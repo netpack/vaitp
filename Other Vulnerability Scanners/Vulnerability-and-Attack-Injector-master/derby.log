@@ -1,0 +1,31 @@
+Apache Derby Network Server - 10.2.2.1 - (538595) started and ready to accept connections on port 1527 at 2009-07-24 10:39:46.612 GMT 
+----------------------------------------------------------------
+2009-07-24 10:39:53.871 GMT:
+ Booting Derby version The Apache Software Foundation - Apache Derby - 10.2.2.1 - (538595): instance c013800d-0122-ac58-579d-00006efebd8f
+on database directory /home/ze/WindowsFiles/ze/Doutoramento/Artigos aceites/2009-06-29 ArtigoDSN2009 PDS Carter Award - Vulnerability & Attack Injection for Web Applications/Attack_Injector/AttackDB  
+
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+2009-07-24 10:40:38.657 GMT:
+ Booting Derby version The Apache Software Foundation - Apache Derby - 10.2.2.1 - (538595): instance 80220011-0122-ac58-579d-00006efebd8f
+on database directory /home/ze/WindowsFiles/ze/Doutoramento/Artigos aceites/2009-06-29 ArtigoDSN2009 PDS Carter Award - Vulnerability & Attack Injection for Web Applications/Attack_Injector/AttackDB_MyReferences_IDS  
+
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+2009-07-24 10:41:54.349 GMT:
+ Booting Derby version The Apache Software Foundation - Apache Derby - 10.2.2.1 - (538595): instance 582f8014-0122-ac58-579d-00006efebd8f
+on database directory /home/ze/WindowsFiles/ze/Doutoramento/Artigos aceites/2009-06-29 ArtigoDSN2009 PDS Carter Award - Vulnerability & Attack Injection for Web Applications/Attack_Injector/AttackDB_tikiwiki_IDS  
+
+Database Class Loader started - derby.database.classpath=''
+
+2009-07-24 11:07:19.766 GMT:
+Shutting down instance 582f8014-0122-ac58-579d-00006efebd8f
+----------------------------------------------------------------
+
+2009-07-24 11:07:19.788 GMT:
+Shutting down instance 80220011-0122-ac58-579d-00006efebd8f
+----------------------------------------------------------------
+
+2009-07-24 11:07:19.798 GMT:
+Shutting down instance c013800d-0122-ac58-579d-00006efebd8f
+----------------------------------------------------------------

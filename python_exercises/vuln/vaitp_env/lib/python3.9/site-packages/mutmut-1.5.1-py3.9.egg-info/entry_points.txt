@@ -1,0 +1,3 @@
+[console_scripts]
+mutmut = mutmut.__main__:climain
+

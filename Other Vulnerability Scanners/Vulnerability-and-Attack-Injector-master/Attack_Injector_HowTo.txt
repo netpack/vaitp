@@ -1,0 +1,72 @@
+How to use the Attack Injector:
+
+Ubuntu Vmware image
+
+1) Initial setup (this only has to be done once):
+The MySQL must be configured to use the port 13306
+Configure the /etc/mysql/my.cnf file around line 45, changing
+port		= 3306
+to:
+port		= 13306
+
+Then restart the MySQL service (or reboot):
+sudo /etc/init.d/mysql restart
+
+Tell the PHP applications to use the MySQL port in stead of connecting directly, by changing the connection. For example, where in the PHP code we have something like:
+define('PHD_HOST', 'localhost');
+change to:
+define('PHD_HOST', '127.0.0.1:3306');
+
+2) Deploy the MySQL proxy to send a copy of all the MySQL packets
+Open a Console and type:
+~/Desktop/MySQLProxy/proxySrc/runMySQLProxy.sh
+
+The MySQL proxy will proxy the MySQL communications between port 3306 and 13306 and send all the packets to the port 18000, which is the default configured in the Attack_Injector. This way, the Attack_Injector becomes aware of all the MySQL communication.
+
+3a) Configure the Web Browser (if the crawling is going to be performed manually)
+Use the Web Browser (Opera, for example) proxy to use the localhost in the port 8080 and use it for local servers
+Run the Web Application: http://localhost/html/phd-mysql-test/index.php
+
+3b) Configure the Acunetix Web Vulnerability Scanner (if the crawling is going to be performed automatically)
+The Acunetix Web Vulnerability Scanner must be run from a Windows XP PC, or a Windows XP Vmware image.
+In the Application Settings, General, in the maximum number of parallel connections change to 1
+In the Application Settings, LAN Settings, configure to use an HTTP proxy server
+The IP is the IP of the Ubuntu Vmware image machine and the port is the 8080
+In the Site crawler, Start URL write:
+http://192.168.180.133/html/phd-mysql-test
+
+4) Remove (or copy to a backup folder) the AttackDB database
+rm -rf ~/Desktop/Attack_Injector/dist/AttackDB
+
+5) Start the JavaDB database as a Network Server and the Attack_Injector
+~/Desktop/Attack_Injector/dist/StartAttackInjector.sh
+
+6) Create the database
+In the Database tab click on the Create Database button
+close the Attack_Injector
+
+7) Perform the Inspection
+(For some applications, like the tikiwiki, in the "inspection tab", you have to des-select the "Affect SQL Static" check box first. On the other cases you may leave both checkboxes "Affect SQL Static" "Affect SQL Dynamic"selected)
+Start the JavaDB database as a Network Server and the Attack_Injector
+~/Desktop/Attack_Injector/dist/StartAttackInjector.sh
+In the Inspection tab click on the Start Inspection button
+Start the crawling:
+	If manually interact with the PHP web application (for example click on the Show papers, edit, Edit Authors, Update, Show Papers, Home Page)
+	If automatically execute the  Acunetix Web Vulnerability Scanner Crawler by clicking on the  Site crawler, Start button and wait until it finishes its job 
+In the Inspection tab click on the Stop Inspection button and wait the Attack_Injector to do its calculations
+Go to the Attack tab and click on the Generate Attack Payloads button
+close the Attack_Injector
+
+8) Perform the attack
+Start the JavaDB database as a Network Server and the Attack_Injector
+~/Desktop/Attack_Injector/dist/StartAttackInjector.sh
+Go to the Attack tab and click on the Start Attack button and wait to finish the job. It will take some minutes and at the end it will display the resume of all the attacks performed
+
+9) Show the results
+On the Attack tab and click on the Calculate the Attack Success button
+On the Attack tab and click on the Show Attack Results button
+It will be displayed the Attacks not Successful, the Attacks not Successful (undefined), the Attacks Successful, the Vulnerabilities that could be Attacked and the details of the vulnerabilities attacked successfully
+
+10) End
+Close the Attack_Injector
+Close the MySQL proxy window (if it was executed from the command line)

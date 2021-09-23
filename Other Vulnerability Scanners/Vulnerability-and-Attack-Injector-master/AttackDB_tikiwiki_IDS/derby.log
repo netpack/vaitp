@@ -1,0 +1,6 @@
+Apache Derby Network Server - 10.2.2.1 - (538595) started and ready to accept connections on port 1527 at 2008-10-21 22:34:28.719 GMT 
+2008-10-21 22:34:55.710 GMT Thread[DRDAConnThread_3,5,main] (DATABASE = AttackDB), (DRDAID = {1}), Database 'AttackDB' not found.
+2008-10-21 22:35:16.501 GMT Thread[DRDAConnThread_3,5,main] (DATABASE = AttackDB), (DRDAID = {2}), Database 'AttackDB' not found.
+2008-10-21 22:35:16.587 GMT Thread[DRDAConnThread_3,5,main] (DATABASE = AttackDB), (DRDAID = {3}), Database 'AttackDB' not found.
+2008-10-21 22:35:16.609 GMT Thread[DRDAConnThread_3,5,main] (DATABASE = AttackDB), (DRDAID = {4}), Database 'AttackDB' not found.
+2008-10-21 22:35:16.637 GMT Thread[DRDAConnThread_3,5,main] (DATABASE = AttackDB), (DRDAID = {5}), Database 'AttackDB' not found.

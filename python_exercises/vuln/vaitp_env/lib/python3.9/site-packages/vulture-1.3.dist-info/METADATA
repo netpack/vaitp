@@ -1,0 +1,505 @@
+Metadata-Version: 2.1
+Name: vulture
+Version: 1.3
+Summary: Find dead code
+Home-page: https://github.com/jendrikseipp/vulture
+Author: Jendrik Seipp
+Author-email: jendrikseipp@gmail.com
+License: MIT
+Keywords: dead-code-removal
+Platform: UNKNOWN
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Environment :: Console
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 2
+Classifier: Programming Language :: Python :: 2.7
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.5
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: Implementation :: CPython
+Classifier: Programming Language :: Python :: Implementation :: PyPy
+Classifier: Topic :: Software Development :: Quality Assurance
+Requires-Python: >=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*
+
+Vulture - Find dead code
+========================
+
+.. image:: https://travis-ci.org/jendrikseipp/vulture.svg?branch=master
+   :target: https://travis-ci.org/jendrikseipp/vulture
+   :alt: Travis CI build status (Linux)
+
+.. image:: https://ci.appveyor.com/api/projects/status/github/jendrikseipp/vulture?svg=true
+   :target: https://ci.appveyor.com/project/jendrikseipp96693/vulture
+   :alt: AppVeyor CI build status (Windows)
+
+.. image:: https://coveralls.io/repos/github/jendrikseipp/vulture/badge.svg?branch=master
+   :target: https://coveralls.io/github/jendrikseipp/vulture?branch=master
+
+Vulture finds unused code in Python programs. This is useful for
+cleaning up and finding errors in large code bases. If you run Vulture
+on both your library and test suite you can find untested code.
+
+Due to Python's dynamic nature, static code analyzers like Vulture are
+likely to miss some dead code. Also, code that is only called implicitly
+may be reported as unused. Nonetheless, Vulture can be a very helpful
+tool for higher code quality.
+
+
+Features
+--------
+
+* fast: uses static code analysis
+* tested: tests itself and has complete test coverage
+* complements pyflakes and has the same output syntax
+* sorts unused classes and functions by size with ``--sort-by-size``
+* supports Python 2.7 and Python >= 3.5
+
+
+Installation
+------------
+
+::
+
+  $ pip install vulture  # from PyPI
+  $ pip install .        # from cloned repo
+
+
+Usage
+-----
+
+::
+
+  $ vulture myscript.py  # or
+  $ python3 -m vulture myscript.py
+  $ vulture myscript.py mypackage/
+  $ vulture myscript.py --min-confidence 100  # Only report 100% dead code.
+
+The provided arguments may be Python files or directories. For each
+directory Vulture analyzes all contained `*.py` files.
+
+Vulture assigns each chunk of dead code a confidence value. A confidence
+value of 100% means that the code will never be executed. Values below
+100% are only estimates for how likely it is that the code is unused.
+
+After you have found and deleted dead code, run Vulture again, because
+it may discover more dead code.
+
+**Handling false positives**
+
+You can add used code that is reported as unused to a Python module and
+add it to the list of scanned paths. To obtain such a whitelist
+automatically, pass ``--make-whitelist`` to Vulture. ::
+
+  $ vulture mydir --make-whitelist > whitelist.py
+  $ vulture mydir whitelist.py
+
+We collect whitelists for common Python modules and packages in
+``vulture/whitelists/`` (pull requests are welcome). If you want to
+ignore a whole file or directory, use the ``--exclude`` parameter (e.g.,
+``--exclude *settings.py,docs/``).
+
+**Ignoring names**
+
+You can use ``--ignore-names foo*,ba[rz]`` to let Vulture ignore all names
+starting with ``foo`` and the names ``bar`` and ``baz``. Additionally, the
+``--ignore-decorators`` option can be used to ignore functions decorated
+with the given decorator. This is helpful for example in Flask projects,
+where you can use ``--ignore-decorators "@app.route"`` to ignore all functions
+with the ``@app.route`` decorator.
+
+We recommend using whitelists instead of ``--ignore-names`` or
+``--ignore-decorators`` whenever possible, since whitelists are automatically
+checked for syntactic correctness when passed to Vulture and often you can
+even pass them to your Python interpreter and let it check that all
+whitelisted code actually still exists in your project.
+
+**Marking unused variables**
+
+There are situations where you can't just remove unused variables, e.g.,
+in tuple assignments or function signatures. Vulture will ignore these
+variables if they start with an underscore (e.g., ``_x, y = get_pos()``).
+
+**Minimum confidence**
+
+You can use the ``--min-confidence`` flag to set the minimum confidence
+for code to be reported as unused. Use ``--min-confidence 100`` to only
+report code that is guaranteed to be unused within the analyzed files.
+
+
+How does it work?
+-----------------
+
+Vulture uses the ``ast`` module to build abstract syntax trees for all
+given files. While traversing all syntax trees it records the names of
+defined and used objects. Afterwards, it reports the objects which have
+been defined, but not used. This analysis ignores scopes and only takes
+object names into account.
+
+Vulture also detects unreachable code by looking for code after
+``return``, ``break``, ``continue`` and ``raise`` statements, and by
+searching for unsatisfiable ``if``- and ``while``-conditions.
+
+
+Sort by size
+------------
+
+When using the ``--sort-by-size`` option, Vulture sorts unused code by
+its number of lines. This helps developers prioritize where to look for
+dead code first.
+
+
+
+Examples
+--------
+
+Consider the following Python script (``dead_code.py``):
+
+.. code:: python
+
+    import os
+
+    class Greeter:
+        def greet(self):
+            print("Hi")
+
+    def hello_world():
+        message = "Hello, world!"
+        greeter = Greeter()
+        greet_func = getattr(greeter, "greet")
+        greet_func()
+
+    if __name__ == "__main__":
+        hello_world()
+
+Calling ::
+
+    vulture dead_code.py
+
+results in the following output::
+
+    dead_code.py:1: unused import 'os' (90% confidence)
+    dead_code.py:4: unused function 'greet' (60% confidence)
+    dead_code.py:8: unused variable 'message' (60% confidence)
+
+Vulture correctly reports "os" and "message" as unused, but it fails to
+detect that "greet" is actually used. The recommended method to deal with
+false positives like this is to create a whitelist Python file.
+
+**Preparing whitelists**
+
+In a whitelist we simulate the usage of variables, attributes, etc. For
+the program above, a whitelist could look as follows:
+
+.. code:: python
+
+    # whitelist_dead_code.py
+    from dead_code import Greeter
+    Greeter.greet
+
+Alternatively, you can pass ``--make-whitelist`` to Vulture and obtain
+an automatically generated whitelist.
+
+Passing both the original program and the whitelist to Vulture ::
+
+    vulture dead_code.py whitelist_dead_code.py
+
+makes Vulture ignore the "greet" method::
+
+    dead_code.py:1: unused import 'os' (90% confidence)
+    dead_code.py:8: unused variable 'message' (60% confidence)
+
+
+Exit codes
+----------
+
++-----------+---------------------------------------------------------------+
+| Exit code |                          Description                          |
++===========+===============================================================+
+|     0     | No dead code found                                            |
++-----------+---------------------------------------------------------------+
+|     1     | Dead code found                                               |
++-----------+---------------------------------------------------------------+
+|     1     | Invalid input (file missing, syntax error, wrong encoding)    |
++-----------+---------------------------------------------------------------+
+|     2     | Invalid command line arguments                                |
++-----------+---------------------------------------------------------------+
+
+
+Similar programs
+----------------
+
+* `pyflakes <https://pypi.org/project/pyflakes/>`_ finds unused imports and
+  unused local variables (in addition to many other programmatic errors).
+* `coverage <https://pypi.org/project/coverage/>`_ finds unused
+  code more reliably than Vulture, but requires all branches of the code to
+  actually be run.
+* `uncalled <https://pypi.org/project/uncalled/>`_ finds dead code by using
+  the abstract syntax tree (like Vulture), regular expressions, or both.
+* `dead <https://pypi.org/project/dead/>`_ finds dead code by using
+  the abstract syntax tree (like Vulture).
+
+
+Participate
+-----------
+
+Please visit https://github.com/jendrikseipp/vulture to report any
+issues or to make pull requests.
+
+* Contributing guide: `CONTRIBUTING.rst <https://github.com/jendrikseipp/vulture/blob/master/CONTRIBUTING.rst>`_
+* Changelog: `NEWS.rst <https://github.com/jendrikseipp/vulture/blob/master/NEWS.rst>`_
+* Roadmap: `TODO.rst <https://github.com/jendrikseipp/vulture/blob/master/TODO.rst>`_
+
+
+News
+====
+
+1.3 (2020-02-03)
+----------------
+* Detect redundant 'if' conditions without 'else' blocks.
+* Add whitelist for ``string.Formatter`` (Joseph Bylund, #183).
+
+
+1.2 (2019-11-22)
+----------------
+* Fix tests for Python 3.8 (#166).
+* Use new ``Constant`` AST node under Python 3.8+ (#175).
+* Add test for f-strings (#177).
+* Add whitelist for ``logging`` module.
+
+
+1.1 (2019-09-23)
+----------------
+* Add ``sys.excepthook`` to ``sys`` whitelist.
+* Add whitelist for ``ctypes`` module.
+* Check that type annotations are parsed and type comments are ignored (thanks @kx-chen).
+* Support checking files with BOM under Python 2.7 (#170).
+
+
+1.0 (2018-10-23)
+----------------
+* Add ``--ignore-decorators`` flag (thanks @RJ722).
+* Add whitelist for ``threading`` module (thanks @andrewhalle).
+
+
+0.29 (2018-07-31)
+-----------------
+* Add ``--ignore-names`` flag for ignoring names matching the given glob patterns (thanks @RJ722).
+
+
+0.28 (2018-07-05)
+-----------------
+* Add ``--make-whitelist`` flag for reporting output in whitelist format (thanks @RJ722).
+* Ignore case of ``--exclude`` arguments on Windows.
+* Add ``*-test.py`` to recognized test file patterns.
+* Add ``failureException``, ``longMessage`` and ``maxDiff`` to ``unittest`` whitelist.
+* Refer to actual objects rather than their mocks in default whitelists (thanks @RJ722).
+* Don't import any Vulture modules in setup.py (thanks @RJ722).
+
+
+0.27 (2018-06-05)
+-----------------
+* Report ``while (True): ... else: ...`` as unreachable (thanks @RJ722).
+* Use ``argparse`` instead of ``optparse``.
+* Whitelist Mock.return_value and Mock.side_effect in unittest.mock module.
+* Drop support for Python 2.6 and 3.3.
+* Improve documentation and test coverage (thanks @RJ722).
+
+
+0.26 (2017-08-28)
+-----------------
+* Detect ``async`` function definitions (thanks @RJ722).
+* Add ``Item.get_report()`` method (thanks @RJ722).
+* Move method for finding Python modules out of Vulture class.
+
+
+0.25 (2017-08-15)
+-----------------
+* Detect unsatisfiable statements containing ``and``, ``or`` and ``not``.
+* Use filenames and line numbers as tie-breakers when sorting by size.
+* Store first and last line numbers in Item objects.
+* Pass relevant options directly to ``scavenge()`` and ``report()``.
+
+
+0.24 (2017-08-14)
+-----------------
+* Detect unsatisfiable ``while``-conditions (thanks @RJ722).
+* Detect unsatisfiable ``if``- and ``else``-conditions (thanks @RJ722).
+* Handle null bytes in source code.
+
+
+0.23 (2017-08-10)
+-----------------
+* Add ``--min-confidence`` flag (thanks @RJ722).
+
+
+0.22 (2017-08-04)
+-----------------
+* Detect unreachable code after ``return``, ``break``, ``continue`` and
+  ``raise`` (thanks @RJ722).
+* Parse all variable and attribute names in new format strings.
+* Extend ast whitelist.
+
+
+0.21 (2017-07-26)
+-----------------
+* If an unused item is defined multiple times, report it multiple times.
+* Make size estimates for function calls more accurate.
+* Create wheel files for Vulture (thanks @RJ722).
+
+
+0.20 (2017-07-26)
+-----------------
+* Report unused tuple assignments as dead code.
+* Report attribute names that have the same names as variables as dead code.
+* Let Item class inherit from ``object`` (thanks @RJ722).
+* Handle names imported as aliases like all other used variable names.
+* Rename Vulture.used_vars to Vulture.used_names.
+* Use function for determining which imports to ignore.
+* Only try to import each whitelist file once.
+* Store used names and used attributes in sets instead of lists.
+* Fix estimating the size of code containing ellipses (...).
+* Refactor and simplify code.
+
+
+0.19 (2017-07-20)
+-----------------
+* Don't ignore `__foo` variable names.
+* Use separate methods for determining whether to ignore classes and functions.
+* Only try to find a whitelist for each defined import once (thanks @roivanov).
+* Fix finding the last child for many types of AST nodes.
+
+
+0.18 (2017-07-17)
+-----------------
+* Make `--sort-by-size` faster and more accurate (thanks @RJ722).
+
+
+0.17 (2017-07-17)
+-----------------
+* Add `get_unused_code()` method.
+* Return with exit code 1 when syntax errors are found or files can't be read.
+
+
+0.16 (2017-07-12)
+-----------------
+* Differentiate between unused classes and functions (thanks @RJ722).
+* Add --sort-by-size option (thanks @jackric and @RJ722).
+* Count imports as used if they are accessed as module attributes.
+
+
+0.15 (2017-07-04)
+-----------------
+* Automatically include whitelists based on imported modules (thanks @RJ722).
+* Add --version parameter (thanks @RJ722).
+* Add appveyor tests for testing on Windows (thanks @RJ722).
+
+
+0.14 (2017-04-06)
+-----------------
+* Add stub whitelist file for Python standard library (thanks @RJ722)
+* Ignore class names starting with "Test" in "test\_" files (thanks @thisch).
+* Ignore "test\_" functions only in "test\_" files.
+
+
+0.13 (2017-03-06)
+-----------------
+* Ignore star-imported names since we cannot detect whether they are used.
+* Move repository to GitHub.
+
+
+0.12 (2017-01-05)
+-----------------
+* Detect unused imports.
+* Use tokenize.open() on Python >= 3.2 for reading input files, assume
+  UTF-8 encoding on older Python versions.
+
+
+0.11 (2016-11-27)
+-----------------
+* Use the system's default encoding when reading files.
+* Report syntax errors instead of aborting.
+
+
+0.10 (2016-07-14)
+-----------------
+* Detect unused function and method arguments (issue #15).
+* Detect unused \*args and \*\*kwargs parameters.
+* Change license from GPL to MIT.
+
+
+0.9 (2016-06-29)
+----------------
+* Don't flag attributes as unused if they are used as global variables
+  in another module (thanks Florian Bruhin).
+* Don't consider "True" and "False" variable names.
+* Abort with error message when invoked on .pyc files.
+
+
+0.8.1 (2015-09-28)
+------------------
+* Fix code for Python 3.
+
+
+0.8 (2015-09-28)
+----------------
+* Do not flag names imported with "import as" as dead code (thanks Tom Terrace).
+
+
+0.7 (2015-09-26)
+----------------
+* Exit with exitcode 1 if path on commandline can't be found.
+* Test vulture with vulture using a whitelist module for false positives.
+* Add tests that run vulture as a script.
+* Add "python setup.py test" command for running tests.
+* Add support for tox.
+* Raise test coverage to 100%.
+* Remove ez_setup.py.
+
+
+0.6 (2014-09-06)
+----------------
+* Ignore function names starting with "test\_".
+* Parse variable names in new format strings (e.g. "This is {x}".format(x="nice")).
+* Only parse alphanumeric variable names in format strings and ignore types.
+* Abort with exit code 1 on syntax errors.
+* Support installation under Windows by using setuptools (thanks Reuben Fletcher-Costin).
+
+
+0.5 (2014-05-09)
+----------------
+* If dead code is found, exit with 1.
+
+
+0.4.1 (2013-09-17)
+------------------
+* Only warn if a path given on the command line cannot be found.
+
+
+0.4 (2013-06-23)
+----------------
+* Ignore unused variables starting with an underscore.
+* Show warning for syntax errors instead of aborting directly.
+* Print warning if a file cannot be found.
+
+
+0.3 (2012-03-19)
+----------------
+* Add support for python3
+* Report unused attributes
+* Find tuple assignments in comprehensions
+* Scan files given on the command line even if they don't end with .py
+
+
+0.2 (2012-03-18)
+----------------
+* Only format nodes in verbose mode (gives 4x speedup).
+
+
+0.1 (2012-03-17)
+----------------
+* First release.
+
+

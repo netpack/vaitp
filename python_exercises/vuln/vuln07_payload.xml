@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE person [
+  <!ENTITY file SYSTEM "file:///etc/passwd">
+]>
+
+<person>
+  <name>&file;</name>
+  <age>35</age>
+</person>
+

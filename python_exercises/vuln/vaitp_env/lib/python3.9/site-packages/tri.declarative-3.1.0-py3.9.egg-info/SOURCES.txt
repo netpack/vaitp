@@ -1,0 +1,17 @@
+AUTHORS.rst
+CONTRIBUTING.rst
+HISTORY.rst
+LICENSE
+MANIFEST.in
+README.rst
+requirements.txt
+setup.cfg
+setup.py
+test_requirements.txt
+lib/tri.declarative.egg-info/PKG-INFO
+lib/tri.declarative.egg-info/SOURCES.txt
+lib/tri.declarative.egg-info/dependency_links.txt
+lib/tri.declarative.egg-info/not-zip-safe
+lib/tri.declarative.egg-info/requires.txt
+lib/tri.declarative.egg-info/top_level.txt
+lib/tri_declarative/__init__.py
