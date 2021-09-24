@@ -7,6 +7,9 @@ Main research document: https://docs.google.com/document/d/1-yceAfsVoBpIeUxHfzZH
 
 Main VAITP Issues research sheet: https://docs.google.com/spreadsheets/d/1oCFxijCtPEj71KpVpWnAtmZxJMXNZmpehIsB5skmecw/edit?usp=sharing
 
+Main Trello board: https://trello.com/b/MRQzaN3s/vaitp
+
+Main github repository: https://github.com/netpack/vaitp/
 
 
 By Frédéric Bogerts under the orientation of prof. Naghmeh Ivaki and prof. José Fonseca
