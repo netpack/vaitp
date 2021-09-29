@@ -4,14 +4,14 @@ import subprocess
 
 def convertVideoFile(filename):
     cmd = "ffmpeg -i '{source}' out.mkv".format(source=filename)
-    subprocess.call(cmd,shell=True)
+    subprocess.getoutput(cmd)
 
 
 if __name__ == '__main__':
     print("VAITP vulnerability example module by Frédéric Bogaerts\n\n",
-    "python vuln01c_vuln \"a; ls -la\"")
+    "python vuln01_vuln \"a; ls -la\"")
 
     convertVideoFile(sys.argv[1])
 
 
-# a'; cat /etc/passwd; '
+# python vuln01e_vuln.py a"\'; cat /etc/passwd; "\'

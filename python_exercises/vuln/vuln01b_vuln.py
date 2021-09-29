@@ -9,7 +9,7 @@ def convertVideoFile(filename):
 
 if __name__ == '__main__':
     print("VAITP vulnerability example module by Frédéric Bogaerts\n\n",
-    "python vuln01_vuln \"a; ls -la\"")
+    "python vuln01b_vuln \"a; ls -la\"")
 
     convertVideoFile(sys.argv[1])
 
