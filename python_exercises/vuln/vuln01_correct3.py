@@ -4,8 +4,7 @@ from shlex import quote
 
 
 def convertVideoFile(filename):
-    file = input('Input video file:')
-    cmd = 'ffmpeg -i {source} out.mkv'.format(source=quote(file))
+    cmd = 'ffmpeg -i {source} out.mkv'.format(source=quote(filename))
     subprocess.call(cmd,shell=False)
 
 

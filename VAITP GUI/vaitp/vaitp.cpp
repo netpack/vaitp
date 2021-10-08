@@ -28,6 +28,9 @@ VAITP::VAITP(QWidget *parent)
         db.open();
     }
 
+    //Reset the injection chain number
+    chainNum=0;
+
 }
 
 /**
@@ -194,6 +197,8 @@ void VAITP::on_bt_scan_py_clicked()
         }
 
 
+       ui->lbl_target->setText(pyfile);
+
        ui->txt_output_sh1->appendHtml(tr("Scanning Python Script... Done!"));
 
        //ui->bt_auto_daisyChain->setEnabled(true);
@@ -214,6 +219,86 @@ void VAITP::on_bt_scan_py_clicked()
  * @brief VAITP::on_bt_inject_vuln_clicked
  * Inject a patch
  */
+void VAITP::patchInjection(QString pyfile, bool isChained, QStringList patchList, bool isTemp)
+{
+    QString patch = patchList[0].trimmed();
+    QString inj = patchList[1].trimmed();
+
+    qDebug()<<"Selected file will be patched from: "<<patch<<" to: "<<inj;
+
+    QString line = patchList[2].replace("Line","").trimmed().at(0);
+
+    QString outputfilename="";
+    QString time_format = "yyyy_MM_dd_HH_mm_ss";
+    QDateTime a = QDateTime::currentDateTime();
+    QString as = a.toString(time_format);
+    QString thispyfile = pyfile.replace(".py","");
+
+
+    if(isChained){
+
+        chainNum++;
+        qDebug()<<"chain Num:: "<<chainNum;
+
+        if(isTemp){
+            outputfilename = pyfile.replace(".py","")+"_temp_"+QString::number(chainNum)+".py";
+            tempFiles.append(outputfilename);
+        } else {
+            QRegExp re("_temp_[0-9]*");
+            outputfilename = pyfile.replace(".py","").replace(re,"")+"_injectedChain_"+as+".py";
+
+        }
+
+
+    } else {
+        outputfilename = pyfile.replace(".py","")+"_injected_"+as+".py";
+
+    }
+     ui->lbl_target->setText(outputfilename);
+
+     //ui->txt_output_sh1->appendHtml("Injected file output: "+outputfilename);
+     if(!isTemp)
+        ui->lst_injectedFiles->addItem(outputfilename);
+
+
+    //if(QFile::copy(pyfile,outputfilename)){
+
+        qDebug()<<"The pyfile is: "<<thispyfile+".py";
+        qDebug()<<"The outputfilename is: "<<outputfilename;
+
+            //QByteArray fileData;
+            QFile file(thispyfile+".py");
+            QFile out(outputfilename);
+            int linenum = 0;
+            QString text="";
+            if(file.open(QIODevice::ReadOnly)){
+                 if(out.open(QIODevice::ReadWrite)){
+                     QTextStream in(&file);
+                     while(!in.atEnd()){
+                         linenum++;
+                         QString linein = in.readLine()+"\n";
+                         qDebug()<<"Read line["<<linenum<<"]: "<<linein;
+
+                         if(line.toInt() == linenum){
+                             linein.replace(patch, inj);
+                         }
+                         text.append(linein);
+                     }
+                     out.seek(0); // go to the beginning of the file
+                     out.write(text.toUtf8());
+                     out.close();
+                 } else {
+                     ui->txt_output_sh1->appendHtml("Unable to open out file "+outputfilename);
+                 }
+                 file.close();
+            } else {
+                ui->txt_output_sh1->appendHtml("Unable to open in file "+thispyfile+".py");
+            }
+
+            if(!isTemp)
+                ui->txt_output_sh1->appendHtml("Injection file created: "+outputfilename);
+}
+
 void VAITP::on_bt_inject_vuln_clicked()
 {
     ui->bt_inject_vuln->setEnabled(false);
@@ -225,102 +310,34 @@ void VAITP::on_bt_inject_vuln_clicked()
 
         ui->lbl_info->setText(tr("Injecting Python Script... Please Wait..."));
 
-        QString path = "/home/fred/msi/ano2/VAITP/python_exercises/vuln/";
+        //QString path = "/home/fred/msi/ano2/VAITP/python_exercises/vuln/";
         QString pyfile = ui->txt_py_src->text();
 
-
         QStringList patchList = ui->lst_injectionPoints->currentItem()->text().split("::");
-        QString patch = patchList[0].trimmed();
-        QString inj = patchList[1].trimmed();
 
-        qDebug()<<"Selected file will be patched from: "<<patch<<" to: "<<inj;
-
-
-        QString outputfilename = pyfile.replace(".py","")+"_injected_"+patchList[2].replace("Line","").trimmed().at(0)+".py";
-
-         ui->txt_output_sh1->appendHtml("Injected file output: "+outputfilename);
-         ui->lst_injectedFiles->addItem(outputfilename);
-
-
-        //if(QFile::copy(pyfile,outputfilename)){
-
-
-
-                QByteArray fileData;
-                QFile file(pyfile+".py");
-                QFile out(outputfilename);
-
-                if(!file.open(QIODevice::ReadOnly))
-                        qDebug()<<"Unable to open in file "<<pyfile+".py";
-
-                if(!out.open(QIODevice::ReadWrite))
-                        qDebug()<<"Unable to open out file "<<outputfilename;
-
-                fileData = file.readAll();
-                QString text(fileData);
-
-                text.replace(patch, inj);
-
-                out.seek(0); // go to the beginning of the file
-                out.write(text.toUtf8());
-
-                file.close();
-                out.close();
-
-                qDebug() << "Injection file created";
-
-
-/*
-                //add to gui
-                bool hasI=false;
-                for(int i=0; i<ui->lst_injectedFiles->count();i++){
-                    if(ui->lst_injectedFiles->item(i)->text() == outputfilename){
-                        hasI=true;
-                    }
-                }
-                if(!hasI)
-                 ui->lst_workingAttacks->addItem(outputfilename);*/
-       // }
-
-
-
-
-        /*ui->lst_injectionPoints->clear();*/
+        patchInjection(pyfile,false,patchList,false);
 
 
     }
 
 }
 
-void VAITP::on_bt_restore_pys_clicked()
-{
-    QString path = "/home/fred/msi/ano2/VAITP/python_exercises/vuln/";
-    QString command("python");
-    QStringList params = QStringList() << "restore_vulns.py";
-
-    QProcess *process = new QProcess();
-    process->startDetached(command, params, path);
-    process->waitForFinished();
-    process->close();
-
-    ui->lbl_info->setText("The un-injected files were restored.");
-}
-
 void VAITP::on_lst_injectionPoints_itemClicked(QListWidgetItem *item)
 {
     qDebug() << "Selected injection: " << item->text();
     ui->bt_inject_vuln->setEnabled(true);
+    ui->bt_addToInjectionChain->setEnabled(true);
 }
 
 void VAITP::on_lst_vulns_itemClicked(QListWidgetItem *item)
 {
     qDebug() << "Selected Vulnerability: " << item->text();
+
+    //compose payloads list
     ui->lst_payload->clear();
     QSqlQuery qry;
-    qry.prepare("Select payload from vulns where vulnerability like ?");
-    qry.bindValue(0,item->text());
-
-
+    qry.prepare("Select payload from payloads");
+    //qry.bindValue(0,item->text());
 
     ui->bt_attack->setEnabled(false);
 
@@ -330,7 +347,24 @@ void VAITP::on_lst_vulns_itemClicked(QListWidgetItem *item)
         ui->lst_payload->addItem(qry.value(0).toString());
     }
 
-    qDebug() << "SQL:: " << qry.lastQuery();
+    qDebug() << "SQL payloads :: " << qry.lastQuery();
+
+
+    //get vulnerability description
+    ui->txt_vulnDescription->clear();
+
+    qry.prepare("Select description from vulnerabilities where vulnerability like ?");
+    qry.bindValue(0,item->text());
+    qry.exec();
+    while(qry.next()){
+        QString desc = qry.value(0).toString();
+        qDebug() << "SQL desc in db :: " << desc;
+        ui->txt_vulnDescription->insertPlainText(desc);
+    }
+
+    qDebug() << "SQL description :: " << qry.lastQuery();
+
+
 
 }
 
@@ -358,7 +392,10 @@ void VAITP::on_bt_attack_clicked()
            QString payload = ui->lst_payload->currentItem()->text();
            QString command("python");
            QStringList params;
-           QString pyfile = ui->txt_py_src->text();
+           QString pyfile = ui->lbl_target->text();
+
+           qDebug() << "Attacking file: " << pyfile;
+           ui->txt_output_sh1->appendHtml("Attacking file: "+pyfile);
 
            params = QStringList() << pyfile << payload;
 
@@ -370,7 +407,7 @@ void VAITP::on_bt_attack_clicked()
            qDebug() << "Attack result: " << output;
            ui->txt_output_sh1->appendHtml("Attack output:<br>"+output);
            if(output.contains("root")){
-               QString workingv = "Vulnerability: "+ui->lst_vulns->currentItem()->text()+ " :: Payload: "+payload;
+               QString workingv = "Vulnerability: "+ui->lst_vulns->currentItem()->text()+ " :: Payload: "+payload+" :: File: "+pyfile;
                bool hasVP=false;
                for(int i=0; i<ui->lst_workingAttacks->count();i++){
                    if(ui->lst_workingAttacks->item(i)->text() == workingv){
@@ -398,11 +435,77 @@ void VAITP::on_bt_clearAll_clicked()
     ui->lst_payload->clear();
     ui->lst_vulns->clear();
     ui->txt_output_sh1->clear();
+    ui->txt_vulnDescription->clear();
 }
 
 void VAITP::on_lst_payload_itemClicked(QListWidgetItem *item)
 {
     qDebug()<<"Item selected: "<<item->text();
     ui->bt_attack->setEnabled(true);
+}
+
+
+void VAITP::on_lst_injectedFiles_itemClicked(QListWidgetItem *item)
+{
+    ui->bt_setInjectedFileAsTarget->setEnabled(true);
+    ui->lbl_target->setText(item->text());
+}
+
+
+void VAITP::on_actionReScan_for_injected_files_triggered()
+{
+    /*get path for vulns*/
+
+    /*get all py file that contain "_injected_" */
+
+}
+
+
+void VAITP::on_bt_addToInjectionChain_clicked()
+{
+    QString inp = ui->lst_injectionPoints->currentItem()->text();
+    qDebug()<<"selected injection to add to chain: "<<inp;
+    ui->lst_injectionsChain->addItem(inp);
+    ui->bt_executeInjectionChain->setEnabled(true);
+}
+
+
+
+
+void VAITP::on_bt_executeInjectionChain_clicked()
+{
+    qDebug()<<"Executing injection chain...";
+    ui->txt_output_sh1->appendHtml("Executing injection chain...");
+    QString pyfile;
+    //QString delFileName="";
+
+    //patch all injections
+    for(int ci=0; ci<ui->lst_injectionsChain->count();++ci){
+
+        pyfile = ui->lbl_target->text();
+        QStringList patchList = ui->lst_injectionPoints->item(ci)->text().split("::");
+
+        if(ci==ui->lst_injectionsChain->count()-1){
+            patchInjection(pyfile,true,patchList, false);
+        } else {
+            patchInjection(pyfile,true,patchList, true);
+        }
+
+    }
+
+    //delete old ones
+    qDebug()<<"To Delete::";
+    for(int n=0; n<tempFiles.count(); n++){
+        qDebug()<<tempFiles[n];
+        QFile f(tempFiles[n]);
+        f.remove();
+    }
+
+}
+
+
+void VAITP::on_bt_clearInjectionChain_clicked()
+{
+    ui->lst_injectionsChain->clear();
 }
 

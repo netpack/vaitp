@@ -33,4 +33,8 @@ def vuln():
 # cd /home/fred/msi/ano2/VAITP/python_exercises/vuln
 # . vaitp_env/bin/activate
 # export FLASK_APP=app
+# mv vul05_vuln_app.py app.py
 # flask run
+#
+##exploit:
+#python vuln05_exploit01.py 127.0.0.1
