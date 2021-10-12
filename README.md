@@ -1,4 +1,4 @@
-# vaitp - Vulnerability Attack and Injection Tool for Python
+# VAITP - Vulnerability Attack and Injection Tool for Python
 
 A tool to identify, inject and attack vulnerabilities in Python scripts.
 
