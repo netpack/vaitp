@@ -1,0 +1,1 @@
+"blank accessing variable of high level from lower level class i have a class inside a class like this:..class robot(object):.      def __init__(self):.         self.name = 'ganken'.       class speaker(object):.          pass...let’s say i want to access robot.name from speaker, how do i do that"

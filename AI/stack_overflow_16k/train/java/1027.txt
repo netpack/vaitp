@@ -1,0 +1,1 @@
+clone arr3----> store the result in a variable arr6 would this be correct? clone arr3----> store the result in a variable arr6   ..static long[] arr6 = (long[])arr3.clone();

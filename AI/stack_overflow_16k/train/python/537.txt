@@ -1,0 +1,1 @@
+"find coincidence in a column of names with blank i have a column with names...i would like to find similar names like this examples:..john f. kennedy or john fitzgerald kennedy..i tried this code:..df2[df2['nombre'].duplicated() == true]...brings the exact value duplicated, but i need to find any coincidence with the frist name."

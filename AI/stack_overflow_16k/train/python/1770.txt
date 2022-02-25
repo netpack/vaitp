@@ -1,0 +1,1 @@
+"auto __repr__ method i want to have simple representation of any class, like { property = value }, is there auto __repr__?"

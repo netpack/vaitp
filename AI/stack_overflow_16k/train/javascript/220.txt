@@ -1,0 +1,1 @@
+"isnan(1) and isnan(""1"") returns false why in my screenshot below isnan(1) and isnan(""1"") returns false? as one of them is number and one of them is a string so isnan(""1"") should return true."

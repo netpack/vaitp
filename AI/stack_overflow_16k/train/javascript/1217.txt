@@ -1,0 +1,1 @@
+"uncaught syntaxerror: invalid regular expression: missing forwardslash(/) what is wrong with the code below? i get this error:...  uncaught syntaxerror: invalid regular expression: missing /...$('#element').html($input.val().replace(/([^\]*\)*/,''));"

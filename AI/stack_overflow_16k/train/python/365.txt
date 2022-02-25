@@ -1,0 +1,1 @@
+"blank 3.1 - creating normal distribution i have scipy and numpy, blank v3.1..i need to create a 1d array of length 3million, using random numbers between (and including) 100-60,000. it has to fit a normal distribution. ..using  'a = numpy.random.standard_normal(3000000)', i get a normal distribution for that required length; not sure how to achieve the required range."

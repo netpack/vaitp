@@ -1,0 +1,1 @@
+"how to split line with nested parameters using blank regex? how to split line with nested parameters using blank regex?..'1;2;3' - '1', '2', '3'..'1;(1;2;3);(1;(1;2;3);3)' - '1', '(1;2;3)', '(1;(1;2;3);3)'..number of nested parameters can be any"

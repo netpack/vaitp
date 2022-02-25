@@ -1,0 +1,1 @@
+"compare values stored in variables, then print the variable name i have tried to use the max code but it printed out the largest number not the variable name...a=3.b=4.c=7.d=6.e=8..max(a,b,c,d,e)...this is the code i've tried but it printed 8 instead of e..forgot to add that my values for a b c etc came from a loop so im not suppose to know their values myself..."

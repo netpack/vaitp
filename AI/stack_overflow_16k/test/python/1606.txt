@@ -1,0 +1,1 @@
+"how do i print this string? hi i'm trying to print this string but i get an error..what is wrong in my code?..def main():.    for x in range (0, 100):.        t = 100 - x.        print (t+' bottles of beer on the wall,'+t+'bottles of beer..        'take one down, pass it around,'+t-1+' bottles of beer on the wall.')..main()...the error is:..eol while scanning the string literal"

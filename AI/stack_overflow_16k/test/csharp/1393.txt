@@ -1,0 +1,1 @@
+"blank motion detection without aforge.net is there a way i can create some basic motion detection code (no need for drawing over a bitmap , some just text that says 'motion detected')? without using the aforge.net framework"

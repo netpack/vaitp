@@ -1,0 +1,1 @@
+"blank range for with array of objects the following piece of code..var test = [.  {region: 'ap', tl: 'lol'},.  {region: 'ew', tl: 'asd'}.];..for(var i in test) {.  console.log(i.region);.}...just displays twice undefined. what's the problem with an array of objects?"

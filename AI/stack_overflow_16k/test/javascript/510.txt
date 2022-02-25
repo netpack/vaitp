@@ -1,0 +1,1 @@
+"why is my code not running? i'm simply trying to solve euler problem #1, but nothing is coming up. here's the code: ..int sum = 0;.for (int i = 0; i &lt; 1000; i++) {.    if (i % 3 == 0 &amp;&amp; i % 5 == 0) {.        sum += i;.    }.}.alert(sum);...i have no library &amp; onload settings."

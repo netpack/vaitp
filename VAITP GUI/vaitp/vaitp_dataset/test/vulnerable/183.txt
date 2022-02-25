@@ -1,0 +1,1 @@
+"    def test_received_control_line_finished_garbage_in_input(self):        buf = DummyBuffer()        inst = self._makeOne(buf)        result = inst.received(b"garbage\n")        self.assertEqual(result, 8)        self.assertTrue(inst.error)"

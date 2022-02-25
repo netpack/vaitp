@@ -1,0 +1,4 @@
+"    def __exit__(self, *args, **kw):
+        for k, v in self.old_values.items():
+            if v is not None:
+                os.environ[k] = v"

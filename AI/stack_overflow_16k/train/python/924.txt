@@ -1,0 +1,1 @@
+"simple way to convert list to dict please, tell me the simplest way to convert list object to dictionary..all parameters are looks like this:..['a=1', 'b=2', ...] ...and i want to convert it into:..{'a': '1', 'b': '2' ...}"

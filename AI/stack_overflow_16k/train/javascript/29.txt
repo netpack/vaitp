@@ -1,0 +1,1 @@
+"how to ignore newlines in blank regexp? i have simple example:..data = data.replace(//*(.*?)*//g,"""")...how to ignore newlines in this regexp ?"

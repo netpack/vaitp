@@ -1,0 +1,1 @@
+"reverse words but dot should be at the end i have sentence: .""i love marry."" .and i would like to get: .""marry love i."" (dot at the end)..how can i do that?..public static string reversewords(string originalstring).{.   return string.join("" "", originalstring.split(' ').where(x =&gt; !string.isnullorempty(x)).reverse());.}"

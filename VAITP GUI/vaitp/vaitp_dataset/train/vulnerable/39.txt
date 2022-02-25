@@ -1,0 +1,5 @@
+"    def _download_file(bucket, filename, local_dir):
+        key = bucket.get_key(filename)
+        local_filename = os.path.join(local_dir, filename)
+        key.get_contents_to_filename(local_filename)
+        return local_filename"

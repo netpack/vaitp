@@ -1,0 +1,1 @@
+can i listen to all events emitted by a blank target? addeventlistener lets me add one listener to a target associated with some event type...can i somehow listen to all the events emitted by a target? every time a specified object emits an event - any event - i want to log the type of the event.

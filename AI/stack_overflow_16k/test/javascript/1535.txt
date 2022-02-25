@@ -1,0 +1,1 @@
+why the global variable remain the same after calling a function to increase it? why the global variable is still 5 after calling the increment function? thanks in advance for any help...&lt;script&gt;.function increment(val) {.  val+=1;.}..var val = 5;..increment(val); ..alert(val);..&lt;/script&gt;

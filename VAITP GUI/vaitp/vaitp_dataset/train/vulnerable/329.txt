@@ -1,0 +1,54 @@
+"    def handle_delete_user(self, req):
+        """Handles the DELETE v2/<account>/<user> call for deleting a user from an
+        account.
+
+        Can only be called by an account .admin.
+
+        :param req: The swob.Request to process.
+        :returns: swob.Response, 2xx on success.
+        """
+        # Validate path info
+        account = req.path_info_pop()
+        user = req.path_info_pop()
+        if req.path_info or not account or account[0] == '.' or not user or \
+                user[0] == '.':
+            return HTTPBadRequest(request=req)
+
+        # if user to be deleted is reseller_admin, then requesting
+        # user must be the super_admin
+        is_reseller_admin = self.is_user_reseller_admin(req, account, user)
+        if not is_reseller_admin and not req.credentials_valid:
+            # if user to be deleted can't be found, return 404
+            return HTTPNotFound(request=req)
+        elif is_reseller_admin and not self.is_super_admin(req):
+            return HTTPForbidden(request=req)
+
+        if not self.is_account_admin(req, account):
+            return self.denied_response(req)
+
+        # Delete the user's existing token, if any.
+        path = quote('/v1/%s/%s/%s' % (self.auth_account, account, user))
+        resp = self.make_pre_authed_request(
+            req.environ, 'HEAD', path).get_response(self.app)
+        if resp.status_int == 404:
+            return HTTPNotFound(request=req)
+        elif resp.status_int // 100 != 2:
+            raise Exception('Could not obtain user details: %s %s' %
+                            (path, resp.status))
+        candidate_token = resp.headers.get('x-object-meta-auth-token')
+        if candidate_token:
+            path = quote('/v1/%s/.token_%s/%s' %
+                (self.auth_account, candidate_token[-1], candidate_token))
+            resp = self.make_pre_authed_request(
+                req.environ, 'DELETE', path).get_response(self.app)
+            if resp.status_int // 100 != 2 and resp.status_int != 404:
+                raise Exception('Could not delete possibly existing token: '
+                                '%s %s' % (path, resp.status))
+        # Delete the user entry itself.
+        path = quote('/v1/%s/%s/%s' % (self.auth_account, account, user))
+        resp = self.make_pre_authed_request(
+            req.environ, 'DELETE', path).get_response(self.app)
+        if resp.status_int // 100 != 2 and resp.status_int != 404:
+            raise Exception('Could not delete the user object: %s %s' %
+                            (path, resp.status))
+        return HTTPNoContent(request=req)"

@@ -1,0 +1,1 @@
+"syntaxerror: invalid syntax file.close() i keep getting an error here, any help?..file = open(filename,'r') is on the same line as file.close with no indentations. why do i keep getting this error?"

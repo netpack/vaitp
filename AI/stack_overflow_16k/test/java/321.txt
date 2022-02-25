@@ -1,0 +1,1 @@
+how to use -dapp -dtime as name bound args to main method in blank how do i pass arguments to a  main program in blank .so that the order of parameters is not bound to the args[] array index...and no matter in what order the user enter the args i can map the right values to right field.in the function...hope this clarifies the query !..thank.vr

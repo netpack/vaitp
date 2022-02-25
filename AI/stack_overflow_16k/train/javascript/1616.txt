@@ -1,0 +1,1 @@
+getting the js error : microsoft jscript runtime error: object doesn't support this property or method tried to get length of the listbox: ..var list = $.clientid('lstcategory');.alert(list.options.length);...this threw the exception:...  microsoft jscript runtime error: object doesn't support this property.  or method....anybody please help.

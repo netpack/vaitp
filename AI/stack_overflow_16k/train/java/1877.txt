@@ -1,0 +1,1 @@
+why the methods in object class are protected? why the methods in class object are protected and why its not public is there any valid reason?..protected native object clone() throws clonenotsupportedexception;

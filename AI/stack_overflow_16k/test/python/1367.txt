@@ -1,0 +1,1 @@
+"main() function doesn't run when running script #! /usr/bin/blank..def main():.    print(""boo"")...this code does nothing when i try to run it in blank 3.3. no error or anything..whats's wrong..[tim@tim-arch ~]$ gvim script.[tim@tim-arch ~]$ sudo chmod 775 script.[tim@tim-arch ~]$ ./script.[tim@tim-arch ~]$"

@@ -1,0 +1,1 @@
+"access nested objects in js i have a object like ..var obj = {.  floorplan: 'hello',.  datespan: {.    from: sat feb 21 2015 00: 00: 00 gmt + 0530(ist),.    to: wed feb 25 2015 00: 00: 00 gmt + 0530(ist).  }.};...and a string ..var a = 'datespan.to';...i want to access 'obj.datespan.to' using the variable 'a'..how can i do it?.please help."

@@ -1,0 +1,1 @@
+how can i create a blank extension method that i don't have to pass the string into for instance lets say i have a isnullorempty function defined like so...string.prototype.isnullorempty = function (o) {.   return o == null || o == '';.}...i want to be able to say something like this:..var s = 'test';.s.isnullorempty...and get the answer as false or true for that string.

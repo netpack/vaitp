@@ -1,0 +1,1 @@
+basic slicing review i am confused as to what is done when there are two slicing operations right next to each other. for example:..&gt;&gt;&gt; s = 'fuzzy wuzzy was a bear'.&gt;&gt;&gt; l = s.split().&gt;&gt;&gt; u = l[-1][:2].'be'...i have no idea why it returns this output? and how to interpret it when there are slices [][] right next to eachother. thank you.

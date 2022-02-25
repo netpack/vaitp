@@ -1,0 +1,1 @@
+"remove specific item in a list i'm trying to remove some specific '' in the list using blank. ..the list is [1,'','',2,'','','',3,'']. i want to remove just one '' between two values. which means the output i want is [1,'',2,'','',3]. the code i had shows as below:..for j in range (len(lst)):.    if len(lst[j]) == 1:.        lst.remove(lst[j+1])"

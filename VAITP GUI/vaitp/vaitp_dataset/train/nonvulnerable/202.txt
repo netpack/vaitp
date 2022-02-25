@@ -1,0 +1,23 @@
+"    def process_request(self, req):
+        auth_tok = req.headers.get('X-Auth-Token')
+        user = None
+        tenant = None
+        roles = []
+        if auth_tok:
+            user, tenant, role = auth_tok.split(':')
+            if tenant.lower() == 'none':
+                tenant = None
+            roles = [role]
+            req.headers['X-User-Id'] = user
+            req.headers['X-Tenant-Id'] = tenant
+            req.headers['X-Roles'] = role
+            req.headers['X-Identity-Status'] = 'Confirmed'
+        kwargs = {
+            'user': user,
+            'tenant': tenant,
+            'roles': roles,
+            'is_admin': self.is_admin,
+            'auth_tok': auth_tok,
+        }
+
+        req.context = context.RequestContext(**kwargs)"

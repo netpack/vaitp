@@ -1,0 +1,1 @@
+"use case for method , system.identityhashcode(object x) i read blankdoc of this blank api method, system.identityhashcode(object x) and not able to understand a typical use case of this method. classes that need hashcode() are recommended to have overridden hashcode() method of their own so what is the purpose of this method if object class already has default hashcode()?"

@@ -1,0 +1,1 @@
+"cancellationtokensource always has the token canceled - blank so the iscancellationrequested property of the cancellationtoken is always true, even after declaring it as a variable and checking the token whether it was cancelled or not directly and it's infuriating me..how can i run a task if the token is already canceled?"

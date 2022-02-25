@@ -1,0 +1,1 @@
+"a format string to put % after a number trying to figure out how to append a % to a number.  the number length varies so that's what i'm not sure about..how to create a regex that takes whatever the digit is and appends % to it...i was thinking this but how would you handle the unexpected length?..""\%d{digitlegnthvarieshere}""...or is it something as simple as ""\%d"""

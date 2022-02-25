@@ -1,0 +1,1 @@
+finding strings with alpha and numeric pattern any idea what is the best way to check if a string contains a value with following pattern and extract that value:...  ana-aa-aaaa...above a is alpha and n is numeric.

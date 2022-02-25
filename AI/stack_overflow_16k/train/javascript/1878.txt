@@ -1,0 +1,1 @@
+build an html5 game - no starch i do not understand the || and {} at the end of the first line here. please could you explain. ..var bubbleshoot = window.bubbleshoot || {};.bubbleshoot.game = (function($){.var game = function(){.var curbubble;

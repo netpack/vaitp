@@ -1,0 +1,1 @@
+extracting filename with extension form url let's say i have the following string..http://i2.kym-cdn.com/photos/images/original/000/748/132/b84.png...what would be the best way to extract b84.png from it? my program will be getting a list of image urls and i want to extract the file name with its extension from each url.

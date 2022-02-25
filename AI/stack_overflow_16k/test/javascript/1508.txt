@@ -1,0 +1,1 @@
+scour nodes in ie8 i use a blank function to scour a html page and search and replace a string..but this function don't work in ie7 and ie8. the problem come from the using of childnodes..have you a source or a script (compatible with ie 7/8)for search and replace a string in all the element of the dom?

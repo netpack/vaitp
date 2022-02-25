@@ -1,0 +1,1 @@
+"convert a list to other type i have this interface and classes:..interface i {.    void method1();.}.class a implements i  {.    void method1(){.    .....    }.}...assume i have this list: list&lt;a&gt; aslist filled with a items, and i have a variable of type list&lt;i&gt; vari=null;.i need ti do vari=aslist? how can i do it with the minimum convertions?"

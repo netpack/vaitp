@@ -1,0 +1,1 @@
+"once we declare the variable.in which memory it will store whether heap or stack? i heard that variables are stored in stack and objects are stored in heap...if i declare variable as var password= ""abc"".now where this password is going to store(heap /stack)"

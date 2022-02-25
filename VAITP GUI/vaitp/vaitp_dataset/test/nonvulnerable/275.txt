@@ -1,0 +1,1 @@
+"    def test_received_chunk_is_properly_terminated(self):        buf = DummyBuffer()        inst = self._makeOne(buf)        data = b"4\r\nWiki\r\n"        result = inst.received(data)        self.assertEqual(result, len(data))        self.assertEqual(inst.completed, False)        self.assertEqual(buf.data[0], b"Wiki")"

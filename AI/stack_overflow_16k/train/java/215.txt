@@ -1,0 +1,1 @@
+"add elements to arraylist<arraylist<string>> i have an arraylist of arraylist. how can i add an element to the list in specific position? ..example: ..arraylist&lt;arraylist&lt;string&gt;&gt;=new arraylist&lt;&gt;(list,list2,.....,listn);...i want to add an element to list2 for example."

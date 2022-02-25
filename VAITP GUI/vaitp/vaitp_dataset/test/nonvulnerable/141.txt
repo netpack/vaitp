@@ -1,0 +1,1 @@
+"    def attemptRequestWithMaliciousMethod(self, method):        """        Attempt to send a request with the given method.  This should        synchronously raise a L{ValueError} if either is invalid.        @param method: the method (e.g. C{GET\x00})        @param uri: the URI        @type method:        """        raise NotImplementedError()"

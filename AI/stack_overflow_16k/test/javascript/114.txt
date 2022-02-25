@@ -1,0 +1,1 @@
+"why is this iife returning undefined, instead of 10? why is this immediately invoked function returning undefined instead of 10?..function test(){..    function test2(){.         return 10;.    }.    test2();.}"

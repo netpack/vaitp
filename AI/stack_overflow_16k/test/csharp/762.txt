@@ -1,0 +1,1 @@
+"blank open cmd as admin via code and change font and background colors trying to change the cmd window colors. this does not work?..             processstartinfo p1 = new processstartinfo();.             p1.verb = ""runas"";.             p1.filename = ""cmd.exe"";.             p1.arguments = ""color 80"";.             process.start(p1);"

@@ -1,0 +1,7 @@
+"    def test_post_only(self):
+        """
+        Verify that we can't call the view when we aren't using POST.
+        """
+        self.client.login(username=self.staff_user.username, password='test')
+        response = self.call_add_users_to_cohorts('', method='GET')
+        self.assertEqual(response.status_code, 405)"

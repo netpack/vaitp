@@ -1,0 +1,1 @@
+"assign an object to null if i instantiate an object and pass it to an function, in this function i assign this object to null..it seems when return from the function, the object still there...i just want to know when i assign null, what happens."

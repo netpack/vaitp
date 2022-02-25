@@ -1,0 +1,1 @@
+"how to wait for a specified time until a command gives a desired output i am writing a small blank script to wait for a max of 1200 secs for devices to come up ,what is the best way to accomplish this?..command to run..device.exe list...output when no devices attached:..list of devices attached...output when devices attached..list of devices attached.device#1.device#2.device#3"

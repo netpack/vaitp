@@ -1,0 +1,1 @@
+"not converting the int into a string on if statement i am trying to convert an int into a str using a if loop! here is my logiv. what is it that i am doing wrong ? any ideas ?..var waittime  = parseint(""53"");.if (waittime &gt; 20) {.  return 'a lot of time'.} else if (waittime &lt; 20) {.  return 'we can wait'.}..console.log(waittime);...i keep getting"

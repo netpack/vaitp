@@ -1,0 +1,1 @@
+blank question for ie6 i have a blank requirement. ..i will pass a comma separated string into a function. i need to ensure that it contains only integers (without decimals) and the value is less than 2147483648. could you please help me ?..note:: i am working on ie 6 ..thanks..lijo

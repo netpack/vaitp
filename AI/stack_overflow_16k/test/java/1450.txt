@@ -1,0 +1,1 @@
+"assigning values to object fields in blank? for example, if i have this:..class test{.  private int id;..  public test(int id){.    id=id;.  }.}...in this case, how can i assign the value of the id parameter to the id field?"

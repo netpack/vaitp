@@ -1,0 +1,1 @@
+"blank, escape is not a function - from firefox? i'm quite puzzled by this one, getting this error from firefox...escape is not a function....looking at the w3c page, it says it is supported as i thought...i tried escapeuri instead and this produced the same error...any suggestions ?"

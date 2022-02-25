@@ -1,0 +1,1 @@
+"how to use blank get current cursor style from browser i am using selenium to automation test browser application, i need a blank api to get the browser current cursor style, not care where it is. is there some api get the information link document.readstate"

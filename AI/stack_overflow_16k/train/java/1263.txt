@@ -1,0 +1,1 @@
+how vector and hashtable are thread-safe in collection? i know that both of them have thread safe methods. i want to know how they are thread safe? what is the implementation? this is a common question in all interviews.

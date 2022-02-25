@@ -1,0 +1,1 @@
+"decimal.parse(""value"") seems odd i am working on someone else's code, and see things like:..if ((somevariable) &gt;  decimal.parse(""24,999.99"")) ......and..return int.parse(""0"");...i cannot think of any logical reason to do this instead of..if ((somevariable) &gt; 24999.99) ......or..return 0;...what am i missing?"

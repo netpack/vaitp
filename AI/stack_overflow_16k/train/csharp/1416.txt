@@ -1,0 +1,1 @@
+"blank - getmethod returns null i have a class:..public abstract class a.{..}...and then i have b class that derives from it:..public sealed class b : a.{.    public void somemethod().    {.        var method = this.gettype().getmethod(""addtext"");.    }..    private void addtext(string text).    {.        ....    }.}...why is getmethod returning null?"

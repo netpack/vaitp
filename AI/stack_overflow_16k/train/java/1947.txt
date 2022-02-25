@@ -1,0 +1,1 @@
+"how to define a char stack? how to define a char stack in blank? for example, to create a string stack i can use such construction:..stack &lt;string&gt; stack= new stack &lt;string&gt; ();...but when i'm try to put char instead string i got an error:..syntax error on token ""char"", dimensions expected after this token"

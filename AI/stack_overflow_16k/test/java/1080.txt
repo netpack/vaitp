@@ -1,0 +1,1 @@
+"how can i split two digit into two different strings? i have month in, which contains a value such as 12. i am trying to split it into two different strings e.g. a=1 and b=2. how do i do this?"

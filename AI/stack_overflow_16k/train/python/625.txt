@@ -1,0 +1,1 @@
+"adding a context variable to an existing context how can i add a context variable to an existing context?..for example:..context = {'name': 'andrew', 'age': 43}...i now want to add:..{'city': 'london'}...how can i do this without declaring the context all in one go?"

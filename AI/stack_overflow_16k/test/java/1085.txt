@@ -1,0 +1,1 @@
+"what is the need to represent the integer value in three different numbering systems? eg:..// the number 26, in decimal..int decval = 26;...// the number 26, in hexadecimal..int hexval = 0x1a;...// the number 26, in binary..int binval = 0b11010;"

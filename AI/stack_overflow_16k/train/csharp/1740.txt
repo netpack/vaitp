@@ -1,0 +1,1 @@
+"blank does this object initiation call its constructor? private object object1;...does object1 call the default constructor of object even though it haven't used = new object(); ?..if not, is object1 null until it is initialized with new?"

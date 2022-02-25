@@ -1,0 +1,1 @@
+loop statement in blank not behaving as expected the below code will only execute the alert statement statement once then break. for example i = 2000 i was expecting it to be printed 4 times will it reaches the condition.  ..var i = str.value;..for (i; i &lt;= 2400; i += 100) {.    alert(i);.}

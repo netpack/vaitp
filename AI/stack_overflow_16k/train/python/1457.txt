@@ -1,0 +1,1 @@
+"in blank, is it considered better to define a module with functions or a module with a class that contains functions? in my code either of the above two options would work equally well but i am interested in finding out the pros and cons of both approaches."

@@ -1,0 +1,1 @@
+"split data equally for equal proportion of 0 and 1 in dependent variable i have a dataset in which the dependent variable is 0 or 1. however, there are a huge number of 0s (10 times as much as 1s). i wanted to know what the fastest way is to create a subset in which the dependent variable proportions are equal?"

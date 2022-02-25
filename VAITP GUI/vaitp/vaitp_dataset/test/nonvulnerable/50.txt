@@ -1,0 +1,1 @@
+"    def tearDown(self):        LoginCode.objects.all().delete()"

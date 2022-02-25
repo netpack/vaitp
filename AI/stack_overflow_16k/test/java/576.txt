@@ -1,0 +1,1 @@
+"can you explain me how this array element access works? int index=1;.int[] array = {1,2,3};.system.out.println(array[index=2]);...i do not understand this in-bracket instantiation"

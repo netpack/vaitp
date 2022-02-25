@@ -1,0 +1,1 @@
+"how to write a blank script to remove all files ending with .log in 10 different directories please provide a blank script which can delete all .log files in 10 different directories which are older than 5 days...path1 is like abc/bcd/def/xyz/fkd/.log.path2 is like abc/bcd/def/mnq/kjf/.log ..and so on, the first three directories are same but it differs after that."

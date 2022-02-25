@@ -1,0 +1,1 @@
+"how to replace $$ in blank when i try to replace $$ using replace() it will replace to single $ only...var abc = ""t"".abc.replace(""t"",""a$$b"").""a$b""...i require output as ""a$$b"""

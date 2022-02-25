@@ -1,0 +1,1 @@
+"trouble with self keyword in blank am creating a browser in ubuntu.. using glade.when i compile it's showing ""nameerror: name 'self' is not defined"".code :  ..self.reload = self.bulider.get_object(""reload"").def on_pressbutton_clicked(self, widget): print""reload""...it is just a sample code to check button's action.."

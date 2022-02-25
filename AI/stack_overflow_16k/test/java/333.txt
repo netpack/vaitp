@@ -1,0 +1,1 @@
+"target variable based on string in blank i need to allow the user to target a variable using a string name. example,..int number = 5;..string variabletarget = ""number"";...i need to target the int, number, and then change its value in later code. any way?..i cannot think of any way to do it. there seems to be alot of class targeting, but i already have that."

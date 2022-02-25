@@ -1,0 +1,1 @@
+"js strings ""+"" vs concat method i have some experience with java and i know that strings concatenation with ""+"" operator produces new object. ..i'd like to know how to do it in js in the best way, what is the best practice for it?"

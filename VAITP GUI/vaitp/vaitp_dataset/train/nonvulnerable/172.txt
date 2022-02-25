@@ -1,0 +1,10 @@
+"    def get(self, section, option):
+        if section == 'memcache':
+            if option == 'memcache_servers':
+                return '1.2.3.4:5'
+            elif option == 'memcache_serialization_support':
+                return '2'
+            else:
+                raise NoOptionError(option)
+        else:
+            raise NoSectionError(option)"

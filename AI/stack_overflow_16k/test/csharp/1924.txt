@@ -1,0 +1,1 @@
+"datetime.now causes io blocking? on a conference someone told me that datetime.now causes io blocking, something that i have never stopped to consider.  if it does, why?"

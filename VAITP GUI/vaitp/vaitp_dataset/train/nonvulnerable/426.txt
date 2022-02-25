@@ -1,0 +1,3 @@
+"    def DELETE(self, path, body=None, log_request_body=True, ignore_prefix=False):
+        return self._request('DELETE', path, body=body, log_request_body=log_request_body,
+                             ignore_prefix=ignore_prefix)"

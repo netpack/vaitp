@@ -1,0 +1,1 @@
+"does blank execution stop when an invalid line is encountered? if the browser is executing blank on a web page and it encounters invalid blank.(e.g. somerandomthingy;) does execution of blank stop at that point, or do async operations continue. also do blank events still work (e.g. onclick)."

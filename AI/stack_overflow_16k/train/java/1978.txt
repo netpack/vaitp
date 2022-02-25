@@ -1,0 +1,1 @@
+"error while filling color on a buffered image i am trying to fill a buffered image rectangle with color red.and i am getting arrayindexoutofboundexception..could not understand why..bufferedimage bufferedimage = new bufferedimage(width, height, bufferedimage.type_int_rgb);..int[] pixels = {255,0,0};..bufferedimage.setrgb(0,0,width, height, pixels, 0 , width);"

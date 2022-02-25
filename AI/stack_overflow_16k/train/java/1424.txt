@@ -1,0 +1,1 @@
+"what are the blank equivalents of python's __file__, __name__, and object.__class__.__name__? in python you can get the path of the file that is executing via __file__ is there a blank equivalent?..also is there a way to get the current package you are in similar to __name__?..and lastly, what is a good resource for blank introspection?"

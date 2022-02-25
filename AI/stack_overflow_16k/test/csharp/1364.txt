@@ -1,0 +1,1 @@
+"blank string.isnullorwhitespace(""t"") == true i have a line of code ..var delimiter = string.isnullorwhitespace(founddelimiter) ? "","" : founddelimiter;...when founddelimiter is ""t"", string.isnullorwhitespace returns true. ..why? and what is the approriate way to work around this?"

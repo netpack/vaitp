@@ -1,0 +1,1 @@
+how to set current time to a value i was just wondering if there is a way to get the current time and set it into a value...if its 12:06 am.. i want to get that time and set it into currenttime...example..float currenttime = 0;.currenttime = 12.06;

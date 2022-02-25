@@ -1,0 +1,1 @@
+"when we use new keyword for create new datetime (object) what is the different between this..datetime thistime = new datetime();...and this..datetime thistime;...who is the better performance, and who is the better practice for used. for beginning when is create is have the same date times. i used thistime to add datetime from file who has 8000 rows, with method parseexact()."

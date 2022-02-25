@@ -1,0 +1,1 @@
+"object id in blank let's assume i execute the following:..&gt;&gt;&gt; id(a).139926795932424.&gt;&gt;&gt; a.[1, 2, 3, 4].&gt;&gt;&gt; a = a + [5].&gt;&gt;&gt; id(a)...will the last line of this script print 139926795932424? or a new id will be assigned to a?"

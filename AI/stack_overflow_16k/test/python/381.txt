@@ -1,0 +1,1 @@
+"adding list of list except last list if i have a matrix ..[[1,2,3],[4,5,6],[7,8,9]]...how do i loop over to sum all of the entries except the last list? that is stop the for loop before the final list. ..in this case, the output should be 21 (=1+2+3+4+5+6)."

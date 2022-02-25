@@ -1,0 +1,1 @@
+"looking for a standard blank method (or, udf if necessary) to check if one hashset is a subset of another it should return true if one hashset a is a subset of another hashset b, false otherwise."

@@ -1,0 +1,1 @@
+fetching the bit version of an .exe file using csharp i am trying to determine whether an .exe file present is of 64 bit or  of 32 bit . i am trying to achieve this through csharp. i have few solutions like sigcheck and exe64bitdetector  which are command line tools which will get the desired output. is there anyway this can be achieved through csharp.

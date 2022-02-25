@@ -1,0 +1,1 @@
+"blank reflection: difference between getmethods() and getdeclaredmethods() can someone please elaborate on this, and explain the difference between the two methods, and when/why you would want to use one over the others"

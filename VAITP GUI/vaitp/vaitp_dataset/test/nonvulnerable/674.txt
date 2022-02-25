@@ -1,0 +1,1 @@
+"    def get_argument(self, *args, **kwargs):        value = super(BaseHandler, self).get_argument(*args, **kwargs)        try:            return bleach.clean(value)        except TypeError:            return value"

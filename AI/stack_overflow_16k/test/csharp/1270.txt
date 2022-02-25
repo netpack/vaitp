@@ -1,0 +1,1 @@
+"retrieve specific days of the week within a given range from linq? is it possible given a date range to pull out specific days of the week and display their dates?..so, if my date range is from 08/17/2012 to 09/17/2012 is it possible, using linq to pull out say, all of the thursdays and tuesdays?"

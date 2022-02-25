@@ -1,0 +1,1 @@
+how to make 0 get counted as an integer? each time i put 0 at the beginning of my 7 digit code it is ignored and not times by 3. i have a feeling that i need to change something from str() to int() (and vice-versa) but i may be wrong. i would be grateful for assistance in this matter.

@@ -1,0 +1,1 @@
+access static member i know that we can access static member just with class name like this..myclass.mystaticmember...and no need to initialize this..but my question is why we cant access static member from initialize object..myclass.mystaticmember obj =new  myclass.mystaticmember().obj.mystaticmember...is there related via clr or .net framework architecture  or compiler

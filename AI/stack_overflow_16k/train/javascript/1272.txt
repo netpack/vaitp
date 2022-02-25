@@ -1,0 +1,1 @@
+"how to check a variable is a real object or just a reference to an object considering:..a = {};.a.test = 123;.b = a;.c = {};.for (key in a) c[key] = a[key]; // a crude clone....in this example, b is a reference to a, c is a deep-copy of a...i know i can check them by a === b and a === c..but if i don't have an a, can i distinguish ""b"" and ""c"" without knowing ""a"" ?"

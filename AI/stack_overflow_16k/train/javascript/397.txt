@@ -1,0 +1,1 @@
+"iterate through a loop multiple numbers at a time how can i iterate through a loop more than 1 index at a time and stop when the highest index reaches a certain number?.i saw this article but could'nt translate this into blank...var i,j,k;.i = j = k = 0;.while(k&lt;100){.    j = i+1;.    k = i+2;.    console.log(i+' '+j+' '+k); // k reaches 101.    i = i+3;  .}"

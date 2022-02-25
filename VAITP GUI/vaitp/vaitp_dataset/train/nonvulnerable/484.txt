@@ -1,0 +1,28 @@
+"    def import_bookmarks(self):
+        files = choose_files(self, 'export-viewer-bookmarks', _('Import bookmarks'),
+            filters=[(_('Saved bookmarks'), ['calibre-bookmarks'])], all_files=False, select_only_single_file=True)
+        if not files:
+            return
+        filename = files[0]
+
+        imported = None
+        with lopen(filename, 'rb') as fileobj:
+            imported = json.load(fileobj)
+
+        if imported is not None:
+            bad = False
+            try:
+                for bm in imported:
+                    if 'title' not in bm:
+                        bad = True
+                        break
+            except Exception:
+                pass
+
+            if not bad:
+                bookmarks = self.get_bookmarks()
+                for bm in imported:
+                    if bm not in bookmarks:
+                        bookmarks.append(bm)
+                self.set_bookmarks([bm for bm in bookmarks if bm['title'] != 'calibre_current_page_bookmark'])
+                self.edited.emit(self.get_bookmarks())"

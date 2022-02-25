@@ -1,0 +1,1 @@
+js sum of 2 numbers return a bad result i calculate a lot of number with blank. in some calculation i have a bad result...exemple: http://jsfiddle.net/6et8d10c/..var num1 = 2.01;.var num2 = 22.29;.var result = num1 + num2; //24.29 (should be 24.30)...for now i fix with:.(2.01*100 + 22.29*100) / 100 = 24.30..that's not perfect. why can't i calculate 2.01 + 22.29 ?

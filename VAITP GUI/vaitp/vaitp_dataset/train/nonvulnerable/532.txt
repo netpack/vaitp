@@ -1,0 +1,11 @@
+"    def test(self):
+        actual = util.load_yaml('''
+id: 1
+names:
+  - tadashi
+  - aikawa
+        ''')
+        assert actual == {
+            "id": 1,
+            "names": ['tadashi', 'aikawa']
+        }"

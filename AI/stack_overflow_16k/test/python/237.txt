@@ -1,0 +1,1 @@
+"create hash table from the contents of a file how can i open a text file, read the contents of the file and create a hash table from this content? so far i have tried:..import json..json_data = open(/home/azoi/downloads/yes/1.txt).read()..data = json.loads(json_data).pprint(data)"

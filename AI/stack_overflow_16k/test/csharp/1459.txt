@@ -1,0 +1,1 @@
+how can i check if there is a carriage return / new line for every line in a text box? id-division.program-id.writer...these are the sample strings that i want to check if there is a rn for every last character of the strings without using the split command.

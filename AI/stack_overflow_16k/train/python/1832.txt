@@ -1,0 +1,1 @@
+"how to write a list of combinations to a file in blank import itertools.stuff = [1,2,3].for i in range(0, len(stuff)+1):.    for subset in itertools.combinations(stuff, l):.        print(subset)....  is there a way to write this to a file instead of printing it on the screen?"

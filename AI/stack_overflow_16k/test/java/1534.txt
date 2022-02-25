@@ -1,0 +1,1 @@
+"what does the question mark in blank mean? i have encounter a code snippt..putall(map&lt;? extends k, ? extends v&gt; map)...on the android developer site, i know that the k and v are placeholders, but what does the question mark ? mean? does it mean that the param must be a reference type or something else?"

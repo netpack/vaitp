@@ -1,0 +1,1 @@
+importing json string to blank is it possible to convert a json string array to a blank array?..for example something similar to this http://api.soundrop.fm/spaces/xjtt3mxtozpvgmoc..i need to fetch the currently playing and artist values.

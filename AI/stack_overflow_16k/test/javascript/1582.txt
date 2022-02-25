@@ -1,0 +1,1 @@
+"refresh opener window i have a window that opens a new window with window.open...when i want to reload/refresh the main page with..window.opener.location=""index.php""...(or many other tests, reload, etc.)..instead of refreshing the opening page, a new window is opened with index.php, or i get permission denied (in ie)..this is driving me nuts!..thanks"

@@ -1,0 +1,23 @@
+"def reverse(endpoint, args=None, kwargs=None, is_dashboard_endpoint=True):
+    """
+    Simple wrapper of Django's reverse that first ensures that we have declared
+    each endpoint under test.
+
+    Arguments:
+        args: The args to be passed through to reverse.
+        endpoint: The endpoint to be passed through to reverse.
+        kwargs: The kwargs to be passed through to reverse.
+        is_dashboard_endpoint: True if this is an instructor dashboard endpoint
+            that must be declared in the INSTRUCTOR_GET_ENDPOINTS or
+            INSTRUCTOR_GET_ENDPOINTS sets, or false otherwise.
+
+    Returns:
+        The return of Django's reverse function
+
+    """
+    is_endpoint_declared = endpoint in INSTRUCTOR_GET_ENDPOINTS or endpoint in INSTRUCTOR_POST_ENDPOINTS
+    if is_dashboard_endpoint and is_endpoint_declared is False:
+        # Verify that all endpoints are declared so we can ensure they are
+        # properly validated elsewhere.
+        raise ValueError("The endpoint {} must be declared in ENDPOINTS before use.".format(endpoint))
+    return django_reverse(endpoint, args=args, kwargs=kwargs)"

@@ -1,0 +1,1 @@
+"how to convert dollar sign to words in blank i am looking to format something like ""$100"" to ""100 dollars"" using blank...how can i do this?..i want to do some text processing from a news feed (rss) using blank nltk, but first i want to ""clean up"" that text a bit, so i thought about starting with the dollar signs."

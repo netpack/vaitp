@@ -1,0 +1,1 @@
+"why am i not getting the complete date in m/d/yyyy with datetime.now.tostring method? i am using the datetime.now.tostring method with the format m/d/yyyy but am not getting the desired output.  instead, i'm getting 9/d/yyyy.  please help.  currently, my code snippet is as below:..datetime d = datetime.now.date;.            string date = d.tostring(""m/d/yyyy"");"

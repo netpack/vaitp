@@ -1,0 +1,1 @@
+"how do i get it to repeat the statement if nothing is entered, in blank? while num_students &lt; 0:.   num_students = int(input(""how many students are you entering? ""))...how do i get it to repeat the question if nothing is entered by the user (so they just go enter), in blank?"

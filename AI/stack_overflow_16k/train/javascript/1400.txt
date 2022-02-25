@@ -1,0 +1,1 @@
+please explain me about || signal in blank please explain me what does || signal means in blank. i have some lines like this:..a=a||{};.a.checkurl=a.checkurl||window.location.href;.a.checkinterval=a.checkinterval||5e3;...this code use || signal many times. may anybody help me to explain.

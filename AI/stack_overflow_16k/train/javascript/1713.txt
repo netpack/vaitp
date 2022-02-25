@@ -1,0 +1,1 @@
+"c++ isprint() equivalent in blank i have seen many ""home grown"" implementations of a blank equivalent to the c++ isprint() function...here's the one i'm currently using:.. function isprint(char) {.     return /^[a-za-z0-9!""#$%&amp;'()*+,./:;&lt;=&gt;?@[] ^_`{|}~-]*$/.test(char);. };...my question is, is there a ""stock"" function call that provides the same functionality?"

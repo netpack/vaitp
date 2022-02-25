@@ -1,0 +1,1 @@
+performance difference between location.href and window.location.href i have been read location.href is faster than window.location.href. but internally location.href is being read as window.location.href right? so how it would increase the significant performance?

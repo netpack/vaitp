@@ -1,0 +1,1 @@
+parentelement and commonparentelement for getting parent element parentelement( http://msdn.microsoft.com/en-us/library/ms534327(vs.85).aspx ) and commonparentelement( http://msdn.microsoft.com/en-us/library/aa704196(vs.85).aspx ) are two methods in blank. ..when should i use these methods for getting the parent element?

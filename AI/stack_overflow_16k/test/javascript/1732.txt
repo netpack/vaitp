@@ -1,0 +1,1 @@
+"issue on deducting current time from default time i have a simple time calculation code like below and i would like to get remaining time from now to default time app ....var app = ""16:30"";.var dt = new date();.var time = dt.gethours() + "":"" + dt.getminutes();.var res = app - time;.console.log(res);.....can you please let me know how to do it?"

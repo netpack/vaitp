@@ -1,0 +1,1 @@
+checking whether a string contains a number value in blank how can i write a method to find whether a given string contains a number? the method should return true if the string contains a number and false otherwise.

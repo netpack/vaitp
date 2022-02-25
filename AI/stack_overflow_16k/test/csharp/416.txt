@@ -1,0 +1,1 @@
+"how can i send multi-part messages by gsmcomm i wanna send a sms by gsmcomm that lenght of text is more than 140 characters..i used this code..pdu = new smssubmitpdu(strsms, cellno, """");.gsmcomm.sendmessage(pdu);...but they have an error ......how can i send multi-part messages?"

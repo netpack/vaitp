@@ -1,0 +1,1 @@
+"blank eval function .  possible duplicate:.  prevent malicious user from executing blank  .....if i put blank:eval(""abcfunction(""123""; eval();""); in the browser's address bar and click on enter it is sending a request to a server, how do i avoid this?"

@@ -1,0 +1,1 @@
+"get number from html id using blank alright, so i have an html element as &lt;div id=""slide_item_#""&gt; where # is a number. what i would like to do, using blank, is get the number from the id. so i would assume a regular expression, i just don't know how to use them in blank...var html_id = ""slide_item_3"";.var id_number = /* code here so that id_number == 3 */ ;"

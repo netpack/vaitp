@@ -1,0 +1,1 @@
+how do i make a single application run on different jvms? i want to make a single blank application run on more than one  jvm simultaneously. how do i do this?

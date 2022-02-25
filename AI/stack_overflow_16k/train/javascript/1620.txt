@@ -1,0 +1,1 @@
+"blank function return un-defined why would one case return an object (func1) but the other return undefined (func2) ..enter image description here..function func1(){.     return {.     bar: ""hello"".    };. }. function func2(){.     return.    {.     bar: ""hello"".    };. }"

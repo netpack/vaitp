@@ -1,0 +1,1 @@
+"solo `+` in blank i came across some weird blank code:..var a, b; // integers set somewhere;..var c = +b;..somefunc(+a);...what does that + mean here? in my tests i cannot see any effect from it in blank, but at the same time it is valid blank...what is it really, and why would anyone ever use it?"

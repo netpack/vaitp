@@ -1,0 +1,1 @@
+getting keyname of parent i have a function like this:..this.dostuff({.    'testkey': {.        testfunction: function() {.            // will return testfunction.            console.log(object.keys(this));.        }.    }.});...is there are a way of getting testkey within the testfunction scope? ..the object.keys(this) will return testfunction.

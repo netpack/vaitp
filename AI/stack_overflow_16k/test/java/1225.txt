@@ -1,0 +1,1 @@
+"what does new classname[0] do? (blank 8) what does this syntax do, with square brackets around the number?..new integer[0];...i've found it in a codebase i'm maintaining but i can't find any documentation on it. it is used like this:..set&lt;form&gt; forms = getforms();.list&lt;form&gt; formslist = arrays.aslist(forms.toarray(new form[0]))"

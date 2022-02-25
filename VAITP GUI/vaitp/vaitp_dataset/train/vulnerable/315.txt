@@ -1,0 +1,7 @@
+"def field_names(ctx, rd, field):
+    '''
+    Get a list of all names for the specified field
+    Optional: ?library_id=<default library>
+    '''
+    db, library_id = get_library_data(ctx, rd)[:2]
+    return tuple(db.all_field_names(field))"

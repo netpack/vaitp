@@ -1,0 +1,1 @@
+"how can i see how many numbers i put in a vector blank i have a vector: int[,] leg = new int[100, 2]; and i put some numbers in it. is there a function beside v.length that shows how many numbers i put in my vector?(v.length shows me that i have 200 numbers which is wrong because i put in just a few)"

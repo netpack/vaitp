@@ -1,0 +1,1 @@
+"is it safe to remove google's ""unused_argv"" from forked blank projects? on projects that google share on the web, they use:..def main(unused_argv):..(see example)., where unused_argv is never used. i couldn't find why do they do it and it annoys me to have warnings on my code...is it safe to remove this parameter?..thanks"

@@ -1,0 +1,1 @@
+noobish does not exist in the current context why i cannot call this one? ;(..public void startnewgame().{.    button gamepanelhidebutton = new button();.}..public void gamepanelhidebuttonclick().{.    gamepanelhidebutton.visible = !gamepanelhidebutton.visible;.}...gamepanelhidebutton does not exist in context :( although its created before.

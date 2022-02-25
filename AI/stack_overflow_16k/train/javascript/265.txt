@@ -1,0 +1,1 @@
+"how to delete items from range in array i have 3800 items in array. i want to remove all the items after the 1500th. how can i accomplish that?..i tried using this..arr.slice(1500,arr.length) but it didn't work"

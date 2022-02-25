@@ -1,0 +1,1 @@
+"how to remove or hide particular column in a datatable? i am using blank. i want to hide or remove the column from datatable or dataset  . i attach my partial code:..datatable dt = new datatable();.dataview dv = new dataview();.dv = (dataview)session[""map_hi""];.dt = dv.totable();.dt.columns[0].columnmapping = mappingtype.hidden;.dt.acceptchanges();"

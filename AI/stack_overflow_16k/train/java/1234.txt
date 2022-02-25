@@ -1,0 +1,1 @@
+"generating reports for different time zones in blank as a part of my requirement,i have to fire a sql query which takes yesterday's midnight and today's midnight in the respective time zone as input.is there a way to achieve this?"

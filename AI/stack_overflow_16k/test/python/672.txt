@@ -1,0 +1,1 @@
+"how can i append a text file to order the contents i have a text file with about 2000 numbers, they are written to the file in a random order...how can i order them from within blank? any help is  appreciated..file = open('file.txt', 'w', newline='').s = (f'{item[""num""]}').file.write(s + 'n').file.close().read = open('file.txt', 'a').sorted(read)"

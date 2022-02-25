@@ -1,0 +1,1 @@
+"run blank form app as service i developed blank a gui form with only ""start"" and ""stop"" something like:..private void btnstart_click(object sender, eventargs e).{. //some code here.}..private void btnstop_click(object sender, eventargs e).{.//some code here.}...i need to run this app as service...how can i run my gui app as a service? plz help"

@@ -1,0 +1,1 @@
+printing object property also prints undefined? i have a blank object:..function thing() {.    this.number = 4;.}...i create an instance and assign a new property:..var mything = new thing();.mything.newproperty = 5;..console.log(mything.newproperty);...and the output is:..5.undefined...why is the output also printing undefined?

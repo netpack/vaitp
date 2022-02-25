@@ -1,0 +1,1 @@
+"camel or pascal for method fields or parameters coding standard what is best practice for method fields or parameters (camel or pascal):..public string dosomething(string documentname, string firstname).{.    return string.empty;    .}..public string dosomething(string documentname, string firstname).{.    return string.empty;    .}"

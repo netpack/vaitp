@@ -1,0 +1,1 @@
+"why does "" new string('my string'); "" return an object? but "" string('my string'); "" returns a string the code below will return an object:..alert(typeof new string(""my string""));...but it will return string when new is removed:..alert(typeof string(""my string""));...why is that?"

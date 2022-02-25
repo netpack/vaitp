@@ -1,0 +1,2 @@
+"    def _affinity_host(self, context, instance_id):
+        return self.compute_api.get(context, instance_id)['host']"

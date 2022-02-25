@@ -1,0 +1,1 @@
+"blank: strip everything but spaces and alphanumeric i have a large string with brackets and commas and such. i want to strip all those characters but keep the spacing. how can i do this. as of now i am using..strippedlist = re.sub(r'w+', '', origlist)"

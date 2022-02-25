@@ -1,0 +1,30 @@
+"def get_user_from_request(request):
+    """ Checks the current session and returns a :class:`~horizon.users.User`.
+
+    If the session contains user data the User will be treated as
+    authenticated and the :class:`~horizon.users.User` will have all
+    its attributes set.
+
+    If not, the :class:`~horizon.users.User` will have no attributes set.
+
+    If the session contains invalid data,
+    :exc:`~horizon.exceptions.NotAuthorized` will be raised.
+    """
+    if 'user_id' not in request.session:
+        return User()
+    try:
+        return User(id=request.session['user_id'],
+                    token=request.session['token'],
+                    user=request.session['user_name'],
+                    tenant_id=request.session['tenant_id'],
+                    tenant_name=request.session['tenant'],
+                    service_catalog=request.session['serviceCatalog'],
+                    roles=request.session['roles'],
+                    request=request)
+    except KeyError:
+        # If any of those keys are missing from the session it is
+        # overwhelmingly likely that we're dealing with an outdated session.
+        LOG.exception("Error while creating User from session.")
+        request.user_logout()
+        raise exceptions.NotAuthorized(_("Your session has expired. "
+                                         "Please log in again."))"

@@ -1,0 +1,18 @@
+"    def _update_load_status(self, ok: bool) -> None:
+        """Update the load status after a page finished loading.
+
+        Needs to be called by subclasses to trigger a load status update, e.g.
+        as a response to a loadFinished signal.
+        """
+        if ok:
+            if self.url().scheme() == 'https':
+                if self.url().host() in self._insecure_hosts:
+                    self._set_load_status(usertypes.LoadStatus.warn)
+                else:
+                    self._set_load_status(usertypes.LoadStatus.success_https)
+            else:
+                self._set_load_status(usertypes.LoadStatus.success)
+        elif ok:
+            self._set_load_status(usertypes.LoadStatus.warn)
+        else:
+            self._set_load_status(usertypes.LoadStatus.error)"

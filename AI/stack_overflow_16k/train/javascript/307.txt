@@ -1,0 +1,1 @@
+"why doesn't this piece of blank code work on my browsers? ..&lt;button id=""mybutton""&gt;you want to click me&lt;/button&gt;..&lt;script type=""text/blank""&gt;.  document.getelementbyid(""mybutton"").onclick = function() {..    alert(""hi!"");..  }.&lt;/script&gt;.....can you tell me what is wrong with this, please?"

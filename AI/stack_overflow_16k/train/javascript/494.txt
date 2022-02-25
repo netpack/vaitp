@@ -1,0 +1,1 @@
+"can not call legacy function in blank as delegate sorry about this really stupid question, but why this code is not working?..var ar = [1,2,3];.ar.foreach(console.log);...thank you in advance."

@@ -1,0 +1,1 @@
+"print line in specific order i want to print around 10 lines in such a way that in every sequence 9 lines print with sign '-'. for example, if x=[1,2,3,4,5]. now i want to print in following sequence,.. 1.-2.-3.-4.-5..-1.2.-3.-4.-5..-1.-2.3.-4.-5...etc. ...please help me to solve this."

@@ -1,0 +1,1 @@
+"google pagespeed api error for enable mime type refused to execute script from 'https://www.googleapis.com/pagespeedonline/v1/runpagespeed?url=https://deve…callback=runpagespeedcallbacks&amp;key=aizasydw0nyo6wh6fz8bg5z8te-eqk0hljnsnni' because its mime type ('application/json') is not executable, and strict mime type checking is enabled."

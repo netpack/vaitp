@@ -1,0 +1,1 @@
+"how to convert a byte into an int in blank i converted a music file into a byte, and now i need to know how to convert a byte into an int...i've tried the following, but it failed:..bitconverter.toint32(array, 0);"

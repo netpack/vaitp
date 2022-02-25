@@ -1,0 +1,1 @@
+"blank property deletion just wondering about this one :..whats the difference, or is there a difference at all, between :..delete obj.someproperty...and..obj.someproperty=undefined"

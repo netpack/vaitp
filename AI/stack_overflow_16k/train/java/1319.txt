@@ -1,0 +1,1 @@
+"passing parameters to getmethods i'm trying to use getmethod()..public method getmethod(string name, class&lt;?&gt;... parametertypes) throws nosuchmethodexception, securityexception...what does that the second argument mean? .for example, what should i do if i have two parameters to set?"

@@ -1,0 +1,1 @@
+"how to deal with error handling in object literals? how can i do some error handling within an object literal?.at least i wanted it to work like this :..window.app={.  variables:{.    ""views_data"":.      try{.        json_parse(drupal.settings.royal).      }.      catch(e){.        json.parse(drupal.settings.royal).      }        .  }.}"

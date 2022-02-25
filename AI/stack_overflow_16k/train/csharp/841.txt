@@ -1,0 +1,1 @@
+"how do i write a blank method that takes a variable number of arguments? is it possible to send a variable number of arguments to a method? ..for instance if i want to write a method that would concatenate many string[] objects into one string, but i wanted it to be able to accept arguments without knowing how many i would want to pass in, how would i do this?"

@@ -1,0 +1,1 @@
+"map arguments in blank if you wanted to use arguments to put the arguements into à map. how would you do it? for example, how would use these arguments in a method?.. public void  mapmethod (map&lt;string,integer&gt; map)..   {.   //code here.    }...i have read other questions similar to this, but none of them seem to explain if it this possible."

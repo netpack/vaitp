@@ -1,0 +1,1 @@
+"when blank gives you the memory location of an object, what's that for? when blank gives me the location of an object in memory, what is that for, other than distinguishing between instances in the interactive prompt?..example:..&gt;&gt;&gt;inspect.walktree.&lt;function walktree at 0x2a97410&gt;"

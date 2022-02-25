@@ -1,0 +1,1 @@
+"parse datetime string in the format ""nov. 7, 2012, 9:02 p.m."" how can i parse a date string in the format ""nov. 7, 2012, 9:02 p.m.""..i think i'm close. have tried:..        string line = ""nov. 7, 2012, 9:02 p.m."";.        string format = ""mmm. dd, yyyy, hh:mm p.m.""; ;.        datetime result = datetime.parseexact(line, format, null);"

@@ -1,0 +1,1 @@
+"apply changes for <div> using a blank this is my div class. ..&lt;div class=""panel-body relative"" ng-attr-id=""{{{{$parent.p.cameraid}}}}""&gt;&lt;/div&gt;...how to replace the ""string"" of below codes with above ng-attr-id?..var target = document.getelementbyid('string');"

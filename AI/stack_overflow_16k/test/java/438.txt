@@ -1,0 +1,1 @@
+"singleton method and class method blank i'm wondering what different between static method and singleton class method when i use them for multiple thread. i think if use static method, it will conflict result data or parameter but i don't think use singleton method class then the same problem will occur."

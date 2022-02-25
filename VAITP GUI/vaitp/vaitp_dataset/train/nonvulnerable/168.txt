@@ -1,0 +1,3 @@
+"    def __init__(self, servers, connect_timeout=CONN_TIMEOUT,
+                 io_timeout=IO_TIMEOUT, tries=TRY_COUNT,
+                 allow_pickle=False, allow_unpickle=False):"

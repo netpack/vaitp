@@ -1,0 +1,1 @@
+"how to trim text after special character n in js in the following text:..textnnwhy'; ...i'm trying to get rid of everything after  (sign included) so that my output will be:.text..how can i do it?.tried:..var s = 'textnnwhy';.s = s.substring(0, s.indexof(''));.console.log (s)"

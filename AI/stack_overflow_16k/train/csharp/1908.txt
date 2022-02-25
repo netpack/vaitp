@@ -1,0 +1,1 @@
+"blank compilation error i'm doing image steganography and visual cryptography project using rsa algorithm. while compiling the project i'm getting these errors:...  argumentexception was unhandled...and also ...  empty path name is not legal...this error shown in:..filestream outstream = .    new filestream(stegofilename, filemode.create, fileaccess.write);"

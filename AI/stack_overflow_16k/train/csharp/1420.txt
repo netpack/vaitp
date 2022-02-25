@@ -1,0 +1,1 @@
+"how to print text from combobox into a messagebox will this work using blank. i am trying to get the text out of a combobox to compare and use.  i just want to get the text that is selected in the combobox and put it in a string...string mytext = """";.mytext = combobox1.getitemtext(combobox1.selecteditem);.messagebox.show(mytext);...i am obviously new, but could use some help."

@@ -1,0 +1,1 @@
+"are document.all and document.layers obsolete now i am going through some (old?) native blank and i encountered a separation of document.getelementbyid, document.all and document.layers...from what i know, document.all and document.layers are obsolete now, but i just wanted to make sure."

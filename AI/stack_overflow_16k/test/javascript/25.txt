@@ -1,0 +1,1 @@
+"change first letter in string to uppercase in blank i have an array of strings, ..[""item1"", ""item2""] ...i'd like to change my array to ..[""showitem1"", ""showitem2""]"

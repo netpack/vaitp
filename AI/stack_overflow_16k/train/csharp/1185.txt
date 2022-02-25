@@ -1,0 +1,1 @@
+controls instead of icon in system tray icon in blank is it possible to add control like check-box in system tray icon in blank?.i wants to handle check and uncheck event within that checkbox. so that i dont need to handle it on contextmenu.

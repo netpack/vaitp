@@ -1,0 +1,1 @@
+mq pure blank client lib i am evaluating websphere mq7.  i am a traditionally a tibrv guy.  one thing i do not like is the fact that the ibm blank client libs require c++ libs in order to run.  is there anyway to run the ibm blank client libs without requiring the c++ libs?  e.g. is there a pure blank client library for mq ?

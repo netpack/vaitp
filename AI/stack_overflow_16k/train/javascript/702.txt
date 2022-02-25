@@ -1,0 +1,1 @@
+"blank set anonymous object key to variable name     var curr = data[i],.        newarray = [],.        key = curr.frequency.type,.        obj = {key: []};.    newarray.push(obj);...however, this yields an object with a key of ""key""! how can i create a new object with a key of the value of the variable key?"

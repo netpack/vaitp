@@ -1,0 +1,1 @@
+"can someone explain this blank code structure? i have a program with the following code:..    coros = [.        get_book(pair, session).        for pair in pairs.    ]...how does this not give a syntax error? or is it that if you do a for-loop in a list you have to put the function before the for-statement? i've never seen this but it's everywhere in the program."

@@ -1,0 +1,1 @@
+"importing module in another module my question is simple. if i import, let's say, numpy in a module called foo.py, and i imported foo.py in a script that has numpy imported, would numpy be imported twice? in other words, would a module be imported twice in the same script? i care because importing scipy (for example) multiple times (if it's true) is memory inefficient."

@@ -1,0 +1,1 @@
+"how to get a unique id for a list of strings? how can i get a unique id (as a integer) for a list of strings?..e.g. the list looks like [""cat"",""dog"",""cow"",""cat"",""rat""].the result should be:..1 -&gt; cat.2 -&gt; dog.3 -&gt; cow.4 -&gt; rat...i need to save this and new structure...edit: its important, that cat is only one time in the new structure."

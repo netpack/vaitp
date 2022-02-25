@@ -1,0 +1,13 @@
+"    def verify_cert_against_key(self, filename, key_filename):
+        """
+        check that a certificate validates against its private key.
+        """
+        cert = self.data + filename
+        key = self.data + key_filename
+        cmd = "openssl x509 -noout -modulus -in %s | openssl md5" % cert
+        cert_md5 = Popen(cmd, shell=True, stdout=PIPE, stderr=STDOUT).stdout.read()
+        cmd = "openssl rsa -noout -modulus -in %s | openssl md5" % key
+        key_md5 = Popen(cmd, shell=True, stdout=PIPE, stderr=STDOUT).stdout.read()
+        if cert_md5 == key_md5:
+            return True
+        return False"

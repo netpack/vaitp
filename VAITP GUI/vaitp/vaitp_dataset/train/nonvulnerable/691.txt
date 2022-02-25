@@ -1,0 +1,5 @@
+"    def test_ignores(self):
+        tree = self.parse(ignores)
+        self.assertEqual([ti.lineno for ti in tree.type_ignores], [2, 5])
+        tree = self.classic_parse(ignores)
+        self.assertEqual(tree.type_ignores, [])"

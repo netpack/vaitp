@@ -1,0 +1,1 @@
+"converting a string to an integer blank i am looking to convert the string to an integer so that i can ask the user for input and then count down accordingly...code:..string bottle = ""bottles"";.string num = """";.request.getparameter(bottles);.int number = bottles;"

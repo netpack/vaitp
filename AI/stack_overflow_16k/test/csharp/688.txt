@@ -1,0 +1,1 @@
+"how to add characters to a string in blank problem: i would like add characters to a phone...so instead of displaying ###-###-####, i would like to display (###) ###-####...i tried the following:..string x = ""phone_number"";.string y = x.remove(0,2);//removes the ""1-""...from here, i am not sure how i would add ""()"" around ###..any help would be appreciated."

@@ -1,0 +1,1 @@
+"rename file using blank and returns its value i wanted to rename multiple files and return its value. is there any way other than os.rename(src,dst), because this method does not return renamed file name."

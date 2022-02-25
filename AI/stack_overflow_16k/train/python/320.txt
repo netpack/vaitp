@@ -1,0 +1,1 @@
+"access to nested data i need to access structured data in a nested way but i didn't understand how to do it...the data is structured in this way:..{'function':'data_chip',. 'group_id': 172,. 'types': [.    {'tms0202':'sr-20',.     'tms0207':'sr-22',.     'tms0201': 'ti-4000',.     'tms0203': 'ti-450'.    }. ].}"

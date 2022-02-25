@@ -1,0 +1,1 @@
+if statement performance given the following code snippet:..if (condition1 &amp;&amp; condition2) {.  // action 1.} else if (!condition1) {.  // action 2.} else {.  // action 3.}.....does it make a difference in performance if i restructure it this way:..if (condition1) {.  if (condtion2) {.    // action 1.  } else {.    // action 3.  }.} else {.  // action 2.}

@@ -1,0 +1,1 @@
+"how to rebind names in outer function? &gt;&gt;&gt; def qq():....     a = 0....     def qqq():....         global a....         a += 1....     qqq().....&gt;&gt;&gt; qq().nameerror: global name 'a' is not defined...it appears that global doesn't work in this scenario. what else can i do, other than the 1-element list trick?"

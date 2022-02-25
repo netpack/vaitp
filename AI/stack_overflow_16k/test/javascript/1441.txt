@@ -1,0 +1,1 @@
+get last selected node i get the first selected node like this:..var userselection = window.getselection();.var selected_element = userselection.anchornode;...but i haven't been able to find something like userselection.endnode

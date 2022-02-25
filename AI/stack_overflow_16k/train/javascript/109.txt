@@ -1,0 +1,1 @@
+"how to convert date in blank? i try to use new date() in blank, and it display like this..sat dec 17 2016 00:00:00 gmt+0800 (your country standard time)...but i want to convert to display like this..2020-02-05t06:23:34...i try to search it in google but i don't know the term that im gonna use to search the date."

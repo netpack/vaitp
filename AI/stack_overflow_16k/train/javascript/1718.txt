@@ -1,0 +1,1 @@
+"why would any body use this pattern? i read this once in a script, but i didn't understand its benefits...(function () {}).call(this); ...also, i tried running it, ..(function () { console.log('hello world') }).call(this); ...but it didn't print anything...even calling this (function () { console.log('hello world')  })() didn't print anything either. whats wrong?"

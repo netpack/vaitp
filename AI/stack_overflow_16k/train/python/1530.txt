@@ -1,0 +1,1 @@
+"file handling techniques in blank how do i read a file by opening that particular file instead of printing it on the console? i've used the following code but it prints the contents of the file on the console...fw=open(""x.txt"",'r+').#fw.write(""hellon"").#fw.write(""blank is crazy af"").n=fw.read().print(n).fw.close()"

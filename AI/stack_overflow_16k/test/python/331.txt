@@ -1,0 +1,1 @@
+finding if string is substring of some string in blank: a special case i am working on finding if a string is sub-string of some string in blank. it runs fine for all the cases but here is a special case where it fails:..in blank shell i do:..x=repr('rrr') .y=repr('rr') ...in this case y in x returns false. can someone tell me what to do so that it returns true?

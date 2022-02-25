@@ -1,0 +1,1 @@
+"blank how to create a date with a non-english string var date = new date (""mai 15, 2018 10:41:48""); ...the string is in german..i am receiving error ""invalid date"" as expected because js wants me to put in english...i do not want to use tolocalestring() as i am trying to initialize the date from a different language."

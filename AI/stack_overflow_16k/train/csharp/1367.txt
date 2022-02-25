@@ -1,0 +1,1 @@
+"initialize object in blank with () or without what is the difference between initializing an object in these two ways:..myobject myobject = new myobject().{.    id = 1,.    color = green.}...vs...myobject myobject = new myobject.{.    id = 1,.    color = green.}"

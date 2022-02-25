@@ -1,0 +1,1 @@
+"def test_parse_www_authenticate_correct(data, strict):    headers, info = data    # FIXME: move strict to parse argument    httplib2.USE_WWW_AUTH_STRICT_PARSING = strict    try:        assert httplib2._parse_www_authenticate(headers) == info    finally:        httplib2.USE_WWW_AUTH_STRICT_PARSING = 0"

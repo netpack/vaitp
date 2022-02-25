@@ -1,0 +1,1 @@
+blank trying to display undefined variable error is there any way to show all js errors? by all errors i mean fore example undefined variable (without using try &amp; catch in every function - which is painless)

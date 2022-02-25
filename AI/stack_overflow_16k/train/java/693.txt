@@ -1,0 +1,1 @@
+"an int argument in the arraylist, what is it? what is the difference between this:..arraylist&lt;string&gt; test = new arraylist&lt;string&gt;();...and this:..arraylist&lt;string&gt; test = new arraylist&lt;string&gt;(3);...i just tested the array and i really see no difference.. i always see people using a number there, what is it for ?"

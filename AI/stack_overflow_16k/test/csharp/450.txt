@@ -1,0 +1,1 @@
+outputting a double in exponential notation i am converting a vb6 application to blank. my blank code is:..double a = 0.1345;.double b = 56.0;.double c = 40574.0;.double d = a * (b / c);.console.writeline(d);...as per vb the above code should return 1.856361216542613e-4..but my application is returning 0.000185636121654261...i need the value as it is having e notation.

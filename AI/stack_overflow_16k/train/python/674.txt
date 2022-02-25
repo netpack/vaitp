@@ -1,0 +1,1 @@
+how to solve an lcp (linear complementarity problem) in blank? is there a good library to numericly solve an lcp in blank ?..edit: i need a working blank code example because most libraries seem to only solve quadratic problems and i have problems converting an lcp into a qp.

@@ -1,0 +1,1 @@
+"how can i create an object with a given prototype chain? i need a way to create an empty object whose prototype chain is provided as an array of objects:..var prototypes = [{one: 1}, {two: 2}, {three: 3}];.var created = create(prototypes);.// prototype chain of created should be:.// created --&gt; {one: 1} --&gt; {two: 2} --&gt; {three: 3}...how can i do this?"

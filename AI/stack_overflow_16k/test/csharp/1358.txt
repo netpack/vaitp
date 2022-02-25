@@ -1,0 +1,1 @@
+"call reference of an object as a parameter in another method for example:..a a = new a(b);.b b = new b(a);...how can i use b as a parameter in a constructor when it's not existed, how can the compiler will know that b will be created later? ..thank you."

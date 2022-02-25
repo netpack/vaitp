@@ -1,0 +1,1 @@
+"does ordered dict return keys in order too? for example:..my_dict = ordereddict([('apple', 4), ('banana', 3), ('orange', 2), ('pear', 1)])...if an operation to get keys i.e. my_dict.keys() or  my_dict.iterkeys() is done, is it guaranteed to return:.['apple','banana','orange','pear'] ?..this is not explicitly mentioned in the docs."

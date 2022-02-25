@@ -1,0 +1,1 @@
+conversion of string like -2.0934e-6 to integer i am new to blank and i have to convert a string like -2.0934e-6 into a integer to do some calculation. i hope someone has an idea. thanks in advance. hermann..this is what i have done:..integer i = integer.parseint(c_column2);.out_colum2mod = i;

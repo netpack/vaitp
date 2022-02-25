@@ -1,0 +1,1 @@
+"can blank cooperate with another applications? can blank cooperate with applications like  chrome?..something like:..from tkinter import *..from (straightaccestoapps) import (straightaccestoapps)..main = tk()..def runchrome():.    straightaccestoapps('c:\desktopchrome').run().    main.quit()..button(main, text=""chrome"", command=runchrome).pack()..main.mainloop()"

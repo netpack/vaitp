@@ -1,0 +1,1 @@
+"add  to a string with quotes in blank i need to add a '' to a string..i try this.. var filename = name.replace(""'"", ""'"");. name = filename ;...if name = he's here..name.replace(""'"", ""'"") will return : ""he\'s here""..what i need is: he's here"

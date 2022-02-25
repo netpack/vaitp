@@ -1,0 +1,1 @@
+"nullpointerexception in hashmap's get method i have a nullpointerexception on this line:.. int qty = mselectedbottles.get(bottleid);...i've checked that mselectedbottles and bottleid are both not null. ..mselectedbottles is of type hashmap&lt;integer, integer&gt; and bottleid is of type int"

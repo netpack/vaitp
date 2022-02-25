@@ -1,0 +1,1 @@
+"does blank have logical inversion mark like exclamation mark in java? do blank have logical inversion mark like exclamation mark in java?..in java, ..bool mybool = true; . system.out.println(!mybool); should give us the output ""false""...but what about blank? in blank, is there any mark?..edit: i know the keyword ""not"". i am asking for a mark."

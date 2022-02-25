@@ -1,0 +1,1 @@
+"""oring"" two bytes together i need to take two bytes and or them together, a rather simple task.  however, i do not know the proper syntax to or the two bytes together... byte first = 0x03;. byte second = 0x15;.. //need to or them. byte result = first || second; //this syntax does not work in blank"

@@ -1,0 +1,1 @@
+"in which more than 1 elements are stored in an index i want to store more than one elements in an index. example i want to store 23,45,67 at index 0, 12 34 56 at index 1, and so on. how can i store?"

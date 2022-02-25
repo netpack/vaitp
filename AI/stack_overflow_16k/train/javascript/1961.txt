@@ -1,0 +1,1 @@
+"is it possible to add a two dot in a variable name in blank? i want to create a variable like this in blank..variable1.varible2.variable3 = ""hi its working"";.alert(variable1.varible2.variable3);"

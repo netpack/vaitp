@@ -1,0 +1,1 @@
+"why does the following code print ""0 1 2 3""? in this code im confused as to why it prints out ""0 1 2 3"" instead of ""3 2 1 0""..    int y = 3;.    string s = "" "";.    while (y&gt;-1).    {.        s = y + "" "" + s;.        y--;.    }.    system.out.print(s);...thanks."

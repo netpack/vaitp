@@ -1,0 +1,1 @@
+"cost model of the quick-find algorithm i am taking the lesson of algorithm part i in coursera..and this is the problem...in this ppt he said connected need 2 array accesses, and union need 2n+2 array accesses...but in the next ppt, he said union need n array accesses, and find need 1...i am confused about why they are not the same."

@@ -1,0 +1,1 @@
+"blank simple multiply gives wrong result i just want for example multiply 7.50*1.19..iam pretty sure it´s 8,925 but if i calculate it in my js i get 8.924999999999999 and i cannot get a correct rounding to finally get 8,93..parsefloat(tarif.field_grundpreis * 1.19)...result = 8.924999999999999..while tarif.field_grundpreis is 7.50..it´s crazy, please help."

@@ -1,0 +1,1 @@
+"console application tries to find database in path of local machine i created a console application in blank which works fine in my machine. but when it is installed in other machine, it fails with error message stating that the database file is not present. .also, it tries to find the database in the path of local machine where development was done. how can i resolve this?"

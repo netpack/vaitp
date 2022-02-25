@@ -1,0 +1,1 @@
+how to bulk upload in the azure storage blob i have successfully done with single file uploading in azure using blank. .i have also tried for bulk uploading but failed to find any method which directly supports blank..is there any direct method is present for bulk uploading in blank on azure

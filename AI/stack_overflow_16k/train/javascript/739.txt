@@ -1,0 +1,1 @@
+"how to zoom on the center of an image? i want to know how to zoom on the center of an image...i tried different things like imagewrapper.width().left..$(document).on('click', '.process-diagram-zoom-in', function(){.    var div = $(this).parents('.container-fluid:first');.    var imagewrapper = div.find('.image-wrapper');.    imagewrapper.width(imagewrapper.width() * 5.1);.});"

@@ -1,0 +1,1 @@
+"running a function every second and compare with a value a second before. i have to run the code every second and compare if the return values are equal or not for the current execution and a second before. i tried threading but i couldn't find a way to store the values to compare. ..import numpy as np.import random ..def ran ():.    a = random.randint(1,101).    return a"

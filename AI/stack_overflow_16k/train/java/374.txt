@@ -1,0 +1,1 @@
+"is it acceptable if actual and formal parameters have the same name? like this:..mymethod(first, second)..public void mymethod(int first, int second)...my teacher said it's preferred not to name them the same.  but i don't see the reason why? is he wrong?"

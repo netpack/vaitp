@@ -1,0 +1,1 @@
+"httpwebrequest keep connection and reuse it so my basic idea is to create emails(yahoo for example) but for this purpose i need to open the connection, pass the captcha and then return it to the same connection so the captcha is still the same. i just need to know how to do that. i hope you got my question."

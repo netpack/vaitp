@@ -1,0 +1,1 @@
+"how to push associative item into array in blank? please correct this code:....var arr = [];.var name = ""name"";.var val = 2;.arr.push(val); //works , but not associative.arr[name] = val; //does not work.console.log(arr);.....jsfiddle"

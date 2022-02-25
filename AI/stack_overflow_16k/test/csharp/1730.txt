@@ -1,0 +1,1 @@
+how can i decode html characters in blank? i have email addresses encoded with html character entities. is there anything in .net that can convert them to plain strings?

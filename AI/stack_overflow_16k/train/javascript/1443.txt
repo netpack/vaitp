@@ -1,0 +1,1 @@
+"in blank is there an equivelant to python's ""try ... except"" feature? here is the python code that i am trying to solve this problem in blank:..try:.    float(s) if '.' in s else int(s).    return true.except valueerror:.    return false...i'm looking for the keyword equivalent to ""except"" in python."

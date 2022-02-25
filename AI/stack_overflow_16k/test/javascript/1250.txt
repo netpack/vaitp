@@ -1,0 +1,1 @@
+"what ascii characters are valid for blank variable names? i've seen this other question, unfortunately the answers spend too much attention on unicode and say nothing about normal ascii characters. ..i need to know which 7-bit ascii characters (0..127) are valid in a blank identifier name."

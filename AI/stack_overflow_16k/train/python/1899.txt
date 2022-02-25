@@ -1,0 +1,1 @@
+"typeerror in blank programming i wrote the following program for square each digit of a number. but, it is showing an error as ""int"" object is not iterable...def square_digits(num):..a = 1.for i in num:.  a = i * i        .  return a..result = square_digits(12).print(result)"

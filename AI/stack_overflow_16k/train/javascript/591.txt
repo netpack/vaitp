@@ -1,0 +1,1 @@
+"what does this blank code do? this code takes a url as input, but i'm not sure what it does or what's the benefit of doing this..var hashpos = url.lastindexof ( '#' );.return url.substring( hashpos + 1 );"

@@ -1,0 +1,1 @@
+"blank replace with global not working on caret symbol i have following code for replacing.. var temp =  ""^hall^,^restaurant^"";. temp.replace(/^/g, '');. console.log(temp);...this does not replace the ^ symbol from string. how can this not work?"

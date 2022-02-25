@@ -1,0 +1,1 @@
+"change variable in array or list i'm trying to change second element in my array using loop in this way:..mytab = [false,true,true];..  if (trueoffalse){.            for (let i = 0; i &lt; mytab.length; i++) {.                mytab[i].set(true).  }.  mytab[3] = false;...how to fix it for running ? in java this works."

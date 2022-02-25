@@ -1,0 +1,1 @@
+"def allow_all(tag: str, name: str, value: str) -> bool:    return True"

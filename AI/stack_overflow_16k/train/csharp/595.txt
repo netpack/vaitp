@@ -1,0 +1,1 @@
+"what happens if default value is null and convert to string to be more specific, i have datetime? birthdate..my question is what will happen in this case:..lblbirthdate.text = myobject.birthdate.getvalueordefault().tostring();...if birthdate will be null. i have resharper installed, and it doesn't warn me that i could have a null problem there..."

@@ -1,0 +1,14 @@
+"def change_due_date(request, course_id):
+    """
+    Grants a due date extension to a student for a particular unit.
+    """
+    course = get_course_by_id(SlashSeparatedCourseKey.from_deprecated_string(course_id))
+    student = require_student_from_identifier(request.GET.get('student'))
+    unit = find_unit(course, request.GET.get('url'))
+    due_date = parse_datetime(request.GET.get('due_datetime'))
+    set_due_date_extension(course, unit, student, due_date)
+
+    return JsonResponse(_(
+        'Successfully changed due date for student {0} for {1} '
+        'to {2}').format(student.profile.name, _display_unit(unit),
+                         due_date.strftime('%Y-%m-%d %H:%M')))"

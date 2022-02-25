@@ -1,0 +1,1 @@
+how do i fire an event when document readystate is complete i want to fire and event when the dom has completely loaded. i checked out document.readystate but it's not an event. i want to fire it when the readystate is complete. how do i do that?

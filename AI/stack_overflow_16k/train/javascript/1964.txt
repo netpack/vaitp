@@ -1,0 +1,1 @@
+"how to create a new value in a object with window i have the object :..var bot = new object().bot.a......i want create a new value for bot, bot.b. how do i do it with window.variable ?.i tried window.bot[""b""] = ... and it didnt work. thanks"

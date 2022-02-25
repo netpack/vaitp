@@ -1,0 +1,1 @@
+turn off a feature if the server is loaded with requests i am working on implementing an auto save feature and was looking for some suggestions on how to implement a roll back strategy incase the server is bombarded with requests and there's increase in response time . .thanks in advance

@@ -1,0 +1,1 @@
+remove line breaks in text area how to detect line breaks in text area using java script?.if two continuous blank lines present in text area delete one blank line and if only single line present delete it too...can any one help me on this? currently i can able to delete single lines only...line 1...line 2..line3 ...should be converted to:..line 1..line 2.line3

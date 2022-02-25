@@ -1,0 +1,1 @@
+"string execution inside infinite loop can anyone please explain to me exactly what happens internally when we compile and run the below code.....class objtest{.    public static void main(string [] args){                    .        while(true){.            string str = new string(""hello"");.        }.    }.}"

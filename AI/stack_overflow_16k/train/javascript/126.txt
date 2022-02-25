@@ -1,0 +1,1 @@
+"blank strip all url parameters from string? i've got an url in a string like this:..http://url.com?page=121&amp;param1=hello&amp;param2=bye#hello...the above could be something else as well meaning it will be dynamic...how could i only keep the ""main page""? in the above it would be:..http://url.com?page=121"

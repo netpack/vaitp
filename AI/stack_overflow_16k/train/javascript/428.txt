@@ -1,0 +1,1 @@
+"blank inset variable into brackets when i alert btnname it is not fetching the attr name and instead using the text btnname. ..var btnname = orderbtn.attr(""name"");.var obj = {btnname:true,json:1};...i am sure this is possible, i just can;t figure it out."

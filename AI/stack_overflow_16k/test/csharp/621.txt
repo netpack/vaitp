@@ -1,0 +1,1 @@
+"open connection to database, how to check if still existing? i open connection to database in the biginig of my program (one time)..after 5 minute the server shut down...how i can catch this problem ?..i am not open connection befor any query..thank's"

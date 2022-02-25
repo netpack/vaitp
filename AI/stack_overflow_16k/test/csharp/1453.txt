@@ -1,0 +1,1 @@
+"pass in only strings and ints in blank? i have a function like the below. i ran into a problem were i accidentally passes in enums when i wanted the value. same problem would occur if i passed in structs or classes...is there a way i can pass call the func and only have strings and ints as my arguments? ..static public string func(string fmt, params object[] args)"

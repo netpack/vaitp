@@ -1,0 +1,1 @@
+"i would like to pass google project json file (authintication data) data to system.net.webclient i would like to pass this data using system.net.webclient to be authenticated ....using (system.net.webclient client = new system.net.webclient()).{.    //i would like to know how to pass json file content data to be authorized.   client.downloadfile(item.medialink,""data.xml"");.}"

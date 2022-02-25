@@ -1,0 +1,1 @@
+how to load google analytics after page load .  possible duplicate:.  how do i dynamically load google analytics blank?  .....hi google analytics call is slowing down my web page load. is there a way to initiate call to google analytics only after the complete web page has been rendered?

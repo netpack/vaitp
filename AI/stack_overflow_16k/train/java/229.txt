@@ -1,0 +1,1 @@
+blank-how to remove sign '$' from string '$49monthly' i have used replace function but it replaces '$' sign with space but i dont need space. i want to only remove '$' sign from mystring.

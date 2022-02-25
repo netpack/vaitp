@@ -1,0 +1,56 @@
+"    def build(self):
+        g = Grammar(self.tokens)
+
+        for level, (assoc, terms) in enumerate(self.precedence, 1):
+            for term in terms:
+                g.set_precedence(term, assoc, level)
+
+        for prod_name, syms, func, precedence in self.productions:
+            g.add_production(prod_name, syms, func, precedence)
+
+        g.set_start()
+
+        for unused_term in g.unused_terminals():
+            warnings.warn(
+                "Token %r is unused" % unused_term,
+                ParserGeneratorWarning,
+                stacklevel=2
+            )
+        for unused_prod in g.unused_productions():
+            warnings.warn(
+                "Production %r is not reachable" % unused_prod,
+                ParserGeneratorWarning,
+                stacklevel=2
+            )
+
+        g.build_lritems()
+        g.compute_first()
+        g.compute_follow()
+
+        cache_file = os.path.join(
+            tempfile.gettempdir(),
+            "rply-%s-%s-%s.json" % (self.VERSION, self.cache_id, self.compute_grammar_hash(g))
+        )
+        table = None
+        if os.path.exists(cache_file):
+            with open(cache_file) as f:
+                data = json.load(f)
+            if self.data_is_valid(g, data):
+                table = LRTable.from_cache(g, data)
+        if table is None:
+            table = LRTable.from_grammar(g)
+            with open(cache_file, "w") as f:
+                json.dump(self.serialize_table(table), f)
+        if table.sr_conflicts:
+            warnings.warn(
+                "%d shift/reduce conflict%s" % (len(table.sr_conflicts), "s" if len(table.sr_conflicts) > 1 else ""),
+                ParserGeneratorWarning,
+                stacklevel=2,
+            )
+        if table.rr_conflicts:
+            warnings.warn(
+                "%d reduce/reduce conflict%s" % (len(table.rr_conflicts), "s" if len(table.rr_conflicts) > 1 else ""),
+                ParserGeneratorWarning,
+                stacklevel=2,
+            )
+        return LRParser(table, self.error_handler)"

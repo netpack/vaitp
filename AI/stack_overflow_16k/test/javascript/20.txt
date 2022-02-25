@@ -1,0 +1,1 @@
+check if a time is previous than other in blank i want to check if a time is earlier than another time using blank or any blank library...for example i have t1=12:45:30 and t2=12:45:35 i want to check if t1 is earlier than t2. how can i easily do it using blank? ..i was trying the following code:..if(t1&lt;t2)...but it is not working.

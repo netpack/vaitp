@@ -1,0 +1,1 @@
+which event would notify me that the scrolling is finished in a scroll bar? which event would notify me that the scrolling is finished in a scroll bar?.i have a scroll bar in a panel. vscrollbar1_scroll event tells me that scrolling has started. i want to be notified when it stops. which event to use in blank?

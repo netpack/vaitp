@@ -1,0 +1,1 @@
+"    def should_deny_admin(self):        return self.totp_status != TOTPStatus.ENABLED and config.get(            "enable_force_admin_2fa"        )"

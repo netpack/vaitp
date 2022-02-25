@@ -1,0 +1,1 @@
+"c # unable to highlight text box using mouse when display form in panel of splitcontainer i have a form1 with a splitcontainer. i have put a button on the left panel, whenever user click the button, form2 will be displayed in the right panel...the question now is, i am not allowed to highlight the textbox in form2 with mouse. but i still can use the keyboard to highlight."

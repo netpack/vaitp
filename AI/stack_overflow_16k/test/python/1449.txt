@@ -1,0 +1,1 @@
+"how to convert a list in string form to a list suppose a string s=""[1,2,3]""..i want the list to be l=[1,2,3], where type(l) is list..how can i achieve this"

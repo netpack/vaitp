@@ -1,0 +1,1 @@
+"benefit of using => operator in declaration recently when i was walking through one of the project source i come across a statement like below...public bool isrestricted =&gt; false;...can any one brief me, what is the benefit in using these kind of statements..thanks in advance."

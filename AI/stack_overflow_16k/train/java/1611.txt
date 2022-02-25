@@ -1,0 +1,1 @@
+"inserting space underneath line, but not a new line (blank) having a bit of confusion on a simple issue. i have a new line in my output, however, the necessary output just shows a line being skipped. here is what i mean...what can i do to my code to match the output on the right?..if (listdata.isempty()).{.    system.out.println(""no customer"");.    system.out.println();..}"

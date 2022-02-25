@@ -1,0 +1,1 @@
+"is there any reason to use !1 over false? i've been looking through some blank code, and in various places, the developer uses !1, like so:  ..var somevar = !1;...from my understanding !1 is the same as false...is there any practical (whether it is to cover some edge case, performance, etc.) reason as to why they are using !1 instead of false?"

@@ -1,0 +1,12 @@
+"    def test_get_students_features_cohorted(self, is_cohorted):
+        """
+        Test that get_students_features includes cohort info when the course is
+        cohorted, and does not when the course is not cohorted.
+        """
+        url = reverse('get_students_features', kwargs={'course_id': unicode(self.course.id)})
+        set_course_cohort_settings(self.course.id, is_cohorted=is_cohorted)
+
+        response = self.client.get(url, {})
+        res_json = json.loads(response.content)
+
+        self.assertEqual('cohort' in res_json['feature_names'], is_cohorted)"

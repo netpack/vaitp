@@ -1,0 +1,1 @@
+"can i combine the getting from an array with the creation of an array? is there a way that i can refactor this code into one statement:..// following line used referenced only once.public static color[] tabbarbackgroundcolor      = { greyef, grey00, grey00 }; ..// here's where it's referenced.current.resources[""tabbarbackgroundcolor""]  = styles.tabbarbackgroundcolor[thc];"

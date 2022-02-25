@@ -1,0 +1,1 @@
+"how can i check a blank variable is an empty string """" or null? i am looking for the simplest way to do a check. i have a variable that can be equal to """" or null. is there just one function that can check if it's not """" or null?"

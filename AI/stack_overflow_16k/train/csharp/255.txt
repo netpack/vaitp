@@ -1,0 +1,1 @@
+"how to parse this following string? i have to parse this string ..""cust =customer custcr =customer credit prod=product salesrep=sales rep taxcat=tax category taxid=tax id volbill=volume billing""..as code, description like code=cust and description=customer..split on basis of space is not working for this because there is also a space in description too ."

@@ -1,0 +1,27 @@
+"    def test_send_event_single_sender(self):
+        """Test that using a single federation sender worker correctly sends a
+        new event.
+        """
+        mock_client = Mock(spec=["put_json"])
+        mock_client.put_json.return_value = make_awaitable({})
+
+        self.make_worker_hs(
+            "synapse.app.federation_sender",
+            {"send_federation": True},
+            http_client=mock_client,
+        )
+
+        user = self.register_user("user", "pass")
+        token = self.login("user", "pass")
+
+        room = self.create_room_with_remote_server(user, token)
+
+        mock_client.put_json.reset_mock()
+
+        self.create_and_send_event(room, UserID.from_string(user))
+        self.replicate()
+
+        # Assert that the event was sent out over federation.
+        mock_client.put_json.assert_called()
+        self.assertEqual(mock_client.put_json.call_args[0][0], "other_server")
+        self.assertTrue(mock_client.put_json.call_args[1]["data"].get("pdus"))"

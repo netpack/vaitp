@@ -1,0 +1,1 @@
+"unpacking into a list is there any difference in blank between unpacking into a tuple:..x, y, z = v...and unpacking into a list?..[x, y, z] = v"

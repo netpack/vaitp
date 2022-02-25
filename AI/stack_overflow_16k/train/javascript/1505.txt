@@ -1,0 +1,1 @@
+get element by class in blank and count the number of elements in them .  possible duplicate:.  how to get element by class in blank?  .....i have a div tag with a class name on it. i want to get that div tag using the class name and count the number of elements in them. i am not in a position to filter using id. how do i achieve this?

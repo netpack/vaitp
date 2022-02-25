@@ -1,0 +1,1 @@
+how to get the last number in a string using regex? the string i have is -- 20 of 568 matches. i want 568 to be picked up and displayed. ..what regex can i use to accomplish this?

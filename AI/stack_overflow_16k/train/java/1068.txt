@@ -1,0 +1,1 @@
+"how to change the alignment of contents in a jscrollpane i am working on a gui to manage bank accounts. ..i use a jpanel in a jframe to list all the account register as buttons, and a jscrollpane to extend the view. when i run the program, the scroll bar appears but the buttons appears in horizontal. what do i have to the change it to appear vertical?"

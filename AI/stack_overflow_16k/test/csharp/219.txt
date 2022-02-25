@@ -1,0 +1,1 @@
+how to get remainder of 2 double using % operator? i am trying to get remainder of 2 double using % operator..double x = 965.606698735538;.double y = 482.803349367769;.var mod = x % y;...expected value is 0..actual value is 482.803349367769..can someone help why its behaving so strange.

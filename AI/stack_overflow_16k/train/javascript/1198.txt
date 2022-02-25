@@ -1,0 +1,1 @@
+"function returining function //the fn is  a function calling ajax request to get data ..function fn(onsuccess, onerror, args ){.}...//i need to write retry function which calls fn function for api call. the max attempt will be 5. if attempt exceeds i need to call the onerror function...//signature of retry ..function retry(fn,attempt, onsuccess, onerror, args){..}"

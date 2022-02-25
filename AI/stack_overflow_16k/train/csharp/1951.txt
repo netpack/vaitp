@@ -1,0 +1,1 @@
+"get owner from datatable object is it possible to get the owner from a datatable object? ..select * from dbo.mytable ...datatable.tablename retrieves only mytable, i would like to get the table owner (dbo) too..thanks"

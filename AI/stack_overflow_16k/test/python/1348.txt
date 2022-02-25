@@ -1,0 +1,1 @@
+"including an integer in a print statement i am trying this, where i is an integer:..sys.stdout.write('thello world %d.n' % i+1)...and it says ""cannot concatenate str and int"". i have tried various combinations:..int(i) + 1.i + int(1)...... but it's not working"

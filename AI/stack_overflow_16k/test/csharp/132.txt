@@ -1,0 +1,1 @@
+"blank application not getting terminate on other machine i am using system.environment.exit(0) in my blank application. while using this, application gets terminated but when i build an .exe file and using this application on another machine, its seem to not trminate application...    btnclose_click(system.object sender, system.eventargs e) {.system.environment.exit(0).};"

@@ -1,0 +1,1 @@
+"write row to a csv file without it adding quotation marks my first problem:..writer.writerow(['name,' 'street,,' 'address,,,'])...the above example returns ""name,street,,address,,,""..i need it to return name,street,,address,,, without the quotation marks...what should i do?"

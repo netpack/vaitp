@@ -1,0 +1,1 @@
+"def _factorial(x):    if x<=10000:        return float(math.factorial(x))    else:        raise Exception('factorial argument too large')"

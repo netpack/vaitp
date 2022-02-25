@@ -1,0 +1,1 @@
+"what is bit-wise not operator in blank? is there a function that takes a number with binary numeral a, and does the not? (for example, the function's value at 18 [binary 10010] would be 13.[binary 01101].) i thought this was what the tilde operator (~) did, but it only adds a minus sign to 18, which is two's complement of that, instead of getting 13."

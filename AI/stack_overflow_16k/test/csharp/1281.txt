@@ -1,0 +1,1 @@
+keyvaluepair vs dictionaryentry what is the difference between keyvaluepair which is the generic version and dictionaryentry?..why keyvaluepair is used instead of dictionaryentry in generic dictionary class?

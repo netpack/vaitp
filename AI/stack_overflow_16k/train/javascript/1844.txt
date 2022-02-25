@@ -1,0 +1,1 @@
+"convert one string to array with blank i have a string like this: ..data=""{'year':'1990/01/01','income':1990/02/01,'expenses':1000668},{'year':'1990/03/01','income':1000778,'expenses':1000778}""  ...i want to set it on one array like this:..var chart_data = [data];...how can i do this?"

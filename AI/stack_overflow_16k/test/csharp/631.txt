@@ -1,0 +1,1 @@
+"how to sort a string array with integers and strings in? i have a string array:.string[] face = {""a"",""2"",""3"",""4"",""5"",""6"",""7"",""8"",""9"",""10"",""j"",""q"",""k"" };..i randomized it and now i am trying to sort it back to what it was..i tried the array.sort() method but it didn't work...any ideas how i can achieve this?"

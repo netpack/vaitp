@@ -1,0 +1,1 @@
+"watch setting value of properties is there a possibility to watch value changes of properties without calling propertychanged (system.componentmodel) for every property in setter?..i tried watching my properties with timer, but this has an unnecessary negative effect on performance and is too slow (15ms for every run)."

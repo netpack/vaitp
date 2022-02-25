@@ -1,0 +1,1 @@
+"js get radio label text .i have this code :  ..&lt;input type=radio name=""vote_x"" value=""5""&gt;.    &lt;label for=""vote_x""&gt;blabla&lt;/label&gt;&lt;br&gt;...how can i get the label value for radio with id of vote_x [using js] ??..thanks"

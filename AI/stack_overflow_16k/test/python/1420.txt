@@ -1,0 +1,1 @@
+blank file pointer in blank file handling why we need to close() or discard pointer reference even when we are in read mode..reading don't do any changes in file which are required to be saved by dereferncing file pointer.

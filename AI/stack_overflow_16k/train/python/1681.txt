@@ -1,0 +1,1 @@
+"blank dictionary key/value delimiter is it possible to obtain a blank dictionary where the keys are wrapped within "" "" as opposed to ' '?..something like this:..{""key_1"":""value_1"", .... , ""key_n"":""value_n""}...instead of:..{'key_1':'value_1', .... , 'key_n':'value_n'}"

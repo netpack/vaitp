@@ -1,0 +1,1 @@
+"how does promises work when blank is single threaded? how does blank execute promises async when js is single threaded?.i know how to use promises, but it is still unclear to me how it works behind the scene."

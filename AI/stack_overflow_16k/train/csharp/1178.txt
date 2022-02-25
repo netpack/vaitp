@@ -1,0 +1,1 @@
+"blank: shorten code (nullable object, return property or string.empty) i wondered if anybody can come up with a shortened version for this code:....myobject theobject = objectcollection.grabanobject();.if (theobject == null) return string.empty;.else return theobject.myproperty;.....thank you!"

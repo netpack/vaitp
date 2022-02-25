@@ -1,0 +1,1 @@
+"return random value from list tuple how can i return a random key value from this list tuple? i'm only concerned with returning 'r', 'p', or 's' from moves...# snippet..moves = [('r', ""rock""), ('p', ""paper""), ('s', ""scissors"")]..view_all(moves):.    print ""player moves:"".    for move in moves:.        print "" =&gt; "".join((move[0], move[1]))"

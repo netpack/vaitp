@@ -1,0 +1,27 @@
+"def boboAwareZopeTraverse(object, path_items, econtext):
+    """Traverses a sequence of names, first trying attributes then items.
+
+    This uses zope.traversing path traversal where possible and interacts
+    correctly with objects providing OFS.interface.ITraversable when
+    necessary (bobo-awareness).
+    """
+    request = getattr(econtext, 'request', None)
+    path_items = list(path_items)
+    path_items.reverse()
+
+    while path_items:
+        name = path_items.pop()
+
+        if name == '_':
+            warnings.warn('Traversing to the name `_` is deprecated '
+                          'and will be removed in Zope 6.',
+                          DeprecationWarning)
+        elif name.startswith('_'):
+            raise NotFound(name)
+
+        if OFS.interfaces.ITraversable.providedBy(object):
+            object = object.restrictedTraverse(name)
+        else:
+            object = traversePathElement(object, name, path_items,
+                                         request=request)
+    return object"

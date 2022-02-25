@@ -1,0 +1,1 @@
+"how to find a parent's id through a child's id i have a dynamically generated table that will have an id. if the table has a radio button, when i click on the radio button i need to get that parent table's id through blank. how can i do that?"

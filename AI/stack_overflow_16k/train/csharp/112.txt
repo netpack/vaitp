@@ -1,0 +1,1 @@
+"kill another process after the crash of the main app the main app starts another process, how can i end up this secondary process after the crash of the main app?"

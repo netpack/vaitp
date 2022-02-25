@@ -1,0 +1,1 @@
+"what is the difference between these 2 function syntax types as the title says, whats the difference between..myfunction = function() {..}...and..function myfunction() {..}...nothing?..duplicate: var functionname = function() {} vs function functionname() {}"

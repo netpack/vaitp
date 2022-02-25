@@ -1,0 +1,1 @@
+"setinterval(""clock()"",50) different from setinterval(""clock"",50)？ running the code, the browser will display rangeerror.....function hide() {.    h -= step;.    pp.style.height = h + ""px"";.    settimeout(hide(), 1);.}"

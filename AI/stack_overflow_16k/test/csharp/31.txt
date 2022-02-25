@@ -1,0 +1,1 @@
+"console.readline() max length? when running a small piece of blank code, when i try to input a long string into console.readline() it seems to cut off after a couple of lines...is there a max length to console.readline(), if so is there a way to increase that?"

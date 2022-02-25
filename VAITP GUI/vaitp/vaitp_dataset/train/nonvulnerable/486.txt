@@ -1,0 +1,2 @@
+"    def item_to_bm(self, item):
+        return item.data(Qt.UserRole).copy()"

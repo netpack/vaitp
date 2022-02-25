@@ -1,0 +1,1 @@
+what is infooffriends[]? public static infooffriends[] friendsinfo = null;...in the above line i didn't get what is happening there? why there is infooffriends[] because infooffriends is a class which i discovered from the code? please help me understand.

@@ -1,0 +1,1 @@
+getting last page url from history object - cross browser? hey guys - a simple question with no simple answer for me yet :)..is it possible to get last page url from the history object? i've come accross history.previous but that's either undefined or protected from what i've seen

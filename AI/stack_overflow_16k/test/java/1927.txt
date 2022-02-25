@@ -1,0 +1,1 @@
+"blank objects compare with null cases? is there any ready implementation of method..public static boolean equals(object o1, object o2) {.   return o1==null &amp;&amp; o2==null || o1!=null &amp;&amp; o2!=null &amp;&amp; o1.equals(o2);.}...somewhere in jre/jdk?"

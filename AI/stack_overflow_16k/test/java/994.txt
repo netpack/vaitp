@@ -1,0 +1,1 @@
+"if x is incremented after (x++), would y print out = or will it print out +1? x = 2; .y = x++; .system.out.println(y)...if x is incremented after, would y print out 2 or will it print out 3 and why?.if this was prefixed, would it print out just the 3?"

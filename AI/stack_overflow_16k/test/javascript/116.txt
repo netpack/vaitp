@@ -1,0 +1,1 @@
+"retrieving previously focused element i would like to find out, in blank, which previous element had focus as opposed to the current focus. i've been looking through the dom and haven't found what i need, yet. is there a way to do this any help would be much appreciated"

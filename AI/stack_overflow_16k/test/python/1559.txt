@@ -1,0 +1,1 @@
+"blank find half time between two times i want to find half time between two times in blank. let's say i've two times ..start_time = '08:30:00'.end_time = '16:30:00'...if i want to display first half, it should print as'08:30:00' and '12:30:00'.if i want to display second half, it should print as '12:30:00' and '16:30:00'..any suggestions would be helpful."

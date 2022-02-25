@@ -1,0 +1,1 @@
+access a method in same project but different package is it possible to access a method in different package but same project without making the method public or inheritance? i'm looking for something similar to friendly assemblies in c#.

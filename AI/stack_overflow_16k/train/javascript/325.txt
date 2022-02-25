@@ -1,0 +1,1 @@
+how to get client side time zone i want to store timezone of client (visitor) which going to use my web portal..would you please show me way to find out timezone for client machine using blank code.....i need the gmt offset hours like `(gmt +5:30)`.

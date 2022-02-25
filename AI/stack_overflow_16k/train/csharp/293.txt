@@ -1,0 +1,1 @@
+"find which process accesses registry? ok if anyone can solve this they must be a genius because its nowhere on the web!..http://technet.microsoft.com/en-us/sysinternals/bb896645.aspx..this program detects registry accesses and tells you which process did it. ..does anyone know how i can do this? i can detect changes, but i cant get the process...thanks in advance"

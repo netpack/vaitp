@@ -1,0 +1,1 @@
+adding attributes to an expandobject member var? i have found this thread that talks a bit about it: is it possible to add attributes to the generated members of an expandoobject instance?..but it seems to just focus on the powergrid...i have spent about 1 hour looking for this on google without any luck either. could anyone at least confirm if it can be done?.

@@ -1,0 +1,1 @@
+"date object in safari i am using safari 8.0, and i try to do.. new date('sat-oct-10-2015');...on chrome the result is date object with the right date. but on safari the result is.. invalid date...how can i work with dates in this format in safari?"

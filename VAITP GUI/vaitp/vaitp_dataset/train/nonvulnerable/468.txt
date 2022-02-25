@@ -1,0 +1,5 @@
+"    def is_node(cls, path):
+        filesystem_path = pathutils.path_to_filesystem(path,
+                                                       filesystem.FOLDER)
+        return (os.path.isdir(filesystem_path) and
+                not os.path.exists(filesystem_path + ".props"))"

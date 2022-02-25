@@ -1,0 +1,1 @@
+input only year field of the datepicker calendardateinput.js i want to give my own value to the year field of the datepicker like ..document.getelementbyid('enddate_year_id').value = '2013';...is it possible to populate our own values with blank ?

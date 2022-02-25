@@ -1,0 +1,1 @@
+"how to call a method using reflection how do i use reflection to call this method. ..using system.reflection..public static string notsoobvius&lt;v&gt;(v show) where v : class.    {.        return string.format(""this is it"", show);.    }"

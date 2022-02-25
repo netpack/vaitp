@@ -1,0 +1,1 @@
+"stream filter regex list&lt;file&gt; filelisttoprocess = arrays.stream(allfolderpath).                .filter(myfile -&gt; myfile.getname().matches(""archive_"")).                .collect(collectors.tolist());...i am filtering files which starts with ""archive_"" to process using regex and streams. this does not work. what am i doing wrong here?"

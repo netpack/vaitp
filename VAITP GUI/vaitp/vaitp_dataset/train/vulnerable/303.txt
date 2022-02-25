@@ -1,0 +1,3 @@
+"    def is_node(cls, path):
+        path = os.path.join(filesystem.FOLDER, path.replace("/", os.sep))
+        return os.path.isdir(path) and not os.path.exists(path + ".props")"

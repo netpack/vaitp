@@ -1,0 +1,1 @@
+"blank: killall processes by name except itself i want my blank script to kill all instances of blank except itself. e.g. if its pid is 87457, something like..killall -9 blank -except 87457...lg, couka"

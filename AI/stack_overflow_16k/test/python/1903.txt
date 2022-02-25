@@ -1,0 +1,1 @@
+why is float('nan') not equal to itself in blank in [6]: a = float('nan')..in [7]: a == a.out[7]: false...why?

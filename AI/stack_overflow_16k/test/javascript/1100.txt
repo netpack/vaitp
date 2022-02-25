@@ -1,0 +1,1 @@
+settimeout with variables passed in fuction i need a delay before executing certain function in java script. i could use settimeout but the problem is i have two variables passed to function. i need to syntax for settimeout in this case.can anyone help?

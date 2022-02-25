@@ -1,0 +1,1 @@
+"changing ""for loop"" to ""while loop"" wondering how would the following for loop be changed to while loop. ..while having the same output...for i in range(0,20, 4):.     print(i)"

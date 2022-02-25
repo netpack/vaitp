@@ -1,0 +1,9 @@
+"    def test_course_has_entrance_exam_in_student_attempts_reset(self):
+        """ Test course has entrance exam id set while resetting attempts"""
+        url = reverse('reset_student_attempts_for_entrance_exam',
+                      kwargs={'course_id': unicode(self.course.id)})
+        response = self.client.get(url, {
+            'all_students': True,
+            'delete_module': False,
+        })
+        self.assertEqual(response.status_code, 400)"

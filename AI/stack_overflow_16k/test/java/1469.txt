@@ -1,0 +1,1 @@
+shifting integer using shiftopearator how does doing..system.out.println(integer.tobinarystring(43 &gt;&gt; 24));...gives me a result as zero?..where as right shift &lt;&lt; gives me 101011000000000000000000000000 . can anybody explain with example how does this happen?

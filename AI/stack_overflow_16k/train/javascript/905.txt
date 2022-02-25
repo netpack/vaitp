@@ -1,0 +1,1 @@
+"compare two dates by day in blank i'm trying to compare two dates by day in blank.  comparing dates is fine, but i want just compare them by day and ignore the time of day.  is this possible without relying on a library like momentjs?"

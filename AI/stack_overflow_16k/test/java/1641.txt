@@ -1,0 +1,1 @@
+"fastest way to search string? what's the fastest way to check if specific letter/number appear in string (and how many times)? for example:..i let user write something and got ""test020301423"" (ofc i store that data in string variable). now i want to count how many times ""0"" appears in string. what's the fastest/best way to do that?"

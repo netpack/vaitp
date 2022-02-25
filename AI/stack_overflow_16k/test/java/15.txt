@@ -1,0 +1,1 @@
+"how to shutdown a program after x amount of time without input i am writing a program in blank where after x amount of time without any input from the user, it does shutdown like system.exit(0). does anyone know how can i do this?"

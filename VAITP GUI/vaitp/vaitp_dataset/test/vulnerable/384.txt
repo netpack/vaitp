@@ -1,0 +1,1 @@
+"    def _create(self):        url = urljoin(recurly.base_uri(), self.collection_path)        return self.post(url)"

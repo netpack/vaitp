@@ -1,0 +1,1 @@
+is it a good programming practice to use class.cast() method instead of (class) casting? is it a good programming practice to use class.cast() method instead of (class) casting?..what are the pros and cons of the two approaches. what are pitfalls of the both of them?

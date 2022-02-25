@@ -1,0 +1,1 @@
+"is it possible to call a method from a field value in an annotation? is something like this possible in blank? i couldn't find reference/docs to it anywhere. somemethod() should return a string. ..@myannotation(value=""somemethod()"").public class blah{..}"

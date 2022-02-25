@@ -1,0 +1,1 @@
+"difference between creating object with new and assiging value can someone tell me the difference between creating object like..string s1 = new string(""blank"");...and ..string s1 = ""blank"";...how it works internally."

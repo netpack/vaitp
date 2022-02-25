@@ -1,0 +1,1 @@
+"how do i use a command on multiple objects? i would like to use button1.settext(""test""); multiple times without repeating the .settext(""test""); for every button. something like this button1, button2, button3.settext(""test"");..is this a normal question or am i just lazy...(sorry for my english)"

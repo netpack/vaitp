@@ -1,0 +1,1 @@
+"blank : fatest way to restore a binary file of double values i've a bunch of files (let's say 1'000, each between 1million to 10millions entries) full of double values in binary format (previously dumped by a dataoutputstream); what is the most efficient way to restore those double values in blank ?"

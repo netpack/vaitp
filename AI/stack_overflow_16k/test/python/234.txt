@@ -1,0 +1,1 @@
+"self.writer.writerow([s.encode('utf-8') for s in row]) i am trying to write into a file (in blank), but it says:...  'manyrelatedmanager' object has no attribute 'encode' ...here is the code:..self.writer.writerow([s.encode('utf-8') for s in row])...is there a way to avoid/fix this ?"

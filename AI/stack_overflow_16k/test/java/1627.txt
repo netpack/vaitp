@@ -1,0 +1,1 @@
+"conditional method chaining in blank what is the best possible way to chain methods together? in my scenario, there are four methods. if the output of the first method is true, it has to call the second method. ..for example:..flag = method1();.if (flag){.  flag = method2();.}.if (flag){.  method3();.} .// and so on for next methods .."

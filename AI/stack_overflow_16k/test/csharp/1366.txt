@@ -1,0 +1,1 @@
+"anonymous types, when is it useful? how could this anonymous type be useful in real life situation? why is it good to be anoynimous?..// sampleobject is an instance of a simple anonymous type..var sampleobject = .    new { firstproperty = ""a"", secondproperty = ""b"" };"

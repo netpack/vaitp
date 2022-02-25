@@ -1,0 +1,1 @@
+".includes() not working in internet explorer this code does not work in internet explorer. any alternative?..""abcde"".includes(""cd"")"

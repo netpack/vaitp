@@ -1,0 +1,1 @@
+"blank: remove entry in a nested list i have a nested list that i would like to delete rows after it has finished with them. i tried using enumerating to pass in the index of the row to delete...nlist = [['chris', 'davids', 21], ['rob', 'croft', 26]]..for i, v in enumerate(nlist):.   if v[0] == 'chris':.       del v[i]"

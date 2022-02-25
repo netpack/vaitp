@@ -1,0 +1,1 @@
+"get week in array of days i have a array of days:..var days = [1,5,7,9,12,16,23,27,45,66];...now i want to find out which days belong to which week. i.e...week 1: 1,5,7.week 2: 9,12.week 3: 23,27...and so on...how can i achieve that?"

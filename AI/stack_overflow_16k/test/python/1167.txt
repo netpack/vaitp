@@ -1,0 +1,1 @@
+"cannot import name 'application' in blank 3 from pywinauto import application...error message:...  traceback (most recent call last):   file ""d:/program.  files/blank/pywinauto.py"", line 1, in .      from pywinauto import application   file ""d:/program files/blankpywinauto.py"", line 1, in .      from pywinauto import application importerror: cannot import name 'application'"

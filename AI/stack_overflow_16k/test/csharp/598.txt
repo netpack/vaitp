@@ -1,0 +1,1 @@
+"how to select row from a table based on two values blank? i know how to select a row from a table base on one column value, like that:..var rowfeaturename = db.afrrules.singleordefault(r =&gt; r.featurename == featurename);...but how can i do the same thing based on two column?..thanks"

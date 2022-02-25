@@ -1,0 +1,1 @@
+"format string using regex string to be formatted ..""new date(2009,0,1)""..string after formatting..""'01-jan-2009'"""

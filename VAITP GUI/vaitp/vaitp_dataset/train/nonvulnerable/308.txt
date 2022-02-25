@@ -1,0 +1,13 @@
+"    def test_endpoints_accept_get(self, data):
+        """
+        Tests that GET endpoints are not rejected with 405 when using GET.
+        """
+        url = reverse(data, kwargs={'course_id': unicode(self.course.id)})
+        response = self.client.get(url)
+
+        self.assertNotEqual(
+            response.status_code, 405,
+            "Endpoint {} returned status code 405 where it shouldn't, since it should allow GET.".format(
+                data
+            )
+        )"

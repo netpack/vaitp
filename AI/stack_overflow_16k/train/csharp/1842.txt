@@ -1,0 +1,1 @@
+"datetime format user entries i am trying to make a method which will convert any format of datetime a user enters. an example of an entry from the user can be 2y 4m 3d etc..i need this entry to be converted to a duration like 2 years, 4 months and 3 days to be something like seconds."

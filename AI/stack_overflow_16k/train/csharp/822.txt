@@ -1,0 +1,1 @@
+"sorting array of directory paths by actual directory structure i have an array of directories (a search which includes subdirectories). i'd like to sort the results, like so:..test.---a.----a.a.---b...so the collection lists the directory, and then all of the directories within it, and so forth, for every directory...how could i sort an array like this?..thanks"

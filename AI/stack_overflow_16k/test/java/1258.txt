@@ -1,0 +1,1 @@
+"how to get users ip address in blank while this may seem simple, i have tried the usual request.getremoteaddr(), request.getremotehost() but i keep getting my servers address. something about my configuration, im getting my gateway ip. does anyone know how to get the acutal users ip address?..thanks"

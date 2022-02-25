@@ -1,0 +1,1 @@
+"blank reference outer shadow variables from inner object quick question - it is possible to reference a shadow variable from a iife? i would like to reference to the a in global, is that possible?..var a = 2;..(function foo(){..    var a = 3;.    console.log( a ); // 3.    console.log( this.a ); // i want to reference to the var a = 2 in global.})();..console.log( a ); // 2"

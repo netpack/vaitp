@@ -1,0 +1,1 @@
+"blank to download string trying to initiate a browser download in blank, but the data i want to be downloaded is in a string, not a file. i know if it were a file, the following would do it:..window.location.href = '/filepath/file.csv';...how can i get this same effect, only with a string (with csv data), not a file that already exists on the server?"

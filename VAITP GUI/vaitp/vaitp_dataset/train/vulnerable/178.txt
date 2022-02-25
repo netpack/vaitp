@@ -1,0 +1,14 @@
+"    def test_calculate_report_csv_success(self, report_type, instructor_api_endpoint, task_api_endpoint, extra_instructor_api_kwargs):
+        kwargs = {'course_id': unicode(self.course.id)}
+        kwargs.update(extra_instructor_api_kwargs)
+        url = reverse(instructor_api_endpoint, kwargs=kwargs)
+        success_status = "The {report_type} report is being created.".format(report_type=report_type)
+        if report_type == 'problem responses':
+            with patch(task_api_endpoint):
+                response = self.client.get(url, {'problem_location': ''})
+            self.assertIn(success_status, response.content)
+        else:
+            CourseFinanceAdminRole(self.course.id).add_users(self.instructor)
+            with patch(task_api_endpoint):
+                response = self.client.get(url, {})
+            self.assertIn(success_status, response.content)"

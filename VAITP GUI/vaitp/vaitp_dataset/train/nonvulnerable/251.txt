@@ -1,0 +1,7 @@
+"    def _generate_cmd(self, executable, cmd):
+        if executable:
+            ### TODO: Why was "-c" removed from here? (vs jail.py)
+            local_cmd = [self.zlogin_cmd, self.zone, executable, cmd]
+        else:
+            local_cmd = '%s "%s" %s' % (self.zlogin_cmd, self.zone, cmd)
+        return local_cmd"

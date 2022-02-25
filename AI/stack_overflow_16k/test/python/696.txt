@@ -1,0 +1,1 @@
+"how to sort blank list of strings of numbers i am trying to sort list of strings containing numbers..a = [""1099.0"",""9049.0""].a.sort().a.['1099.0', '9049.0']..b = [""949.0"",""1099.0""].b.sort()    ..b.['1099.0', '949.0']..a.['1099.0', '9049.0']...but list b is sorting and not list a"

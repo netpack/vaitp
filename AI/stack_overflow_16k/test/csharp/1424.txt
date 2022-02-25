@@ -1,0 +1,1 @@
+"what's the difference between new object[] {} and new [] {}? sometimes when passing an arbitrary array of objects such as to an activator, i see this notation:..new [] {5, ""five""}...and in other cases, that seem to need a named dictionary of objects, i see this:..new {numeric = 5, textual = ""five""}...what exactly is this second expression creating an array of?"

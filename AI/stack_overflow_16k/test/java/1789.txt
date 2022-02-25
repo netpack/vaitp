@@ -1,0 +1,1 @@
+"how to quickly check if a class exists i want to do something like this:..  try {.    class.forname( ""your.fqdn.class.name"" );.  } catch( classnotfoundexception e ) {.  //my class isn't there!.}...however i need to do it far more quickly. execution time of class.forname(name) is about 200ms for me and this is not good enough. ..is there a faster way of doing the same thing?"

@@ -1,0 +1,1 @@
+"multiply large no. in array multiply any 2 numbers. the numbers can be extremely large (i.e. run into hundreds of digits) and are provided as strings. ..the expected output is a string which represents the product of the two numbers..example-..multiply(""268435456"",""524288"")=""140737488355328"".multiply(""12321412423524534534543"",""0"")=""0"""

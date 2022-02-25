@@ -1,0 +1,3 @@
+"    def POST(self, path, body=None, ensure_encoding=True, log_request_body=True):
+        return self._request('POST', path, body=body, ensure_encoding=ensure_encoding,
+                             log_request_body=log_request_body)"

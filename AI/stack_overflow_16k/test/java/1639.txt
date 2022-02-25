@@ -1,0 +1,1 @@
+blank list creation methods difference what's the difference between defining a arraylist like this:..list list = new linkedlist(); ...and like this?..linkedlist list = new linkedlist();

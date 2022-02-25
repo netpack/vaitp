@@ -1,0 +1,1 @@
+"blank - one result from a list i dont know if i did choose a good title, but here it goes: ..i have this list which i need it to only produce one result not all of them!..for i in range(len(f)):.    print i+1,d[i]..1 -0.0002.2 0.0.3 0.0.4 0.0.5 -3.2e-05.6 -0.000376...i need only the last result. i use a for loop to get all of them. is there a way to do that?"

@@ -1,0 +1,1 @@
+"what does suffix 'f' mean in blank code? here's the explanatory code. the language is blank and the code uses android...fg.settextsize(height*0.50f); //&lt;-'f' is in the brackets...or..@override.protected void onsizechanged(int w, int h, int oldw, int oldh) {.    super.onsizechanged(w, h, oldw, oldh);.    swidth = w / 3f; // &lt;-'f' is here.}...what does the suffix 'f' mean?"

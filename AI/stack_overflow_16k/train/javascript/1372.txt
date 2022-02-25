@@ -1,0 +1,1 @@
+"taking the specific value of a div based on class id in my html page i have a tag with this format:..&lt;p class=""pclass""&gt;cclass&lt;/p&gt;...i want to take the value cclass and add it to a variable. i tried to use this:..var x = document.getelementsbyclassname(""pclass"").innerhtml;...is there a different way to do it?"

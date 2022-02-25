@@ -1,0 +1,1 @@
+"when to use __iter__() vs iter()? let's say i have a class which implements an __iter__() function, is it preferred to use iter(obj) or calling obj.__iter__() directly? are there any real differences besides having to type 5 characters less with the magic function?..in contrast: for next() and __next__() i can see an advantage for having a default value with the magic function."

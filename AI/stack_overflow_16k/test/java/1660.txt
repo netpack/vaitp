@@ -1,0 +1,1 @@
+"is there an equivalent method to c's scanf in blank? blank has the notion of format strings, bearing a strong resemblance to format strings in other languages. it is used in jdk methods like string#format() for output conversion...i was wondering if there an input conversion method akin to c's scanf in blank?"

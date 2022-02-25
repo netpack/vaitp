@@ -1,0 +1,1 @@
+"how can i get the classname at runtime, but only the classname? how can i get the classname at runtime, but only the actual classname and not the whole ""com.xyz.etc."" ?..i mean only the part of the name after the last period"

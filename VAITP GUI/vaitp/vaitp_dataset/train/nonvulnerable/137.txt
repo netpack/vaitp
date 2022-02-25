@@ -1,0 +1,6 @@
+"    def __init__(self):
+        self.catalog_api = Manager()
+        self.identity_api = identity.Manager()
+        self.policy_api = policy.Manager()
+        self.token_api = token.Manager()
+        super(ServiceController, self).__init__()"

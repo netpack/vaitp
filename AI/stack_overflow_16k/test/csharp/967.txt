@@ -1,0 +1,1 @@
+"what does ""<<"" operator mean in blank for example, if i write console.writeline(1&lt;&lt;2&lt;&lt;2+1); in blank console application, the output will be 32  ..can you say me why? what does this ""&lt;&lt;"" operator mean?.where can i read more about it? i google but couldn't find it"

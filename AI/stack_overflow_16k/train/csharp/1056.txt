@@ -1,0 +1,1 @@
+how can i monitor the process using blank? i want my application to monitor and log the process that are started and terminated in winxp machine during the existence of my application. i dont want to get all the process names that are running. how can i achieve this ? any ideas appreciated.. thanks.

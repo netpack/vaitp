@@ -1,0 +1,1 @@
+"blank object literal function how can i remove quotes from a blank object literal only by ""function"" part? for example:..before..{ ""a3"" : { ""text"" : ""function(a1,a2) {return a1+a2 }"" }...after removing..{ ""a3"" : { ""text"" : function(a1,a2) {return a1+a2 } }...p.s: php json_encode puts quotes for each value. i need an object function without quotes."

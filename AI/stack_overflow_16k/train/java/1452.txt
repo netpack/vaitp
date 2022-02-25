@@ -1,0 +1,1 @@
+"object to class how can i transfer object of class c to class a and b. but i cannot use constructor..i mean:..public class jdbc { ..    public static void main(string[] args) { .        c q = new c();.        a a = new a(args, q);.        b w = new b(args, q);.        a.start();.        w.start();.    }.}...this variant with constructor"

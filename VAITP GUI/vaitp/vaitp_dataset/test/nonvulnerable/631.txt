@@ -1,0 +1,1 @@
+"    def test_render_simple_round_brackets(self):        test_string = "(Ar)"        out = render_to_html(test_string)        correct = u'<span class="math">(Ar)</span>'        log(out + ' ------- ' + correct, 'html')        self.assertEqual(out, correct)"

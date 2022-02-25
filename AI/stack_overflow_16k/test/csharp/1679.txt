@@ -1,0 +1,1 @@
+find location of a string i am trying to find a hex string in the loaded ram memory. i am doing the comparison check using if statement. once the string is located i need the location of the string relative to the beginning of the file. ram is the acquired physical memory of a system

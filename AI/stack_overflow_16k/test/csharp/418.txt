@@ -1,0 +1,1 @@
+"calculate a pixel value if i have this code in blank:..int index = 10;.float value = 20;..float* pixels = getpixeldata();..pixels[index+1] = (byte)(value/256);.pixels[index+0] = (byte)(value &amp; 0xff);...then, the question is how to calculate the 'value' if i have:..int index = 10;..pixels[index+1] = x;.pixels[index+0] = y;..float value = ?"

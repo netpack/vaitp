@@ -1,0 +1,1 @@
+"    def test_win(self):        """        test if default_dir for Windows platform is accessible        since default_dir_win() does not have any Windows specific code,        let's test it everywhere        """        d = catalog.default_dir_win()        assert_(catalog.is_writable(d))"

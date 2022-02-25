@@ -1,0 +1,1 @@
+"    def get_response(self):        token_serializer = self.token_serializer_class(            instance=self.token,            context=self.get_serializer_context(),        )        data = token_serializer.data        data['next'] = self.serializer.validated_data['code'].next        return Response(data, status=status.HTTP_200_OK)"

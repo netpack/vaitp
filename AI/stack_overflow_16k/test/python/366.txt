@@ -1,0 +1,1 @@
+how to install .whl files in blank 3.4 from www.lfd.uci.edu i tried to install pygame 3.4 from www.lfd.uci.edu.i read someone that told me to do this c:blank34scriptspip3.4.exe install c:userstomer2desktoppygame+mkl‑cp34‑none‑win_amd64.whl..but it does not work.

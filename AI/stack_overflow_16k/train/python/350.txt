@@ -1,0 +1,1 @@
+"blank: appending to a list in a dictionary so,..having a case of the monday's and none of my references are helping me out...i have a file formatted like this:..x1    y1    z1.x1    y2    z2.x2    y3    z3...i would like to make a dictionary formatted like this: {x1: [[y1, z1], [y2,z2]], x2: [y3,z3]} but i'm getting stuck on an efficient way to do this. help?"

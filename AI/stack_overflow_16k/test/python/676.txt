@@ -1,0 +1,1 @@
+"how come slicing returns a lists but indexing returns a value indexing ---> returns string..input:.l1 = ['bbq', 'rr'].[l1[0] + l1[0], l1[1]+l1[1]]..output: ['bbqbbq', 'rrrr']...slicing  ---> returns lists..input: [l1[:1] + l1[:1], l1[1:2]+l1[1:2]]&lt;br&gt;.output: [['bbq', 'bbq'], ['rr', 'rr']]"

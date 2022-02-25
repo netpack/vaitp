@@ -1,0 +1,1 @@
+send key strokes to games using direct input i can send any windows application key strokes with postmessage api. but i can't send key strokes to game window by using postmessage...anyone know anything about using direct input functions for sending keys to games from blank.

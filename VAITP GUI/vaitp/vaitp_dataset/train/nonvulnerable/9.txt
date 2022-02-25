@@ -1,0 +1,8 @@
+"    def testPathTraverse(self):
+        # need to perform this test with a "real" folder
+        from OFS.Folder import Folder
+        f = self.folder
+        self.folder = Folder()
+        self.folder.t, self.folder.laf = f.t, f.laf
+        self.folder.laf.write('ok')
+        self.assert_expected(self.folder.t, 'CheckPathTraverse.html')"

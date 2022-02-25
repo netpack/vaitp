@@ -1,0 +1,1 @@
+"window.onunload event not firing i have a silverlight application in which i need to fire signout event if user navigates away..i have tried a sample function as..window.onunload = function test() { alert(""test""); }...the problem is when i navigate away from the webpage the event fires, but i need this event to fire when user closed browser or tab."

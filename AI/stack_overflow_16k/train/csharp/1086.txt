@@ -1,0 +1,1 @@
+"why does x++ have higher precedence than ++x? what’s the point of post increment ++ operator having higher precedence than preincrement ++ operator? thus, is there a situation where x++ having same level  of precedence as ++x would cause an expression to return a wrong result?"

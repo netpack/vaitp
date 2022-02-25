@@ -1,0 +1,1 @@
+input stream.read return 0 or -1? what the difference between ..byte[] buffer = new byte[1024];.// this:.if (inputstream.read(buffer) &gt; 0) { /*...*/ }.// and:.if (inputstream.read(buffer) != -1) { /*...*/ }...can both determine the network stream terminate?

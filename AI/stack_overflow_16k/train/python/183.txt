@@ -1,0 +1,1 @@
+"what does the following segment do - blank i have a problem with the following function. i can't understand what it does, because i'm new to blank, can you help me, please. thanks in advance...def foo(limit):.    a = [true] * limit.    a[0] = a[1] = false.    for (i,b) in enumerate(a):.        if b:.        yield i.        for n in xrange(i*i,limit,i):.            a[n] = false"

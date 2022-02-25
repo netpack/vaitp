@@ -1,0 +1,1 @@
+how to add element to a generic collection i am wondering how to add a specialized object to a generic collection..i am using the following code..collection&lt;t&gt; c;.class1 object1 = new class1().c.add((t)object1)...is this the correct way?

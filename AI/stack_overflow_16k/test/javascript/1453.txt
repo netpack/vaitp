@@ -1,0 +1,1 @@
+"like excel mround function in blank i am trying to round a decimal number to nearest fraction number which end with 0 or 5 in blank.example if value is 543.55 should return 545 and if value is 541.99 should return 540..i tried with math.round() .but not able to achieve..kindly suggest me how to achieve that..thanks in advance,.bijay"

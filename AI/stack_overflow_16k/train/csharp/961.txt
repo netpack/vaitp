@@ -1,0 +1,1 @@
+"why boolean and bool from the link ( which is mentioned in question) my question is that microsoft says ""the blank type keywords and their aliases are interchangeable"" but why we need aliases, from my point of view boolean is more meaningful then bool and int32 is more meaningful then int then why aliases ???"

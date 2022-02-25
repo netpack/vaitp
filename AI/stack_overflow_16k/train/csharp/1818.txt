@@ -1,0 +1,1 @@
+is there any option to make get encoding return the required number of bytes matching the target byte array i have a byte array defined as..byte[] target;...now when i call ..target = encoding.ascii.getbytes(input);...the returned bytes are only 3.but i need a 4 byte array..is there any way to get the returned 3 bytes padded with a 0 byte so that i get a byte array of length 4

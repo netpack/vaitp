@@ -1,0 +1,1 @@
+"type error for not enough arguments when 2 arugments are already passed i am getting the following error,it says not enough arguments,am already passing two arguments...what is wrong here?..   check_call(""rm -rf %s/%s/*"" % script_root % w_root,shell=true)                                .    typeerror: not enough arguments for format string"

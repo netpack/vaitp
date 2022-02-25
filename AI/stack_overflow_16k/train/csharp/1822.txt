@@ -1,0 +1,1 @@
+"read file contents into string, not string array i'm new to blank. i'm trying to store the contents of a text file into a string. i tried the readalllines method but it requires a string[]"

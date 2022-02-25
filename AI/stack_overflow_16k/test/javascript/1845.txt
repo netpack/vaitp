@@ -1,0 +1,1 @@
+"js error object has no method addeventlistener i have following code..var el = document.queryselectorall('.block');.console.log(el);.el.addeventlistener('click', function () {.    alert('hello');.}, false);...however, it returns an error uncaught typeerror: object #&lt;nodelist&gt; has no method 'addeventlistener'..why am i getting this error and how can i solve this issue?"

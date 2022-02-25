@@ -1,0 +1,1 @@
+"how to use class in blank i declared a class in file a:..a = function(param1,para2){}; ...then i used the class in file b:.. let a = require('../filename'); . let a = new a(param1,param2);...but the v8 said that,the a is not defined.    how can i fix it ? .    thanks in regards."

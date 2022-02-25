@@ -1,0 +1,53 @@
+"    def __process_key_event_internal2(self, keyval, keycode, state):
+        if self.__has_input_purpose and \
+           self.__input_purpose == IBus.InputPurpose.PASSWORD:
+            return False
+
+        if Engine.__typing_mode == jastring.TYPING_MODE_THUMB_SHIFT and \
+           Engine.__input_mode not in [INPUT_MODE_LATIN, INPUT_MODE_WIDE_LATIN]:
+            return self.process_key_event_thumb(keyval, keycode, state)
+
+        is_press = (state & IBus.ModifierType.RELEASE_MASK) == 0
+
+        state = state & (IBus.ModifierType.SHIFT_MASK |
+                         IBus.ModifierType.CONTROL_MASK |
+                         IBus.ModifierType.MOD1_MASK)
+
+        # ignore key release events
+        if not is_press:
+            return False
+
+        if keyval in KP_Table and self.__prefs.get_value('common',
+                                                         'ten_key_mode'):
+            keyval = KP_Table[keyval]
+
+        key = self._mk_key(keyval, state)
+        for cmd in self.__keybind.get(key, []):
+            if config.DEBUG:
+                print 'cmd =', cmd
+            try:
+                if getattr(self, cmd)(keyval, state):
+                    return True
+            except:
+                print >> sys.stderr, 'Unknown command = %s' % cmd
+
+        if state & (IBus.ModifierType.CONTROL_MASK | IBus.ModifierType.MOD1_MASK):
+            return False
+
+        if (IBus.KEY_exclam <= keyval <= IBus.KEY_asciitilde or
+            keyval == IBus.KEY_yen):
+            if Engine.__typing_mode == jastring.TYPING_MODE_KANA:
+                if keyval == IBus.KEY_0 and state == IBus.ModifierType.SHIFT_MASK:
+                    keyval = IBus.KEY_asciitilde
+                elif keyval == IBus.KEY_backslash and keycode in [132-8, 133-8]:
+                    keyval = IBus.KEY_yen
+            ret = self.__on_key_common(keyval, state)
+            if (Engine.__input_mode != INPUT_MODE_LATIN and
+                unichr(keyval) in u',.' and
+                self.__prefs.get_value('common', 'behavior_on_period')):
+                return self.__cmd_convert(keyval, state)
+            return ret
+        else:
+            if not self.__preedit_ja_string.is_empty():
+                return True
+            return False"

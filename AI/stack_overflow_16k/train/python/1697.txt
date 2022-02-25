@@ -1,0 +1,1 @@
+"why one liner result is different while working with fibonacci sequence:..a = 1.b = 3.a, b = b, a + b.print a, b...this properly results to a = 3 and b = 4..now if i would re-code it as:..a = 1.b = 3.a = b.b = a + b.print a, b...the resulting variable b is 6 instead of 4...what happens ""behind of scenes"" when one-liner a, b = b, a + b is used?"

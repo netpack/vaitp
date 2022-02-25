@@ -1,0 +1,1 @@
+"the alert() and return give different value for my variable var buy = function(sum, arr){.  arr.some(function(item, i) {.    var id = arr.indexof(sum - item, i + 1);.    alert(id);.  });.};..buy(2,[1,1]);...alert(id) would give me the value of 1 and -1; however, return says the id is undefined. why does it do that?"

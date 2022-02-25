@@ -1,0 +1,1 @@
+how could [1][0]+[2][0] equals 3 - blank hello i was in interview and i asked this question. i didn't knew the answer could some help me..how could this equals to 3..var x = [1][0]+[2][0];.console.log(x);     //print 3

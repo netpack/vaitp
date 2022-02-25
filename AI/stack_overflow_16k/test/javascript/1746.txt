@@ -1,0 +1,1 @@
+"disable click on a div i want to disable click on a certain &lt;div&gt; so that when you select the text on it, the text doesn't select...i tried writing onclick=""return false;"" like in this fiddle http://jsfiddle.net/mageek/x6hqd/ but it doesn't work...how can it work? (my goal isn't just disabling the select, it's the whole click)."

@@ -1,0 +1,1 @@
+"error in reading data in blank after update version 3.5 to 3.6 in ubunto 16.04 after updating to ubuntu 16.04 , i have updated blank3 version from 3.57 to 3.6 but now i can't read the data using pandas...here are the errors issued:"

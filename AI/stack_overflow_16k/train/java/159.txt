@@ -1,0 +1,1 @@
+in a instance like this why the both conditions are not cheked class a.{. public static void main(string args[]). {.  int z=5;.  if(++z&gt;5||++z&gt;6).  {.   z++;.  }.  system.out.println(z);. }.}

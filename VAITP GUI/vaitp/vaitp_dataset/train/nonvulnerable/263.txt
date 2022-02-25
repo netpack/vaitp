@@ -1,0 +1,112 @@
+"    def _execute_module(self, conn, tmp, module_name, args,
+        async_jid=None, async_module=None, async_limit=None, inject=None, persist_files=False, complex_args=None, delete_remote_tmp=True):
+
+        ''' transfer and run a module along with its arguments on the remote side'''
+
+        # hack to support fireball mode
+        if module_name == 'fireball':
+            args = "%s password=%s" % (args, base64.b64encode(str(utils.key_for_hostname(conn.host))))
+            if 'port' not in args:
+                args += " port=%s" % C.ZEROMQ_PORT
+
+        (
+        module_style,
+        shebang,
+        module_data
+        ) = self._configure_module(conn, module_name, args, inject, complex_args)
+
+        # a remote tmp path may be necessary and not already created
+        if self._late_needs_tmp_path(conn, tmp, module_style):
+            tmp = self._make_tmp_path(conn)
+
+        remote_module_path = conn.shell.join_path(tmp, module_name)
+
+        if (module_style != 'new'
+           or async_jid is not None
+           or not conn.has_pipelining
+           or not C.ANSIBLE_SSH_PIPELINING
+           or C.DEFAULT_KEEP_REMOTE_FILES
+           or self.su):
+            self._transfer_str(conn, tmp, module_name, module_data)
+
+        environment_string = self._compute_environment_string(conn, inject)
+
+        if "tmp" in tmp and ((self.sudo and self.sudo_user != 'root') or (self.su and self.su_user != 'root')):
+            # deal with possible umask issues once sudo'ed to other user
+            self._remote_chmod(conn, 'a+r', remote_module_path, tmp)
+
+        cmd = ""
+        in_data = None
+        if module_style != 'new':
+            if 'CHECKMODE=True' in args:
+                # if module isn't using AnsibleModuleCommon infrastructure we can't be certain it knows how to
+                # do --check mode, so to be safe we will not run it.
+                return ReturnData(conn=conn, result=dict(skipped=True, msg="cannot yet run check mode against old-style modules"))
+            elif 'NO_LOG' in args:
+                return ReturnData(conn=conn, result=dict(skipped=True, msg="cannot use no_log: with old-style modules"))
+
+            args = template.template(self.basedir, args, inject)
+
+            # decide whether we need to transfer JSON or key=value
+            argsfile = None
+            if module_style == 'non_native_want_json':
+                if complex_args:
+                    complex_args.update(utils.parse_kv(args))
+                    argsfile = self._transfer_str(conn, tmp, 'arguments', utils.jsonify(complex_args))
+                else:
+                    argsfile = self._transfer_str(conn, tmp, 'arguments', utils.jsonify(utils.parse_kv(args)))
+
+            else:
+                argsfile = self._transfer_str(conn, tmp, 'arguments', args)
+
+            if (self.sudo and self.sudo_user != 'root') or (self.su and self.su_user != 'root'):
+                # deal with possible umask issues once sudo'ed to other user
+                self._remote_chmod(conn, 'a+r', argsfile, tmp)
+
+            if async_jid is None:
+                cmd = "%s %s" % (remote_module_path, argsfile)
+            else:
+                cmd = " ".join([str(x) for x in [remote_module_path, async_jid, async_limit, async_module, argsfile]])
+        else:
+            if async_jid is None:
+                if conn.has_pipelining and C.ANSIBLE_SSH_PIPELINING and not C.DEFAULT_KEEP_REMOTE_FILES and not self.su:
+                    in_data = module_data
+                else:
+                    cmd = "%s" % (remote_module_path)
+            else:
+                cmd = " ".join([str(x) for x in [remote_module_path, async_jid, async_limit, async_module]])
+
+        if not shebang:
+            raise errors.AnsibleError("module is missing interpreter line")
+
+        rm_tmp = None
+        if "tmp" in tmp and not C.DEFAULT_KEEP_REMOTE_FILES and not persist_files and delete_remote_tmp:
+            if not self.sudo or self.su or self.sudo_user == 'root' or self.su_user == 'root':
+                # not sudoing or sudoing to root, so can cleanup files in the same step
+                rm_tmp = tmp
+
+        cmd = conn.shell.build_module_command(environment_string, shebang, cmd, rm_tmp)
+        cmd = cmd.strip()
+
+        sudoable = True
+        if module_name == "accelerate":
+            # always run the accelerate module as the user
+            # specified in the play, not the sudo_user
+            sudoable = False
+
+        if self.su:
+            res = self._low_level_exec_command(conn, cmd, tmp, su=True, in_data=in_data)
+        else:
+            res = self._low_level_exec_command(conn, cmd, tmp, sudoable=sudoable, in_data=in_data)
+
+        if "tmp" in tmp and not C.DEFAULT_KEEP_REMOTE_FILES and not persist_files and delete_remote_tmp:
+            if (self.sudo and self.sudo_user != 'root') or (self.su and self.su_user != 'root'):
+            # not sudoing to root, so maybe can't delete files as that other user
+            # have to clean up temp files as original user in a second step
+                cmd2 = conn.shell.remove(tmp, recurse=True)
+                self._low_level_exec_command(conn, cmd2, tmp, sudoable=False)
+
+        data = utils.parse_json(res['stdout'], from_remote=True)
+        if 'parsed' in data and data['parsed'] == False:
+            data['msg'] += res['stderr']
+        return ReturnData(conn=conn, result=data)"

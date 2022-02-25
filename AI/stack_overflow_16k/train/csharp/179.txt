@@ -1,0 +1,1 @@
+"blank actionfilterattribute what is default attributeusage example..[attributeusage(attributetargets.class | attributetargets.method, inherited = true, allowmultiple = false)].public class redirectingactionattribute : actionfilterattribute...but if we don't use attributeusage, what is default value for actionfilterattribute. i search in google but i can not find it."

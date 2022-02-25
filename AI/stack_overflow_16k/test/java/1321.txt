@@ -1,0 +1,1 @@
+"blank modulos and division difference 2 / 4 = 0; // it should be 0.5, but the result is 0..2 % 4 = 2 // its should be 0, cuz there are no remainders, but somehow the result is 2...why it gives this results, what i'am doing wrong?"

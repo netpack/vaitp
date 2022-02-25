@@ -1,0 +1,1 @@
+"how to add commas between array members, etc? i simply add comma next to each word:.. foreach (datarow row in ds.tables[0].rows). {                {.    sqlin += row[""personid""] + "", "";. }...then i remove the last comma which one is unnecessary:.. sqlin = sqlin.trimend(' ', ',');...and i feel like in the days of classic asp. is there any blank version of what i do?"

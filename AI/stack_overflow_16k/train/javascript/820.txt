@@ -1,0 +1,1 @@
+"how to return array in variable instead of string blank var i = 1..var pattern1 = [""apple"", ""pear"", ""orange"", ""carrot""]..var pattern2 = [""apple"", ""pear"", ""orange"", ""carrot""]..var currentpat = ""pattern"" + i..alert(currentpat)...the currentpat variable is returning the string pattern1, its not returning the array. what am i doing wrong?"

@@ -1,0 +1,1 @@
+"encoding string blank i get a page response from a web and it is having strings like ""lluís quílez"". but i get it as ""llu&amp;#xed;s qu&amp;#xed;lez"". so how do i change it back to ""lluís quílez"" in blank?..thank you."

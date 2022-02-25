@@ -1,0 +1,17 @@
+"    def test_project_quotas_defaults_noclass(self):
+        self._stub_class()
+        self._stub_project()
+        result = quota.get_project_quotas(self.context, 'admin')
+        self.assertEqual(result, dict(
+                instances=10,
+                cores=20,
+                ram=50 * 1024,
+                volumes=10,
+                gigabytes=1000,
+                floating_ips=10,
+                security_groups=10,
+                security_group_rules=20,
+                metadata_items=128,
+                injected_files=5,
+                injected_file_content_bytes=10 * 1024,
+                ))"

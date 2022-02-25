@@ -1,0 +1,1 @@
+"how to compare current hours with a hour string blank i have attribute string time:""10:50"" response in blank..how to compare only hour of string with hour of system..e.g: if 10=10 then run code in function..please help. thanks"

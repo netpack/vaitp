@@ -1,0 +1,1 @@
+"how to represent list<string> in database i'm trying to represent the following class in the database,..class student.{.   int id,.   string name,.   list&lt;string&gt; skills.}...i'm not sure how to represent skills in my database.. please help"

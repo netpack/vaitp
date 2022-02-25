@@ -1,0 +1,1 @@
+how to reverse number in 4 digits(blank) this is my code down below;.. int reverse = 0;..     while( num != 0 ).      {.      reverse = reverse * 10;.      reverse = reverse + num%10;.      num = num/10;..    }..    system.out.println(reverse);...if i input :1234 it will show 4321..but if i input 0044..it will output 44..i want to output 4400..what should i type in?

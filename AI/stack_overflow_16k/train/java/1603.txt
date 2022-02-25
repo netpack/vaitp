@@ -1,0 +1,1 @@
+"how to use determine if a string is actually a character in blank? i need to check if a string is actually a character (only consists of 1 character). ..this is what i have so far...scanner keyboard = new scanner(system.in);.string str = keyboard.next();.    if (ischar(str = a) == true).    {.         system.out.print(""is a character"");.    }"

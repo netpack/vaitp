@@ -1,0 +1,1 @@
+"get element by id: how to select a file a manipulate it later i was wondering how can i get the value from the selected file. i am using..document.getelementbyid(""file1"").click()...so is it fine to use like this : ..var v = document.getelementbyid(""file1"").click();"

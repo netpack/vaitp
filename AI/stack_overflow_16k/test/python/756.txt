@@ -1,0 +1,1 @@
+"looking for a snippet to convert a string into a list of integers as an example:..&gt;&gt; s = '0123456' .&gt;&gt; list(s).['0', '1', '2', '3', '4', '5', '6']...i have come up with this:..&gt;&gt; map( lambda x:int(x), list(s) ).[0, 1, 2, 3, 4, 5, 6]...can this be improved ?"

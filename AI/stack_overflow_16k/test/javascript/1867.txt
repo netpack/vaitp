@@ -1,0 +1,1 @@
+"slice js function's arguments i want to write a common confirm method like..var confirmdelete = function (fun) {.    if (confirm(""do you want to delete "" + arguments[1])) {.        $(arguments[2]).remove();.        fun(arguments[3]);.    }.    return false;.}...it's working fine for fun with one parameter, but i want to suit for two or more parameters, how i can do it?"

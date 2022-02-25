@@ -1,0 +1,1 @@
+how to convert an object having rows into a datatable i have an object that has 14 objects inside it . each object contains my row values. how do i put everyting into a datatable using blank

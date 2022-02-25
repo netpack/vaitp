@@ -1,0 +1,1 @@
+"what is <%= something %>? i'm maintaining a blank page and i'm just wondering what surrounding a variable with this will do?..&lt;%= variable %&gt;...i tried searching but wasn't able to find anything relevant, so i'm sorry if this has been answered already! =)..thanks!"

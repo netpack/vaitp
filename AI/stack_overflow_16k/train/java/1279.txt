@@ -1,0 +1,1 @@
+calling only the super method on override class i see this code snippet in a jenkins plugin and i think that it is no-op..  @override.  public descriptorimpl getdescriptor() {.    return (descriptorimpl)super.getdescriptor();.  }...any reason that this might be essential and cannot be nuked from the code?

@@ -1,0 +1,1 @@
+"blank finding the maximum so i have a script with 3 scores, and i want the code to find the highest score and print a message based on which variable is the highest score. i know that math.max() finds the maximum, but i want it to find the variable name that has the maximum.  how do i do this?"

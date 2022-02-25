@@ -1,0 +1,1 @@
+"treemap that contains string as key and a boolean as value? hello i tried to create a treemap in blank but the compiler gives the error saying ""unexpected type""..can anyone tell me why? isn't possible to have primitive data types in a map?..i did solve it by using the blank.lang.boolean instead. but i don't understand why i can't mix a complex data type with a primitive one."

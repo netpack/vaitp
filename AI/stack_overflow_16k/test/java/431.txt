@@ -1,0 +1,1 @@
+beginner blank: how to write a method to set a variable to 0? i need to create a format method (within a class called usbdrive) which resets the capacity of a usbdrive to zero in blank.  any suggestions please?

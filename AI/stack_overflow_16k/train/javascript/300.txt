@@ -1,0 +1,1 @@
+"in blank, is function foo() { } a class, a standard function, or a function with properties? as a newbie, function foo() { } confuses me...why is it used with so many purposes? what is it built for? doesn't this make maintenance of code difficult?..edit: i'm not talking about ""foo"" but about functions in general."

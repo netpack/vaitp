@@ -1,0 +1,1 @@
+"trying to make a for loop that divides by 3 i'm trying to get numbers that are only divided by 3 so im not sure why i'm getting 0 as well. here's my code:..var numbers = [1,2,3,4,5,6,7,8,9,10];..for (var i = 0; i &lt; numbers.length; i++) {.    if (i % 3 === 0) {.        console.log(i);.    }.}"

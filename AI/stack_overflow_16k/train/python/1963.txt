@@ -1,0 +1,1 @@
+"how do i absolute the negative numbers in my list? hi how do i implement the abs() function in blank to ensure that the negative values in my list are now positive and stored to another variable?..say.....sample = [-1, -3, 2, 5]...and i want the new list of positive values in variable sample1, how then should i do it?..sample1 = map(abs, sample).print(sample1)"

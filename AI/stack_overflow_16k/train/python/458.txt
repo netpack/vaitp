@@ -1,0 +1,1 @@
+"list of objects being changed when original object is changed in blank, if i write:..a = [1].b = 3 * [a].a.append(2).print a, b...then, the output is: ..[1, 2] [[1, 2], [1, 2], [1, 2]]...however, when i write:..a = [1].b = 3 * a # notice the missing brackets here .a.append(2).print a, b...this turns out to be:..[1, 2] [1, 1, 1]...what is going on here?"

@@ -1,0 +1,1 @@
+"letting user decide what operation to apply to a list of numbers i have picked up blank recently and was wondering how i could do the following. say we have a list of 3 numbers:..x = [1, 2, 3]...then, we ask the user what to do with these numbers:..whatdo = raw_input('&gt; ')...for example the user enters '+2'. now how do i apply '+ 2' to all the elements of the list?"

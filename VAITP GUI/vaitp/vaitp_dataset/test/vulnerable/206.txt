@@ -1,0 +1,1 @@
+"def mysql_ends_with(field: Field, value: str) -> Criterion:    return functions.Cast(field, SqlTypes.CHAR).like(f"%{value}")"

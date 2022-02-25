@@ -1,0 +1,3 @@
+"    def __init__(self, expression, delimiter, **extra):
+        delimiter_expr = Value(str(delimiter))
+        super().__init__(expression, delimiter_expr, **extra)"

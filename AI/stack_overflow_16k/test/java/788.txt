@@ -1,0 +1,1 @@
+"system.getproperty(""user.dir"") does not work i need to get relative path from my project to upload photos, however when i run system.getproperty(""user.dir""); in my test, it returns /home/user/workspace/myproject,.but if i run it from my spring controller, it just returns /home/user...can anyone provide a insight that probably is happening?"

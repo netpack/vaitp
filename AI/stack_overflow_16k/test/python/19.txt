@@ -1,0 +1,1 @@
+"importing time module twice i saw the code from youtube and have a question...the code below imports time twice....import time.from time import mktime.....import pandas as pd.import os.import time.from datetime import datetime.from time import mktime...by importing time on third line, i think 5th line is useless...why does he import time twice?"

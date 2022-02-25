@@ -1,0 +1,1 @@
+blank cookie related issue i am facing a problem with a backend using cookies ...the ui technology is jsp and i have login to the application and performed some operations...at that time i copied the url and opened a new tab and pasted the copied url ..in this case i would like the user to be redirected to login page.

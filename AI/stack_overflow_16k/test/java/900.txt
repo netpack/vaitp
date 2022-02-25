@@ -1,0 +1,1 @@
+int[] cannot be converted to int[][] i have an int[][] established like this:..public static final int[][] answers...but i am having issues iterating through it. i have this:..for(int[][] s : answers)...and i am getting an error that says 'incompatible types: int[] cannot be converted to int[][]'. they are both int[][] so i am confused why this is happening.

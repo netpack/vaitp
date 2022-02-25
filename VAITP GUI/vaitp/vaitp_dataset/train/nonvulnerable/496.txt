@@ -1,0 +1,10 @@
+"def inspect_format_method(callable):
+    if not has_format:
+        return None
+    if not isinstance(callable, (types.MethodType,
+                                 types.BuiltinMethodType)) or \
+       callable.__name__ != 'format':
+        return None
+    obj = callable.__self__
+    if isinstance(obj, string_types):
+        return obj"

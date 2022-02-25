@@ -1,0 +1,1 @@
+blank client and server chat system i have little problem when i creating client and server chat system client doesn't read characters i am using bufferedinput stream

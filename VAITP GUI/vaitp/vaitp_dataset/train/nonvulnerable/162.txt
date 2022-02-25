@@ -1,0 +1,9 @@
+"    def setUp(self):
+        super(TestRequestBodySizeLimiter, self).setUp()
+
+        @webob.dec.wsgify()
+        def fake_app(req):
+            return webob.Response(req.body)
+
+        self.middleware = middleware.RequestBodySizeLimiter(fake_app)
+        self.request = webob.Request.blank('/', method='POST')"

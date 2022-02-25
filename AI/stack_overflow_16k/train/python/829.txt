@@ -1,0 +1,1 @@
+"how to compile multiple blank scripts to exe blank 3.5 i have 7 scripts that all call eachother at some point, so i want to compile them all and have it as a single .exe that i can run anywhere. pyinstaller isn't working for me, it keeps coming up with errors such as warning: lib not found: api-ms-won-crt-time-l1-1-0.dll dependency of c:blank35dlls_ssl.pyd"

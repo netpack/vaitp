@@ -1,0 +1,1 @@
+xmlserializer xs = new xmlserializer (typeof(myclass) closes debugger session in visual studio but works in intermediate window i am facing a really strange issue:..xmlserializer xs = new xmlserializer (typeof(myclass) closes debugger session in visual studio but works in the immediate window..it was working before but suddenly started to behave like this.

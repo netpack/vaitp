@@ -1,0 +1,1 @@
+"remove a group of textbox with java script i want to remove a group of textbox that their name are textbox1...how can i do it?..my code doesn't work...function remove_textbox(){.var parent=document.getelementbyid(""div1"");.var child=document.getelementsbyname(""textbox1"");.parent.removechild(child);            .}...any help?..many thanks in advance"

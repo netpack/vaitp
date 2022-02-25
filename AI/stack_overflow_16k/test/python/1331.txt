@@ -1,0 +1,1 @@
+"why does this simple integer division in blank 3 give me one less than expected answer? blank 3. i have this command ->..int(29930125722068957199361/65537)...i get 456690506463050752, but answer should be 456690506463050753..oh and this happens only in blank 3+ , not when executing direct in blank prompt"

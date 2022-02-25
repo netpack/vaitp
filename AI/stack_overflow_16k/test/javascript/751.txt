@@ -1,0 +1,1 @@
+"how event with if condition works in blank? if(document.getelementbyid(""ready_1"").innerhtml &amp;&amp; document.getelementbyid(""ready_2"").innerhtml ==""wait..""){.            document.getelementbyid(""start"").style.color = ""black"";.        }...i want to make #start black if #ready_1 &amp; #ready_2's innerhtml == ""wait.."".not using jquery."

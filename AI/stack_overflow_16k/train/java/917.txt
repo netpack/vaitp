@@ -1,0 +1,1 @@
+"sorting variables and negated variables in blank how to sort variables x and negated varibles x' alphabetic which are saved as string in blank?..example: string string = ""b*a'*d*h'""; result must.         string sortedstring=""a'*b*d*h'"";"

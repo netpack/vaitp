@@ -1,0 +1,1 @@
+"blank: can you use raw_input and template strings? (%s) i have this line of code....raw_input(""hello, %s, this is a question: "") % name...but i get and error saying:...  ""not all arguments converted during string formatting""...is it possible to use %s when using input()?"

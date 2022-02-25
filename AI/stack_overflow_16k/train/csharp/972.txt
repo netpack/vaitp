@@ -1,0 +1,1 @@
+how to create a popup window in blank.net i have two different applications on different system.if a button pressed in one application i keep its record in database and according to the record i want to popup a window in second application that notifying that button is pressed in first application...how could i do this? is it feasible?

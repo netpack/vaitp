@@ -1,0 +1,1 @@
+"in the below code, isn’t both the object references is of stringbuilder type? consider the following three statements in blank:...stringbuilder s1 = new stringbuilder(""boo"");.stringbuilder s2 = new stringbuilder(""boo"");.string s3 = new string (""boo"");...why does  s1.equals(s2) return false?"

@@ -1,0 +1,1 @@
+"how to match array what would be the best approach to check if all the elements of a given array are contained by another array? for example:..match(['countryaarea', 'countrybarea'], ['countrya', 'countryb']) // true...i have tried indexof() and includes(), but it does not work."

@@ -1,0 +1,1 @@
+getting absolute path of a file loaded via classpath i have this very specific need wherein a file is loaded from classpath and the same is used in another module which needs it's absolute path. what are the possible ways an absolute path of a file loaded via classpath can be deduced ?

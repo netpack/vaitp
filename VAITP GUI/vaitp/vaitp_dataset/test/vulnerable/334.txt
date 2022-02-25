@@ -1,0 +1,1 @@
+"    def post(self, request):        totp_secret = pyotp.random_base32()        request.user.totp_secret = totp_secret        request.user.totp_status = TOTPStatus.VERIFYING        request.user.save()        add_2fa.send(sender=self.__class__, user=request.user)        return FormattedResponse({"totp_secret": totp_secret})"

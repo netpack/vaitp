@@ -1,0 +1,1 @@
+how to sum duplicates values in list? i have a simple list of strings:..1 test1.10 test1.2 test1.12 test2.87 test2.12 test1.75 test1.43 test1...how to get list of strings:..1+10+2 test1.12+87 test2.12+75+43 test1...?

@@ -1,0 +1,3 @@
+"    def test_redundantdef(self):
+        with self.assertRaisesRegex(SyntaxError, "^Cannot have two type comments on def"):
+            tree = self.parse(redundantdef)"

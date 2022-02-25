@@ -1,0 +1,1 @@
+"is there a way to send variables to blank files? is it possible to do something like this.to send the value id=3 to the js file..&lt;script src=""http://site.com/js/loader.js?id=3"" .......otherwise what's the approach to do that?"

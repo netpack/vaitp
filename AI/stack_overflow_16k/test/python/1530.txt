@@ -1,0 +1,1 @@
+"blankic way of converting a list embedded in a string to a list i am not sure if there is a solution for this on stack overflow; so apologies if this is a duplicate...there are number of ways of converting the string:..s = '[1, 2, 3]'...to a list..t = [1, 2, 3]...but i am looking for the most straightforward blankic way of doing this. also, performance matters."

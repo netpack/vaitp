@@ -1,0 +1,1 @@
+"select up to five items how would i do a random choice, but up to five instead of exactly five:..random.random().sample(items[:40], 5) # select up to five random cues...for example, if there are only 2 items, it should only pick two. as it is now, it will raise a valueerror if there are less than five items."

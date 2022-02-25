@@ -1,0 +1,1 @@
+"how to divide textbox on column from db in sql query? how to divide textbox8 on value of price..int32 readsearch2 = convert.toint32(textbox8.text);.sqlcommand command = new sqlcommand(""select [price] from [products] "", sqlconnection);"

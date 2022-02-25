@@ -1,0 +1,1 @@
+"force overwrite in os.rename is it possible to force a rename os.rename to overwrite another file if it already exists?  for example in the code below if the file tests.csv already exists it would be replaced by the tests.txt file (that was also renamed to tests.csv)...os.rename(""c:userstest.txt"",""c:userstests.csv"");"

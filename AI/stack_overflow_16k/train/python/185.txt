@@ -1,0 +1,1 @@
+"how to get the distinct elements from a blank list? my list is like this: [['a','b'],['c','a'],['k','f'],['s','b'],['a','b']...].i want to get a new list which has no duplicate elements from it. what is the fastest way to realize it ?"

@@ -1,0 +1,1 @@
+"split a string if it contains enter key or n i have a multiline textbox.  i am entering recipe ingredients one by one in each line by using enter key.  i am saving this to database in a single field, but on display i need to split them to show them line by line.  how can i achieve this?"

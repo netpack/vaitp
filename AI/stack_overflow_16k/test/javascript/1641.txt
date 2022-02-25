@@ -1,0 +1,1 @@
+"how do i parse a long number string to just a number? i have some ids i need converted from strong to numbers however whenever i use parseint() or number(), i get a double type decimal..1.01038295007818e+016.0...i need to just convert the string to just a number."

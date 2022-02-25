@@ -1,0 +1,1 @@
+"what does the ~ do in blank? i just encountered this line in our code:..inspectactionresult.workactionresult &amp;= ~workactionresult.error;...workactionresult is a numbered enum, but what does the ~ do???"

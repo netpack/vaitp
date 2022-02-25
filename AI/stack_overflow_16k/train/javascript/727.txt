@@ -1,0 +1,1 @@
+how do i find if an object contains an array in blank? i have a huge set of data which is basically an array of objects. i need to loop through all the objects to see if any contain any array themselves...thoughts ?

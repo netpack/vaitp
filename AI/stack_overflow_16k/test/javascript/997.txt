@@ -1,0 +1,1 @@
+"what is the best way to store user input using prompt() in blank? basically, if you had a program that asked for a pet's name, in what way would you store a user's input so that the program wouldn't distinguish between ""fluffy"" , ""fluffy"", and ""fluffy""?"

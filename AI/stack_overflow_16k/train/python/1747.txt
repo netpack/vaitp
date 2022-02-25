@@ -1,0 +1,1 @@
+blank is there a shutdown equivalent to __init__ () i use __init__() functions a lot in blank classes to set up things when a class is first called. ..is there an equivalent function that is called when a script is shutting down?

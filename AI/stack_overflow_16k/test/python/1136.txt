@@ -1,0 +1,1 @@
+"ilu0 factorization with blank scipy spilu function i am trying to use scipy spilu function to ilu0 factorize a matrix in csc format. however, i don't see any option that allows me to use zero fill-in as fill_factor >= 1.0 and always performs fill in. can someone guide me about this?..i have tried spilu(a, fill_factor=1.0). still gives some fill in..lu = linalg.spilu(mat_csc)"

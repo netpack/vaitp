@@ -1,0 +1,1 @@
+"blank mouseevent parameter ..var test = document.getelementbyid(""test"");.test.onclick = function(ev) {.    console.log(ev);.}.....how blank engine know that ev is an eventmouse?.can i create a function and assign parameters like this?"

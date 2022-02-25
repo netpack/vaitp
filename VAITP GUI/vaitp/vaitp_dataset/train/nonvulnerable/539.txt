@@ -1,0 +1,2 @@
+"    def sentences_stats(self, type, vId = None):
+    	return self.sql_execute(self.prop_sentences_stats(type, vId))"

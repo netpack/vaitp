@@ -1,0 +1,1 @@
+"i've added a password to my blank program and i need to hide it i have a login and password on a blank program and i wont to print a * for every letter i type in the password (im on linux by the way)..name = input(""name : "").lower().password = input()(""password : "").lower()"

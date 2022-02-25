@@ -1,0 +1,1 @@
+"can i read a binary file and print out a text file in blank? i'm learning file i/o and i can read/write binary file from/to binary file , write text to binary file but i'm wondering can i read a binary file and print out a text , the content is the same when the binary file was created not the character by character?..thanks!"

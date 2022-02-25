@@ -1,0 +1,1 @@
+intersection of n sets mozilla has an example showing how to intersect two sets like so:..var intersection = new set([...set1].filter(x =&gt; set2.has(x)));...but what's the most concise (compact) way to intersect n sets? thanks.

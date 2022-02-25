@@ -1,0 +1,1 @@
+"get static property by string i have public static class myclass which contains many public static string parameters...following i have some value..string val = ""something"";...using that val i want to be able to get specified property - like myclass.something..how can i do that ?"

@@ -1,0 +1,1 @@
+"    def test_device_list_view_for_own_user_returns_200(self, verified_user, rf):        with override_settings(WAGTAIL_2FA_REQUIRED=True):            request = rf.get('foo')            request.user = verified_user            response = DeviceListView.as_view()(request, user_id=verified_user.id)            assert response.status_code == 200"

@@ -1,0 +1,1 @@
+"adding current position of a loop with previous position this might be a silly question but.i have a loop where n is a user input..n = input(""enter number""):.for i in range(n):.    a = input(""enter a value for each n"")...now i need to add the current position of a with the previous position of a..    c = a[n] + a[n-1]...how do i do that?..lets say n = 5 and a = 1,2,3,4,5"

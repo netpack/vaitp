@@ -1,0 +1,1 @@
+"2 variable outcomes cant have two? i have:..var outcome = $('#outcome') ;...with one outcome ""#outcome"" but i want to have two outcomes..i have tried ..var outcome = $('#outcome #outcome2') ;"

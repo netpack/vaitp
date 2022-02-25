@@ -1,0 +1,1 @@
+"what is missing in my code why this code is not working ?.i think i am doing some silly mistake here. ....document.addeventlistener(""domcontentloaded"", function() {.  var text = ""planing"";.  document.getelementsbytagname(""div"").innerhtml = text;.});.&lt;div id=""demo"" class=""eg""&gt;&lt;/div&gt;"

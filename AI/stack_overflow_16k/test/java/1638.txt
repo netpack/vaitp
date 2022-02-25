@@ -1,0 +1,1 @@
+"files.write and files.readallbytes changes byte[] input i am writing a unit test and i am seeing the following which i don't understand. any help is appreciated...tempfile = file.createtempfile(""temp"", ""file"");.files.write(tempfile.topath(), expectedbytes);.byte[] b = files.readallbytes(tempfile.topath());.assert.equals(b, expectedbytes); // failed"

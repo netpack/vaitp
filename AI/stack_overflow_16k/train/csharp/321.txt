@@ -1,0 +1,1 @@
+"string find and replace i have a string like..string text=""~aaa~bbb~ccc~bbbddd"";...the input value will be : bbb..so in the above string i should remove the value ""~bbb""..the resulting string should be..text=""~aaa~ccc~bbbddd"";"

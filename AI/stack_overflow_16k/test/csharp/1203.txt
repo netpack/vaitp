@@ -1,0 +1,1 @@
+rounding double value to value ending on .0 or .5 i'm trying to round some values as the following examples and need some help to write the math calculation for it:..input -&gt; 25 ÷ 4 = 6.25        output -&gt; 6.5..input -&gt; 15.5 ÷ 4 = 3.875     output -&gt; 4.0..input -&gt; 24.5 ÷ 4 = 6.125     output -&gt; 6.0...any idea how to write the round math procedure please?!

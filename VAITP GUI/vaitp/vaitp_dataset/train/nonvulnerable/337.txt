@@ -1,0 +1,12 @@
+"    def test_show_student_extensions(self):
+        self.test_change_due_date()
+        url = reverse('show_student_extensions',
+                      kwargs={'course_id': self.course.id.to_deprecated_string()})
+        response = self.client.post(url, {'student': self.user1.username})
+        self.assertEqual(response.status_code, 200, response.content)
+        self.assertEqual(json.loads(response.content), {
+            u'data': [{u'Extended Due Date': u'2013-12-30 00:00',
+                       u'Unit': self.week1.display_name}],
+            u'header': [u'Unit', u'Extended Due Date'],
+            u'title': u'Due date extensions for %s (%s)' % (
+                self.user1.profile.name, self.user1.username)})"

@@ -1,0 +1,1 @@
+"cast bindingsource current into datarow i need to capture the value of a specific field in the currentchange event. the problem is, i'm not sure how to convert a bindingsource.current (which returns an object) to a datatable or equivalent so i can grab a field value...any ideas?..cheers."

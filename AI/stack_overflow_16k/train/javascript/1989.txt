@@ -1,0 +1,1 @@
+"can i extract file metadata from a blank file object? i am working with the blank file api and am getting a file object after the user drags a local file into the browser window. in this particular case, it is an mp3. the mp3 has standard metadata associated with it, such as artist, album, year, etc. i want to access that metadata. is that possible?"

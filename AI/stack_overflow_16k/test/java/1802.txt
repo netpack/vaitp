@@ -1,0 +1,1 @@
+"same keyword for two purposes in blank? as we use ""default"" keyword as a access specifier, and it can be used in switch statements as well with complete different purpose, so i was curious that is there any other keywords in blank which can be used in more then one purposes"

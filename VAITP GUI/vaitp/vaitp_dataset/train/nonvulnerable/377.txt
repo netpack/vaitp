@@ -1,0 +1,13 @@
+"    def register_with_redemption_code(self, user, code):
+        """
+        enroll user using a registration code
+        """
+        redeem_url = reverse('shoppingcart.views.register_code_redemption', args=[code], is_dashboard_endpoint=False)
+        self.client.login(username=user.username, password='test')
+        response = self.client.get(redeem_url)
+        self.assertEquals(response.status_code, 200)
+        # check button text
+        self.assertTrue('Activate Course Enrollment' in response.content)
+
+        response = self.client.post(redeem_url)
+        self.assertEquals(response.status_code, 200)"

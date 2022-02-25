@@ -1,0 +1,1 @@
+"how to extend sub-list to the list with a comprehension list method how to extend a sub list to the list inside a comprehension list..this is my code:..print [i if not isinstance(i,list) else j for j in i for i in [1, 2, 3, [5, 6, 7]]]..i expect [1, 2, 3, 5, 6, 7]. and i get nameerror: name 'i' is not defined..could you tell me how should i improve my code?"

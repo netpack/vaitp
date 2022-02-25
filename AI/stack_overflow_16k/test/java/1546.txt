@@ -1,0 +1,1 @@
+"display date in jtextfield calendar calendar = calendar.getinstance();.date udoa = new date(calendar.gettime().gettime());`...here, i am storing system date in udoa (local variable)..i want to display it in jtextfield doa;..doa.settext(udoa); ..i am using this, but it is not working because data type of udoa is date...does anybody know how to achieve this?"

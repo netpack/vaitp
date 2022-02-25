@@ -1,0 +1,1 @@
+"get all numbers between two numbers i want to get all the numbers say from 0 - 10...so like ..if textbox1.text.contains(0 - 10).    {.        messagebox.show(""true"");.    }..etc...i'm sorry if its a noob question. im new to the language...thanks"

@@ -1,0 +1,1 @@
+"return x param anonymous object in blank, sometimes i need to return a struct variable like point(x,y). however, i only use this result in 1 place of the code and 1 time. so it seems excessive to declare a class called point. is there a way to return some kind of anonymous object with x number of parameters?"

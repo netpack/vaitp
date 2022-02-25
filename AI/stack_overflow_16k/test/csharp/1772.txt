@@ -1,0 +1,1 @@
+"find data containing in last column of excel of a specific row i am trying to find data containing in last column of excel of a specific row.i want to find it for row number2 only...using code below..excel.range last = sheet.cells.specialcells(excel.xlcelltype.xlcelltypelastcell, type.missing);.int lastusedrow = last.row;.int lastusedcolumn = last.column;"

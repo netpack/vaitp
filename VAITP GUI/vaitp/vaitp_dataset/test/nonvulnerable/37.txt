@@ -1,0 +1,1 @@
+"    def setup(self, request, hge_ctx):        self.dir = 'queries/graphql_query/permissions'        st_code, resp = hge_ctx.v1q_f(self.dir + '/setup.yaml')        assert st_code == 200, resp        yield        st_code, resp = hge_ctx.v1q_f(self.dir + '/teardown.yaml')        assert st_code == 200, resp"

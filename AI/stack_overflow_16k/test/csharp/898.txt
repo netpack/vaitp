@@ -1,0 +1,1 @@
+"find indexof in blank how do i find indexof() from :  ..string value = ""     50     "";  ...there are spaces...but i don't want to remove them using substring() or replace()...  ..i have to remove leftindex spaces until i get ""5"" and remove rightindex spaces after ""0""."

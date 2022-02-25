@@ -1,0 +1,1 @@
+"blank assigning value to variable from callback function i'm trying to assign a value to variable from a callback, but in console.log it shows me undefined...what am i doing wrong?..var threadslist = threads(data =&gt; {.  return data.})..console.log(threadslist)"

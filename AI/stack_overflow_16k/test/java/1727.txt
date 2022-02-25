@@ -1,0 +1,1 @@
+"how to use base64 to encrypt and decrypt? i am trying to convert byte array to base64 format in blank..my problem is sun.misc.base64decoder cannot be  used? is there any alternative?..byte[] buf = new byte[] { 0x12, 0x23 };.string s = new sun.misc.base64encoder().encode(buf);"

@@ -1,0 +1,1 @@
+"can i use node.childnodes in the if clause? can i do..if (node.childnodes) {.  // do something.}...instead of ..if (node.haschildnodes()) {.  // do something.}...i tried it, and it works. i tried !div.childnodes on a div element with stuff inside it and this returned the boolean false. it looks like it's working, but are there any traps that i'm overlooking here?"

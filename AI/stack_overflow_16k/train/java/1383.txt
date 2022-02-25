@@ -1,0 +1,1 @@
+any difference between `var x` and `int x`? is there a difference between declaring var x and int x?..//blank 8.int x = 10;..//blank 10.var x = 10;

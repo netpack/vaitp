@@ -1,0 +1,1 @@
+"get the highest height value from collection of dom elements i have a div with some children. i need to get the height of the highest div from those children. what is the best way, to get it using blank?"

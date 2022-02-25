@@ -1,0 +1,1 @@
+"converting a string to ints and chars i don't need an exact solution because this is homework, but i'm having trouble with one thing:..if i have a string consisting of 3 a 2 b 1 c.i need to get the ints and add them, then get the chars and convert each into a number grade, but i don't know how i can do that. there's no nextchar() method right?"

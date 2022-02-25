@@ -1,0 +1,1 @@
+method hiding in blank classes i'm looking at linkedlist class implementation in blank and i cannot understand how.add method is hidden...linkedlist implements icollection which has an add method. in the linkedlist class code the add method is declared as:..void icollection&lt;t&gt;.add(t value);...how it is possible to have internal method which is declared in the interface?

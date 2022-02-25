@@ -1,0 +1,1 @@
+using jmx or snpm4j with openjdk 8 i was searching the internet to finding some resources to use jmx or snmp4j with openjdk 8. can someone help with this?..with oracle jdk 8 we used snmp to send the heap status to nagios monitoring. snmp is proprietary to oracle jdk. this leads us to think about jmx or snmp4j with openjdk 8. ..any support will be highly welcomed !!!

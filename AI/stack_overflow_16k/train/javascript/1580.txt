@@ -1,0 +1,1 @@
+"why doesn't array.prototype.some named as .any? any sounds more native, and some kind of implies the number of items matching the predicate matters...why does the standard name the method some instead of any?"

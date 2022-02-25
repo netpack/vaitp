@@ -1,0 +1,1 @@
+sax xml parser or dom parser? is this using a sax or dom parser?..documentbuilder docbuilder = documentbuilderfactory.newinstance().newdocumentbuilder();.document     document = docbuilder.parse(file);

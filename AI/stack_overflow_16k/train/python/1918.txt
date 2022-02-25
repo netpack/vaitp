@@ -1,0 +1,1 @@
+"how to split a items inside a list, surrounded by brackets, seperated by , i have a string of plot ploints such as:..plots = [(0, 1), (0, 2), (1, 4), ... (0.4, 0.8) etc...but i want to split them into respective x and y's:..x = (0, 0, 1, ... 0.4).y = (1, 2, 4, ... 0.8)...i am unsure how to do this."

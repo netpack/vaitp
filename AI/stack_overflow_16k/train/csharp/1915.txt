@@ -1,0 +1,1 @@
+"how is complex number assignment from a double enabled? the complex structure in system.numerics allows assignment like this..complex c = 3.72;...if i wanted to make my own complex struct, how would i program this capability? i like it better than using constructors as in..complex c = new complex(3.72);"

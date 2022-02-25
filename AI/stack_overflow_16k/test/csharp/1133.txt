@@ -1,0 +1,1 @@
+read byte array byte by byte using blank i have a byte array and i want to read this array byte by byte and displayed each byte as integer...how to do this using blank?

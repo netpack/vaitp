@@ -1,0 +1,1 @@
+"how to specify the connection string if the excel file name contains white space?using blank string connstring = ""provider=microsoft.ace.oledb.12.0;data source=d:\data\[proj_resource details 20110118.xlsx];extended properties=excel 12.0"";...i mentioned [ ] still it is throwing exception.how can i solve this problem..plz mention the correct path"

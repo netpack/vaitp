@@ -1,0 +1,1 @@
+"blank member access from nested class to containing class i have classb, which is nested inside of classa. in classa i have a variable called _myid... how can i access _myid from classb?..thanks in advance!"

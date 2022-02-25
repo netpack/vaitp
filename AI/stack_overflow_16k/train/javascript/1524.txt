@@ -1,0 +1,1 @@
+assigning a value to variable inside test condition in blank is it acceptable to assign a value to a variable inside the test condition:..var word;.while (word = words.pop()) {.// other code.}...instead of after the condition is evaluated as part of the execution of the statement:..var word;.while (words.pop()) {.  word = words.pop();.  // other code.}...which is better?

@@ -1,0 +1,1 @@
+"def HTML(html):                                 # pylint: disable=invalid-name    return markupsafe.Markup(html)"

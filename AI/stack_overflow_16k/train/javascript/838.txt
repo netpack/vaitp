@@ -1,0 +1,1 @@
+"get date in dd:mm:yyyy hh:mm:ss format i need a current date in dd:mm:yyyy hh:mm:ss format, but getting a numeric one..i'm using date.now() for the same. how should i set the format to get the required format?"

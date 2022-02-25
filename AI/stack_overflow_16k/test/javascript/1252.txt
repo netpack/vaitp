@@ -1,0 +1,1 @@
+"how to convert hex numbers to byte string? &gt; str = 'xaexee'.'®î'...how to convert [0xae, 0xee] to '®î'?"

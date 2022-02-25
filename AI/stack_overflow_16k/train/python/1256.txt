@@ -1,0 +1,1 @@
+"removing decimals from a list in blank i would like to know if it is possible to remove the decimals from a product of a maths command in blank. my code is below. i would like to print only the whole numbers and not show the others...mylist = [5,10,15,20,25,30,35,40,45,50].myint = 7.newlist = [x / myint for x in mylist].print (newlist)"

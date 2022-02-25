@@ -1,0 +1,1 @@
+"compare two strings blank? is there a simple way in blank to compare two strings and find out the percentage of similarity between the two? say you have a string ""i like bing"" and ""i like google"" it would compare the words ""i"" ""like"" ""bing"" with the words ""i"" ""like"" ""google"" then would say that 2/3 of it was the same, and would return .66"

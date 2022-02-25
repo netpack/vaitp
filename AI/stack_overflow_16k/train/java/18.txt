@@ -1,0 +1,1 @@
+blankfx serialization textfield i'm using serialization in my blankfx window app. but i can't store user nick (can't serialize blankfx elements) so is there a good option to store it? store it in file is good idea? extra file for one nick sounds bad;(

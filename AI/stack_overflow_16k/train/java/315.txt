@@ -1,0 +1,1 @@
+"is it necessary to add string[] args to main method in blank, even if i'm sure that i won't pass any command line argument?if yes why? is it necessary to add string[] args to main method in blank, even if i'm sure that i won't pass any command line argument? if yes, why? and are there any other parameters that can be passed to main method???"

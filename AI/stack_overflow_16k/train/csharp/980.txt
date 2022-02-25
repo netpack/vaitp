@@ -1,0 +1,1 @@
+"find the number of characters that are present in every line into a list<string> i need to find the number of characters that are present in every line, within a list:..so, if for example, the string is..ajdahnfj.jnbafdbn.jadnjadg...a,j,d,n are common for each line. therefore the answer is 4...no case sensitive is required..regards"

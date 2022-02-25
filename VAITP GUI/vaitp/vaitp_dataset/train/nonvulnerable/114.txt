@@ -1,0 +1,84 @@
+"def handle(request, message=None, redirect=None, ignore=False, escalate=False):
+    """ Centralized error handling for Horizon.
+
+    Because Horizon consumes so many different APIs with completely
+    different ``Exception`` types, it's necessary to have a centralized
+    place for handling exceptions which may be raised.
+
+    Exceptions are roughly divided into 3 types:
+
+    #. ``UNAUTHORIZED``: Errors resulting from authentication or authorization
+       problems. These result in being logged out and sent to the login screen.
+    #. ``NOT_FOUND``: Errors resulting from objects which could not be
+       located via the API. These generally result in a user-facing error
+       message, but are otherwise returned to the normal code flow. Optionally
+       a redirect value may be passed to the error handler so users are
+       returned to a different view than the one requested in addition to the
+       error message.
+    #. RECOVERABLE: Generic API errors which generate a user-facing message
+       but drop directly back to the regular code flow.
+
+    All other exceptions bubble the stack as normal unless the ``ignore``
+    argument is passed in as ``True``, in which case only unrecognized
+    errors are bubbled.
+
+    If the exception is not re-raised, an appropriate wrapper exception
+    class indicating the type of exception that was encountered will be
+    returned.
+    """
+    exc_type, exc_value, exc_traceback = sys.exc_info()
+
+    # Because the same exception may travel through this method more than
+    # once (if it's re-raised) we may want to treat it differently
+    # the second time (e.g. no user messages/logging).
+    handled = issubclass(exc_type, HandledException)
+    wrap = False
+
+    # Restore our original exception information, but re-wrap it at the end
+    if handled:
+        exc_type, exc_value, exc_traceback = exc_value.wrapped
+        wrap = True
+
+    # We trust messages from our own exceptions
+    if issubclass(exc_type, HorizonException):
+        message = exc_value
+    # If the message has a placeholder for the exception, fill it in
+    elif message and "%(exc)s" in message:
+        message = message % {"exc": exc_value}
+
+    if issubclass(exc_type, UNAUTHORIZED):
+        if ignore:
+            return NotAuthorized
+        request.user_logout()
+        if not handled:
+            LOG.debug("Unauthorized: %s" % exc_value)
+            # We get some pretty useless error messages back from
+            # some clients, so let's define our own fallback.
+            fallback = _("Unauthorized. Please try logging in again.")
+            messages.error(request, message or fallback, extra_tags="login")
+        raise NotAuthorized  # Redirect handled in middleware
+
+    if issubclass(exc_type, NOT_FOUND):
+        wrap = True
+        if not ignore and not handled:
+            LOG.debug("Not Found: %s" % exc_value)
+            messages.error(request, message or exc_value)
+        if redirect:
+            raise Http302(redirect)
+        if not escalate:
+            return NotFound  # return to normal code flow
+
+    if issubclass(exc_type, RECOVERABLE):
+        wrap = True
+        if not ignore and not handled:
+            LOG.debug("Recoverable error: %s" % exc_value)
+            messages.error(request, message or exc_value)
+        if redirect:
+            raise Http302(redirect)
+        if not escalate:
+            return RecoverableError  # return to normal code flow
+
+    # If we've gotten here, time to wrap and/or raise our exception.
+    if wrap:
+        raise HandledException([exc_type, exc_value, exc_traceback])
+    raise exc_type, exc_value, exc_traceback"

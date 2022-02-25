@@ -1,0 +1,1 @@
+why blank contains libs and lib directories? it confuses me that blank installation contains lib directory with blank libs (packages) and secondary similar directory named 'libs' where also contains libs: libs staticly linked binary files with .lib extension. why?

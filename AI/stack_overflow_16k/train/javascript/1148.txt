@@ -1,0 +1,1 @@
+how to get data of faces'(triangles) of meshes and edit them (their color)? (xeogl.js) i'm used to babylon.js and three.js. now i'm trying out xeogl.js but its hierarchy is quiete different. i can't figure out where i can get the faces' data from. i just know where they are through the worldposition-property and their indices but thats it. any idea?

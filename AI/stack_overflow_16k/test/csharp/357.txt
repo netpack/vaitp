@@ -1,0 +1,1 @@
+"method with combinations of different argument types i'm wondering if its possible to write a blank method that can take a combination of different argument types...for example, this method would combine four overloaded methods into one...public static void mymethod( (jobject or file) jsonone, (jobject or file) jsontwo) {}"

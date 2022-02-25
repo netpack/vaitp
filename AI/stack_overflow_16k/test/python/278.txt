@@ -1,0 +1,1 @@
+"how do you get input while using a multi-part string? i have some code, something along the lines of..name = input(""what is your name?"").press_enter_to_continue = input(""well"", name, "", you've got a long journey ahead of you."")...i end up getting an error over the surplus of parameters, so i how could i redo the code?"

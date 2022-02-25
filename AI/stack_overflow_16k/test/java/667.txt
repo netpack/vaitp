@@ -1,0 +1,1 @@
+why we are allowed to create an object of a class inside the same class? i am just trying to figure out why it is possible to do such thing but it is not possible in some other programming languages like c++. .here is an example of what i am asking:..public class a{.    private a objectofthesameclass;.    public a().    {.       objectofthesameclass=new a();.    }.}

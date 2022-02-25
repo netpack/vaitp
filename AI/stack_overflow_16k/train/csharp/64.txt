@@ -1,0 +1,1 @@
+"xml doc - null handling i have ..xmldoc.dataset.tables[""&lt;tablename&gt;""].columns...i want to loop through those columns via datacolumn, for say this xmldoc has 10 entries and 5 are null, then the loop should happen for the non-null entries only...any thoughts?"

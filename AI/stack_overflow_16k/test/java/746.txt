@@ -1,0 +1,1 @@
+"blank jlabel array what's wrong with this? the labels[] causes an error..jlabel labels[] = new jlabel();.    for (int i =  0; i &lt; 4; i++) {.       labels[i] = new jlabel(""label"" + i);.       panel.add(labels[i]);. }"

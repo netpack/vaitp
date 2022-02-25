@@ -1,0 +1,1 @@
+get cpu and ram usage of background worker i have a program that have two background worker..i need to get how much cpu and ram used per background worker..i know i can get cpu usage with this code:..how to get the cpu usage in blank?.but i need get it per background worker. is that possible? how?

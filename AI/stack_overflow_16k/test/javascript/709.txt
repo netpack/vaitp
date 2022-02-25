@@ -1,0 +1,1 @@
+"find max date out of three datetime variables i have question regarding date comparison in blank..i want to find max date out of three datetime variables...like, i can find max date in c# linq using following short way..maxdate= new[] {p1.date, p2.date, p3.date}.max();...does blank has such nice way to do that?"

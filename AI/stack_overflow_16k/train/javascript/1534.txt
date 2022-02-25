@@ -1,0 +1,1 @@
+"behavior: 'smooth' causes page shaking window.scrollto({.    top: posy,.    behavior:'smooth',.});...this code runs when users clicks on one of the links. it scrolls to the correct element smoothly, but later, when i scroll the page, it behaves weird - seems to be shaking. i noticed, that if i remove the behavior:smooth option, it works propely. is there any solution to that?"

@@ -1,0 +1,1 @@
+"why is the object not found in the array with indexof when i search for the object literal below i get for index -1 but i do not understand why...can i not use complex types like object literal to search for this object in the array?..var fruits = [{name: ""banana""}, {name: ""orange""}];.var index = fruits.indexof({name: ""banana""});"

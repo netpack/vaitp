@@ -1,0 +1,1 @@
+"stuck with codecademy js course ('the story so far: if, else, and loops' 2/14) try this code..var iseven = function(number) {...    if (number % 2 === 0) {.        return true;.    } else if (isnan(number)) {.        return ""not a number"";.    } else {.        return false;.    }.}...iseven();...this must work for you. i got this one as correct !!!!"

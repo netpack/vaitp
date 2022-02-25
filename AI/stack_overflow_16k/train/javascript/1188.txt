@@ -1,0 +1,1 @@
+"generate ajax object in a single line following my code:..var ajax = new xmlhttprequest() || new activexobject(""microsoft.xmlhttp"");...it does not work, how to solve, and then generate the appropriate ajax object in a single line? i don't want to use any framework."

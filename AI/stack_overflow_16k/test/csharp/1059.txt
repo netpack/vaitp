@@ -1,0 +1,1 @@
+text area size in asp.net can any tell me what is max size of text area control in asp.net...?.iam facing problem that this text area only takes 1000 characters my column size is 5000 and in sp that varible size is varchar(2000) still in tables it saves only 1000 characters...what would be the problem..?

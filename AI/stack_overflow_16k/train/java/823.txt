@@ -1,0 +1,1 @@
+"how does first empty string initialized in blank? below is default constructor of blank.lang.string:..public string() {.    this.value = """".value;.    this.coder = """".coder;.}...my question is where is """".value come from? is object """" created with default constructor?"

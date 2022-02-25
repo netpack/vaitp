@@ -1,0 +1,1 @@
+"how to tell if an int has been changed i want to know how to tell if an int has been changed (during the program)..like with an if statement...int i = 2;.int a = 1;..while(1 &lt; 2) {.if(i % 100 == 0) i++;.}..if(i //then checks if it changed) {.   system.out.println(""changed :d"");.}...is there a way to tell if the variable i is changed during the program?"

@@ -1,0 +1,1 @@
+"simple blank function not working i'm wrote a really basic function to display an alert from a button:....function myfunction(name, id) {.  alert(name, id);.}.&lt;button onclick=""myfunction(doe, agdje)""&gt;call&lt;/button&gt;.....nothing happens. anyone know the reason for this?"

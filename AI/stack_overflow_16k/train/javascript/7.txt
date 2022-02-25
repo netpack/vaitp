@@ -1,0 +1,1 @@
+"how to sort array of objects? .  possible duplicate:.  how to sort an array of blank objects?  .....i have a array of objects:..var arr = [].arr[0] = new object().....arr[n] = new object()...i want to get sorted array by arr[i].getsortorder() for example, where arr[i].getsortorder() return integer value.  how to do it ?"

@@ -1,0 +1,1 @@
+"equals(...) and equalsignorecase(...) why do we have equals() and equalsignorecase() as two different methods, when equals() could have been overloaded with a special ignorecase argument to provide equalsignorecase() functionality?"

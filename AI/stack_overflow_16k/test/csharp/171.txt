@@ -1,0 +1,1 @@
+why does the following code always go inside the if block? could anyone please tell me how i could resolve this issue ?..int a = 3;.if(a != 1 || a!=2 || a!=3 ).{.    //comes in here ? why ? when a=3 ?.}

@@ -1,0 +1,1 @@
+"native 64bit integers in blank it seems that even the newest ecmascript 8 has no support for 64bit integers...currently we have to use libraries, like long or uint64 or closure library...is it technically possible to add native support for 64bit integers in blank?"

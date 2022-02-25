@@ -1,0 +1,1 @@
+"get the name of the blank process instead of pid? jps.exe which found on jdk 1.5 and later could monitor all blank process but is there a way to detect the specify command line and terminate the correct pid?..what if the user have jre, is there a similar code allow us to terminate any process easily?..prefer to keep the topic on windows which i am working on."

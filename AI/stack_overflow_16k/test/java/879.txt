@@ -1,0 +1,1 @@
+replace string with dynamic value i have pattern like '{yy}-{mm}-{seqno}'. i want to replace above string by dynamic value...for example ..{yy} with - 17 .{mm} with - 06.{seqno} with - 0001...what is the way to that in blank?

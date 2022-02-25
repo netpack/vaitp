@@ -1,0 +1,1 @@
+"parsing int from datarow cell how could int value be parsed from datarow cell?..int32.parse(item[""questionid""].tostring());...this code works, but it looks too verbose..also is it possible to handle dbnull values?"

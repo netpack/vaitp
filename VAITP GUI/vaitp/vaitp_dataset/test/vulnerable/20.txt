@@ -1,0 +1,1 @@
+"    def expr(self, node, msg=None, *, exc=ValueError):        mod = ast.Module([ast.Expr(node)])        self.mod(mod, msg, exc=exc)"

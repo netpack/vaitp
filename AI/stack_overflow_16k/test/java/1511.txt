@@ -1,0 +1,1 @@
+"string.valueof() in a loop i am trying to add elements to a queue using a for-loop..for(int i = 1; i &lt;= cars.size(); i++){.    cars.add(new vehicle(string.valueof(i));.}...when i try to peek at the queue, i am getting hashcode representations instead of the actual value of i. how can i get the values of i?"

@@ -1,0 +1,1 @@
+"blank: how do i find a folder with only part of the word? i'm trying to get back a string that contains the path to a folder..i want to do it with just a part of the folder name...so say i have a folder called ""example-1"" in ""usr/share/example-1"", i want to be able to get that path by matching ""usr/share/ex""."

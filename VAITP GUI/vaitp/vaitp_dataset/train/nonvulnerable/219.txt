@@ -1,0 +1,7 @@
+"def _task_main(q):
+    a = Crypto.Random.get_random_bytes(16)
+    time.sleep(0.1)     # wait 100 ms
+    b = Crypto.Random.get_random_bytes(16)
+    q.put(binascii.b2a_hex(a))
+    q.put(binascii.b2a_hex(b))
+    q.put(None)      # Wait for acknowledgment"

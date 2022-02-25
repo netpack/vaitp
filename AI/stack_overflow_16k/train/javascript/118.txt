@@ -1,0 +1,1 @@
+"how to prevent enter for onclick in anchor tag? &lt;a href=""blank: void(0);"" onclick=""callfunction()""&gt;&lt;img src=""imagepath"" border=""0"" alt="""" title="""" /&gt;...if i click the anchor tag it will call the function callfunction()..after clicking the anchor tag, if i press the enwter key, again the function is called..how to prevent enter for onclick in anchor tag?"

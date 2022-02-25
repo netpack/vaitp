@@ -1,0 +1,1 @@
+"testing functions printing behavior i have a function foo(..) which prints a lot of messages using 'print'. i want to write unit test to test correctness of printed messages. how can i get printed messages instead of printing it in console. ..for example ..def foo(x):.    print(""value is "", x)..assertequal(output(foo(5)), ""value is 5"")"

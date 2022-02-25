@@ -1,0 +1,1 @@
+"class cannot directly extends enum class i have public final class i.e., public final class biometricposition extends enum, but it gives error like class cannot directly extends blank.lang.enum."

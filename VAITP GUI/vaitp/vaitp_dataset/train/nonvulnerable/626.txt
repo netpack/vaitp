@@ -1,0 +1,42 @@
+"    def prepare(self, reactor, clock, homeserver):
+        # make a second homeserver, configured to use the first one as a key notary
+        self.http_client2 = Mock()
+        config = default_config(name="keyclient")
+        config["trusted_key_servers"] = [
+            {
+                "server_name": self.hs.hostname,
+                "verify_keys": {
+                    "ed25519:%s"
+                    % (
+                        self.hs_signing_key.version,
+                    ): signedjson.key.encode_verify_key_base64(
+                        self.hs_signing_key.verify_key
+                    )
+                },
+            }
+        ]
+        self.hs2 = self.setup_test_homeserver(
+            federation_http_client=self.http_client2, config=config
+        )
+
+        # wire up outbound POST /key/v2/query requests from hs2 so that they
+        # will be forwarded to hs1
+        async def post_json(destination, path, data):
+            self.assertEqual(destination, self.hs.hostname)
+            self.assertEqual(
+                path, "/_matrix/key/v2/query",
+            )
+
+            channel = FakeChannel(self.site, self.reactor)
+            req = SynapseRequest(channel)
+            req.content = BytesIO(encode_canonical_json(data))
+
+            req.requestReceived(
+                b"POST", path.encode("utf-8"), b"1.1",
+            )
+            channel.await_result()
+            self.assertEqual(channel.code, 200)
+            resp = channel.json_body
+            return resp
+
+        self.http_client2.post_json.side_effect = post_json"

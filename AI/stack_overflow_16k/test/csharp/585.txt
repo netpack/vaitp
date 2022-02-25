@@ -1,0 +1,1 @@
+divide in blank with incorrect result i have problem with some divide constructs in blank..when i try to divide 2 numbers i always get result of zero what is incorrect result...i have code like this...double a = 100 / 1500;...i get result of a=0;.if i use ..double a = 100d / 1500d;...i got correct result..where is problem in case 1 ? can someone explain to me difference ?

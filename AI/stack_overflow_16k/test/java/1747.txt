@@ -1,0 +1,1 @@
+"how to get the values or indexed from nested array and compare conditions how can i display the value john or mary or alice or bob separately? .from the sample nested array...string[][] kstemmers = new string[][] {.    {""john"", ""mary""}, .    {""alice"", ""bob""}.};"

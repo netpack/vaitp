@@ -1,0 +1,1 @@
+how to access serialport1 in another form? .  possible duplicate:.  best way to access a control on another form in winforms?  .....how can i access serialport1 which is in form2 in the mainform(form1) ?.i want to use the methods which is related to the serialport1 control ?

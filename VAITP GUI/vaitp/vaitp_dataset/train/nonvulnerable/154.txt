@@ -1,0 +1,6 @@
+"    def read(self, i):
+        result = self.data.read(i)
+        self.bytes_read += len(result)
+        if self.bytes_read > self.limit:
+            raise exception.RequestTooLarge()
+        return result"

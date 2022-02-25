@@ -1,0 +1,1 @@
+"def verify_password(plain_password, user_password):    if plain_password == user_password:        LOG.debug("password true")        return True    return False"

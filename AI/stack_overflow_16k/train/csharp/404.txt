@@ -1,0 +1,1 @@
+print the source filename and linenumber in blank is there any way to retrieve the current source filename and linenumber in blank code and print that value in the console output? like line and file in c?..please advise...many thanks

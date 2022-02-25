@@ -1,0 +1,26 @@
+#ifndef AIMODULE_H
+#define AIMODULE_H
+
+#include <QSqlDatabase>
+#include <QString>
+
+
+
+class aimodule
+{
+public:
+    aimodule();
+    void rm_old_dataset();
+    void rm_old_ai_vulns(QString path_vuln);
+    void opencvefixesdb();
+    QSqlDatabase cvefixesdb;
+    int cvefixes_count_vulns();
+    QStringList get_dataset_first_half(int aNumHalfDataset);
+    QStringList get_dataset_second_half(int aNumHalfDataset);
+    int cvefixes_count_patches();
+    QStringList get_dataset_first_half_patches(int aNumHalfDataset);
+    QStringList get_dataset_second_half_patches(int aNumHalfDataset);
+    void trainModule();
+};
+
+#endif // AIMODULE_H

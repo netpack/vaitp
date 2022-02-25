@@ -1,0 +1,1 @@
+"creating pairs of objects in a list i have a list of objects:..object_list = ['distance', 'alpha1', 'alpha2', 'gamma']...i want to obtain a new list with a pair combination of those objects, such as:..new_list = [ ['distance', 'alpha1'], ['distance', 'alpha2'], ['distance', 'gamma'],['alpha1', 'alpha2'], [ 'alpha1', 'gamma'] ... ]...generally i will obtain 24 sublists(cases)."

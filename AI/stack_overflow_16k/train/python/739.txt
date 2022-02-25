@@ -1,0 +1,1 @@
+"do i have to inherit from abc.abc to use the @abstractmethod decorators? is it possible to use the @abstractmethod decorator in any class definition to signal a method to be defined later, or do i have to have abc.abc as a base/meta class for this to work properly?"

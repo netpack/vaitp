@@ -1,0 +1,1 @@
+"return with shortcuts < && || > i'am trying to use return together with shortcuts...window.abc=window.abc || console.log(""works fine"");...or..window.cde=window.cde &amp;&amp; console.log(""works fine""); ...but if i use return instead console i will get an error...window.abc=window.abc &amp;&amp; return; ...is there a trick or an explanation?"

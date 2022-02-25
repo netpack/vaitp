@@ -1,0 +1,1 @@
+access resultsview from object type how to access resultsview from an object of type object? ..object table = null;.class.callsomemethod( ref table);...table has resultsview and i am not sure how to access that?

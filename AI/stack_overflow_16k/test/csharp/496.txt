@@ -1,0 +1,1 @@
+"how can i parse code from blank-6 to blank-5 i have a blank project that is wrote in vs 2015 blank 6. there is two line that i', getting error : ..public override bool confirmed =&gt; true;.public override bool responded { get; }...how can i parse it to blank 5?.thank you"

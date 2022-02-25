@@ -1,0 +1,1 @@
+how to assign an event to a checkbox in datagrid view in blank? i want that when i check the checkbox in the datagrid view my button that is disabled at the beginning will be activated after i want the selected lines to be inserted in a table.

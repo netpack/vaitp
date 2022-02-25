@@ -1,0 +1,1 @@
+"how can i search for a specific array within an array? if i have an array of arrays like this:..let arrayoarrays = [[0,0], [1,1], [2,2]];...and i want to see if it includes a specific array. when i look up ..arrayoarrays.includes([0,0])...i get false. i assume .includes isn't to be used like this, but i'm not sure what i should be using instead."

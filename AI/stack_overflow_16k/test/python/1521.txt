@@ -1,0 +1,1 @@
+"how to get the length of a 2-d counter build the counter:..class counters:.    def __init__(self,cats).        self.form = collections.defaultdict(collections.counter)...i get the length of the first dimension:..len(counters.form.items())...how to get the length of the second dimension?"

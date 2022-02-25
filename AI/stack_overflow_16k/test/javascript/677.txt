@@ -1,0 +1,1 @@
+blank: why does tostring() not work directly with a number but with a number variable declared? ..y = 15;.let x = y.tostring(10);.console.log(x).....this prints '15' but....let x = 15.tostring(10);.console.log(x).....gives error: invalid or unexpected token.why?

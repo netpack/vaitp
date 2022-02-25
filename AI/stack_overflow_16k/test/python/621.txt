@@ -1,0 +1,1 @@
+"blank - how to split image using pil i would like to know what is the best way to split a given image into multiple images where each image includes one object..for example, in vase the image includes - tree, dog, cat, ball.the output should be four different images of tree, dog, cat, ball..btw, i'm using pil module in blank...thanks"

@@ -1,0 +1,1 @@
+"is it possible to have a ""var"" as a global variable i have noticed there are other threads on global variables in blank. such as integers, strings etc. e.g...public static int;...but i need to use a ""var"" which the other thread don't mention and ..public static var;...doesn't seem to work...so what i'm asking is it possible to have a ""var"" as a global variable in blank?"

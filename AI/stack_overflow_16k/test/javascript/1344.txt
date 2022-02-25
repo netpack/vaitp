@@ -1,0 +1,1 @@
+"why blank return uncaught referenceerror why blank throws uncaught referenceerror when trying to get global variable directly for example somevar, but when trying get it through window.somevar it gots undefined"

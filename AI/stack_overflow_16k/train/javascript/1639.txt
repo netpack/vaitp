@@ -1,0 +1,1 @@
+"why does this switch statement fail? switch (t.value) {.    case &lt; 5:.        alert('hi');.        break;.}...i know it's the part where i have ""&lt; 5"". how do i make it so that it has a case where t.value is less than 5??"

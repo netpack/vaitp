@@ -1,0 +1,1 @@
+sorted iteration of hashmap blank i know that hashmap is not sorted but is there any away i can create iterator which returns values in sorted order of key. i can use sorted versions of the collections but i am looking for a way to do the same with hash based map.

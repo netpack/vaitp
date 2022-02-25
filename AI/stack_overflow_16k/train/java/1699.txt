@@ -1,0 +1,1 @@
+can we reference a class from inside a interface? can we reference a class from our interface? whenever i run the code it says package controller does not exist. if gives the error as controller.tool package does not exist..import controller.tool;.public interface iremotedraw extends remote {..    public void draw(tool tool) throws remoteexception;.}

@@ -1,0 +1,1 @@
+"    def test_is_writable(self):        """ default_dir has to be writable """        path = catalog.default_dir()        name = os.path.join(path,'dummy_catalog')        test_file = open(name,'w')        try:            test_file.write('making sure default location is writable\n')        finally:            test_file.close()            os.remove(name)"

@@ -1,0 +1,1 @@
+"convert.toint32(string) giving wrong values i am getting weird numbers when i am parsing my string using the convert.toint32..var check = ""82567"";.convert.toint32(check[0]) //i get 56.convert.toint32(check[0].tostring());// i get 8...can someone help me make sense of this"

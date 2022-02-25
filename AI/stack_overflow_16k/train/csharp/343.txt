@@ -1,0 +1,1 @@
+how to change string value after 5 sec? i'm willing to write program that after 5 sec  shows text that was hidden and after another 5 sec changes both. example: . - program start:.   text 1. - after 5 sec:.   text 1 text 2. - after 5 sec:.   text 3. - after 5 sec:.   text 3 text 4......how i can in blank count those seconds?

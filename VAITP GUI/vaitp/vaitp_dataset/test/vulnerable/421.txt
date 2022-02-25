@@ -1,0 +1,1 @@
+"    def prepare_context(self, request, context, *args, **kwargs):        """ Hook for adding additional data to the context dict """        pass"

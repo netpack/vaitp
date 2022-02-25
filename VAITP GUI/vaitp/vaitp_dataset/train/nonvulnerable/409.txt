@@ -1,0 +1,15 @@
+"    def open(self):
+        if not os.path.isdir(self.path):
+            raise Exception('%s Does not look like an Attic cache' % self.path)
+        self.lock = UpgradableLock(os.path.join(self.path, 'config'), exclusive=True)
+        self.rollback()
+        self.config = RawConfigParser()
+        self.config.read(os.path.join(self.path, 'config'))
+        if self.config.getint('cache', 'version') != 1:
+            raise Exception('%s Does not look like an Attic cache')
+        self.id = self.config.get('cache', 'repository')
+        self.manifest_id = unhexlify(self.config.get('cache', 'manifest'))
+        self.timestamp = self.config.get('cache', 'timestamp', fallback=None)
+        self.key_type = self.config.get('cache', 'key_type', fallback=None)
+        self.chunks = ChunkIndex.read(os.path.join(self.path, 'chunks').encode('utf-8'))
+        self.files = None"

@@ -1,0 +1,1 @@
+"are there objects that cannot be coerced into a string in blank? in blank, can any object be coerced into a string unless its __str__ method is overloaded to raise an exception?"

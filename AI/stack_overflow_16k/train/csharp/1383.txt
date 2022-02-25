@@ -1,0 +1,1 @@
+"how do i add leading zeroes to string.format parameters? i have the following code:..string texttransdate = string.format(""{0}-{1}-{2} {3}:{4}"", datetime.now.year, datetime.now.month, datetime.now.day, datetime.now.hour, datetime.now.minute);...i want to add leading zeroes to the month and day parameters if they are less than 10, how would i accomplish this?"

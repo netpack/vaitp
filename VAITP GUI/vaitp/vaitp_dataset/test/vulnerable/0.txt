@@ -1,0 +1,1 @@
+"def safe_text(raw_text: str) -> jinja2.Markup:    """    Process text: treat it as HTML but escape any tags (ie. just escape the    HTML) then linkify it.    """    return jinja2.Markup(        bleach.linkify(bleach.clean(raw_text, tags=[], attributes={}, strip=False))    )"

@@ -1,0 +1,1 @@
+compiling and using blank from within another .jar file is it possible to compile a .blank file from within a blank program and use that compiled blank file for use within the blank program. for use in scripting outside of the initial blank program?

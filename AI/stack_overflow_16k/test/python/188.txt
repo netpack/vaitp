@@ -1,0 +1,1 @@
+"uinput works only in interactive shell import uinput..device = uinput.device([uinput.key_leftctrl, uinput.key_leftalt, uinput.key_t])..device.emit_combo([uinput.key_leftctrl, uinput.key_leftalt, uinput.key_t])...the above code works perfectly in blank shell but not in a file. what's wrong is this code?"

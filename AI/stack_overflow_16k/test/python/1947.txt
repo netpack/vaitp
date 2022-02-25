@@ -1,0 +1,1 @@
+"why doesn't this cause an array out of bounds error in blank? i do not know much about blank, but i am surprised the following code works:..import sys.prev =  [sys.maxint]*(5).j = 0.print prev[j].print prev[j-1]...in general i thought second print statement should give me an error. why does this work?..i need to convert some blank code into c++, and in c++ this will not work."

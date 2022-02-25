@@ -1,0 +1,1 @@
+"how to iterate over a file in blank in a particular way as described below. a file programinput.txt has this as its content..&lt;start&gt;.content.............&lt;stop&gt;..&lt;start&gt;.content.........&lt;stop&gt;...and so on..how do i iterate over the txt file , so that i take out the content between each  and  and store it in a different file in each iteration ?"

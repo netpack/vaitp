@@ -1,0 +1,1 @@
+"ie9 throws blank error: script5007: the value of the property 'getcomputedstyle' is null or undefined, not a function object telrik.web.webresource.axd file thrown ""script5007: the value of the property 'getcomputedstyle' is null or undefined, not a function object"" error. it works properly for other browsers. can anyone please suggest how i handled it throw hardcoded."

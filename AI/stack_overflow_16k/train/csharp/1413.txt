@@ -1,0 +1,1 @@
+"possible to refresh user control? if i have done a user control and then update it by moving around a button or size of a panel, i noticed it's still the old version on the windows form. and when i delete it and drag it out from the toolbox again, it's still the old one!..is there a way to refresh the user controls or do i have to start from the beginning and make a new?"

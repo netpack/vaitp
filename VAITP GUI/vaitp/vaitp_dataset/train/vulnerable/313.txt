@@ -1,0 +1,2 @@
+"    def item_to_bm(self, item):
+        return cPickle.loads(bytes(item.data(Qt.UserRole)))"

@@ -1,0 +1,1 @@
+"dump a blank dictionary with array value inside to csv i got something like this:..dict = {}.dict[""p1""] = [.1,.2,.3,.4].dict[""p2""] = [.4,.3,.2,.1].dict[""p3""] = [.5,.6,.7,.8] ...how i can dump this dictionary into csv like this structure? :...1 .4 .5..2 .3 .6..3 .2 .7..4 .1 .8...really appreciated !"

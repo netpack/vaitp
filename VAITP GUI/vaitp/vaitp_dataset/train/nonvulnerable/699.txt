@@ -1,0 +1,2 @@
+"        def parse_func_type_input(source):
+            return ast.parse(source, "<unknown>", "func_type")"

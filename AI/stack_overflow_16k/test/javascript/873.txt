@@ -1,0 +1,1 @@
+"defining a queue datastructure in blank i am just trying to learn blank. i want to design a queue which takes the following format:..[{(0,0),0}], [{(0,1),1}], [{(0,2),2}]...so i tried to define the queue in the following way, but obviously it's not correct..var queue = [{}] ;"

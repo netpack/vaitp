@@ -1,0 +1,1 @@
+"add 3 spaces in a squence i've got a 8 digits string. how can i add a space in the following sequesnce..var str = ""11111111"";.//expected output 1111 11 11 ...add a space after first 4 digits and then the next two digits and then before the last two digits...i know to do a single space ( .replace(/[_]/g,"" "");). but how do i do 3 in the above sequence?"

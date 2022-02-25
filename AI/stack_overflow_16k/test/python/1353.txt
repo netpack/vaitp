@@ -1,0 +1,1 @@
+"blank: replace characters in a string by position trying to replace characters in a string only by position...here is what i have, any help would be appreciated!..for i in pos:.    string=string.replace(string[i],r.choice(data))"

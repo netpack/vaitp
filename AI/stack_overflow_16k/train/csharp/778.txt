@@ -1,0 +1,1 @@
+"how to solve the following unique finding issue? i have a dictionary of &lt;int, bool&gt;, ..like 1, false; 2 true;... ; 9 true; ..i need to find if there is a unique one...for example, if all except 9 are false, i can output 9..how to achieve this?"

@@ -1,0 +1,1 @@
+"set enum from dropdownlist i have a property on my customer object, say gender, based on an enum...how do i set the enum property on the object based on a dropdownlist.selectedvalue?..thanks,.rod."

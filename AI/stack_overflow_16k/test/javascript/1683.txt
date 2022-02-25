@@ -1,0 +1,1 @@
+"blank sorting input values into an array i have the below code which looks at hidden inputs with the class howmanyproducts...$(""#proddiv .howmanyproducts"").each(function() {.    var idval = $(this.id).val();.});...what i am trying to achieve is for each id get the value and sort the ids into an array based on their values."

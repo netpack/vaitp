@@ -1,0 +1,1 @@
+does blank null conditional operator make any difference in calling an async task? is there any difference between..await myobject.fooasync();...and ..await myobject?.fooasync();...they seem to throw the same exception when myobject is null: object reference not set to an instance of an object..could anyone shed some light on this?

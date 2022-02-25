@@ -1,0 +1,1 @@
+blank.random wrap around i've found multiple references saying that the blank.random prng will wrap around after 2^48 numbers have been issues. has anyone actually tested this with code and determined when it wraps around?..thanks

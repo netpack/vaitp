@@ -1,0 +1,1 @@
+"blank- how to count the number of occurrences of a partial string in a list of strings if i have a list, say list = [abc are all letters, elephants, bananas are yellow, apples are fruits] or something of that sort, how would i count the number of times the word 'are' shows up in this list?"

@@ -1,0 +1,1 @@
+what does /*!*/ mean in blank? i'm new to blank and am reading code with /*!*/ in what seem like strange places.  for instance class methods defined as:..protected override optionsparser/*!*/ createoptionsparser().protected override void parsehostoptions(string/*!*/[]/*!*/ args)...unfortunately /*!*/ is not googleable.  what does it mean?

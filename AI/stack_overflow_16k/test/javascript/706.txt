@@ -1,0 +1,1 @@
+"what mean ""||"" in initialization of variable on w3school i read about js window and encounter such piece of code...var h = window.innerheight.|| document.documentelement.clientheight.|| document.body.clientheight;...what does this mean?"

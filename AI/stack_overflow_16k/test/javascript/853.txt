@@ -1,0 +1,1 @@
+"values from object like keys in dictionary doesn't work i have created object in blank like ..function metaentity(){.this.energy = ""energy"";.this.name = ""name"";.}..var meta = new metaentity();...when i try to use values from meta like keys in dictionary it doesn't work...var c = {meta.energy: 100,.         meta.name : ""tekton""}...can tell me what is a problem?"

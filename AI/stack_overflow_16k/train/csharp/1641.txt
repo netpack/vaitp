@@ -1,0 +1,1 @@
+blank implement inherited abstract member i am trying to inherit abstract members from a derived class and it is not working..i have set the class as abstract such as..now my main program says the same thing about the calculateweeklypay()  and i shouldn't need it in my main class.  how can i fix that?

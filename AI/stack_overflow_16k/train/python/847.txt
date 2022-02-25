@@ -1,0 +1,1 @@
+"where should magic methods be placed inside a class relative to other methods? when i implement magic/special methods inside a class (__len__, __contains__, __iter__), are they usually placed above other methods i implement (right after __init__) or below? also, is there an order that these magic methods are typically placed in? alphabetically or...?"

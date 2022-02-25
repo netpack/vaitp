@@ -1,0 +1,1 @@
+"where is main config file in the oracle blank jvm? where is main config file in the oracle blank jvm?..i need to hardcode some config to the jvm, like config:..blankx.xml.accessexternalschema=all.http.proxyhos=proxy.http.proxyport=8080.blankx.net.ssl.truststore=c:/qqq...i tried to write it to the management.properties, but it doesn't helped..."

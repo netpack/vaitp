@@ -1,0 +1,1 @@
+"close browser kill web server session i would like to know whether there is any method such that when a user close a browser, it will kill a web server session?..i know some bank website can perform this task, but dont know how to implement it...thanks."

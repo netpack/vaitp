@@ -1,0 +1,91 @@
+"    def instance_rules(self, instance, network_info):
+        # make sure this is legacy nw_info
+        network_info = self._handle_network_info_model(network_info)
+
+        ctxt = context.get_admin_context()
+
+        ipv4_rules = []
+        ipv6_rules = []
+
+        # Initialize with basic rules
+        self._do_basic_rules(ipv4_rules, ipv6_rules, network_info)
+        # Set up rules to allow traffic to/from DHCP server
+        self._do_dhcp_rules(ipv4_rules, network_info)
+
+        #Allow project network traffic
+        if FLAGS.allow_same_net_traffic:
+            self._do_project_network_rules(ipv4_rules, ipv6_rules,
+                                           network_info)
+        # We wrap these in FLAGS.use_ipv6 because they might cause
+        # a DB lookup. The other ones are just list operations, so
+        # they're not worth the clutter.
+        if FLAGS.use_ipv6:
+            # Allow RA responses
+            self._do_ra_rules(ipv6_rules, network_info)
+
+        security_groups = db.security_group_get_by_instance(ctxt,
+                                                            instance['id'])
+
+        # then, security group chains and rules
+        for security_group in security_groups:
+            rules = db.security_group_rule_get_by_security_group(ctxt,
+                                                          security_group['id'])
+
+            for rule in rules:
+                LOG.debug(_('Adding security group rule: %r'), rule,
+                          instance=instance)
+
+                if not rule.cidr:
+                    version = 4
+                else:
+                    version = netutils.get_ip_version(rule.cidr)
+
+                if version == 4:
+                    fw_rules = ipv4_rules
+                else:
+                    fw_rules = ipv6_rules
+
+                protocol = rule.protocol.lower()
+                if version == 6 and protocol == 'icmp':
+                    protocol = 'icmpv6'
+
+                args = ['-j ACCEPT']
+                if protocol:
+                    args += ['-p', protocol]
+
+                if protocol in ['udp', 'tcp']:
+                    args += self._build_tcp_udp_rule(rule, version)
+                elif protocol == 'icmp':
+                    args += self._build_icmp_rule(rule, version)
+                if rule.cidr:
+                    LOG.debug('Using cidr %r', rule.cidr, instance=instance)
+                    args += ['-s', rule.cidr]
+                    fw_rules += [' '.join(args)]
+                else:
+                    if rule['grantee_group']:
+                        # FIXME(jkoelker) This needs to be ported up into
+                        #                 the compute manager which already
+                        #                 has access to a nw_api handle,
+                        #                 and should be the only one making
+                        #                 making rpc calls.
+                        import nova.network
+                        nw_api = nova.network.API()
+                        for instance in rule['grantee_group']['instances']:
+                            nw_info = nw_api.get_instance_nw_info(ctxt,
+                                                                  instance)
+
+                            ips = [ip['address']
+                                for ip in nw_info.fixed_ips()
+                                    if ip['version'] == version]
+
+                            LOG.debug('ips: %r', ips, instance=instance)
+                            for ip in ips:
+                                subrule = args + ['-s %s' % ip]
+                                fw_rules += [' '.join(subrule)]
+
+                LOG.debug('Using fw_rules: %r', fw_rules, instance=instance)
+
+        ipv4_rules += ['-j $sg-fallback']
+        ipv6_rules += ['-j $sg-fallback']
+
+        return ipv4_rules, ipv6_rules"

@@ -1,0 +1,1 @@
+passing null to web method in blank i have given a web service url. one of its methods have an argument that if i pass null it does something and if pass int does something else. i have added a service reference to project. blank does not accept passing null to that argument because it has implemented its interface to accept int and not int? (nullable int)...please advise.

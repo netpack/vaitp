@@ -1,0 +1,15 @@
+"    def test_set_get(self):
+        memcache_client = memcached.MemcacheRing(['1.2.3.4:11211'])
+        mock = MockMemcached()
+        memcache_client._client_cache['1.2.3.4:11211'] = [(mock, mock)] * 2
+        memcache_client.set('some_key', [1, 2, 3])
+        self.assertEquals(memcache_client.get('some_key'), [1, 2, 3])
+        memcache_client.set('some_key', [4, 5, 6])
+        self.assertEquals(memcache_client.get('some_key'), [4, 5, 6])
+        memcache_client.set('some_key', ['simple str', 'utf8 str éà'])
+        # As per http://wiki.openstack.org/encoding, we should expect to have unicode
+        self.assertEquals(memcache_client.get('some_key'), ['simple str', u'utf8 str éà'])
+        self.assert_(float(mock.cache.values()[0][1]) == 0)
+        esttimeout = time.time() + 10
+        memcache_client.set('some_key', [1, 2, 3], timeout=10)
+        self.assert_(-1 <= float(mock.cache.values()[0][1]) - esttimeout <= 1)"

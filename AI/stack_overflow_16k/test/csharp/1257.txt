@@ -1,0 +1,1 @@
+"sorting elements of a list how can i use .sort() to sort a list in reverse order:  ..list&lt;string&gt; lststr = new list&lt;string&gt;() { ""bac"", ""abc"", ""cba"" };.lststr.sort(); //i want something like sort(""desc"");"

@@ -1,0 +1,1 @@
+"def test__sanitize():    assert utils.sanitize("something*~with lots_- of weird things}=") == "somethingwith lots_- of weird things""

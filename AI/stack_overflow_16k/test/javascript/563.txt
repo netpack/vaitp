@@ -1,0 +1,1 @@
+concatenate strings on multiple lines in blank i have some code that goes like this:..var css = '.myclass { text-align: center .... };...the about can get really long...is there a var to add multiple lines to then be merged together like:..var .   css = '.myclass { text-align: center .... };.  +css = '.myclass { something else .... };...then css with be a merge of both lines?

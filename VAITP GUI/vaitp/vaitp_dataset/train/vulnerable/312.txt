@@ -1,0 +1,7 @@
+"    def export_bookmarks(self):
+        filename = choose_save_file(
+            self, 'export-viewer-bookmarks', _('Export bookmarks'),
+            filters=[(_('Saved bookmarks'), ['pickle'])], all_files=False, initial_filename='bookmarks.pickle')
+        if filename:
+            with open(filename, 'wb') as fileobj:
+                cPickle.dump(self.get_bookmarks(), fileobj, -1)"

@@ -1,0 +1,6 @@
+"    def _on_load_started(self) -> None:
+        self._progress = 0
+        self._has_ssl_errors = False
+        self.data.viewing_source = False
+        self._set_load_status(usertypes.LoadStatus.loading)
+        self.load_started.emit()"

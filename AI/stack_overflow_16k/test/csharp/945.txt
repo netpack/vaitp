@@ -1,0 +1,1 @@
+"blank split string and remove empty string i want to remove empty and null string in the split operation:.. string number = ""9811456789,   "";. list&lt;string&gt; mobilenos = number.split(new string[] { "","" }, stringsplitoptions.removeemptyentries).select(mobile =&gt; mobile.trim()).tolist();...i tried this but this is not removing the empty space entry"

@@ -1,0 +1,1 @@
+"how to get the text sent to console output in an event or method i need to capture the event when my application is trying to write something on console...console.writeline(""any text"");...is it possible to get the text sent to console output in an event or method?"

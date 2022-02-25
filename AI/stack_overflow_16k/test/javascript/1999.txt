@@ -1,0 +1,1 @@
+"can someone help explain why it returns a different sum? var x = 10 + number(""1""+""6"");.console.log(x);..returns: 26....var y = 10 + 1 + 6;.console.log(y);..returns: 17"

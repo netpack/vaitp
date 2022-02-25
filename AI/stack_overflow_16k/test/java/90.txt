@@ -1,0 +1,1 @@
+getting the current price of a stock symbol i would like to write a blank program or method that simple gets the current price of a given stock symbol.  i have scoured through the google and yahoo finance apis and do not think these have what i am looking for.  does anyone know how i can accomplish this or a good place to look?

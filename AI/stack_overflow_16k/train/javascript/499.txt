@@ -1,0 +1,1 @@
+getting domain name from url issue i need some blank help i have the following function..domain: function(){.var a = document.createelement('a');.a.href = this.url;.return a.hostname;.}...which is great but when this.url is something like google.com (without the http or www) my return is localhost.any ideas?

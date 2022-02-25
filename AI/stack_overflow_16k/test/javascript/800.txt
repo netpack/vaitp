@@ -1,0 +1,1 @@
+"height of an element blank i would like to adjust the size of an element in the opposite direction, so the code below does adjust it, but it enlarges it from current position to bottom, i want current position to top. what would be an efficient way of doing this? thanks..var ele=document.getelementbyid('mydiv');.ele.style.height = 500+'px';"

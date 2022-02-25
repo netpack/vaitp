@@ -1,0 +1,1 @@
+"why can i use using, but not object.dispose()? i was playing around with system.net.httplistenerresponse today, and i noticed that there is still apparently a gap in my knowledge regarding using...using (httplistenerresponse response = context.response).{.   // do stuff.}...is perfectly valid code, however, the object has no dispose() method...why does using still work?"

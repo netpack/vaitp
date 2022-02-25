@@ -1,0 +1,1 @@
+blank enum question i need to make an enum with one of the values = 50/50..is this not possible? visual studio doesn't seem to like it...i may have to make this field a database lookup it seems...please let me know.

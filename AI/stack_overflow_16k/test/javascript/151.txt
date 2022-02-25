@@ -1,0 +1,1 @@
+"ie blank for in loop vs chrome for in loop var arr=[""test""]; for(var e in arr) console.log(e);...in ie11's  console it outputs:..0 contains remove clear add addall(all properties)..and in chrome's console only outputs 0, which is expected...how to fix it in ie? i know i can use for(var i=0;i&lt;arr.length;i++) to solve it..but i just wonder why ie outputs all the properties."

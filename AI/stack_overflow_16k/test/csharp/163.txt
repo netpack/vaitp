@@ -1,0 +1,1 @@
+i want to split datatable rows based on number i have datatable and i want to split the number of rows based on foreach 12 row.for example if the number of rows is 61 : that's mean .61 / 12 = 6 tables .5 tables with 12 rows and the table number 6 have 3 rows .blank.thanks alot

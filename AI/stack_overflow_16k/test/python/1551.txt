@@ -1,0 +1,1 @@
+"assignment of variables in blank in blank i created integer and list objects as follows:..a = 10.b = 10.x = [].y = []...then i get the following results while comparing the id of a and b, and the id of x and y..id(a)==id(b)  returns true.id(x)==id(y) returns false...somewhere i read that assignment in blank never copies data. my question is why x and y do not have the same id?"

@@ -1,0 +1,1 @@
+"filling a character array with subsequent letters in a string for example i need to get the string ""example"" split by characters and fill a character array with a determined size and then stop when the array is full. ..so if the character array had 10 elements then the resulting array would have components: ..{e,x,a,m,p,l,e,e,x,a}"

@@ -1,0 +1,1 @@
+"how to refresh a particular div after closing a modal window? i have a modal window which closes when i add an item. the parent page will refresh once the modal window is closed. but i don't want the whole window to get closed, but i want a particular div to get refreshed. is there any blank way to do it ?"

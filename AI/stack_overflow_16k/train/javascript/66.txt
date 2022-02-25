@@ -1,0 +1,1 @@
+"how to submit the form when pressing ctrl + s (instead of ""save the webpage"") in blank? i have a html page with a form. i don't want to have to move the cursor to and click the ""update"" submit button constantly. i want to be able to just press ""ctrl + s"" as if it were a text editor, to submit the form (which saves the fields)...no jquery junk, please."

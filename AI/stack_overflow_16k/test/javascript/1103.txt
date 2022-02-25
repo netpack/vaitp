@@ -1,0 +1,1 @@
+"how to validate entered date format is valid or not? how to check entered date format is valid or not in text box $(""#txtcustomdate"")...function datval(){.  var obj = $(""#txtcustomdate"").val();.  var format = obj.touppercase();.  var date = new date();.  text = moment(date).format(format);.  $('#editor').val(value + ""&lt;span&gt;"" + text + ""&lt;/span&gt;"");.}"

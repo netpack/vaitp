@@ -1,0 +1,1 @@
+"am i missing something or is this not right way to declare event? i came across this piece of code. it works, but is it not against the .net event declaration guidelines?..public event action sessiontimeout;"

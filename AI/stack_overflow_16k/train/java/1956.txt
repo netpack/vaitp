@@ -1,0 +1,1 @@
+"how to print characters and integers from a char array i have string array as char[] onlyarr={'a','b','c','d','1','2','3','4'};.how do i get to this?..a,1.b,2.c,3.d,4...with the syntax [letter][number]"

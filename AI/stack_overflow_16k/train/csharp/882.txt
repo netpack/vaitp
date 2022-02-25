@@ -1,0 +1,1 @@
+"huge xml to model in blank i am working with a huge xml using a tool in vs2010 able to convert it into a model (.cs class). now in order to read that xml, i am parsing through the tags and filling in my objects  in the model..just want to know if i am on the right track or there's a easier way to now load the model with xml data"

@@ -1,0 +1,16 @@
+"def update_server_key(conf):
+    """
+    Download the server's RSA key and store in the location
+    specified in the configuration.
+    :param conf: The consumer configuration object.
+    :type conf: dict
+    """
+    host = conf['server']['host']
+    location = conf['server']['rsa_pub']
+    url = 'https://%s/pulp/static/rsa_pub.key' % host
+    try:
+        os.makedirs(os.path.dirname(location))
+    except OSError, e:
+        if e.errno != errno.EEXIST:
+            raise
+    download(url, location)"

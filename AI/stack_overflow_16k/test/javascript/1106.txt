@@ -1,0 +1,1 @@
+"how we can find attach function in a html tag in blank suppose we have a html tag and some blank function is attached on that by addevenetlistner or attachevent (with tag id or name but not inline), and if we need find out that which function is attach on that tag, then what is good way for find that...please suggest me."

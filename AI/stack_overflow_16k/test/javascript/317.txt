@@ -1,0 +1,1 @@
+is this a closure in blank as im not sure? is this a  closure in blank?..var test = function(b){.    var a = 1;.    return function(b){.        a + b.    }.};.var c = test(2);

@@ -1,0 +1,1 @@
+"why my blank for loop will not work? for (var i=1; i<5; i++;) { document.write (""a statement has run ""); } i have tried using alert and document.write. it is from the following youtube video. it works for him but not for me. ..for (var i=1; i&lt;5; i++;) {  .    document.write (""a statement has run "");.}"

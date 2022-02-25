@@ -1,0 +1,1 @@
+"blank regexp for validating url without http in the beginning i want to validate a blank string using regexp for url...i don't wan't to force http:// in the beginning...what is the correct regexp, since i have the next one to include http:..var pattern = /(ftp|http|https)://(w+:{0,1}w*@)?(s+)(:[0-9]+)?(/|/([w#!:.?+=&amp;%@!-/]))?/;"

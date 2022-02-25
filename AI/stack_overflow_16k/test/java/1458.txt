@@ -1,0 +1,1 @@
+"how to print last 4 digits from my 13 digit long package com.nusecond.code;..public class code {....    public static void main(string args[]) {..        long i=system.currenttimemillis();.        system.out.println(i);.    }..}...last 4 digits...here i""m trying to get last 4 digits of current time in millis.the above code gives 13 digit long type number and i want last 4"

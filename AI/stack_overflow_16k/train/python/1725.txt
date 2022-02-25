@@ -1,0 +1,1 @@
+django import i couldnt create main file into my project file c:userssushant dhore&gt;cd c:userssushant dhoredesktopmyside..c:userssushant dhoredesktopmyside&gt; py -3.7.3 manage.py startapp main.unable to create process using 'c:userssushant dhoreappdatalocalprogramsblankblank37blank.exe -3.7.3 manage.py startapp main'

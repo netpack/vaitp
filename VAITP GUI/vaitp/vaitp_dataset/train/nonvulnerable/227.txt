@@ -1,0 +1,72 @@
+"    def _fork(self, path, href, text, fetch=False):
+
+        # Prepare temporary files, if fetch.
+
+        if fetch:
+            # Get a path (sans query strings, etc.) for the URL
+            tmppath = urllib.parse.urlparse(href).path
+
+            # Return just the basename of the path (no directories)
+            fname = os.path.basename(tmppath)
+
+            # Grab a temporary directory. This allows us to create a file with
+            # an unperturbed filename so scripts can freely use regex /
+            # extension matching in addition to mimetype detection.
+
+            tmpdir = tempfile.mkdtemp(prefix="canto-")
+            tmpnam = tmpdir + '/' + fname
+
+            on_hook("curses_exit", lambda : (os.unlink(tmpnam)))
+            on_hook("curses_exit", lambda : (os.rmdir(tmpdir)))
+
+        pid = os.fork()
+
+        # Parents can now bail.
+        if pid:
+            return pid
+
+        if fetch:
+            tmp = open(tmpnam, 'w+b')
+
+            # Grab the HTTP info / prepare to read.
+            response = urllib.request.urlopen(href)
+
+            # Grab in kilobyte chunks to avoid wasting memory on something
+            # that's going to be immediately written to disk.
+
+            while True:
+                r = response.read(1024)
+                if not r:
+                    break
+                tmp.write(r)
+
+            response.close()
+            tmp.close()
+
+            href = tmpnam
+
+        # Make sure that we quote href such that malicious URLs like
+        # "http://example.com & rm -rf ~/" won't be interpreted by the shell.
+
+        href = shlex.quote(href)
+
+        # A lot of programs don't appreciate
+        # having their fds closed, so instead
+        # we dup them to /dev/null.
+
+        fd = os.open("/dev/null", os.O_RDWR)
+        os.dup2(fd, sys.stderr.fileno())
+
+        if not text:
+            os.setpgid(os.getpid(), os.getpid())
+            os.dup2(fd, sys.stdout.fileno())
+
+        if "%u" in path:
+            path = path.replace("%u", href)
+        elif href:
+            path = path + " " + href
+
+        os.execv("/bin/sh", ["/bin/sh", "-c", path])
+
+        # Just in case.
+        sys.exit(0)"

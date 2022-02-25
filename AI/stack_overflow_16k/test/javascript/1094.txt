@@ -1,0 +1,1 @@
+"onkeydown doesn't work with blank why doesn't my function return an alert given this particular code?..function searchstring() {.  if (event.keycode == alert(""success!""); }.}...here is my html code:..&lt;input type=""text"" id=""searchstring"" name=""searchstring"" onkeydown=""searchstring();""/&gt;"

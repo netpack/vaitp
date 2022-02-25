@@ -1,0 +1,1 @@
+"how to remove item from list interface in blank? i have a arraylist. when i try to remove an item i am getting an unsupportedoperationexception. how can i solve it? please can any one help...here my code is:..static list&lt;string&gt; availableformslist = new arraylist&lt;string&gt;();.availableformslist.add(""a"");   .availableformslist.remove(""a"");"

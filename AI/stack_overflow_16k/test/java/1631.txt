@@ -1,0 +1,1 @@
+"set method for blank i am new to blank and i created a set method book reference number so it accepts only 3 characters. i tried my code below but it's not right...public void setrefnumber(string ref). {.  system.out.println(""hello "" + ref());.      if(ref.length() ==3).{.        return;. }.  system.out.println(""fail...your reference number mis too short""); .}"

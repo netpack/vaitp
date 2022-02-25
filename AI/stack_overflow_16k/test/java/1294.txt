@@ -1,0 +1,1 @@
+"blank main not running <terminated> just made a simple for loop, was playing around with some integers and was wondering why it keep saying  &lt; terminated> and no print output?..public class codingbat {...public static void main(string[] args){.    for(int x = 3; x == 0; x--){.        system.out.print(x);.    }.}..}"

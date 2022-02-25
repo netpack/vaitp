@@ -1,0 +1,1 @@
+difference between ? extends vs e extends i am currently reading about wildcards but i cant figure out if there is any difference between ? extends animal and e extends animal.

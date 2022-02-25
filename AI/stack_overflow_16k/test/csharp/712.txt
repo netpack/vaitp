@@ -1,0 +1,1 @@
+"expression tree instead of using linq i have a list&lt;t&gt; where t:icomparable&lt;t&gt;..i want to write a  list&lt;t&gt; getfirstnelements (ilist&lt;t&gt; list, int n) where t :icomparable &lt;t&gt; which returns the first n distinct largest elements ( the list can have dupes) using expression trees."

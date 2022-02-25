@@ -1,0 +1,1 @@
+blank update parent html i'm trying to update the innerhtml of a div tag that's within the parent window from within an iframe.  how do i access the parent window?

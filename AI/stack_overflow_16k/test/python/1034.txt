@@ -1,0 +1,1 @@
+how to remove two chars from the beginning of a line i'm a complete blank noob. how can i remove two characters from the beginning of each line in a file? i was trying something like this:..#!/blank26/..import re..f = open('m:/file.txt').lines=f.readlines()..i=0;.for line in lines:.    line = line.strip()     .    #do something here

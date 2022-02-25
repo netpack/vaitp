@@ -1,0 +1,1 @@
+"does blank support creating a type with less properties than a parent type? when class a extends class b, a can have more properties than b...what about class a extracted from class b? then class a can only has a subset of properties of class b...i think this will be useful in some cases."

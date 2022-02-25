@@ -1,0 +1,1 @@
+"how to display date using blank? as i try the below blank code to display date....&lt;!doctype html&gt;.&lt;html&gt;.&lt;body&gt;.&lt;h1&gt; blank&lt;/h1&gt;.&lt;button type=""button"" onclick=document.getelementbyid('demo').innerhtml=date()""&gt;click me to display date and time.&lt;/button&gt;.&lt;p id=""demo""&gt;&lt;/p&gt;.&lt;/body&gt;.&lt;/html&gt;"

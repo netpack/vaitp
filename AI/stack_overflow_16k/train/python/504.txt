@@ -1,0 +1,1 @@
+"from x import y - access name of x? quick question:..from x import y, z...is there any way that i can access the name of x within the script?..i know that if i look at the locals() or globals() dict, that i can see y and z, but i can't seem to find a way to look for x."

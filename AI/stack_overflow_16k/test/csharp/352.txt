@@ -1,0 +1,1 @@
+"how to get information of a byte in a binary format i want to have my results in this part of code in a binary format rather than in a hexadecimal!!! how can i do it????? ..  string temp = byte format.to hex(result.data, """", """");...i mean i want to see my results in (0011010...) rather than being converted to a hexadecimal number...thanks for you answers in advance."

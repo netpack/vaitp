@@ -1,0 +1,1 @@
+"multiprocessing, pool and two lists &gt;&gt;&gt; from multiprocessing import pool..&gt;&gt;&gt; def f(x, y):....     return x*y..&gt;&gt;&gt; p = pool(3)..&gt;&gt;&gt; p.map(f, [1,2,3], [4,5,6])...and i look errors typeerror: unorderable types: list() &lt;= int()..how to use pool with 2 lists?"

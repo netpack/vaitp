@@ -1,0 +1,1 @@
+"how to use regular expressions to find all sub-strings? how do we find all length-n sub-strings in a string? suppose the string is 'jonathan'. all length-3 sub-strings are then:.. 'jon','ona',...'han'...i would like to use regex for this. i tried using re.findall('...','jonathan), but didn't quite give me what i wanted."

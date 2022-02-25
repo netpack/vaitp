@@ -1,0 +1,22 @@
+"    def _decode_xsrf_token(self, cookie):
+        m = _signed_value_version_re.match(utf8(cookie))
+        if m:
+            version = int(m.group(1))
+            if version == 2:
+                _, mask, masked_token, timestamp = cookie.split("|")
+                mask = binascii.a2b_hex(utf8(mask))
+                token = _websocket_mask(
+                    mask, binascii.a2b_hex(utf8(masked_token)))
+                timestamp = int(timestamp)
+                return version, token, timestamp
+            else:
+                # Treat unknown versions as not present instead of failing.
+                return None, None, None
+        elif len(cookie) == 32:
+            version = 1
+            token = binascii.a2b_hex(cookie)
+            # We don't have a usable timestamp in older versions.
+            timestamp = int(time.time())
+            return (version, token, timestamp)
+        else:
+            return None, None, None"

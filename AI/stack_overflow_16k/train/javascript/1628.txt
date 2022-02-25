@@ -1,0 +1,1 @@
+"blank to search attributes in an xml document i want to make a blank that reads a xml document as an input (let say ""c010.xml""), searches for certain tags and then returns the value within these tags..for example, in the expression ...  &lt;lesson_mode&gt;normal&lt;/lesson_mode&gt;...to return the attribute ""normal""...could you suggest sth please?..thanks!"

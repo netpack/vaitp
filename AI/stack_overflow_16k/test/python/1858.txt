@@ -1,0 +1,1 @@
+"malayalam word sense disambiguation in blank # encoding=utf-8.file=open(""mm.txt"",""r+"").wordcount={}.for word in file.read().split():.    if word not in wordcount:.        wordcount[word] = 1.    else:.        wordcount[word] += 1.print (word,wordcount).file.close();...this work fine for english sentence .how to work this code for malayalam sentence"

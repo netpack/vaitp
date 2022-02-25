@@ -1,0 +1,1 @@
+"interpret a string made of 0 and 1 as a binary sequence? using blank, i want to convert/interpret a string made of 0 and 1 as if it was binary...assume i have a string that looks like this:  ..&gt;&gt;&gt;str = ""010010000110010101101100011011000110111100100000010101110110111101110010011011000110010000100001""...i would like a function (or whatever) to retrieve hello world!."

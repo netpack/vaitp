@@ -1,0 +1,1 @@
+"split string into array of equal length strings i have a string that i need split into smaller strings with an equal length of 6. i tried using:..'abcdefghijklmnopqrstuvwxyz'.split(/(.{6})/)...but it returns an array with empty strings like so:..["""", ""abcdef"", """", ""ghijkl"", """", ""mnopqr"", """", ""stuvwx"", """"]"

@@ -1,0 +1,1 @@
+"creating a new list for each for loop i wish to create a new list each time a for loop runs..#reading user input e.g. 10.lists = int(raw_input(""how many lists do you want? "")).for p in range(0,pooled):.    #here i want to create 10 new empty lists: list1, list2, list3 ......is there any smart way of doing this?..thanks,..kasper"

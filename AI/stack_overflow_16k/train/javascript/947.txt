@@ -1,0 +1,1 @@
+"pause blank execution while waiting on response i'm looking for a way to pause a blank function while waiting for the user to make a choice. i would like it to work like prompt, alert or confirm (they pause the script) but i would like to create my own query box in html...is there any way that i can achieve this?"

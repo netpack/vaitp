@@ -1,0 +1,1 @@
+"usages of private static object in blank? could someone let me know the places where we need to use private static object in blank?..the places i mean is about the reasons behind in using them or the use cases where we need to use them...thanks,.kathir"

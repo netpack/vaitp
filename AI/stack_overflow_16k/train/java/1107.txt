@@ -1,0 +1,1 @@
+serversocket accept() method can anybody please explain me how this accept() method works.what does it return?does it creates a new socket on server side? does it returns the reference of the socket created on client side?i am so confused.it would be a great help if anyone could help.

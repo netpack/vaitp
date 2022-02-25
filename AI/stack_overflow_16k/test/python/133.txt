@@ -1,0 +1,1 @@
+"what's the best way to get the size of a folder and all the files inside from blank? if there will be a small number of files it should be easy with a recursive function to pass through all the files and add the size but what if there are lots of files, and by lots i really mean lots of files."

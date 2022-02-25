@@ -1,0 +1,1 @@
+"extracting data into blank list from csv i have excel sheet with ids such as je2456,je2645,je2893,......i would like to save it in a list in blank. ..but its throwing errors while importing like.'no such file or directory exists.'"

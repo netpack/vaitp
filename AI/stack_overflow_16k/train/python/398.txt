@@ -1,0 +1,1 @@
+return value of 'print' function? i'm blank beginner..i am wondering what the return value of the 'print' function is..i tried type(print(3)) and didn't work...i tried to find the api document but i could only find the pprint function.

@@ -1,0 +1,1 @@
+unexpected output in dividing two numbers why is this code giving 0.0 as answer?..public static void main(string[] args) {.    float ans = (480/1080);.    system.out.println(ans);.}

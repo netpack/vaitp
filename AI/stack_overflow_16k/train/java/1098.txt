@@ -1,0 +1,1 @@
+"ifs and arraylists is there a way to do an if statement where one number is compared to an entire arraylist?.i want to ask the user to input a number, then scan the array list for that same number and then print out the number from the array list."

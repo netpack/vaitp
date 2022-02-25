@@ -1,0 +1,1 @@
+"printing unicode hex values for strings i am trying to print unicode characters for strings..for example, '{' should print as '007b' (with the leading zeroes)..all i can do at the moment is this:..binascii.hexlify(unicode(""{"")) .'7b'...i want to be able to give it a string like ""test"" and it should print ""0074006500730074"""

@@ -1,0 +1,1 @@
+"how to find the overlapping of an image on tkinter canvas (blank)? in tkinter, when i create an image on a canvas and find the coordinates of it, it only returns two coordinates, so the find_overlapping method doesn't work with it (naturally). is there an alternative?"

@@ -1,0 +1,1 @@
+"reading a line partially from a file i have a file in which data is stored in 4 columns such as:..moore 0.312 5.312 9...now i just want to read the name from the line and store in a list, but i am not able to figure out how to do it."

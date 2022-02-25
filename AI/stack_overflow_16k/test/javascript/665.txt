@@ -1,0 +1,1 @@
+"get millis using only year and month i need to get a millis value only with year and month...important: i don't wanna to use days, hours, seconds, etc...i'm using the following:..for (var i = 0; i &lt;= 11; i++) {.    var d = new date(date);.    d.setmonth(i);.    var span = $(""&lt;span&gt;"").addclass(""calelement"").attr(""millis"", d.gettime());.}"

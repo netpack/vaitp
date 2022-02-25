@@ -1,0 +1,1 @@
+"start index of a string in another string let's say i have a string ""i'm stuck here please help, y? something else..... yyyy "" ..i need to find the start index of yyyy i know the indexof method which will take a char.  if i use y it will give the index of this y?"

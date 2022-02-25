@@ -1,0 +1,1 @@
+"blank parse datetime year to int how can i parse datetime variables only year to integer type?..i would like to parse datetime variable (2008-06-08) to a integer type variable that would contain only year (2008)..i have tried converting datetime to string and string parsing to int, but maybe there is a better way to do so?"

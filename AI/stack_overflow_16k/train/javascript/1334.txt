@@ -1,0 +1,1 @@
+"object.keys(data).length counting items and not entries i have this data:..{id: ""001"", name=""name 1"", lastname=""lastname 1"", active=""0""}...in order to get the number of entries...which in this example above should be 1 i've added this code:..object.keys(data).length...this is returning 4 and not 1...what i'm i doing wrong here?enter code here"

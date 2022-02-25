@@ -1,0 +1,1 @@
+what does this comparison mean? i just read the following line in a script:..fn = (len(sys.argv) &gt; 2 and [sys.argv[2]] or ['test_out.jpg'])[0]...i don't really get what's going on here. so there is a comparison of the number of arguments with 2 and then an or statement. what is the author doing with this and is it a good coding style?

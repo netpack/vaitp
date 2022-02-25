@@ -1,0 +1,1 @@
+a better way to write exception handling code in my work almost 60 to 70% of the code is for exception handling and logging those exceptions..rest 30 to 40% is the business logic...is there a way to extract out the exception handling part using entlib or any other concept which can be applied here?..regards.

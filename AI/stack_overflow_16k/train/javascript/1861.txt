@@ -1,0 +1,1 @@
+blank: class method access deep function is it  possible to access method/function m1 from instance of myobjgraph?.thanks in advance for your answers..class myobjgraph .{.    constructor(id) .    {.        this.drawgraph(id);.    }.    drawgraph(id).    {.        var inid = id;.        function m1().        {.            alert(inid);.        }.    }.}

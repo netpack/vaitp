@@ -1,0 +1,1 @@
+"blank paging util i have list of object. i need to do pagination..the input parameters are the maximum number object per page and page number...for example  input list  = (""a"", ""b"", ""c"", ""d"", ""e"", ""f"").the maximum number per page is 2.page number is 2.result = (""c"", ""d"")..are there any ready-made classes(libs) to do this?  for example apache project or so on."

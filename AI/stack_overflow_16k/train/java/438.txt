@@ -1,0 +1,1 @@
+"number too large i got result as  integer number too large  when following program compiled,..import blank.io.*;.class test.{.    int i =09;.    public static void main(string args[]).    {  .        test s=new test();.        s.test();.    }.    void test().    {.        system.out.println(""number is "" +i);.    }.}"

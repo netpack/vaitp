@@ -1,0 +1,1 @@
+"value for variable, on a button, changes but not the display i am trying to create a button that onclick changes from migrate to migrated. when i click on it , the value changes, but the display remains the same. how do i go back dealing with this situation..function migrate(p){.    $$('dlmisc_a10').value = ""migrated"";.    alert ($$('dlmisc_a10').value);.}"

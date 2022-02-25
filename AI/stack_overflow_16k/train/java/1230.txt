@@ -1,0 +1,1 @@
+"blank encode string to ucs i need to encode utf-8 string to ucs like 'q' to 'u0071' or '龥' to 'u9fa5' in blank. i have tried this code but with wrong result .....new string(inputstring.getbytes(""iso8859_1""), ""utf-8"");"

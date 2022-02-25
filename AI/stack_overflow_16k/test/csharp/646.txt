@@ -1,0 +1,1 @@
+"blank how to display 2 array in sequence with using two ""for"" loop? i am new to programming...let say i have..arr1 = {1, 2, 3, 4, 5}.arr2 = {+, - , *, /, =}...how can i display this two array in sequence by using two for loop in the form like this...1+2-3*4/5="

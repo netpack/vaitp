@@ -1,0 +1,1 @@
+write out xmlwriter to file i have an xmlwriter object used in a method. i'd like to dump this out to a file to read it. is there a straightforward way to do this?..thanks

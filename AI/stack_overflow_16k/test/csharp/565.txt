@@ -1,0 +1,1 @@
+how to add delimiter to end of the each word in string using blank i have text file containing data like following. ..4 4  4100100001063d 1cbsme 150312  40001063ante leco metering c 3460025.57lkr ..i want add delimiter like following..4| 4|  4100100001063d| 1cbsme| 150312|  40001063ante| leco| metering| c| 3460025.57lkr|..how can i fix this problem. help me friends

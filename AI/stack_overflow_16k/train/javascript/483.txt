@@ -1,0 +1,1 @@
+call function from the same function how can i call a function from the same function in angularjs?..example:..function one(){..           function two(){.            //now i have to call function one().           }.}

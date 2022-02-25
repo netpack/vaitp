@@ -1,0 +1,1 @@
+"zip key value pairs in blank i need to change my output from number 1 = 0 to (1:0) or ('1':0). i want to change to key value pair. below is the code i'm using...numberlist = [1].val_list = [0].for (number, val) in zip(numberlist, val_list):.    print 'number ', number, ' = ', val...output: number 1 = 0.desired output is: ('1':0) or  (1:0)"

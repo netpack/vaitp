@@ -1,0 +1,1 @@
+"how to run a blank function after x seconds i am trying a blank function after 10 second of body load. but it is showing immediatly after body load. i am not expert in blank, so i am not able to find where is the problem. my code is below:..&lt;script type=""text/blank""&gt;.window.onload=setinterval(div_show(), 10);.&lt;/script&gt;"

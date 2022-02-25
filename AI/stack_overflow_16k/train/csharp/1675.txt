@@ -1,0 +1,1 @@
+"returning instance of resource class i have a method which return an instance of resource class, how can use the ""using"" statement to avoid resource leak?..public resourceclass method().    {.        return  new resourceclass ();.    }...i hope my question is clear..thanks in advance"

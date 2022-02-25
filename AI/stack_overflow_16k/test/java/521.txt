@@ -1,0 +1,1 @@
+"how to refer jars present in other war file in my own webb applications manifest file my requirement is i have to refer the jars present in other war file in my web application...i am thinking to edit the manifest file of my web application to add the jars of other war file, but i do not know exactly what to add in the manifest file...could any one please help me on this."

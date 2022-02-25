@@ -1,0 +1,1 @@
+"how can i make an error verifiy with os.makedirs in blank? how can i make a verify error for this command?..if blablablabla:.    os.makedirs('c:\test\')...if the folder already exists, he return me an error... how can i make it ignore this error? and move on ?"

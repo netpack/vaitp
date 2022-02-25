@@ -1,0 +1,1 @@
+how to list properties defined with object.defineproperty is it possible to list all properties defined using object.defineproperty?.these don't show up while iterating through the object:..for (var prop in obj) { ... }...and neither with object.getownpropertynames...update: i guess it is only possible if they are created with the enumerable: true flag set.

@@ -1,0 +1,1 @@
+exclude lines containing only numbers and whitespaces i am parsing a file in blank. i have few lines like this:..2756    4   3179..3076    4   3179..3142    4   3179..3179    4   3179..in my file...i am parsing the file i blank. i want to write regular expression to exclude such lines containing only numbers and white spaces. ..how should i do it?

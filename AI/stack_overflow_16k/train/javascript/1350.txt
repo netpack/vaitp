@@ -1,0 +1,1 @@
+"global blank variables defined in the function i am trying to make variables lat and loc global, but they are always zero...var lat=0;.var loc=0;..navigator.geolocation.getcurrentposition(function(position) {.     lat = position.coords.latitude;.     loc = position.coords.longitude;.});..alert(lat); // this eqals zero"

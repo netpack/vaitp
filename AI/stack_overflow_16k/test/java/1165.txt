@@ -1,0 +1,1 @@
+why can a constructor be called only once per instance? why are constructor calls in blank allowed only once per instance? if would be useful to set multiple instance variables in one call rather than calling several setters.

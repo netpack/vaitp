@@ -1,0 +1,1 @@
+"i want to search strings that starts with a pattern using blank i want to search string that start by another string..example:..&lt;br&gt;.{&lt;br&gt;.sujith,&lt;br&gt;.surjith,&lt;br&gt;.rejith,&lt;br&gt;.}&lt;/p&gt;&lt;br&gt;...if the search word is 'su',should :..return&lt;br&gt;.{&lt;br&gt;.sujith,&lt;br&gt;.surjith,&lt;br&gt;.}&lt;/p&gt;&lt;br&gt;.but not rejith.&lt;/p&gt;"

@@ -1,0 +1,1 @@
+"how to make a keycode work for cyrillic below code work only for latin n, but how to make it work for cyrillic н..if(event.keycode === 78) {.console.log('okay');.}...and is weird that this code works if i change the keyboard layout different from us and click on latin n"

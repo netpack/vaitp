@@ -1,0 +1,1 @@
+"radiobutton - hide lbl and txt box based on selection if(rbn1.checked == true).{.    lblr.enabled = false;.    txtr.enabled = false;.    re = (input * 2 + inputw * 2);.    lblre.text = math.round(re, 2).tostring();.}...this is the current code i have, but when i run the program and select the rbn1, it does not seem to hide the lblr and txtr.  all help is appretiated, thanks!"

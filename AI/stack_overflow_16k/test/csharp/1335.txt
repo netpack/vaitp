@@ -1,0 +1,1 @@
+blank uninstall event is it possible to catch the uninstall event and execute some code when the program starts uninstalling?..program is installed by autoinstall. i already try to use this..public override void uninstall(. idictionary savedstate.)...but it said that method can not be overriden becouse it does not exist.

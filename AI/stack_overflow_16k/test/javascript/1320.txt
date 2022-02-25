@@ -1,0 +1,1 @@
+"blank array duplicates and values this is my first stack overlow question:..i got this array [['a',12],['a',21],['b',1],['c',4],['c',5]]..and i want to output it like this [['a',33],['b',1],['c',9]]..anyone can give me an helping hand?"

@@ -1,0 +1,1 @@
+changing the colour of elements in a list box / list model if a room is in emergency mode then i would like to display it on the list box as red. my list box uses a list model to display all of it's items..gui displaying the rooms.is there anyway of looping through each element in the list box to change the colour of its text?

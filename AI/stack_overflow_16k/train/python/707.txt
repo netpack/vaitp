@@ -1,0 +1,1 @@
+"blank linecount in a file for the following:..def linecount(filename):.    count = 0.    for x in open(filename):.        count += 1.    return count...how does the script 'know' that each line is a separate element?.for 'file' type, is this how it is essentially separated -- by line? thank you"

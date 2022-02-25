@@ -1,0 +1,1 @@
+native methods in blank i have spent some time learning what are blank native methods and that they are implemented in platform dependent code(mostly c)...but where can i find those native implementations of blank? eg : sleep(long millis) method of thread class is native. but where is its implementation code???

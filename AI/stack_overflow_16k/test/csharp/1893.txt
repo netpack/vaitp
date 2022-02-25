@@ -1,0 +1,1 @@
+"get specific number in string after divided character if i have a formular like ""(10 / 0) + (29 / 0.0) + (10 / 0.1)"" as string, i want throw a devide by zero exception. for that case, i have to parse the string and check all numbers in past of the divide character...how can i solve that with a function?"

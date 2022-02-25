@@ -1,0 +1,1 @@
+"variable number of leading zeros in blank we can do..""file_{:03}.ext"".format(i)...allowing us to easily pad any number i with leading zeros to fit any given width...but what if the desired width is only known at runtime?  can we still achieve the same effect?"

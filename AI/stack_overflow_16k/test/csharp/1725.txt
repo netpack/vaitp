@@ -1,0 +1,1 @@
+resize desktop icons i'm trying to figure out how to re-size the desktop icons with blank. i'm not finding much with my various searches. has anyone done this before. i know the size is stored in the hkey_current_usercontrol paneldesktopwindowmetricsshell icon size registry value but changing this value doesn't seem to actually change the size of the desktop icons.

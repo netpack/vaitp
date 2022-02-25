@@ -1,0 +1,1 @@
+"how to simplify the so many question mark in the insert string ？ the table in one database has 30 fields ,when i write some  data into table ,how to handle the ? in insert string?..many=""? ,""*30.many=many[0:-1].db_str='insert into the_table  values (' + many + ');'.con.executemany(db_str, data)...the db_str is ugly for people to use ,how can i make the code look fine."

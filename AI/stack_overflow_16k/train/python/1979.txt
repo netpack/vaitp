@@ -1,0 +1,1 @@
+"group list of dict results using blank based on first key from each item i am trying to find the output of this list of dict using blank. because foo and data are unique keys, the output should merge them...input = [{'foo': 'foo-main-123'}, {'foo': 'foo-main-345'}, {'data': 'data-main-111'}].output = {'foo', ['foo-main-123', 'foo-main-345'], 'data': ['data-main-111']}"

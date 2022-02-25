@@ -1,0 +1,1 @@
+how to delay blank code i am making a web scrapper that has a loop that goes from page to page. the only problem is that it is running too fast and i got temporarily banned from the website. (the website allows robots to access their content). ..is there any library/command that i can add to my code to make it run slower?

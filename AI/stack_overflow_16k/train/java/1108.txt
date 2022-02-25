@@ -1,0 +1,1 @@
+"how to parse string dateformat to only time dateformat dateformat = new simpledateformat(""hh:mm:ss:ms"");.calendar cal = calendar.getinstance();.date finaltime=dateformat1.parse(dateformat.format(cal1.gettime()));.system.out.println(finaltime1);...actual output..thu jan 01 17:01:37 ist 1970...expected output..17:01:37"

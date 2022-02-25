@@ -1,0 +1,1 @@
+"download msv file in js we try to download msv file in js..our code:..var link = document.createelement(""a"");.                                   link.download = 'samplereport.msv';.                                   link.href = ""c:/mcf/16-02-2016.msv"";.                                   link.click();...but it doesn't work.what do we do wrong?.thanks!"

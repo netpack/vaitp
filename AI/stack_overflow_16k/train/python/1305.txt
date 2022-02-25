@@ -1,0 +1,1 @@
+whats the easiest way of converting a character into its ascii equivalent in blank? .  possible duplicate:.  ascii value of a character in blank  .....the method i have applied is mapping the characters in an array . is there a library for it ?

@@ -1,0 +1,1 @@
+"why is my blank script not running via command line? thanks!..def hello(a,b):.    print ""hello and that's your sum:"".    sum=a+b.    print sum.    import sys..if __name__ == ""__main__"":.hello(sys.argv[2])...it does not work for me, i appreciate the help!!! .thanks!"

@@ -1,0 +1,1 @@
+getting line number of an error from minified blank files is it in any way possible to dynamically get the line number of an error when the blank files are minified?..at the moment all errors are logged as being occurred on line 0.

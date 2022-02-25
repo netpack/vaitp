@@ -1,0 +1,1 @@
+"why do we need to override the methods of parent class? i mean if we want to rewrite all the content of the method in the child class and change its function, why couldn't we just write a new method with a different name?  what's the difference? i know this is a simple question. but i am new to programming and very confused. thx."

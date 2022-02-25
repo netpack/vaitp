@@ -1,0 +1,1 @@
+"blank byref // copy i am new to blank (and dont know much about programming anyway), but i remember reading that blank generally does not copy values so any statement a = b makes b point to a. if i run..a = 1.b = a.a = 2.print(b)...gives the result 1. should that not be 2?"

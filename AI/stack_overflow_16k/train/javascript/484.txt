@@ -1,0 +1,1 @@
+"js scope return function i'm walking through and implementing some new blank feature in some code i'm new to.  i've learned quite a bit about variable scope within functions but understand this one...in this sample, why is x undifined with the return function, but not the layoutinfo and tempxsllink attributes on the outer function showtempxslfodialog?..here's a graphic."

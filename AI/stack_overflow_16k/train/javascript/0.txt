@@ -1,0 +1,1 @@
+"i have js error , saying object [object object] has no method 'countdown' i have a website working fine in all browsers except ie. when i look at the console it says:..object [object object] has no method 'countdown'...the website name is: http://www.rivalhost.com/ ..the problem is with menu. please help me out of this guys. thanks in advance"

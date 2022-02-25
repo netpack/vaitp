@@ -1,0 +1,24 @@
+"    def set(self, key, value, serialize=True, timeout=0):
+        """
+        Set a key/value pair in memcache
+
+        :param key: key
+        :param value: value
+        :param serialize: if True, value is pickled before sending to memcache
+        :param timeout: ttl in memcache
+        """
+        key = md5hash(key)
+        if timeout > 0:
+            timeout += time.time()
+        flags = 0
+        if serialize:
+            value = pickle.dumps(value, PICKLE_PROTOCOL)
+            flags |= PICKLE_FLAG
+        for (server, fp, sock) in self._get_conns(key):
+            try:
+                sock.sendall('set %s %d %d %s noreply\r\n%s\r\n' % \
+                              (key, flags, timeout, len(value), value))
+                self._return_conn(server, fp, sock)
+                return
+            except Exception, e:
+                self._exception_occurred(server, e)"

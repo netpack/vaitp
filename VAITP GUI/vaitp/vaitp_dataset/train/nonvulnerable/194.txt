@@ -1,0 +1,20 @@
+"    def test_bcrypt_harden_runtime(self):
+        hasher = get_hasher('bcrypt')
+        self.assertEqual('bcrypt', hasher.algorithm)
+
+        with mock.patch.object(hasher, 'rounds', 4):
+            encoded = make_password('letmein', hasher='bcrypt')
+
+        with mock.patch.object(hasher, 'rounds', 6), \
+                mock.patch.object(hasher, 'encode', side_effect=hasher.encode):
+            hasher.harden_runtime('wrong_password', encoded)
+
+            # Increasing rounds from 4 to 6 means an increase of 4 in workload,
+            # therefore hardening should run 3 times to make the timing the
+            # same (the original encode() call already ran once).
+            self.assertEqual(hasher.encode.call_count, 3)
+
+            # Get the original salt (includes the original workload factor)
+            algorithm, data = encoded.split('$', 1)
+            expected_call = (('wrong_password', force_bytes(data[:29])),)
+            self.assertEqual(hasher.encode.call_args_list, [expected_call] * 3)"

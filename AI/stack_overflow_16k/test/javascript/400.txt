@@ -1,0 +1,1 @@
+"how can i convert this into a integer in blank? i asked a similar question yesterday .. if i have for example 0-9999 , how can i turn this into 09999 , basically removing the - and make it an integer in blank ?..var = 0-9999..turn that into 9999 integer..or var  = 2-9999 , turn that into 29999..thanks a bunch"

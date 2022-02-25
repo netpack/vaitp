@@ -1,0 +1,1 @@
+"how to check file size before uploading file using blank in ie 7,ie 8?(no using flash and serverlet) when user upload 1 gb file, the only way i know the file size in server size after user finish uploading..but it will make more effort in web server. how do i know the file size before user full post the entire file?"

@@ -1,0 +1,1 @@
+"how to print bitset as series of bits is there a method or a way to print a bitset as series of bits such as 1001011..for example, the following code:..    bitset b = new bitset(6);..    b.set(1);.    b.set(3);.    b.set(4);..    // i want to print b like 101100.    system.out.println(b);...thanks"

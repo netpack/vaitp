@@ -1,0 +1,1 @@
+finalize() method i want to know why its neccessary to write this statement super.finalize() in the following..code...protected void finalize() throws throwable {..    try {..        close();..    } catch(exception e) {..    }..    finally {..        super.finalize();...    }.}

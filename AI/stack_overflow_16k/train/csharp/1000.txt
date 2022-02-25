@@ -1,0 +1,1 @@
+"what is the default value when create multi dimention blank array in normal situation ,i can create an array like this:..int [,] arr =new int[2,2];...but if i use:..int[,] arr= new int[2];...what is the default value for the second parameter? 0 or 1 or null?"

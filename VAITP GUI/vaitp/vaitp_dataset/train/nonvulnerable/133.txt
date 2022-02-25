@@ -1,0 +1,16 @@
+"    def test_disable_user_invalidates_token(self):
+        from keystoneclient import exceptions as client_exceptions
+
+        admin_client = self.get_client(admin=True)
+        foo_client = self.get_client(self.user_foo)
+
+        admin_client.users.update_enabled(user=self.user_foo['id'],
+                                          enabled=False)
+
+        self.assertRaises(client_exceptions.Unauthorized,
+                          foo_client.tokens.authenticate,
+                          token=foo_client.auth_token)
+
+        self.assertRaises(client_exceptions.Unauthorized,
+                          self.get_client,
+                          self.user_foo)"

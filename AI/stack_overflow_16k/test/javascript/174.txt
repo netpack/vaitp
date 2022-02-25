@@ -1,0 +1,1 @@
+"change all span-tags into label-tags with blank? what i want to do: call an unload-function to change..&lt;span&gt;some content&lt;/span&gt;...into..&lt;label&gt;some content&lt;/label&gt;...is it possible to change a span-tag into a label-tag with blank? if it is possible how can i do that?..thnx,..... doro"

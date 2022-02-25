@@ -1,0 +1,1 @@
+"differences between 2 times? startcopying = datetime.now;.file.copy(@""c:userssshap5xdesktopline4shiradebbihackers.avi"", @""c:userssshap5xdesktoptesthackers.avi"", true);..endcopying = datetime.now;.copyingtime1 = (endcopying - startcopying).duration;...what is the problem with my code?..copying time is timespan object."

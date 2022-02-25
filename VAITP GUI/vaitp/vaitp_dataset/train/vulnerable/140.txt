@@ -1,0 +1,106 @@
+"def template_from_file(basedir, path, vars, vault_password=None):
+    ''' run a file through the templating engine '''
+
+    fail_on_undefined = C.DEFAULT_UNDEFINED_VAR_BEHAVIOR
+
+    from ansible import utils
+    realpath = utils.path_dwim(basedir, path)
+    loader=jinja2.FileSystemLoader([basedir,os.path.dirname(realpath)])
+
+    def my_lookup(*args, **kwargs):
+        kwargs['vars'] = vars
+        return lookup(*args, basedir=basedir, **kwargs)
+    def my_finalize(thing):
+        return thing if thing is not None else ''
+
+    environment = jinja2.Environment(loader=loader, trim_blocks=True, extensions=_get_extensions())
+    environment.filters.update(_get_filters())
+    environment.globals['lookup'] = my_lookup
+    environment.globals['finalize'] = my_finalize
+    if fail_on_undefined:
+        environment.undefined = StrictUndefined
+
+    try:
+        data = codecs.open(realpath, encoding="utf8").read()
+    except UnicodeDecodeError:
+        raise errors.AnsibleError("unable to process as utf-8: %s" % realpath)
+    except:
+        raise errors.AnsibleError("unable to read %s" % realpath)
+
+
+    # Get jinja env overrides from template
+    if data.startswith(JINJA2_OVERRIDE):
+        eol = data.find('\n')
+        line = data[len(JINJA2_OVERRIDE):eol]
+        data = data[eol+1:]
+        for pair in line.split(','):
+            (key,val) = pair.split(':')
+            setattr(environment,key.strip(),ast.literal_eval(val.strip()))
+
+    environment.template_class = J2Template
+    try:
+        t = environment.from_string(data)
+    except TemplateSyntaxError, e:
+        # Throw an exception which includes a more user friendly error message
+        values = {'name': realpath, 'lineno': e.lineno, 'error': str(e)}
+        msg = 'file: %(name)s, line number: %(lineno)s, error: %(error)s' % \
+               values
+        error = errors.AnsibleError(msg)
+        raise error
+    vars = vars.copy()
+    try:
+        template_uid = pwd.getpwuid(os.stat(realpath).st_uid).pw_name
+    except:
+        template_uid = os.stat(realpath).st_uid
+    vars['template_host']   = os.uname()[1]
+    vars['template_path']   = realpath
+    vars['template_mtime']  = datetime.datetime.fromtimestamp(os.path.getmtime(realpath))
+    vars['template_uid']    = template_uid
+    vars['template_fullpath'] = os.path.abspath(realpath)
+    vars['template_run_date'] = datetime.datetime.now()
+
+    managed_default = C.DEFAULT_MANAGED_STR
+    managed_str = managed_default.format(
+        host = vars['template_host'],
+        uid  = vars['template_uid'],
+        file = vars['template_path']
+    )
+    vars['ansible_managed'] = time.strftime(
+        managed_str,
+        time.localtime(os.path.getmtime(realpath))
+    )
+
+    # This line performs deep Jinja2 magic that uses the _jinja2_vars object for vars
+    # Ideally, this could use some API where setting shared=True and the object won't get
+    # passed through dict(o), but I have not found that yet.
+    try:
+        res = jinja2.utils.concat(t.root_render_func(t.new_context(_jinja2_vars(basedir, vars, t.globals, fail_on_undefined), shared=True)))
+    except jinja2.exceptions.UndefinedError, e:
+        raise errors.AnsibleUndefinedVariable("One or more undefined variables: %s" % str(e))
+    except jinja2.exceptions.TemplateNotFound, e:
+        # Throw an exception which includes a more user friendly error message
+        # This likely will happen for included sub-template. Not that besides
+        # pure "file not found" it may happen due to Jinja2's "security"
+        # checks on path.
+        values = {'name': realpath, 'subname': str(e)}
+        msg = 'file: %(name)s, error: Cannot find/not allowed to load (include) template %(subname)s' % \
+               values
+        error = errors.AnsibleError(msg)
+        raise error
+
+    # The low level calls above do not preserve the newline
+    # characters at the end of the input data, so we use the
+    # calculate the difference in newlines and append them 
+    # to the resulting output for parity
+    res_newlines  = count_newlines_from_end(res)
+    data_newlines = count_newlines_from_end(data)
+    if data_newlines > res_newlines:
+        res += '\n' * (data_newlines - res_newlines)
+
+    if isinstance(res, unicode):
+        # do not try to re-template a unicode string
+        result = res
+    else:
+        result = template(basedir, res, vars)
+
+    return result"

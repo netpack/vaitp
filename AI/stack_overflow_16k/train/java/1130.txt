@@ -1,0 +1,1 @@
+thread class how start method calls the run method of sub class please help me out to understand how does run method gets called by calling start method of thread class.

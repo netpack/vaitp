@@ -1,0 +1,1 @@
+blank function invocation syntax unclear i can't seem to find a reference that describes the following syntax:.. func() ();...this invocation of func is at the end of a constructor. other invocations within the constructor are 'normal'.

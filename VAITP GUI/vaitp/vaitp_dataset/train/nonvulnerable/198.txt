@@ -1,0 +1,3 @@
+"    def test_string_agg_delimiter_escaping(self):
+        values = AggregateTestModel.objects.aggregate(stringagg=StringAgg('char_field', delimiter="'"))
+        self.assertEqual(values, {'stringagg': "Foo1'Foo2'Foo4'Foo3"})"

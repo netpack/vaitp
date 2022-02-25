@@ -1,0 +1,1 @@
+"syntax for executing a returned function if i return a function from a function as shown below, how do i execute it and set the parameter?..var func1 = function(param){.    // do stuff.};..function returnfunction(){.    return func1;.}..returnfunction() // this will return func1 but i want to execute it with certain param."

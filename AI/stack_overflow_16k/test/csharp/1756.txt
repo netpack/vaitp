@@ -1,0 +1,1 @@
+"how to import data from a xml file into datagrid view using linq? im using blank .net , windows form application. i have a xml file which contains two columns and some rows of data. now i have to fill this data into a data grid view. i want to use linq."

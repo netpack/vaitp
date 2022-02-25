@@ -1,0 +1,1 @@
+"rand a value different than i have an enum:..public enum privilegedaccounts.{.    user = 1,.    service = 16,.    admin = 64,.    other = 1040,.    executive = 2048.}...and i wish to rand a value different than user..i know there's this rand (not sure it's true):..foo = (privilegedaccounts) (rand());...but how do i make it to rand any value except for ""user""?..thank you,"

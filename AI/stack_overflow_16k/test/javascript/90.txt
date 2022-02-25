@@ -1,0 +1,1 @@
+"how to change a ternary operator into an if-else statement? how do i change this shorthand ternary operator into an if-else statement?..header.style.width = header.style.width === ""1265px"" ? '0px' : '1265px';"

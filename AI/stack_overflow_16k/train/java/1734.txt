@@ -1,0 +1,1 @@
+"blank - inputstream .read() function if i use int onebyte = dis.read(bytearray, 0, 1) does this mean i am reading only 1 byte and i am assigning its decimal value to integer onebyte?..if i want to check for | (pipe) character to break out of a loop can i do something like this:.while((onebyte = dis.read(bytearray, 0, 1)) != 124)"

@@ -1,0 +1,1 @@
+can a weakly consistent iterator throw nosuchelementexception after it has responded true to hasnext method? i am using a weakly consistent iterator provided by a concurrent map. i have a question whether it can throw nosuchelementexception for next() method call after responding to hasnext() method as true value.

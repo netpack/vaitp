@@ -1,0 +1,1 @@
+"how to get a reference to the module of a class you can get the name of the module a class belongs to as follows:..myclass.__module__...how do i get a reference to the module instead? more specifically, i want to access the doc-string of the module an arbitrary class is part of. something similar to:..mod = myclass.getmodule() # how do i do this?.print mod.__doc__"

@@ -1,0 +1,1 @@
+"blank equivalent of event objects in c++ , winapi is there an equivalent in blank of the event objects created in c++ using the win api function ""createevent""."

@@ -1,0 +1,1 @@
+how to read binary data via pipe in blank what do i need do to make sure the data is read as binary and not text.when i do..cat binfile | myscript.py...reads as text mode i need binary mode?..data = sys.stdin.read

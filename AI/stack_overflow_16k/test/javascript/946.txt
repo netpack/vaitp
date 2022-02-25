@@ -1,0 +1,1 @@
+how to change find method for a string? how can i replace find method. it is used incorrectly. ie don't see var mail...var mail = textobj.products.find(function ( itm ) { return itm.name == c }).mail

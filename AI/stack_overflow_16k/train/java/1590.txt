@@ -1,0 +1,1 @@
+blank int comparation how does blank know/evaluate the comparison of two int values;..for example:..int a=5;.int b=10;...how does it evaluates whether a &gt; b or a == b or a &lt; b..please give an elaborate explanation.

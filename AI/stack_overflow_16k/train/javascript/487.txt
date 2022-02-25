@@ -1,0 +1,1 @@
+"return the property name from a nested object literal i have an object and i'm trying to get the name of the parent property of a method. ..var a = {b: {c: function() {return // i want ""b"" }}}..is this possible?"

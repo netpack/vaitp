@@ -1,0 +1,1 @@
+"get method's attribute without creating instance i have the following class:..public class person.{.   [somecustomattribute].   public void blahblahblah().   {}.}...is it possible to extract the attributes of a method by reflection, without creating the instance? i know it's not possible for instance property, how about instance method? will it work if the method is static?"

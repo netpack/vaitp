@@ -1,0 +1,1 @@
+"writing to multiple files in blank i want to write ""print 'hello'"" to a bunch of *.py files in the same directory.  how do you do that?  i've searched all over the web and so, and i can't find out how...like in pseudo-code, ""all files with *.py in a certain directory, open and write 'print 'hello'', close file""...i'm sorry, i'm a n00b, i just started learning blank."

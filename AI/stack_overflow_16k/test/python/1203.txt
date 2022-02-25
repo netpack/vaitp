@@ -1,0 +1,1 @@
+"variable of variable in blank i've a list of variable names, how can i print value of it using for loop....var1=""first"".var2=""second"".list=[""var1"",""var2""].for var in list:.   print(var) # i want to print value of var,...present output.var1.var2..what i want is..first.second"

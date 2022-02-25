@@ -1,0 +1,1 @@
+"empty check with string[] array i want to know the best practice for checking whether a string array is empty or not...string[] name = {""a"" , ""b""};..if (name == null) {.}...is this a good practice or there are more best codes for the same?"

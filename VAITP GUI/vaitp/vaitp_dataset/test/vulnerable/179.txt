@@ -1,0 +1,1 @@
+"    def test_parse_header_no_cr_in_headerplus(self):        data = b"GET /foobar HTTP/8.4"        self.parser.parse_header(data)        self.assertEqual(self.parser.first_line, data)"

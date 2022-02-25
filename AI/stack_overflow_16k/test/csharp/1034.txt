@@ -1,0 +1,1 @@
+"textbox data to datagrid view i'm developing a window application which is displaying valuse in 4 textboxes .,now i want save these textboxes data to datagrid view on save button click..like .r1 1 1 1 1 delete ..r2 2 2 2 2 delete..where delete is a button onclick of which that particular row gets deleted"

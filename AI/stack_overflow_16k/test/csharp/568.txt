@@ -1,0 +1,1 @@
+"error 119 operator '&&' cannot be applied to operands of type 'int' and 'int' whats the problem with my code..(string.compare(reader[""uname""].tostring(), user.tostring()) .&amp;&amp; string.compare(reader[""pname""].tostring(), pass.tostring()))"

@@ -1,0 +1,1 @@
+xmlhttprequest : not allowed by access-control-allow-origin xmlhttprequest cannot load http://example.mobi/. origin http://www.example.mobi is not allowed by access-control-allow-origin....how is it possible to have same origin error on two domains that are the same?

@@ -1,0 +1,1 @@
+"js - how do i use getfilesasync() to create an array of files inside a folder? i read many documents about getfilesasync(), but most of them give examples with just a list of file names in a folder. how do i use getfilesasync() to create an array of files inside the folder?"

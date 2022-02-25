@@ -1,0 +1,1 @@
+"blank: check if a multiple of 100 lies between two doubles i want to check if something between (including) two doubles is a multiple of one hundred...with if (double1 % 100 == 0) i can check one double, but i want to check two doubles...example:..double double1 = 398, double2 = 399.6;.should return false but.double double1 = 797.5, double2 = 801.2;.should return true."

@@ -1,0 +1,1 @@
+"    def test_siblings_cant_talk_parent(self):        # ensure 'unidirectional' attribute is respected for contexts started        # by children.        self.router.unidirectional = True        parent = self.router.local()        parent.call(test_siblings_cant_talk_remote)"

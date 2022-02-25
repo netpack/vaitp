@@ -1,0 +1,1 @@
+how to abort thread that use accepttcpclient() inside? accepttcpclient() prevents app from exit after i called thrd.abort()...how to exit application when in listening?

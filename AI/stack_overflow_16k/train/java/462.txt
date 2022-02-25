@@ -1,0 +1,1 @@
+how to create checkerboard with blank i'm trying to create a checkcerboard for my lap and i'm having problems with my code. ..int rr = 18;.int cc = 16;.for (int j= 0; j&lt;=cc; j++) {.    for(int i = 0; i&lt;=rr; i++){.        if(i % 2 == 0){.            system.out.print(design);..        }.        system.out.print( design);.    }.    system.out.println();.}

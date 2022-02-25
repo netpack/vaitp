@@ -1,0 +1,1 @@
+"how to call a blank function with parameter i am trying to call blank function on ""onclick"" event of a link as..var xx = 'test str';..breadcrumbstr = onclick=""categorymaster.expandnode(xx)""&gt;'+xx...it works only when i call the function without parameter. i want to execute this function with parameter...please help me.thanks"

@@ -1,0 +1,1 @@
+blank: is function inside loop good practice or not it's pretty handy that we can define functions anywhere in blank. but is it a good practice to define functions inside a loop? will it cause any unnecessary overhead during runtime?

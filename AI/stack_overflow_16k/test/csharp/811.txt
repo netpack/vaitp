@@ -1,0 +1,1 @@
+"explicitly casting generics in blank 4 can anyone help  me in casting generic collection in blank 4. ..here is the code snippet...gridview1.datasource = dataservicecoll.select(t => t.product_desc=""edibileitem"")..it is throwing up runtime error at the below line,..gridview1.databind(); ..saying it is a http exception...i think it should be a simple type cast...thanks,.kris."

@@ -1,0 +1,1 @@
+"blank get content of url if i enter this link, i get an array of search suggestions for the word 'sun' in a textfile 'f.txt'..http://suggestqueries.google.com/complete/search?client=firefox&amp;q=sun...how can i get this into an array in blank using only this url?"

@@ -1,0 +1,1 @@
+"an issue with logic i have a string str, that i read from a file. its values can be null, ""norw"" or !=""norw"". now i want to execute a code block when its value is either null or !=norw. how do i do that?"

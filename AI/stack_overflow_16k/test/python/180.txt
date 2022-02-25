@@ -1,0 +1,1 @@
+"is there a portable version of namedtuple which doesn't allow indexing? namedtuple is a great choice for creating immutable record classes in blank, as it eliminates boilerplate. however, a namedtuple still supports positional indexing x[0]. is there a way to define something like a namedtuple in blank 2 and blank 3, but without positional indexing?"

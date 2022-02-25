@@ -1,0 +1,1 @@
+difference between declaring variable what is the difference between the way a variable can be declared?..a = 5;...and ..var a = 5;...is there any relation with scoping also?

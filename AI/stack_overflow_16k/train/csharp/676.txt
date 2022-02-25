@@ -1,0 +1,1 @@
+"app.config vs appname.exe.config will it hurt anything if the app.config file is copied into the same directory with the appname.exe.config (in the environment it is running, dev, test, stage or prod)? i am curious to know if the app.config is simply ignored when running the appname.exe and that the .exe only reads the appname.exe.config."

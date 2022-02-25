@@ -1,0 +1,1 @@
+"passing math operator in blank i'm looking at this piece of code here:..if operation:   .  print('{} {} {} = '.format(number_1, operation, number_2)).  answer = number_1 + operation + number_2.  print(answer)...i'm trying to pass in the operation so that there wouldn't be a need for a bunch of if statements?..how would i go about doing this? if this is possible at all?"

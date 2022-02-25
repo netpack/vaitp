@@ -1,0 +1,1 @@
+"    def save(self):        if self.get_user().login_code:            self.get_user().login_code.delete()"

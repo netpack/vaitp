@@ -1,0 +1,1 @@
+"check if [path to exe] has running instance? is there a way to check (using blank) whether there is an instance of an exe that is refered to by path running? if so, please provide the method of doing so. thank you in advance...example: is there a way to find out if ""c:foobar.exe"" has a running instance, by refering to the exe as ""c:foobar.exe""?"

@@ -1,0 +1,1 @@
+"how to use blank change a string into list cut by ','? i have a string like this ..string_ = 'hello world, world, hello, stackoverflow, me, not, me'...how to change it into a list like this?..['hello world', 'world', 'hello', 'stackoverflow', 'me', 'not', 'me']...i have try ..alist = list(string_)...but when i format alist.it shows ..['h', 'e', 'l', ... ]"

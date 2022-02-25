@@ -1,0 +1,6 @@
+"def home_get_preview():
+    vId = request.form['vId']
+    t = (vId,)
+    d = db.sentences_stats('get_preview', t)
+    n = db.sentences_stats('id_networks', t)
+    return json.dumps({'status' : 'OK', 'vId' : vId, 'd' : d, 'n' : n});"

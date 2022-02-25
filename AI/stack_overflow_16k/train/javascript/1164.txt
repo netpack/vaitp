@@ -1,0 +1,1 @@
+blank: image to base64? is there any way how to encode a png/jpeg/gif image to base64 using blank (can't use canvas todataurl)? thank you.

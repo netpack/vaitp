@@ -1,0 +1,1 @@
+"blank date - month always increment hello i encountered strange behavior with blank date. i show in this example:....var date = new date(2017, 07, 22);.console.log(date); //22. 8. 2017.console.log(date.tolocaledatestring()) //tue aug 22 2017 00:00:00 gmt+0200.....why is month always increment? is normal behavior or its my problem? thanks"

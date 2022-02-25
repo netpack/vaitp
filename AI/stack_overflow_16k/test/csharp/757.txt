@@ -1,0 +1,1 @@
+"a switch expression or case label must be bool (or ...) why this swich statement do not work, gives error:...  a switch expression or case label must be a bool, char, string, integral, enum, or corresponding nullable type...code:.. switch (btn.backcolor). {.     case color.green:.         break;.     case color.red:.         break;.     case color.gray:.         break;. }"

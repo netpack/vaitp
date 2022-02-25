@@ -1,0 +1,1 @@
+blank tcp server for connecting gps devices i want to develop a tcp server which will accept around 5000 gps client connection currently i have developed a simple multi threaded tcp server which is unable handle even 100 clients. it consumes around 98% of cpu. what may be the problem and what is the best approach for this purpose?

@@ -1,0 +1,1 @@
+"blank search if localstorage variable exists i am programming a chat system. i always make a localstorage variable when a new chat is opened. created like this:..localstorage.setitem(""chat_""+varemail, data);...now i want to check how many of them i have so something like:.""chat_""+... count..how can i do this?"

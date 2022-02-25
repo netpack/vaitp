@@ -1,0 +1,1 @@
+"blank attributes, simple way get the value of tagged properties i want to make a attribute class. every property with the attribute tag calls a function..in those functions i need the value and type of the property. since 4.5 there are some new nice.features. ..is it really necessary to look inside the whole assembly for all properties with these attribute tag ?"

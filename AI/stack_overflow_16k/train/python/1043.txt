@@ -1,0 +1,1 @@
+"is this the same code for blank dictionary? if d is a blank dictionary, are these two lines the same thing?..if d in d:...vs:..if d in d.keys():...i am reading other people' code and found these two lines in very close locations. i think they should be the the same and should be changed to the first version. right?"

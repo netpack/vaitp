@@ -1,0 +1,1 @@
+blank split integer and add decimal point my integer value is 1210 and i want split this integer like 1 | 210 .have to add decimal point on middle...eg:..var integer=1210;..split this integer and add decimal value like this 1.210

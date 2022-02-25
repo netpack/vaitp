@@ -1,0 +1,1 @@
+"what is the difference between these two blank codes using `input`? a=int(input(""unesi a:  "")).b=int(input(""unesi b:  "")).c=a+b.print(c)...i do not understand what the difference is because it does the same thing...d=input(""unesi c:  "").e=input(""unesi d:  "").f=int(d)+int(e).print(f)"

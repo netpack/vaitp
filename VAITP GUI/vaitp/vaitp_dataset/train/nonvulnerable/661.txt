@@ -1,0 +1,68 @@
+"    def test_event_match_non_body(self):
+        """Check that event_match conditions on other keys work as expected"""
+
+        # if the key is anything other than 'content.body', the pattern must match the
+        # whole value.
+
+        # non-wildcards should match
+        condition = {
+            "kind": "event_match",
+            "key": "content.value",
+            "pattern": "foobaz",
+        }
+        self._assert_matches(
+            condition,
+            {"value": "FoobaZ"},
+            "patterns should match and be case-insensitive",
+        )
+        self._assert_not_matches(
+            condition,
+            {"value": "xFoobaZ"},
+            "pattern should only match at the start/end of the value",
+        )
+        self._assert_not_matches(
+            condition,
+            {"value": "FoobaZz"},
+            "pattern should only match at the start/end of the value",
+        )
+
+        # wildcards should match
+        condition = {
+            "kind": "event_match",
+            "key": "content.value",
+            "pattern": "f?o*baz",
+        }
+        self._assert_matches(
+            condition,
+            {"value": "FoobarbaZ"},
+            "* should match string and pattern should be case-insensitive",
+        )
+        self._assert_matches(
+            condition, {"value": "foobaz"}, "* should match 0 characters"
+        )
+        self._assert_not_matches(
+            condition, {"value": "fobbaz"}, "? should not match 0 characters"
+        )
+        self._assert_not_matches(
+            condition, {"value": "fiiobaz"}, "? should not match 2 characters"
+        )
+        self._assert_not_matches(
+            condition,
+            {"value": "xfooxbaz"},
+            "pattern should only match at the start/end of the value",
+        )
+        self._assert_not_matches(
+            condition,
+            {"value": "fooxbazx"},
+            "pattern should only match at the start/end of the value",
+        )
+        self._assert_not_matches(
+            condition,
+            {"value": "x\nfooxbaz"},
+            "pattern should not match after a newline",
+        )
+        self._assert_not_matches(
+            condition,
+            {"value": "fooxbaz\nx"},
+            "pattern should not match before a newline",
+        )"

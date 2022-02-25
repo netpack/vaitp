@@ -1,0 +1,1 @@
+"blank how to ascertain if it is a comma delimited list? i'm curious, how would you test a string and say ""yep, that is a comma delimited list!""  i'm not so worried about the 'comma delimited' part more that this string has more than one item in it?..thanks, r."

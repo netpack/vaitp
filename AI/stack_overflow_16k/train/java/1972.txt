@@ -1,0 +1,1 @@
+"how to replace curly braces in blank? i am getting error when try to replace regular expression in blank...for example:..string h = ""{hiren:}"";..h=h.replaceall("":}"", "":""""}"");...please give me solution..thanks"

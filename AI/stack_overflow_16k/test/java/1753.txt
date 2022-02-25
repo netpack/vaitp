@@ -1,0 +1,1 @@
+sending complex arguments to a blank program i need to supply a binary license file to a blank program.  what is the best way to do this?  the data will change all the time so i don't want to have to write a file and then read it back every time...the data is coming from a php page

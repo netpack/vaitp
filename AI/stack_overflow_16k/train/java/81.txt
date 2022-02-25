@@ -1,0 +1,1 @@
+"blank : convert ""hellothere"" to ""hello_there"" i want to convert all upper case in text to underscore , here are some example..hellothere -&gt; ""hello_there"".itisexample -&gt; ""it_is_example""...i used this code but does not work :   ..string regex = ""([a-z][a-z]+)"";.string replacement = ""$1_"";.str.replaceall(regex, replacement); .return tolowercase(str);"

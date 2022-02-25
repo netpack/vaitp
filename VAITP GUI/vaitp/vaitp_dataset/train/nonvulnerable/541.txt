@@ -1,0 +1,11 @@
+"    def prop_sentences_stats(self, type, vId = None):
+        return {
+        	'get_data' : "SELECT victims.*, geo.*, victims.ip AS ip_local, COUNT(clicks.id) FROM victims INNER JOIN geo ON victims.id = geo.id LEFT JOIN clicks ON clicks.id = victims.id GROUP BY victims.id ORDER BY victims.time DESC",
+        	'all_networks' : "SELECT networks.* FROM networks ORDER BY id",
+        	'get_preview' : ("SELECT victims.*, geo.*, victims.ip AS ip_local FROM victims INNER JOIN geo ON victims.id = geo.id WHERE victims.id = ?" , vId),
+        	'id_networks' : ("SELECT networks.* FROM networks WHERE id = ?", vId),
+        	'get_requests' : "SELECT requests.*, geo.ip FROM requests INNER JOIN geo on geo.id = requests.user_id ORDER BY requests.date DESC, requests.id ",
+        	'get_sessions' : "SELECT COUNT(*) AS Total FROM networks",
+        	'get_clicks' : "SELECT COUNT(*) AS Total FROM clicks",
+        	'get_online' : ("SELECT COUNT(*) AS Total FROM victims WHERE status = ?", vId)
+        }.get(type, False)"

@@ -1,0 +1,1 @@
+logging exception in xml file i have a webservice and want to implement exception handling block to that and want to log the exceptions in an xml flat file in application path...can anyone provide me the example for this

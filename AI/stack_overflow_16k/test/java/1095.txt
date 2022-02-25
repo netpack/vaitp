@@ -1,0 +1,1 @@
+"instance method call in blank in blank, for each object, a new copy of instance variables is created which can be accessed using the object reference..but in case of an instance method, only one copy of it(instance method) exists..how is this method accessed by various object references?"

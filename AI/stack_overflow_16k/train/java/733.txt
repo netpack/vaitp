@@ -1,0 +1,1 @@
+"why is -(insertion_point - 1) returned by collections.binarysearch when an element not present and not -insertion_point? been using the binarysearch method and wondering why is -(insertion_point - 1) returned by collections.binarysearch when an element not present and not -insertion_point? i understand why it is negative, but why the -1?"

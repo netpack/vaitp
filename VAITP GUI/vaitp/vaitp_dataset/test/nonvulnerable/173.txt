@@ -1,0 +1,1 @@
+"    def test_verified_user_has_no_change_user_perm(self, verified_user):        """Sanity check."""        assert not verified_user.has_perm("user.change_user")"

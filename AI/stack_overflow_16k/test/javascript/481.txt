@@ -1,0 +1,1 @@
+"display dynamic value in html element with blank i have a int foo in my blank program that changes many times. i want to display the current value of foo in #foobox, replacing the old value. how can i do this?"

@@ -1,0 +1,1 @@
+currency cultureinfo i need to display currency in a culture specific way we are currently supporting only english speaking countires but that might expand to another countries. we are implementing this quickly so i need a way of displaying a universal currency format for the time being until i can implement a culture specific. ..does anyone know the best way to do this?

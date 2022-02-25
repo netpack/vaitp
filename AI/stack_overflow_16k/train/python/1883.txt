@@ -1,0 +1,1 @@
+"when i expect to get int but the external function return none here is my code:..def fibonacci(t0, t1, b, n):.    t2 = t1**2 + t0.    t0 = t1.    t1 = t2.    b += 1.    if (n &gt; b):.        fibonacci(t0, t1, b, n).    else:.        return t2...... (define t0, t1, b, n).fb = fibonacci(t0,t1,b,n)..but fb=none. why t2 is not returned?"

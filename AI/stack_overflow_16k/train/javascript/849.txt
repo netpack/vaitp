@@ -1,0 +1,1 @@
+"how to handle cyclic references in thrustjs? we have a class a that references class b , and class b references class a which creates a loop on instance time while require clause is called, how can i handle this using  thrustjs ? ( we don't have it handled by the framework like in nodejs)."

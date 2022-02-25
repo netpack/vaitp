@@ -1,0 +1,1 @@
+how to convert a string to dword in blank when i tried to convert string to dword it is not converting and exception is coming: input string was not in correct format..string cdata = file.readalltext(@file1text.text );.dword rdata = convert.touint32(cdata);

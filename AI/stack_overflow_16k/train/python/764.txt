@@ -1,0 +1,1 @@
+"what syntax is better for blank != or is not? for example:..match = re.search('...', str, re.ignorecase).if match is not none:.    pass..# or.if match != none:.    pass...what is better?"

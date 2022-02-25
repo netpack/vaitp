@@ -1,0 +1,1 @@
+"object.style.height doesn't work i've googled this but didn't find an answer, this is strange.  in blank in firefox when i do object.style.height it doesn't return anything.  would anybody know why?..in css i've put..#movable {.height: 100px;........in html i've put..&lt;div id=""movable""&gt;&amp;nbsp;&lt;/div&gt;...and in js:..alert(movable.style.height);"

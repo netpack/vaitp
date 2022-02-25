@@ -1,0 +1,1 @@
+"which api should we use to extract the text and images from pdf, however extracted images and text should be in sequential order? i have tried pdfbox api which provides data in sequential order and itext api which provides images in sequential order. now, my question is there a way to get both (images and text) in sequential order by using the same api ?"

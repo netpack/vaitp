@@ -1,0 +1,1 @@
+change focus from one datagridview to another while pressing down arrow key from first grid view cell i have one datagridview and when i started typing on the first cell of gridview a new gridview will be shown as suggestion popup. i want to move focus to the popup gridview when pressing down an arrow key (the first gridview is in edit mode). is there any solution?

@@ -1,0 +1,1 @@
+"cannot save string to file with `n` characters the following code produces a file with content test\nstring, but i need the file to contain testnstring. i can't figure out a way to replace the \symbol either...s = ""testnstring"".with open('test.txt', 'w') as f:.    f.write(s)...how can i make sure that the file contains only n instead of \n?"

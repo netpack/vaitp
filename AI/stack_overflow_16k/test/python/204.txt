@@ -1,0 +1,1 @@
+"why add item to the first element of a dict list, also modify the other dict in the list? why the following code:..lst = [{}]*2.lst[0]['key'] = 7.print lst...gives      [{'key':7}, {'key':7}]"

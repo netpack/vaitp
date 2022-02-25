@@ -1,0 +1,1 @@
+"complete function multiplymagic() to multiply two elements complete function multiplymagic() to multiply two elements. ..the function should never return an error, irrespective of input passed .and should return 1 in case .of any kind of error or problem with input. .use default parameters for the same. ..sample input : multiplymagic(2,3)..output - 6"

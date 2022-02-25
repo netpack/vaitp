@@ -1,0 +1,1 @@
+"label filtering i want to filter the label to search for ""1125"" if it does not exist it will display an alert box. so here is my code:..if (var id = $('mobilelabel_2:contains(""1125"")').attr('for');).{.    alert (""works"");.}.else.{.    alert (""try again"");.}"

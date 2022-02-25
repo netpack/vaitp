@@ -1,0 +1,1 @@
+"how to call variable in function object blank im learning js , can u help me how to call variable js in object function..example..var obj = {.    a : 'foo',.    b : function(){.        var ab = a + ""bar""; &lt;-- how to call var 'ab' outside var obj ...        alert(ab).    }.}..console.log(ab);...thanks"

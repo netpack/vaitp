@@ -1,0 +1,1 @@
+"blank: zip dict with keys i have:..list_nums = [1,18].list_chars = ['a','d']...i want:..list_num_chars = [{'num':1, 'char':'a'},.                  {'num':18, 'char':'d'}]...is there a more elegant solution than:..list_num_chars = [{'num':a, 'char':b} for a,b in zip(list_nums, list_chars)]"

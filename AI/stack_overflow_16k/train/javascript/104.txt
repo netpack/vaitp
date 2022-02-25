@@ -1,0 +1,1 @@
+"mapping array of numeric strings to integers returns nan i'm trying to convert an array of numeric strings to integers, and am seeing something odd. ....const ints = ['1','2','3'].map(parseint);.console.log(ints);.....the above code returns: [1, nan, nan]?..the 1 gets parsed correctly, but why are the 2 and 3 getting converted to nan?"

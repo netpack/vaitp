@@ -1,0 +1,1 @@
+"how to test if a dictionary contains a specific key? what's the cleanest way to test if a dictionary contains a key?..x = {'a' : 1, 'b' : 2}.if (x.contains_key('a')):.    ...."

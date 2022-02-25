@@ -1,0 +1,44 @@
+"    def __init__(self, hs):
+        self.hs = hs
+        self.auth = hs.get_auth()
+        self.client = hs.get_federation_http_client()
+        self.clock = hs.get_clock()
+        self.server_name = hs.hostname
+        self.store = hs.get_datastore()
+        self.max_upload_size = hs.config.max_upload_size
+        self.max_image_pixels = hs.config.max_image_pixels
+
+        self.primary_base_path = hs.config.media_store_path
+        self.filepaths = MediaFilePaths(self.primary_base_path)
+
+        self.dynamic_thumbnails = hs.config.dynamic_thumbnails
+        self.thumbnail_requirements = hs.config.thumbnail_requirements
+
+        self.remote_media_linearizer = Linearizer(name="media_remote")
+
+        self.recently_accessed_remotes = set()
+        self.recently_accessed_locals = set()
+
+        self.federation_domain_whitelist = hs.config.federation_domain_whitelist
+
+        # List of StorageProviders where we should search for media and
+        # potentially upload to.
+        storage_providers = []
+
+        for clz, provider_config, wrapper_config in hs.config.media_storage_providers:
+            backend = clz(hs, provider_config)
+            provider = StorageProviderWrapper(
+                backend,
+                store_local=wrapper_config.store_local,
+                store_remote=wrapper_config.store_remote,
+                store_synchronous=wrapper_config.store_synchronous,
+            )
+            storage_providers.append(provider)
+
+        self.media_storage = MediaStorage(
+            self.hs, self.primary_base_path, self.filepaths, storage_providers
+        )
+
+        self.clock.looping_call(
+            self._start_update_recently_accessed, UPDATE_RECENTLY_ACCESSED_TS
+        )"

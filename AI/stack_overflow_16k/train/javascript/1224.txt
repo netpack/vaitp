@@ -1,0 +1,1 @@
+"blank date() object returns valid but not new date() var d = date(""12:00 am"") returns as a date just fine, however when trying to create an instance of it new date(""12:00 am"") it returns 'invalid date'...i found a solution here, using moment.js, which works fine, but i would like know why getting 'invalid date' when using 'new date()'..thanks..fiddle"

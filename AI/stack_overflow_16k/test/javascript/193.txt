@@ -1,0 +1,1 @@
+"converting a sting into an array when passing argument into a function i need help converting the sting passed as an argument to the function into an array and then reversing the array...i tried the code below, and it is not working...function reversestring(str) {.  var arr = str.split("" "").reverse().join('');..  return arr;.}..reversestring(""howdy"");"

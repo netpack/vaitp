@@ -1,0 +1,1 @@
+"is there a way make a sprite have a permanent color? in play.js, you can make a sprite by this:..var derp.function setup () {.derp = createsprite(width / 2, height / 2, 600, 400);.function draw () {.drawsprites();.}...this makes a big sprite, but it changes colors every time the program runs. how do make it on one color always when it runs?"

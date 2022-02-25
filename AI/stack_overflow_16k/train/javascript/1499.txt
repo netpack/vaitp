@@ -1,0 +1,1 @@
+"alert blank function code in alert? i am getting script error (""syntaxerror: unterminated string literal"") while showing that alert message ..&lt;!doctype html&gt;.&lt;html&gt;.&lt;body&gt;..&lt;script&gt;.var test= ""&lt;script&gt;dsfdsf&lt;/script&gt;"";.alert(test);.&lt;/script&gt;.&lt;/body&gt;.&lt;/html&gt;...can we show script in alert ??"

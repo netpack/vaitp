@@ -1,0 +1,1 @@
+"get folder from which application was called i'm writing a program to be called from a folder's context menu that should create a folder in that folder. how do i get the path of that folder, rather than the directory the executable resides in?"

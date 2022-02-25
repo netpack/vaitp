@@ -1,0 +1,1 @@
+"mathematical expression calculation in javasscript i have a string that have a equation on below how to i calculate the output  ..  var equation=  ""((35.8/100)*100)*10%""...i used eval in js , but eval cannot support percentage , anyone can help it how to figure out, thanks"

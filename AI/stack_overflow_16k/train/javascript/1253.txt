@@ -1,0 +1,1 @@
+is there a clean way of conditionally increasing or decreasing a value? this is what i'm trying to achieve:..var direction = (getstate() &lt; state) ? -1 : +1;         //check direction.var state = state + direction...but i don't like this solution at all. would like something like:..var state = (getstate() &lt; state) ? state++ : state--;

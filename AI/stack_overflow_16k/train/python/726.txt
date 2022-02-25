@@ -1,0 +1,1 @@
+how can i attribute each line of a txt file to a variable? i'm making a saving system for a program and i didn't find how to attribute each line of my .txt file to a variable...for example :..a = the first line of my txt file..b = the second line.etc.....is there a better way to make this ?..thanks

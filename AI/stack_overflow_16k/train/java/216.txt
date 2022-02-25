@@ -1,0 +1,1 @@
+"retrieve scheme from kafka for a topic blank i am able to connect to kafka and retrieve the data(serialized). however, i am unable to map it to scheme files (protobuf files). is there a way to retrieve scheme definition for a topic from kafka. ..i am using below simpleconsumer example from .link"

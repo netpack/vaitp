@@ -1,0 +1,1 @@
+"blank do while, where char will accept uppercase and lowercase answer how do you make the program accept n (lowercase) and n (uppercase) for the while condition?..char x;.int y = 1;.scanner sc = new scanner(system.in);.do {.  system.out.println(y);.  y++;.  system.out.println(""do you want to continue, y/n? "");.  x = sc.next().charat(0);.} while (x != 'n')"

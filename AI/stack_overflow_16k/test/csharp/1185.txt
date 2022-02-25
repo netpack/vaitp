@@ -1,0 +1,1 @@
+"how to access templatecontent.roottype in the vs 2015 watch window it shows a roottype property on the templatecontent; however the compiler doesn't seem to know about it.  does anyone know how to access it from code?.thanks in avance,.steve"

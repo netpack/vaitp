@@ -1,0 +1,1 @@
+"sudo blank doesn't work i am able to invoke blank 3.3.0 using my alias, in .bashrc, blank3.3. but sudo blank3.3 doesn't work. ..error is : blank command not found...any ideas why?"

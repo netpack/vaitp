@@ -1,0 +1,1 @@
+"given a list [9,2,11].find the biggest combination like 9211 in blank x = [9,2,1].l=[].for i in range(len(x)):.    p = max(x).    l.append(p).    x.remove(p).print(l).b = int(''.join(str(n) for n in l)).print(b)...the answer i got is 921.but if the list is [9,2,11].this won't work."

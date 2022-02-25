@@ -1,0 +1,1 @@
+"    def dataReceived(self, data) -> None:        self._maybe_fail()"

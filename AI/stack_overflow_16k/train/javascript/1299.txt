@@ -1,0 +1,1 @@
+"what if i use ""throw"" in ""catch""? function f(){.    try{.        if (/*some codes*/) throw false;.        return true;.    }.    catch(x){.        if (x===false) return false;.        throw x;.    }.}...here,what does ""throw x"" mean? it seems codes in ""catch"" won't run twice."

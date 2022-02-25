@@ -1,0 +1,1 @@
+"how to combine a dictionary formatted excel file with dictionary in blank if i have an excel file that has no row/column labels that looks like this:....and i have a dictionary that looks like this:..dict = {a:1, b:2, c:3}...how can i combine them into a dictionary that combines the values and that looks like this:..dict_result = {a:2, b:3, c:4}"

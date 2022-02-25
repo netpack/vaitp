@@ -1,0 +1,1 @@
+why does the default object.tostring() include the hashcode? if you execute:..system.out.println(someobj.tostring());...you probably see the output like...  someobjectclassname@hashcodenumber...my question : is there any specific reason why hashcode number is displayed there?

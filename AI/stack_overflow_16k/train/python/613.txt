@@ -1,0 +1,1 @@
+"flattening list of lists hey i am having trouble trying to make a list of list into just one please help:..i want:..a = [['a'], 'b', 'c', 'd', 'e']...to become:..a = ['a', 'b', 'c', 'd', 'e']...thanks"

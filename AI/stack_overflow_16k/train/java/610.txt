@@ -1,0 +1,1 @@
+how to merge multiple files in blank? is there a way i can merge multiple files together? for example..file1:..1 a.2 b.3 c...file2:..4 d.5 e.6 f...merged together output..1 a 4 d.2 b 5 e.3 c 6 f

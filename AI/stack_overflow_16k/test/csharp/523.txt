@@ -1,0 +1,1 @@
+"trouble understanding blank reference ""new"" point point = new point(x,y,z);.point = new point(2*x, 2*y, 2*z);...point is a reference from an external library and assuming x,y,z have a random initial value. i have trouble understanding what is going on between the 2 lines of code."

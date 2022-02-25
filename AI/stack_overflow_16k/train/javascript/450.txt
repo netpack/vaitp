@@ -1,0 +1,1 @@
+"how to maintain flexiblity of images in a given width how can we maintain flexibility of images in a given width,.example:i have a div width of 500px right now i have placed 4 images in that in future i will add 4 more images to same div the images should flexibly fit in that width"

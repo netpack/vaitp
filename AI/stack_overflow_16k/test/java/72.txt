@@ -1,0 +1,1 @@
+"checking two integer array elements and positions in blank i have two integer array that keeps number of digits entered by user. user enters two number. i want to print out the similarity of two number is the count of the digits that occur in both numbers in different positions, and the count of digits that occur in the same positions."

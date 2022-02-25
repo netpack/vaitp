@@ -1,0 +1,1 @@
+"convert 2 json objects into single blank array angularjs here is what i try to convert:..[{""id"":4,""name"":""group4""},{""id"":6,""name"":""group6""}]...so i want to convert it into single blank array like:..[4,6]"

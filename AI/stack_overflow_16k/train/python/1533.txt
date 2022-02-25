@@ -1,0 +1,1 @@
+"where are the blank packages and dependencies located? creating a package with composer, dependencies are stored in /vendor folder..creating a package with npm, dependencies are stored in /node_modules folder..creating a package with pip, where are the dependencies stored? and why it's different?"

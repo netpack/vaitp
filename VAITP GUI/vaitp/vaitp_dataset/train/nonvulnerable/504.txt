@@ -1,0 +1,2 @@
+"    def substitute_array(self, args):
+        return [self.substitute(txt) for txt in args]"

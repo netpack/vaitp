@@ -1,0 +1,19 @@
+"    def test_dir_struct_exists(self, mopen, mock_os):
+        """
+        Test that when the directory structure already exists, the write still happens.
+        """
+
+        class MockException(OSError):
+            pass
+
+        mock_e = MockException()
+        mock_e.errno = 17
+        mock_os.makedirs.side_effect = mock_e
+        mock_fp = open.return_value
+
+        cli.write_to_location('test/loc', 'content')
+        mock_os.path.dirname.assert_called_once_with('test/loc')
+        mock_os.makedirs.assert_called_once_with(mock_os.path.dirname.return_value)
+        open.assert_called_once_with('test/loc', 'w+')
+        mock_fp.write.assert_called_once_with('content')
+        mock_fp.close.assert_called_once_with()"

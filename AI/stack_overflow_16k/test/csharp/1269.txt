@@ -1,0 +1,1 @@
+"blank: how to convert image field to int[]? blank:.how would you convert an image field's data to an int array?.how would you write an int array to an image field?..has to be done in code, not procedures, i don't know which database type will be used...edit: i am using a blob field to store a one dimensional array of instrument readings."

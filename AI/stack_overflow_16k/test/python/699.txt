@@ -1,0 +1,1 @@
+"how to find out which variable has the greatest value if a &gt; b and c and d:.   print(""a wins"").if b&gt;a and c and d:.   print(""b wins"")...how do i check and see which variable contains the largest integer out of the group? deciding who wins?"

@@ -1,0 +1,1 @@
+"count lines in a text without empty liines i'm using next code to count lines in a text i have..it's work fine but i don't want to count empty lines..how can i do it, but with saving the current code format?..var linecount = 0;.using (var readerlines = file.opentext(strfilename)).{.    while (readerlines.readline() != null).    {.        linecount++;.    }.}"

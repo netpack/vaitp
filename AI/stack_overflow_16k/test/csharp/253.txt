@@ -1,0 +1,1 @@
+"check string null in any better way blank a method accepts about 7 string parameters, and they need to be checked for null.the basic way to do for all of them is simply !string.isnullorwhitespace(param1) and likewise.is there any better or smarter way ?.also, i may wrap the parameters in an object if that helps !"

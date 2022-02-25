@@ -1,0 +1,1 @@
+calling multiple functions with names matching regex i have some functions like these:...function name_a(){}.function name_b(){}.function name_x(){}.function name_n(){}...i want to call all functions start with name_ with regex in blank...how can i do that?

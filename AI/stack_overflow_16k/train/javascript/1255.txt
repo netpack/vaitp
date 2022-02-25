@@ -1,0 +1,1 @@
+how can i get the contents of a variable up to the first new line? i have a variable in blank that can contain a message with one or more n line breaks:..var a = multiline;...how can i make it so that the variable a only contains the first line of the contents of the .multiline variable?

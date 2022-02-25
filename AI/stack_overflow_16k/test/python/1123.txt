@@ -1,0 +1,1 @@
+"argumentparser: only accept optional argument if first argument is a certain value parser = argparse.argumentparser().parser.add_argument(""first_arg"").parser.add_argument(""--second_arg"")...i want to say that second_arg should only be accepted when first_arg takes a certain value , for example ""a"". how can i do this?"

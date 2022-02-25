@@ -1,0 +1,1 @@
+how do you filter over property of object i have an array of objects.  each object has a name and a value.  i need to return an array that just has the names where value equals the maximum.

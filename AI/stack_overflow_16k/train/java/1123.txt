@@ -1,0 +1,1 @@
+"creating a dynamic web project with maven in eclipse and running it on server when i created a dynamic web project with maven in eclipse and tomcat server then it showed ""hello world"". my question is there in index.jsp file saying ""hello world"" but i couldn't find it being added in ""web.xml"" file.. how is it working without adding it to the web.xml? .thanks in advance."

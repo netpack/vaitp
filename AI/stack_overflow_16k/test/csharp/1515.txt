@@ -1,0 +1,1 @@
+"export the tables from pdf to excel? how do i export only the table contents to excel file through blank programming?.i am currently extracting all the contents from pdfs using pdfnet sdk ,but couldn't able to read the table as a tabular structure"

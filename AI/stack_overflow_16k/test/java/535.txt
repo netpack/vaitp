@@ -1,0 +1,1 @@
+"how to swap digits from a integer in blank using bitwise operator? what i am trying to do is swapping the numbers, for example 27 to 72. i tried the code below without any luck...static int reverse(int a){.    int r = 0x0ff &amp; a;.    r &lt;&lt;= 4; a &gt;&gt;= 4;.    r |= 0x0ff &amp; a;.    return r;.}"

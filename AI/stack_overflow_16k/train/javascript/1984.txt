@@ -1,0 +1,1 @@
+"is there a way to control when the action of a form occurs with blank? say we have got a form with an action for example :  &lt;form id=""form"" name=""form"" action=""test.php""&gt; is there a way to control when will the action  occur even if i hit the submit button using blank?"

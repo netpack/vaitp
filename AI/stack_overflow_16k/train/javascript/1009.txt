@@ -1,0 +1,1 @@
+does the && operator act as an if condition? does some thing like this ...  condition1 &amp;&amp; func1 &amp;&amp; condition3 &amp;&amp; func2...mean..if (condition1 ) {.    if (!!func1 ) {.        if (condition3) {.           func2.        }.    }.}

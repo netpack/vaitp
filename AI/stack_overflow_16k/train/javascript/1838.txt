@@ -1,0 +1,1 @@
+"not getting validate after convert to data in js i have one string ""09-04-2000"". now i am trying to convert it into date using js date()...var parsedate= new date(""09-04-2000""); format : dd-mm-yyyy...after executing above code i am getting output : mon sep 04 2000 00:00:00 which is wrong...what is the correct way to get correct result in js?"

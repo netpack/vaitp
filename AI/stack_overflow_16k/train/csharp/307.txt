@@ -1,0 +1,1 @@
+foreach/for loop alternative lambda function? we use for or foreach to loop through collections and process each entries...is there any alternative in all those new lambda functions for collections in blank?..traditional way of doing..foreach(var v in vs).{.  console.write(v);.}...is there anything like?..vs.foreach(v =&gt; console.write(v))

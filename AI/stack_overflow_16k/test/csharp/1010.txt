@@ -1,0 +1,1 @@
+method-chaining in blank i have actually no idea of what this is called in blank..but i want to add the functionallity to my class to add multiple items at the same time...myobj.additem(mitem).additem(mitem2).additem(mitem3);

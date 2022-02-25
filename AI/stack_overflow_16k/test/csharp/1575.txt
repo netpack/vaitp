@@ -1,0 +1,1 @@
+"intresting behaviour of ipaddress.tryparse i'm using ipaddress.tryparse to validate an ip address, but if i use..if (ipaddress.tryparse(""192.168.1.009"", out ip)...it fails, but..if (ipaddress.tryparse(""192.168.1.007"", out ip)...passes. basically if the last digit is an 8 or 9 it fails on a valid ip address...i'm not sure what to do to get this to work?"

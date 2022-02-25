@@ -1,0 +1,1 @@
+blank equivalent to perl's lwp and http::parse i'm new to blank and i need to know if there is and equivalent to perl's lwp and http::parse. i've a perl script to get the content from an url and parsing it and i would like to port it to blank.

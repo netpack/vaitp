@@ -1,0 +1,1 @@
+"error add byte in linkedlist<byte> why can't i do :..byte b = new byte(""0"");..linkedlist&lt;byte&gt; begin = new linkedlist&lt;byte&gt;().add(b);"

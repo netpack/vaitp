@@ -1,0 +1,1 @@
+"constructor in blank using new string () a = new string(""av"");.a.constructor == string /* line no 2 */...my question is why there is no double quotes with string in line no 2"

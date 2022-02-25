@@ -1,0 +1,1 @@
+"can i change the behavior of getclass().getname() method i have a class foo...foo toy=new foo(""toy"");..foo shoe=new foo(""shoes"");...can we do something so that..1 toy.getclass().getname() would print: toy...2 shoe.getclass().getname() would print: shoe."

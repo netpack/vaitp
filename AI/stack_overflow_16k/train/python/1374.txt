@@ -1,0 +1,1 @@
+replace buggy function i have a module a which imports buggy function like this:..from .b import buggy_fn as _buggy_fn...is it possible to replace it outside?..import a.#...? = bug_free_implementation

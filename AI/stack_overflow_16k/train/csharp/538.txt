@@ -1,0 +1,1 @@
+check if a string is encrypted r not in blank how to find is password is encrypted (sha256 algorithm) or not through blank. i have a table like customer with password column. i need to find which passwords are encrypted and which not encrypted in blank.net

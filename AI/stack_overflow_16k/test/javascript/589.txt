@@ -1,0 +1,1 @@
+"are nested functions recreated each call? i was curious about how this was usually handled, i assume it mainly depends on the engine's implementation, but for the sake of example, lets use chrome, are nested functions recreated each time i call the outer function, or are they simply stored somewhere and only made accessible within that scope?"

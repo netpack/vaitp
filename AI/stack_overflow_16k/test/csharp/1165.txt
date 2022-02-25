@@ -1,0 +1,1 @@
+"string join append each element text i have array with n-elements;...  var arr = [""answer1"", ""answer2"", ""answer3""];...i need such result:..{""text"":""answer1""},{""text"":""answer2""},{""text"":""answer3""}...tried sothing like this:..string.join("","", arr);...but how add  {""text"":"" ""} to each element?"

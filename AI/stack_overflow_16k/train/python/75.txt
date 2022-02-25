@@ -1,0 +1,1 @@
+"blank . select transparent colour or no colour for lines / points etc how do i plot a line of transparent colour or no colour ?..for example :..plot(x,y,color='transparent')..or..plot(x,y,color='none')..btw , color='white' is not what i'm looking for ...thanks in advance invisible computer people ."

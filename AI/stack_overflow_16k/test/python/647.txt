@@ -1,0 +1,1 @@
+"how to print blank module hierarchy? i have a file which is dynamically loaded. because of the dynamic loading, i have no idea what its module path is, and all of my best guesses (per the filesystem structure) have failed so far....how do i inspect the full module path from within the running file?.how do i walk the hierarchy programmatically?...(blank 2.6)"

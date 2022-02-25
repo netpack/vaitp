@@ -1,0 +1,1 @@
+"how to read string from text file i have a text file containing following information:.['123', '456', '789'].i would like to read each of them from this file as an individual integer each time. for example, the first time get 123 as integer, the second time get 456 as integer, .....what is the easiest way to do? thanks!"

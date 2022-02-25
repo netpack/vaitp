@@ -1,0 +1,1 @@
+blank: what's the point of adding`__dict__` to `__slots__` the whole point of __slots__ is to save space. ..but i saw people add __dict__ to it so that new attributes can be added. isn't this defeating the goal of __slots__?

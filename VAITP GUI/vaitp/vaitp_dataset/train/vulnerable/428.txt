@@ -1,0 +1,2 @@
+"    async def on_GET(self, origin, content, query, context, event_id):
+        return await self.handler.on_event_auth(origin, context, event_id)"

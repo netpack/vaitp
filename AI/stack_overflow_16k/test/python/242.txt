@@ -1,0 +1,1 @@
+"what is wrong with the result of the if else statement i have a simple if else statement, that gives me the wrong result...a=36.mitten = 42.if a &lt;= mitten:.  print(""a"", end="" "").  print(""b"", end="" "").else:.  print(""c"", end="" "").  print(""d"")...this gives me the result a b..but the correct answer should be a b d"

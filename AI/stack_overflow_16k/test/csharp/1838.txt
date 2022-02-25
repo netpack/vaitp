@@ -1,0 +1,1 @@
+can someone help me deseserializer blank int count = deserializer.deserialize(filestream);...cannot implicitly convert type 'object' to 'int'. an explicit conversion exist (are you missing a cast?)

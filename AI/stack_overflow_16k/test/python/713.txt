@@ -1,0 +1,1 @@
+"shuffle position of elements in a list .  possible duplicate:.  shuffling a list of objects in blank  .....if i have a list:...  a = [""a"", ""b"", ""c"", ..., ""zzz""] ...how can i randomly shuffle its elements in order to obtain a list: ...  b = [""c"", ""zh"", ...]...without consuming a lot of the system's resources?"

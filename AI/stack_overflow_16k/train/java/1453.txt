@@ -1,0 +1,1 @@
+"are fields in blank private by default? why do i see so many examples out there that type private in front of a field while afaik fields are private by default...private int number;.int number;.//both of these are the same afaik. yet, in a ton of examples private gets fully written, why?"

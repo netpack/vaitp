@@ -1,0 +1,1 @@
+"using conditional expressions and incrementing/decrementing a variable how do i to put the if statement into a conditional expression and how do i increment/ decrement a variable?..num_users = 8.update_direction = 3..num_users = .if update_direction ==3:.   num_users= num_users + 1.else:.   num_users= num_users - 1..print('new value is:', num_users)"

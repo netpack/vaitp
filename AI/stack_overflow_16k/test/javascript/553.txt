@@ -1,0 +1,1 @@
+"how to assign escape sequences in string? for example var mystr should have the escape sequences for backslash tab tab carriage-return new-line ..var mystr;..mystr=(""\ t r n"");"

@@ -1,0 +1,1 @@
+"get number of weeks by month in year i want to get the number of weeks by year. i have a wrong result with this code:..for (int i = 0; i &lt;= 11; i++) {.    calendar cal = calendar.getinstance(locale.france);.    cal.set(this.anneeactuelle, i, 1);.    nombremaxsemaine = cal.getactualmaximum(calendar.week_of_month);.}"

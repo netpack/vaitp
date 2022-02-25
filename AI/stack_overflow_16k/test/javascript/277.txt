@@ -1,0 +1,1 @@
+i am trying to clear a txt file in blank i have a text file that has some strings in it. i am trying to clear it to put something else in it. what is the right code? ..i have tried file.clear() but it keeps throwing errors.

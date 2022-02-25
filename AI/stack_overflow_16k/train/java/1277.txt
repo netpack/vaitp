@@ -1,0 +1,1 @@
+how change x.0 to x? in 120/10 result is 12.0.i want res to be 12 in float mode.can i change 12.0 to 12?..float x =120f;.float y =10f;.res.settext(x/y);...finally res> 12.0

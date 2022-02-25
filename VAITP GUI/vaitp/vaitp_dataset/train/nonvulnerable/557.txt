@@ -1,0 +1,3 @@
+"    def __init__(self, protocol='http', hostname='localhost', port='8080',
+                 subsystem=None, accept='application/json',
+                 trust_env=None, verify=True, cert_paths=None):"

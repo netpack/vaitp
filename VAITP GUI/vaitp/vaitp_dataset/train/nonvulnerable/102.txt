@@ -1,0 +1,18 @@
+"    def test_project_quotas_defaults_withclass(self):
+        self._stub_class()
+        self._stub_project()
+        self.context.quota_class = 'test_class'
+        result = quota.get_project_quotas(self.context, 'admin')
+        self.assertEqual(result, dict(
+                instances=5,
+                cores=10,
+                ram=25 * 1024,
+                volumes=5,
+                gigabytes=500,
+                floating_ips=5,
+                security_groups=10,
+                security_group_rules=20,
+                metadata_items=64,
+                injected_files=2,
+                injected_file_content_bytes=5 * 1024,
+                ))"

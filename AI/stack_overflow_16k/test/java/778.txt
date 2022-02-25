@@ -1,0 +1,1 @@
+put each character in a string into its own string - blank i have a string and i want to have that string get split up so that each individual character is in its own string. the string will vary in length as it is user inputted. thanks in advance

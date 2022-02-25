@@ -1,0 +1,1 @@
+"find biggest value in a blank dict i have a blank dict like below: ..{    '1': {'a': '0.6', 'b': '0.8', 'c': '2','d': '0.5'},.     '2': {'a': '0.7', 'b': '0.9', 'c': '0.1','d': '0.2'},.     '3': {'a': '0.5', 'b': '0.8', 'c': '3'},.}...how could i get the following result? ..('2','a','0.7') ('2',b','0.9') ('3','c', '3') ('1','d', '0.5')"

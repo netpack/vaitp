@@ -1,0 +1,1 @@
+"wrapper for default date constructor in blank? i would like a kind of wrapper for the default date object in blank so that whenever i have something like var a = new date();, i want to execute some particular code in the constructor...i basically want to have my own date class that needs to be invoked whenever a call is made to date() rather than the native code."

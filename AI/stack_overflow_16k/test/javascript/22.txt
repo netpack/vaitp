@@ -1,0 +1,1 @@
+"java script replace giving empty while removing decimal i have a string with decimal number and trying  to remove decimal symbol .   (""690.00"".replace(/./g, ''));..when i run above in java script, i am getting """" as result.  my aim was to remove  ""."" from the string and get 69000"

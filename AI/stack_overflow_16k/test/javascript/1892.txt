@@ -1,0 +1,1 @@
+"how does string.tolowercase() actually work? how can one create that functionality manually? to set a string to lowercase, we just need to call the function tolowercase() on it. but, for a language i am working in right now, there is no such function, so i would need to create one myself. how is blank able to achieve that manually?"

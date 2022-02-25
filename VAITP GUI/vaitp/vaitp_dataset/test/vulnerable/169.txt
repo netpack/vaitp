@@ -1,0 +1,1 @@
+"    def test_parse_header_connection_close(self):        data = b"GET /foobar HTTP/1.1\nConnection: close\n\n"        self.parser.parse_header(data)        self.assertEqual(self.parser.connection_close, True)"

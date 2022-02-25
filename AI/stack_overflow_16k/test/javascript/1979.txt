@@ -1,0 +1,1 @@
+"test for value in blank array in sql server, i could say: ..where x in(1,2)...how would you rewrite the following in blank:..if (x==1 || x==2) {}"

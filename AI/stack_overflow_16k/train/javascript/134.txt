@@ -1,0 +1,1 @@
+"can anyone tell me what happens in for loop here is the code that computes 2 10 , using for loop :.how did the 1024 answer come?..var result = 1;.for ( var counter = 0; counter &lt; 10; counter = counter + 1).result = result * 2;.console . log ( result );.//  1024"

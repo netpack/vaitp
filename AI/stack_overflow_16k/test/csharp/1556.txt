@@ -1,0 +1,1 @@
+multiple arraylist into a multi-dimensional array hello i was wonder if there was any ways  i could merge multiple arraylist into a multi array...exmaple ..i have arraylist1 which holds names.  arraylist 2 which holds phone number and arraylist 3 which holds address.  how could i merge these into one multi array so it would be as a record?

@@ -1,0 +1,1 @@
+"get count of ""yes"" from my multiple objects of list<string> i want to get count of 'yes' from my multiple objects of list(string). lets suppose i have three list sig1, sig2 and sig3 and they all contain either 'yes' or 'no'. and i want to get the count of 'yes' from sig1 where sig2 is 'yes' and sig3 is 'no'."

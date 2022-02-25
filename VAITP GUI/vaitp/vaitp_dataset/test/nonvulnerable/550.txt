@@ -1,0 +1,1 @@
+"    def check_is_symlink():        """ Check if intermediate dir is symlink. """        try:            return not os.path.islink(im_dir)        except OSError:            return False"

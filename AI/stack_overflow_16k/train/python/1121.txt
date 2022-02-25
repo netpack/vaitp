@@ -1,0 +1,1 @@
+"blank threading.timer did not repeat function i need write a function could repeat another function many times. i am using threading.timer but it could not work...here ismy code:..import threading..def plus(a,b):.    print (a+b)..def repeat(func,interval,*args):.    threading.timer(interval, func, args = args).start()..repeat(plus,1,2,3)"

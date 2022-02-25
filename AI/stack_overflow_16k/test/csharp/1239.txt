@@ -1,0 +1,1 @@
+"how to get all users application data folders under system account? environment.getfolderpath(environment.specialfolder.applicationdata) returns current user folder, but under system account it returns for example:..c:windowssystem32configsystemprofileappdataroaming...so the question is how to get all users' appdata folders by using the system account?"

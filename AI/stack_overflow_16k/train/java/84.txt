@@ -1,0 +1,1 @@
+"how to get top 10 keys in decreasing order of their values for the map<string, integer> map.put(""tom"",5);.map.put(""tim"",2);.map.put(""ted"",4);...and then i could broadcast it like:..tom is 5.ted is 4.tim is 2...how may i do this? i'm beginner in coding, please don't punish me so hard."

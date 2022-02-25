@@ -1,0 +1,1 @@
+"blank dataframe, compare the value of two columns the scorea is the score for studenta and scoreb is for student b. i try to compare their score...how can i compare scorea and score b? can np.where do it?"

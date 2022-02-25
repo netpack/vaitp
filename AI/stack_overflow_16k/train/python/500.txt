@@ -1,0 +1,1 @@
+"how to extract the word after ""?"" .  /test/?testone...i want to extract the word after ""?"" and store in a var...var = testone"

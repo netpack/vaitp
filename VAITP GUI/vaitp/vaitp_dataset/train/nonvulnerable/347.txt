@@ -1,0 +1,19 @@
+"    def test_list_entrance_exam_instructor_tasks_student(self):
+        """ Test list task history for entrance exam AND student. """
+        # create a re-score entrance exam task
+        url = reverse('rescore_entrance_exam', kwargs={'course_id': unicode(self.course.id)})
+        response = self.client.post(url, {
+            'unique_student_identifier': self.student.email,
+        })
+        self.assertEqual(response.status_code, 200)
+
+        url = reverse('list_entrance_exam_instructor_tasks', kwargs={'course_id': unicode(self.course.id)})
+        response = self.client.post(url, {
+            'unique_student_identifier': self.student.email,
+        })
+        self.assertEqual(response.status_code, 200)
+
+        # check response
+        tasks = json.loads(response.content)['tasks']
+        self.assertEqual(len(tasks), 1)
+        self.assertEqual(tasks[0]['status'], _('Complete'))"

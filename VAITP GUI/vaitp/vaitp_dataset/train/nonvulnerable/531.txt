@@ -1,0 +1,8 @@
+"def load_yamlf(fpath, encoding):
+    """
+    :param unicode fpath:
+    :param unicode encoding:
+    :rtype: dict | list
+    """
+    with codecs.open(fpath, encoding=encoding) as f:
+        return yaml.safe_load(f)"

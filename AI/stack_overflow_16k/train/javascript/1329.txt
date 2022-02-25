@@ -1,0 +1,1 @@
+can object method have own propertis? for function i can make this:..uniqueinteger.counter = 0;..function uniqueinteger() {.    return uniqueinteger.counter++; // increment and return counter property.}...can i do this also with object method?

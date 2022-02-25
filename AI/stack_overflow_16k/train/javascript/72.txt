@@ -1,0 +1,1 @@
+"blank sort for currency string i'm quite new to blank and would to know how to create syntax that will convert currency values that are in string format ($1,234.56) to numbers (1234.56) that can be sorted. or is there perhaps a way of just sorting the values without removing the string format?"

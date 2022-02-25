@@ -1,0 +1,1 @@
+"is the resulting bytecode generated in blank deterministic? given a blank interpreter (cblank, jython, etc), is the bytecode generated deterministic?.that is, if i compile 2 different scripts that differ only in whitespace, but otherwise syntactically equivalent, would the chosen compiler generate exactly the same bytecodes?"

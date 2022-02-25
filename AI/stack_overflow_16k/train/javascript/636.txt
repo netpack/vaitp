@@ -1,0 +1,1 @@
+"get length of array inside object i have the following object in blank:..objectx which is an ..object {names : array[14]}...im trying to get the length of this, but it returns undefined when i use objectx.length?..im trying it in chrome debugger, and googling, anyone out there quickly let me know plz."

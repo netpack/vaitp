@@ -1,0 +1,1 @@
+"what's the difference between function and function() in blank? for example, .    thread t = new thread(function);.why not.    thread t = new thread(function());.thank you."

@@ -1,0 +1,1 @@
+"in blank, what's the relationship between the built-in function 'setattr()' and 'object.__setattr__()'? what's the relationship between the built-in function 'setattr()' and 'object.__setattr__()'? is the built-in function ""getattr(obj,attr)"" totally equal to obj.attr?"

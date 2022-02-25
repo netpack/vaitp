@@ -1,0 +1,5 @@
+"    def test_withstmt(self):
+        tree = self.parse(withstmt)
+        self.assertEqual(tree.body[0].type_comment, "int")
+        tree = self.classic_parse(withstmt)
+        self.assertEqual(tree.body[0].type_comment, None)"

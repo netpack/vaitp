@@ -1,0 +1,1 @@
+"blank how do you detect tab key press within a non-gui application? i'm trying to write a program that simulates the terminal tab completion. but i'm unsure of how to trap the tab key. this is a non gui application. i'm not looking for swing/awd actionlisteners..desired result..while(true).//some api to capture keyevent.vk_tab (tab key).system.out.print(""you typed tab"")"

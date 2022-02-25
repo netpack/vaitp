@@ -1,0 +1,14 @@
+"    def test_underscore_traversal(self):
+        t = self.folder.t
+
+        t.write('<p tal:define="p context/__class__" />')
+        with self.assertRaises(NotFound):
+            t()
+
+        t.write('<p tal:define="p nocall: random/_itertools/repeat"/>')
+        with self.assertRaises((NotFound, LocationError)):
+            t()
+
+        t.write('<p tal:content="random/_itertools/repeat/foobar"/>')
+        with self.assertRaises((NotFound, LocationError)):
+            t()"

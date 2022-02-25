@@ -1,0 +1,1 @@
+"use of { } in blank while initializing as an array int[] outsize = new int[]{bytes, packets};..new byte[] {0, 0, 0, 0}...what does the first line of code mean? what is it doing to size array?.how is the second line of code initializing that byte array (if it is at all)?"

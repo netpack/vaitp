@@ -1,0 +1,1 @@
+"can random(int32).next(minvalue, maxvalue) be used as a linear congruential generator? can.. system.random(int32).next(minvalue, maxvalue) ;...be used as a sort of linear congruential generator?"

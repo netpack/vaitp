@@ -1,0 +1,1 @@
+"removing a value from a map i have a map&lt;something, list&lt;string&gt;&gt; map..i want to remove a string from the list&lt;string&gt;...is that possible ? how do i do that ?..i don't want to remove the mapping, just alter the 'value' of an entry...i have tried map.values().remove(""somestring""), but that doesn't seem to work."

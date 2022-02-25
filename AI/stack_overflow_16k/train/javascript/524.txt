@@ -1,0 +1,1 @@
+"why the max index of blank's array is 4294967294 but not 4294967295？ i am learning blank and recently met a problem about array of blank...the numeric index of blank's array is described as 32 bit, i think its max index is 2 to the power of 32 minus 1，but the right is 2 the power of 32 minus 2..i don' know why? can anyone tell me?"

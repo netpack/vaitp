@@ -1,0 +1,1 @@
+"arraylist sort by length i want to sort an arraylist of objects by the length of the vector.objects...double[] s ={1,2,3,4};.double[] s2 ={1,2};.double[] s3 ={1,2,3};..student[] facultate ={new student(s),new student(s2)};.arraylist&lt;student&gt; facultatelist = new arraylist&lt;student&gt;(arrays.aslist(facultate));...i want facultatelist to be ordered like s2,s3,s."

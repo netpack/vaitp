@@ -1,0 +1,1 @@
+"function return discarding changes so i have a file, main.py. the contents are such:..var = 0..def func():.    var = 1..def pr():.    func().    print(var)..pr()...when run, this prints out 0 instead of my expected 1. why and how can i get the changes in func() to stick?"

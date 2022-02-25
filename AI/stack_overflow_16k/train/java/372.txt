@@ -1,0 +1,1 @@
+why output is true and false? public class test.{.    public static void main(string ar[]).    {.        integer a = 10;.        integer b =10;.        integer c = 145;.        integer d = 145;.        system.out.println(a==b);.        system.out.println(c==d);.    }.}

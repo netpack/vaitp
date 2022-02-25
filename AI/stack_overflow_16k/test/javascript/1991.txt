@@ -1,0 +1,1 @@
+"3d-scatter plots (highcharts) too slow to update new data i am working on 3d scatter plots using html blank and flask . .when i try to change the data points to be plotted , it takes too much time to reflect those changes on 3d scatter plots(even if i am working with number of data points as low as 10) .... can someone help me on that ?..thanks in advance :)"

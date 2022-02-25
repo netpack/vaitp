@@ -1,0 +1,1 @@
+"taking input in integer /string and store it in array how would i take integer user input such that 502 and store it in the form of array ,like arr[0]=5, arr[1]=0,arr[2]=2 and access it separately."

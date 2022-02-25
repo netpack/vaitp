@@ -1,0 +1,1 @@
+"why does `{} + []` return a different result from `a = {} + []` in blank? in (at least) firefox web console and jsbin, i get..&gt; {} + [].0.&gt; a = {} + [].""[object object]""...node.js returns ""[object object]"" in both cases. which behavior is correct according to the spec? if the first, why?"

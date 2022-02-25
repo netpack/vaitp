@@ -1,0 +1,1 @@
+"add the string value for multi array i want to add the string value for array using pointer in blank. it look like the code as below:..public static string[,] matrixgroup = new string[199, 3];..void a().{.    string*[0,0] matrixgroup = {""a""};.}...can anybody here help me?"

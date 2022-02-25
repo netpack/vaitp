@@ -1,0 +1,1 @@
+"math.log() is giving me wrong values with blank i'm having problems using math.log in blank, it's giving me wrong values...in my code: ..math.log(0.137931034482758)  ...returns: -1.98100146886658..but with a calculator..log(0.137931034482758)  ...gives -0.86033800657099..why is that?"

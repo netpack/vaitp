@@ -1,0 +1,1 @@
+"how do i write if ''not'' in blank i have this code :..el(""inp"").onpropertychange=function(){.    addscript(""http://www.google.nl/complete/search?callback=suggest&amp;q=""+this.value);.};...i want to exclude the arrow keys. as i understand i can do this with if (!(condition)) {action}  but how do i write this in the code above?"

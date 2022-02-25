@@ -1,0 +1,1 @@
+"please i don't understand the second and third line of the code below i saw this in someones code and i'm trying to understand what it means.. if(output=="""" &amp;&amp; history!=""""){.            if(isnan(history[history.length-1])){.                history = history.substr(0, history.length-1);.            }.        }"

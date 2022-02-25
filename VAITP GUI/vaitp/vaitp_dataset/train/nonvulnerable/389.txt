@@ -1,0 +1,7 @@
+"def show_unit_extensions(request, course_id):
+    """
+    Shows all of the students which have due date extensions for the given unit.
+    """
+    course = get_course_by_id(SlashSeparatedCourseKey.from_deprecated_string(course_id))
+    unit = find_unit(course, request.POST.get('url'))
+    return JsonResponse(dump_module_extensions(course, unit))"

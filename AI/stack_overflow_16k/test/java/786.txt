@@ -1,0 +1,1 @@
+"clarification regrading string concatenation and addition? why do i get 10 2030 as the out put? i cant figure out why it doesnt output it as 10 50 ?..public class testing1 {.public static void main (string args[]){.    int num1=10,num2=20,num3=30;..    system.out.println(num1+"" ""+num2+num3);.    }..}"

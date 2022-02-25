@@ -1,0 +1,1 @@
+"casting in blank if i have class a that have a method foo() and a class b that extends from a and overrides foo(). if i write a a= new b(); and than i write ((a) a).foo()- which foo is going to be activated? on one hand the dynamic type is b and foo() was well overridden, on the other hand- does this cast makes a to be a dynamic type of a?"

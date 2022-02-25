@@ -1,0 +1,1 @@
+"what is different in memory between a string and an array of chars? what's different about what winds up being referenced in str in the first line vs. the second line?..char[] str={'a','b','c'};...vs...string str= new string(""abc"");"

@@ -1,0 +1,1 @@
+"blank: double with comma from string with unknown decimal separator starting from a string variable i need to obtain a double value of it with comma as decimal separator...i can't know if string will contains int numbers or number with decimals separated by dot or comma, so i need to catch cases of unappropriate string values as presence of chars or multiple dots or commas."

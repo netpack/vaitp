@@ -1,0 +1,1 @@
+"    def request(self, method, request_uri, headers, content):        """Modify the request headers to add the appropriate        Authorization header."""        headers["authorization"] = (            "Basic " + base64.b64encode("%s:%s" % self.credentials).strip()        )"

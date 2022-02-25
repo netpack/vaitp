@@ -1,0 +1,1 @@
+"why does this list comprehension throw an out of range error i can't quite grasp why this doesn't work:..seq_ls = [s0] .seq_ls.extend([((j*seq_ls[x-1] + k)%l) for x in range(1,100,1)])...but this does:..seq_ls = [s0] .for x in range(1,100,1):.    seq_ls.append(((j*seq_ls[x-1] + k)%l))...the first set of code gives me an ...  indexerror: list index out of range"

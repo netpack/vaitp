@@ -1,0 +1,1 @@
+"write a function that calculates an operation result given 2 numbers and the operator i have tried this, but the problem is i don't know how to make the function identify math operations like + or -..def calc(n1,n2,""x""):.    y= n1 x n2.    return y"

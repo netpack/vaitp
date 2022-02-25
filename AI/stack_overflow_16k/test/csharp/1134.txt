@@ -1,0 +1,1 @@
+"usage of networkcredential using blank smtpserver.credentials = new system.net.networkcredential(""username"", ""password""); ...what shall we put in the ""username"" field and in the ""password"" field"

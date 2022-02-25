@@ -1,0 +1,1 @@
+"creating an array with x elements i wanna create an array with x elements (defined by the user). is that possible to do?.till now i've always done it like this :..array = []..l = int(input(""syze: ""))..i = 0.while i&lt;l:.    elem = input(""element : "").    array = array + [elem].    i = i + 1...is it even possible ?"

@@ -1,0 +1,1 @@
+"programmatically setting the name of a variable is there a shortcut for writing the following 100 assignments?..variable_1 = 1;.variable_2 = 2;.variable_3 = 3;.......variable_100 = 100;...i have tried..for(var i = 1; i &lt;= 100; i++) {.    variable_ + i = i;.}...but i get the error message ""invalid left-hand side in assignment"". any ideas?"

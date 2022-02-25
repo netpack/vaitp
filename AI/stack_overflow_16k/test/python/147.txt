@@ -1,0 +1,1 @@
+"in blank, why does 0xbin() return false? inputting the command 0xbin() returns false:..&gt;&gt;&gt; 0xbin().false...why does that happen? this syntax should have no meaning whatsoever. functions cannot start with 0, there are no ""i"" and ""n"" in hex, and the bin function must have some arguments."

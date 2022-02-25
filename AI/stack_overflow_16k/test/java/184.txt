@@ -1,0 +1,1 @@
+"comparing strings by their alphabetical order string s1 = ""project"";.string s2 = ""sunject"";...i want to compare the two above string by their alphabetic order (which in this case ""project"" then ""sunject"" as ""p"" comes before ""s"")..does anyone know how to do that in blank?"

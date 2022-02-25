@@ -1,0 +1,1 @@
+avoiding null check when accessing an object property in blank i have a situation where i need get the property of a blank object if the object exists or null...something like foo == null ? null : foo.bar..is there an operator available in blank to do the same?

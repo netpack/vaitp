@@ -1,0 +1,1 @@
+blank alias for class public static member? i have class rendermanager which has public static member therenderer. instead of rendermanager.therenderer can i create alias for that like myrenderer or whatever?..thank you

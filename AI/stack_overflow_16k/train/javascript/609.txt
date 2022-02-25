@@ -1,0 +1,1 @@
+"defining a getter for document.cookie i would like to know how to define a getter for default objects like document.cookie. ..document.__definegetter__(""cookie"", function(newv) {.   console.log('accessing cookie'); .  //what to return here??. });...returning document.cookie obviously causes a recursion. .thanks"

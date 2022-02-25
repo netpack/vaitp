@@ -1,0 +1,1 @@
+"blank number wrapping? consider this blank code:..assert(a &gt; 0).assert(b &gt; 0).assert(a + b &gt; 0)...can the third assert ever fail?  in c/c++, it can if the sum overflows the maximum integer value.  how is this handled in blank?"

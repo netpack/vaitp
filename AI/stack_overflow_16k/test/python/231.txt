@@ -1,0 +1,1 @@
+"except valueerror in blank is there better way of writing this code: ..def add (exe1, exe2):.    try:.        a = float (exe1).        b = float (exe2).        total = float (a + b).    except valueerror:.        return none.    else:.        return total"

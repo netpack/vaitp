@@ -1,0 +1,1 @@
+"how to split numbers into individual i have this whole number 75892. i want to split it in individual and then add below is my code. it works fine but is there any other solution to minimize my code? thanks..var x=75892;.var d,ans=0;.while(x!=0){.    d=x%10;.    ans=ans+d;.    x=parseint(x/10);.}.document.write(""sum:""+ans);"

@@ -1,0 +1,1 @@
+"how can i make a rectangular pulse in microseconds for audio in blank? as the title, i'm trying to make a rectangular pulse for audio in blank, but in microseconds. like this:..image - pulse of 100us and signal rate of 10hz..i was searching some libraries and i found function ""beep"", but i see that only uses miliseconds."

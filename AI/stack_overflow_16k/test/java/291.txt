@@ -1,0 +1,1 @@
+"declare a variable with a variable? i have the variable x, which is constantly changing. how would i be able to declare a new string named after the value of variable x?.i am using this in a while loop, where each cycle, i need to temporarily declare a variable to hold information."

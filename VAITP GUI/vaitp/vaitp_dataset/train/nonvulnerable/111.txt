@@ -1,0 +1,14 @@
+"def _inject_file_into_fs(fs, path, contents, append=False):
+    absolute_path = _join_and_check_path_within_fs(fs, path.lstrip('/'))
+
+    parent_dir = os.path.dirname(absolute_path)
+    utils.execute('mkdir', '-p', parent_dir, run_as_root=True)
+
+    args = []
+    if append:
+        args.append('-a')
+    args.append(absolute_path)
+
+    kwargs = dict(process_input=contents, run_as_root=True)
+
+    utils.execute('tee', *args, **kwargs)"

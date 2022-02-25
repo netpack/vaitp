@@ -1,0 +1,1 @@
+time between client inputs in socket communication i have a simple socket server client communication in blank where the clinet introduce a string and the server return the number of spaces from that string. i want to finish the communication if the client does'n introduce nothing for more than 10 seconds but i don't know how. any idea please?

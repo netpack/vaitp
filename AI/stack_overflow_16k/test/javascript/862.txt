@@ -1,0 +1,1 @@
+"hard binding vs call in my example, do bind and call achieve the same thing, it's just that bind creates a new function?..function hardbinding(a,b){.    this.a = a;.    this.b = b;.    console.log(this);.}..hardbinding = hardbinding.bind(this,a,b);.hardbinding();..function sameas(){.    hardbinding.call(this,a,b);.}..sameas();"

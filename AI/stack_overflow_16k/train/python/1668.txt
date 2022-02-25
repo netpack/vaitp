@@ -1,0 +1,1 @@
+"while writing fibonacci series in blank, getting indexerror: list index out of range def fib(n):.    lst = [0,1].    for i in range(n):.        lst.append(lst[n] + lst[n+1]).    print lst..fib(3)...getting indexerror: list index out of range"

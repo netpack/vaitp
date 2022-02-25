@@ -1,0 +1,1 @@
+"comparing two blank statements - are they equivalent? are these two statements equivalent?..var var1 = var2 ? var2 : 0;..var var1 = var2 || 0;...seems like yes, however i'm not sure...var2 is (probably) defined above."

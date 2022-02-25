@@ -1,0 +1,1 @@
+"    def spanify(s):        return HTML(u'<span class="math">{0}</span>').format(s)"

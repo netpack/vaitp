@@ -1,0 +1,1 @@
+"blank extend static method, can't compile, why? class base {.    public static void f(){}.}.class derived extends base{.    private static void f(){}.}...the derived.f()'s modifier must be public, if it's private ,the compiler say.""attempting to assign weaker access privileges; was public""..i can't understand! why compiler not allow us to do that?"

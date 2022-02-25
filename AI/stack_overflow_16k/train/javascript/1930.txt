@@ -1,0 +1,1 @@
+"get current url address by blank how can i get current url like this...for example, if the url is:..http://www.test.com/app/one.bc..i want to get the path without the address the main page so like:../app/one.bc"

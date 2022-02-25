@@ -1,0 +1,1 @@
+"i cannot compile and run blank package in macos.can some one help me how to compile? package world;.public class ackage{.public static void main(string[] args) {.system.out.println(""hello hi"");..}   .}...i get some kind of error..the error is..error: could not find or load main class ackage.caused by: blank.lang.noclassdeffounderror: world/ackage (wrong name: ackage)"

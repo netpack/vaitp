@@ -1,0 +1,1 @@
+"how to get the absolute path of the current blank file name i have a blank file named main.js...inside main.js i want to get the absolute path of this current file, something like:..http://server/app/main.js..http://server/app/script/main.js...what is the fastest way to get the absolute path?"

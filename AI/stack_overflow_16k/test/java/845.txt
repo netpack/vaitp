@@ -1,0 +1,1 @@
+"in blank i am trying to insert same integer in a list in blank i am trying to insert the same integer in a list, but it's not working.  my code:..arraylist&lt;integer&gt; list = new arraylist&lt;integer&gt;();..for ( int i = 0; i &lt; 5; i++) {.    list.add(1);.}..for ( int i = 0;i&lt;5; i++) {.    system.out.println(list.indexof(i));.}...output:.-1. 0.-1.-1.-1"

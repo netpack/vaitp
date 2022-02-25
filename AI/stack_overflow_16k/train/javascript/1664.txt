@@ -1,0 +1,1 @@
+"function expression has undefined passed in an iife why would one have to pass undefined as an argument in the below referenced function.. var x = (function (window, undefined){.      function x(){.        this. result = 0;.      }.  })(window);"

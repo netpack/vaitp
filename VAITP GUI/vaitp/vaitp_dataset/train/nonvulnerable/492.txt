@@ -1,0 +1,10 @@
+"    def __getitem__(self, key):
+        if key == '':
+            idx = self._last_index
+            self._last_index += 1
+            try:
+                return self._args[idx]
+            except LookupError:
+                pass
+            key = str(idx)
+        return self._kwargs[key]"

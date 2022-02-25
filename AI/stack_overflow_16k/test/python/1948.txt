@@ -1,0 +1,1 @@
+"blank hsaudiotag for wma files always returns 0? i'm using the blank library hsaudiotag, and i'm trying to read the track number in my files, however, without fail, the file returns 0 as the track number, even if it's much higher. does anybody have any idea how to fix this?..thanks."

@@ -1,0 +1,1 @@
+why java script nested for loop having loops counter name same goes infinetly what will be out put of following code...for(var i=0; i&lt;5; i++){.  for(var i=0; i&lt;3; i++){.    console.log(i + ' ' + i);.  }}...why it is infinite loop.

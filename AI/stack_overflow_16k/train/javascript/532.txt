@@ -1,0 +1,1 @@
+"getting the error: uncaught syntaxerror: invalid or unexpected token i have tried to fix the issue but failed to do so. finally posting my script here. .let me know the where the issue is..function displaynumber(mynumber) {.  console.log(mynumber);.}..​function displaycallback(callnumber, callback) {.  callback(callnumber);    .} ..displaycallback(30, displaynumber);"

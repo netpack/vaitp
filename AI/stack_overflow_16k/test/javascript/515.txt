@@ -1,0 +1,1 @@
+is passing the window object to an iife optional? is there any difference between the following examples?..example 1:..(function (window) {. 'use strict';.  console.log(window).})(window);...example 2:..(function () {. 'use strict';.  console.log(window).})();...is passing the window object optional?

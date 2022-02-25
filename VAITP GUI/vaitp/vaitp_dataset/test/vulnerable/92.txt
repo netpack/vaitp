@@ -1,0 +1,1 @@
+"    def test_received_preq_completed_empty(self):        inst, sock, map = self._makeOneWithMap()        inst.server = DummyServer()        preq = DummyParser()        inst.request = preq        preq.completed = True        preq.empty = True        inst.received(b"GET / HTTP/1.1\n\n")        self.assertEqual(inst.request, None)        self.assertEqual(inst.server.tasks, [])"

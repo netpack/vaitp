@@ -1,0 +1,1 @@
+"how to launch exe file without giving path in blank i want to use..runtime runtime = runtime.getruntime();.process process = runtime.exec(""arduino.exe"");...instead of ..runtime runtime = runtime.getruntime();.process process = runtime.exec(""c:\progrm files\arduino\arduino.exe"");"

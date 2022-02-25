@@ -1,0 +1,1 @@
+is there a simple way to create an initialized array? i want to create an int[n] array of unique numbers:..int[] result = new int[24];..for(int i = 0; i&lt;24; i++).    result[i] = 1;..return result;...is there a shorter way to accomplish this. may be something like this:..return (from i in new int[24] .        select 1).toarray();...but not as ugly as this.

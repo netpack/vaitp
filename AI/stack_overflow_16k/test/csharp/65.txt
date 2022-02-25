@@ -1,0 +1,1 @@
+"how to merge a line item row to the above row based on condition i have a table with the below column names....  1) hsn code.  2) item code.  3) unit cost.  4) total...if the ""hsn code"" field value is empty in any row i want to merge the remaining fields data to the above row. how can i do that in blank?"

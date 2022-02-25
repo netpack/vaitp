@@ -1,0 +1,1 @@
+"replace properties of properties file i have a cluster.properties file with contents :..master=1.2.first.node=.second.node=10.20.30.30...i want to replace these properties with some different value. how can i do this this?..my method look like replaceprop(string filepath, string prop, string newvalue)"

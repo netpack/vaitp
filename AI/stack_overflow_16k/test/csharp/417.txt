@@ -1,0 +1,1 @@
+"convert int array to string in blank i have an int[]:..rxbuffer[0], rxbuffer[1],..., rxbuffer[9]...where each value represents an ascii code, so 0x31 represents 1, 0x41 represents a...how do i convert this to a 10 character string ?..so far i've tried data = rxbuffer.tostring();. but it shows data equals to system.int32[] which is not what my data is...how can i do this?"

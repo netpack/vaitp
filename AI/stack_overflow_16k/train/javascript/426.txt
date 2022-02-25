@@ -1,0 +1,1 @@
+"blank lambda regex replace like this code c#? its possible blank lambda replace like this..     m =&gt; m.groups[1].value +  ""#""  + regex.split(new regex(@""m"").replace(m.groups[7].value,"""", 1), @""m"").sum(v =&gt; int.parse(v)) + ""y#"" ...please help me"

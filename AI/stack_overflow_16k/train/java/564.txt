@@ -1,0 +1,1 @@
+convert interface to different type how would i convert an interface to another type?..let's say i have an interface of type 'cars' and.another one of type 'trucks'..i would like to convert this interface to type 'vehicles'...how would i go about solving that?

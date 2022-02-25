@@ -1,0 +1,1 @@
+what is the equivalent operator to `in` in the `operator` module? the module operator offers equivalent functions for almost all standard operations...i have not been able to find the equivalent for the in (if x in y:) operator...can anyone point me in the right direction?

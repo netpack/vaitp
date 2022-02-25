@@ -1,0 +1,1 @@
+append a string after the question mark sign i have a string url. i need to append the following string at a given position...http://site:8080/pic/user/snap?x=hi...how can i append the string id=12&amp; so it looks like follows:..http://site:8080/pic/user/snap?id=12&amp;x=hi

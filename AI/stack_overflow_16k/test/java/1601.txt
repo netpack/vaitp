@@ -1,0 +1,1 @@
+"how to remove e notation from double value good day,..i'm experiencing about e value from double field i get from my database. is there any method on how i remove/convert the e from the field value to become double variable...example value i get from the database field value:...  5.7377159e7"

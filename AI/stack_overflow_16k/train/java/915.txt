@@ -1,0 +1,1 @@
+"lib/class which can execute methods written as strings for example awesome.run(""system.""+""exit();"");.is there any class or lib which i could use for something like this?.it would be very helpful..."

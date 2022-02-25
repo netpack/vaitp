@@ -1,0 +1,1 @@
+"how to deal with un-format json data in blank? i am new to regular expression, i want to get the content between 'query:' and ',""' ..the example data likes here https://maps-api-ssl.google.com/maps/suggest?q=hello ..i tried the regular string like ""^query(.*),""$"", but it not worked, i don't know why, and how can i deal with the problem?"

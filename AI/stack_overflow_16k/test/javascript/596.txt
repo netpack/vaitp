@@ -1,0 +1,1 @@
+"get the text after a specific word let say i have the following strings:..var y = ""test""..var x = ""abc 123 test 456 def""...i would like to get the string from x that comes after the word that specified in y. ..in this example it will be:..var z = "" 456 def""...thank you!"

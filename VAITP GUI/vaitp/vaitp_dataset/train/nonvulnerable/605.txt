@@ -1,0 +1,27 @@
+"    def make_homeserver(self, reactor, clock):
+        self.mock_federation = Mock()
+        self.mock_registry = Mock()
+
+        self.query_handlers = {}
+
+        def register_query_handler(query_type, handler):
+            self.query_handlers[query_type] = handler
+
+        self.mock_registry.register_query_handler = register_query_handler
+
+        hs = self.setup_test_homeserver(
+            federation_http_client=None,
+            resource_for_federation=Mock(),
+            federation_client=self.mock_federation,
+            federation_registry=self.mock_registry,
+        )
+
+        self.handler = hs.get_directory_handler()
+
+        self.store = hs.get_datastore()
+
+        self.my_room = RoomAlias.from_string("#my-room:test")
+        self.your_room = RoomAlias.from_string("#your-room:test")
+        self.remote_room = RoomAlias.from_string("#another:remote")
+
+        return hs"

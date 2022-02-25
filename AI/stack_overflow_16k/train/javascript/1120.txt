@@ -1,0 +1,1 @@
+"loop in blank, why does ""i"" iterate this way? why does the variable ""i"" not go up as 0,1,2,3,4,5,6,7,8,9 consecutively? ""i"" stays at 0 ten times...var num = 0;..outermost:.for (var i=0; i &lt; 10; i++) {.    for (var j=0; j &lt; 10; j++) {.        console.log(i, j);.        if (i ==5 &amp;&amp; j ==5) {.            break outermost;.        }.        num++;..    }.}"

@@ -1,0 +1,1 @@
+"how do i change the value of a global variable inside of a function i am using blank and i create a global variable. i define it outside of a function and i want to change the global variable value from inside a function and use it from another function, how do i do this?"

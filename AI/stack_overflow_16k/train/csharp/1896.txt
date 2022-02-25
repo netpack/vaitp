@@ -1,0 +1,1 @@
+"how do i get a list of all the assemblies i can reference on my machine? to add a new .net reference to your project in visual studio you just click ""add reference..."" on references of the current project, switch to the "".net"" tab and go for it...now, is there a way to get this list programmatically?"

@@ -1,0 +1,1 @@
+"how does float in blank outputs the assigned value? float var1 = 0.123456789f;.system.out.println(""var5(float)"" + var5);...output:..var5(float)0.12345679...why 8 was removed while the assigned value was 0.123456789?"

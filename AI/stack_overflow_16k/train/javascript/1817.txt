@@ -1,0 +1,1 @@
+"blank convert unix date to ddmmyy format i have a chart that's giving me this date:..1577612800000...i need to convert it to ""ddmmyy"" format..i found this:..var timestamp = 1577612800000;                 .var date = new date(timestamp * 1000);...but it has no format...how can i do this with format ddmmyy ?"

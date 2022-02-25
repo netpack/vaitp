@@ -1,0 +1,1 @@
+use new keywoard but return one instance is it possible to get same instance when using new keyword in blank. i know it is not a good idea just wondering if it is possible to do something with test function so it return same object...ex ..var a = new test();.var b = new test();.a == b // should give true

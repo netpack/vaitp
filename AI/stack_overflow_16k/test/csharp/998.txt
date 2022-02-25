@@ -1,0 +1,1 @@
+"controls hide event's of form in blank windows program i had written an event handler for mousemove for my form.but when i add a panel to form, this handler does not run while mouse moves on panel..i added event handler to panel and this works but i had several panels on the form,.is there an easier solution?"

@@ -1,0 +1,1 @@
+how can i check if datatable is empty or not i would like to check if datatable is empty or not. i wrote a code but it does not work and i do not know why...    if(datatable1.rows.count == 0).  {.     //some code.  }

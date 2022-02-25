@@ -1,0 +1,1 @@
+"color.getcolor(""red"") returns null i would like the user to import a string such a ""red"" then be able to pass it to the code below...string red = ""red"";.color color = color.getcolor(red);.system.out.println(color);....  output:.  null...how would i get it to output red. if that is possible."

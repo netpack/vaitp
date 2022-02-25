@@ -1,0 +1,1 @@
+"what is the difference between blank.nio.file.path and blank.nio.*; when i looked at the source code of scanner in blank i found something confused me ..import blank.nio.file.path;.import blank.nio.*;...what is the difference between them, why they didn't just imported blank.nio.*?.thank you."

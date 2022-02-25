@@ -1,0 +1,1 @@
+why does false==false in [false] return true? a senior of mine demonstrated it and i want to know if this is a flaw or is there some precedence and operator associativity stuff that justifies it...&gt;&gt;&gt; false==false in [false].true

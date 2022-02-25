@@ -1,0 +1,1 @@
+how to get server_name from url? i have ( for example ) a link:..http://10.100.0.178:8134/hds-live/livepkgr/_definst_/liveevent.f4m...how to get server_name (http://10.100.0.178:8134/ ) from this link ? any standard function ?

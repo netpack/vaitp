@@ -1,0 +1,15 @@
+"def update_server_key(command_inst):
+    """
+    Ensure that the server's public key stored on the consumer is up to date.
+
+    :param command_inst: instance of a CLI command
+    :type  command_inst: pulp.client.extensions.extensions.PulpCliCommand
+    """
+    try:
+        key_reply = command_inst.context.server.static.get_server_key()
+    except Exception, e:
+        msg = _('Download server RSA key failed [%(e)s]' % {'e': e})
+        command_inst.prompt.render_failure_message(msg)
+    else:
+        key_location = command_inst.context.config['server']['rsa_pub']
+        write_to_location(key_location, key_reply.response_body)"

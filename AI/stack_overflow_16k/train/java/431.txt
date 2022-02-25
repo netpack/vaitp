@@ -1,0 +1,1 @@
+function within a function in blank is it possible to define a function within a function in blank? i am trying to do something like:..public static boolean fun1().{.  static void fun2().  {.     body of function..     fun2();.  }.  return returnvalue;.}...but i am getting error illegal start of expression.

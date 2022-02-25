@@ -1,0 +1,1 @@
+"to check the blank object has a value can you tell me how to check the blank object has a value ? this vm.occupantdetail.contactdetail object is neither null nor undefined.it looks like as shown below at run time. ..it defines as shown below... vm.occupantdetail = {.            contactdetail: {},.     };"

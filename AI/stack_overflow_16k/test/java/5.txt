@@ -1,0 +1,1 @@
+"what is difference between console.readline() and scanner? my teacher is using console.readline(), but i've learned to use scanner...int age = console.readline(""age: "");...and..system.out.println(""age: "");.int age = scan.nextint();....what is the difference between these?.is it possible to write scan method in one line like readline?.how can i use console on ides?"

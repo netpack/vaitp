@@ -1,0 +1,1 @@
+a pojo class which extends serializable interface is also called as pojo class? class sample implements serializable .{..// code..}...now this sample class is called as pojo..?

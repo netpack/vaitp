@@ -1,0 +1,1 @@
+"implicit and explicit cast is this possible? ..string wellformattedguidasstring = ...;.guid guid = wellformattedguidasstring;......method(wellformattedguidasstring ); .void method(guid id) { ... } ...i tried with explicit and implicit cast...public static implicit operator guid(string str).{.    guid guid;.    guid.tryparse(str, out guid);.    return guid;.}"

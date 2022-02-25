@@ -1,0 +1,1 @@
+"replace \ with  using replace() check the code bellow. i am trying to find \ and replace with  single back slash but it seems replace() method can't do that. i keep getting the same result on test2 variable...how can i fix this?..string test1 = ""c:\users\lik\desktop\foo\backlogexcelgenerator\bin\debug\foo.xlsx"";...string test2 = test1.replace(""\"", @"""");"

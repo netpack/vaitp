@@ -1,0 +1,1 @@
+"def find_temp_dir(prefix, tmp_dir=None):    """ Find temp dirs in 'tmp_dir' starting with 'prefix'"""    matches = []    tmp_dir = tmp_dir or tempfile.gettempdir()    for tmp_file in os.listdir(tmp_dir):        if tmp_file.startswith(prefix):            matches.append(os.path.join(tmp_dir, tmp_file))    return matches"

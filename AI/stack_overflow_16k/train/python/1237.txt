@@ -1,0 +1,1 @@
+"how to convert ""12:45pm - 01:00pm today, september 7"" into utc i have the following time string ..12:45pm - 01:00pm today, september 7...and i want to convert this string into utc datetime in the following format..2016-09-07t22:45:00z...how can i achieve this in blank?"

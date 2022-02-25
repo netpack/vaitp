@@ -1,0 +1,1 @@
+"what exactly does this mean in blank? i was working on a project euler problem and found this code online:..a = 1.b = 2.s = 0..while b &lt;= 4000000:.    if not b % 2:.        s += b.    a, b = b, a + b.print s...i am not entirely sure what if not b % 2: means and was wondering if someone would mind shedding some light on it for me."

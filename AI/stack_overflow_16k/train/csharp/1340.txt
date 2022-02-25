@@ -1,0 +1,1 @@
+"how do i read this object i want to read the alert message from the object..{.    alert = ""1n2n3"";.    sound = default;.}...i have tried serializing it to json with newtonsoft and i've also tried converting it to a class. but both failed due to the formatting."

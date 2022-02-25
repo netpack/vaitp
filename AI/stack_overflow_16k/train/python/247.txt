@@ -1,0 +1,1 @@
+"update new value to key in dictionary (blank) i make a minimised dfa, to use key value style coding, i used dictionary...so there is a dictionary,..{1: {1:2}}...i want to update this dictionary add 2:3 to add key 1's dictionary...{1: {1:2, 2:3}}...i don't know how to do this...is any simple idea to solve this?"

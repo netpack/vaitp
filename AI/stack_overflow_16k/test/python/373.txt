@@ -1,0 +1,1 @@
+"replacing unquoted words only in blank i am looking for a way to replace a word, however only when its not surounded by quotations...for example.replacing hello with hi..hello 'hello' nothing &rightarrow; hi 'hello' nothing..since 'hello' is in quotes it does not get replaced, but the first hello does because it is not wrapped with quotes...any help would be great!"

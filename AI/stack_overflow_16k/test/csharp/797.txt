@@ -1,0 +1,1 @@
+how to remove characters from a string to get the desired format? i have a string representation exactly like 'computername -- ipaddress'; i.e: ...  'samarena -- 192.168.1.97'.... i want to get only the 'computername' part from the actual representation by removing other characters. i'm actually quite beginner in using string.formatmethods() ...please help me out...thanks.

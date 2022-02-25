@@ -1,0 +1,1 @@
+"how do you make an array that has 1-3 int, instead of the default 0-3 int? how do you make an array that has 1-3 int, instead of the default 0-3 int?.like  ..int[] anarray;.anarray = new int[3];.has numbers 0-3 i want index starting at 1"

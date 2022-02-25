@@ -1,0 +1,1 @@
+blank runtime error i am using a ckeditor in replacement with a textbox id txteditoranswer but on running i found the following error in these lines..x.tabindex=x.config.tabindex||x.element.getattribute('tabindex')||0;..o.modes={wysiwyg:!!n.element.$.form};..if(x.elementmode==1&amp;&amp;y.is('textarea'))..var z=y.$.form&amp;&amp;new h(y.$.form);

@@ -1,0 +1,1 @@
+using bufferedreader to take input in blank i have been using the scanner object to take in input until now and would like to learn how the bufferedreader works. i have tried it and it seems to be working only for strings. can someone show me how to use it with ints and doubles?and how do you ask for two string inputs on the same line? thanks.

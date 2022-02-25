@@ -1,0 +1,1 @@
+declaring static const variables in functions if declaring static variables inside functions is an error then why declaring implicitly static const variables in functions not an error in blank..class hello{.   public void hello(){.       static int h;  //error.   }.}..class hello{.   public void hello(){.       const int h=33;   //const implicitly static.   }.}

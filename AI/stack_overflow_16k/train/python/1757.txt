@@ -1,0 +1,1 @@
+"i want to return a specific list when i have a collection of lists i want to return a specific list, when i have a collection of lists, but i am not to sure how to do this. i tried this approach but it didn't work. any ideas..this_list1 = [2,3,4,5].this_list2 = [5,6,9,8]..x = input(""which list do you want"")..print this_list(x)"

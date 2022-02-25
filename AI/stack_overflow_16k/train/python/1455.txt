@@ -1,0 +1,1 @@
+"syntax to create dictionary in particular order using blank? data={isbn1:[{.              name:.              desc:.              price:[producturl:_].              review:[website1:[r1,r2,r3],website2[]].              }].     isbn2:[{....           }]..}...i am new to blank so i don't know to print this dict in this order."

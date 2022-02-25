@@ -1,0 +1,36 @@
+"    def test_spawn_netinject_file(self):
+        self.flags(flat_injected=True)
+        db_fakes.stub_out_db_instance_api(self.stubs, injected=True)
+
+        self._tee_executed = False
+
+        def _tee_handler(cmd, **kwargs):
+            input = kwargs.get('process_input', None)
+            self.assertNotEqual(input, None)
+            config = [line.strip() for line in input.split("\n")]
+            # Find the start of eth0 configuration and check it
+            index = config.index('auto eth0')
+            self.assertEquals(config[index + 1:index + 8], [
+                'iface eth0 inet static',
+                'address 192.168.1.100',
+                'netmask 255.255.255.0',
+                'broadcast 192.168.1.255',
+                'gateway 192.168.1.1',
+                'dns-nameservers 192.168.1.3 192.168.1.4',
+                ''])
+            self._tee_executed = True
+            return '', ''
+
+        def _readlink_handler(cmd_parts, **kwargs):
+            return os.path.realpath(cmd_parts[2]), ''
+
+        fake_utils.fake_execute_set_repliers([
+            # Capture the tee .../etc/network/interfaces command
+            (r'tee.*interfaces', _tee_handler),
+            (r'readlink -nm.*', _readlink_handler),
+        ])
+        self._test_spawn(IMAGE_MACHINE,
+                         IMAGE_KERNEL,
+                         IMAGE_RAMDISK,
+                         check_injection=True)
+        self.assertTrue(self._tee_executed)"

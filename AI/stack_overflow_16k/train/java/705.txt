@@ -1,0 +1,1 @@
+assigning itself values in post increment and in pre increment i'm new to the coding can anyone explain to me why below code is giving output as '6'..class test{.    public static void main(string[] args) {.        int i = 5;.        i = i++;.        i = ++i;.        system.out.print(i);.    }.}

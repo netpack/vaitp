@@ -1,0 +1,1 @@
+how to relaunch running application i am working on an win mobile application . i am running application in background using ..e.cancle = true;...now i need to relaunch same instance of that application so that i can off that  application ...can any one tell me ... how to do this?

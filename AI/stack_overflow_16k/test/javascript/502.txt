@@ -1,0 +1,1 @@
+"convert danish numbers to english? how do i convert a danish number to an english format .for example :.8,5 is decimal number representation in danish .and in english it would be 8.5 .now i need to convert 8,5 to 8.5 my current culture is danish and i am trying to convert this in blank (not c#)..regards,.francis p."

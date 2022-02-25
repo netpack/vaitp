@@ -1,0 +1,1 @@
+lookup @property methods with inspect module is there a way to programmatically lookup the names of all @property decorated methods in a class using the inspect module?

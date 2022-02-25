@@ -1,0 +1,1 @@
+"if case calculation in blank im having some trouble doing calculation part...example:-.i have 3 field name called total,num1,num2. the calculation should be as below:-.. case 1:-- if num1&gt;num2;.            total: display 0.00 .. case 2:-- if num1&lt;num2;.           total: display num1*(-1)...can someone help me on this coding."

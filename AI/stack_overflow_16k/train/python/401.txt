@@ -1,0 +1,1 @@
+"repeating elements of a list n times how do i repeat each element of a list n times and form a new list? for example:..x=[1,2,3,4].n=3..x1=[1,1,1,2,2,2,3,3,3,4,4,4]...x*n doesn't work..for i in x[i].    x1=n*x[i]...there must be a simple and smart way."

@@ -1,0 +1,1 @@
+"double minus operation result i have a stupid question : ..string str0 = ""245.00"";.string str1 = ""45.00"";.double str3 = double.parsedouble(str0) - double.parsedouble(str1); .system.out.println(str3); =====&gt; 200.0...why it don't gives 200.00? (tested with float too) and how to control number of digits after the comma?"

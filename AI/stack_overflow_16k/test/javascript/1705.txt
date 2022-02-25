@@ -1,0 +1,1 @@
+blank date time formatting i have a date value i'm getting current date time with it: ..let date = new date(); ...it gives me the current date and time. ..but how can i get the current date but change hour to : 00:00 ?

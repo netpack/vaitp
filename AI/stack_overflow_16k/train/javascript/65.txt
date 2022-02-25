@@ -1,0 +1,1 @@
+"blank array of functions: pass each function as parameter to another function i have a usercase where i get an array of functions from backend something like:..var arr = [a(){}, b(){}, c(){}];...now i need a way to execute them such that each function in the array is passed as a parameter to another function in the array...a(b(c()));"

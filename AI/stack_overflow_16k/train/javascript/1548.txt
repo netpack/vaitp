@@ -1,0 +1,1 @@
+"if document.cookie is a string, why doesn't document.cookie = """" delete all of the relevant site's cookies? i think knowing the answer to this would help me conceptualize the relationship between the cookies stored by the browser and the document.cookie made available via the dom."

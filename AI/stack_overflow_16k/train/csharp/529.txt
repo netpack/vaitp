@@ -1,0 +1,1 @@
+"a question regarding the syntax to escape a quotation mark inside a verbatim string why do you have to add 2 additional set of quotation marks in order to escape a set of quotation marks inside a verbatim string?..string s = @""""""hi""""""; //note: three quotes on either side...the preceding code produces the following string:.    ""hi"""

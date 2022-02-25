@@ -1,0 +1,1 @@
+"how to return unsliced values? for example, ..var str = ""hello""; .console.log(str.slice(-1)); ...returns value sliced off, ""o"" — but how would i return the unsliced value, in this case, ""hell""?"

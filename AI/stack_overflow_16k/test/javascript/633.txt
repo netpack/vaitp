@@ -1,0 +1,1 @@
+"return array of objects when a property from another array is matched i want to filter an array..var arr = [{name:""james"",id:10},{name:""john"",id:2}]; ...what i want is to remove the items which are not in arr i.e. [10,2] using the value of id of the arr above...i'm stuck at map..var filtered = arr.map(function(item){. return //?? .})"

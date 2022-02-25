@@ -1,0 +1,1 @@
+"remove decimal point from number in blank i would like to remove the decimal, but keep all of the digits. ..all i can think of is to find the length of the number and find out which power of 10 it's just larger than, then multiply. although, i can't find how to find the length of a number."

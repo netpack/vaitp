@@ -1,0 +1,1 @@
+"more than one varargs argument i am getting a compile time error when i type this code out:..public void mymethod(foo... f, bar... b) {..}...it says that the varargs has to be the last argument, is there any other way to implement this kind of functionality?"

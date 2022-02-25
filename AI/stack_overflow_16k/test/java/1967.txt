@@ -1,0 +1,1 @@
+how to convert a url object to a string i would like to convert a url to a string. i have searched online and cannot find anything that works. apparently there is a tostring(url) method but i can't get that to work...public string getlocationjar(){.    url filelocation = getclass().getprotectiondomain().getcodesource().getlocation();..    return tostring(filelocation);.}

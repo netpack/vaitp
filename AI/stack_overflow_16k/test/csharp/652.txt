@@ -1,0 +1,1 @@
+how can i get first() on task<list<...>>? if i have ..task&lt;list&lt;sometable&gt;&gt; models = _dbcontext.sometable.tolistasync();...how can i now use first() ?..models.first() // task&lt;list&lt;..&gt;&gt; does not contain a definition for first

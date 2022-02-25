@@ -1,0 +1,1 @@
+"blank : related to paramiko i need to run the windows command ""xcopy"" on remote machine...i am using paramiko module to connect to remote machine and run, but i am getting error like invalid path even though the path is valid and same command works if i run on remote command prompt manually. but not possible through paramiko...can anybody help?..regards,.arun"

@@ -1,0 +1,48 @@
+"    def test_stopped_typing(self):
+        self.room_members = [U_APPLE, U_BANANA, U_ONION]
+
+        # Gut-wrenching
+        from synapse.handlers.typing import RoomMember
+
+        member = RoomMember(ROOM_ID, U_APPLE.to_string())
+        self.handler._member_typing_until[member] = 1002000
+        self.handler._room_typing[ROOM_ID] = {U_APPLE.to_string()}
+
+        self.assertEquals(self.event_source.get_current_key(), 0)
+
+        self.get_success(
+            self.handler.stopped_typing(
+                target_user=U_APPLE,
+                requester=create_requester(U_APPLE),
+                room_id=ROOM_ID,
+            )
+        )
+
+        self.on_new_event.assert_has_calls([call("typing_key", 1, rooms=[ROOM_ID])])
+
+        put_json = self.hs.get_http_client().put_json
+        put_json.assert_called_once_with(
+            "farm",
+            path="/_matrix/federation/v1/send/1000000",
+            data=_expect_edu_transaction(
+                "m.typing",
+                content={
+                    "room_id": ROOM_ID,
+                    "user_id": U_APPLE.to_string(),
+                    "typing": False,
+                },
+            ),
+            json_data_callback=ANY,
+            long_retries=True,
+            backoff_on_404=True,
+            try_trailing_slash_on_400=True,
+        )
+
+        self.assertEquals(self.event_source.get_current_key(), 1)
+        events = self.get_success(
+            self.event_source.get_new_events(room_ids=[ROOM_ID], from_key=0)
+        )
+        self.assertEquals(
+            events[0],
+            [{"type": "m.typing", "room_id": ROOM_ID, "content": {"user_ids": []}}],
+        )"

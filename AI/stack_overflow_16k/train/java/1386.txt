@@ -1,0 +1,1 @@
+"removing elements with the same priority from a priorityqueue while executing this code:..queue q=new priorityqueue();.q.add(1);.q.add(1);.q.add(1);.q.add(2);.system.out.println(q);.system.out.println(q.remove(1));.system.out.println(q);...the output is:..[1, 1, 1, 2].true.[1, 2, 1]...could someone please explain the reason for this shifting in the value of 1 in the output?"

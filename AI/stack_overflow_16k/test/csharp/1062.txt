@@ -1,0 +1,1 @@
+"gettype from object is returning runtimetype i have a simple function:..public string gettype(object obj){.type type = obj.gettype();.return type.fullname;.}...if you use this function on a string object, which was created on runtime, the function returns ""system.runtimetype"".....but it should return ""system.string""..."

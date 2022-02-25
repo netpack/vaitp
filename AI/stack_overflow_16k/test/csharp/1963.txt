@@ -1,0 +1,1 @@
+"error creating directory on shared network im having an exception (the handle is invalid) hr result -2147024890 when i create a directory in a shared network like this:..string path = @""\serverpathtofolder"";.if (directory.exists(path)).{.    directory.createdirectory(path).}...do you know why and how to solve it?"

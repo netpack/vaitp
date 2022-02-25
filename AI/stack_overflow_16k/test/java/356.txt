@@ -1,0 +1,1 @@
+"blank operands usage int a = 3;.int b = (a=2)*a;.int c = b * (b=5);.system.out.println(""a="" + a + "" b="" + b + "" c="" + c);...can someone explain me why the output is:..a=2 b=5 c=20...instead of ..a=2 b=4 c=20"

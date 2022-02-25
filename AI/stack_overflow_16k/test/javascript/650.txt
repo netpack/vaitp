@@ -1,0 +1,1 @@
+"how to use self-defined variable in @require (greasemonkey) in my script, there are many @requires. it looks like:..@require patha/file1.@require patha/file2...sometimes i need to change patha, after which it looks like this:..@require pathb/file1.@require pathb/file2...is it possible to use a variable as follwoing:..path = patha .@require $path/file1.@require $path/file2"

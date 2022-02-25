@@ -1,0 +1,1 @@
+"find greatest value of subset of array i need some blank help.  i have an array of integers with 5 values:...int[] arrayvalues = { 10, 8, 6, 5, 3 };...i need to find the greatest value for any combination of three values (10 combination possibilities) and then rearrange the values so that the 3 values that have the greatest sum are in the last 3 positions."

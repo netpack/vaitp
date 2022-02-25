@@ -1,0 +1,1 @@
+"blank lambda expression summation exception decimal val=datarow.asenumerable().sum(s=&gt;s.field&lt;decimal&gt;(""quantity""));...if column contain null it raises exception.so i want to return zero instead of exception"

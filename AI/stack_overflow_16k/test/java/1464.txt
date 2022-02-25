@@ -1,0 +1,1 @@
+"blank : check equivalence of two text files? there are two text files. i hope to know what is the most simplest blank way to check if their contents are equivalent each other...on shell, i usually use diff command:..$ diff 1.txt 1.same.txt # nothing is shown if 1.txt and 1.same.txt have the same contents .$ diff 1.txt 2.txt.4a5,6.&gt; 20, -, 22.0.&gt; 10, 10.0, -"

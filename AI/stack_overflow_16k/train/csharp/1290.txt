@@ -1,0 +1,1 @@
+"reading values from xmlnode class i have xml as below in  stored as xml node class, i need to read values from xml tag's..xml stored in xmlnode class.. system.xml.xmlnode responsexml = ecartproxy.getcart(customercontext, ""1024396864463"");"

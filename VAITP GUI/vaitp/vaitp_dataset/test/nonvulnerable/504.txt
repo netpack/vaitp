@@ -1,0 +1,1 @@
+"def get_paths(root: str, sub_path: str) \        -> typing.Tuple[pathlib.Path, pathlib.Path]:    base_path = flask.safe_join(root, sub_path)    data_file = pathlib.Path(base_path + ".data")    metadata_file = pathlib.Path(base_path + ".meta")    return data_file, metadata_file"

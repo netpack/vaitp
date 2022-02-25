@@ -1,0 +1,1 @@
+"what is the ?: syntax in blank? what does it mean for the following line?..t = ($(""#a .b"").hasclass(""active"") ? ""c"" : ""d"") ;...$(""#a .b"").hasclass(""active"") means whether #a .b exists? but how about ? ""c"" : ""d"", is it some kind of comparison logic?"

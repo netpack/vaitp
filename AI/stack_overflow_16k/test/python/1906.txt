@@ -1,0 +1,1 @@
+"how to sort all possible words out of a string? i'm wondering how to proceed with this task, take this string for example ""thingsandstuff""...how could i generate all possible strings out of this string as to look them up individually against an english dictionary?..the goal is to find valid english words in a string that does not contain space...thanks"

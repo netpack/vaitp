@@ -1,0 +1,13 @@
+"    def setUp(self):
+        self.mock_federation_resource = MockHttpResource()
+
+        self.mock_http_client = Mock(spec=[])
+        self.mock_http_client.put_json = DeferredMockCallable()
+
+        hs = yield setup_test_homeserver(
+            self.addCleanup, http_client=self.mock_http_client, keyring=Mock(),
+        )
+
+        self.filtering = hs.get_filtering()
+
+        self.datastore = hs.get_datastore()"

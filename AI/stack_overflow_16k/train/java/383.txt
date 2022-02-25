@@ -1,0 +1,1 @@
+advantages of stack-based architecture of the jvm's instruction why the blank virtual machine was designed with no registers to hold intermediate data values? instead every thing works on stack. is there any specific advantage of having a stack-based architecture instead of register?

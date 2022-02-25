@@ -1,0 +1,1 @@
+"how can i get first and last day of current week in iso date format in blank? $gte: isodate(""2010-04-29t00:00:00.000z""),$lt: isodate(""2010-05-01t00:00:00.000z"")"

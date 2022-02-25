@@ -1,0 +1,1 @@
+"how to know browser download location programatically i have a webpage, that downloads a file,.now the requirement is to show a alert where the downloaded file has been stored..is it possible to get the download folder location of a browser through any of browser properties(navigator,window,location etc). please help...thanks in advance"

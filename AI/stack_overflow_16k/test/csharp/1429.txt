@@ -1,0 +1,1 @@
+"pulling text from a string i need extract part of a text string (in this case everything after ""data source ="" ...""data source=xxxxx""..in vba, there is a function call mid()..strtext = ""data source=xxxxx"".var = mid(strtext, 12)...is there anything similar in blank?"

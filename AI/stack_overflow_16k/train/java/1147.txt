@@ -1,0 +1,1 @@
+is 'new class[] {iface}' and 'new class<?>[] {iface}' the same in blank are the two statements equal in blank?..//code 1.object o1[] = new class[] {iface};.//code 2.object o2[] = new class&lt;?&gt;[] {iface};

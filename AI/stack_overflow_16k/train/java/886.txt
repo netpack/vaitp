@@ -1,0 +1,1 @@
+"blank: ""for"" change condition? while(result.length() != alltext){.    b = (boolean)(i &lt; variable);.    for(i = firstr; b; i++){.       //do something.}.    b = (i &lt; variable);.}...am i can change for condition by boolean? .in my code b = condition is converted true or false. i want to keep it by condition."

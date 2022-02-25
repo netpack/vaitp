@@ -1,0 +1,1 @@
+i am new in blank. i need to know which is the reference to be add when i need to loop controls (textbox) foreach (textbox tb in this.controls).        {.            if (tb != null).            {.            }.        }...i need to do this but the reference is missing. i dont´t know which is. please can you help me? thanks

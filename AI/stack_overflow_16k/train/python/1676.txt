@@ -1,0 +1,1 @@
+"how to concatenate two 2d arrays in parallel by returning a 1d array how to concatenate two 2d arrays in parallel by returning a 1d array, example:..arrays / lists..list1 = [['a'], ['b'], ['c']]..list2 = [['a'], ['b'], ['c']]...goal:..list3 = ['a:a', 'b:b', 'c:c']...attempt:..concat_array = [itm + ':' if not itm.endswith (':') plus itm for itm in list1 + list2]"

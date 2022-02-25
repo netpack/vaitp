@@ -1,0 +1,1 @@
+"adding network service user to admin group i am getting null in the user variable ..what am i missing????..principalcontext pc = new principalcontext(contexttype.machine);.groupprincipal user = groupprincipal.findbyidentity(pc, @""nt authoritynetwork service"");.groupprincipal group = groupprincipal.findbyidentity(pc, ""administrators"");.group.members.add(user);.group.save();"

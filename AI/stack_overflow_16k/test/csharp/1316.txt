@@ -1,0 +1,1 @@
+"how to create vector in blank i have a set of servers for which i need the names, but i only want those that are currently available so i need a dynamically sized array.  what data structure can i use to store these."

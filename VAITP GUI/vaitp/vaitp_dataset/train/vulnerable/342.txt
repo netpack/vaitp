@@ -1,0 +1,3 @@
+"    def sql_one_row(self, sentence, column):
+        self.cursor.execute(sentence)
+        return self.cursor.fetchone()[column]"

@@ -1,0 +1,1 @@
+"js: convert string into object i have code..data = ""{isshowloginpopup:true,newfavofferid:1486882}"";...i want to convert it into js object (not in json) and use it in this way:..data.newfavofferid = ......how can i do this?"

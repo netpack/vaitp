@@ -1,0 +1,1 @@
+"what will be output and explanation? below code return boolean false value. any explanation for this ?..string str = ""bee"";.string str2 = ""bee"";.system.out.println(""=="" + str == str2); ...actual result : false"

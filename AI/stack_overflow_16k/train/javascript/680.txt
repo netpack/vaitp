@@ -1,0 +1,1 @@
+"blank tolowercase() undefined error i know this has been put out too many times, but none of the questions fix the problem i have. it gives me the following error every time i run the function:..typeerror: cannot read property 'tolowercase' of undefined...here's the code it's running:..global.toid = function(text) {.    return text.tolowercase().replace(/[^a-z0-9]/g, '');.};"

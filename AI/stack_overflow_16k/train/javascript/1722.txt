@@ -1,0 +1,1 @@
+find the height of dynamically created div neither of the properties clientheight and offsetheight has worked out for me while i try to determine the height of the div created dynamically. could someone suggest alternative please? thanks a ton in advance.

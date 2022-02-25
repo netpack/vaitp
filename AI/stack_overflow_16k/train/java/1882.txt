@@ -1,0 +1,1 @@
+"local variable is redundant blank can someone explain to me why it's giving me ""local variable is redundant error""?..public double depreciationamount() {.    double depreciationamount = (cost * percentdepreciated);.    return depreciationamount;.}"

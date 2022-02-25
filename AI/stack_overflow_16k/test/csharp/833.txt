@@ -1,0 +1,1 @@
+"blank yield waitforseconds or time.deltatime i am making a game in unity 5 with blank and i was wondering about yield vs time.deltatime. let's say that the ""money"" should go up by ""x"" every second, should i use..yield return new waitforseconds(1);...or just use..money += moneymodifier * time.deltatime;"

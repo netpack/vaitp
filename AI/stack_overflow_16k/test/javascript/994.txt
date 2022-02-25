@@ -1,0 +1,1 @@
+"why is ""typeof"" the same as ""typeof()""? i'm learning blank, and i saw in the code that is the same to use typeof and typeof(), for example:..the result is number in both cases:..console.log(typeof 1); .console.log(typeof(1));"

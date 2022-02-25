@@ -1,0 +1,1 @@
+"why does console.log() output [object object] in blank? ..console.log(({.  title: ""the three musketeers"",.  author: ""alexandre dumas"",.  price: ""$49"".}).tostring());.....it outputs an object as [object object], even though i am calling .tostring() on it. can anyone please explain why this happens?"

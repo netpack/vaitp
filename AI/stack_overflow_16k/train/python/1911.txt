@@ -1,0 +1,1 @@
+function that returns fields not equal to something hello so i have this function:..#checks and strips out empty.def filterwithaccum(fields):.    if fields == u'':.        accum.add(1).    return fields != u''...what i want to do is add more possibilities like != u'null' but i don't think you can do a return with a or clause in it. what is the recommended approach?

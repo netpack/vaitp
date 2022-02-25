@@ -1,0 +1,1 @@
+"about inheritance and constructors i just wondering if this code is correct that i found in some information. the thing i find strange, is that diameter is used twice in both example, is this really correct?..public ellipse(double diameter): base(diameter, diameter)"

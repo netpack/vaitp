@@ -1,0 +1,1 @@
+"blank syntax doubt hey, i have been using the pymt library and they have this convention to referring their widgets:..from pymt import *..# create a slider from 0.-1..sl = mtxyslider()..@sl.event.def on_value_change(x, y):.    print 'slider value change', x, y..runtouchapp(sl)...what's with the ""@""? what does it signify in blank?thanks."

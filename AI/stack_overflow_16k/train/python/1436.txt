@@ -1,0 +1,1 @@
+"how to iterate step with right shift in blank? is it possible to use right shift as the step argument in xrange?..basically i'm trying to do this (pseudo-code)..for i in xrange(35926661, 0, _value_&gt;&gt;6):.    //logic"

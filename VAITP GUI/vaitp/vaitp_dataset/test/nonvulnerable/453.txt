@@ -1,0 +1,1 @@
+"def kebab_case(value: str) -> str:    return fix_keywords(stringcase.spinalcase(group_title(sanitize(value))))"

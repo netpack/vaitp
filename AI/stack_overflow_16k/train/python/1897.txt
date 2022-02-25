@@ -1,0 +1,1 @@
+add values to array in one line how can i write this code in one-line?..aa = [].for s in complete:.    aa.append(s)...i know there are several solutions. i would really appreciate if you could write them down..thanks!

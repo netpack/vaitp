@@ -1,0 +1,1 @@
+how to import package for imbalance data? i want to import the handle imbalance data but the package is not imported: .. from imblearn.under_sampling import nearmiss ...in blank 3.7  but its gives me following error...  attributeerror: type object 'sklearn.manifold._barnes_hut_tsne.array' has no attribute 'reduce_cython'.  from imblearn.under_sampling import nearmiss

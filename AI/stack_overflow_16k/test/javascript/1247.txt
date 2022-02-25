@@ -1,0 +1,1 @@
+"is this href value equivalent to ""blank:void(0)""? what is the difference between blank:// and blank:void(0) ?..&lt;a href=""blank://"" class=""button toggle-filters""&gt;filters&lt;/a&gt;"

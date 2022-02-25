@@ -1,0 +1,1 @@
+"why does split(""."") fail? blank i've written the following code:..string[] arr = ((string) ""asd.asd"").split(""."");...and arr=[]. why?"

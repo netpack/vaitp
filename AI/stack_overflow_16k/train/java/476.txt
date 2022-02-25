@@ -1,0 +1,1 @@
+code to call dao file in servlet is there any way to connect dao files to servlet.once connected we need to get all the database connections in the jsp files used in same project...i tried this but i cannot connect to dao.

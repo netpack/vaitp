@@ -1,0 +1,1 @@
+"why is == different than === here? why does blank treat ""xy"" == new string(""xy"") as true, but ""xy"" === new string(""xy"") as false?...i have read https://developer.mozilla.org/en-us/docs/web/blank/guide/expressions_and_operators, but am still confused"

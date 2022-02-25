@@ -1,0 +1,1 @@
+"compare disparate date formats, which are stored as strings i have two disparate date formats presented in my application as strings. here are the formats:...07/01/2011.2011-07-01...i'm looking for the most efficient way to assert their equality."

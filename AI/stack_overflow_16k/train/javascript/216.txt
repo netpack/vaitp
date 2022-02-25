@@ -1,0 +1,1 @@
+why does setinterval run at different speeds why does window.setinterval run at different speeds on different computers. is this purely just lag or is is something else?..shouldn't 30ms be 30ms on all computers?

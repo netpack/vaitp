@@ -1,0 +1,1 @@
+"what does the % in a print between the format and variables actually do? i'm just starting to fool around with formatting the output of a print statement...the examples i've seen have a % after the format list and before the arguments, like this:..&gt;&gt;&gt; a=123.&gt;&gt;&gt; print ""%d"" % a.123...what is the meaning of the % and more important, why is it necessary?"

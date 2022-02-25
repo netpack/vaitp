@@ -1,0 +1,1 @@
+blank or operator shorthand i am trying to implement an or logic in my application. i stumbled across something like below and wondered whether we still need to write or operation in such an expanded manner. do we have a simpler/better way to write the same for or operator instead of writing it like below ?..   (x == 5 || x == 15)

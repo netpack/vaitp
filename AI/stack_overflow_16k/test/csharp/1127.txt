@@ -1,0 +1,1 @@
+"what is the blank ""checked"" keyword for? i just came across this keyword for the first time.  what does it do, and when should it be used?..int multiply(int i, int j).{.    return checked(i * j);.}"

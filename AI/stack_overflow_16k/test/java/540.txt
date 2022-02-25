@@ -1,0 +1,1 @@
+"make file array print deafult names in blank? my problem is when i print the files within the directory, it prints out stuff like 'thumbs.db' and 'desktop.ini'. how to i make it print the name itself. all the files are .png by the way..static file overlaypath1 = new file(minecraft.getminecraft().mcdatadir, ""\tvmod\"" + fileslist[0].getname());"

@@ -1,0 +1,1 @@
+"creating window.customizedobject? i found out that some js sources uses its own customized objects...for example, jquery uses $, and android can use blank interface...how can i make my customized object? what do i need to add my custom object to window object? (like window.myobject) ..thanks in advance."

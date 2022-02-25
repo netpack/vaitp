@@ -1,0 +1,1 @@
+"how to make the popup window scrollable i am having the following code that works to open a window with some size. .now need to make it scrollable. how to do that? i tried browsing but, couldn't find the right one...window.open(""xxx"","""",""width=1200"",""height=60"");"

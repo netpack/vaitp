@@ -1,0 +1,1 @@
+list of all system properties supported by a jre yesterday i came across a system property in blank -djsse.enablecbcprotection=false which was added in jdk 6u30. i never knew about this till yesterday.  ..so can anyone tell me where i can find the list of system properties supported in a blank version along with its meaning?

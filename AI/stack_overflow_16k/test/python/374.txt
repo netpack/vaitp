@@ -1,0 +1,1 @@
+how to check dataframe for multiple empty columns? i have a fairly large dataset containing several columns (over 100). i want to check which ones are completely empty so that they can be dropped. ..i'm using this code len(df.col_name.value_counts()) &gt; 0 to plug in different columns to check but this is painfully slow. is there a way i can check using a for loop?

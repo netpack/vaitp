@@ -1,0 +1,1 @@
+"convert int to byte array i need a way to do this..string username = ""snake"";.int usernamelength = username.length(); // 5...converting it to..0x05...should i use a for loop to get each number and add a zero if the result is less than two numbers?"

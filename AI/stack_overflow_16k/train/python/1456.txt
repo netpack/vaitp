@@ -1,0 +1,1 @@
+"form list of strings from list of chars in blank i have a list of chars, something like..['t','u','p','l','e']...and i want to create a list of strings out of it:..['tuple'...i tried to initialise an empty array and append or += to it but this still returns a list of chars. how can i concatenate strings?"

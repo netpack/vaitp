@@ -1,0 +1,1 @@
+"min and max operations on enum values using blank, how can i take the min or max of two enum values?..for example, if i have..enum permissions.{.    none,.    read,.    write,.    full.}...is there a method that lets me do helper.max(permissions.read, permissions.full) and get permissions.full, for example?"

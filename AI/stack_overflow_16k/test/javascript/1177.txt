@@ -1,0 +1,1 @@
+"how to get the current running function name when declared with ""foo = function(){...}""? in this situation, arguments.callee.name get nothing...foo = function(){.  console.log(arguments.callee.name);.}...is there any solution?"

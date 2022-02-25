@@ -1,0 +1,1 @@
+"how can i change the last component of a url path? ""http://something.com:6688/remote/17/26/172""...if i have the value 172 and i need to change the url to 175..""http://something.com:6688/remote/17/26/175""...how can i do that in blank?"

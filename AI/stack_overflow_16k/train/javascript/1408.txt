@@ -1,0 +1,1 @@
+"need help in blank time and date function if i use this it shows the full time like sun oct 18 2015 07:05:16 gmt-0700 (pdt)...&lt;script type=""text/blank""&gt;.        var date = new date();.        document.write(date);.&lt;/script&gt;...but i want to only show the day, hour and minute. how can i that?"

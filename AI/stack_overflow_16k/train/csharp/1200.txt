@@ -1,0 +1,1 @@
+how can i execute this in blank can someone help me how can i execute this in blank..if txtbxquantity.text &lt;=5     .then    .    txtbxhighlowitem.text = low item    .else    .    txtbxhighlowitem.text = high item    .end if

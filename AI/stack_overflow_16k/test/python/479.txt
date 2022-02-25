@@ -1,0 +1,1 @@
+"how to add multiple value to a dictionary key in blank i am new to blank...list = {('9034','1234'):'bmw', '9996':'chevy', '7206':'ford'}.x = raw_input(""enter first 4 digit: "").print (list[(x)])...how can i print bmw in both value '9034' and '1234'"

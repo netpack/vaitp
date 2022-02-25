@@ -1,0 +1,1 @@
+"get raw pixel value in bitmap image how can i get bits per pixel in bitmap image? example if pixel x=24 &amp; y=45 has rgb 123,212,112 so it must return 1111011, 11010100, 1110000."

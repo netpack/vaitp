@@ -1,0 +1,1 @@
+"object marshalled and unmarshalled what is meant by object marshaling and unmarshaling? what is the impact on object state when the above operation happens, i.e. the effect of serialization on hashcode and equals?"

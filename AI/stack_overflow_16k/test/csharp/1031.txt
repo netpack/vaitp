@@ -1,0 +1,1 @@
+change string type list to type integer the list is below: i simply want to convert it to an integer list..   list&lt;string&gt; list2 = new list&lt;string&gt;();...how do i convert all of it's contents to int?

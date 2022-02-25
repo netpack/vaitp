@@ -1,0 +1,1 @@
+"taking string input and making a int array how do i take an string input and make it into an int array? ..string input = console.readline();.int numb = convert.toint32(input);          .int[] intarray = // what do i write here to make it take the ""input"" length, and put the input into an int array?"

@@ -1,0 +1,1 @@
+"why we don't need to import the blank.lang package to use the integer class(wrapper classes) in blank suppose i want to make the object of an integer(not int) class,since the integer class is in another package, i should have to import the blank.lang package for creating the object of the integer class.but i didn't import the package ,yet compiler doesn't give me an error."

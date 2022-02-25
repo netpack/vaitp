@@ -1,0 +1,1 @@
+"how to use `console.writeline` properly i want to show the full equation 1 + 2 = 3...my attempt so far :..        double x = 1, y = 2; .        double add = x + y ;.        console.writeline(add);.        console.writeline(""press any key to continue"");.        console.readkey();...though, this gives me only 3 as output! any suggestions"

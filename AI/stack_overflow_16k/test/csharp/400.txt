@@ -1,0 +1,1 @@
+"extracting url data from moz_places table within places.sqlite in blank i have created a program to copy out the places.sqlite file to usb storage, however i am needing to access this file to extract all urls from the moz_places table. what would be the best method to achieve this?..thanks,.jason"

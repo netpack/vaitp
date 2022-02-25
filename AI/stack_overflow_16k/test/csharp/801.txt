@@ -1,0 +1,1 @@
+"splitting values in double quotes using blank i have text file with values like..""444"",""/5"","" "", "" "","" john""""66""""88""...i want to get only values with double quotes.so i want seven strings as below after splitting..first = ""444"".second = ""/5"".third = "" "".fourth ="" "".fifth  = ""john"".sixth= ""66"".seven= ""88""....split(""' '"") doesn't seem to work"

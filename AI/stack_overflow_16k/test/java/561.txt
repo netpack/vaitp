@@ -1,0 +1,1 @@
+"extends throwable vs exception in blank when creating my own exception, are there any benefits that i need to take into account when deciding which super class to extend?..what are the prons and cons of each one of them?..class myexception extends exception ...vs..class myexception extends throwable"

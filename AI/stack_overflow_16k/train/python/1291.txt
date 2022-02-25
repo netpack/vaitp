@@ -1,0 +1,1 @@
+"syntactically how these two statements return the same value in blank? syntactically how these two statements return the same value?..x ,= range(1).print(x) # prints 0..(x,) = range(1).print(x) # here also prints 0"

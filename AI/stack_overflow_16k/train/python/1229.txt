@@ -1,0 +1,1 @@
+"how to simplify this kind of blank code? i have many blocks of code like this:..try:.  a = get_a().  try:.    b = get_b()..    # varying codes here, where a and b are used..  finally:.    if b:.      cleanup(b).finally:.  if a:.    cleanup(a)...i hope to write some magic code like this:..some_magic:.  # varying codes here, where a and b are also available...is this possible?"

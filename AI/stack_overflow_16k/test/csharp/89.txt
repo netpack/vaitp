@@ -1,0 +1,1 @@
+how to convert arraylist to nullable integer array? i want to convert arraylist data to int?[]...i tried the below but failed..does any body have an idea?..data.toarray(typeof(int?)) as int?[].(int?[])data.toarray(nullable.getunderlyingtype(typeof(int))).(int?[])data.toarray(nullable.getunderlyingtype(typeof(int?))).(int?[])data.toarray(typeof(int?))

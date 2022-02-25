@@ -1,0 +1,1 @@
+"more elegant way to combine lists to dictionary like structure input:..names = ['c1', 'c2', 'c3'].values = [3, 5, 2]...desired output:..output = [['c1', 3], ['c2', 5], ['c3', 2]]...i've managed to do this in this way:..output = [].  for index, v in enumerate(values):.    output.append([names[index], v]).print(output)...is there better way to do this?"

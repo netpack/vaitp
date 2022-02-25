@@ -1,0 +1,1 @@
+"ensuring order in blank for objects i have a class that looks like this ..class student {.   public string str;   .   public int    marks;.}...say 3 objects for..student s1 (str: sub1, marks:10) , s2 (str: sub2, marks:5) , s3 (str:s3, marks:2)..i want to ensure that for student objects that this condition holds true if sub1 > sub2 > sub3 then marks1 > marks2 > marks3"

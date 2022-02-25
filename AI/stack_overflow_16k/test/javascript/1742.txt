@@ -1,0 +1,1 @@
+how can i access the chrome local storage data in my separate webpage? i tried to use chrome.storage.local.get() to fetch the data but it was giving me an error saying cannot read property 'local' of undefined...i am trying to access this in the separate webpage which is not present in the chrome extension...can any one please help me out over here???..thanks in advance..

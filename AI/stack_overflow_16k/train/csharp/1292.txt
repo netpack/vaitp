@@ -1,0 +1,1 @@
+"how to create an extension method that accepts a class and an interface as a parameters for example i am trying to achieve this:..class a.{.}..class b.{.}..interface c .{.  void somemethod();.}..a.extentionmethod(b,c);...notice that i am passing the type a and c to extentionmethod (not an instance)"

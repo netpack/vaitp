@@ -1,0 +1,1 @@
+"delete event log when installer get uninstalling i was create a windows service which internally create custom event log,when service get starts.creation of event log working perfectly but when i want to uninstall the service i am not be able to delete the custom event log from the system...can any body have any suggestion or help about that,..thanks in advance"

@@ -1,0 +1,1 @@
+"does following the pep8 guidelines make your code run faster than if you did not follow it? is pep8 simply a style guide, or does it actually help the interpreter make optimizations to run your code faster? i'm simply curious since i really like pep8 and wanted to know of any other benefits other than more readable code."

@@ -1,0 +1,1 @@
+"typeerror: can't convert 'float' object to str implicitly typeerror: can't convert 'float' object to str implicitly..print(""nyou will make {:.2f}"".format(score * live - bin))"

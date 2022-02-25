@@ -1,0 +1,1 @@
+"failed read from file, illegal characters in path? i am trying to read from a resource text file (words), using file.readalllines(). but each time it runs i get the error message illegal characters in path. any ideas?..//get all of the words from the text file in the resources folder.string[] allwords = file.readalllines(conundrum.properties.resources.words);"

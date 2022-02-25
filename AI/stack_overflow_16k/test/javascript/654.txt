@@ -1,0 +1,1 @@
+multiple cross-origin request a page with origin a wants to perform a get request to a page with origin b. and the page with origin want to perform a get request to a page with origin c. i want  result from c to b and b to a in callback functions. ..is it possible to do this?

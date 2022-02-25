@@ -1,0 +1,1 @@
+"extract frame from multi page tiff - blank have a multi page tiff and i want to extract page[n]/frame[n] from this tiff file and save it. ..if my multi page tiff has 3 frames, after i extract one page/frame - i want to be left with ..1 image having 2 pages/frames and..1 image having only 1 page/frame."

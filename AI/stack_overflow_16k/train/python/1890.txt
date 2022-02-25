@@ -1,0 +1,1 @@
+"how can i remove part of an string on the re.search result? text = urllib.urlopen('www.text.com').read().frase = re.search(""your text here(.*)"", text).group()...with these code, i get the result as ""your text here mister"".....how can i remove the your text here from the result, staying only with the ""mister"" part?"

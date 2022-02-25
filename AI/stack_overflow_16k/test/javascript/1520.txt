@@ -1,0 +1,1 @@
+"blank class and object can this be done in blank? i am converting a java wiki page to blank. i'm pretty sure var should be used instead of int right? ..class sample extends object {.. int ivar1;. int ivar2; ..sample(int i, int j) {. ivar1 = i;. ivar2 = j;..}..int emptymethod() {}......for (int i = 0; i &lt; maxloops; i++) {..... }.}"

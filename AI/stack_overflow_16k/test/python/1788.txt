@@ -1,0 +1,1 @@
+"what does ""+3"" represents in [:index+3] in blank? here is the problem statement:..return list[index:]+list[:index+3]...i know [:] represents all the elements of the list. .what does this ""+3"" represents here?"

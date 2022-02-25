@@ -1,0 +1,1 @@
+reading a text file and pulling out specific columns what i need to do is read a specific text file and pull out the entire column based on a string...so if my string was parkingfee i would pull out whatever column in my | delimited file that header row matched the word parkingfee

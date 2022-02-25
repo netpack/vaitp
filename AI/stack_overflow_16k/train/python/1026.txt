@@ -1,0 +1,1 @@
+"how to normalize a 3d numpy array in blank? i want to normalize a 3d numpy array of shape 779, 6250, 19, where axis=0 is examples, axis=1 is data points and axis=2 is channels..its a time seried data. i am looking for a function like matlab normalize have. but in scikit library , only 2d array can be normalized. how can i normalize a 3d array in numpy"

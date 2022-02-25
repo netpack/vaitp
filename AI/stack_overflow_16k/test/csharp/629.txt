@@ -1,0 +1,1 @@
+basic threading with single backgroundworker for multiple tasks i'd want to guarantee the order of execution in a single backgroundworker thread like this..one backgroundworker dowork =.{.  first();.  second();.  third();.  ....}..function first().{.   try{.      x();.      y();.      z(); //etc.   }catch.}

@@ -1,0 +1,1 @@
+multiple increment/decrements in a single statement var a = 0;.(++a)+(a++)+(++a); .print(a);...this prints 3. i'm assuming it only executes single increment...var a = 0;.(++a)+(a++)+(--a); ...this prints 1. what's the rule to follow here?..thank you.

@@ -1,0 +1,1 @@
+"private constructor and final why is it a good practice to mark a class with only private constructors as final? my guess is, it is to let other programmers know that it cannot be sub-classed."

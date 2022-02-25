@@ -1,0 +1,1 @@
+"why does blank remove the zero at the end of a number? const number = 0.50;.console.log(""my number: "" + number);...i have a number in this case 0.50 but when i log it to the console it automatically turns it into 0.5; is there a way to log 0.50 to the console?"

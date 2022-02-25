@@ -1,0 +1,50 @@
+"    def runTest(self):
+        # Regression test for CVE-2013-1445.  We had a bug where, under the
+        # right conditions, two processes might see the same random sequence.
+
+        if sys.platform.startswith('win'):  # windows can't fork
+            assert not hasattr(os, 'fork')    # ... right?
+            return
+
+        # Wait 150 ms so that we don't trigger the rate-limit prematurely.
+        time.sleep(0.15)
+
+        reseed_count_before = self._get_reseed_count()
+
+        # One or both of these calls together should trigger a reseed right here.
+        Crypto.Random._UserFriendlyRNG._get_singleton().reinit()
+        Crypto.Random.get_random_bytes(1)
+
+        reseed_count_after = self._get_reseed_count()
+        self.assertNotEqual(reseed_count_before, reseed_count_after)  # sanity check: test should reseed parent before forking
+
+        rfiles = []
+        for i in range(10):
+            rfd, wfd = os.pipe()
+            if os.fork() == 0:
+                # child
+                os.close(rfd)
+                f = os.fdopen(wfd, "wb")
+
+                Crypto.Random.atfork()
+
+                data = Crypto.Random.get_random_bytes(16)
+
+                f.write(data)
+                f.close()
+                os._exit(0)
+            # parent
+            os.close(wfd)
+            rfiles.append(os.fdopen(rfd, "rb"))
+
+        results = []
+        results_dict = {}
+        for f in rfiles:
+            data = binascii.hexlify(f.read())
+            results.append(data)
+            results_dict[data] = 1
+            f.close()
+
+        if len(results) != len(results_dict.keys()):
+            raise AssertionError("RNG output duplicated across fork():\n%s" %
+                                 (pprint.pformat(results)))"

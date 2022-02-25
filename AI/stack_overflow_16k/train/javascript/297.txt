@@ -1,0 +1,1 @@
+how to dynamically reduce all fonts to 50% using blank? i have a web page with various font sizes all assigned using px sizes. i want to be able to dynamically change all the font sizes to 50% of it's original size using blank. i tried using a css rule but realized that you cannot change font sizes that have an px defined size.

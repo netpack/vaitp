@@ -1,0 +1,3 @@
+"    def _props_path(self):
+        """Absolute path of the file storing the collection properties."""
+        return self._filesystem_path + ".props""

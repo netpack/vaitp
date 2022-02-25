@@ -1,0 +1,1 @@
+"does this code create a temporary string? does this code takes x and changes its contents directly or creates a temporary new string then copy to x?..if the latter is true, i don't understand why we use ref...public static void removespaces(ref string x).    {.        x = x.replace("" "", """");.    }"

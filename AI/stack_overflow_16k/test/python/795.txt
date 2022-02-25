@@ -1,0 +1,1 @@
+"from tuple to 1d array i have this list [(1,),(2,),(3,),(4,)].how can i convert it into 1d array [1,2,3,4]?"

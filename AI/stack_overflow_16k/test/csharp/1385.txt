@@ -1,0 +1,1 @@
+help me to understand equals() in blank .  possible duplicate:.  == or .equals()  .....why use equals()  and not use == ..    for (i = 0; i &lt; names.length; i++).{.   if (names[i].equals(targetname)).   {.      index = i;.      break;.   }.}

@@ -1,0 +1,1 @@
+"blank: modify a dict to make the key a value, and a value the key say i have a dictionary dict, with the following values:..dict1 = {'1': ['a','b', 'c', 'd'], '2': ['e','f', 'g', 'h']}...how would i make one of the values the key in a new dictionary, dict1?..dict2 = {'d': ['a','b', 'c', '1'], 'h': ['e','f', 'g', '2']}"

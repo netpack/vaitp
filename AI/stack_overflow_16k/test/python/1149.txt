@@ -1,0 +1,1 @@
+"blank 2d array indexing: setting a value changing whole column? it might be a very stupid question but i just don't understand this code:..&gt;&gt;&gt; a=[[0]*3]*3.&gt;&gt;&gt; a.[[0, 0, 0], [0, 0, 0], [0, 0, 0]].&gt;&gt;&gt; a[0][1]=3.&gt;&gt;&gt; a.[[0, 3, 0], [0, 3, 0], [0, 3, 0]]...why a call a[0][1] will initialize the whole second column to be 3?"

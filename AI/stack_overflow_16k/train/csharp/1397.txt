@@ -1,0 +1,1 @@
+"cacheduration for blank webmethod using web.config is there a way to configure the cacheduration attribute of a webmethod using web.config?.so i can change its value by just editing the web.config file anytime, without rebuilding the dll..i am using blank .net4.0.thanks"

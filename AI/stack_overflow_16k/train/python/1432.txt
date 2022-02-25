@@ -1,0 +1,1 @@
+how to add a map as a class field? i want to add a dictionary that maps an object to a list of objects as an instance variable to a class. what is the idiomatic way to do it in blank? here's how i've done it:..class myclass:.    def __init__(self):.        self.mydict = { none : [none] }

@@ -1,0 +1,3 @@
+"    def test_nonasciidef(self):
+        tree = self.parse(nonasciidef)
+        self.assertEqual(tree.body[0].type_comment, "() -> àçčéñt")"

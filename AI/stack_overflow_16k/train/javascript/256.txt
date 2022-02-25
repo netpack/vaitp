@@ -1,0 +1,1 @@
+"do a concatenation on blank array value/key why concatenation on values or keys of a blank array is not allowed?..var arr = {'date': year + "", "" + month};...or..var arr = {'to' + 'day': day};"

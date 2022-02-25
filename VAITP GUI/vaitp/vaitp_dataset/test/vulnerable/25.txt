@@ -1,0 +1,1 @@
+"    def command(self):        res = self._gnupg().list_secret_keys()        return self._success("Searched for secret keys", res)"

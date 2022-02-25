@@ -1,0 +1,1 @@
+advantages of using keys() function when iterating over a dictionary is there any advantage to using keys() function?..for word in dictionary.keys():.    print word...vs..for word in dictionary:.    print word

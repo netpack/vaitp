@@ -1,0 +1,1 @@
+blank: division by larger number print 1/50...results to a rounded zero: 0..print float(1/50)...once again returns zero but as a float...what syntax i should be using to get a right result (0.02) using only stock modules.

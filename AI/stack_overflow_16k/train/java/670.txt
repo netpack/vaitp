@@ -1,0 +1,1 @@
+"getsize(), getwidth(), getheight() returns -1 i have an image img that, when trying to use any of above mentioned get methods, returns -1. why is this? and what is an imageobserver object?"

@@ -1,0 +1,1 @@
+"function that returns first object of a given array function first(array){ .return first(0);    .var first = [""gold"",""brown"",""green""21,1998];.    console.log(first[0]);...trying to create a function that will return the first object of a given array, and am getting an error self[e.data.invoke.func].apply is not a function.not sure what i'm missing?"

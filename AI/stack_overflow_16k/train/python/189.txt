@@ -1,0 +1,1 @@
+correctly calling variables inside a function as an example..def test():.    function = 'one'..print(function)...how does one go about doing that?.at the moment i get..nameerror: name 'function' is not defined

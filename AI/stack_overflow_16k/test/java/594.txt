@@ -1,0 +1,1 @@
+"blank keep decimal places only when it got value i need the decimal places output to be like this:.1000.00 -> 1000.1000.10 -> 1000.10.remove trailing zero if decimal places is both zero, but.keep two decimal places if there is at least one value...i tried decimalformat("".##""), but its not what im looking for:.1000.1000.1 (need to keep two decimal places 1000.10)"

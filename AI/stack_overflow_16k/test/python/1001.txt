@@ -1,0 +1,1 @@
+"blank: how to load (substitute) attribute name from list i would like to improve this piece of code:..class opt_variable:..       pass..var = opt_variable..list = [""name"", ""value""]..var.list[0] = ""xxx""...i got this message:..attributeerror: type object 'opt_variable' has no attribute 'list'...i would like to use attribute name called from the previously defined list."

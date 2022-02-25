@@ -1,0 +1,1 @@
+"how to detect back button clicked action is it possible to detect whether back button was clicked or not using pure blank, servlet, jsp. i saw few answers dealing with ajax, blankscript etc...i was trying to detect the action in doget method of my controller. ..but that doesn't work. noob question."

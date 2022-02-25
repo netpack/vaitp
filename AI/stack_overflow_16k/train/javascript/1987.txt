@@ -1,0 +1,1 @@
+"efficiency of checking if an item exists in set (blank) i was wondering how the new set data structure is implemented in blank. in particular, what would be the big o efficiency inserting, deleting, or checking if an item exists in a set."

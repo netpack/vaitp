@@ -1,0 +1,1 @@
+"does readlines() close the file? is there a need to close a file after doing:..lines = open(fname).readlines()...or does readlines() close the file after reading the data? if not, how should it be closed?"

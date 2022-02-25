@@ -1,0 +1,1 @@
+"    def field(self):        if not hasattr(self, '_field'):            field = super().field            max_validator = self.get_max_validator()            if max_validator:                field.validators.append(max_validator)            self._field = field        return self._field"

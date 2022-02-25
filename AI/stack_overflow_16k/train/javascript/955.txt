@@ -1,0 +1,1 @@
+"how do i convert a string to number which have operator inside it? i have a string which consist of a number with operators. like : displaytext =""123+12*23"".and i want to convert it into number so that all the mathematical operations will be performed. any idea how can i do that"

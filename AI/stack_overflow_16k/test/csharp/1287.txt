@@ -1,0 +1,1 @@
+is there a encryption api's available to encrypt log file while using microsoft enterprise library 3.1 how to encrypt a string message while it is being logged into the log file using logger.write(...) in microsoft enterprise library 3.1. are there any inbuilt api's in  microsoft enterprise library which does encryption?

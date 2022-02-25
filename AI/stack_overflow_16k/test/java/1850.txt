@@ -1,0 +1,1 @@
+map interface from blank question i have been wondering about the map from blank.util...why does values() method return a collection while the keyset and entryset return a set?..what's the advantages/disadvantages of a set and collection?

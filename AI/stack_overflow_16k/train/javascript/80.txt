@@ -1,0 +1,1 @@
+"mouseleave 'body' in firefox and autocomplete mouseleave listening body and fires when mouse hover autocomplete fields (only in firefox). how to fix it?....document.body.addeventlistener('mouseleave', function(ev) {.. alert('out');..});.&lt;input type=""text"" name=""email""&gt;"

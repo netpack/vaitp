@@ -1,0 +1,1 @@
+"how can get the property name of an object array value? i have an object like below:..myobj = {.  ""name"":""john"",.  ""age"":30,.  ""cars"":[ ""ford"", ""bmw"", ""fiat"" ].}...how can i know the property name ""cars"" when i input ""bmw""? i need a function which needs to return property name ""cars"" when i pass the argument ""bmw"" in the function."

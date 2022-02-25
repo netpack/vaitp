@@ -1,0 +1,1 @@
+"slice a list to max string size i have a max length of a list item that i need to enforce. how would i accomplish the following:..max_length = 13.&gt;&gt;&gt; str([""hello"",""david""])[:max_length].""['hello', 'da""..==&gt; [""hello"", ""da""]...i was thinking using ast.literal_eval, but was wondering what might be recommended here."

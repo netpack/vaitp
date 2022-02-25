@@ -1,0 +1,1 @@
+how many columns does line.split() return i have somewhat unclean data in a csv...line.split() will normally return x columns. but sometimes the end of the data is cut meaning it will return x - y columns. this makes the app throw an exception. ..is there a way to know how many columns line.split() has returned or how many columns there are in string[] ?

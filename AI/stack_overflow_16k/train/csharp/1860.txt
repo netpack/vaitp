@@ -1,0 +1,1 @@
+"blank get and set, shorthand and access control class program.{.    class ad.    {.        public string _name { private get; set; }.    }..    public static void main().    {.        ad ad = new ad();.        console.writeline(ad._name = ""name"");.    }..}...code output : ""name"" , but _name field's get is private. why i don't get an error?"

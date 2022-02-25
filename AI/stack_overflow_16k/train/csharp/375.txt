@@ -1,0 +1,1 @@
+"rounding troubles i have this problem: i need to do the following rounding..4.2 --&gt; 5.4.6 --&gt; 5.4.0 --&gt; 4...how could i achieve this?..edit: i miswrote the 4.0 rounding, i'm going to use this to create a 2d array in which i'll store the chars of a sentence. to perform this one dimension is a variable a, and the other is the length of the sentence divided by a"

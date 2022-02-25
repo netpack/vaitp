@@ -1,0 +1,1 @@
+"how to determine if first two elements of a value are integers or characters? my task is save the number of a day in a value..for example:..today_str = 10-2-2018..date_numb = 10...or:..today_str = 3/5/2018..date_numb = 3...to sum up, i wanna check if its 2 integers or 1 so i can save the day's number in a value."

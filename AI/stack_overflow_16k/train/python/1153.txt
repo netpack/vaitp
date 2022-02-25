@@ -1,0 +1,1 @@
+"slice a list within a list? i am trying to slice a list in blank so that i get two separate lists: one with the keys, and one with the values. my list looks like this:..[(b'a', 2), (b'surprise,', 1), (b'but', 1), (b'welcome', 1), (b'one', 1), (b'for', 1), (b'sure.', 1)]...i am relatively new at coding and so i am just wondering how i would be able to do something like that."

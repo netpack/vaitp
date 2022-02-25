@@ -1,0 +1,1 @@
+how to run a method from another cs file i need to run a method from another form but when i make an object it makes my main form pretty much useless because the data in the lists get reset. and i cant make it static either because i'm working with a listbox. are there other ways to workaround these things or do i need to rewrite everything.

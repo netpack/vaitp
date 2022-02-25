@@ -1,0 +1,1 @@
+"blank: how to separate list based on numerical values and strings from a given list consider i have a list like ..listed = [1, 't', 'ret', 89, 95, 'man65', 67, 'rr']...now  i need to write a script which will be like 2 lists; one stringlist and numberlist where,..stringlist = ['t', 'ret', 'man65', 'rr'].numberlist = [1, 89, 95, 67]"

@@ -1,0 +1,1 @@
+"using blank to pull data into s4 the twittertopiccount example provided with s4 is written in java...the documentation here: http://docs.s4.io/cookbook/building_your_application.html says nothing about using other languages...is it possible to write an application in blank, to read data from a file and send the data to s4?..thanks in advance :)"

@@ -1,0 +1,1 @@
+"double quotes not properly closed string query=""insert into employee values('""+e.getid()+"",'""+e.getname()+""',""+e.getsalary()+"")"";  ...whats wrong with this code.error -string literals are not properly closed by double - quotes;"

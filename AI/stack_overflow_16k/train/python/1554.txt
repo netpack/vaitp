@@ -1,0 +1,1 @@
+"what is the difference between bunch and dictionary type in blank? i found out that bunch and dict works more or less the same. like if there is a dict object say .dict_1 = {""a"":1, ""b"":2}.and a bunch object say bunch .bunch_1 = bunch(a=1, b=2).both have the same set of behaviour"

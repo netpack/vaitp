@@ -1,0 +1,1 @@
+"is there a way to open a new console window from a console application in blank we want to troll our teacher, we want to start a new console window when he inputs something (arbitrary value) invalid...is there a way that we could start a new console window from main?..using system;.using system.diagnostics;..static void main(string args).{.    process.start();.}"

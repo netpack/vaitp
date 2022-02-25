@@ -1,0 +1,1 @@
+"how to call static function from another static function public static void func1(string a,string c)..{..func2(a,c)--- error..}..public static void func2(string a,string c)..{...}...if im wrong please correct it..i need function to be called this way... function to be static.please help"

@@ -1,0 +1,1 @@
+"    def err(s):        "Render as an error span"        return HTML('<span class="inline-error inline">{0}</span>').format(s)"

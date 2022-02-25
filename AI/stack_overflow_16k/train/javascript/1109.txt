@@ -1,0 +1,1 @@
+"convert a range of numbers to portion of 100 i have a list of numbers (any length) ranging from 0 - 100, including duplicates. i need convert those numbers to portions of 100...for example:.[25, 50] becomes [33.333, 66.666]..[25, 50, 50] becomes [20, 40, 40]..what algorithm would work best for this?"

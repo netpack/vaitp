@@ -1,0 +1,1 @@
+blank how to detect if a thread join timed out i have a program that starts a couple of worker threads. the main thread contains t.join(timeout) where timeout equals some integer like 5...how can i detect if a thread joined due to a timeout.

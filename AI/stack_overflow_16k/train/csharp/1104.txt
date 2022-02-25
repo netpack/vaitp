@@ -1,0 +1,1 @@
+"how do i delete items in a multidimensional array and will it change the array length? say i have a 3d array:..int[,,] arr = new int[3, 2, 3];...how can i delete all items under one of the first dimension? and if that can be done, will that move up all the values under it? or will the deleted items just take null values and be counted in the arr.getlength(0) method?"

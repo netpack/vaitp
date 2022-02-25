@@ -1,0 +1,1 @@
+windows service not running after installing i have created a windows service to send mail when service is started. the service works fine like it sends mail when i debug the service and run it via code. but the service is not working after i install it. it is not sending any mail after i install the service...can anyone please suggest me the solution?

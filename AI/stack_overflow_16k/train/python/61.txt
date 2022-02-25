@@ -1,0 +1,1 @@
+"is there a more blankic way of writing the following maximum-value function: def greatest(values):.    value_generator = (v for k,v in values).    max_value = max(value_generator).    return (k for k,v in values if v == max_value)..sample_data = ( ('id1', 3), ('id2', 5), ('id3', 5) ).items = list( greatest(sample_data) ) # should produce ['id2', 'id3']...mapreduce anyone?"

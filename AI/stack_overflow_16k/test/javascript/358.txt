@@ -1,0 +1,1 @@
+"ff not setting size on window.open i have a simple js script including:..openwindow=window.open("""", ""newwin"", ""height=250, width=250,toolbar=no,scrollbars=""+scroll+"",menubar=no"");...ff 21.0 opens it to the full size of the browser window...chrome and opera correctly open it to the specified width and height...is this a known bug in ff? is there some way around it?"

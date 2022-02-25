@@ -1,0 +1,1 @@
+"does blockingqueue need synchronized? could you help me?.is this necessery for blockingqueue, when i want to be sure that only one thread modify queue?:..blockingqueue queue = new arrayblockingqueue(1024);..collections=collections.synchronizedcollection(queue); &lt;--- is this necessary?"

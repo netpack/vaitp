@@ -1,0 +1,7 @@
+"    def test_anymail_webhook_authorization(self):
+        errors = check_deprecated_settings(None)
+        self.assertEqual(errors, [checks.Warning(
+            "The ANYMAIL_WEBHOOK_AUTHORIZATION setting has been renamed ANYMAIL_WEBHOOK_SECRET to improve security.",
+            hint="You must update your settings.py. The old name will stop working in a near-future release.",
+            id="anymail.W001",
+        )])"

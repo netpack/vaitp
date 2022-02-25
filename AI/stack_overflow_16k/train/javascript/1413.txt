@@ -1,0 +1,1 @@
+"how to make .getday to return something other than a number? the result shows ""monday1"" because .getday method displays 1 as monday. ..var dob = new date(""april 2,1984"");.var weekday = dob.getday();.if (weekday==1) {.document.write('monday');.}.document.write(weekday);...is there any way to get rid of the number and leave just monday word?"

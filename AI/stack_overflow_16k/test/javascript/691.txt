@@ -1,0 +1,1 @@
+"how to add a property to an element method? the code looks like document.getelementbyid.a = 1. this works except in ie. as the document says...  the function is also an object...so it can be added properties, right?"

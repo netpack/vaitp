@@ -1,0 +1,1 @@
+"conversion of scientific notation to long numbers using blank? i need to convert 8.9148e+19 to numeric format using blank..i have already tried using  double.parse(3.58e+14, system.globalization.numberstyles.float) but it is rounded up the value, but not returned the actual number."

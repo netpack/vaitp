@@ -1,0 +1,1 @@
+how to create segy header in blank? any packages available? i want to create a segy 2d seismic file from scratch and did anyone worked on creating segy by setting binary header and ebcdic header. i don't see any libraries to do the same.

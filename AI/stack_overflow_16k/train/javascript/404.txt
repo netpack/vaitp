@@ -1,0 +1,1 @@
+"insert a value containing single quotes in blank document.execcommand('inserthtml', false, 'hello this is veena's message');...how can i insert text which contains a single quotes other than passing it in double quotes like..document.execcommand('inserthtml', false, ""hello this is veena's message"");"

@@ -1,0 +1,1 @@
+"blank detect scroll wheel movement without actually scrolling i have a website on which you cant scroll down, but i would like the user to be able to scroll to trigger an event. any ideas on how to do this?..thanks in advance"

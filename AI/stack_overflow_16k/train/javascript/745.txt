@@ -1,0 +1,1 @@
+"i need to close a pop-up window after some period of time i need to close the pop-window which is triggered from 3rd party site after some time passes..i know we can close the pop-up using settimeout(""self.close()"",5000) in body of the page, but the pop-up is triggering from other server."

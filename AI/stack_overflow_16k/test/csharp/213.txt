@@ -1,0 +1,1 @@
+"how to set file version of dll from environment variable? i have a dll that needs to be built outside of the normal build environment, but the file version needs to match that of those build inside.  what's the tag required for this?  i've tried &lt;version&gt;, &lt;fileversion&gt;, and &lt;productversion&gt; to no avail."

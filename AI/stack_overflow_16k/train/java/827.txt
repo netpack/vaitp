@@ -1,0 +1,1 @@
+how to serialize a class which contains nio.buffer? i have a class which contains nio buffer as a data member. i am wonderign how to serialize this class?

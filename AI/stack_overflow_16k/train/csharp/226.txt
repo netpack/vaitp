@@ -1,0 +1,1 @@
+"are properties passed by reference in blank? if i have some method that accepts a boolean, and i pass it a property that is a boolean, will that method be referencing the property? or just the value of what i passed at the time?"

@@ -1,0 +1,1 @@
+"what will be the maximum heap size when we set only minimum heap size using -xms in blank? by default in my machine taking 10 gb of maximum heap size because we have 40 gb memory. when i set -xms15g, what will be the maximum heap size ?"

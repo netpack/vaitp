@@ -1,0 +1,8 @@
+"    def test_get_ora2_responses_already_running(self):
+        url = reverse('export_ora2_data', kwargs={'course_id': unicode(self.course.id)})
+
+        with patch('instructor_task.api.submit_export_ora2_data') as mock_submit_ora2_task:
+            mock_submit_ora2_task.side_effect = AlreadyRunningError()
+            response = self.client.post(url, {})
+        already_running_status = "An ORA data report generation task is already in progress."
+        self.assertIn(already_running_status, response.content)"

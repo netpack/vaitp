@@ -1,0 +1,1 @@
+"explain the value returned in blank dict method can someone explain to me what the following blank code line returns? im new to blank..v[i].meesageout=.dict([(x, array([1,1])).for x in v[i].neighbors])"

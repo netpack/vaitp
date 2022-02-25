@@ -1,0 +1,1 @@
+"counting date backwards in blank can you please show me how to decrement a datetime by month? for example, today is august 2013, so the count will be july 2013, june 2013, may 2013, april 2013 so on and so forth. and also, the year must also be change when the month reach january going to december. it is like counting the datetime backwards. thanks for the help!"

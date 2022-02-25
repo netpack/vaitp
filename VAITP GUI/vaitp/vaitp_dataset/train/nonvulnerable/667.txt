@@ -1,0 +1,9 @@
+"    def test_literal_match(self):
+        """patterns without wildcards should match"""
+        pat = glob_to_regex("foobaz")
+        self.assertTrue(
+            pat.match("FoobaZ"), "patterns should match and be case-insensitive"
+        )
+        self.assertFalse(
+            pat.match("x foobaz"), "pattern should not match at word boundaries"
+        )"

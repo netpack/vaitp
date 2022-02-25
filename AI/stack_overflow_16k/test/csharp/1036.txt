@@ -1,0 +1,1 @@
+why are nullable boolean values not comparable with the shorthand if(boolean)? why can i compare nullable boolean values in blank like this:..bool? test = true;.if (test==true).   //do somethign...but not like this:..bool? test = true;.if (test).   //do somethign

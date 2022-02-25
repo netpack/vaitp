@@ -1,0 +1,1 @@
+optimized way to draw curved line (1000 dots) on a bitmap is there an optimized way to pass a buffer of points that will draw a single curved line on an bitmap or do we have the repeatedly call the same pixel call 1000 times?

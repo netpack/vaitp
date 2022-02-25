@@ -1,0 +1,1 @@
+"create string from byte[] works fine if creating like this:..byte [] d = {1,2};.string ss = new string( d );...but fails if creating like this:..string ss = new string( {1,2} );...or even this:..string ss = new string( {(byte)1,(byte)2});...what is the problem?"

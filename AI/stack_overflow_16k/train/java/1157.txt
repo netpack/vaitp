@@ -1,0 +1,1 @@
+"blank how to check if file exists and open it? how to check if file exists and open it?..if(file is found).{.    fileinputstream file = new fileinputstream(""file"");.}"

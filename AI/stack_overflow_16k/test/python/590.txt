@@ -1,0 +1,1 @@
+"how to isinstance(x, module)? i need to test if a variable is a module or not. how to do this in the cleanest way?..i need this for initializing some dispatcher function and i want that the function can accept either dict or module as an argument."

@@ -1,0 +1,1 @@
+"    def test_login_unknown_code(self):        response = self.client.post('/accounts/login/code/', {            'user': 1,            'code': 'unknown',        })        self.assertEqual(response.status_code, 200)        self.assertEqual(response.context['form'].errors, {            '__all__': ['Unable to log in with provided login code.'],        })"

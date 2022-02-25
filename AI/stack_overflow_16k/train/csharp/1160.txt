@@ -1,0 +1,1 @@
+"two different ways of create a delegate instance? using system; ..delegate void d(int x); ..class c .{ .   public static void m1(int i) { .    console.writeline(""c.m1: "" + i); .   } .}..  d cd1 = new d(c.m1);.  d cd2 = c.m1;...delegate instances cd1 and cd2  are created differently above...are they equivalent? ..if not, what differences are between them?..thanks."

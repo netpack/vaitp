@@ -1,0 +1,1 @@
+"how to sort the following structure in blank i have the following list of lists in blank...[[53.60495722746216, 'percent cats'],. [45.298311033121294, 'percent dogs'],. [1.0967317394165388, 'percent horses']]...now i want the animal with the highest percentage . in this case the it would be cats. ..how do i sort this structure to get the value out?"

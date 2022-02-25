@@ -1,0 +1,1 @@
+"how to use class selector with find as blank only? i got the following jquery code, which i need to convert to pure blank:..$('.your-name input').val(lastname);...while i can use document.getelementsbyclassname(""your-name"") i do not know how find the nested input and apply lastname to it. can someone give me a hint?"

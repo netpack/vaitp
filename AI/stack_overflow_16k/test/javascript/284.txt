@@ -1,0 +1,1 @@
+is it possible to use inner functions in blank? how can i get access to my y() function?..function x() {.    function y() {.        return 1;.    }.}...is it possible at all?

@@ -1,0 +1,1 @@
+"undefined is not an object for 2d array i have this block of code where i'm looking for a value in a 2d array:..function subsquare(y, x, half) {.  var a = y - half;.  console.log(terrain[a][x]);.}...which keeps returning this error:...  typeerror: undefined is not an object (evaluating 'terrain[a][x]')...if i typeof a it is a number. not sure why its not working. thanks"

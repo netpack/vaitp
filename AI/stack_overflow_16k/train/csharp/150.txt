@@ -1,0 +1,1 @@
+"where's the inverse of math.tanh in the math libraries? y = math.tanh(x) is the hyperbolic tangent of x. but i need f(y) = x. for the regular tangent there's arctan, but where's arctanh?..thanks!"

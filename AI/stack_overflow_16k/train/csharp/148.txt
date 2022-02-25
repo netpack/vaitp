@@ -1,0 +1,1 @@
+"how to get the reference of new object in two variables at same time? i need to get the reference of new object in two variables at same time. somthing like..object o1,o2 = new object();...is this is possible?..thanks in advance.."

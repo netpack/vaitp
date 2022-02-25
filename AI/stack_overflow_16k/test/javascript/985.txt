@@ -1,0 +1,1 @@
+"blank runtime error: invalid character using json.parse the following throws ""blank runtime error: invalid character"":..   var opts = ""[{'uom':'e','description':'e - each'},{'uom':'c','description':'c - per 100'},{'uom':'m','description':'m - per 1000'}]"".   var options = json.parse(opts);...what invalid character is in my json string? thanks"

@@ -1,0 +1,1 @@
+adding character in string if i have a string like this:..str = c:userspbdesktoparsiv...how can i append character '' in this string like this:..str = c:\users\pb\desktop\arsiv

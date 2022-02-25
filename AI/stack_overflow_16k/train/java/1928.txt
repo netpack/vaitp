@@ -1,0 +1,1 @@
+"blank. create fileoutputstream using url i have url object, which i get from servletcontext#getresource(), and i want to use this url object to overwrite existing file (using fileouputstream). ..how i can use url object  to create new fileoutputstream object? ..fileouputstream(url.touri()) - don't help, because scheme component of this uri is 'http', not 'file'"

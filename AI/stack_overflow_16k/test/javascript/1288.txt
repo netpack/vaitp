@@ -1,0 +1,1 @@
+blank test string for lower case in any language hi i need test blank string for any lower latters i have build next code:..var lower = /[a-z]/;.var lower = lower.test('mystring');...but if string contain any special chars from other languages this code not working..and is is logical my test is just for english latter..how to write test for any language ?

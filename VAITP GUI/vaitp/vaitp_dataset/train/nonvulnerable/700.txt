@@ -1,0 +1,2 @@
+"    def parse(self, source):
+        return ast.parse(source, type_comments=True)"

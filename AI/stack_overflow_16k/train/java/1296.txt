@@ -1,0 +1,1 @@
+"more than one return type from method is there a way to get different return type from a method like int or string or double?..what i can think of is using generics wildcard,not sure..like: ..public x m1(){.//implementation.}...x can be int,string,long etc"

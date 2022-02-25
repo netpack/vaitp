@@ -1,0 +1,1 @@
+what class does this variable belong to? class program.{.    class mammal.    {..    }..    class horse : mammal.    {..    }..    static void main().    {.        horse myhorse = new horse();.        mammal mymammal = myhorse;.        horse myhorseagain = mymammal as horse;.    }.}...will myhorseagain have methods defined in horse class?

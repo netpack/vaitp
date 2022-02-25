@@ -1,0 +1,1 @@
+"how to replace after . part with my string? i want to replace the part after the ""."", but get undefined...let replacedword = ""math"".console.log(classes.replacedword)"

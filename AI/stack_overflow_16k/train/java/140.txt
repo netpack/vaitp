@@ -1,0 +1,1 @@
+struts tiles taglib class not found i am using struts tiles concept. i got an error:..blank.lang.classnotfoundexception org.apache.struts.taglib.tiles.useattributetei...i have downloaded apache.struts.1.3.8.jar file.

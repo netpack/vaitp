@@ -1,0 +1,1 @@
+"how to create array with many normalized float values in blank in blank, if i have a data [1,2,...,9,10], i can use range(1,11) to simplify the code. however, how to simplify the code of the normalized version of those data in blank? for instance, now i have the data [(1-1)/(10-1),(2-1)/(10-1),...,(10-1)/(10-1)]. the results must be in float type."

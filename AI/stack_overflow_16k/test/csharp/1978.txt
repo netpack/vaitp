@@ -1,0 +1,1 @@
+"how to delete all files but leave directory structure intact? i want to delete all the files in a folder, and delete all the files in all its sub folders, and sub sub folders, etc, but i do not want to delete the folders themselves...what would be the simplest way to do this?"

@@ -1,0 +1,1 @@
+"initialize 0588235294117647 value in blank when i get a input as long datatype, the compiler does not accept the following number..0588235294117647...but if i place the zero other than first position, it is executed...how can i declare the long number starting with zero ?..my input       ..0588235294117647l-------&gt;error...after change..5088235294117647l-------&gt;no error"

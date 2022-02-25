@@ -1,0 +1,10 @@
+"    def to_html(self, data, options=None):
+        """
+        Reserved for future usage.
+        
+        The desire is to provide HTML output of a resource, making an API
+        available to a browser. This is on the TODO list but not currently
+        implemented.
+        """
+        options = options or {}
+        return 'Sorry, not implemented yet. Please append "?format=json" to your URL.'"

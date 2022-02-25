@@ -1,0 +1,1 @@
+"how can i shorten this code snippet? i'm sorry for the vague title, i think you really have to see the snippet to know what i mean:..float[] foo = new float[3];.fillfoos(foo);.return foo;...i'd like to have that in one line (i use this snippet very often). how would that be possible?"

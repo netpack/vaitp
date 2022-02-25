@@ -1,0 +1,1 @@
+"how can i repair this autoclick button script: while(autoscript){buttonname.click()} so i just wanted to make a script to the game that autoclicks button..ive tried using true/false statements but somehow this isnt working..var maxa = document.queryselector(""#maxall"")..var autoscript = false..while(autoscript) {.    maxa.click();.}"

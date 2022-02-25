@@ -1,0 +1,1 @@
+"check if var contains cssstylerule (get object name) i need to check if a variable contains a cssstylerule. when using window.console.log(myvar) it tells me cssstylerule { constructor=cssstylerule, type=1, more...}, but when i use typeof myvar it just tells me object...how can i check if it is really a cssstylerule?"

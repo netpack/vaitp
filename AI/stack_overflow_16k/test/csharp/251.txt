@@ -1,0 +1,1 @@
+"get file name without path using windowapicodepack's commonopenfiledialog when using the windows api code pack's commonopenfiledialog, how do you retrieve the filename of a file (such as mydoc.text) without getting the path information?"

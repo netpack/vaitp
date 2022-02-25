@@ -1,0 +1,1 @@
+"blank: optional first argument in function i have a typical blank function with some parameters..my_function = function(content, options) { action }...if i call the function as such :..my_function (options)...the argument ""options"" is passed as ""content""..how do i go around this so i can either have both arguments passed or just one ?.thank you"

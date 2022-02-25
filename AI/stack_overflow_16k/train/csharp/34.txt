@@ -1,0 +1,1 @@
+"double.parse cannot keep comma i'm trying to convert a string into double, i've this value: 53.095 and try to convert into double as:..string doub = ""53.095"";.var cv = convert.todouble(doub);...i get: 53095. why i doesn't get the comma? what am i missing?"

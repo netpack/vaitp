@@ -1,0 +1,1 @@
+current month (number) + year (number) how do i output the current year and month (in numbers) in blank?..getutcmonth() logs: getutcmonth is not defined..getutcmonth() logs: getmonth is not defined

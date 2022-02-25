@@ -1,0 +1,1 @@
+"how can i get domainusername from linux? i am trying to get domain/username from windows, where my tool is running under linux , and os.environ['userdomain'] it wont work, but how can i get the response of os.environ['userdomain']\username from windows client to linux server? ..&gt;&gt;&gt; import os.&gt;&gt;&gt; print(os.environ['userdomain'] + '\' + os.getlogin()).domainuser"

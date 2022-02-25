@@ -1,0 +1,1 @@
+"store inputs into list of string in blank is there any other optimized and simple way to store inputs into a list of string...input ..bcdef.abcdefg.bcde.bcdef...output ..['bcdef', 'abcdefg', 'bcde', 'bcdef']...below is the code i tried to code ..l = [].for i in range(4):.    l.append(input()).print(l)"

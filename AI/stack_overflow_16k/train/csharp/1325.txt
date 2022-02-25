@@ -1,0 +1,1 @@
+"prevent data from add to db after message box i want after message box show ..prevent data from insert to db ..int numberofrecords = convert.toint32(qotext.text);.if (numberofrecords == 9999).{.    messagebox.show(""try other value"", ""error"",.    messageboxbuttons.ok, messageboxicon.error);.}"

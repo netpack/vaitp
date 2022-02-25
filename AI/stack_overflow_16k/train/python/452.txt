@@ -1,0 +1,1 @@
+visualize the structure of a blank module is there tool out there which can be used to graphically represent the structure of a blank module? ..i'm thinking that a graph of sub-modules and classes connected by arrows representing imports.

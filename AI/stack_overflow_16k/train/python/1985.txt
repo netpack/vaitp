@@ -1,0 +1,1 @@
+"tabs n in list for blank i have simple script in blank, want return per line the values..tabs = # and n..script..output = ['192.168.0.1 #srvnetn192.168.0.254 #srvdata']..output =  output[0].split('#').output.split('n')...output..attributeerror: 'list' object has no attribute 'split'"

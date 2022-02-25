@@ -1,0 +1,1 @@
+using blank scripts with external modules on other computers? suppose i need to distribute a blank script to other computers but i'm using modules downloaded from remote sources that need to be installed locally. is there a standard way of doing that?

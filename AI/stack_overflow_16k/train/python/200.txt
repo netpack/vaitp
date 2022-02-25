@@ -1,0 +1,1 @@
+"blank printing problems print ""i will now count my slaves:""..print ""females"", 50 + 80  10.print ""males"", 10  2.print ""is it true that 6 &gt; 7?"".print ""what is 59 + 27?""...for some reason, it shows me:..    print ""females"", 50 + 80  10.                                ^.syntaxerror: unexpected character after line continuation character"

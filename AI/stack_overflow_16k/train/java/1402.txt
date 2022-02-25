@@ -1,0 +1,1 @@
+string equals to null even though it goes past the whileloop checking if its not equal to null no help recieved..i fixed it my self cant remove code. thanks everybody who actually helped not spam down votes because you didn't like the question..    }..    public static void main(string[] args) {.        new login().setvisible(true);.    }..}

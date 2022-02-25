@@ -1,0 +1,1 @@
+"how to declare public method and private method in blank i am wondering if i need public method, i need to use this..var testclass = function() {..    this.pub = function() {.              blahblah;.        };...if need private method(inner method), i need to use ..var testclass = function() {..    var pri = function() {.              blahblah;.        };...is this true?"

@@ -1,0 +1,1 @@
+"why is this a valid comparison here is some example code:..static datetime time;.if (time == null).{./* do something */.}...since datetime cannot be null, why does this code compile?..edit:.the issue is not just that this code will always return false,but why something like datetime which is never null is allowed in such a comparison."

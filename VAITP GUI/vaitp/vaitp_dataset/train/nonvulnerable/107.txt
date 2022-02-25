@@ -1,0 +1,12 @@
+"def _inject_net_into_fs(net, fs, execute=None):
+    """Inject /etc/network/interfaces into the filesystem rooted at fs.
+
+    net is the contents of /etc/network/interfaces.
+    """
+    netdir = _join_and_check_path_within_fs(fs, 'etc', 'network')
+    utils.execute('mkdir', '-p', netdir, run_as_root=True)
+    utils.execute('chown', 'root:root', netdir, run_as_root=True)
+    utils.execute('chmod', 755, netdir, run_as_root=True)
+
+    netfile = os.path.join('etc', 'network', 'interfaces')
+    _inject_file_into_fs(fs, netfile, net)"

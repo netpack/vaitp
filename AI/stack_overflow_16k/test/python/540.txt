@@ -1,0 +1,1 @@
+"calculating the mean and std on excel file using blank i am really really new on blank. .i have three col and about 7000~8000 rows on the excel file. how can i calculate the mean and std for each col after importing the data to blank...import xlrd.file_location = ""c:/users/roy/desktop/table.xlsx"".workbook = xlrd.open_workbook(file_location).sheet=workbook.sheet_by_index(0)"

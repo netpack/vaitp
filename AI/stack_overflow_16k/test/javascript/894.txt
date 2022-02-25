@@ -1,0 +1,1 @@
+"blank settimeout while disabling input i'm using the function settimeout(*function*, 500) to delay a function being called for 0.5 seconds, but during this time that it is done, i need to disable an input field as well. can i disable the input by using document.getelementbyid(""movechoice"").disabled = true; and how do i do it at the same time?"

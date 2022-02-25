@@ -1,0 +1,1 @@
+"getting the value of an int array at an index in blank i want to get the value of my integer array, at an index. the getvalue method refuses the int type...what am i doing wrong?..return locx.getvalue(ind);...ind is an integer, locx is declared like: public int[] locx;..i know i am doing something wrong. sorry for the noobiness of this question, i am kinda new to blank."

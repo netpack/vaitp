@@ -1,0 +1,1 @@
+"why calling 'super()' in child class constructor? why do i need to call super here?..class animal {.    public animal(string arg) {.        system.out.println(""constructing an animal: "" + arg);.    }.}..class dog extends animal {.    public dog() {.        super(""from dog constructor"");.        system.out.println(""constructing a dog."");.    }.}"

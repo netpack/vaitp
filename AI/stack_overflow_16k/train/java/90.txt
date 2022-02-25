@@ -1,0 +1,1 @@
+"byte array to char array conversion my byte array is look like.. byte[] x = { (byte) 0xff , (byte) 0x80  };...how can i convert it to char array {char[] y } where:-..y[0]='f';.y[1] ='f' and so on"

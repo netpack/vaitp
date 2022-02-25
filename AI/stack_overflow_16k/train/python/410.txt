@@ -1,0 +1,1 @@
+"remove repeated letters from the string would appreciate if anyone could provide a short method to remove the repeated letters...let's say i have a list of strings ['apple', 'banana'].  i want to remove the repeated letters in the list items and the output maintain original order as ['aple', 'ban']. these are for n items in the list."

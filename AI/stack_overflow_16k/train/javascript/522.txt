@@ -1,0 +1,1 @@
+"how to use regular expression in blank var pattern=/[a-za-z0-9]/;.if((fs.value||ls.value||ad1.value||ad2.value||pc.value||city.value||email.value)!=pattern).{alert(""fields not entered"");.return false;}.else.return true;...even after entering all the fields in the form, i get alert message ""field not entered.  here fs,ls,ad1,ad2,email,pc and city are form field values"

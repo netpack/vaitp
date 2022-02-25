@@ -1,0 +1,1 @@
+"xlworksheettoexport.cells[irowcnt, 1] = dt.rows[i].field(""empname""); the error is error  4   the type arguments for method 'system.data.datarowextensions.field(system.data.datarow, string)' cannot be inferred from the usage. try specifying the type arguments explicitly."

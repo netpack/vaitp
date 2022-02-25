@@ -1,0 +1,1 @@
+"def test_use_yaml_safe_load(mock_yaml):    """    Ensure we're using yaml.safe_load not yaml.load    """    from confire.config import Configuration    Configuration.CONF_PATHS = [TESTCONF]    Configuration.load()    mock_yaml.safe_load.assert_called_once()    mock_yaml.load.assert_not_called()"

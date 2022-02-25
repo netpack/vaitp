@@ -1,0 +1,1 @@
+"what does the caret symbol (^) do in blank? i thought that math.pow(2,2) was equal to 2^2 but it is not. so what does ^ (caret) mean in blank?..i was executing some tests in the console but didn't recognize the results:..2 ^ 2 = 0.2 ^ 3 = 1.1 ^ 2 = 3"

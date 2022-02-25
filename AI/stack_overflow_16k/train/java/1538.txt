@@ -1,0 +1,1 @@
+"how to pass two arrays into one varargs i want to pass two arrays of strings into one string varsargs...ie...public void dosomething(string... ){..}..public void test(){.string[] arrayone = ....string[] arraytwo = ....dosomething(arrayone, arraytwo); //doesn't work but just for an example.}...is the best way to just concat the two arrays or is there a better way of doing this?"

@@ -1,0 +1,1 @@
+how to go to catch block without throwing exception i have a blank class which is throwing ioexception.i have some code in catch block which i need to debug. i don't know in which case my blank class is throwing exception. so i need to go to catch block explicitly without throwing. can it be possible...please help me out.

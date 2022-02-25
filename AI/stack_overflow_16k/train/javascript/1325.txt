@@ -1,0 +1,1 @@
+"custom prototype function for string to interpolate strings like c# in blank custom prototype function for string interpolation.. var str = ""user"";..console.log(""hello {0}"".format(str ));"

@@ -1,0 +1,1 @@
+"    def __init__(self):        self.request = None        self.response = None        self.config = None        self.conn = None        self.event_json = None        self.event_tags = None"

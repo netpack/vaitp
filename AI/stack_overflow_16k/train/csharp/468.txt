@@ -1,0 +1,1 @@
+"blank array size not defined by integer variable namespace oo_assign_2_edepot_.{.    public partial class driver.    {.        int driver_size = 1;.        public string[] d_username = new string[driver_size] {""john""};     .        public string[] d_password = new string[driver_size] { ""pass1"" };.    }.}...driver.size is not recognized as the variable size in the arrays"

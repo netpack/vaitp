@@ -1,0 +1,104 @@
+"    def test_permissions(self):
+        # Create an image that belongs to TENANT1
+        path = self._url('/v2/images')
+        headers = self._headers({'Content-Type': 'application/json'})
+        data = json.dumps({'name': 'image-1'})
+        response = requests.post(path, headers=headers, data=data)
+        self.assertEqual(201, response.status_code)
+        image_id = json.loads(response.text)['id']
+
+        # Upload some image data
+        path = self._url('/v2/images/%s/file' % image_id)
+        headers = self._headers({'Content-Type': 'application/octet-stream'})
+        response = requests.put(path, headers=headers, data='ZZZZZ')
+        self.assertEqual(201, response.status_code)
+
+        # TENANT1 should see the image in their list
+        path = self._url('/v2/images')
+        response = requests.get(path, headers=self._headers())
+        self.assertEqual(200, response.status_code)
+        images = json.loads(response.text)['images']
+        self.assertEqual(image_id, images[0]['id'])
+
+        # TENANT1 should be able to access the image directly
+        path = self._url('/v2/images/%s' % image_id)
+        response = requests.get(path, headers=self._headers())
+        self.assertEqual(200, response.status_code)
+
+        # TENANT2 should not see the image in their list
+        path = self._url('/v2/images')
+        headers = self._headers({'X-Tenant-Id': TENANT2})
+        response = requests.get(path, headers=headers)
+        self.assertEqual(200, response.status_code)
+        images = json.loads(response.text)['images']
+        self.assertEqual(0, len(images))
+
+        # TENANT2 should not be able to access the image directly
+        path = self._url('/v2/images/%s' % image_id)
+        headers = self._headers({'X-Tenant-Id': TENANT2})
+        response = requests.get(path, headers=headers)
+        self.assertEqual(404, response.status_code)
+
+        # TENANT2 should not be able to modify the image, either
+        path = self._url('/v2/images/%s' % image_id)
+        headers = self._headers({
+            'Content-Type': 'application/openstack-images-v2.0-json-patch',
+            'X-Tenant-Id': TENANT2,
+        })
+        data = json.dumps([{'replace': '/name', 'value': 'image-2'}])
+        response = requests.patch(path, headers=headers, data=data)
+        self.assertEqual(404, response.status_code)
+
+        # TENANT2 should not be able to delete the image, either
+        path = self._url('/v2/images/%s' % image_id)
+        headers = self._headers({'X-Tenant-Id': TENANT2})
+        response = requests.delete(path, headers=headers)
+        self.assertEqual(404, response.status_code)
+
+        # Publicize the image as an admin of TENANT1
+        path = self._url('/v2/images/%s' % image_id)
+        headers = self._headers({
+            'Content-Type': 'application/openstack-images-v2.0-json-patch',
+            'X-Roles': 'admin',
+        })
+        data = json.dumps([{'replace': '/visibility', 'value': 'public'}])
+        response = requests.patch(path, headers=headers, data=data)
+        self.assertEqual(200, response.status_code)
+
+        # TENANT3 should now see the image in their list
+        path = self._url('/v2/images')
+        headers = self._headers({'X-Tenant-Id': TENANT3})
+        response = requests.get(path, headers=headers)
+        self.assertEqual(200, response.status_code)
+        images = json.loads(response.text)['images']
+        self.assertEqual(image_id, images[0]['id'])
+
+        # TENANT3 should also be able to access the image directly
+        path = self._url('/v2/images/%s' % image_id)
+        headers = self._headers({'X-Tenant-Id': TENANT3})
+        response = requests.get(path, headers=headers)
+        self.assertEqual(200, response.status_code)
+
+        # TENANT3 still should not be able to modify the image
+        path = self._url('/v2/images/%s' % image_id)
+        headers = self._headers({
+            'Content-Type': 'application/openstack-images-v2.0-json-patch',
+            'X-Tenant-Id': TENANT3,
+        })
+        data = json.dumps([{'replace': '/name', 'value': 'image-2'}])
+        response = requests.patch(path, headers=headers, data=data)
+        self.assertEqual(404, response.status_code)
+
+        # TENANT3 should not be able to delete the image, either
+        path = self._url('/v2/images/%s' % image_id)
+        headers = self._headers({'X-Tenant-Id': TENANT3})
+        response = requests.delete(path, headers=headers)
+        self.assertEqual(404, response.status_code)
+
+        # Image data should still be present after the failed delete
+        path = self._url('/v2/images/%s/file' % image_id)
+        response = requests.get(path, headers=self._headers())
+        self.assertEqual(200, response.status_code)
+        self.assertEqual(response.text, 'ZZZZZ')
+
+        self.stop_servers()"

@@ -1,0 +1,1 @@
+can i send only byte array with asynchronous socket class? i currently work on a server/client program based on asynchronous socket. as far as i see the send() method of the socket class mainly accept byte buffer. do i have to convert everything to byte array or is there any other method? ..what should i do to send a simple string for example?

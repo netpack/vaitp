@@ -1,0 +1,1 @@
+"how to convert number start with 0 to string equivalent of the value? i want to convert a number start with 0 to string equivalent of the value...if i run..var num = 12;.var int = num.tostring();.console.log(int);...it logs 12 as expected but if i apply the tostring() to a number start with 0 like,..var num = 012;.var int = num.tostring();.console.log(int);...it logs 10, why?"

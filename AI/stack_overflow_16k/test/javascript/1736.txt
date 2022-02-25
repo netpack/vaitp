@@ -1,0 +1,1 @@
+i have this code to modify but not understand the second statement in if block the second statement in the block if which is $next.addclass(type).offsetwidth is neither a call to a function neither an assignment. ..if (transition) .{ .$next.addclass(type);.$next[0].offsetwidth; .}.else .{  .$active.removeclass('active');.$next.addclass('active');.}...what's the logic here?

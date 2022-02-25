@@ -1,0 +1,1 @@
+'if false' statement in blank i saw some of blank code from my colleague...def sample_func():..   # dowork here.   dowork();.   # dowork failed.   if false: .      ......what does if false mean?

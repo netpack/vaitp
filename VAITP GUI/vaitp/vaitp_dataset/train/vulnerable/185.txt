@@ -1,0 +1,9 @@
+"    def test_reset_student_attempts_nonsense(self):
+        """ Test failure with both unique_student_identifier and all_students. """
+        url = reverse('reset_student_attempts', kwargs={'course_id': self.course.id.to_deprecated_string()})
+        response = self.client.get(url, {
+            'problem_to_reset': self.problem_urlname,
+            'unique_student_identifier': self.student.email,
+            'all_students': True,
+        })
+        self.assertEqual(response.status_code, 400)"

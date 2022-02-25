@@ -1,0 +1,1 @@
+wsgi blank template engine used without a framework trying to build a website using blank for the backend and i'm trying to learn without using a framework. i've been reading that i need a wsgi template engine that can be used without a framework. any recommendations?

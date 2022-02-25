@@ -1,0 +1,1 @@
+"blank, numbers in an array, even comes first write a blank program to rearrange all the numbers in an array, even comes before odd, only use o(1) space, and should keep relative order of even and odd numbers, for example:.input: [1, 2, 3, 4, 5].output: [2, 4, 1, 3, 5]"

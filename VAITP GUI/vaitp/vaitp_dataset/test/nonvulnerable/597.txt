@@ -1,0 +1,1 @@
+"    def write_realm_audit_log_entry(user_profile: Any,                                    event_time: Any, event_type: Any,                                    affected_user_type: str) -> None:"

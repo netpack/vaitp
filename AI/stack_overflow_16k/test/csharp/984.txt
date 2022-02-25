@@ -1,0 +1,1 @@
+"what is the @ syntax in blank .  possible duplicate:.  what&#39;s the use/meaning of the @ character in variable names in blank?  .....i have seen in several places including resharper converted code .....someclass @object = new someclass( ... );...i thought it is anonymous, but i think i am wrong  ..does it really mean something?"

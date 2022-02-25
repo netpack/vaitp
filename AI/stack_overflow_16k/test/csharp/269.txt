@@ -1,0 +1,1 @@
+"what's the meaning of ""@"" in blank new learner's quick question,.what's the meaning of ""@"" in blank codes?..examples:..clientdatasource.where = @""it.clientid==1"";.cont.notes = @"""";.response.redirect(@""~/default.aspx"");...thanks!"

@@ -1,0 +1,1 @@
+"string equals in android studio was just wondering why i get ...  cannot resolve symbol 'equals'...on the string.equals. im using andriod studio...public class transaction {..    string type;.    double amount;..    if(type.equals(""deposit"")){...    };...}"

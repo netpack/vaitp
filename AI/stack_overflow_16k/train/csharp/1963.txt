@@ -1,0 +1,1 @@
+datagridview to datatable without updating when i insert data from datagridview to datatable like this:..datatable dt = new datatable();.dt = (datatable)(dgv.datasource);...any changes in dgv automatically updates in dt. but i need to copy the first data from dgv without any updates in future. how can i achieve this?

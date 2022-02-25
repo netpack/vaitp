@@ -1,0 +1,1 @@
+"how to loop through this dictionary i have declared a dictionary like this:..dictionary&lt;string, keyvaluepair&lt;string, string&gt;&gt; dc = new dictionary&lt;string, keyvaluepair&lt;string, string&gt;&gt;();...now how can i loop through it? i wanted something like the following so i created that dictionary:..name1.oldvalue1.newvalue1..name2.oldvalue2.newvalue2....."

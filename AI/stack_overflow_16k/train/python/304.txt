@@ -1,0 +1,1 @@
+"how do i create a file inside a directory that i created? i want to create a directory and then create some files in that directory...i have already created a directory like so:..if not os.path.exists(""output""):.    os.mkdir(""output"")...how can i now access this directory and create some files using something like this open(""foo.txt"", ""w"")?"

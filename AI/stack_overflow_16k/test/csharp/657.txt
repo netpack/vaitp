@@ -1,0 +1,1 @@
+"how to retrieve the integer value of an enum? i have an enum..public enum color.{.    red = 0,.    blue = 1,.    yellow = 2.}...when i do this:..color color = color.blue;.console.writeline(color.value);...i want to see it's integer-value (1 in this case), but it outputs ""blue"" instead...how can i solve this?..i use .net 3.5."

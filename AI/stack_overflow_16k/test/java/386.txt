@@ -1,0 +1,1 @@
+"blank for statement i have this code:..stringbuilder[] remotefiles = {filesremote};..for (stringbuilder i : remotefiles) {.    system.out.println(""this is: "" + i);.}...it returns:..this is file1.file2.file3...instead of:..this is file1.this is file2.this is file3...how can i get it to print as above?"

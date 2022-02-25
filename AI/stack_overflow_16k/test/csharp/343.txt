@@ -1,0 +1,1 @@
+"why can't a blank structure return a reference to its member field? struct foo {.    int i;.    public ref int i =&gt; ref i;.}...this code raises compile error cs8170, but if foo is a class, it doesn't. why can a structure not return a member as a reference?"

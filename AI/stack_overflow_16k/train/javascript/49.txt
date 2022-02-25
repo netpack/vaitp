@@ -1,0 +1,1 @@
+make 'or' in 'equal' in js are it's possible to make 'equals' like this ..if(index==1|12|23|34|45|56){.    //do.}...or it's actually must use this: ..if(index==1|index==12|index==23|index==34|index==45|index==56){.    // do.}...but how if its many index there?..please tell me?

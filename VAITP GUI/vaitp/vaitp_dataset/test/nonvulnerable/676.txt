@@ -1,0 +1,1 @@
+"def parse_xml(source: Union[AnyStr, IO[Any]], recover: bool = False):    """Wrapper around lxml's parse to provide protection against XXE attacks."""    parser = _XMLParser(recover=recover, remove_pis=False)    return _parse(source, parser=parser)"

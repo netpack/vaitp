@@ -1,0 +1,1 @@
+left pad zeros and save the result as integer in blank. here is my code..integer.pasrseint(new decimalformat(0000).format(230));...this returns a string but i want to save it as an integer. ..thanks in advance.

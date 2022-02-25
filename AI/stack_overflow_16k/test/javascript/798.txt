@@ -1,0 +1,1 @@
+should display:none element still have length = 1? i'm just wondering if an element with display: none should have a length of 1 in blank. i though display: none was like removing an element from the document and the known universe...e.g...$('.element').hide();  // jquery sets to display: none;.console.log($('element').length); // returns 1

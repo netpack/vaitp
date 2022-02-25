@@ -1,0 +1,1 @@
+"get nearest point from another one in blank let's say i have a point, called i, which is ..{.  x: 10000,.  y: 10000.}...and i have some other points, in an array, something like:..[{.  x: 35,.  y: 10001.}, {.  x: 2478,.  y: 38.}, ...]...my question is, how to, in blank, get the nearest point from i?.thanks!"

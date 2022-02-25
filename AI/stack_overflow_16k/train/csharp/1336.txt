@@ -1,0 +1,1 @@
+"how to create pop up window with asp:menu and xmldatasource for certain menu item only? i'm trying to update current application menu..it's using asp:menu with xmldatasource...i tried to used menuitemclick event so that when users click on certain menu items, it would pop up in new window. the sad thing is the event only triggered when i click on the menu, not the menu items."

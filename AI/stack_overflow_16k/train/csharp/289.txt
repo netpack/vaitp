@@ -1,0 +1,1 @@
+"pause execution and run until form is clicked newbie here.  i have this code:..while (v &lt; 360).{.    v +=10;.    runit();.    // need to wait half a second here.}...how do i wait the 1/2 second?  also, if this isn't asking too much, i'd like this to run repeatedly until the user clicks on the form.  thanks in advance."

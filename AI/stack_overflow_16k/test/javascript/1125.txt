@@ -1,0 +1,1 @@
+"using . in a [] to enter in a new scope let me try to explain this, i have a string like this:..""b.c""...and an object like this:..a = {.    b:{.        c:2.    }.}...i would like to use that string to get the c property, but using this doesn't work:..a[""b.c""]...how can i use the ""b.c"" string to work just like a.b.c? (without using eval, perfomance is important in my case)"

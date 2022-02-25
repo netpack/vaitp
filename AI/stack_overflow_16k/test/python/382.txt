@@ -1,0 +1,1 @@
+"blank: how to concatenate variables and array example i have attributes as below:..a = [1,2,3].b = [3,2,1].r1 = 5.r2 = 6...how do i get:..foo = [1,2,3,3,2,1,5,6]"

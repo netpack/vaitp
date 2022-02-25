@@ -1,0 +1,1 @@
+"replace all "" and ' from a string i want to replace all the "" and ' from a string..eg strings ..""23423dfd.""'43535fdgd.""""'4353fg.""""'''3453ere...the result should be..23423dfd.43535fdgd.4353fg.3453ere...i tried this mystring.replace(""'"",string.empty).replace('""',string.empty); but its not giving me the correct result."

@@ -1,0 +1,13 @@
+"    def test_quotas_update_as_admin(self):
+        body = {'quota_class_set': {'instances': 50, 'cores': 50,
+                                    'ram': 51200, 'volumes': 10,
+                                    'gigabytes': 1000, 'floating_ips': 10,
+                                    'metadata_items': 128, 'injected_files': 5,
+                                    'injected_file_content_bytes': 10240}}
+
+        req = fakes.HTTPRequest.blank(
+            '/v2/fake4/os-quota-class-sets/test_class',
+            use_admin_context=True)
+        res_dict = self.controller.update(req, 'test_class', body)
+
+        self.assertEqual(res_dict, body)"

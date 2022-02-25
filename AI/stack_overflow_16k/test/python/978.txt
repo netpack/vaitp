@@ -1,0 +1,1 @@
+can anything non-obvious go wrong with this blank trick? i frequently want a dictionary mapping keys to consecutive ids so i do the following:..ids = defaultdict().ids.default_factory = ids.__len__...is there anything strange that could go wrong due to the use of the __len__ method here?

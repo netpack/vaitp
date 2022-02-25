@@ -1,0 +1,1 @@
+"for set type, why would we need both discard() and remove() function? set.remove(x) : delete x from set, if x doesn't exist, keyerror raised up...set.discard(x) :  delete x if x in set...why we need these two functions at the same time?..if they are necessary, why list function does only have remove()?"

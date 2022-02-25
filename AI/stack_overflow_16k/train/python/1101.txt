@@ -1,0 +1,1 @@
+"how to print to screen after redirect print to file, in blank? i have a code use print() to write in file:..with open('test.xml', ""w+"") as outfile:.    sys.stdout = outfile...now i want write to console after this code, how can i do this?"

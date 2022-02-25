@@ -1,0 +1,1 @@
+why there is no main method in applet? where from the execution starts in an applet?.is it true that since an applet program is not a standalone application so it does not have a main method?

@@ -1,0 +1,1 @@
+"calling a function which is inside of a function my c# oriented braincells keep telling me that this should work:..var myapp = function() {.currenttime = function() {.    return new date();.  };.};..myapp.currenttime();...clearly it doesn't.  but if a blank function is an object, shouldn't i be able to call a function that is on the object? what am i missing?"

@@ -1,0 +1,1 @@
+parsefloat rounding issue i'm having a problem with the parsefloat function..total is 0 ..this.value is 49.. total = parsefloat(total) + parsefloat((this).value);...after this line of code is ran total = 50.....i'm not sure why i'm sure i've used this function before without any problems.

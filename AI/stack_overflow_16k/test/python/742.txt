@@ -1,0 +1,1 @@
+"does blank have a comma operator like c in c (and c family of languages) an expression (4+7, 5+2) returns 7. but the same expression in blank would result in a tuple (11, 7)..so does blank have a comma operator like c ?"

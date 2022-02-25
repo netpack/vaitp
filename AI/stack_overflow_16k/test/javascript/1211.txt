@@ -1,0 +1,1 @@
+"blank - replace to english number i want to replace bengali numbers to english numbers. such as .. var bengali = [০,১,২,৩,৪,৫,৬,৭,৮,৯];. var eng = [0,1,2,3,4,5,6,7,8,9];...bengali.replace(eng);..so that anyone write any bengali number it convert to english number. how can i achieve this?"

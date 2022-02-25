@@ -1,0 +1,1 @@
+"how to get length of string in blank without using native length method i am working on a practice problem:...  return the length of a string without using blank's native string.length method....the only ways i could think of would be substring or slice, but i'm stumped."

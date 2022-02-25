@@ -1,0 +1,1 @@
+read file allocation table without using system.io i have a problem which is that i want to extract information about fat(file allocation table) in blank but the restriction is i cannot use system.io.so how i get drive types?cluster information e.t.c

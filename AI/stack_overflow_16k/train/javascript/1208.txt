@@ -1,0 +1,1 @@
+"blank - for variable ""i"" is not defined following my code:..var a;.var b = new array('t1');.for(var i =0; i &lt; b.length; i++){.    document.getelementbyid('test').innerhtml='&lt;div onclick=""a = i;""&gt;a&lt;/div&gt;';.}...the error is: ""i"" is not defined. how to solve it?"

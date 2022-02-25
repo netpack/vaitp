@@ -1,0 +1,1 @@
+"how to convert numbers to string with decimal and commas i'd like to convert a number like 1323.67 to 1.323,67, how can i do that?..i've tried this ..f'{1325.76:.,2f}'..but it prints out 1,325.76..i excpected f'{1325.76:.,2f}' to be 1.325,75 but it's 1,325.76"

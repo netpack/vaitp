@@ -1,0 +1,1 @@
+"get key from value in key-value pair i have something like this:..var input = [];.var result = {};.input.push({.                key:  1,.                value: value.                });.                result[input[0].key] = input[0].value;...if i want to get the value from key i call result[key], but what if i want to get the key from a certain value? any ideas?"

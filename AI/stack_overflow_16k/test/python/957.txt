@@ -1,0 +1,1 @@
+"why does blank floor division operator behaves like this? why does blank floor division operator behaves like this?.i came across this code snippet and result was quite surprising...a = 1 // 10 .b = -1 // 10.print a,b.a= 0.b=-1...printing output obtained results are a=0 and b= -1...why does a=0 and b= -1?..// does floor division, so it's always rounding down?"

@@ -1,0 +1,1 @@
+"access file from another project under same solution i have a blank solution containing several mvc asp.net projects. under project1 there is a directory for storing images which can be edited, deleted and added by user from the front end.i need to access those images from the project2. but, i don't want to hard code the file path. how can i do that?"

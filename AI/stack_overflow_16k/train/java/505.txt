@@ -1,0 +1,1 @@
+"blank string.subsequence() method say, string str = ""hello world"" ;.to, get hello, we can use str.subsequence(0, 5). .if it's a 0-based indexed string, then why we don't write str.subsequence(0.4) as 'o' has the index 4?"

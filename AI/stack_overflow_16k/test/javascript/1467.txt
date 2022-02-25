@@ -1,0 +1,1 @@
+"get dimensions from text in blank i have a string that looks similar to this:..tumblr_mgn6mfe9ad1rbaz5bo1_500.jpg (jpeg image, 500 × 705 pixels)...i want to strip the text until i get the value 500 &amp; 705. i want them as two separate values. how can i do this in blank?"

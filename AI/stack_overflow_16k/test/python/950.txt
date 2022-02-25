@@ -1,0 +1,1 @@
+"check if two variables are equal from three choices i have three integers, and i need to check if two of them are equal. the code i have is quite ugly:..a = 5.b = 7.c = 5.if a == b or b == c or a == b:.    pass...i wonder if there is a better alternative to this kind of comparation."

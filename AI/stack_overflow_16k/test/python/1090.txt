@@ -1,0 +1,1 @@
+"parameter argument not working right (beginner) newb question, when i write:..def right_indent(s):.    print ' '*70+'s'       #puts argument after 70 spaces.right_indent('michael').                                                                     s...why does it return s as a result? shouldn't it be michael?.this seems really simple but i have no idea what i'm doing wrong"

@@ -1,0 +1,1 @@
+"separating list by decimal in blank here is my current list:..x = [1.0, 0.0, 3.5, 1.2, 5.4]...and here is what i want:..newx = [1, 0, 0, 0, 3, 5, 1, 2, 5, 4]...i just need to split the list at the decimal point and do not want any extra zeros added to the new list. seems like there should be a simple solution i just don't know about since i am so new."

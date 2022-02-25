@@ -1,0 +1,1 @@
+how to check if a string is an anchor tag? whats the best way to check if a string is an anchor tag in js?..some examples:..&lt;a href='./page'&gt;link&lt;/a&gt; //returns true..&lt;a href='./page'&gt; //returns false...is there a quick and easy way?.in the most simplest form. as long as there is an opening &lt;a&gt; and a closing &lt;/a&gt;

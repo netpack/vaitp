@@ -1,0 +1,1 @@
+"what is difference between < length() and <=length()-1? 'string s="" "";'//blank developer . for(int i=0;i&lt;=arg0.length()-1;i++)//it's subtracts ...i.e length()=10-1=9.?? otherwise it's index starts from 0?.  hope u guys"

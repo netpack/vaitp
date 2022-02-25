@@ -1,0 +1,1 @@
+"how to convert a string to int array i have a spring rest controller that returns an int array. but it is received as a string on the front-end. ..how can i convert this string [1,1] to int array in blank...edit: turns out, it was json."

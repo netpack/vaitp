@@ -1,0 +1,1 @@
+blank local and global variables def spam():.    print(eggs).    eggs = 13..eggs = 12.spam()...this gives the error:..unboundlocalerror: local variable 'eggs' referenced before assignment..but this does not:..def spam():.    print(eggs)...eggs = 12.spam()...why?

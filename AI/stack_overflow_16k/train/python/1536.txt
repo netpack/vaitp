@@ -1,0 +1,1 @@
+how to read s16le file in blank i have a file which apparently is encoded with s16le bit data?..how do i read it in blank?.i see some reference here http://zulko.github.io/blog/2013/10/04/read-and-write-audio-files-in-blank-using-ffmpeg/.but not able to translate it to my usecase?.thanks

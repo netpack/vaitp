@@ -1,0 +1,1 @@
+blank get local timezone offset in hours i need to get the local timezone offset in hours. ..eg: 0530 is my utc offset. how can i print this in blank..&gt;&gt;&gt;print (datetime.datetime.now()) .&gt;&gt;&gt;2017-04-20 10:33:49.272839...this is in my local time zone. which is +0530 utc. so i need to print (or get) +0530

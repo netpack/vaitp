@@ -1,0 +1,1 @@
+"blank tag having <!-- --> i've been seen some blank coding enclose with &lt;!-- --&gt;. is there any significant having it that way?..code:..&lt;script type=""text/blank"" language=""blank""&gt;.&lt;!--.      ...blank code here.--&gt;.&lt;/script&gt;...compared to this:..&lt;script type=""text/blank"" language=""blank""&gt;..      ...blank code here..&lt;/script&gt;"

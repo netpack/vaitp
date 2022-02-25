@@ -1,0 +1,3 @@
+"    def test_yaml_load_vulnerability(self):
+        with pytest.raises(ConstructorError):
+            util.load_yaml('!!python/object/apply:os.system ["calc.exe"]')"

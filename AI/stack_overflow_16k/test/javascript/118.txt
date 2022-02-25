@@ -1,0 +1,1 @@
+"what does x(); refer to? var y = new w();.var x = y.z;..y.z= function() {.      doonething();.      x();.   }...where w does not contain a z object but contains other objects (e.g, a, b, c)..what is x(); possibly referring too? (again, this is blank).is the function calling itself?"

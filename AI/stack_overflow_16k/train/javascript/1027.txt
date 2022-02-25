@@ -1,0 +1,1 @@
+delete number after slash in blank hey lets say i have url like this:..http://google.com/1/2...how do i delete last number(after last slash character)? all numbers can vary in length.

@@ -1,0 +1,1 @@
+replace fixed number of symbols in string i have this number: 4200000000000000.i would like to leave only the first 4 digits and last 3 digits:..42000......000...everything else should be replaced by dots. how i can implement this with some smart algorithm?

@@ -1,0 +1,1 @@
+"how to loop inside a dictionary which has values as arrays i want to loop inside a dictionary that has arrays as values and get each element of the array. how do i do that? i tried this but it didn't work:..array = {'secretary' : [0,1,2,3,4] , 'admin' : [0,2,3,4,1]}..for key,value in array.items():.    for v in value:.        print(v[count]).        count = count + 1"

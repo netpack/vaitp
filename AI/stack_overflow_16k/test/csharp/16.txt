@@ -1,0 +1,1 @@
+modify a .cs file in pre-compile event i try to modify a .cs class with an external program in the pre-compile-event. ..unfortunately the changes in the file are not included in the current compile. what can i do to get the changes from the external program into the compile?..thanks for your help

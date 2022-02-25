@@ -1,0 +1,1 @@
+"how can i have multiple forms start at once in blank .net? in blank, i'm trying to get two forms (but probably three eventually) to start at the same time... i've tried adding a new ""application.run"" to my program.cs file, but it only starts the second form after the first one closes...so how could i create something like that? similar to a program like lazarus."

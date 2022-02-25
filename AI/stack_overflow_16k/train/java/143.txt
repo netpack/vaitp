@@ -1,0 +1,1 @@
+blank.lang.stackoverflowerror at line a a=new b() at line a a=new b() i am getting error ..abstract class a{..}.class b extends a{.    a a=new b();.}.public class test {.public static void main(string[] args) {.    b ab=new b();.    system.out.println(ab.a);.}.}...i don't know why am i getting that error

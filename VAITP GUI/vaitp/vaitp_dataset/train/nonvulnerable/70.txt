@@ -1,0 +1,12 @@
+"    def test_security_group_ingress_quota_limit(self):
+        self.flags(quota_security_group_rules=20)
+        kwargs = {'project_id': self.context.project_id, 'name': 'test'}
+        sec_group = db.security_group_create(self.context, kwargs)
+        authz = self.cloud.authorize_security_group_ingress
+        for i in range(100, 120):
+            kwargs = {'to_port': i, 'from_port': i, 'ip_protocol': 'tcp'}
+            authz(self.context, group_id=sec_group['id'], **kwargs)
+
+        kwargs = {'to_port': 121, 'from_port': 121, 'ip_protocol': 'tcp'}
+        self.assertRaises(exception.EC2APIError, authz, self.context,
+                              group_id=sec_group['id'], **kwargs)"

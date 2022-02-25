@@ -1,0 +1,1 @@
+"can't list files in documents with blank (mac) hey i'm trying to list all the files in documents (on a mac). in blank i am using this code:..import os.for file in os.listdir(""/documents/""):.    print(file)...i keep getting the error no such file or directory. what am i doing wrong here?"

@@ -1,0 +1,1 @@
+"how to cast a string to my own class? i want to know how to cast a string into my own class the way org.json.jsonobject does...you can cast the string: {""key"":""value""} as a jsonobject even though jsonobject inherits only from object...how do i get a string to cast as a myownclassobject while only inheriting from object?"

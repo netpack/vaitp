@@ -1,0 +1,1 @@
+"decimal in .net i have a decimal in .net and i need to store it to a column in a typed dataset that is a string. i need the decimal to be stored to two decimal places. even though i use math.round(value,2) and i do a tostring(), it doesnt work. ..any ideas and suggestions are appreciated!"

@@ -1,0 +1,8 @@
+"    def __init__(
+        self,
+        reactor: IReactorCore,
+        tls_client_options_factory: Optional[FederationPolicyForHTTPS],
+        user_agent: bytes,
+        ip_blacklist: IPSet,
+        _srv_resolver: Optional[SrvResolver] = None,
+        _well_known_resolver: Optional[WellKnownResolver] = None,"

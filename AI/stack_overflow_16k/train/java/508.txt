@@ -1,0 +1,1 @@
+return class from enum variable     public object selectclass(enumvar var){.    switch(var){.    case something:.         return new oneclass();.    case somethingelse:.         return new anotherclass();..    return null;.    }...so then i would call something like..selectclass(something).somefunction();...is it possible something like this?

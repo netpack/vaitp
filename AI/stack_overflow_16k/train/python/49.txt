@@ -1,0 +1,1 @@
+"how to write a function counting number of letter in list? how to write a function counting number of letter in list?.for example:..    letter_list=['a','b','a','c','b','a']...    letter_index={'a':0,'b':1,'c':2}...i want to get a result of:..    ([3,2,1])"

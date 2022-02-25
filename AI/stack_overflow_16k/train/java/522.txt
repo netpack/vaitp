@@ -1,0 +1,1 @@
+"how could i cut string strings by words according to a length? how can i cut a string string by words according to a length..string text = ""hello world welcome"";...the maximum size of a row must be 15 characters, if you used the substring method i would stay like this..hello wordl wel.come...and it should not be like that, it should be like that..hello wordl.welcome"

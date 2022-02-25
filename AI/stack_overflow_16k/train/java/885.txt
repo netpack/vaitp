@@ -1,0 +1,1 @@
+"a timer in blank with accuracy of 0.1 millisecond in 23 milliseconds intervals i want to execute a function every 23 +-0.1 milliseconds. .can this be done in blank?.if yes how?.thanks in advance!..let's say i want to have httpget function with sotimeout 7 ms, can i repeat that in 23 +-1 ms with system.nanotime()?"

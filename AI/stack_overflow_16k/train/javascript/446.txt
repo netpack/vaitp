@@ -1,0 +1,1 @@
+"x = document.getelementbyid(""numb"").value; x = document.getelementbyid(""numb"").value;...i don't understand what "".value"" means?.i have already tried to find solution from google and past questions of blank..so please tell explanation for better understanding."

@@ -1,0 +1,1 @@
+"converting a simple list to a dictionary (in blank) i'm learning blank. i have a list of simple entries and i want to convert it in a dictionary where the first element of list is the key of the second element, the third is the key of the fourth, and so on. how can i do it?..list = ['first_key', 'first_value', 'second_key', 'second_value']...thanks in advance!"

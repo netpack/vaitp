@@ -1,0 +1,1 @@
+"deserializing the serialized object if base class doesn't implement serializable interface but derived class implements serializable interface, will i be able to deserialiaze the serialized object? because when i tried to do it, i got classnotfoundexception."

@@ -1,0 +1,1 @@
+"crawl images, whole web pages and cache them i am starting a project and wonder the relationship between the characters in images and the whole web page where the images reside...i want to crawl some images and their web pages. i need to save the crawl result in local disk for further analysis. i wonder if there is any open source for this issue?"

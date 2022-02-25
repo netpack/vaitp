@@ -1,0 +1,1 @@
+"blank - 'the given path's format is not supported.' private void savestudent&lt;t&gt;(string filepath, t objecttowrite) .{.  stream = file.openwrite(filepath); **//error is here**.  var binarydata = new system.runtime.serialization.formatters.binary.binaryformatter();.  binarydata.serialize(stream, objecttowrite);.  stream.close();.}"

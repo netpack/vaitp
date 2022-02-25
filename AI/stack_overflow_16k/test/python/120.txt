@@ -1,0 +1,1 @@
+convert modis level 2 to geotiff i have a file of modis and virs. both of them are level 2 products and i want to convert them in geotiff in blank. ..if it was a normal raster i would type  src_ds.getgeotransform() to get the relevant information. is there any similar command to use for these files?

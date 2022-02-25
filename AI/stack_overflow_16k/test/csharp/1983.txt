@@ -1,0 +1,1 @@
+"system.threading.timer expiring hundreds of milliseconds late i'm using a system.threading.timer which is configured to expire in 100ms. typically it will call the callback method within 10ms of the expected time, however, the callback is frequently called up to 500ms late. by frequent, i mean around 25% of the time...can anybody explain this?"

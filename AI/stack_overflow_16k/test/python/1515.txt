@@ -1,0 +1,1 @@
+"how to pipe console print of another script to file from within my blank script? i have a script (let's call it test.py) that writes to the console while running. in a command line i could use ""blank test.py >> a.txt"" to have it write to a file...how can i achieve the same from within another (foo.py) script, where i'm using os.system(""test.py"") to call the first script?"

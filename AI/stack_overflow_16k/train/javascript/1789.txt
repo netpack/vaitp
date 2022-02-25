@@ -1,0 +1,1 @@
+"blank get object property value how do i get the property value of name of this object's 2nd child?..var obj = {.    'one_child': {.        name: 'a',.        date: '10'.    },.    'two_child': {.        name: 'b',.        date: '20'.    }.}...i've tried object.keys(obj)[1].name, but doesnt work."

@@ -1,0 +1,1 @@
+"strange use of greater than operator in blank can anyone shed any light on this short blank line of code? not sure what it is doing, as the greater than symbol inside it seems counter-intuitive:..direction = currentimage &gt; imagetogo ? 1 : -1;"

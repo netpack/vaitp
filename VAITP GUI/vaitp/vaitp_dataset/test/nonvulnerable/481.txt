@@ -1,0 +1,1 @@
+"    async def customize_global(        self, ctx: commands.Context, command: str.lower, *, response: str = None"

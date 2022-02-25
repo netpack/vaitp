@@ -1,0 +1,1 @@
+"when i call ""new object()"" without storing the return, what happens to the returned object? let's say we have some code that looks like the following (which i am aware is bad practice):..try {..new myobject();..} catch {..//stuff..}...what happens to the returned object? is it still stored on the heap? should this throw a compile time error?"

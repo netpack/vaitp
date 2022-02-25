@@ -1,0 +1,1 @@
+"blank passing values from command line i want to pass a value into my blank script, as shown in the below image....where, xyz would be my blank file which requires the abc value...how do i do this and access the abc value in xyz.py?"

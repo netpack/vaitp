@@ -1,0 +1,1 @@
+"http error code 500 i am trying to run a blank client application which in turn calls a servlet, and both of them are placed on the same machine. while running the client code i am getting: ..error while making connection...and the server returned http response code is 500...see url: https://psng11d19087.ksfg.ds-group.com:443..any tips on how i can start debugging this?"

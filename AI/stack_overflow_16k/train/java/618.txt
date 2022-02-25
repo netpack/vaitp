@@ -1,0 +1,1 @@
+"question about switch i'm a blank beginner, so what's wrong with this code:..switch(keycode) {.    case keyboard.key_up || keyboard.key_down: .}...i gives me the following error message:..bad operand types for binary operator '||'.  first type:  int.  second type: int"

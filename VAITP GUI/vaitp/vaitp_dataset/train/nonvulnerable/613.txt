@@ -1,0 +1,52 @@
+"    def test_get_well_known_unsigned_cert(self):
+        """Test the behaviour when the .well-known server presents a cert
+        not signed by a CA
+        """
+
+        # we use the same test server as the other tests, but use an agent with
+        # the config left to the default, which will not trust it (since the
+        # presented cert is signed by a test CA)
+
+        self.mock_resolver.resolve_service.side_effect = generate_resolve_service([])
+        self.reactor.lookups["testserv"] = "1.2.3.4"
+
+        config = default_config("test", parse=True)
+
+        # Build a new agent and WellKnownResolver with a different tls factory
+        tls_factory = FederationPolicyForHTTPS(config)
+        agent = MatrixFederationAgent(
+            reactor=self.reactor,
+            tls_client_options_factory=tls_factory,
+            user_agent=b"test-agent",  # This is unused since _well_known_resolver is passed below.
+            ip_blacklist=IPSet(),
+            _srv_resolver=self.mock_resolver,
+            _well_known_resolver=WellKnownResolver(
+                self.reactor,
+                Agent(self.reactor, contextFactory=tls_factory),
+                b"test-agent",
+                well_known_cache=self.well_known_cache,
+                had_well_known_cache=self.had_well_known_cache,
+            ),
+        )
+
+        test_d = agent.request(b"GET", b"matrix://testserv/foo/bar")
+
+        # Nothing happened yet
+        self.assertNoResult(test_d)
+
+        # there should be an attempt to connect on port 443 for the .well-known
+        clients = self.reactor.tcpClients
+        self.assertEqual(len(clients), 1)
+        (host, port, client_factory, _timeout, _bindAddress) = clients[0]
+        self.assertEqual(host, "1.2.3.4")
+        self.assertEqual(port, 443)
+
+        http_proto = self._make_connection(client_factory, expected_sni=b"testserv")
+
+        # there should be no requests
+        self.assertEqual(len(http_proto.requests), 0)
+
+        # and there should be a SRV lookup instead
+        self.mock_resolver.resolve_service.assert_called_once_with(
+            b"_matrix._tcp.testserv"
+        )"

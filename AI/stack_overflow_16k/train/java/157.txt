@@ -1,0 +1,1 @@
+"random number generator with in a range in exponential distribution i want to implement a scenario where numbers will be generated between a given range using a exponential distribution. i have come across ""org.apache.commons.math3.distribution"" in blank. but how to use it to generate random numbers in a given range in blank? is there any other way out?"

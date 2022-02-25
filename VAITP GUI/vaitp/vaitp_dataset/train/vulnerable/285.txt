@@ -1,0 +1,12 @@
+"def sanitize_path(path):
+    """Make absolute (with leading slash) to prevent access to other data.
+       Preserves an potential trailing slash."""
+    trailing_slash = "/" if path.endswith("/") else ""
+    path = posixpath.normpath(path)
+    new_path = "/"
+    for part in path.split("/"):
+        if not part or part in (".", ".."):
+            continue
+        new_path = posixpath.join(new_path, part)
+    trailing_slash = "" if new_path.endswith("/") else trailing_slash
+    return new_path + trailing_slash"

@@ -1,0 +1,10 @@
+"def allowed_security_groups(context, requested_security_groups):
+    """Check quota and return min(requested, allowed) security groups."""
+    project_id = context.project_id
+    context = context.elevated()
+    used_sec_groups = db.security_group_count_by_project(context, project_id)
+    quota = get_project_quotas(context, project_id)
+    allowed_sec_groups = _get_request_allotment(requested_security_groups,
+                                                  used_sec_groups,
+                                                  quota['security_groups'])
+    return min(requested_security_groups, allowed_sec_groups)"

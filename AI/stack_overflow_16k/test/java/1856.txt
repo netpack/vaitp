@@ -1,0 +1,1 @@
+"how to set priorities for multiple threads in blank how does one set different priorities for different threads on blank?.let us assume i have three threads a,b,c..and i want a to be of high priority...how do i set the priority value in each case? can i get a sample code for that?"

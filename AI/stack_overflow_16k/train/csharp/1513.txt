@@ -1,0 +1,1 @@
+datetime variable set to empty i would like to set null to datetime variable:..datetime saledate = null;...got error:..cannot convert null to 'system.data.time' because it is a non-nullable value type....why i can't set to null?.what is best way to tell system datetime variable is not set to any value?

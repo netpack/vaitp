@@ -1,0 +1,1 @@
+"how to impletement 4 decimal point globally in blank we can use tostring(""f4"")) to get four decimal point in decimal datatype...decimal test= 1234.123456789;.console.writeline(test.tostring(""f4""));...is there a way just to specify precision of decimal point globally?"

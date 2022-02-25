@@ -1,0 +1,1 @@
+find data stored after certain string - blank im trying to find a way to get the data stored at the end of a certain string in a .txt file using blank. e.g:..bob: 22.jeff: 35...how could i tell blank to ask for bobs age. not the entire string...thanks.torin

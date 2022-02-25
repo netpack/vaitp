@@ -1,0 +1,1 @@
+"access controls created programmatically on form1 from form2 in form1, i am creating some controls programmatically like below:.. xtratabpage xtp = new xtratabpage();.        xtp.name = ""abc"";.        xtp.text = ""abc"";.        xtratabcontrol1.tabpages.add(xtp);...in form2, i would like to access xtp and change the text property. how do i do this?"

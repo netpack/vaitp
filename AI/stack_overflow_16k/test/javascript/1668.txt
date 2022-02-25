@@ -1,0 +1,1 @@
+"i have seen this but not sure what it means i have been looking into some blank code and noticed this not sure what it does and why you would use it..let reset = function(a, b){.    b || (b = something, b.somethingelse &amp;&amp; (b.other = b.somethingelse)) //.....    //some other code underneath.}...if could help me understand that, that would be great"

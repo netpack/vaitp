@@ -1,0 +1,1 @@
+"how to parse childs of an html element? i have this in my html:..&lt;table id=""my_table""&gt;.    &lt;tbody&gt;.        &lt;tr&gt;.            &lt;td&gt;my content&lt;/td&gt;.        &lt;/tr&gt;.        ....    &lt;/tbody&gt;.&lt;/table&gt;...is there any simple way to parse the table tree and get to the &lt;td&gt; element (node)?"

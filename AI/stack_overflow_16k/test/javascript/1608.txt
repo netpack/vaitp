@@ -1,0 +1,1 @@
+"settimeout arrgument passing in blank i want to use the settimeout() function like this..&lt;script&gt;    .var id=12;..settimeout(""showgrid('i want to pass variable id here')"",5000);..&lt;/script&gt;"

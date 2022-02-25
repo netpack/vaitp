@@ -1,0 +1,1 @@
+blank: how to raise an exception when keyword does not match up? when comparing strings i want to raise an exception when they do not equal:..x = 'obama'.if x == 'obama' or 'bush' or 'kennedy' :.    pass.else:.    raise exception

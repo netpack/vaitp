@@ -1,0 +1,1 @@
+"adding numbers in blank for total i have a program where i am calculating the total of a meal including the tax and tip. .my tax and tip variables are working but my total is not doing the right thing. ..i have this so far:..string total = mealcost + tax + tip;.console.write (""total: "" + total);...what am i doing wrong?"

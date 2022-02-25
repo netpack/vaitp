@@ -1,0 +1,1 @@
+"return value for settimeout function inside a for loop hi all when i am executing this piece of code i am getting 40 in my console log can some one plese explain me why..for (var i = 0; i &lt; 10; i++) {.    settimeout(function () {.        console.log(i);.    }, 300000).};"

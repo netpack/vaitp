@@ -1,0 +1,1 @@
+"is it possible to make multi-parameter properties? is there a way to do something like this:..class blabla.{.   string[] a;.   string ciao(int row, string text).   {.       set { a[row] = text;}.       get { return a[row;}.   }.}...(yeah i know i can just make my own method eventually)"

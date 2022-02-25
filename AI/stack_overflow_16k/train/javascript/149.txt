@@ -1,0 +1,1 @@
+"dot notation on blank variables datenow = new date().dateget = datenow.getday().document.write(dateget.todatestring())...why is this document.write(date11.todatestring()) not allowed in blank...date11 is a variable. it gives me an error of ""todatestring() is not a function"""

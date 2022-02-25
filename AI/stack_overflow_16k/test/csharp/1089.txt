@@ -1,0 +1,1 @@
+"copying to an empty folder? when i use the command :  ..file.copy(source path , destination path)...it's perform the copy just if in the destination path .there is a file in the same name as the file i want to copy from the source path. .actualy- it's replace it..how can i perform copying that will create the file by itself?- i want to copy file to an empty folder!"

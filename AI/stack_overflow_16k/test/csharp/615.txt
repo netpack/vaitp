@@ -1,0 +1,1 @@
+"how to declare a different variable for every value in a collection in blank? i want to loop through a list and declare integer variables for every value in list...example :..list&lt;string&gt; variablenames= new list&lt;string&gt;().{.    ""length"",.    ""breadth"",.    ""height"".};...output :..int length;.int breadth;.int height;...is this possible ?"

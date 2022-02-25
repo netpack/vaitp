@@ -1,0 +1,1 @@
+"find dll name by having name of the namespace in the code there is a line like this:..company.security.logs.logevent mylog = null;...now in another project i want to do the same but i don't know which ""reference"" should i add to my project? so how do i know in which of the references in this project we have this security class?"

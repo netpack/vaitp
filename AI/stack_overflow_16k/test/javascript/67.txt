@@ -1,0 +1,1 @@
+"is this array count on chrome debugger faulty? ..here's a screenshot of chrome debugger tool, where my object has key 3707 and the value is an array of 3 items... however, it was showing 3708 items in the array"

@@ -1,0 +1,5 @@
+"    def test_vardecl(self):
+        tree = self.parse(vardecl)
+        self.assertEqual(tree.body[0].type_comment, "int")
+        tree = self.classic_parse(vardecl)
+        self.assertEqual(tree.body[0].type_comment, None)"

@@ -1,0 +1,1 @@
+"how to add decimal point to decimal number in blank i am trying to add 0.10 to 23.50 but i get 23.50.10 instead of 23.60..my code..console.log((parsefloat(23.50) + parsefloat((math.random() * 0.10) + 0.01).tofixed(2)));...this piece of code generates decimal point like: 0.04, 0.29, etc.....parsefloat((math.random() * 0.90) + 0.01).tofixed(2)"

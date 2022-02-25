@@ -1,0 +1,1 @@
+"how to read a csv file from sftp and use csvhelper to parse the content without saving csv locally how to read a csv file from sftp and use csvhelper to parse the content without saving csv locally?..is this possible, or do we have to save it locally, parse and delete the file? ..i am using ssh.net and csvhelper."

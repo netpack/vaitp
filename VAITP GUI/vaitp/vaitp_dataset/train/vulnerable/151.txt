@@ -1,0 +1,25 @@
+"def install_agent(agent_key):
+    '''
+    Function downloads Server Density installation agent, and installs sd-agent
+    with agent_key.
+
+    CLI Example:
+
+    .. code-block:: bash
+
+        salt '*' serverdensity_device.install_agent c2bbdd6689ff46282bdaa07555641498
+    '''
+    work_dir = '/tmp/'
+    account_url = get_sd_auth('account_url')
+
+    __salt__['cmd.run'](
+        cmd='curl https://www.serverdensity.com/downloads/agent-install.sh -o install.sh',
+        cwd=work_dir
+    )
+    __salt__['cmd.run'](cmd='chmod +x install.sh', cwd=work_dir)
+
+    return __salt__['cmd.run'](
+        cmd='./install.sh -a {account_url} -k {agent_key}'.format(
+            account_url=account_url, agent_key=agent_key),
+        cwd=work_dir
+    )"

@@ -1,0 +1,1 @@
+"blank oops clarification please why line ""b[0]= new child2();"" fails at runtime and not at compile time. please don't check the syntax, i just did it here..class base.{}..class child1 : base.{}..class child2 : base.{}..class test.{.   void main().   {.     base [] b= new child1[10];.     b[0]= new child2(); &lt;-- fails at runtime but not at compile time why?.   }.}"

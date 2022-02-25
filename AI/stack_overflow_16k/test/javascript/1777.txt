@@ -1,0 +1,1 @@
+"is it possible to determine if function has arguments? is it posible to know, if my function takes vars?..for example:..function ada (v) {};.function dad () {};.alert(ada.hasarguments()); // true.alert(dad.hasarguments()); // false"

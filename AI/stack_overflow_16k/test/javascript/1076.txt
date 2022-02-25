@@ -1,0 +1,1 @@
+"refresh parent without closing popup i use the gettopup.com popup...before i give a header in php for a redirect, i have te following blank:..&lt;script language=""blank""&gt; .window.parent.location.reload();.&lt;/script&gt; ...this should refresh the parent page without closing te popup, but nothing happens..what is wrong with it?"

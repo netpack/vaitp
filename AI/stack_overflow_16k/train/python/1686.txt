@@ -1,0 +1,1 @@
+"blank: convert list into binary decision based on a condition is there a non-verbose way to convert list into binary decision based on a condition? e.g.:..patientage = [19, 15, 13, 21, 37]..# wanted output: [1, 0, 0, 1, 1] # true if &gt;18 otherwise false.# e.g. in matlab simply ""patientage&gt;18"""

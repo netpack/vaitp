@@ -1,0 +1,2 @@
+"        def fake_security_group_rule_count_by_group(context, sec_group_id):
+            return 0"

@@ -1,0 +1,1 @@
+"how to filter values when i have float numbers in string we have a string that contains float numbers:..a = ""1.65, 1.46, 2.05, 3.03, 3.35, 3.46, 2.83, 3.23, 3.5, 2.52, 2.8, 1.85""...how can i compute the the number of items with values >3.0 ?"

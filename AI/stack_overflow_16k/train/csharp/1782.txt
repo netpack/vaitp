@@ -1,0 +1,1 @@
+object field value when have property name as string i have an object of a model class...i have to return the field of the object whose name is provided as a string parameter. ..is there a better way than writing the multiple if conditions...thanks in advance.

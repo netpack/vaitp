@@ -1,0 +1,1 @@
+how can i find domain that has been used from a client to reach my server in blank socket? i just wonder how apache server can know the domain you come from you can see that in vhost configuration

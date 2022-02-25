@@ -1,0 +1,1 @@
+how to import user defined packages in blank program? some.blank.import a.a1.*;..directory structure.  a.  |_a2.  |  |_some.blank.  |_a1.     |_someother files and blank files...but import statement didn't work. what is the reason?

@@ -1,0 +1,1 @@
+"explanation to blank code i know the answer to this question, but do not understand the logic...i am looking for an explanation as to how the final values equal i=1951, j=0..int i = 60;.int j = 50;.int count = 0;.while (count &lt; 5).{.   i = i + i;.   i = i + 1;.   j = j - 1;.   j = j - j;.   count++;.}.system.out.println(""i="" + i + "", j="" + j);"

@@ -1,0 +1,1 @@
+"blank - finding an object's container if i create an object ..var o = { a : {}, b : {}}...i then set..o.a.foo = function() { }.o.b.foo = function() { }...how can foo() find out whether its parent is a or b?"

@@ -1,0 +1,1 @@
+"how do i check if a few variables are defined? ich want to check if my 3 variables are defined but this doesnt work:..if (typeof inputserver &amp;&amp; inputuser &amp;&amp; inputpassword !=""undefined"") {.        alert(""it works!"");.    }...my debugger says ""uncaught syntaxerror: unexpected token { "" ..please help me :)..greets tom"

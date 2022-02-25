@@ -1,0 +1,1 @@
+sorting a string based array on two conditions i have an array of strings like so..may#01.april#02.jan#03...i need to sort this first alphabetically and then by the numeric value next to the #..alphabetical sort is obvious but i don't seem to get the numeric part.

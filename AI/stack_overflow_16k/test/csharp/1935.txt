@@ -1,0 +1,1 @@
+"how to check object names in loops i have 31 numericipdowns (nup1,nup2,nup3....nup31), i want to add this numericupdowns values in datagridview.i used ""for"" loop and ""switch"", now i want to make something like this:..for(int i=1;i&lt;32;i==){.   if(nup+i.value&gt;0){.   datagridview1.rows.add((nup+i).tostring(0).   }.}...anybody can to help me?"

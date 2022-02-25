@@ -1,0 +1,1 @@
+"expected an indented block in blank_image_search when typing the code:..def __init__(self, preprocessors=none):.     self.preprocessors = preprocessors..     if self.preprocessors is none:.         self.preprocessors = []...there is expected an indented block error in def"

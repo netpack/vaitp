@@ -1,0 +1,1 @@
+declare an array of (nullable) doubles? i have this declaration:..double?[] x = 0;...i don't know how should i declare the zero because it seems that this is not the right way...it says: ...  cannot implicitly convert type 'int' to 'double?[]'...i have searched on the internet for a solution but everything that i have found didn't help me. any suggestion?

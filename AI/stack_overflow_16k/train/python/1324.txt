@@ -1,0 +1,1 @@
+"load a matrix from a .mm file into blank i am trying to load/run a matrix from a test.mm file in blank using numpy. the matrix inside the file is written for example a 2x2 matrix as ..    1 1 10.    1 2 11.    2 1 20.    2 2 30...i researched a lot, but i couldn't find a suitable answer."

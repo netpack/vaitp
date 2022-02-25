@@ -1,0 +1,1 @@
+"how to remove element id from xml using blank this is my xml..&lt;root&gt;.&lt;child =""1"" uid=""1""&gt;.&lt;grandchild&gt;1&lt;/grandchild&gt;  .&lt;/child&gt;.&lt;child =""2"" uid=""2""&gt;.&lt;grandchild&gt;2&lt;/grandchild&gt;  .&lt;/child&gt;.&lt;/root&gt;...how can i remove child 1 from xml"

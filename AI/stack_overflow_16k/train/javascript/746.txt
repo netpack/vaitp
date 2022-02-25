@@ -1,0 +1,1 @@
+"length property in blank i am trying to run the following code in browser console:..console.log(length); //output is 1 in chrome console...in some other ide, the output is 0...my question is why the output is 1 even if i haven't declared any variable length."

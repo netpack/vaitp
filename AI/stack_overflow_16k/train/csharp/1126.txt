@@ -1,0 +1,1 @@
+blank constructor using this can somebody explain what means : this(123) in a constructor ?..public class myobject.{      .    public myobject(): this(123).    {.    }.    .............}

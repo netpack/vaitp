@@ -1,0 +1,1 @@
+"how can i get the type name value of an object as a string? i know it's simple.  i can't find it any where...i want something like:..    string mystring = object.gettype;...i know that it wont work as written but how do i get the type value into a string.  ..thanks for your indulgence,.charles"

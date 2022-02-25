@@ -1,0 +1,1 @@
+"convert object to string getting can not cast error i have a list of object list in which at 4th index it has list of integer [1,2,3,4,5].now i want to get list into a comma separated string..below is my try, but it giving error as can not cast...for(object[] objarr : relationshipinfo){.if(null != objarr[4]){.string groupeditemids = (string)objarr[4];.}...how to do this?"

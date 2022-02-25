@@ -1,0 +1,1 @@
+array initialization problem i have the following code:..var intrebari = new array();.var i = 0;.intrebari[i]['enunt'] = 'test';.alert(intrebari[i]['enunt']);...the problem is that when i run it it says that intrebari is undefined. why?

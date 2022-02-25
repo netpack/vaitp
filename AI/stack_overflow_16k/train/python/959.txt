@@ -1,0 +1,1 @@
+"replace empty string(s) in tuple is there an easy way (hopefully a one liner) to replace '' with something like '-'?.many thanks...tup = (1,2,'abc','','','','text')"

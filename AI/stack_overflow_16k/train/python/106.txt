@@ -1,0 +1,1 @@
+"indentationerror: expected an indented block || not like the others i just programed this code and i have i problem with it...#!/user/bin/blank.x=raw_input(""your name?: "").if x==raw_input(""john""):.print ""welcome john""...and here is the error.....    print ""welcome john"".        ^.indentation-error: expected an indented block"

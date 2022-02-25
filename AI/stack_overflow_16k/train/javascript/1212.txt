@@ -1,0 +1,1 @@
+"looping through blank object converts keys to string when i loop through an object in blank to extract its keys, why do the keys convert to string when they were intended to be integers ? ..obj = {1:'a', 2:'b'};.arr = [];.for(var key in obj){.  if (obj.hasownproperty(key)){.    arr.push(key);.  }.}...now arr is [ ""1"", ""2"" ] instead of [1, 2]"

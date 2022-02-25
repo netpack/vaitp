@@ -1,0 +1,1 @@
+"linq concatenating elements in two string arrays i have two string arrays..array1 = {""paul"",""john"",""mary""}.array2 = {""12"",""13"",""15""}...i would like to know whether it is possible to join these arrays so that the resultant arrays have something like ..{""paul12"",""john13"",""mary15""}"

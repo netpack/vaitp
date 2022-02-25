@@ -1,0 +1,1 @@
+"why does this object literal cause a syntax error? i´m kind of confused as to why i can assign the following object literal:..var x = { ""a"" : true };...while changing it to a simple statement:..{ ""a"" : true };...will cause syntaxerror: unexpected token : in firefox and chrome (it works as expected in node)."

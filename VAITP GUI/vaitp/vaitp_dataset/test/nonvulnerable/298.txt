@@ -1,0 +1,1 @@
+"    def visit_Name(self, node):        id_ = node.id.lower()        if id_ in self._env:            return self._env[id_]        else:            raise NameError(node.id)"

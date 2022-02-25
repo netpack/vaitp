@@ -1,0 +1,1 @@
+"how to sort treemap in descending order based on the value treemap&lt;string, integer&gt; map = new treemap&lt;&gt;();.    map.put(""apple"", 5);.    map.put(""orange"", 8);.    map.put(""pear"", 3);.    map.put(""watermelon"", 10);.    map.put(""melon"", 1337);...how can i sort all the values in descending order and print them?"

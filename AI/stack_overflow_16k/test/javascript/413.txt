@@ -1,0 +1,1 @@
+"how to validate a readonly=""readonly"" situation in blank, how can i check to see if an item, say ""emailaddrs"" that is set as readonly=""readonly"" has a value as i need to perform validation for situations like this before the form is submitted?..thanks"

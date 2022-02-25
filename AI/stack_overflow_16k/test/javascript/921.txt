@@ -1,0 +1,1 @@
+"can i open a new window with other origin policy? my problem is, that my page is on a https server, and when i'm opening a new blank window, i need to have it in http not https as its domain. is it possibel, and if yes how?..window.open("""","""","""")"

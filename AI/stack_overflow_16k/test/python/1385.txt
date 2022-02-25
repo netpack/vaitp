@@ -1,0 +1,1 @@
+self-referencing lists say you do the following: ..a = [1].a[0] = a...you end up with a as equal to [[...]]. what's going on here? how does this implicitly defined infinite chain of a's referring to a's end up as [[...]]?

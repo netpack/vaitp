@@ -1,0 +1,1 @@
+"    def test_get_header_lines(self):        result = self._callFUT(b"slam\r\nslim")        self.assertEqual(result, [b"slam", b"slim"])"

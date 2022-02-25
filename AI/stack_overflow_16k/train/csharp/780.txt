@@ -1,0 +1,1 @@
+how does clr run beginxxx in a thread pool thread? i try to figure out how clr put asynchronous operations beginxxx into thread pool's queue..and which threadpool's api is called..but i did not find anything when i pokeed aroud beginread() in system.io.stream.and beginexecutereader() in system.data.sqlclient.sqlcommand by reflector 6.

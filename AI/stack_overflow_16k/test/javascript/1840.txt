@@ -1,0 +1,1 @@
+"set variable value as attribute using js this is my code:..var chk=""checked"";.document.getelementbyid(""chk"").chk=true;...where i used variable to set attribute in the second line...but this is not working with no error. ..please help me to find this."

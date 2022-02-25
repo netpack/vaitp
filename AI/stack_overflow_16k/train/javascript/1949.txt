@@ -1,0 +1,1 @@
+"in blank, which is the more efficient way of adding a new element to an array? this is a very simple question. when adding elements to the end of a blank array, do either of these forms have a speed or other optimization benefit over the other? or does it not really matter, other than style?..(1) pagedata[pagedata.length] = themember;..(2) pagedata.push(themember);"

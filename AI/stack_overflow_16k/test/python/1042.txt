@@ -1,0 +1,1 @@
+"blank3 division operator exactly like in blank2 i (really, really) need division operator in blank3 behaves like in blank2...blank2 code: ..--&gt; 11/5.2.--&gt; 11.0/5.2.2...but in blank3 we have..--&gt; 11//5.2.--&gt; 11.0//5.2.0...i can change / to // or whatever, but i expect the same results..any ideas?"

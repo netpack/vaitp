@@ -1,0 +1,33 @@
+"def subscribe_for_tags(request):
+    """process subscription of users by tags"""
+    #todo - use special separator to split tags
+    tag_names = request.REQUEST.get('tags','').strip().split()
+    pure_tag_names, wildcards = forms.clean_marked_tagnames(tag_names)
+    if request.user.is_authenticated():
+        if request.method == 'POST':
+            if 'ok' in request.POST:
+                request.user.mark_tags(
+                            pure_tag_names,
+                            wildcards,
+                            reason = 'good',
+                            action = 'add'
+                        )
+                request.user.message_set.create(
+                    message = _('Your tag subscription was saved, thanks!')
+                )
+            else:
+                message = _(
+                    'Tag subscription was canceled (<a href="%(url)s">undo</a>).'
+                ) % {'url': escape(request.path) + '?tags=' + request.REQUEST['tags']}
+                request.user.message_set.create(message = message)
+            return HttpResponseRedirect(reverse('index'))
+        else:
+            data = {'tags': tag_names}
+            return render(request, 'subscribe_for_tags.html', data)
+    else:
+        all_tag_names = pure_tag_names + wildcards
+        message = _('Please sign in to subscribe for: %(tags)s') \
+                    % {'tags': ', '.join(all_tag_names)}
+        request.user.message_set.create(message = message)
+        request.session['subscribe_for_tags'] = (pure_tag_names, wildcards)
+        return HttpResponseRedirect(url_utils.get_login_url())"

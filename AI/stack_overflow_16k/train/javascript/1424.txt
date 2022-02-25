@@ -1,0 +1,1 @@
+"why do i get 5 for each iteration in this js code? i am new to js and was encountered this code for ..for(var i = 0; i &lt; 5; i++) {.  operations.push(() =&gt; {.    console.log(i).  }).}...which prints 5 for each iteration and i cannot det why? also, how exactly does iife solve this problem?"

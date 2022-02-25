@@ -1,0 +1,1 @@
+"adding lists together i have multiple lists of strings, ilist&lt;string&gt;, that i want to consolidate in one list showing distinct string and count for each item (like a dictionary). what is the most efficient way to do this?"

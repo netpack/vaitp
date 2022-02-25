@@ -1,0 +1,1 @@
+"convert text to string array with separator i want to convert an string to string[] separate with ','...string text = ""1,2,5,6"";.string[] textarray =?"

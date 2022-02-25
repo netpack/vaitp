@@ -1,0 +1,1 @@
+"blank propertychangelistner if i send two null values as below...pcl.firepropertychange(""name"", null, null)...it will recognize this as a change and fires .propertychange(propertychangeevent evt). ..is this a bug? any suggestions ?"

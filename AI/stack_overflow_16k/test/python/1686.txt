@@ -1,0 +1,1 @@
+"how to print part of item in a list? i have a list that looks like this:..['blake 4', 'bolt 1', 'de grasse 3', 'gatlin 2', 'simbine 5', 'youssef meite 6']...i am trying to print this:..blake.bolt.de grasse.gatlin.simbine.youssef meite...how do i go about writing a list comprehension that handles this scenario? i tried using split and indexing but nothing i have used has worked."

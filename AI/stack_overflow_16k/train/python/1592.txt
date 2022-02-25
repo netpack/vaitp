@@ -1,0 +1,1 @@
+"i cant figure out whats wrong with this code (blank) def primefactors():.    prime_list = [].    n = 600851475143.    for i in range(0, n):.        if i % n == 0:.            prime_list.append(i).    return prime_list...print (primefactors())...i want to print out the numbers i have stored in prime_list..i dont get any errors but it dosnt print out anything.."

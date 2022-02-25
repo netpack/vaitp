@@ -1,0 +1,1 @@
+"targeting an array of objects in blank i have a value in this format:..var state = [{""industry-type"":""football"",""your-role"":""coach""}]...i would like to output ""football"". how can i do this?..i've tried state[0].industry-type but it returns an error:..uncaught referenceerror: type is not defined...any help appreciated."

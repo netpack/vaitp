@@ -1,0 +1,1 @@
+"copy certain properties from two lists into third list i've a list a..class a {id, name, location, post, station, status, rank}..i've a list b..class b {gender, level}..i want list a and list b should be both merged and copied over onto list c. so that list c would be like this..class c {id, name, status, gender, level}"

@@ -1,0 +1,1 @@
+why new date(yyyy-mm-dd) shows past date? why its showing past day date..var date = new date('2020-01-01');..console.log(date)..tue dec 31 2019 19:00:00 gmt-0500 (eastern standard time)

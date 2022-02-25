@@ -1,0 +1,1 @@
+"saving the last reading position i need to get and save the reading position of the posts in wordpress website for the user to continue reading from the same position, when he/she signs in again, i tried with scrolltop in jquery but it is not cross browser compatible and gives different values in internet explorer, chrome and firefox, is there any other way out"

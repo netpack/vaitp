@@ -1,0 +1,1 @@
+"connecting to a remote server using blank i am trying to print the contents of a folder in a remote server. the code i have used is:..srcserver = 'abc.com'.dyndir = '\\%s\e$\backup\' %(srcserver).ls = glob.glob('%s*' %dyndir).print ls...when i try this, it returns an empty array. could you please help me resolve this issue."

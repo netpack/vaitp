@@ -1,0 +1,1 @@
+"how do i convert (universal datetime) string to datetime in blank i am trying the following statement and it throws an error:..datetime.parseexact(""wed, 06 may 2015 11:08:00 pdt"", ""ddd, dd mmm yyyy hh:mm:ss gmt"", null)...i even tried this and it did not work:..datetime.parseexact(""wed, 06 may 2015 11:08:00 pdt"", ""r"", null)"

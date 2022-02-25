@@ -1,0 +1,1 @@
+how to store long range number i have to store this value.but eclipse shows error on that...private final long cal_to_ev = 26131952998320000000l;...plz tell me how to store this.

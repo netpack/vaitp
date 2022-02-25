@@ -1,0 +1,1 @@
+"what is """" in blank really? this one says false, meaning the """" is a number:..alert(isnan("""")); ...this one says nan, meaning the """" is not a number and cannot be converted:..alert(parsefloat(""""));...i was expecting the second code to convert """" to 0 since """" is a number when tested in isnan but i was wrong! am i getting crazy or i just missed something?"

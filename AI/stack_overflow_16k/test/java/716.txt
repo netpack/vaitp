@@ -1,0 +1,1 @@
+"why does this not cause a nullpointerexception? public class null {.    public static void greet() {.        system.out.println(""hello world!"");.    }..    public static void main(string[] args) {.        ((null) null).greet();.    }.}...program output: hello world!..i thought it would throw a nullpointerexception. ..why is it happenning?"

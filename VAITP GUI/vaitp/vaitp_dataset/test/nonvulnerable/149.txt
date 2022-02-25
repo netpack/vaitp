@@ -1,0 +1,1 @@
+"    def attemptRequestWithMaliciousURI(self, method):        """        Attempt to send a request with the given URI.  This should        synchronously raise a L{ValueError} if either is invalid.        @param uri: the URI.        @type method:        """        raise NotImplementedError()"

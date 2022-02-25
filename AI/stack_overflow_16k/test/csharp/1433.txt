@@ -1,0 +1,1 @@
+"dynamically declare string variables i want to declare string dynamically for example ..int i =2;...then declare two string..string str1 ="""";.string str2 ="""";...so basically i want to declare string based on i."

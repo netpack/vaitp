@@ -1,0 +1,1 @@
+"are apply, arguments, bind, etc. part of the internal prototype of a blank object? i keep reading about the inaccessible internal prototype of blank objects and am wondering whether this is related to the methods you find on the blank data types: object, array, string, etc?"

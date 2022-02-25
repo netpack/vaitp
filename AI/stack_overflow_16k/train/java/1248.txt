@@ -1,0 +1,1 @@
+"creating an applet to get an image is there anything wrong with doing this:..public static image getpicture01().{.    applet app = new applet();.    image t = app.getimage(app.getclass().getresource(""/res/pic01.png""));.    return t;.}...my goal is to get a resource (image) from my project in blank, and use it."

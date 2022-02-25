@@ -1,0 +1,1 @@
+"parse values only in object (blank) i have an object i'm pulling in and i have it's value parsed and i would like to un-parse (just the value) ..so i have..myobj = { ""name"" : ""(json.stringified object)"",.          ""name"" : ""(json.stringified object)"" }...having trouble json.parse'ing just the value of an object, especially more than one. could use some insight, thanks!"

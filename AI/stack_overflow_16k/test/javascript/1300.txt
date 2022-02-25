@@ -1,0 +1,1 @@
+how can i remove the autospace inserted by mobile keyboard words sugestions? my input search when accessed in mobile insert a white space when user use suggested words of mobile keyboard...something like:..word(whitespace)..the correct is:.word(no whitespace)..i need remove this with blank. i need remove the last whitespace on input and i don’t know create a trim in input box

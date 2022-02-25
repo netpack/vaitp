@@ -1,0 +1,1 @@
+"where does the default jbutton color (gradient) originate within blank? when you create a jbutton (or jpanel) you can change the background color (setbackground). before changing the color however, you have a sort of gradient background. where does that come from?"

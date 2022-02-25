@@ -1,0 +1,1 @@
+swap two numbers without using another variable swap two variables without using a temp variable .if ..int a=4; .int b=3;...i need to swap these variable and get output as . a=3 and b=4.without using another variable in blank

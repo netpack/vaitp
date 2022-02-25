@@ -1,0 +1,1 @@
+"get tuple from double ""for"" loop in blank the code like:..for x in ['a','b','c']:.    for y in [1,2,3]:...i just want get the tuple like:..(""a"",1).(""b"",2).(""c"",3)"

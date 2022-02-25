@@ -1,0 +1,1 @@
+"how to fire only the very last settimeout window.addeventlistener('resize', onresize, false);.function onresize() {.    timer = settimeout(function() { .        console.log('fire timer');.    }, 1000);.}...resize event fires super fast. so there will be many timer fire every 1000ms. how to fire only the very last timer?"

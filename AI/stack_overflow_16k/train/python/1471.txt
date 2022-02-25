@@ -1,0 +1,1 @@
+detect same words using different alphabets? blank treats words мама and mama differently because one of them is written using latin and another using cyrillian...how to make blank treat them as one same string?..i only care about allomorphs.

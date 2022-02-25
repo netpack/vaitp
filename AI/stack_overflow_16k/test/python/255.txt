@@ -1,0 +1,1 @@
+"how can i print word encoded by gbk in blank? i'm writing a spider in blank. i got a list with one element [u'xb9xd8xd3xdaxbfxaaxd5xb9] which is the gbk code of ""关于开展"". i've tried some methods, but none of them work."

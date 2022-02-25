@@ -1,0 +1,1 @@
+"how to convert byte in string representation to real byte representation? i want to convert a byte in string representation, for example:..""ff""..to a real byte representation:..0xff..other examples:..""00"" to 0x00..""10"" to 0x10..""2a"" to 0x2a..""5f"" to 0x5f..and so on.....how can i do this?..thanks"

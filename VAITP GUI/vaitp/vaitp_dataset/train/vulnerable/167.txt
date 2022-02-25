@@ -1,0 +1,21 @@
+"    def test_create_registration_code_without_invoice_and_order(self):
+        """
+        test generate detailed enrollment report,
+        used a registration codes which has been created via invoice or bulk
+        purchase scenario.
+        """
+        course_registration_code = CourseRegistrationCode.objects.create(
+            code='abcde',
+            course_id=self.course.id.to_deprecated_string(),
+            created_by=self.instructor,
+            mode_slug='honor'
+        )
+        test_user1 = UserFactory()
+        self.register_with_redemption_code(test_user1, course_registration_code.code)
+
+        CourseFinanceAdminRole(self.course.id).add_users(self.instructor)
+        self.client.login(username=self.instructor.username, password='test')
+
+        url = reverse('get_enrollment_report', kwargs={'course_id': self.course.id.to_deprecated_string()})
+        response = self.client.get(url, {})
+        self.assertIn('The detailed enrollment report is being created.', response.content)"

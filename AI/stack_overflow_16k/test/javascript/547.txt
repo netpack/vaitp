@@ -1,0 +1,1 @@
+"add number to a date without appending as string i want to add the number 30 (30 days) to a date in blank, but it keeps adding it like a string, how to convert it to a date format and then add it?..&lt;input name = ""date1"" type = ""text"" id = ""date1"".   onchange = ""document.zipad.date1_end.value  = (document.zipad.date1.value) + 30"" /&gt;"

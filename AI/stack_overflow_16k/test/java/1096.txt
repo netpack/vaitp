@@ -1,0 +1,1 @@
+"tictactoe-game in blank, variable boardsize, checkwin() function is giving me trouble i am having trouble writing the checkwin() function for my tictactoe game. can someone explain to me how i can check for a win in a variable board? the win condition is if you complete a row or a column."

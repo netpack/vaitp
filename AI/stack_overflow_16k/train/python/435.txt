@@ -1,0 +1,1 @@
+"how to generate grid of dots from image array with interval x? suppose i have an image 1000x1000, i want to put a red dot every 10 pixels. how to generate such an array?..m, n = 5, 8..x = np.linspace(0,1000,m+1).y = np.linspace(0,1000,n+1).x,y = np.meshgrid(x,y)..positions = np.vstack([y.ravel(), x.ravel()])..for x in positions:.    cv2.circle(img,(x[0], x[1]), 5, (0,255,0), 2)"

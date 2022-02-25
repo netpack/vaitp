@@ -1,0 +1,1 @@
+"function for splitting by substring i have text..hi, my name is &lt;b&gt;dan&lt;/b&gt; and i need/n to separate string...what i need is to find specific tags and separate text by predefined tags like /n or (b),.the result need to be:..str[0] = hi, my name is.str[1] = dan.str[2] = and i need.str[3] = to separate string...can you please help me?"

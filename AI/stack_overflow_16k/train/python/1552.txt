@@ -1,0 +1,1 @@
+"blank2: merge a list of csv elements i have a dict like this:..{1: ['1,2,3', '4,5,6', '7,8']}...the dict can be variable in the number of list items but always 1 dict item. how do i merge it to..{1: ['1,2,3,4,5,6,7,8']}..?..thanks"

@@ -1,0 +1,1 @@
+"call dynamic function in blank my code:..var myobj = {.    myfnc = function(a, b) {.       console.log('a: '+a+', b: '+b);.    }.}..var list = new array('myfnc', new array('var1', 'var2'));.myobj[list[0]].call(list[1]);...but not working, somebody can help me?"

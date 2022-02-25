@@ -1,0 +1,1 @@
+"how can i have a low value and a high value in a variable okay so my code is pdmg = round(mage['stats']['pstrength'] * .50) so what i want to do is have the .50 as the minimum value and then have it multiply the same thing by .75, what do i do? basically what i want is a minimum damage and a maximum damage, its for a a battle system"

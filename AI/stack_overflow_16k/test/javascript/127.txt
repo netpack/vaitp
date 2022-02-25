@@ -1,0 +1,1 @@
+"how to display all three letters in the array? code:..var a = [""a"", ""b"", ""c""];. for (i=0; i&lt;a.length; i++){. alert (a[i]);...currently i am getting only 'c' in the alert. i want to get all three of them. how do i do?"

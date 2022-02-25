@@ -1,0 +1,1 @@
+"blank alert prompt prior to reload() i have an existing icon that performs a blank reload of the page.  how do i add an alert with an ok or cancel prior to executing the reload? ..&lt;a href=""#"" onclick=""window.location.reload()""&gt;&lt;img src=""img/reload.png"" alt=""reset"" name=""reset"" width=""32"" height=""32"" align=""middle"" id=""reset"" /&gt;&lt;/a&gt;"

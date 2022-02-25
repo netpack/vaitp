@@ -1,0 +1,1 @@
+turn a full path into a path with environment variables i want to turn a full path into an environment variable path using blank..is this even possible?..i.e...c:usersusernamedocumentstext.txt -&gt; %userprofile%documentstext.txt.c:windowssystem32cmd.exe -&gt; %windir%system32cmd.exe.c:program filesprogramprogram.exe -&gt; %programfiles%programprogram.exe

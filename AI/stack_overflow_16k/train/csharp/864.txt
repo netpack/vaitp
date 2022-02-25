@@ -1,0 +1,1 @@
+"blank string filepath question i am trying to set a filepath for a soundplayer object..if i have a sounds folder in my main project folder. how do i go about sending ..soundplayer test = new soundplayer(""sounds/fireball.wav"");"

@@ -1,0 +1,1 @@
+blank innerwidth instead of window.innerwidth is there any reason why should i use window.innerwidth instead of innerwidth?

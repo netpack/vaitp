@@ -1,0 +1,1 @@
+"invalid syntax error for loop i get the error ""invalid syntax"" at the second line in my script:..def pointsinsidetriangles(points,triangles): .    for (p in points):.        for (t in triangles):.            if isinsidetriangle(p,t[0],t[1],t[2]):.                print(""point "" + str(p) + "" is inside triangle "" + str(t))...what am i doing wrong?"

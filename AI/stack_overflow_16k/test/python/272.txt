@@ -1,0 +1,1 @@
+"colab connection always broken i run cnn code on colab notebook, and it takes long time. however, the connection always breaks after i ran 2 or 3 hours and cannot be reconnect back. i was told colab virture machine would break connection after 12 hours without any operates, so how can i avoid restart my code after connection broken, or any easier way to controll colab?"

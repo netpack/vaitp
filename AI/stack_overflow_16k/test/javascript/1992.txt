@@ -1,0 +1,1 @@
+"how to pass variable to anonymous function i want to pass variable settimeoutfunction and do something with that. when i alert value of i it shows me numbers that i did not expected. what i m doing wrong? i want log values from 1 till 8...var end=8;.for (var i = 1; i &lt; end; i ++) {.       settimeout(function (i) {.           console.log(i);   ..       }, 800);.   }"

@@ -1,0 +1,1 @@
+"getelementsbytagname().setattribute(); don't work in ie8 i am trying to convert input box to button. it's working well in all the browsers accept ie8...html code..&lt;input value=""click here""&gt;&lt;/input&gt;...blank code..document.getelementsbytagname(""input"")[0].setattribute(""type"",""button"");"

@@ -1,0 +1,1 @@
+"sort blank array alphanumerically i have this array..const arr = ['1','2','3',...'30','31','last']...i need to sort by number asc..here is the example code and i don't know how to sort it..help me please..const arr2 = ['2','1','10','last','20']...i need result ['1','2','10','20','last'] instead of ['1','10','2','20','last']"

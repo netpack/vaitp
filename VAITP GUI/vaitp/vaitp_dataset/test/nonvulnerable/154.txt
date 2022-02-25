@@ -1,0 +1,1 @@
+"    def attemptRequestWithMaliciousURI(self, uri):        """        Attempt a request with the provided URI.        @param uri: see L{URIInjectionTestsMixin}        """        client.getPage(uri)"

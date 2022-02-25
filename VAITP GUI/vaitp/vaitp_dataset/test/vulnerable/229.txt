@@ -1,0 +1,1 @@
+"def _wsse_username_token(cnonce, iso_now, password):    return base64.b64encode(        _sha("%s%s%s" % (cnonce, iso_now, password)).digest()    ).strip()"

@@ -1,0 +1,1 @@
+"working with string and replace ok so i have something like this:..string str = ""have.fun.something"";.string str2 = ""asd.sad.saw.sa.something"";...and i wanna remove all things from last char until first ""."" so output will be always ...  something"

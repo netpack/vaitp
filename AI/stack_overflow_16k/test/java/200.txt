@@ -1,0 +1,1 @@
+how to recognize calling object? can i recognize my calling object? .i can create stacktrace for classname of a but how can i access an object of a?..class a{.    void method(){.        new b().method();.    }.}..class b{.    void method(){.        // can i recognize object a ????.    }.}

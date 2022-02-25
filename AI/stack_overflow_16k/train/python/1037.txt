@@ -1,0 +1,1 @@
+"blank getattr multiple levels with values being passed as well so i've been reading up on getattr, and was wondering what the equivalent of..example = val1.val2.val3(item)...would be. .so i get that you have to use nested getattr to implement multiple levels attributes..example = getattr(getattr(val1, ""val2""), ""val3"")...but how do i represent the object being passed in?"

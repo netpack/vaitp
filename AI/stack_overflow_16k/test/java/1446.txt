@@ -1,0 +1,1 @@
+"difference between e and object types what is the difference between e and object types, when referring to the following example?..example..list interface has two methods, add(e e) and remove(object obj)...how was it decided to use e or object for each method?..phrased another way, how would i know whether to use e or object when writing the header of my own written method?"

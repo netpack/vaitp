@@ -1,0 +1,1 @@
+"    def get_type_string(self) -> str:        """ Get a string representation of type that should be used when declaring this property """        if self.required:            return self._type_string        return f"Optional[{self._type_string}]""

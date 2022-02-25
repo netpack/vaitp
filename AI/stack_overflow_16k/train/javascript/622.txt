@@ -1,0 +1,1 @@
+"blank explanation of brackets can someone explain me which bracket here is used for what?..let mymodule = (function() {})();...i know that the inner part = function() { // some stuff here } is a function, so what does ..(innerpart)();...?.how and why is it different from ..let mymodule = function() {}"

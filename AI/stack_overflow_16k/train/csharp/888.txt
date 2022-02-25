@@ -1,0 +1,1 @@
+"why putting <t> after class name? what's the using of class &lt;tclass&gt; after class name. for example ..public class foo&lt;tfoosomething,string&gt; where tfoosomething :class {..    public foo(iboo&lt;tboosomething&gt; boo) : base(boo).    {.       //code goes here.    }.} ...if it's just for declaring parameter types, can't we just declare them in the constructor?"

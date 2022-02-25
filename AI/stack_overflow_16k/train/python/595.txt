@@ -1,0 +1,1 @@
+"split string using custom separators i have a string in blank:..string = ""field1|data1||field2|data2||field3|data3""...i need to create a dic with this string:..dic = {.  ""field1"": ""data1"",.  ""field2"": ""data2"",.  ""field3"": ""data3"".}....how i can make this ?"

@@ -1,0 +1,18 @@
+"    def test_serialization(self):
+        memcache_client = memcached.MemcacheRing(['1.2.3.4:11211'],
+                                                 allow_pickle=True)
+        mock = MockMemcached()
+        memcache_client._client_cache['1.2.3.4:11211'] = [(mock, mock)] * 2
+        memcache_client.set('some_key', [1, 2, 3])
+        self.assertEquals(memcache_client.get('some_key'), [1, 2, 3])
+        memcache_client._allow_pickle = False
+        memcache_client._allow_unpickle = True
+        self.assertEquals(memcache_client.get('some_key'), [1, 2, 3])
+        memcache_client._allow_unpickle = False
+        self.assertEquals(memcache_client.get('some_key'), None)
+        memcache_client.set('some_key', [1, 2, 3])
+        self.assertEquals(memcache_client.get('some_key'), [1, 2, 3])
+        memcache_client._allow_unpickle = True
+        self.assertEquals(memcache_client.get('some_key'), [1, 2, 3])
+        memcache_client._allow_pickle = True
+        self.assertEquals(memcache_client.get('some_key'), [1, 2, 3])"

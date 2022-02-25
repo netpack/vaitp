@@ -1,0 +1,1 @@
+"blank says variable name is a syntax error every time i try to run these first 2 lines in blank, it says:..syntaxerror: invalid syntax...and highlights the name of the variable i'm trying to define (yname)...these are the lines i'm trying to run:..print(""hello what's your name?"")       .yname = input(""your name:"")"

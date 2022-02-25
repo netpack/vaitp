@@ -1,0 +1,1 @@
+"load external blank files on the web in javascript, we could use &lt;script type=""text/javascript"" src=""http://your.cdn.com/first.js""&gt;&lt;/script&gt; to load external javascript files on the web...i am wondering how to load external blank files on the web in a local blank program?"

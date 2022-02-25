@@ -1,0 +1,1 @@
+how to convert float to string for textfied correctly? i want to convert float number 0.24779509870200961 to string for fill textfield but the value display in textfield not correct. how could i do that.

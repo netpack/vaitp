@@ -1,0 +1,1 @@
+"how do i convert an array of arrays to a 1d array [.  [{.    ""_id"": ""5be9a07c7791b4083fbda644"",.    ""resource"": ""one"",.    ""code"": 1,.    ""__v"": 0.  }],.  [{.    ""_id"": ""5be9a0877791b4083fbda645"",.    ""resource"": ""two"",.    ""code"": 2,.    ""__v"": 0.  }].]...i have an array inside an array, and i am trying to get rid of the parent array"

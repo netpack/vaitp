@@ -1,0 +1,1 @@
+"run a function after a variable has reached a predifined value i have a global variable ..var trigger = 0;...in addition i have some functions which once completed,they increase the value of this variable...my goal is to trigger an additional function once the variable trigger has reached the value 2...which is the best way to achieve this ?"

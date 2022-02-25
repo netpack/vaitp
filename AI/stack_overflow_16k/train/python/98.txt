@@ -1,0 +1,1 @@
+strange behaviour of variable name with double underscores the following code shows no error...class bar():.    pass..class foo():.    def __init__(self):.        self.__bar = bar()..    def get_bar(self):.        return self.__bar..foo = foo().bar1 = foo.get_bar()..foo.__bar = bar().bar2 = foo.get_bar()..assert (bar1 is bar2)...why is __bar acting like a singleton?

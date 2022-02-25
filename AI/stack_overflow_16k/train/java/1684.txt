@@ -1,0 +1,1 @@
+"what is the explanation of this blank line? i'm new to blank. could someone explain this line to me ?..math.sqrt(6 * (1 until 10000).map(x =&gt; (1 / math.pow(x.todouble, 2))).sum)"

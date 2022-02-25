@@ -1,0 +1,1 @@
+"how to display reportviewer in other system? i am using winform app. blank2010 with 4.0 ,after deploying application to another computer i have error i have copied all references along with reports which i used but still error in uploading report.""could not load file or assembly error.microsoft.reportviewer.processing object model version = 10.0.0.0,.culture = neutral"""

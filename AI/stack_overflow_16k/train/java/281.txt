@@ -1,0 +1,1 @@
+blank memory collection usage i have a try catch and finally block like this...client client = new client();.try {.   ....}.catch {.   ....}.finally {.   client = null;.}...i would like to ask if client = null is necessary to wipe out memory use for client object if exception occurs.

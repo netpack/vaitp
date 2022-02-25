@@ -1,0 +1,1 @@
+why im getting an error on ienumerator? public void checkfiletype(string directorypath).        {.            ienumerator files = directory.getfiles(directorypath).getenumerator();.        }...the error: error    1   using the generic type 'system.collections.generic.ienumerator' requires 1 type arguments

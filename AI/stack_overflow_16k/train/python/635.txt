@@ -1,0 +1,1 @@
+"what is the difference between [1,2,3] and array([1,2,3]) i am learning blank and i find a=[1,2,3] is almost the same as a=array([1,2,3]),though the latter will show [1 2 3] when i print it. what is the difference between them?"

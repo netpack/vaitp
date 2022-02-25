@@ -1,0 +1,1 @@
+"how can i parse minutes to seconds? i want to parse the following input ""10:05"" in format ""minutes:seconds"" in seconds. so 10:05 should be 10 * 60 = 600 + 5 = 605. how can i manage to do this with code ?"

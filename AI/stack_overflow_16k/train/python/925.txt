@@ -1,0 +1,1 @@
+"blank: shutil.copy2 empties target dir we have a blank script that ftp's (downloads) files.  however, target folder contents are deleted when the source is empty...how do you not delete the files in the target dir when the source is empty?..we are using shutil.copy2 -- can that be the cause?  are there alternatives that preserve metadata?"

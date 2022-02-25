@@ -1,0 +1,1 @@
+"blank function reference consider this code, which sets a to a function. then f points to a, but then a gets set to null...var a = function () { .    return 5;.};..var f = a; ..a = null;...however, when calling f(), 5 prints out...console.log(f());....  5...why doesn't calling f() result in a null object reference?..http://jsfiddle.net/dedca/"

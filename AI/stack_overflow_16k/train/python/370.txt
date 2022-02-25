@@ -1,0 +1,1 @@
+"adjusting 1 space between two strings using blank i have two strings:..&gt;&gt;&gt; a = ""abcd"".&gt;&gt;&gt; b = ""xyz"".&gt;&gt;&gt; c = a + b.&gt;&gt;&gt; c.abcdxyz...how can i get abcd xyz as a result instead when adding a and b?"

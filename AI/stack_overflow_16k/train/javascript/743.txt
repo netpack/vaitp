@@ -1,0 +1,1 @@
+"how to convert 'apply' to 'call' or the other i need to replace method apply to call or the other...this[atype].apply(this, aparams)...of course, aparams must be an array...how can i do it?..i'm waiting your opinion"

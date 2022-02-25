@@ -1,0 +1,1 @@
+"return var-type variable i has some method, for example:..    public var getallposts().    {.        var post = from p in _db.posts  select p;.        return post;.    }...how return var-type variable?"

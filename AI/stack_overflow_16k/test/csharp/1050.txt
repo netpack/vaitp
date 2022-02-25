@@ -1,0 +1,1 @@
+"fileloadexception unhandled on dll load how to solve this exception...  could not load file or assembly 'opencvsharp, version=1.0.0.0, culture=neutral, publickeytoken=6adad1e807fea099' or one of its dependencies. the located assembly's manifest definition does not match the assembly reference. (exception from hresult: 0x80131040)"

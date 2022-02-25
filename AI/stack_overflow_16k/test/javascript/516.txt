@@ -1,0 +1,1 @@
+"compare string inside windows.alert this might be a dumb question, but considering the following semi-pseudo code.  how do i compare the string in windws.alert?..var alertcalled = false;.// i'm having trouble with the following line.if (windows.alert().text == 'specific string') {.    alertcalled = true;.}...thanks."

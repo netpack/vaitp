@@ -1,0 +1,1 @@
+"changing upper case string to lower case, but keep only first character to upper case i have multiple strings in upper case: ..james smith, navin hemant signh, lala utrizer ..how can i transform these strings to:..james smith, navin hemant signh, lala utrizer in blank? ..please help."

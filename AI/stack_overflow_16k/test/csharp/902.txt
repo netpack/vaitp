@@ -1,0 +1,1 @@
+implicit type cast of char to int in blank i have a question about the implicit type conversion..why does this implicit type conversion work in blank? i've learned that implicit code usually don't work...i have a code sample here about implicit type conversion.. char c = 'a';. int x = c;. int n = 5;. int answer = n * c;. console.writeline(answer);

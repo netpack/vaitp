@@ -1,0 +1,1 @@
+"return the smallest element value in a list of lists given a list of lists like this :..[[""filea"",7],[""fileb"",4],[""filec"",17],[""filed"",15]]...how would you return the first element associated to the smallest value ? in this instance ""fileb"" since it has the smallest value (4). i'm guessing the shortest way would be using list comprehension ."

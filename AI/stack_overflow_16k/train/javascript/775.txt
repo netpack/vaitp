@@ -1,0 +1,1 @@
+cpu and/or memory intensive algorithms i'm trying to implement some simple blank algorithms that cause high cpu/memory usage without displaying anything. would create additional threads with web workers do the trick ? are there any other possibilities?

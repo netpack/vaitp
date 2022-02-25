@@ -1,0 +1,1 @@
+"add multiple options in array with blank i have this var ..var allwords = {};...and i need push more options in this array like:..allwords.push = {""ctrl-space"": ""autocomplete""};.allwords.push = {""ctrl-pause"": ""closewindow""};...and look like this: ..allwords = {""ctrl-space"": ""autocomplete"", ""ctrl-pause"": ""closewindow""};...how can't i do?"

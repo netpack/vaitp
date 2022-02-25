@@ -1,0 +1,23 @@
+"    def test_get_students_who_may_enroll(self):
+        """
+        Test whether get_students_who_may_enroll returns an appropriate
+        status message when users request a CSV file of students who
+        may enroll in a course.
+        """
+        url = reverse(
+            'get_students_who_may_enroll',
+            kwargs={'course_id': unicode(self.course.id)}
+        )
+        # Successful case:
+        response = self.client.post(url, {})
+        res_json = json.loads(response.content)
+        self.assertIn('status', res_json)
+        self.assertNotIn('currently being created', res_json['status'])
+        # CSV generation already in progress:
+        with patch('instructor_task.api.submit_calculate_may_enroll_csv') as submit_task_function:
+            error = AlreadyRunningError()
+            submit_task_function.side_effect = error
+            response = self.client.post(url, {})
+            res_json = json.loads(response.content)
+            self.assertIn('status', res_json)
+            self.assertIn('currently being created', res_json['status'])"

@@ -1,0 +1,1 @@
+"if a variable is modified to reference a different atomiclong, will the update be visible then? if i am doing something like this in a class-..private atomiclong count = new atomiclong(0);...and then inside a method, i do this-.. count = new atomiclong(1); // will this update is going to be visible to other threads...i am confused because atomiclong is @threadsafe"

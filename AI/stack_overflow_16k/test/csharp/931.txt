@@ -1,0 +1,1 @@
+"blank: loading large dictionary in memory and access it from multiple application for performance issue and large numbers of hits per second, i need to add about 4gb of data in memory using dictionary and access it from multiple applications using dictionary key. this data can be updated from time to time ..what is the best way to create this scenario using blank"

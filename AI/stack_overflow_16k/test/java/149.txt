@@ -1,0 +1,1 @@
+do blank use invisible pointers? i recently programmed blank using two int arrays. let it be 'a' and 'b'. after assigning a=b i do some calculations on b. but without again using a=b all value of b are copied to a like a pointer to a location. this make error in my program because  i use it like normal function copying value only. do blank really use invisible pointers?

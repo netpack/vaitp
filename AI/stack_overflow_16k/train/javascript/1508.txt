@@ -1,0 +1,1 @@
+"how come it says array is undefined? here is a blank sample:..var obj =.{.   options:  [],..   init:  function( ).   {.       options['one'] = 'one';.       for( k in options ).       {.          alert( options[k] );.       }.   }.};...instead of prompting ""one"", it says undefined, why?"

@@ -1,0 +1,1 @@
+how can i split date and time separate? i have a datetime column in mysql db column and i need to show it in separate date and time textboxes...my datetime format in db is 2014-12-24 17:23:35. and i want in:..date : 2014-12-24  .time : 17:23:35...how can i do it in blank?

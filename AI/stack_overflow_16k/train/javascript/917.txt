@@ -1,0 +1,1 @@
+"ways to evaluate a string given a string s, how can one ""execute"" it in blank?..i know of two ways, namely eval(s) and (new function(s))()...are there other ways in which a string can be evaluated?"

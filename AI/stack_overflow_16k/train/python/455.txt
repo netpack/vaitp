@@ -1,0 +1,1 @@
+can i use cgi module to read and extract information from an uploaded formdata object file in blank? can i use cgi module to read and extract information from an uploaded formdata object file in blank?.the file is being uploaded on the server from the front end and i'd like to read the file and extract data from it..so how do i go about it?

@@ -1,0 +1,1 @@
+"most blankic style for function calls with multiple params which is more blankic:..style one:..    self.partitions.append(.        partition(.            self.current.bottom, self.current.lower, boundary))...style two:..    self.partitions.append(partition(self.current.upper,.                                     self.current.top,.                                     boundary))"

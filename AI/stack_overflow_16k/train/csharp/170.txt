@@ -1,0 +1,1 @@
+"can i store int and enum together? example, i have a random number, but it can have ""special numbers"" values. something like that:..enum xnumber { infinity, negative, int }...so i could store:..var i = xnumber.infinity;.var i = xnumber.negative;.var i = (xnumber) 1;.var i = (xnumber) 500;.var i = (xnumber) -1000;...if not, what are my possibilities to do that?"

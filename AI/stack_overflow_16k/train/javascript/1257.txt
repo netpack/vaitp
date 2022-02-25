@@ -1,0 +1,1 @@
+how to make an interactive link check like according to jinxuan cang: i meant to extract something from a link: www.example.com?variable=value.i want to extract the variable variable how do i do that in jquery/blank?

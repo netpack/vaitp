@@ -1,0 +1,1 @@
+"how to use type.gettype in a expression lambda i'm trying do the next instruction in blank:..form form = this.mdichildren.firstordefault(x =&gt; x is type.gettype(""myformname""));...but i have a error: method name expected...what would be the correct usage of the instruction."

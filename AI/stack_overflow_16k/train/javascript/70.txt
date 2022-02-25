@@ -1,0 +1,1 @@
+how can i override event property setters like for event.pagex? i want to override event.pagex and event.pagey for all events because ie10+ come with a bug that sometimes returns floating point positions for pagex/y instead of integers.

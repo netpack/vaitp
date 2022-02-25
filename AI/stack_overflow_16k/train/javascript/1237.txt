@@ -1,0 +1,1 @@
+"reverse sort the number having repeated value i have to sort the input number who digits are not distinct..i've tried this code. but does not work for repeated digit number...function abc(n){.   return +n.tostring().split('').reverse().join('');.   //take n=1021 it will return 1201, instead of 2110.}"

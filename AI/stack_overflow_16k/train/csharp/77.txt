@@ -1,0 +1,1 @@
+"datetime.now as file name i would like to give a document i've created programmatically a name which contains the returned value of datetime.now.tostring();..the trial failed when "":"" symbol is a content of the file name. ..any idea?"

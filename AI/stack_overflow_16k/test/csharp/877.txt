@@ -1,0 +1,1 @@
+"how expensive is a guid cast and comparison vs a string comparison which would be faster? ..bool same=(guid)identifier==id;..bool same=string.equals(string1,string2, stringcomparison.ordinalignorecase);"

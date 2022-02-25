@@ -1,0 +1,1 @@
+"what`s wrong with nodevalue? // html.&lt;div&gt;hello world!&lt;/div&gt;..// blank.var textnode = div.firstchild;.textnode.nodevalue = ""hello us"";...the sample: sample why can`t i change the text content?"

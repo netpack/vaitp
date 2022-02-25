@@ -1,0 +1,1 @@
+"why in blank range (0,x**2+1) very slow? here is my code ..def(x):.    for i in range (0,x**2+1):.        ......but i found it is very slow!!.who can tell me the reason,thanks!"

@@ -1,0 +1,1 @@
+"blank validator for input text field for two decimals only how would one validate and restrict input text field for two decimals only, without using jquery or this syntax: ..  regexpobject.test(string)"

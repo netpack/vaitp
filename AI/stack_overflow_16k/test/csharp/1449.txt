@@ -1,0 +1,1 @@
+"blank regex url validation i'm using below regex for url validation... public static readonly string urlvalidation = @""^((http|ftp|https|www)://)?([w+?.w+])+([a-za-z0-9~!@#$%^&amp;*()_-=+\/?.:;',]*)?$"";...but,if i input google..com.my, the result is valid, but actually is not. how to amend the regex to make it not valid if input 2 dots."

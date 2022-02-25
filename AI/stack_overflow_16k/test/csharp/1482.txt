@@ -1,0 +1,1 @@
+blank: casting variable as a generic type t i have a generic class with type t. in one of the methods i need to cast a variable as that type but i can not find out how to do it...var identdata = new identifyingdata&lt;t&gt;((t)data);...i need to cast data as the type of t.

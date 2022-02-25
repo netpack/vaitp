@@ -1,0 +1,1 @@
+"is array.slice with negative numbers safe? i remember reading years ago that passing negative numbers as the 2nd argument to some of the functions with this syntax (slice, substr, etc) was only supported in some browsers, but i can't find the reference...just wondering if anyone knows if ary.slice(0, -1) specifically is safe across all browsers."

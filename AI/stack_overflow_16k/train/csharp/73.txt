@@ -1,0 +1,1 @@
+"how to access a const value without defining a static class in blank? in php i can define a class with const value that can be easily accessed, how do i do that in blank?..&lt;?php.class myclass.{.    const constant = 'constant value';.}..echo myclass::constant;...the php class can be a general class, but has it to be a static class in blank to get the same function??"

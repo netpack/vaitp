@@ -1,0 +1,1 @@
+formating float variable in blank upto 2 digits i am trying to display float variable upto two digits of precision. suppose the variable is 50.35 then it is getting displayed. but when the variable is 50.30 it is displaying only 50.3. unable to make it to display 50.30.

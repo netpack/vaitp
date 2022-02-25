@@ -1,0 +1,1 @@
+"how to split an array into multi arrays in blank? i have an array..[2,5,7,9,1,3,4,6,8]...and i want a function..list&lt;list&lt;integer&gt;&gt; split(list&lt;integer&gt; list, int n)...which will separate the list intonarrays..for example:n=4,.result will be:..[2,1,8],.[5,3],.[7,4],.[9,6]...note, the number was sampled averagely"

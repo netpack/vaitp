@@ -1,0 +1,1 @@
+"set bit values in byte i need to set the bit for some of the bluetooth features listed below using blank:..headervalue:bluetoothfeatures, .tag id:0x10, .length:4 bytes, .possible values :.    bit 0 = a,.    bit 1 = b,.    bit 2 = c,.    bit 3 = d,.    bit 4 = e ....so on till bit 31."

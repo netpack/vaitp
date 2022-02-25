@@ -1,0 +1,21 @@
+"    def test_certificates_features_against_status(self):
+        """
+        Test certificates with status 'downloadable' should be in the response.
+        """
+        url = reverse('get_issued_certificates', kwargs={'course_id': unicode(self.course.id)})
+        # firstly generating downloadable certificates with 'honor' mode
+        certificate_count = 3
+        for __ in xrange(certificate_count):
+            self.generate_certificate(course_id=self.course.id, mode='honor', status=CertificateStatuses.generating)
+
+        response = self.client.get(url)
+        res_json = json.loads(response.content)
+        self.assertIn('certificates', res_json)
+        self.assertEqual(len(res_json['certificates']), 0)
+
+        # Certificates with status 'downloadable' should be in response.
+        self.generate_certificate(course_id=self.course.id, mode='honor', status=CertificateStatuses.downloadable)
+        response = self.client.get(url)
+        res_json = json.loads(response.content)
+        self.assertIn('certificates', res_json)
+        self.assertEqual(len(res_json['certificates']), 1)"

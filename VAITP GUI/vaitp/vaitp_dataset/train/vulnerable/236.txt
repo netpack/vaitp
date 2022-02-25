@@ -1,0 +1,10 @@
+"    def get_email_content_response(self, num_emails, task_history_request, with_failures=False):
+        """ Calls the list_email_content endpoint and returns the repsonse """
+        self.setup_fake_email_info(num_emails, with_failures)
+        task_history_request.return_value = self.tasks.values()
+        url = reverse('list_email_content', kwargs={'course_id': self.course.id.to_deprecated_string()})
+        with patch('instructor.views.api.CourseEmail.objects.get') as mock_email_info:
+            mock_email_info.side_effect = self.get_matching_mock_email
+            response = self.client.get(url, {})
+        self.assertEqual(response.status_code, 200)
+        return response"

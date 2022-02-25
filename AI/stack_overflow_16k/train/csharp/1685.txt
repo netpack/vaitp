@@ -1,0 +1,1 @@
+"blank string operation. get file name substring myfinename_slice_1.tif.myfilename_slice_2.tif.........myfilename_slice_15.tif.........myfilename_slice_210.tif...in blank, how can i get file index, like ""1"", ""2"", ""15"", ""210"" using string operations?"

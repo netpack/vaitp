@@ -1,0 +1,8 @@
+"    def test_poisoned_http_host_admin_site(self):
+        "Poisoned HTTP_HOST headers can't be used for reset emails on admin views"
+        with self.assertRaises(SuspiciousOperation):
+            self.client.post('/admin_password_reset/',
+                {'email': 'staffmember@example.com'},
+                HTTP_HOST='www.example:dr.frankenstein@evil.tld'
+            )
+        self.assertEqual(len(mail.outbox), 0)"

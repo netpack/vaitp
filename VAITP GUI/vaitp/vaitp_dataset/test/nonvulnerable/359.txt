@@ -1,0 +1,1 @@
+"def _normalize_headers(headers):    return dict([(key.lower(), NORMALIZE_SPACE.sub(value, " ").strip()) for (key, value) in headers.iteritems()])"

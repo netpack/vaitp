@@ -1,0 +1,1 @@
+"replace all in blank for one occurance i have to replace """" (two quotes) with "" (one quotes). i used:..string.replace(/""""/g,'""')...but if it is having """""""" (four quotes) it is replacing with "" (one quote) it is again replacing the """" (two quotes) with "" (one quote)...i need """""""" (four quotes) should be replaced with """" (two quotes)"

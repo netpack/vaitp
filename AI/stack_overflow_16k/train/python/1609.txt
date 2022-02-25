@@ -1,0 +1,1 @@
+"how can i make `bin(30)` return `00011110` instead of `0b11110`? what does the ""b"" stand for in the output of bin(30): ""0b11110""? is there any way i can get rid of this ""b""? how can i get the output of bin() to always return a standard 8 digit output?"

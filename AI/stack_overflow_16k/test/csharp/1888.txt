@@ -1,0 +1,1 @@
+"splitting 2-d array into several 1-d arrays in blank i have a 2-d int array say ..int[,] data = new int[n, numofcol]; ...now this is also numofcol number of 1-d array of length n. correct?..suppose numofcol is 3...how do we represent those 1-d arrays?..data[,0] data[,1] and data[,2] gives me wrong syntax in visual studio."

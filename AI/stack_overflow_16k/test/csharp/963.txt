@@ -1,0 +1,1 @@
+how can i generate unique number as format xxxx-xxxx-xxxx using blank i want to generate number as format above and i try to use uuid() and guid() but it is not what i want(difference format and it is hexadecimal not number)..anyone have any idea or logic to do it?

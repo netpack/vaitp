@@ -1,0 +1,1 @@
+"blank xpath id() not working? i'm using blank and i'm stumped. does it just not support id()? i have a large xml file, about 4-5 of them at ~400kb, so i need some speed and performance wherever i can get it...i use xmldocument.selectsinglenode(""id('blahblahblah')"") and it doesn't get the node by id. am i going crazy or is it that blank xpath just doesn't support id()?"

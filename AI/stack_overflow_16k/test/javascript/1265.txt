@@ -1,0 +1,1 @@
+"timestamp has decimal? i'm using the following code to get a timestamp in blank, but it's returning a decimal. when i checked the timestamp with an online converter it's actually correct. i've never seen this format before...var currentts = new date().gettime() / 1000;...how can i get a whole number and why is it returning a valid timestamp with a decimal?..thanks"

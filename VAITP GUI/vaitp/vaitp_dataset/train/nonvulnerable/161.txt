@@ -1,0 +1,5 @@
+"    def test_content_length_acceptable(self):
+        self.request.headers['Content-Length'] = MAX_REQUEST_BODY_SIZE
+        self.request.body = "0" * MAX_REQUEST_BODY_SIZE
+        response = self.request.get_response(self.middleware)
+        self.assertEqual(response.status_int, 200)"

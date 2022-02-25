@@ -1,0 +1,1 @@
+"should i add __init__.py to github? i needed an empty __init__.py file in order to call a class from my main in a project i was working on. if i understand correctly, this is the constructor?..since github doesn't allow files that are empty to be added to my repository, i was wondering if it actually wasn't necessary for my project or if i needed a work around?"

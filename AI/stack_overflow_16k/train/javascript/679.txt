@@ -1,0 +1,1 @@
+use blank file in a different project i have a blank (which uses files from it's own project) file that i need to use in a different project without copy the code..how can i do it?..thanks

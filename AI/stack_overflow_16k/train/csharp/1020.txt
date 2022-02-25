@@ -1,0 +1,1 @@
+how to use one collection as a parameter to function call in another collection of the same size? i have two collections known to be of the same size:..list&lt;drivers&gt; drivers;.list&lt;car&gt; cars;...i need to put driver from the i place to i car:..for (int i = 0; i &lt; drivers.count; i++).    cars[i].assigndriver(drivers[i]);...may i do that without loop?

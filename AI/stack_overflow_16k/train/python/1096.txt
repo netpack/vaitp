@@ -1,0 +1,1 @@
+"list index out of range while removing indexes from list for y in range(len(list)):.            print(""length"",len(list)).            print (""y"",y).            print(""list"",list[y]).            if (list[y])%(dividing_prime)==0:.                  print(list[y]).                  counter=counter+1.                  list[y]=0.                  list.remove(0)"

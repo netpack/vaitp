@@ -1,0 +1,1 @@
+"finding the sum of products in a string i need to make it so the numbers in a string multiply with the number next to it.this is what i have tried so far..example: ""1234"" would be 20 because it would be ((1*2)+(2*3)+(3*4))..def sumofproducts(dig):.      for i in dig:.            a=dig[i]*dig[i+1].      return a"

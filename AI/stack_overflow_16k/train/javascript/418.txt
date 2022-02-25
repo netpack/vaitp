@@ -1,0 +1,1 @@
+how to save the current date/time when i add new value to firebase realtime database in blank i want to add data in firebase database using webpage..for unique id i want to use date and time like below format.mtb + yyyyddmmhhmmss.mtb20190517083578..how to do this? please tell me any one.

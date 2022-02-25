@@ -1,0 +1,1 @@
+"in blank, is it possible to get an object without name from another module? i want to get all object generated from another module, even the object do not have a name or reference, is it possible? for example:..in module1.py, there's only one line code:..myclass()...in module2.py:..module1 = __import__(""module1"").# print sth of myclass from module1"

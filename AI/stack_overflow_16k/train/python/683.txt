@@ -1,0 +1,1 @@
+"extracting substrings at specified positions how to extract substrings  from a string at specified positions.for e.g.: ‘abcdefghijklm’. i have to extract the substring from  3 to 6 and 8 to 10...required output: defg, ijk..thanks in advance."

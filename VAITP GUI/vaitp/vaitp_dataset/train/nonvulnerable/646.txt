@@ -1,0 +1,2 @@
+"def read_body_with_max_size(
+    response: IResponse, stream: BinaryIO, max_size: Optional[int]"

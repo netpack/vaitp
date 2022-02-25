@@ -1,0 +1,1 @@
+"how to strip trailing digits from a string i have a variable text whose value is like below,i need strip of trailing digits,is there a blank built-in function to do it..if not,please suggest how can this be done in blank..e.g. -text=a8980bqdfzdd1701209.3 => -a8980bqdfzdd"

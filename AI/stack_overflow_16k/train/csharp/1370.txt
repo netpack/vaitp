@@ -1,0 +1,1 @@
+store all the results of a loop in a single string i am trying to store the resulting strings together (combine them) into a single string...for (int i = 0; i &lt; datagridview1.rows.count; ++i).{.    string pedido = datagridview1.rows[i].cells[2].value.tostring();.}

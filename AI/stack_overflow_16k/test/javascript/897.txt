@@ -1,0 +1,1 @@
+"what does mean && between variables in line without if? i have following line of code in blank:..q &amp;&amp; (c = q === ""0"" ? """" : q.trim());...what does it mean? i understand that c is equals either empty string or q.trim() result, but what does mean q &amp;&amp; ()?"

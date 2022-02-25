@@ -1,0 +1,1 @@
+"blank.lang.outofmemoryerror: blank heap space i'm trying to create a 2 dimensional array that is fairly large and i keep getting the error ""blank.lang.outofmemoryerror: blank heap space"".  i've tried the -xmx command and i still get it...could there be an alternative i could use to 2d arrays?  or a way to increase heap size that works."

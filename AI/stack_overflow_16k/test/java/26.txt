@@ -1,0 +1,1 @@
+"how do i decompose a url into its component parts in blank? my requirements are fairly simple, but i need to do a lot of this so i'm looking for a robust solution...is there a good light-weight library for decomposing urls into their component parts in blank?  i'm referring to hostname, query string, etc."

@@ -1,0 +1,1 @@
+"how to convert from decimal to binary invert it with ~ and convert back to decimal not sure if i am in the right direction..i can't find info about tilde...int n = 5;.int m = ~n;..string numasstring = convert.tostring(~n, 2);..char[] numaschar = numasstring.tochararray();..long l = convert.toint64(numasstring, 2);..console.writeline(numasstring);.console.writeline(l);"

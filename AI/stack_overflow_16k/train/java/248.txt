@@ -1,0 +1,1 @@
+"blank: is there a version of ++ for booleans? how do you use an increment operator for booleans so every time it adds ++, it changes from true to false or from false to true?"

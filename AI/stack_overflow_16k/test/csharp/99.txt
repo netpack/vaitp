@@ -1,0 +1,1 @@
+"question mark '?' given in arguments of a method i have a code containing a class with the following method:..public string addevent(datetime date, int eventcount, int? eventid, string eventguid){...}...my question is what does the question mark there do? my guess it has something to do with overloading since there's another overload method of addevent but i'm not sure..."

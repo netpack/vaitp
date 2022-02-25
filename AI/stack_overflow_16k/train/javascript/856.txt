@@ -1,0 +1,1 @@
+count the number of child div inside parent div and align the child divs in the middle of the parent div i have 8 child divs inside a parent div. i have to count the width of the parent div and divide the width with the number of child width and place them in the middle of the parent div using blank

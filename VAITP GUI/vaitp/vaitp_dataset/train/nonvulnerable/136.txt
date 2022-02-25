@@ -1,0 +1,6 @@
+"    def get_services(self, context):
+        self.assert_admin(context)
+        service_list = self.catalog_api.list_services(context)
+        service_refs = [self.catalog_api.get_service(context, x)
+                        for x in service_list]
+        return {'OS-KSADM:services': service_refs}"

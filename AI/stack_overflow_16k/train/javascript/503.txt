@@ -1,0 +1,1 @@
+"purpose of assigning var as void 0 in blank i'm trying to understand the libraries used in this article and elsewhere, and there's some pretty mind bending stuff in there, among which is the line..var cb = void 0;...i've learned that void 0 returns undefined, but isn't a var undefined by default? why not just use the following instead?..var cb;"

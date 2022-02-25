@@ -1,0 +1,1 @@
+"declaring blank variable what's the best practice of declaring blank variables and why?..for example from these 3 below, which one is better?..var test1;.var test2 = null;.var test3 = """";...thanks."

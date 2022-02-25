@@ -1,0 +1,1 @@
+"blank return only a tuple in a list i was wondering how i could select only a tuple in a list where there could be numbers and other things in blank 3...how to do it if the list looks like this?..&gt;&gt; [5433, (32, 54, 122)].(32, 54, 122) #expected result...i want to ignore the first number and return only the tuple of integers...any ideas?"

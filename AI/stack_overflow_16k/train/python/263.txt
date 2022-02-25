@@ -1,0 +1,1 @@
+"blank [error 22] invalid mode most of the times this part of the code works. but only some times it fails with the error message shown. i am wondering if this is a code problem?..crfile=strftime(""%y-%m-%d %h_%m_%s"").file = open(""c:\all-files\%s.log"" % crfile,""w"")..ioerror: [errno 22] invalid mode ('w') or filename: 'c:\all-files\2015-03-30 19_05_09.log'"

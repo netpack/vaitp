@@ -1,0 +1,1 @@
+"how to prevent math.max() return nan? i want to create a function which returns the maximum number from an array, but it keeps returning nan...how can i prevent nan and return the wanted result ? ..var thenum = [5,3,678,213];..function max(num){.    console.log(math.max(num));.}..max(thenum);"

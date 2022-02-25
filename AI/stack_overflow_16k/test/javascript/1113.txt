@@ -1,0 +1,1 @@
+convert utc time to blank date i am using highcharts a js library it gives me the time of a point in utc format: 2592000000 which should correlate to a date somewhere in 2011...how do i get the actual date of this?

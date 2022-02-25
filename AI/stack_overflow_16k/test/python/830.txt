@@ -1,0 +1,1 @@
+"simplest way to return an array that is nested in multiple arrays i have a situation where i have data that sometimes can be nested in multiple array layers...some times the data can be nested like: ..[ [ 'green', 'blue', 'red' ] ]...other times..[[[ ['green', 'blue', 'red' ] ]]]...i want to extract the array and return it, what would be the most blankic way of doing this?"

@@ -1,0 +1,1 @@
+"why inline blank doesn't work? this piece of code doesn't work on my firefox 12 browser...blank:alert(""hi"");...but it works on ie8...what's the problem?"

@@ -1,0 +1,1 @@
+blank error when calling a function in initialize() i have a page for carpools.  i made some changes to the function that calls initialize and now getting errors.  here is the page:..http://www.comehike.com/hikes/hike_carpool.php?hike_id=180..what is the correct way to have the second argument when i call the initialize function?  i think some blank errors are coming from there.

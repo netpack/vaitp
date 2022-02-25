@@ -1,0 +1,1 @@
+"reading value from registry and storing it in a bin file in a folder i am writing a blank code. as shown in the image, i need to retrieve the value of a key called licensekey (right side of the image) from the registry path hkey_local_machine/software/avtec, inc/licensekey and store the value in a bin file called pml.bin..can anyone help me with the code? thanks in advance."

@@ -1,0 +1,1 @@
+"echo php var before the </head> (closing head) tag in order to retrieve it with java script i have a php variable called $myvar = ""6542"";..where can i echo it before the &lt;/head&gt; tag of my site (and not trigger any html issues) in order to be able to pick the value up with blank?..ty"

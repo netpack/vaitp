@@ -1,0 +1,1 @@
+how to implement a fifo buffer? my data is coming from a serial port and i'd like to store it in a fifo buffer before sending it to the client via tcp/ip. how can i do it?

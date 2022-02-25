@@ -1,0 +1,1 @@
+"    async def actset(self, ctx):        """        Configure various settings for the act cog.        """"

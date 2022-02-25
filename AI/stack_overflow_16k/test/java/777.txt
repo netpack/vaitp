@@ -1,0 +1,1 @@
+blank design patterns (number patterns) help me to write a blank code for printing the number pattern for any number of rows!.ask the user to enter the input!(number of rows)..for example:if the user enters input=6 then print like this!..1.2 11.3 10 12.4 9  13 18.5 8  14 17 19.6 7  15 16 20 21...similarly for any number of input rows!

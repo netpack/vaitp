@@ -1,0 +1,1 @@
+"insert current url in textfield on page load i want my url to be displayed in a text field when the page loads..i tried this but it did not work:....function geturl() {.  var url = document.url;.  document.getelementbyid(""textfield"").value = url;.}.&lt;input type=""text"" name=""textfield"" id=""textfield"" readonly=""true"" onload=""geturl()"" value=""""&gt;"

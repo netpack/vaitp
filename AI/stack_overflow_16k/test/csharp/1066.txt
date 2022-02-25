@@ -1,0 +1,1 @@
+what is difference between :: and . in blank when aliases are used? if alias is used with namespaces like..using alias = system;...there are two ways to call members of namespace through alias:..alias::member...and ..alias.member...is there any difference between these calls?

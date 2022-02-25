@@ -1,0 +1,1 @@
+"how do i install a previous version of blank into a virtualenv? i had blank3 installed globally, then i made a virtualenv. now i want to change the blank version inside to blank2.7. trying to install blank2.7 gives me only the option of installing to my hard disk. how can i specify the version in my virtualenv?"

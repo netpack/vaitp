@@ -1,0 +1,1 @@
+"removing the common elements between two lists .  possible duplicate:.  blank list subtraction operation  .....i want to remove the common elements between two lists. i mean something like this....a=[1,2,3,4,5,6,7,8].b=[2,4,1].# i want the result to be like.res=[3,5,6,7,8].....is there any simple blankic way to do this ?"

@@ -1,0 +1,1 @@
+"any use of declaring a private static class in blank? is there any use of declaring a static class as private.here is the code below:..static class derivedclass.{.    private static string getval().    {.        return ""hello"";.    }.}"

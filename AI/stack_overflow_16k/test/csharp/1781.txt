@@ -1,0 +1,1 @@
+"how to determine the size of each dimension of multi-dimensional array? int[,,] moreints = { {{10,20,30}, {60,70,80}, {111,222,333}} };...how do i retrieve the size of each dimension in this multi-dimensional array when it is defined and initialized in the same statement?  i know by looking that it is [1,3,3], but how do i determine that programmatically?"

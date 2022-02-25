@@ -1,0 +1,1 @@
+"blank how to split string based on 2 parameters? i have three string called this_is string1 and this is string2 there_is string3 ..how to split these 3 strings after ""this_"", ""this "" ""there_) in one condition? basically, i want to split based on first ""_"" or "" "" in a string in one condition."

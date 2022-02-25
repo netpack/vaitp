@@ -1,0 +1,1 @@
+"web view component shows windows start screen background color b4 loading webview component for a flash second my app has a white background, but the area of a webview control flashes the background color of the windows 8 start screen before the html string is loaded into the webview. any fix for this"

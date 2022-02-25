@@ -1,0 +1,1 @@
+"does blank move buffers from one logical memory location to another? in simple blank cli script, i created a memory buffer with byteio and wrote some data there. i call it from the terminal...let's say my program is in progress for one hour. ..can blank interpreter implicitly move my buffer from one logical memory location to another during program execution?"

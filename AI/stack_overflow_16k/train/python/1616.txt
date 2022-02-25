@@ -1,0 +1,1 @@
+"input variables in one line i have a problem with reading variables in one line.  i used a map(int, input().splite()) when i know the number of variables, but in this case in every run of code this number is different. (blank 3)"

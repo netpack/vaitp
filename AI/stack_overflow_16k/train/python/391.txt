@@ -1,0 +1,1 @@
+"what am i doing wrong? (convertion) i'm trying  to convert this meters to kilometers but i don't how to let the input to realize it's an integer..m = input(""enter the distance (meters) you want to convert to kilometers  "").km =  1000.print (m/km,""km"")"

@@ -1,0 +1,1 @@
+"calling a blank on an external page as a url there is a blank on an external webpage that downloads a file. can i pass a url to a local script to download this automatically? simply using http://webpage.com/blank:thescript() doesn't seem to work, even when i type it into a browser. i'm very much novice in this space, be gentle! thanks in advance."

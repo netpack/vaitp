@@ -1,0 +1,1 @@
+"how do i split an integer into 2 byte binary? given..private int width = 400;.private byte [] data = new byte [2];  ...i want to split the integer ""width"" into two bytes and load data[0] with the high byte and data[1] with the low byte...that is binary value of 400 = 1 1001 0000 .so data[0] should contain 0000 0001.and data[1] should contain 1001 0000"

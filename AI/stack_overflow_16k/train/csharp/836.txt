@@ -1,0 +1,1 @@
+how can i show currency symbol in a label in blank? i am new to blank and i am using windows forms...anyone knows how can i show currency symbol in a label..for example: ..double test = 2.5;.lable1.text = test.tostring();  ...the result will show 2.5 but i want to show it as £2.5..please help me how to do that. thank you

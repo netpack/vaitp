@@ -1,0 +1,1 @@
+"get type from string in blank i want to get the type object from an string which contains the complete path of the class right from its namespace...i have tried using type type = type.gettype(""system.convert"") and it works but it gives me null when using type type = type.gettype(""system.text.regularexpressions.regex""). ..am i doing something wrong here?"

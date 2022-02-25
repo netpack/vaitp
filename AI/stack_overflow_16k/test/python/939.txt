@@ -1,0 +1,1 @@
+"what is the most blankic way to pop a random element from a set in blank3.6+? before 3.6 i would simply use set.pop(). now, sets are ordered and pop always removes from the start...what do you think is the most blankic way?..i'm not sure how i feel about set.remove(random.sample(set, 1)[0])."

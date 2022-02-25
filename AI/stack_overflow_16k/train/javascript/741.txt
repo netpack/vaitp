@@ -1,0 +1,1 @@
+"blank refresh page i have a html page with a button pop-up. if i click on this button a new window pops-up, i do all of my changes in this window and then click the close button. the html page with the popup button should refresh after i closed the pop-up window. is this possible?"

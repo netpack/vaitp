@@ -1,0 +1,2 @@
+"        def formatter_field_name_split(field_name):
+            return field_name._formatter_field_name_split()"

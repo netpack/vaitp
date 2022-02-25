@@ -1,0 +1,1 @@
+"how to manage string in blank the problem:..i want to get trough a file and from this:..t - v - m = toyota - volvo - mercedes ...get the output:..t = toyota.v = volvo .m = mercedes...i've been trying to do that with the split() method, but i'm a newbie :).thanks!"

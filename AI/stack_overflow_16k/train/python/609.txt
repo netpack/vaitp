@@ -1,0 +1,1 @@
+"get output in exit codes import sys..list = ['a', 'b', 'c', 'd']..if 'c' in list: .    sys.exit(0) .else:    .    sys.exit(1)...i want to print output as o or 1 codes. but, i don't get any output."

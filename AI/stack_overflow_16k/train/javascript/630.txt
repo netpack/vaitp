@@ -1,0 +1,1 @@
+"how do i keep track of the score in a quiz? i tried to put the code into a function in a class...var score = 0;.for (var a = 0; a &lt;= 5; a++) {.  if (userinput[i] == this.ans) {.    score += 1;.  } else {.    score += 0;.  }.}.console.log(""your score is "" + score + ""/5."");...the output will always show 5 even though the answers are wrong."

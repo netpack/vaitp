@@ -1,0 +1,1 @@
+"what does throws statement mean in blank? also, what does throws numberformatexception, ioexception mean? i keep trying to use bufferedreader by saying ..bufferedreader nerd = new bufferedreader(new inputstreamreader(system.in));...but bufferedreader won't work unless throws numberformatexception, ioexception is put in."

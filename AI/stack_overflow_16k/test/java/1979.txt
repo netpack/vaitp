@@ -1,0 +1,1 @@
+"how these two references point to the same object in the heap? could anyone explain how these two references will point to same object in the heap?..string stra = new string(""apples"");.string strb = new string(""apples"");"

@@ -1,0 +1,19 @@
+"def write_to_location(location, content):
+    """
+    Write content to a path. Ensures that the entire path exists, creating directories if necessary.
+
+    :param location: path that should exist
+    :type  location: str
+    :param content: bits to be written to file
+    :type  content: str
+    """
+    try:
+        os.makedirs(os.path.dirname(location))
+    except OSError, e:
+        if e.errno != errno.EEXIST:
+            raise
+    try:
+        fp = open(location, 'w+')
+        fp.write(content)
+    finally:
+        fp.close()"

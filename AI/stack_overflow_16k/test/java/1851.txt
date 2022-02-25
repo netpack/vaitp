@@ -1,0 +1,1 @@
+"how can i split a string hi i want to split a string as only two parts. i.e. i want to split this string only once...ex: string-----&gt; hai,bye,go,run ...i want to split the above string with comma(,) as two parts only..i.e ..string1 ---&gt; hai ..string2 ----&gt;bye,go,run...please help me how can i do it."

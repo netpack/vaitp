@@ -1,0 +1,1 @@
+"how to store three values in data structure blank i have this input: .node1, node2, similarity..for example : ..1 2 0.33.1 3 5.1 5 0.8...and i want to classify them based on similarity so the result will be : ..1 3 5.1 5 0.8.1 2 0.33...my question is: with data structure is suitable to store these data and how to implement it? ^-^ thank you"

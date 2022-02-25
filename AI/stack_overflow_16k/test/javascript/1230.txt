@@ -1,0 +1,1 @@
+"manipulating hover state is there anyway to manipulate :hover state through html dom like:..blank:void(""document.body.backgroundcolor=red"");...in the above code or through html dom can hover state be defined but not through css..i want to make the background color red on only hover state so how can i solve this when the above code is placed in the url?"

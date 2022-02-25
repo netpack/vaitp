@@ -1,0 +1,1 @@
+"isclass(""classname"") method? is there a way to know at runtime whether a class name is a class or not?.in other words, is there some sort of method you can use that would tell you whether a string input is a .net class?"

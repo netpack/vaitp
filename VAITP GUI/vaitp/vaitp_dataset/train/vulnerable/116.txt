@@ -1,0 +1,33 @@
+"    def respond_error(self, context, exception):
+        context.respond_server_error()
+        stack = traceback.format_exc()
+        return """
+        <html>
+            <body>
+
+                <style>
+                    body {
+                        font-family: sans-serif;
+                        color: #888;
+                        text-align: center;
+                    }
+
+                    body pre {
+                        width: 600px;
+                        text-align: left;
+                        margin: auto;
+                        font-family: monospace;
+                    }
+                </style>
+
+                <img src="/ajenti:static/main/error.jpeg" />
+                <br/>
+                <p>
+                    Server error
+                </p>
+                <pre>
+%s
+                </pre>
+            </body>
+        </html>
+        """ % stack"

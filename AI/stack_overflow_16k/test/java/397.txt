@@ -1,0 +1,1 @@
+"how can i declare an arr1 of array_size with the appropriate type 64 bit integer public class sorting {.    static final string in_file = ""sorting.txt"";.    static final int array_size = 20000;..static public void main(string[] args) {..   int[] arr1= new int [array_size];"

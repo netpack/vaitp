@@ -1,0 +1,1 @@
+how to read a text file using blank? .i have a text file which is having a set of qns..the file is present in the same path as my blank file..i need to read the file and store it in a js array....ex :..xxx.txt...first question.second question...result :.1. js array should store every line seperately.

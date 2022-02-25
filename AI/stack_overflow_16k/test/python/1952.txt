@@ -1,0 +1,1 @@
+"""in"" statement for lists/tuples of floats should the use of in or not in be avoided when dealing with lists/tuples of floats? is its implementation something like the code below or is it something more sophisticated?..check = false.for item in list_to_search_the_value_in:.    if value_to_search_for == item:.        check = true"

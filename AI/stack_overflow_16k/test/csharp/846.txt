@@ -1,0 +1,1 @@
+"can not delete an elment from the array via lists blank this method doesn't work at all:..    public static void delete(ref prot[] pack, prot prot).    {.        var temp = new list&lt;prot&gt;(pack);.        temp.remove(prot);.        pack = temp.toarray();.    }...what am i doing wrong?..thank you."

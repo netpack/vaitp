@@ -1,0 +1,1 @@
+"group selectors blank with concatenation can you group those into one line, i know how to do this without concatenation but with, not working...$('#vda'+event.target.id).remove();.$('#a'+event.target.id).remove();.$('#'+event.target.id).remove();.$('#da'+event.target.id).remove();"

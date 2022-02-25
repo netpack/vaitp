@@ -1,0 +1,1 @@
+"blank - check if the input is an int i've looked at threads with this question. but i can't understand what's wrong. .answerone is the user input. ..var answerone = console.read();.        string x = answerone;...        if (int.tryparse(x, out answerone)).        {.            console.writeline(""ok good"");.        }...error: cannot convert type 'int' to 'string'"

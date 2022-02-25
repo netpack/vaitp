@@ -1,0 +1,1 @@
+blank lose focus i have a div that is set to display:inline using the onclick() js event handler.  how do i make the div go back to display:none when i click any where else on the page other than the now visible div?..i've googled about blur and setting the focus to another element but i don't know how to actually do it.

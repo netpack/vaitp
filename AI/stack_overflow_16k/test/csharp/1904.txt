@@ -1,0 +1,1 @@
+"blank join two datatables i'm trying to join two datatables, both got the same amount of rows and just one column. is there any fancy way in blank to do that? in result i need datatable with two columns where first row of first column is next to first row of second column."

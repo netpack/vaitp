@@ -1,0 +1,1 @@
+"'return outside of function' error with correct indentation? in blank, it comes out with 'return outside of function', i check the indentation is nothing wrong. any clue on that?..dict={1:10,2:20,3:30}..for a,b in dict.items():.  if b==30:.    return a"

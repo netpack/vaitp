@@ -1,0 +1,1 @@
+"passing string variable in blank i'm dynamically creating a button. i can pass a variable with a numerical value (1) but i can't pass a string variable.  why?..function test(test1) {.  alert(test1);.}.document.write(""&lt;input type='button' value='' id=j onclick='test(1)'/&gt;"");"

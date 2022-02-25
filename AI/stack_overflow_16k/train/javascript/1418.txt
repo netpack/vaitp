@@ -1,0 +1,1 @@
+"blank - get milliseconds from float seconds i got a string that represents seconds (e.g value is ""14.76580"")..i want to set a new variable that has the value of the decimal portion (milliseconds) of that string ( e.g x = 76580 ) and i'm not sure what's the best way to do that..may you help please ?"

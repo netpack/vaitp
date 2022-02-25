@@ -1,0 +1,1 @@
+"how should i exit this blank program? quit2 = true.while quit2 == true:.    delete = input('nif you would like to delete a guest, enter their guest number. '.                   'nif you would  like to skip this step press enter.')..if isinstance(delete, int):.    list[delete].remove().else:.    break...i can't use quit2 = '' and while not quit2 by the way."

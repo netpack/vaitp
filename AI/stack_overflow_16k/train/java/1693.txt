@@ -1,0 +1,1 @@
+how to end a program when file does not exist rather than having a large block of text? i'm trying to end a program without having a block of unseemly text..i've looked through a few other threads with this topic and have tried to do what was suggested but for some reason it's not working. thank you for any help...error when ran:....my code to end if file does not exist:

@@ -1,0 +1,6 @@
+"    async def on_GET(self, origin, content, query, context):
+        return await self.handler.on_context_state_request(
+            origin,
+            context,
+            parse_string_from_args(query, "event_id", None, required=False),
+        )"

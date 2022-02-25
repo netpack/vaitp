@@ -1,0 +1,1 @@
+"serializable interface i  have a class that implements blank.io.serializable interface.so all the variables in that class is serilaizable. but i want to make some of the variables are should not serializable. is it possible?..thanks,.ravi"

@@ -1,0 +1,1 @@
+convert list<string> to list<int> in blank i want to convert a list&lt;string&gt; to a list&lt;int&gt;...here is my code:    ..void convert(list&lt;string&gt; stringlist).{.    list&lt;int&gt; intlist = new list&lt;int&gt;();  .    for (int i = 0; i &lt; stringlist.count; i++) .    {  .        intlist.add(int.parse(stringlist[i]));  .    }.)

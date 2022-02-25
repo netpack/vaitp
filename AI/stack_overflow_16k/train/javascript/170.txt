@@ -1,0 +1,1 @@
+how to refresh a div in jquery i have implemented paging in my project.but div tag is not getting refresh so i am get improper result.for that i tried reload() function of the jquery.

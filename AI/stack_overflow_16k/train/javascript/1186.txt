@@ -1,0 +1,1 @@
+"mvvm pattern blank can anyone share me a code or example of mvvm pattern in blank without knockout.js. i want to implement mvvm pattern in my project, but without using knockout.js. ..update..the application i am working is not web based and has limitation of using knockout.js. i liked the pattern anyway, but to implement i need a better pure js example."

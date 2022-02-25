@@ -1,0 +1,1 @@
+"retrieve specific object in a file i've got a file.txt with different information like this: ..""toto"": ""1.0"",.""tata"": ""2.0"",.""titi"": ""1.2"",.""trtr"": ""2.4""...i want to do a list with only the name of project, like this: ..toto.tata.titi.trtr...but i don't know how to do this in js ? need to parse my file ? ..thanks for your help :)"

@@ -1,0 +1,1 @@
+"missing ',' before statement in blank var value= ""200,000.00 $"";.var ft_pricetotal = eval(value.replace("" $"", """"));...i can't figure out why this error is being raised missing , after statement.can someone tell me how can i fix this error ?"

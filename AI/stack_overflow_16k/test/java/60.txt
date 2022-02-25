@@ -1,0 +1,1 @@
+is this an incorrect practice of oo programming? i'm working on re-writing a paint handler for my api. is this incorrect practice of oo for my class structure of the paintmanager or is it fine? i feel like it's correct but i wanted some second opinions...ignore the height and positional values in the background class. :p

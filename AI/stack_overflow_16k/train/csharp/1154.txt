@@ -1,0 +1,1 @@
+"is this clean coding? (.net, blank) in one of our projects i found this code..class a .{.     private b b = new b();..     protected void amethod().     {.         var x = b.domesome();.     }.}...my question, is this a ""clean"" way of coding? would it be cleaner to instantiate b in amethod?.does is depend?"

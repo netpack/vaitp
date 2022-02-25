@@ -1,0 +1,11 @@
+"    def _consumer(self, auth):
+        auth.process_response()
+        errors = auth.get_errors()
+        if not errors:
+            if auth.is_authenticated():
+                return True
+            else:
+                return False
+        else:
+            current_app.logger.error('Error processing %s' % (', '.join(errors)))
+            return False"

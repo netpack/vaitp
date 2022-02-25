@@ -1,0 +1,1 @@
+"can't access exception property i am catching an argumentexception, of which i want a specific property. when i put a breakpoint on the code where the argumentexception is caught, i see that it has an errormessage property: ....but trying to access it gives this result:....what's going on here?"

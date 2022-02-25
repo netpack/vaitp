@@ -1,0 +1,1 @@
+"how to convert numbers and letters a string in a list into integers? i'm trying to convert this list..a = ['45 inches', '45 inches', '44 inches', '42 inches', '41 inches', '41 inches']...into..a = ['45', '45', '44', '42', '41', '41']...could someone please help me figure this out?"

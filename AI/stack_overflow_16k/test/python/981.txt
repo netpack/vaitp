@@ -1,0 +1,1 @@
+"difference between list and map for getting multiple user inputs what is the difference between list(int(input()).split()) and map(int,input().split()) for getting multiple inputs from user?"

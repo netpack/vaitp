@@ -1,0 +1,10 @@
+"    def test_roundtrip_file(self):
+        f = open(self.filename, 'wb')
+        self.x.tofile(f)
+        f.close()
+        # NB. doesn't work with flush+seek, due to use of C stdio
+        f = open(self.filename, 'rb')
+        y = np.fromfile(f, dtype=self.dtype)
+        f.close()
+        assert_array_equal(y, self.x.flat)
+        os.unlink(self.filename)"

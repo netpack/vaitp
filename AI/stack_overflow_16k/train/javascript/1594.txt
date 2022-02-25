@@ -1,0 +1,1 @@
+blank if (a.b.v.c.d.e === true) what's an easy way to check ..if (a.b.v.c.d.e === true) {}...and return false if any of b or c or v is undefined?..coffeescript handles it easily but what is a comparable solution in vanilla blank? is there a library that has this common issue taken cared of?

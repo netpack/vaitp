@@ -1,0 +1,1 @@
+"uncaught typeerror: cannot read property 'hidden' of undefined i want [""2"",""2"",""2""] from {1:2,  10:2,  15:2 } since chart.js is unable to pick co-ordinates from an object"

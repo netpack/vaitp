@@ -1,0 +1,1 @@
+blank - print function output def cent_to_fahr(cent):.    print (cent / 5.0 * 9 + 32)..print (cent_to_fahr(20))...the output is this :..68.0.none...why this output has none?..i didn't get this result when i use just cent_to_fahr(20). can i ask why it happens ?

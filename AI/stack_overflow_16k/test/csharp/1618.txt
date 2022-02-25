@@ -1,0 +1,1 @@
+"what does this colon in blank mean in this code:..var hasmanytoone=false;.foreach(var property in entity.descendants(""property"")).{.  if (property:manytoone!=null).  {.    hasmanytoone=true;.  }.}...what does the colon after the variable ""property"" mean? is this the same as a period? i can't find any reference in the blank language that shows the colon being used like this."

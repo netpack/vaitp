@@ -1,0 +1,1 @@
+"pure js, get element by class but not class var items = document.getelementsbyclassname(""classname"");...gives me all the .classname classes, how do i update the code to get all those classes but excluding .classname_exclude?"

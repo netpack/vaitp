@@ -1,0 +1,1 @@
+"remove word from a string in blank i need to remove character from string..the string like ..string a=""{aaaaa{bbbbbb}aaaa}"";...how to remove {bbbbbb} from this string. ..this is example string only i need to remove the string between {------}.not possible to replace"

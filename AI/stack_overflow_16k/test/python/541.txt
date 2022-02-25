@@ -1,0 +1,1 @@
+"converting a tuple with multiple elements to a string in a list what would be an easy way to convert:..(1,0,0,0,0,0)...to..['100000']...i know how to switch it to a list using..list()...but i can't figure out how to combine the elements into a string and keep that inside a list."

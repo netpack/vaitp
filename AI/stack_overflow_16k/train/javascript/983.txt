@@ -1,0 +1,1 @@
+"how to get the value of nested blank object property by string key i want to get a value from within a nested blank object by this key...var t = ""cont.model.inspection.inspectionname"";...how to get the nested object values by string key directly?..i have tried the eval(t) but its giving null but this key has value ""a"" when run on console."

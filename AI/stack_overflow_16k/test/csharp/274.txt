@@ -1,0 +1,1 @@
+"how to convert time to 24hr format from datetime.now here is my code, there is an error regarding the last line stating that...  ""cannot implicitly convert type 'string' to 'system.timespan'...//getting the current date and time.datetime datetime = datetime.now;.//date.var date = datetime.date;.//time.var time = datetime.timeofday;.time = time.tostring(""hh:mm"");"

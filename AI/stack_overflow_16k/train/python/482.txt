@@ -1,0 +1,1 @@
+"verifying constructor parameters in blank what is the best-practice method for verifying constructor params in blank?..i am new to the language, and am using raise:..class breakfast(object):.    def __init__(self, spam=none, eggs=0):.        if not spam:.            raise error(""error: no spam"")...is this stupid, or what?..thanks!"

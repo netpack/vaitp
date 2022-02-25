@@ -1,0 +1,1 @@
+how to create a non-utf8 string? i need to test that my code works for non-utf8 strings as well. how can i create a non-utf8 string in blank?..str = ?

@@ -1,0 +1,1 @@
+combo box and generic list i'm having a list.. list&lt;string&gt; strarraylist = new list&lt;string&gt;();...i want to add to it the values of a combo box ..

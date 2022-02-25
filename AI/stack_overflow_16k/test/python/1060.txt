@@ -1,0 +1,1 @@
+"blank - unpack list of lists what is the cleanest way to implement the following:..list = [list1, list2, ...].return [*list1, *list2, ...]...it looks like this syntax will be available in blank 3.5. in the meantime, what is your solution?"

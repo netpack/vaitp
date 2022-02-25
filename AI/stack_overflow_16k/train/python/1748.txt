@@ -1,0 +1,1 @@
+"merging lists in a row wise manner to generate a 2d array i have a number of lists, and i want to merge all these lists in a row wise manner to generate a two dimensional array in blank. how do i do that ?..ex- .l1=[1,2,3,4].l2=[5,6,7,8].l3=[9,10,11,12].l4=[13,14,15,16]...i want to get a 2d-array like this..m= 1   2   3   4.   5   6   7   8.   9  10  11  12.   13 14  15  16"

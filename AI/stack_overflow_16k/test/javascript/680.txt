@@ -1,0 +1,1 @@
+"multiple equals in variable definition .  possible duplicate:.  blank multiple assignment statement  .....i was wondering what this does. i have tried to search for it, but i can't find out...var config = $.cookie = function (key, value, options) {};...i am referring to the multiple equals in the above line. what is it good for? what does it mean? i have never seen that before."

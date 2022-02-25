@@ -1,0 +1,1 @@
+"simple regex to eliminate ""/"" and number after it i am new to programming and i am trying to eliminate sum characters in my string using blank with regex. how do i go about and do this...string = ""711 / 70,504"";.//expected: 711"

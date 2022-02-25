@@ -1,0 +1,1 @@
+"can i append value to a output text file along with string? can i append a value to an output text file along with string in blank..out=open('output.txt','a').count=5.out.write(count)...can i put the dynamic value as an argument for out.write()..error: out.write(count):...  typeerror: expected a string or other character buffer object"

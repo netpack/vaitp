@@ -1,0 +1,1 @@
+"getting corresponding value from list in blank i have a list in blank and i would like to get the corresponding value. ..month_days = [('january', [31]), ('february', [28, 29]), ('march',[31])]...i would like to enter for example jan and get the number of days as is in the list. ..for example:..send_days('march')"

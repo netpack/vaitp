@@ -1,0 +1,1 @@
+"direct parameter vs passing a class assume that there is a class with 3 attributes...employee...name.age.sal...i have a webmethod, getinfo...does it make any difference with regard to performance for passing direct param vs. direct classs?..getinfo(employee emp) // this will internally call emp.age &amp; return the values...getinfo(int age)...any thoughts?"

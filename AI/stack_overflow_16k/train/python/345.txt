@@ -1,0 +1,1 @@
+"blank: formatting int to 2 places my function calculates numbers, which sometimes will be more than 100. if they are larger than 100 i want to remove the extra digits. ..for example, lets say i have..percent=950...i want it to be reprinted as ..percent=95...i do not want to convert to string, so i would rather not use slicing..."

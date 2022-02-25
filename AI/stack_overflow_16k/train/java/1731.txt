@@ -1,0 +1,1 @@
+"find index of a string array i have a string : ..string str = ""sces123 4096 may 27 16:22 sces123 abc"";...i want to get sces123 abc from the string. my code is :..string[] line = str.split(""\s+"");.string name = str.substring(str.indexof(line[5]));...it returns the whole string...dont know how to do...any help appreciated!"

@@ -1,0 +1,1 @@
+"convert vector tile (mvt) location to latitude, longitude coordinates i have a geojson data file which is converted from mvt vector file. however the coordinated are not stored as latitude, longitude so i need help converting between the mvt coordinate system to google maps latitude, longitude using blank...let me know if you need more information."

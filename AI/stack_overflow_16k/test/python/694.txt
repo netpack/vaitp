@@ -1,0 +1,1 @@
+"time ticks: 100-nanosecond intervals that have elapsed since 12:00:00 midnight, january 1, 0001 is there a blank function similar to .net datetime.ticks which gives 100-nanosecond intervals that have elapsed since 12:00:00 midnight, january 1, 0001?  tried datetime and time modules and so far i'm only able to get unix epoch time."

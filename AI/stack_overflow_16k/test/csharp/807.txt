@@ -1,0 +1,1 @@
+how to cut the string at the time of update in gridview? i m displaying the image file in gridview..at time of update i want to show only the file name to update and not the extension..like file1.jpg is there but i should only change file1 and not .jpg.how to do that?

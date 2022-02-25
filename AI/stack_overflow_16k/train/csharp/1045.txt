@@ -1,0 +1,1 @@
+how to install self signed certificate while installing setup.exe i have created my own certificate using makecert and signed my exe using signtool and verified.but still it shows unknown publisher security warning..then i have tried to install certificate using installer class.but certificate installed after unknown publisher warning popup..is there any way to solved this issue?

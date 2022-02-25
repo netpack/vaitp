@@ -1,0 +1,1 @@
+create optional numbers from 3 inserted positive digits i'm just struggled with question about that:.i need to write a  program that get 3 positive digits from the user and print all the 3 digits numbers that can be created from them. i'm not allowed to use recursion.. any ideas?..thanks

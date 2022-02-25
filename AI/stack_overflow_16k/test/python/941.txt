@@ -1,0 +1,1 @@
+"can anyone tell me why the following blank code is generating none in the output? def hourstominutes(minutes):..    hours = minutes/60.    return hours...h = int(input(print(""enter the number of minutes:"")))..print(hourstominutes(h))"

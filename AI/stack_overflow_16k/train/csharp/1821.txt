@@ -1,0 +1,1 @@
+"what does thread.sleep(0) mean blank? does mean there is no delay?..a book says the below.**...  thread.sleep(0) relinquishes the thread’s current time slice.  immediately, voluntarily handing over the cpu to other threads....**..does it mean that even though a statement is supposed to be executed, giving 0 for sleep will skip execution for the moment?"

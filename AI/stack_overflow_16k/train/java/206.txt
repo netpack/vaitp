@@ -1,0 +1,1 @@
+contents of one array to another array how can i take the contents of one array and put it in another array. i'm trying to call a function that takes a array and places it's contents into another array...public string[] new_list;.public void setlist(string list[]){..for (int i =0; i&lt;list.length; i++).list_command[i]= list[i];.}

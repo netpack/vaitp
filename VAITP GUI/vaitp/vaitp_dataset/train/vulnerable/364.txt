@@ -1,0 +1,18 @@
+"def handler(request):
+    """Handler for a file:// URL.
+
+    Args:
+        request: QNetworkRequest to answer to.
+
+    Return:
+        A QNetworkReply for directories, None for files.
+    """
+    path = request.url().toLocalFile()
+    try:
+        if os.path.isdir(path):
+            data = dirbrowser_html(path)
+            return networkreply.FixedDataNetworkReply(
+                request, data, 'text/html')
+        return None
+    except UnicodeEncodeError:
+        return None"

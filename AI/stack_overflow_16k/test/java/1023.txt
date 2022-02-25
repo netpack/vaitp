@@ -1,0 +1,1 @@
+"cyclic reference in blank if class a has a reference of class b and class b has a reference of class a, is it acceptable in blank? if yes, when we execute class a by the time class b will not be instantiated. so how the compiler will execute the reference of class b?..tia"

@@ -1,0 +1,1 @@
+how to remove index value in for loop (that is 0) for(i=0;i&lt;11;i++).{.    table.insertrow(i);     .    var cell2 = table.rows[i].insertcell(-1);.    var cell4 = document.createtextnode(i);.    cell2.appendchild(cell4);                        .}

@@ -1,0 +1,1 @@
+"new to blank: internet explorer 8 does not support object.create() new to blank: internet explorer 8 does not support object.create(), here is an example:..var tilo = object.create(person); ...ok, so ie does not support it. what should i do next? should i create 2 different blank files.. one for firefox, one for ie ?"

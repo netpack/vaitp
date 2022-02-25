@@ -1,0 +1,1 @@
+"how to redirect output to stdout and a file with subprocess.call? i call below subprocess in my blank file...for testscript in listoftesttorun:.    subprocess.call([""blank"",testscript], stdout=self.destfileoutput)...currently the output gets printed out to a result text file. what i would like to know if using subprocess.call how can i print to a file as well as screen."

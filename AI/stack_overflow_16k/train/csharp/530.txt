@@ -1,0 +1,1 @@
+ternary expression possible? i'm not sure if the following statement is possible to write as one line (i.e. ternary form)...if (a == b).    functiona();.else .    functionb();...both functiona and functionb are type void.

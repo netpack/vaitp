@@ -1,0 +1,20 @@
+"    def fetch_file(self, in_path, out_path):
+        ''' fetch a file from chroot to local '''
+
+        vvv("FETCH %s TO %s" % (in_path, out_path), host=self.chroot)
+
+        try:
+            p = self._buffered_exec_command('dd if=%s bs=%s' % (in_path, BUFSIZE), None)
+        except OSError:
+            raise errors.AnsibleError("chroot connection requires dd command in the jail")
+
+        with open(out_path, 'wb+') as out_file:
+            try:
+                for chunk in p.stdout.read(BUFSIZE):
+                    out_file.write(chunk)
+            except:
+                traceback.print_exc()
+                raise errors.AnsibleError("failed to transfer file %s to %s" % (in_path, out_path))
+            stdout, stderr = p.communicate()
+            if p.returncode != 0:
+                raise errors.AnsibleError("failed to transfer file %s to %s:\n%s\n%s" % (in_path, out_path, stdout, stderr))"

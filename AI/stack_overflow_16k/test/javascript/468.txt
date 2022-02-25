@@ -1,0 +1,1 @@
+"submit a form using external js how to submit a form using external js ? using form name or id is not working,.showing this error .typeerror: document.forms.adminform.submit is not a function...  document.forms[""adminform""].submit();...adminform is name &amp; id of the form"

@@ -1,0 +1,1 @@
+bitmapsource to interopbitmap i made some research but i'm unable to find a way to convert a bitmapsource to interopbitmap...system.windows.interop.interopbitmap mybitmap;.system.windows.media.imaging.bitmapsource _currentframe = /* get the frame */;..mybitmap = convert(_currentframe);...how can i do the convert method ?

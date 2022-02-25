@@ -1,0 +1,1 @@
+"is there any wrapper for gecko in gtk# is there any wrapper for gecko in gtk#? i couldn't find any, despite i could find a wrapper for winforms, which apparently aren't useable cross plaform. (they can be compiled cross platform, but my experience with winform in linux is more than horrible)"

@@ -1,0 +1,1 @@
+how to format date in blank? i'm trying to format date in js as below to formating as y-m-d but i want to get ymdms...datestr = current.toisostring().split('t')[0];.resulting_dates.push(datestr);//dates.push(d.toisostring().split('t')[0]);

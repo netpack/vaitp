@@ -1,0 +1,1 @@
+"how to reverse an integer while removing any leading zeroes? if the input is ""0"", the output should still be 0...example input: ..-2900 ...desired output: ..-92...question..why doesn't my code work?..s = input() .if s.startswith(""0""):.    if len(s) != 1:.        s = s.strip(""0"").print(int(s[::-1]))"

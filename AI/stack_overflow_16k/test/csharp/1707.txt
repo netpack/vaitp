@@ -1,0 +1,1 @@
+the wrong table in database is called even if some other table is given as sql command the screenshot of my problem:....i have a table named effluent but its showing that the table 'effluent_tombstone' is missing...i had created an option for local database caching and later i deleted the local db cache.

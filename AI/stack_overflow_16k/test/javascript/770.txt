@@ -1,0 +1,1 @@
+"convert minutes ( string ) to iso 8601 duration format i always store my minutes in a plain string format saying ""90"" for 90 minutes. i want to convert this to iso 8601 duration format for schema.org standard...e.g ""90"" should be converted to pt1h30m"

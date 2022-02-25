@@ -1,0 +1,1 @@
+"convert string value into variable value - blank i have a string variable: id = '1'; .i want to make a variable that holds the value of data.img + id + .dispwidth without making it a string. ..for example, if id = '7'; then dw = data.img7.dispwidth; .how can i do this?"

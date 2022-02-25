@@ -1,0 +1,1 @@
+"get following command line arguments (elements in an array) in blank how would i get all arguments after the first 3 from a string[] in blank?..e.g. from [1, 2, 3, 4, 5] i want [4, 5]"

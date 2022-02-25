@@ -1,0 +1,1 @@
+"turn script content of a function into string for example, if i have something like this:..function hello() {console.log(""hello"")}...i want to be able to make a function in java script that would return a string value:..""console.log(""hello"");""    ...is there a way to do this with plain blank?"

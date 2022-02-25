@@ -1,0 +1,11 @@
+"    def exec_command(self, cmd, tmp_path, become_user=None, sudoable=False, executable=None, in_data=None):
+        ''' run a command on the zone '''
+
+        ### TODO: Why all the precautions not to specify /bin/sh? (vs jail.py)
+        if executable == '/bin/sh':
+          executable = None
+
+        p = self._buffered_exec_command(cmd, tmp_path, become_user, sudoable, executable, in_data)
+
+        stdout, stderr = p.communicate()
+        return (p.returncode, '', stdout, stderr)"

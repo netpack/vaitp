@@ -1,0 +1,4 @@
+"    def sql_insert(self, sentence):
+        self.cursor.execute(sentence)
+        self.conn.commit()
+        return True"

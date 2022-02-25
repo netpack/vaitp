@@ -1,0 +1,1 @@
+"regular expression for multiple of 2 in blank i would like to know how to write regular expression for a multiple number of 2 ...for example :..2.4.6.8.10....i want to ignore the odd number of  ""%"" and i want to split "",""...for example :..string.split(""(?&lt;!%{odd number}),"");"

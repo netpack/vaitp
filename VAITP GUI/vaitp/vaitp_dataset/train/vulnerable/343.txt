@@ -1,0 +1,13 @@
+"def home_get_dat():
+    d = db.sentences_stats('get_data')
+    n = db.sentences_stats('all_networks')
+
+    ('clean_online')
+    rows = db.sentences_stats('get_clicks')
+    c = rows[0][0]
+    rows = db.sentences_stats('get_sessions')
+    s = rows[0][0]
+    rows = db.sentences_stats('get_online')
+    o = rows[0][0]
+
+    return json.dumps({'status' : 'OK', 'd' : d, 'n' : n, 'c' : c, 's' : s, 'o' : o});"

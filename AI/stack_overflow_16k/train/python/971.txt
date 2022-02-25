@@ -1,0 +1,1 @@
+"what path is represented by ""../"" in blank? in this code:..import scipy.io as scpio.scpio.loadmat('../data/file.mat')...which path is represented by '../', and how can i print this path?..i am running anaconda, and i assumed that '../' would represent the home directory in parentheses before each anaconda command prompt line, but that guess was incorrect."

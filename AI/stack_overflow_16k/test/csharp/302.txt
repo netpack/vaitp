@@ -1,0 +1,1 @@
+what does this method do on blank math.abs(sum - 1) < 1e-9 what is it? 1e-9 what does this method do on blank math.abs(sum - 1) &lt; 1e-9 what is it?  1e-9.. enter code here.. static void rightmain().   {.    double x = 1.0 / 10;.    double sum = 0;.    for (int i = 0; i &lt; 10; i++).    sum += x;.    console.writeline(math.abs(sum - 1) &lt; 1e-9);.    }

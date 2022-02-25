@@ -1,0 +1,1 @@
+"how do i convert date to milliseconds i have a string the represents a time ""2014-07-03t11:47:00""..i would like to covert this time to milliseconds and i think it should look something like the following...var mytime = date.parse(""2014-07-03t11:47:00"");..var mytimems = mytime.gettime();...any suggestions about how to get the value in milliseconds on any browser?"

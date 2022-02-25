@@ -1,0 +1,1 @@
+"jquery not finding value in textarea i am creating a forum but when you post a reply, jquery keeps displaying the error that the textarea is empty when it's not...if (post_body.val() == """") {.    $(""#formerror"").html('&lt;font size=""+2""&gt;please type something&lt;/font&gt;').show().fadeout(3000);.}...here's all the code on the page"

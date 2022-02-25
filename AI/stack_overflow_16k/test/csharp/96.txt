@@ -1,0 +1,1 @@
+"my ajax options are not working in my mvc orchard application after referencing the suppose ajax library and putting up my code, the submit button is actually redirecting me to the partial view is specified instead of load the partial view to the current page asnychoronusly"

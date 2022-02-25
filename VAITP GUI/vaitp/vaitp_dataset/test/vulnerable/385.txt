@@ -1,0 +1,1 @@
+"    def count(cls, **kwargs):        """Return a count of server side resources given        filtering arguments in kwargs.        """        url = urljoin(recurly.base_uri(), cls.collection_path)        if kwargs:            url = '%s?%s' % (url, urlencode(kwargs))        return Page.count_for_url(url)"

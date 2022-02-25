@@ -1,0 +1,1 @@
+"blank error: exception in thread ""main"" blank.lang.nosuchmethoderror: main i got this problem when running the following code in blank:..public class comparison.{.    public static boolean main(string[] args).    {.        if (0.1 + 0.1 + 0.1 == 0.3) return true;.        else return false;.    }.}...can anybody tell me why and how to modify the code?"

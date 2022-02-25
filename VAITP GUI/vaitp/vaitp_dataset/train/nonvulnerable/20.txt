@@ -1,0 +1,21 @@
+"    def build_cert(self, key_filename, entry, metadata):
+        """
+        creates a new certificate according to the specification
+        """
+        req_config = self.build_req_config(entry, metadata)
+        req = self.build_request(key_filename, req_config, entry)
+        ca = self.cert_specs[entry.get('name')]['ca']
+        ca_config = self.CAs[ca]['config']
+        days = self.cert_specs[entry.get('name')]['days']
+        passphrase = self.CAs[ca].get('passphrase')
+        cmd = ["openssl", "ca", "-config", ca_config, "-in", req,
+               "-days", days, "-batch"]
+        if passphrase:
+            cmd.extend(["-passin", "pass:%s" % passphrase])
+        cert = Popen(cmd, stdout=PIPE).stdout.read()
+        try:
+            os.unlink(req_config)
+            os.unlink(req)
+        except OSError:
+            self.logger.error("Failed to unlink temporary files")
+        return cert"

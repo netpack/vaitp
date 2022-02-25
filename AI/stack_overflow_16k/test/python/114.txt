@@ -1,0 +1,1 @@
+what's the blankic way to count the occurrence of an element in a list? this is what i did. is there a better way in blank?...for k in a_list:   .  if kvmap.has_key(k):.    kvmap[k]=kvmap[k]+1   .  else:.    kvmap[k]=1...thanks

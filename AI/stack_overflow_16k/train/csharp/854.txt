@@ -1,0 +1,1 @@
+how to receive http post message to webserver in blank i want to know what i am posting in that url and what message is received from web server.because in my local server is working in http post message and when i deploy to another server it not posted and get error code for 400 bad request.i will check that url string in correct and http post also working.

@@ -1,0 +1,1 @@
+"how to use split with tryparse? i'd rather not throw an exception if the user enters one or more invalid doubles in a textbox..this is kind of what i'd like to do but it is wrong of course...double mydouble[];.double.tryparse(textbox1.text.split(' '), out mydouble);"

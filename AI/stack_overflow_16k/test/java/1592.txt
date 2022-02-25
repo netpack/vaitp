@@ -1,0 +1,1 @@
+"binary format of an integer i have a method that prints out binary formar of numbers:..private static void binary(int n){.   for(int i = 1; i &lt; math.pow(2, n); i++).      system.out.println(integer.tobinarystring(i));.   }.} ...output is like for n = 3:..1.10.11.100.101.110.111...is there a way to print out like this:..001.010.011.100.101.110.111"

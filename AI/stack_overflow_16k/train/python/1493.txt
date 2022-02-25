@@ -1,0 +1,1 @@
+"how to sort dictionary by pseudo-compound key? i have a dictionary:..test = {}.test[(1,2)] = 1.test[(4,3)] = 1.test[(1,4)] = 1...how to sort by ""pseudo compound key"": first element of tuple and after second element of tuple ?"

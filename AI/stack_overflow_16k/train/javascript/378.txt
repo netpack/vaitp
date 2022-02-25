@@ -1,0 +1,1 @@
+runwheel function in html i recently came across this code and was wondering what it actually does and what the output is...function runwheel() {.    tid=tid+1.}

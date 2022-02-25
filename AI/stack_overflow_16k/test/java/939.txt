@@ -1,0 +1,1 @@
+how can i find out if a string contanis a char? is there any way to check to see if a string contains a char?  like create an if statement that will check a string to see if has a certain char in it but the char is a variable that is user inputted?

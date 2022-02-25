@@ -1,0 +1,1 @@
+"is it necessary for the namespace to be the name of the file in blank? for example, i name my file(console application) 'hello', so do i have to write namespace hello?if no, what is the purpose of adding namespace?"

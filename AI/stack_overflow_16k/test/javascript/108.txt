@@ -1,0 +1,1 @@
+"blank crashing chrome (infinite recursion ) when i run this my browser freezes and crashes but i can't figure out how to fix it. i am new to blank and i need some help...function start() {..if (key1 === true) {.    alert (""1"").    key1 = false.} else if (key2 === true) {.    alert (""2"").    key2 = false.} else {.    window.settimeout(start, 1000);.    start().}..}"

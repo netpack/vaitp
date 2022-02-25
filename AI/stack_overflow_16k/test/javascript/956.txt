@@ -1,0 +1,1 @@
+extract table from a site within local domain we have a program for keeping track of entrances and exits to our office and want to be able to extract the data from the web interface to put into a separate database. is this something that can be accomplished with blank?

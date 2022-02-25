@@ -1,0 +1,1 @@
+"how to convert ints in a list of strings into ints in blank? for example i have a list of strings:..lst = [""hello"",""askdj"",""1"",""4"",""xcvs""]...how would i convert the ints in that list of strings into ints?"

@@ -1,0 +1,38 @@
+"    def update(self, **kwargs):
+        consumer_id = load_consumer_id(self.context)
+        if not consumer_id:
+            self.prompt.render_failure_message("This consumer is not registered to the Pulp server.")
+            return
+
+        delta = dict([(k, v) for k, v in kwargs.items() if v is not None])
+        if 'note' in delta.keys():
+            if delta['note']:
+                delta['notes'] = args_to_notes_dict(kwargs['note'], include_none=False)
+            delta.pop('note')
+        # convert display-name to display_name
+        key = 'display-name'
+        if key in delta:
+            v = delta.pop(key)
+            key = key.replace('-', '_')
+            delta[key] = v
+
+        if kwargs.get(OPTION_EXCHANGE_KEYS.keyword):
+            path = self.context.config['authentication']['rsa_pub']
+            fp = open(path)
+            try:
+                delta['rsa_pub'] = fp.read()
+            finally:
+                fp.close()
+
+        try:
+            self.context.server.consumer.update(consumer_id, delta)
+            self.prompt.render_success_message('Consumer [%s] successfully updated' % consumer_id)
+            if not kwargs.get(OPTION_EXCHANGE_KEYS.keyword):
+                return
+            try:
+                update_server_key(self.context.config)
+            except Exception, e:
+                msg = _('Download server RSA key failed [%(e)s]' % {'e': e})
+                self.prompt.render_failure_message(msg)
+        except NotFoundException:
+            self.prompt.write('Consumer [%s] does not exist on the server' % consumer_id, tag='not-found')"

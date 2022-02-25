@@ -1,0 +1,1 @@
+"remove anything between two character i want to remove anything between ""?"" and ""/""..my text is ""hi?0/hello/hi""..i need to see this out put..""hi?/hello/hi""...my code is..key.replaceall(""\?.*/"",""?/"");...but my output is..""hi?/hi""...whats wrong?"

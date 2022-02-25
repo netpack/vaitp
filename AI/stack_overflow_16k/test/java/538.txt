@@ -1,0 +1,1 @@
+private final int offset in blank.lang.string implementation in string class implementation (here) i found this declaration:../** the offset is the first index of the storage that is used. */.private final int offset;...so what is this value for? why not to save all strings starting with the first position?

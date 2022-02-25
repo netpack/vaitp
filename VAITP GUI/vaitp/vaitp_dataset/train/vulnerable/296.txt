@@ -1,0 +1,22 @@
+"    def text(self):
+        components = (
+            ical.Timezone, ical.Event, ical.Todo, ical.Journal, ical.Card)
+        items = set()
+        try:
+            filenames = os.listdir(self._path)
+        except (OSError, IOError) as e:
+            log.LOGGER.info('Error while reading collection %r: %r'
+                            % (self._path, e))
+            return ""
+
+        for filename in filenames:
+            path = os.path.join(self._path, filename)
+            try:
+                with filesystem.open(path) as fd:
+                    items.update(self._parse(fd.read(), components))
+            except (OSError, IOError) as e:
+                log.LOGGER.warning('Error while reading item %r: %r'
+                                   % (path, e))
+
+        return ical.serialize(
+            self.tag, self.headers, sorted(items, key=lambda x: x.name))"

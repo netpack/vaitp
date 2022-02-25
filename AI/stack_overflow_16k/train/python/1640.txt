@@ -1,0 +1,1 @@
+"easiest way to convert two columns to blank dictionary how would i put the following information into a blank dictionary -- http://userpage.chemie.fu-berlin.de/diverse/doc/iso_3166.html? keys would be the country and values would be the two-character iso code...for example, i want the result to be:..mapping_of_country_to_iso = {'aaland islands':'ax','afghanistan':'af',...}"

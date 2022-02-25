@@ -1,0 +1,1 @@
+xml serialization modifications i have created an xml using blank as below....for the above xml to be generated i have created the classes ...clientdocument.cs.typeid.cs.recordtarget.cs.id.cs...can i create the same xml without having to create a recordtarget.cs class as it is just a container for id.cs?

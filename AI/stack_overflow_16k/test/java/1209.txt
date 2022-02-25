@@ -1,0 +1,1 @@
+"""blinking"" boolean with system.currenttimemillis() why is this value always true? i just can't figure out how to have a boolean that ""blinks"" every second...long millis = system.currenttimemillis();.boolean blink = (math.floor(millis/1000 + 0.5)==math.floor(millis/1000));"

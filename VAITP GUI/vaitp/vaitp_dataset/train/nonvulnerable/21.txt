@@ -1,0 +1,12 @@
+"    def verify_cert_against_ca(self, filename, entry):
+        """
+        check that a certificate validates against the ca cert,
+        and that it has not expired.
+        """
+        chaincert = self.CAs[self.cert_specs[entry.get('name')]['ca']].get('chaincert')
+        cert = self.data + filename
+        res = Popen(["openssl", "verify", "-CAfile", chaincert, cert],
+                    stdout=PIPE, stderr=STDOUT).stdout.read()
+        if res == cert + ": OK\n":
+            return True
+        return False"

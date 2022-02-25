@@ -1,0 +1,1 @@
+"need help on datetime manipulation in blank import datetime.today = datetime.date.today().print ('today is: ' + str(today))..//returns today is: 2016-10-06...how could i manipulate the output to look like this: .""today is: october 6, 2016"""

@@ -1,0 +1,1 @@
+"how to convert output into 00:00 format in datetime in blank i subtracted my input time to my time and i want my output into 00:00 format please help me on these ..datetime timein = new datetime(""5:00 am"");.var a = datetime.parse(console.readline());..var b = a - timein;...please i want my output .00:00 format"

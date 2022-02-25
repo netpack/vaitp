@@ -1,0 +1,1 @@
+"suppressing operator precedence in blank while solving problems on spoj, i came across a problem which required the programmer to evaluate an expression without using precedence. that means:  ..2 + 3 * 6=30 and not 20..is there any way to do this?.is there any library or inbuilt function for this?"

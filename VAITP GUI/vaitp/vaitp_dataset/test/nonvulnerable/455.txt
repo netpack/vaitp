@@ -1,0 +1,1 @@
+"def sanitize(value: str) -> str:    return re.sub(r"[^\w _\-]+", "", value)"

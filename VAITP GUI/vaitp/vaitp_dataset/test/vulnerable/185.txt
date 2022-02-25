@@ -1,0 +1,1 @@
+"    def test_mixed(self):        self.assertEqual(self._callFUT(b"\n\n00\r\n\r\n"), 2)"

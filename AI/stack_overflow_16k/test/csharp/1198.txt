@@ -1,0 +1,1 @@
+"keep a webclient() loaded? i am wondering how i would keep a webclient().downloadstring loaded?.i am trying to load in a webpage but it has a loading... section before it so when i am doing:..public static string wtfskins = new webclient().downloadstring(""https://www.wtfskins.com/roulette"");...it is always bringing up the loading page..thank you in advance."

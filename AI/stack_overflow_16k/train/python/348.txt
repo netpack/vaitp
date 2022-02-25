@@ -1,0 +1,1 @@
+"sanitizing a file path in blank i have a file browser application that exposes a directory and its contents to the users...i want to sanitize the user input, which is a file path, so that it does not allow absolute paths such as '/tmp/' and relative paths such as '../../etc'..is there a blank function that does this across platforms?"

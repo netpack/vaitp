@@ -1,0 +1,1 @@
+how to access the value of username from htpasswd file using blank script i have created a username/ password in htpasswd file. in my blank script file i would like to access the username value for further processing. how do i achieve that? i am using linux os.

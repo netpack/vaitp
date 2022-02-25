@@ -1,0 +1,1 @@
+"blank - why is this wrong? this don't works and i wish to know what i did wrong...targets= [""a"",""b"",""c""].tmplist= [""d"",""z"",""x""].value = [ (x,y) for x in targets for y in tmplist]...i know this issue can be solved with zip function, but i want to do it without zip. thanks for any help..edit: i'm very sorry for not being clear, i have been distracted."

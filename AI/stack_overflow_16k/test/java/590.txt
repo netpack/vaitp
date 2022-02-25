@@ -1,0 +1,1 @@
+"how to write variables inside query language? example:..string s1;.string q = ""select * from entrybytitle where booktitle='""+s1+""'"";...here in query statement why +s1+ is used in the syntax. as s1 is string, so it should be '""s1""'. but why '""+s1+""' is written in project."

@@ -1,0 +1,1 @@
+"why doesn't a dll exist in the output path i have 3 projects in a one solution:...a (unittest project).b (unittest project).c...a references b (copylocal = true), and b references c (copylocal = true)...why doesn't c.dll exist on a's output path?"

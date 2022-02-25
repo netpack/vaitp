@@ -1,0 +1,1 @@
+"how to check if value exists in object using blank i have an object in blank ..var obj = {.   ""a"": ""test1"",.   ""b"": ""test2"".}...how do i check that test1 exists in the object as a value?"

@@ -1,0 +1,1 @@
+printing multiple pdf files using print.js i am building a list of pdfs from server side in html. in the list i'd like to include a  a print button . is there some way to directly open the print dialog for the pdf without the user seeing the pdf or opening a pdf viewer? or can i use print.js library in this case

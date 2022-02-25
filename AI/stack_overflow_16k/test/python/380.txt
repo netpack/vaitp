@@ -1,0 +1,1 @@
+"get list of redirect urls i have a list of urls that all redirect to other urls . i would like to using blank get a list of the redirected urls instead, wondering best way to go about doing this?..an example might be this: http://apple.co/1ka9kix yielding apple.com"

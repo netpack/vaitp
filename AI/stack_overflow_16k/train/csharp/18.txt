@@ -1,0 +1,1 @@
+"blank accessing html element without id i've been trying various different methods(webclient, webrequest, etc) to do this however i could not do it after all...&lt;td class=""period_slot_1""&gt;.&lt;strong&gt;tg&lt;/strong&gt;...what i want is to get access to the text value of above, so that i will get ""tg"" as result...how can i do that?"

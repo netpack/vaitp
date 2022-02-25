@@ -1,0 +1,11 @@
+"    def get_mime_for_format(self, format):
+        """
+        Given a format, attempts to determine the correct MIME type.
+
+        If not available on the current ``Serializer``, returns
+        ``application/json`` by default.
+        """
+        try:
+            return self.content_types[format]
+        except KeyError:
+            return 'application/json'"

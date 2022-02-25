@@ -1,0 +1,1 @@
+"why while creating immutable class, fields are declared as private? while creating immutable class all the fields are declared as final so that their value cant be modified.this is okay but why we also declared them as private"

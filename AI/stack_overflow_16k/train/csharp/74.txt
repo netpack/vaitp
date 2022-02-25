@@ -1,0 +1,1 @@
+"i need: ""when textbox1.length = 4 in 1 index element add "" "" by insert"" my code : ..int len = textbox1.text.length;..if (len == 4).{.   int one = 1;.   string empty = "" "";.   textbox1.text.insert(one, empty);.}"

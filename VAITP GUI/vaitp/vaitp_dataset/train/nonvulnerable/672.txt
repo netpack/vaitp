@@ -1,0 +1,29 @@
+"def init():
+    if proxy.rejectReinit is True and proxy.initialized is True:
+        msg = 'Cannot initialize the action more than once.'
+        sys.stderr.write(msg + '\n')
+        response = flask.jsonify({'error': msg})
+        response.status_code = 403
+        return complete(response)
+
+    message = flask.request.get_json(force=True, silent=True)
+    if message and not isinstance(message, dict):
+        flask.abort(404)
+    else:
+        value = message.get('value', {}) if message else {}
+
+    if not isinstance(value, dict):
+        flask.abort(404)
+
+    try:
+        status = runner.init(value)
+    except Exception as e:
+        status = False
+
+    if status is True:
+        proxy.initialized = True
+        return ('OK', 200)
+    else:
+        response = flask.jsonify({'error': 'The action failed to generate or locate a binary. See logs for details.'})
+        response.status_code = 502
+        return complete(response)"

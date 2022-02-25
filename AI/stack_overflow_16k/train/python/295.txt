@@ -1,0 +1,1 @@
+"how to add 9 months and 7 days to a date ""27-05-2018"" in blank how to add 9 months and 7 days to a date ""27-05-2018"" in blank.below is my code attempt which only adds days but how to add months.?..import datetime.d=datetime.date(2018,5,27).dd=datetime.timedelta(days=7).print(d+dd)"

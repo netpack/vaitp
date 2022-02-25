@@ -1,0 +1,1 @@
+"image comparison(only specific region) in blank i need help in comparing two images for a specific region only. for example, i just want to compare the address part(highlighted) in 2 images....and if it matches, make the result as pass. can anyone help? attached is the screenshot...in image 1 address rectangle is padded right and in image 2 address rectangle is in padded left."

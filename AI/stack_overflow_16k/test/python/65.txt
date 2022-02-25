@@ -1,0 +1,1 @@
+"blank script makes a file but doesn't write anything first, code gets a name and makes a file with w permission (also tested  r+) and it should write any other input in file, but it doesn't. i get an empty file...user_name_in =input(""gets input"").fname = user_name_in.f = input().ufile = open(fname,""w"").while true:.    f=input(answer).    ufile.write(f)"

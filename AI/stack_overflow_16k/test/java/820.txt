@@ -1,0 +1,1 @@
+"need to do substring in blank i want to do the substring of given string..string input = select col1,col2,(select col3 from tbl1 where 1=1),col5,col6 from tbl2 where 1=1 and col1= 'testcond' and exists (select col7 from tbl3 where 1=1 and 2=2);..substring output should be charcters which are mark as bold.(from col1 upto col6).please help me with blank method which i can use."

@@ -1,0 +1,1 @@
+"reading system.out blank test i have a task to test a console application. i can access one method, but would also like to check that the string formatting is working correctly. ..as this method does not return a string, but rather prints to the console, is there a way i can intercept the list printed line?..does it even make sense to test this sort of thing?"

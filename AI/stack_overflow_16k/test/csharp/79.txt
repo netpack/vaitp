@@ -1,0 +1,1 @@
+"can i replace an if / else with two levels of ? : i have the following blank code:..        if (client.action == ""show"").        {.            result = ""s"";.        }.        else.        {.            result = answerscorrect ? ""t"" : ""f"";.        }...is there a way i can remove the if and else and use two levels of ? and :"

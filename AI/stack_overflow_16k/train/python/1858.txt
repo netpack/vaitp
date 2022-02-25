@@ -1,0 +1,1 @@
+"blank - returning a value that is bigger than the other? def all_gt(nums, n):.    i = [].    for c in nums:.        if c &gt; n:.            i += c.    return i...this is the code that i used and 'i' is supposed to return the value in nums larger than n..but mine returns nothing inside the bracket. e.g., ..all_gt([1,2,3,4], 2)  =&gt; [3,4]..anyone knows how to fix?.thanks"

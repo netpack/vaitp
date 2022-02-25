@@ -1,0 +1,1 @@
+"why this code return undefined? i am new to blank, why this code return undefined?..    const foo = {  .      bar: function() { return this.baz; },.      baz: 1,.    };..    console.log((function() {.      return typeof arguments[0]();.    })(foo.bar));"

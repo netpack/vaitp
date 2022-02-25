@@ -1,0 +1,1 @@
+"how to make the scanner read string characters like , - , / , * i need to make my scanner read characters and number?..this code only ready numbers>>>..scanner input = new scanner ( system.in) ;..i need it to read a + , a letter, etc..."

@@ -1,0 +1,1 @@
+"abstract equality comparison - prefix operator i read the specs of blank and found this snippet:...  7.2.14 abstract equality comparison.  .  .  if type(x) is boolean, return the result of the comparison ! tonumber(x) == y..  ...what does !tonumber(x) mean?..example:..true == 1 equals to true..but !true == 1 equals to false, so it is not the negate operator."

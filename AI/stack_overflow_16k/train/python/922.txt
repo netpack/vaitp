@@ -1,0 +1,1 @@
+"number bound to function name there is code:..def somefun():.    print ""hi"".print somefun...result is:..&lt;function somefun at 0x0153ddf0&gt;...what's 0x0153ddf0?"

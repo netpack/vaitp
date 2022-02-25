@@ -1,0 +1,1 @@
+"blank multiple commands on the same object i'd like to write something like this :..object..method1(""blah"");..method2(""blah"");..method3(""blah"");...or ..object..method1(""data1"");..method1(""data2"");..method1(""data3"");...instead of:..object.method1(""data1"");.object.method1(""data2"");.object.method1(""data3"");...is it possible ? thanks"

@@ -1,0 +1,1 @@
+determine is a string is integer or double or plain string is there an efficient/clean way to determine if a string contains a sequence of chars that can be interpreted as: a) integer b) double c) if a or b don’t apply then it is an alphanumeric?

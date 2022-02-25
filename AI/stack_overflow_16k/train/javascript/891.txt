@@ -1,0 +1,1 @@
+"how to format numbers in blank to two decimal digits? i need to format numbers to two decimal digits in blank. in order to do this i am using tofixed method which is working properly. ..but in cases, where numbers don't have any decimal digits, it should not show decimal point..e.g. 10.00 should be 10 only and not 10.00."

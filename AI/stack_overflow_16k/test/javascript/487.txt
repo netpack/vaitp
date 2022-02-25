@@ -1,0 +1,1 @@
+"accessing context property of a function object | how to? each function object should have two ""hidden"" properties ( per blank the good parts, the functions chapter )..context...and ..code...is there a way to access these properties?"

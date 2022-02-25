@@ -1,0 +1,1 @@
+"can we force a blank compiler to run constructor first? as blank field initializers run before constructor. is there any way to force the compiler to run constructor first?..thanks @jonathan, but i need to know, why?"

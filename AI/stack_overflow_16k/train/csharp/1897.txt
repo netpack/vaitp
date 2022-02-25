@@ -1,0 +1,1 @@
+"protecting base class object in blank how .. public class baseappconstants.    {.        public const string stliveidcookiename = ""xyz"";.    }...public class appconstants : baseappconstants.{...}...how can i make changes so user can not direct access base class they can only use like this  appconstants.stliveidcookiename;"

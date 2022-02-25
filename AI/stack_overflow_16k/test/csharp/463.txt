@@ -1,0 +1,1 @@
+remove spam url in text input:...  dsfdsf www. cnn .com dksfj kdsfjkdjfdf.  www.google.com dkfjkdjfk w w w . ya.  hoo .co mdfdd...output:...  dsfdsf  dksfj kdsfjkdjfdf  dkfjkdjfk  mdfdd...how do i write a function that does this in blank?

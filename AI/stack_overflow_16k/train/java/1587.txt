@@ -1,0 +1,1 @@
+"blank ordered doubly linked list with comparable i'm doing a blank exercise, and i have the following class header:..public class ordereddoublyll&lt;k extends comparable&lt;k&gt;, v&gt; implements ordereddictionary&lt;k, v&gt;...this means that my ordered doubly linked list is ordered by key automatically?"

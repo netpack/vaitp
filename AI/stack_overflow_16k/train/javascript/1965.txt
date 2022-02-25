@@ -1,0 +1,1 @@
+"code property in blank functions function hello(){.  console.log('goodbye');.}...is an object. almost everything in js is object. we have name property on it and its hello, but what about code property? how can i access that? also, do i have the code inside {} or the whole whats above?"

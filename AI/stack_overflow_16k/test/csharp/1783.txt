@@ -1,0 +1,1 @@
+blank richtext box can not load rtf file while microsoft word using that file i used a read stream to read an rtf file however it failed when this rtf file is opened by  microsoft word...is there anyone know how to solve this problem?

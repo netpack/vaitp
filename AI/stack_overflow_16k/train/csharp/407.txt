@@ -1,0 +1,1 @@
+how do i find an integer at position x in a linked list? if (choice == 1).            {   for (int x = 1; x &lt;= small.count()-1;x++).            {.                number min = (number)small[x-1]; // i know this how you do it for an array list.                int minpos = x - 1;...number is the value in the list i want to find and small is the list

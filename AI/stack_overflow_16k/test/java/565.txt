@@ -1,0 +1,1 @@
+"inputstream to string encoding issue i want to convert inputstream to a string, i am getting some unknown symbols in the string...i used this code,..stringwriter writer = new stringwriter();.ioutils.copy(is, writer,""iso-8859-1"");.string thestring = writer.tostring();...this results in symbols such as ì½ûrûj6xÿgì;``êâo;b ð ©»ª""@øæ©aòþþ7 ihs í­~§7ê'+3ql..please advice."

@@ -1,0 +1,1 @@
+"data.dat blank say i have the following data in a .dat file:..*a-1-2-3-4*b-8-2-4*c-4-2-5-1-5..how can i print the these data like this?:..a : 1 2 3 4..b : 8 2 4..c : 4 2 5 1 5..randomly print any one number for each letter..a, b and c can be any word..and the amount of the numbers can be different..i know that it has some thing to do with the * and the -"

@@ -1,0 +1,1 @@
+blank - execute code when display: block is there a way to wait for a particular tab/panel to be displayed (display : block) before the js is executed?..something like:     ..$document.getelementbyid( '#panel1' ).style.display = 'block' {.// run code //.}

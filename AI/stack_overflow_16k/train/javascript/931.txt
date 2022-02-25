@@ -1,0 +1,1 @@
+"replacing backslashes in blank how can i convert the following string from..var x = ""f:rssimsdatabase""...to:..var x = ""f:\rrsims\database\""...thanks for all your help."

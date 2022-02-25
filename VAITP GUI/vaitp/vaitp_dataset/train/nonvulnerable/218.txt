@@ -1,0 +1,6 @@
+"def get_tests(config={}):
+    tests = []
+    tests += [RNGForkTest()]
+    if multiprocessing is not None:
+        tests += [RNGMultiprocessingForkTest()]
+    return tests"

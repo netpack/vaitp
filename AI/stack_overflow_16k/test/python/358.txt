@@ -1,0 +1,1 @@
+is there any difference between statement 1 and statement 2 statement 1 : `..self.__hours == 0 if self.__hours == 23 else self.__hours=+1...statement 2 :..       if self.__hours == 23 : .        self.__hours == 0 .       else :.         self.__hours += 1 ...is it just the styling or anything else ?

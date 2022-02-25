@@ -1,0 +1,1 @@
+"string to arguments let's say i have a string like function arg1 arg2 ""arg3 is long"". ..how could i obtain the output of..string[0] = ""function"".string[1] = ""arg1"".string[2] = ""arg2"".string[3] = ""arg is long"""

@@ -1,0 +1,1 @@
+convert system.drawing.image to format(.jpeg .gif) whitout saving i need to convert a  system.drawing.image object to gif whitout saving it to a file(that means i can't use  the save function). (bitearray or base64) sow i can send it to a web service.  the code is on a server and i don't have write permisssion on it. blank code.

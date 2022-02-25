@@ -1,0 +1,1 @@
+"method is not a function i've tried code from here http://www.webreference.com/programming/blank/gr/column3/ but firebug says - ""this.preload is not a function"". why? i thought that function is some sort of object."

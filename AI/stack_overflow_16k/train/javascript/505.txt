@@ -1,0 +1,1 @@
+"a simple countdown with for loop hi i'm trying to create a simple countdown..here is my code but it's not working..can you help me find the problem?  ..function count() {.    for (var cc=20,cc &gt; 0,cc--) {.        document.getelementbyid(""cco"").innerhtml=cc;.    }.}.count();"

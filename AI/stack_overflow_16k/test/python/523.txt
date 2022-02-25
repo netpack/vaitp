@@ -1,0 +1,1 @@
+"regular expression operations i came across this ..'[s]+(.[w]+)[s]+([0-9a-fa-f]{8})[s]+([0-9a-fa-f]{8})[s]+([0-9]{1,10})[s]+([0-9a-fa-f]{1,8})'..how to find which patterns has been intended to match"

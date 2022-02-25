@@ -1,0 +1,1 @@
+"single character string my opinion was, until today, that a literal like ""c"" creates a string object. today i heard that blank is not creating an object for single character strings. is this right? does it store that literal as a char?"

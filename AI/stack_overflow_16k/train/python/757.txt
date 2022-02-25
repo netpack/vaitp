@@ -1,0 +1,1 @@
+why does print() on tuple call __repr__ for elements of tuple and not __str__? why does print() on tuple call __repr__ for each elements of tuple (with comma as seperator) and not __str__?

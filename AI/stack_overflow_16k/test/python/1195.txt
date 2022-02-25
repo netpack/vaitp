@@ -1,0 +1,1 @@
+"apply regex to header record how can i apply regex to header records. i have dataframe accounts with column headings as [a.accountnum,a.effectivedate]. i want to remove ""a."". i have tried ..accounts[0:0]=accounts[0:0].replace(""a."",'')..this doesn't seem to work"

@@ -1,0 +1,3 @@
+"    def load(self, stream):
+        '''read vault steam and return python object'''
+        return yaml.safe_load(self.vault.decrypt(stream))"

@@ -1,0 +1,1 @@
+what does (this); mean on end of class method in blank? what does (this); mean on end of function in blank?..i have a class with functions in it. can i call this.outputsome within that class more times and/or when can i call it?..__construct = function(constructor){.    //some code.}(this);...this.outputsome = function(obj){.    //some.}(this);

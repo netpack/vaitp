@@ -1,0 +1,131 @@
+"    def get_groups(self, env, token):
+        """Get groups for the given token.
+
+        :param env: The current WSGI environment dictionary.
+        :param token: Token to validate and return a group string for.
+
+        :returns: None if the token is invalid or a string containing a comma
+                  separated list of groups the authenticated user is a member
+                  of. The first group in the list is also considered a unique
+                  identifier for that user.
+        """
+        groups = None
+        memcache_client = cache_from_env(env)
+        if memcache_client:
+            memcache_key = '%s/auth/%s' % (self.reseller_prefix, token)
+            cached_auth_data = memcache_client.get(memcache_key)
+            if cached_auth_data:
+                expires, groups = cached_auth_data
+                if expires < time():
+                    groups = None
+
+        if env.get('HTTP_AUTHORIZATION'):
+            if not self.s3_support:
+                self.logger.warning('S3 support is disabled in swauth.')
+                return None
+            if self.swauth_remote:
+                # TODO(gholt): Support S3-style authorization with
+                # swauth_remote mode
+                self.logger.warning('S3-style authorization not supported yet '
+                                 'with swauth_remote mode.')
+                return None
+            try:
+                account = env['HTTP_AUTHORIZATION'].split(' ')[1]
+                account, user, sign = account.split(':')
+            except Exception:
+                self.logger.debug(
+                    'Swauth cannot parse Authorization header value %r' %
+                    env['HTTP_AUTHORIZATION'])
+                return None
+            path = quote('/v1/%s/%s/%s' % (self.auth_account, account, user))
+            resp = self.make_pre_authed_request(
+                env, 'GET', path).get_response(self.app)
+            if resp.status_int // 100 != 2:
+                return None
+
+            if 'x-object-meta-account-id' in resp.headers:
+                account_id = resp.headers['x-object-meta-account-id']
+            else:
+                path = quote('/v1/%s/%s' % (self.auth_account, account))
+                resp2 = self.make_pre_authed_request(
+                    env, 'HEAD', path).get_response(self.app)
+                if resp2.status_int // 100 != 2:
+                    return None
+                account_id = resp2.headers['x-container-meta-account-id']
+
+            path = env['PATH_INFO']
+            env['PATH_INFO'] = path.replace("%s:%s" % (account, user),
+                                            account_id, 1)
+            detail = json.loads(resp.body)
+            if detail:
+                creds = detail.get('auth')
+                try:
+                    auth_encoder, creds_dict = \
+                        swauth.authtypes.validate_creds(creds)
+                except ValueError as e:
+                    self.logger.error('%s' % e.args[0])
+                    return None
+
+            password = creds_dict['hash']
+            msg = base64.urlsafe_b64decode(unquote(token))
+
+            # https://bugs.python.org/issue5285
+            if isinstance(password, unicode):
+                password = password.encode('utf-8')
+            if isinstance(msg, unicode):
+                msg = msg.encode('utf-8')
+
+            s = base64.encodestring(hmac.new(password,
+                                             msg, sha1).digest()).strip()
+            if s != sign:
+                return None
+            groups = [g['name'] for g in detail['groups']]
+            if '.admin' in groups:
+                groups.remove('.admin')
+                groups.append(account_id)
+            groups = ','.join(groups)
+            return groups
+
+        if not groups:
+            if self.swauth_remote:
+                with Timeout(self.swauth_remote_timeout):
+                    conn = http_connect(self.swauth_remote_parsed.hostname,
+                        self.swauth_remote_parsed.port, 'GET',
+                        '%s/v2/.token/%s' % (self.swauth_remote_parsed.path,
+                                             quote(token)),
+                        ssl=(self.swauth_remote_parsed.scheme == 'https'))
+                    resp = conn.getresponse()
+                    resp.read()
+                    conn.close()
+                if resp.status // 100 != 2:
+                    return None
+                expires_from_now = float(resp.getheader('x-auth-ttl'))
+                groups = resp.getheader('x-auth-groups')
+                if memcache_client:
+                    memcache_client.set(
+                        memcache_key, (time() + expires_from_now, groups),
+                        time=expires_from_now)
+            else:
+                object_name = self._get_concealed_token(token)
+                path = quote('/v1/%s/.token_%s/%s' %
+                             (self.auth_account, object_name[-1], object_name))
+                resp = self.make_pre_authed_request(
+                    env, 'GET', path).get_response(self.app)
+                if resp.status_int // 100 != 2:
+                    return None
+                detail = json.loads(resp.body)
+                if detail['expires'] < time():
+                    self.make_pre_authed_request(
+                        env, 'DELETE', path).get_response(self.app)
+                    return None
+                groups = [g['name'] for g in detail['groups']]
+                if '.admin' in groups:
+                    groups.remove('.admin')
+                    groups.append(detail['account_id'])
+                groups = ','.join(groups)
+                if memcache_client:
+                    memcache_client.set(
+                        memcache_key,
+                        (detail['expires'], groups),
+                        time=float(detail['expires'] - time()))
+        return groups"

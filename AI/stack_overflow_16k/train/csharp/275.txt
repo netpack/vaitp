@@ -1,0 +1,1 @@
+output (nullable types in blank) in blank (nullable types)..int a = 10;.int? b = 20;.int? c = null;..system.console.writeline( a+c??b );...output is : 20 ..if (c??b +a) then output is 30..i don't understand why ..

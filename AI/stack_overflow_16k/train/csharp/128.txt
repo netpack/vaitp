@@ -1,0 +1,1 @@
+"how to use ribboncontrol in blank.net? my image: enter image description here..i am starting with ribboncontrol in devexpress. my problem is ...change font size in sub-item, if the font size is bigger than 10, it ran out of the area..i need it to read my character in unicode font....there is any way to make the font area auto size with the font size?"

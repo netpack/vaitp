@@ -1,0 +1,1 @@
+"what about naming an iife js function? why did i get: referenceerror: person is not defined for the following code?..(function person() {.  console.log('hi');.}());.console.log(person);...since function person is run, it is first created. however, i cannot explain why it is not then recognizable. my only thought is that iief ignore the name they are given..."

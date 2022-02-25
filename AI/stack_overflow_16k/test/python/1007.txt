@@ -1,0 +1,1 @@
+"how to remove substrings from a blank list is there any list comprehension technique to get the below-desired result in a better way..a = ['hello', 'world', 'hello world', 'hello world how are', 'hello india']..final = set().for i in a:.    for j in [x for x in a if x != i]:.        if i in j:.            final.add(i).list(set(a)^final)"

@@ -1,0 +1,1 @@
+"how to determine which way chained functions execute when ""call"" is used? so for example, in array.prototype.slice.call(arguments), call comes before slice but in var standard= name.substring(1).tolowercase() substring is called before tolowercase. why is there this difference and how do i know which order functions are called in when you chain them?"

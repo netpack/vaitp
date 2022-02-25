@@ -1,0 +1,1 @@
+convert float to raw bits to int in blank we have something like:..float f = 1234.5678f;...let's pretend the binary representation of this is 0x1234abcd. how can i get the value 305441741 (==0x1234abcd) from f?

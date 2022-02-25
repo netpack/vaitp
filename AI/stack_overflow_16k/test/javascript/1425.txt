@@ -1,0 +1,1 @@
+"array function type syntex i was reviewing someones code and he have wrote a syntax which looks like this ..export const actions = {.    [actions.someaction.attempt.name] ({ commit }, payload) {.        return new promise((resolve, reject) =&gt; {...can someone please explain me what the person is trying to do here? like if someone could explain this syntax?"

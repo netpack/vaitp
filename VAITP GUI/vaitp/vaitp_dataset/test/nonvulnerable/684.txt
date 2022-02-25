@@ -1,0 +1,1 @@
+"    def __init__(self, member: discord.Member):        self.name = member.name        self.mention = member.mention"

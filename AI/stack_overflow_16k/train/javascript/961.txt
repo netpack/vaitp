@@ -1,0 +1,1 @@
+"blank getownpropertynames method why dont object.getownpropertynames() not return call and apply method of the function?.. function arr(){};.. object.getownpropertynames(arr);//output:arguments,length,prototype,caller only"

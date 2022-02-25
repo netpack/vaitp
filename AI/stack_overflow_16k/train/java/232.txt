@@ -1,0 +1,1 @@
+skip the first item while iteration through list i need to skip the very first item iterating through the list...for (myclass myobject : mylist) {.    myobject.dosomething();.}

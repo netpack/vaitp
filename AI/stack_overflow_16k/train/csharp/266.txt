@@ -1,0 +1,1 @@
+"indexof finds empty string i got a positive result when ctrl.text happened to be an empty string (value was 0)..is that the correct behavior? do i need to check for an empty string?..""next|prev|first|last|search"".indexof(ctrl.text) &gt; -1"

@@ -1,0 +1,1 @@
+convert a bufferedimage into a 2d array i have a bufferedimage wich represents a 2048x2048 pixels tiff image. i wish to retrieve such array (int [2048][2048] from the bufferedimage. how should i proceed?

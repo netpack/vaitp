@@ -1,0 +1,8 @@
+"    def test_list_entrance_exam_instructor_with_invalid_exam_key(self):
+        """ Test list task history for entrance exam failure if course has invalid exam. """
+        url = reverse('list_entrance_exam_instructor_tasks',
+                      kwargs={'course_id': unicode(self.course_with_invalid_ee.id)})
+        response = self.client.post(url, {
+            'unique_student_identifier': self.student.email,
+        })
+        self.assertEqual(response.status_code, 400)"

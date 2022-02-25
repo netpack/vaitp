@@ -1,0 +1,1 @@
+how to add attributes to a base class's properties i have a couple model classes like so:..public class mymodelbase.{.    public string name { get; set; }.}..public class mymodel : mymodelbase.{.    public string someotherproperty { get; set; }.}...how can mymodel add a [required] attribute to the name property?

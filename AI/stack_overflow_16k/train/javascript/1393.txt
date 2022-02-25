@@ -1,0 +1,1 @@
+"is there a difference between elem['textcontent'] and elem.textcontent? in blank, is there a difference between ..elem['textcontent'] = ""test""; ..and ..elem.textcontent = ""test""; ..when elem is a htmlelement?"

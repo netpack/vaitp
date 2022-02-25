@@ -1,0 +1,1 @@
+"data formatting in blank i am trying to format a text in blank. if the input text is:...  'hi all.  .  how are you?.  .  welcome'...i want the output as:...  'hi all.  how are you?.  welcome'...but i am getting output as ...  'hi allhow are you?welcome'...my code is ..while scanner.hasnext(){.s+=scanner.nextline().replaceall(""n+"" ""n"");.system.out.println(s);.}"

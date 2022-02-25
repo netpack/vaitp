@@ -1,0 +1,1 @@
+"is it better to write: var arr=[]; than var arr=new array();? is it better to write ..var arr=[]; then var arr=new array(); .var obj={}; then var obj=new object();...and if so, why?..i read slide lection page 36 about that idea, but no explanation was given or example why its better."

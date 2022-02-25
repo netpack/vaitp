@@ -1,0 +1,1 @@
+"how to converting sting into dateobject for date comparison? i am facing trouble while converting string into dateobject in blank. .i want to convert string '10 jan 2016"" to dateobject so that i can compare it to the present date and get the time difference. ..i tired but i am getting formatting error.what is the solution to this problem?"

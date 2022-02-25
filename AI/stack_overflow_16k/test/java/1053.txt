@@ -1,0 +1,1 @@
+"how better use replaceall? string jparse = [[10, 20, 'stringone', '{gvdfdf}'], [12, 30, 'stringtwo', '{vxcbnn}']]...how use replace all, that result was: [{gvdfdf}, {vxcbnn}]"

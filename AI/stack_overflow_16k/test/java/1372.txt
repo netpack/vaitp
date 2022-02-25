@@ -1,0 +1,1 @@
+blank - code always throw nullpointerexception this code throws a nullpointerexception.    ..protected static integer cost;.public static int inccost(int value).{.   cost += value;.};

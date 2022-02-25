@@ -1,0 +1,1 @@
+"remove space from string and join using comma i am using this blank to split new line to comma. now on top of this i need to truncate spaces between each values. below is my blank...&lt;script&gt;.function convert() {.var data = document.getelementbyid(""get"").value;.var lines = data.split('rn');.document.getelementbyid(""display"").value = lines.join(',');.}.&lt;/script&gt;"

@@ -1,0 +1,1 @@
+"how to sort the array list maximum to minimum i need to sort the array list in largest value on first, i already done this but its not sorting if the array size more that 10..collections.sort(str_position);.collections.reverse(str_position);...before sorting array list [4, 6, 7, 9, 10, 11, 8, 5, 2, 1].after sorted the array list [9, 8, 7, 6, 5, 4, 2, 11, 10, 1]"

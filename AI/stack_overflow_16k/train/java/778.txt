@@ -1,0 +1,1 @@
+"blank map get value from key i want to get value from key using following code. .. for (entry&lt;integer, string&gt; entryname : mainactivity.list1) {                      . if (entry.getkey() == (entryname.getkey())). }...how can i get value if my entryname map has key using entryname.getkey() ?"

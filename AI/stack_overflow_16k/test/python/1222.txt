@@ -1,0 +1,1 @@
+blank month and days difference say i have two dates:...  2016-05-05 and 2016-08-10...i want the output 26(days) 2 (months) and 10 (days)..2016-05-05 - 2016-05-31 = 26 days..2016-06-01 - 2016-07-31 = 2 months..2016-08-01 - 2016-08-10 = 10 days

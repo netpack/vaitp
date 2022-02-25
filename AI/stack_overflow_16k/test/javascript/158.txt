@@ -1,0 +1,1 @@
+"convert unixtimestamp to date using blank .  possible duplicate:.  convert a unix timestamp to time in blank  .....i am getting date in the form of unixtimestamp..ex: 1321367459.0  (equivalent to tue, 15 nov 2011 14:30:59)..i want to convert the time stamp to date format using blank..using jquery also no problem"

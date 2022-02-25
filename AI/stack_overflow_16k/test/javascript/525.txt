@@ -1,0 +1,1 @@
+"can't get lastindexof to work i have this code..var url = 'http://sitename.com/category/diving/',.    catname = url.substr(url.lastindexof('/') + 1);...and when i try to run alert(catname) it returns empty string. what am i doing wrong?"

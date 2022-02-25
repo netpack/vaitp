@@ -1,0 +1,3 @@
+"    def make_homeserver(self, reactor, clock):
+        hs = self.setup_test_homeserver("server", federation_http_client=None)
+        return hs"

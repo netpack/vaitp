@@ -1,0 +1,1 @@
+"how to remove unspecified number of spaces after a specific word in a sentence in blank suppose i have below string,.abcfoobarfoo   def xyzfoobcd fooaaafoo bar.in this string, i need your help to remove all spaces only after foo only if exists..output: abcfoobarfoodef xyzfoobcd fooaaafoobar  ..thanks in advance."

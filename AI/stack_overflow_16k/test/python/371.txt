@@ -1,0 +1,1 @@
+"blank program returning ""none"" as output import random ..nums1 = [1,2,3].nums2 = [random.shuffle(nums1)].print nums2...how can i get nums2 as a list ?"

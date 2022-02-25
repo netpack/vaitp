@@ -1,0 +1,1 @@
+"convert windows dll of c functions for use in blank in linux is it possible to convert a windows dll file containing c functions to something that i could use in a blank program in linux? i'm able to call the c functions in blank in windows, but not blank in linux. is there any other way i could use that dll file linux blank?"

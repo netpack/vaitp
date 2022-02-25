@@ -1,0 +1,1 @@
+how to clear the terminal in py-charm. (non-manually) i need to clear the terminal in pycharm without clicking the trashbin myself. i've tried using the whole os and csl thing but it only makes some weird arrow in the terminal.

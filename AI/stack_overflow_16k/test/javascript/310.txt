@@ -1,0 +1,1 @@
+"issues with basic java script &lt;p id=""test""&gt;lol&lt;/p&gt;..&lt;script type=""text/blank""&gt;.var text = $('test').text();.var comparingtext = 'lol';..if (text == comparingtext) {.document.write('haha');.}.&lt;/script&gt;...why will not this work ?.have even tried using ""if not"".."

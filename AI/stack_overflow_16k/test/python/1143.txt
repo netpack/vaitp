@@ -1,0 +1,1 @@
+"running command lines in blank i'm having troubles running commands lines in blank..i'm currently using ..os.system(""cd "" + path).os.system(command)...however, os.system opens a new console each time...what class should i use for it to work ?.how can i intercept the output ?..thanks !"

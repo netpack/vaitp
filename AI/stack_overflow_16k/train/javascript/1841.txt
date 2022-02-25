@@ -1,0 +1,1 @@
+how to mask first five digit number on keyup using * for eg while i am typing my ssn number my first 5 dight must be masked to *..  123456789    =&gt;  *****6789...note :on keyup  it should check no of digits and mask based on it...i came through this below example. it mask the entire nine digit...https://codepen.io/anon/pen/vrordo

@@ -1,0 +1,1 @@
+"check if the second element of tuples in list of tuples are all the same i would like to check if the second element of tuples in list of tuples are all the same..features = [(a,b), (c,b), (a,d)]...the first element of the tuple can be different...x = [].for feature, geom_type in features:.    x.append(geom_type).y = collections.counter(x).print len([i for i in y if y[i]&gt;1])"

@@ -1,0 +1,1 @@
+blank in language other than english var d = new date();.document.write(d);...what will it print. it normally prints time of local machine. will it print time in french language if machine's language is french?.or is blank outputs just in english?

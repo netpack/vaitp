@@ -1,0 +1,1 @@
+"how to convert a char array with zero to int in blank i have a char array that starts with zeroes, but when i try to convert it to a int value, it deletes the zeroes, so i want to keep the zeroes as well...something like this array char contains 00001234 and the int has to be like this 00001234, but when i use the parseint it just leaves me 1234."

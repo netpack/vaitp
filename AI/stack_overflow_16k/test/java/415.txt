@@ -1,0 +1,1 @@
+"how to attach an object in j3d core, j3d util i have got a dynamically moving 3d object, say a cube. i intend to attach another object, say a sphere, on one side of this cube...what i want is that as this cube (primary object) moves, the secondary object should move along with it, remaining totally attached/glued to it...i am wondering if you could help...thank you"

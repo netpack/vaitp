@@ -1,0 +1,1 @@
+"how to remove words without vowels from a list in blank vowel = ['a','e','i','o','u'].my_list = ['hbyl','hawk','ibzj','hcxk','gawk']...for word in my_list. if word does not have one vowel. delete word from list..for word in my_list:.    if word does not include at least one vowel:.        my_list.remove(word)..print (my_list).['hawk','ibzj','gawk']"

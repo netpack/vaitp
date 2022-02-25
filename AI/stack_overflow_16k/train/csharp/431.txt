@@ -1,0 +1,1 @@
+"how to use int.tryparse with nullable int? i am trying to use tryparse to find if the string value is an integer. if the value is an integer then skip foreach loop. here is my code...string strvalue = ""42 "".. if (int.tryparse(trim(strvalue) , intval)) == false. {.    break;. }...intval is a variable of type int?(nullable int). how can i use tryparse with nullable int?"

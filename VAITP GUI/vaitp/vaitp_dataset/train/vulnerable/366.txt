@@ -1,0 +1,26 @@
+"def handler(request):
+    """Scheme handler for qute:// URLs.
+
+    Args:
+        request: QNetworkRequest to answer to.
+
+    Return:
+        A QNetworkReply.
+    """
+    try:
+        mimetype, data = qutescheme.data_for_url(request.url())
+    except qutescheme.NoHandlerFound:
+        errorstr = "No handler found for {}!".format(
+            request.url().toDisplayString())
+        return networkreply.ErrorNetworkReply(
+            request, errorstr, QNetworkReply.ContentNotFoundError)
+    except qutescheme.QuteSchemeOSError as e:
+        return networkreply.ErrorNetworkReply(
+            request, str(e), QNetworkReply.ContentNotFoundError)
+    except qutescheme.QuteSchemeError as e:
+        return networkreply.ErrorNetworkReply(request, e.errorstring, e.error)
+    except qutescheme.Redirect as e:
+        qtutils.ensure_valid(e.url)
+        return networkreply.RedirectNetworkReply(e.url)
+
+    return networkreply.FixedDataNetworkReply(request, data, mimetype)"

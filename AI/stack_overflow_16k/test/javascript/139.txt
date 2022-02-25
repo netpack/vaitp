@@ -1,0 +1,1 @@
+"blank ""ors"" - can they be combined into an array? wondering if i can make my blank more efficient..i have a var jsp = ""the jsp's name""..and i have statements in a blank validation file:..if(( jsp == ""test.html"" ) || ( jsp == ""test1.html"") || ( jsp == ""test2.html"" )) then blah blah blah....is there a more efficient way to do this?"

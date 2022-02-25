@@ -1,0 +1,1 @@
+alert when cpu usage stays over a limit for a period of time i have a windows 2003 server and i need to code a service which would email me when the cpu usage stays over 90% for more than 5 minutes. how could i do that?

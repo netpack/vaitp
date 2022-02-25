@@ -1,0 +1,1 @@
+"references to arbitrary (generic) objects i've been trying to emulate python lists in blank; i.e., maintaining a dynamic array, which can store different types of objects simultaneously. is there any way in blank to have a generic object reference, i.e., an object reference that can point to any type of object, user defined or built-in?"

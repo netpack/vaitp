@@ -1,0 +1,1 @@
+can i write `sin(whatever)`? can i write sin(whatever) in blank and have it work?..public static void main(string[] args) {.    try {.        double check = double.parsedouble(args[0]);.    } catch (numberformatexception e) {.        system.exit(0);.    }.    sin(args[0]);.}

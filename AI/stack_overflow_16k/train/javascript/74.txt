@@ -1,0 +1,1 @@
+"blank href and span tag in anchor? i have this markup,..&lt;a href=""http://www.example.com""&gt;hiya&lt;span class=""delete""&gt;delete&lt;/span&gt;&lt;/a&gt;...and my js,..$('.delete').click(function() {.    window.location = 'http://www.example.com/example';.});...my problem the anchor tag always win presedence over my blank window.location how can i overcome this?..thanks"

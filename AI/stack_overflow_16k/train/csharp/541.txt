@@ -1,0 +1,1 @@
+"nullable int (int?) not throwing null reference exception i have encountered the code something like this..int? x = new int();.x = null;.var y = x.tostring();...my understanding is that it should throw a null reference exception. but the code is not breaking and i am getting the value of y as """". please let me understand that what's happening here in behind."

@@ -1,0 +1,1 @@
+"how to get uncommon elements from two arrays using blank i have two string arrays ..array1={""hardware docs"",""customer data"",""customer docs"",""commit reviews"",""product planning docs"",""business operations "",""proprietary""};.array2={""hardware docs"",""customer docs""};...i want uncommon strings from both of these arrays.can anyone suggest how to do it."

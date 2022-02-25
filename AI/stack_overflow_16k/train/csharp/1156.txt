@@ -1,0 +1,1 @@
+blank or specification in if statement if i have if condition like:..if(x == 0 || y == 4).{.// ....}...then if x == 0 is true does blank checks if y == 4 while we already know the whole expression is true?

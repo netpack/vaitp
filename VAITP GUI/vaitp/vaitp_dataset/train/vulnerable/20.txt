@@ -1,0 +1,10 @@
+"    def to_plist(self, data, options=None):
+        """
+        Given some Python data, produces binary plist output.
+        """
+        options = options or {}
+        
+        if biplist is None:
+            raise ImproperlyConfigured("Usage of the plist aspects requires biplist.")
+        
+        return biplist.writePlistToString(self.to_simple(data, options))"

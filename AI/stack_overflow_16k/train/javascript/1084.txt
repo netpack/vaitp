@@ -1,0 +1,1 @@
+"determine html page that called a function in an external js file is it possible to determine this at runtime?..contents of external.js:..function x() {..  //can i get the path/name of the html file that included this js file?..  //which is test.html..}...contents of test.html..script src=""external.js"""

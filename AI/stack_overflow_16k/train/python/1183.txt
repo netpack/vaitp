@@ -1,0 +1,1 @@
+"different output than expected i just started programming and right now i'm stuck with a problem. i'm wondering how if functions really work. ..a = [ 20.0, 8.0, 2.5 ].b = 4.if b &gt; len(a): .    r = 2*b.r = b...i expected the output of 8, but the actual output is 4. how come? because 4 > 3 and that should execute the if statement right?"

@@ -1,0 +1,1 @@
+shared logic between constructor and another function in java script i have a situation like that:..class testclass {.   constructor() {.    shared logic.  }..  anotherfunction() {.    shared logic.  }.}...how can i achieve that not duplicating the code?

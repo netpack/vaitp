@@ -1,0 +1,1 @@
+"syntax error that makes no sense to me i was just starting a small program for fun and i got the error.syntax error on token "";"", { expected after this token after the static int declaration...class counter {.    public static int counter;  ..    for(;;) {..    }.}..public class application {.    public static void main(string args[]) {..    }.}"

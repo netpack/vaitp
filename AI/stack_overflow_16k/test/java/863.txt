@@ -1,0 +1,1 @@
+"combinations of alphabet in char array i have a char array of a, b, c and i want to print the output as:..a,b,c,ab,ac,bc,abc..any suggestions will be appreciated.....public class chararray {.    public static void main(string[] args) {.        char alpha[] = {'a', 'b', 'c'};.        for(char s : alpha) {.                    //what to do now.        }..    }..}"

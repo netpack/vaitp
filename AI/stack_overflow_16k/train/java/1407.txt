@@ -1,0 +1,1 @@
+how use in it in main project? i have the following interface:..public interface myfunctor {.   int myfunction(int x);.}...and i created a class which implements this interface :..public class myfunction1 implements myfunctor {.}...how use in main project? i have corrected mistake now i need how  run it in main   project?.i mean in public static void main(string[]args)?

@@ -1,0 +1,1 @@
+"post import hooks in blank 2.7 according to pep 369, post import hooks should be implemented for blank 2.6 and 3.0. however, i am unable to register or execute any import hook (according to pep) in blank 2.7. am i missing something ?"

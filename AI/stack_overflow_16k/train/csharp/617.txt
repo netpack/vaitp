@@ -1,0 +1,1 @@
+servicepointmanager.certificatepolicy = new trustedcertificatepolicy(); i have added all the references for this but while rebuilding my code it gives returns me ..the type or namespace name 'trustedcertificatepolicy' could not be found (are you missing a using directive or an assembly reference?)..do i need to add any other dll?

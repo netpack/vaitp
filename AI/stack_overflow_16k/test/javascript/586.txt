@@ -1,0 +1,1 @@
+"blank - call a function when i send a from trought an href // some input parameters.        add.    ..when i click on ""add"" i need to call the loadingartp() function before send the form, but it doesnt work. how can do it?"

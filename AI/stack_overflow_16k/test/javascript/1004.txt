@@ -1,0 +1,1 @@
+detect browser close event but not on page refresh in jquery window.onbeforeunload = function (event) {.    //action .};...i have tried this link but it also get fired on page refresh..how to capture the browser window close event?

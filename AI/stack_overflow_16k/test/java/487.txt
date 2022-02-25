@@ -1,0 +1,1 @@
+"uri.create has an invalid character `` uri uri = uri.create(""jar:file:"" + myjarfile.getabsolutepath());...i need this uri for using the zip filesystem to modify a .jar file...anyway, this works on mac. but on windows i'm told that there is a invalid character. the character happens to be ...so what should i do for it to work on windows and mac?"

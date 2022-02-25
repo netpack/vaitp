@@ -1,0 +1,1 @@
+"or operator in blank message += days + "" day"" + ( days==1 ? '':'s' ) + "", "";...if my counter comes to 1 month and zero day, it writes days, of course..how can i pass a ""or"" operator into this code?..i tried:..( (days==1 ? '':'s' ) || (days==0 ? '':'s'))...and:..( days==1||0 ? '':'s' )...both of them show an s at value ""0"""

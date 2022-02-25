@@ -1,0 +1,1 @@
+"compare string and floats in blank i have a two lists with values that i want to compare. if the value can be converted to a float, i want to compare the floats else i just want to compare the values as strings. how can i make that distinction to check whether a value can be converted to float or not?"

@@ -1,0 +1,1 @@
+"play a live, arbitrary waveform through speakers i have a blank program that currently generates a wave based on a formula entered into a parser - the wave can be anything, from a simple sine wave to a noise function. i want to play the wave as it generates through the speakers. what's the best way to do this?"

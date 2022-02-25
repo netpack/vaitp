@@ -1,0 +1,1 @@
+"i have a problem with a math quiz in blank i am very new at blank and i just wanted to make a pprogramm with a question how much is 23*10? and if the user answers 230 it will print true but if not it would print false and i dont know how to ... this is my first attempt..question = input(""how much is 23 * 10? "") if question == ""230"":print(""true"")"

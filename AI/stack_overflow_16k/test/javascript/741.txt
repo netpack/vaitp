@@ -1,0 +1,1 @@
+"blank array index sorry for asking a noob question but if i have an array:..myarray[""2cd""]=""blah1"";.myarray[""3cx""]=""blah3"";.myarray[""8cz""]=""blah2"";...and a string mystr=""2cd"";.and then i use myarray[mystr] to get the value of blah, how can i get the number i am accessing in the object/array or 0 in this case?"

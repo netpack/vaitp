@@ -1,0 +1,1 @@
+"what's the meaning of ""|"" in a method argument? consider this following snippet:..input.setinputtype(.    inputtype.type_class_text | inputtype.type_text_variation_password);...what does the | do? i have never encountered that before in blank."

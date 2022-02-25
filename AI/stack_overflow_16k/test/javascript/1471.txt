@@ -1,0 +1,1 @@
+"get and replace second last digit in integer -blank i want to increment the second last digit of the integer by 1. i used below code but always changing the last digit. please help.for example, i want to change 26925131 to 26925141. ..function increment_last(v) {.    return v.replace(/[0-9]+(?!.*[0-9])/, function(match) {.       return parseint(match, 10)+1;.    });. }"

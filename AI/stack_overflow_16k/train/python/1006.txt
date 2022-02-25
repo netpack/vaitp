@@ -1,0 +1,1 @@
+"'nonetype' object has no attribute 'next' error def display(self):.    temp=self.start.    print ""list isn""       .    while temp.next==none:.        print temp.data.        print ""t"".        temp=temp.next.    print temp.data.    print ""n"""

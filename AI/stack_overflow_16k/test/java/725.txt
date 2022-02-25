@@ -1,0 +1,1 @@
+"how to use addall with generic collection? why does..list&lt;map&lt;string, object&gt;&gt; a, b;.a.addall(b);...compile..but..list&lt;? extends map&lt;string, ?&gt;&gt; a, b;.a.addall(b);...does not...how to make the latter compile?"

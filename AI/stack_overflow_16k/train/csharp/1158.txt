@@ -1,0 +1,1 @@
+null-coalescing operator ?? vs. ??= in blank is use of ?? when checking a null using null-coalescing operator and there is ??= in blank 8.0. there is the same functionality behavior and what is the advantage of using ==? operator...int? a = null;   .int b = 10;    .a = a ??= 0;.a = a ?? b;

@@ -1,0 +1,1 @@
+"how to get reference to the background image? how can i get reference to the background image object (or reference to it as a node) in blank?..var backgroundimgobject = document. .... ?...based on this reference, is it possible to get url of the background image? any other ways to get url?..thank you!"

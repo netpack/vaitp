@@ -1,0 +1,1 @@
+"how would i read a list from text file? i tried this:..saves = open('filename','r').y = saves.readlines().print(y)...but i get the output [b'[0, 0, 0, 0, 0,]'] instead of [0, 0, 0, 0, 0,]..the text file content is [0, 0, 0, 0, 0]..(this not duplicate as the question is about something else and the answer didn't help me)"

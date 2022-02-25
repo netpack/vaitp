@@ -1,0 +1,1 @@
+"how does the following blank statement evaluate? the following statement does not have an if statement, even though it uses the ? character. how does it evaluate?..var username = req.user ? req.user.username : '';"

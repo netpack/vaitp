@@ -1,0 +1,1 @@
+blank slicing - last element of a list - why does it not throw an error? i am wondering why the last two slices don't throw an error..string1 = 'blank'..string1[5:].out[107]: 'n'..string1[5:6].out[109]: 'n'..string1[5:7].out[110]: 'n'

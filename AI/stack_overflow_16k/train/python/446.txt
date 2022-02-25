@@ -1,0 +1,1 @@
+"pass command to the command prompt open via bat file i want to pass awk command to the command prompt opened from the bat file..import subprocess..p = subprocess.popen(r""&lt;.bat file path&gt;"",shell=true, stdin=subprocess.pipe)...above code will open the command prompt, now i want to send the awk command in the opened command prompt..how can i do it?"

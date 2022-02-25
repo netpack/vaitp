@@ -1,0 +1,1 @@
+"blank function overloading, pls explain john resig (jquery way) article i understand implementing blank overloading based on arguments object, or by explicit checking type of and length of arguments.please explain this article: http://ejohn.org/blog/blank-method-overloading/."

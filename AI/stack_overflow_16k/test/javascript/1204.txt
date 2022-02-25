@@ -1,0 +1,1 @@
+"how to combine two value checks into one line in blank i have the following code in blank:..var seasondropdown = tvcontainer.find('select.season').val().if (seasondropdown == ""-1"" || !seasondropdown) {seasondropdown = null}...is there a way to combine these two into one line?"

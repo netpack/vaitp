@@ -1,0 +1,1 @@
+"map of key to map in blank before i reinvent the wheel does blank already have this data structure: map&lt;string, map&lt;string, string&gt;&gt; as a single type?..i need to be able to call .get(key) and it return a map&lt;string, string&gt;...or is there a common library that has it?"

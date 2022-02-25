@@ -1,0 +1,1 @@
+"bindingflags for abstract class? i'm trying to find the right bindingflags to use when using getmethod from an abstract class...public abstract class a.{.    private void consoleoutput(string text).    {.    }.}...i tried the following, but it doesn't seem to work:..this.gettype().getmethod(""consoleoutput"", bindingflags.nonpublic | bindingflags.declaredonly)"

@@ -1,0 +1,1 @@
+"grab ip text from ipchicken i have been trying to make a simple program that grabs the ip text of ipchicken.com. however, when i run it i get a bunch of html and not the ip. here is what i have so far...{.webclient something = new webclient();.string text = something.downloadstring(""http://ipchicken.com"");.label1.text = text;.}...what am i doing wrong?"

@@ -1,0 +1,1 @@
+"object index reference i've created a object..var slider = {.    this.config = {.        color : ""white"",.        width: 200,.        maxwidth : //here i want to insert value of ""slider.config.width"" * 1.5.        }.}...and i want to set a value of ""maxwidth"" to ""width * 1.5""...how can i do it?"

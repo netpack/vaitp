@@ -1,0 +1,13 @@
+"    def test_write_err(self, *_):
+        """
+        If there is a problem with the write, the file is still closed.
+        """
+
+        class MockException(Exception):
+            pass
+
+        mock_fp = open.return_value
+        mock_fp.write.side_effect = MockException
+        self.assertRaises(MockException, cli.write_to_location, 'test/loc', 'content')
+        mock_fp.write.assert_called_once_with('content')
+        mock_fp.close.assert_called_once_with()"

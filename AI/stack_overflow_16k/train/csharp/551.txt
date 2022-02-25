@@ -1,0 +1,1 @@
+"how can i pass string to string[]? i need to pass a string with type a,b,c,d,e(separated with comma) in each string[] value...string test =""a,b,c,d,e"";.string[] arr1 = new string[5];"

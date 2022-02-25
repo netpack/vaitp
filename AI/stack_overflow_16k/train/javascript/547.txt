@@ -1,0 +1,1 @@
+"blank window.onbeforeunload not working in ie11 the following code works fine in chrome, but not working in ie11. is there anything wrong with this code? how to make it work in ie as well?..window.onbeforeunload = function () {.    var newline = ""rn"";.    var message = ""line1"";.    message += newline;.    message += ""line2"";.    return message;.}...thanks"

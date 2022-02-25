@@ -1,0 +1,1 @@
+size of enumeration<string> how can i get the size of an enumeration&lt;string&gt; without iterate over it?..while debugging i can see the size of the the enumeration but i can't find a way to get this value.

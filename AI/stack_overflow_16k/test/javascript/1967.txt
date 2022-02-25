@@ -1,0 +1,1 @@
+"what is the purpose of 'this' keyword in blank differently from the other language, in blank this always refers to the “owner” of the function we're executing, or rather, to the object that a function is a method of. ..what is the advantage/purpose of this behaviour compered with other languages?"

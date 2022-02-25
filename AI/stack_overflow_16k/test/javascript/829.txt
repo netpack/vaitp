@@ -1,0 +1,1 @@
+"what's the easiest way to parse the anchor out of the current page's location? i need to the anchor out of a window.location in blank, such as the following url:..http://www.example.com/page.html#anchor1...what's the easiest method?"

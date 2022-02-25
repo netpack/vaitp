@@ -1,0 +1,1 @@
+"is there any way to get source code inside context manager as string? source code of function can be received with inspect.getsourcelines(func) function. is there any way to do same for context manager?..with test():.    print('123')..# how to get ""print('123')"" as line here?"

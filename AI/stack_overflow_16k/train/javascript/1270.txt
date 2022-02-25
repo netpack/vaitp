@@ -1,0 +1,1 @@
+"async loading of new page and change link i have been wondering how those guys have achieved their async page loading. even though they don't reload the page, the link is changing. the page change is so smooth, it doesn't even look like they are loading anything. neither it's showing any files loaded in chrome network tab...source: http://activetheory.net"

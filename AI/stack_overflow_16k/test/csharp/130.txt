@@ -1,0 +1,1 @@
+updating label control immediately my program is receiving data by serial port and i want to show it(the data) by label control.receiving datas are updating consecutive...how can i refresh value of label immediately?

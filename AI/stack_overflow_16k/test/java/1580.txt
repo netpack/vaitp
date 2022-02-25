@@ -1,0 +1,1 @@
+"how to convert string ( that contains comma separated values.) to an integer i am trying to convert a string to an integer value...example : ""3,879"" to 3879....how to do that using blank.text.numberformat; or if there is any other way to do that...thanks in advance."

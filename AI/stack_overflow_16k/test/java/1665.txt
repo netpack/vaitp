@@ -1,0 +1,1 @@
+"working with frames in blank passing sessions from one frame to another how can i make sure a particular frame can't be accessed without first accessing another frame. just like sessions in asp.net, you can't open an admin page without having logged in. it will redirect you to the log in page. so how can i achieve that?"

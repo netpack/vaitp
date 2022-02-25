@@ -1,0 +1,1 @@
+"js operator performance from a performance perspective, is it better to use:..if (input1 === x &amp;&amp; input2 === y || input1 === z &amp;&amp; input2 === y) {.  // do something.}...or:..if ((input1 === x || input1 === z) &amp;&amp; input2 === y) {.  // do something.}"

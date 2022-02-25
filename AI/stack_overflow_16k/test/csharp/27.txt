@@ -1,0 +1,1 @@
+"split and spanned not support error while zip file extraction in blank while zip file extraction using ziparchival class in blank. it working fine for few files but files with size more than 1 gb it throwing ""split or spanned archives are not supported."" i dont get what it mean. how to resolve it?"

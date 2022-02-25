@@ -1,0 +1,1 @@
+tools to search strings in blank i'm looking for the sql equivalent of like '%text to search%' in blank. really just a small text searching engine i can use to check if a string is a match.

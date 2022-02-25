@@ -1,0 +1,1 @@
+"convert from string array to byte array i'm using blank...i have a string array as follow: ""1,2,3,4,5,..."".i'm trying to convert the string array to byte array as follow []{1,2,3,4,5,...}.what is the best way to do that?..thanks."

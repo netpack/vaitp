@@ -1,0 +1,1 @@
+getting ssl error when i ran api https request i am getting below error when i ran the request....  sslerror: [errno 8] _ssl.c:510: eof occurred in violation of protocol...can any one help me out to resolve the issue...issue exists in blank 2.7.7. it's working fine in 2.7.3?

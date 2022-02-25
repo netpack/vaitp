@@ -1,0 +1,1 @@
+overriding append method in stringbuilder? i have a question regarding the append method in the stringbuilder class. i was asked how can we override the append() method in the stringbuilder class while stringbuilder class is final. is the same logic applicable for overriding tostring() in string class while string class is final? please help me...thanks

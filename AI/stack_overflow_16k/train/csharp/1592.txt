@@ -1,0 +1,1 @@
+blank help using system.uri functions i have a string in blank with a long url such as:.http://mysite.com/testing/testingpages/area/ten/p1.aspx..how can i use system.uri class to get the http://mysite.com part only ?

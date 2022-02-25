@@ -1,0 +1,1 @@
+blank: throw new error without displaying to user is there a way that i can use throw new error in blank and hide the display or change the display of console window?.i am throwing this error just to end the program.

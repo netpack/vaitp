@@ -1,0 +1,1 @@
+how to force metastock 11 to refresh chart i have done writing a blank program to write intraday data to metastock file. i saw some software send/post some message to metastock to force it refresh opening charts...how can i do this?

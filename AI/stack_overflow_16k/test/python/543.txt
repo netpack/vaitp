@@ -1,0 +1,1 @@
+"blank newline whitespace, how to print with out a whitespace a=""blank"".b=""learn blank"".print(a,""n"",b)...output :..blank. learn blank ...why output newline has a whitespace .how to avoid this, i don't need whitespace. my code has anything wrong, please help me ..blank 3.6.0"

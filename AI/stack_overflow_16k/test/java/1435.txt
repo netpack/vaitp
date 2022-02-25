@@ -1,0 +1,1 @@
+"why am i getting this error , it's unusual public class check {.    public void do() {.        system.out.println(""check"");.    }..    public static void main(string args[]){.        check obj=new check();.        obj.do();.    }.}...the errors am getting are .' ; ' expected .illegal start of type ..public void do()...identifier expected ..public void do()"

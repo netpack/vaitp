@@ -1,0 +1,1 @@
+"        def recovery_parser(xml):            parser = XMLParser(recover=True)            return parse(BytesIO(xml), parser)"

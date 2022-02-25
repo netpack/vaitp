@@ -1,0 +1,1 @@
+"how to add '/' between two strings? i have the following code:..if (!string.isnullorempty(_location.foldername)).{.    name = _location.foldername + '/' + name;.}...is it correct way to add / between two strings? or i should use the following code:..if (!string.isnullorempty(_location.foldername)).{.    name = _location.foldername + ""/"" + name;.}"

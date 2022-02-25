@@ -1,0 +1,1 @@
+"store array data in mysql using blank i want to store array data in mysql, ..var newdata={absentid:finaldata, standard:standard, subject:subject}...the finaldata value is [2,8]. how to store these data."

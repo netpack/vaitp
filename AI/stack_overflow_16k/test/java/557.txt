@@ -1,0 +1,1 @@
+"why are asserts enabled although -ea flag is not in my blank command line i don't have -ea flag on my blank app command line however in remote debug / profiling with visualvm i do see that the debugger / profiler is passing thorugh this line, why is that? i didn't place any -ea on my blank command line arguments."

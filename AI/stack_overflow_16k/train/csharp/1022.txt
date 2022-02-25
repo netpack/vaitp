@@ -1,0 +1,1 @@
+"how to get matched dataset column value? like below i want to get dataset column value by another column name? so how to do that?..string areaname = dsarea.tables[0].rows[j][""areaname""].tostring();.dscustreg.tables[0].rows[j][""areaname""] = ds.tables[0].rows[""areaname""](ds.tables[0].rows[""areaid""]);"

@@ -1,0 +1,1 @@
+how do i get maximize attribute from tkinter window? i want to see if the user has maximized a tkinter window by checking for a boolean true or false.  ..check = window.cget('fullscreen') doesn't work...is there a way?

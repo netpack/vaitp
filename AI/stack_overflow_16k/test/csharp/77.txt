@@ -1,0 +1,1 @@
+can a blank .exe file be accessed by multiple users simultaneously? i created a small program for one department in our company. i put the blank exe file in one of the shared hard drives on our network. will there be problems when the exe file accessed by multiple users at the same time?

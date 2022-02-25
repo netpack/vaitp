@@ -1,0 +1,1 @@
+"blank - access values from another private void on same form is it possible to access private string from another private void on same form not another form?..private void english().{.    string value1 = ""hello!"";.}..private void button1_click(object sender, eventargs e).{.    label1.text = value1;.}...the error is: the name 'value1' does not exist in the current context"

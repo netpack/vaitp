@@ -1,0 +1,1 @@
+"blank: can a string containing a newline ""n"" be used as a property name? it is clear why i would not want to do this. but i have little choice in the matter. ..will browsers be able to handle this? ..chrome seems to be okay with it: ..&gt; var x = {};.&gt; x['anb'] = 1;.1.&gt; x.object.a b: 1.__proto__: object.&gt; object.keys(x).[""a.b""]"

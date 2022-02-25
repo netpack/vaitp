@@ -1,0 +1,1 @@
+"explain example in blank with class can anyone explain me the following example?.how does this gets all the elements from the for loop and not only the last one?..class deck:.    def __init__(self):.        self.cards = [card(suits[i], ranks[j]) .                      for i in range (0, len(suits)) .                      for j in range (0, len(ranks))]"

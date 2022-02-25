@@ -1,0 +1,1 @@
+how do sub classes interact with super classes the question i'm asking is can you have the following. super is the super class of sub..super thing = new sub();...and then call a method from the sub class

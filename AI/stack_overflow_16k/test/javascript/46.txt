@@ -1,0 +1,1 @@
+"combining blank variables into an array i know this is a simple question, but i'm new and i can't figure it out.  i am trying to combine two variables into one array.  i want to combine var word1 and var word2 to make var new.  what is the proper way to do this?..var word1 = 'hello'.var word2 = 'good'..var newarray = ['hello','good']"

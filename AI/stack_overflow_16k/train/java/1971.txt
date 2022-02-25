@@ -1,0 +1,1 @@
+"list<integer> c1=new arraylist<integer>what type object is c1 in collections in blank ..list&lt;integer&gt;  c1=new arraylist&lt;integer&gt; ...here, c1 is an object of type list which is an interface, and we can't create an object of that interface? ..can somebody explain this to me?"

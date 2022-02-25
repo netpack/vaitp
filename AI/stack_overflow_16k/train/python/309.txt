@@ -1,0 +1,1 @@
+"standalone blank application i need some simple examples and tutorials for creating stand-alone blank application. i've never do such a thing, so any help is needed. .more precisely, i have one class - svgviewer, with one argument - full path to .svg file, and i need it to be standalone and somehow to be able to open .svg files. any suggestions for that would be appreciated."

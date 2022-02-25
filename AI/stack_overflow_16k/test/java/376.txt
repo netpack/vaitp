@@ -1,0 +1,1 @@
+blank constructor has to automatically generate and id value for the object i've a question. i'm looking for idea for constructors which has to automatically generate an id value for the instances. i've searched many pages for that but i couldn't find the right idea. maybe you have got any ways to do it ?.thanks in advance!

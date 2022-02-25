@@ -1,0 +1,1 @@
+"how can i remove overlap in list? i made example blank list...list_1 = [1,3,2,2,3,4,5,1].print(list_1)....  [1, 3, 2, 2, 3, 4, 5, 1]...to remove overlap, i tried to use set()...print(set(list_1))....  {1, 2, 3, 4, 5}...but i want make ..[1,3,2,4,5]...i want remove overlap in list, but i also want order not to be changed...how can i do that?"

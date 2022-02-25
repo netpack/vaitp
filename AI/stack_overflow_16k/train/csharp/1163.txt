@@ -1,0 +1,1 @@
+"benefit of having variable assignment on the return line as stated, i'm curious if there's any benefit of doing:..return somenumber = calculateresults(parameter);...versus doing:..somenumber = calculateresults(parameter);.return somenumber;...or doing:..return calculateresults(parameter);...is there any performance gained in using one over the other?"

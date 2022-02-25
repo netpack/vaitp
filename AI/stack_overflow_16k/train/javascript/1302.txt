@@ -1,0 +1,1 @@
+"i need 3 random numbers between 1 and 10 using blank but not repeated any of 3 i need 3 random numbers between 1 and 10 using blank but not repeated any of three..function getrandomarbitrary(min, max){.     var rand =  math.ceil(math.random() * (max - min) + min); .     return rand; .}"

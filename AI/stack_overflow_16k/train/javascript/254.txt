@@ -1,0 +1,1 @@
+"modifying a blank object using just blank and not a library such as jquery, is there a more elegant way (such as jquery.extend()) to modify an object before passing it to a function?..var o={.    a:1,.    b:2,.    c:3,.    d:function(){alert('f');}.};.o.e='abc';.o.f='cba';.o.g=function(){alert ('f1');};.foo(o);.o.e='xyz';.o.f='zyx';.o.g=function(){alert ('f2');};.foo(o);"

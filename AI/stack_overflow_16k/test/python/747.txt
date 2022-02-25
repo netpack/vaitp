@@ -1,0 +1,1 @@
+"why i cant import txt files using numpy? i am trying to import my data files to blank using numpy. but it shows error message "" data_file.txt is not defined "" how to get rid of this ?enter image description here"

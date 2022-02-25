@@ -1,0 +1,1 @@
+how should i go about making a method that will compare hands from a poker game and return the best? i need to start the method with a line like this:.public static hand choosebesthand(arraylist&lt;hand&gt; hands) throws handexception {..i just need some hints..edit: the reason i have an exception is for the event that two hands are tied.

@@ -1,0 +1,1 @@
+are there constants for the request types in blank i am using the blank.net.httpurlconnection object to set the request method. i am about to construct an enum to handle the possible values but it seems silly this isn't already done. am i missing something? is there an enum somewhere with all of these values?..update..the content type can be handled with a jax-rs class see this.

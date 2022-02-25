@@ -1,0 +1,1 @@
+in blank how can we identify whether an object is a hash or an array? the output of my json call can either be an array or a hash. how do i distinguish between these two?

@@ -1,0 +1,1 @@
+how to set application to full screen view blank .  possible duplicate:.  how do i make a winforms app go full screen  .....i have an application which has main menu and some toolstrip also...i want to provide view->full screen functionality also. please tell me how to do this so that after setting to full screen main menu and toolstrip should hide.

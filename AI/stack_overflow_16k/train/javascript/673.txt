@@ -1,0 +1,1 @@
+"why doesn't a console loaded script have access to the dom? i added a script to the dom using..// in the console of facebook.com..var test = document.createelement('script');.test.src = ""foo"";.document.head.appendchild(test);...but the script has no access to the dom...does this have to do with the same origin policy?"

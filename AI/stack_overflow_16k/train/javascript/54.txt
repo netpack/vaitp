@@ -1,0 +1,1 @@
+why is it called onblur? blank has an event called onblur that fires when a control loses focus. my question is: why is it called that? wouldn't all of our lives be easier if it was called onfocuslost?

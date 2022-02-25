@@ -1,0 +1,1 @@
+"blank code - perform memory profiling remotely i am running a blank code in a server (remotely) by using blankc. now, i want to perform memory profiling remotely because as yourkit say's,..picked up blank_tool_options:.cannot start the profiler ui: display is not available on this machine....can anybody help me how can i do this easily."

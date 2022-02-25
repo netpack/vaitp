@@ -1,0 +1,1 @@
+"using unsafe blank to take a pointer to a ushort array and write it to disk (create file) i have a *ushort that points to an array of dimensions x * y of 16 bit values, i would like to be able to write that to disk without copying to managed space, is that possible?"

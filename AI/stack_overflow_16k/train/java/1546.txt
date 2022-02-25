@@ -1,0 +1,1 @@
+"using jar inside a jar i created a jar file from my blank project..using eclipse, i added a jar as a referenced library in my own project..however, now when i try to run my program's jar using blank -jar myprogram.jar, i get an exception stating that my referenced jar is not available...so how can i create a jar consisting a reference to a different jar and make it work?"

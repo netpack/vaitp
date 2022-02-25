@@ -1,0 +1,1 @@
+"how to find the active editarea in jquery i am using editarea editor in content management system. in my page there are 3 editarea, so how can i find the editarea id when it is active, ie need to find in which editarea the cursor is pointing."

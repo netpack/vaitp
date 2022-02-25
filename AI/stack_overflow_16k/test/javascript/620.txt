@@ -1,0 +1,1 @@
+"i need help to design a 'income' type textfield using blank using conditions for example a correct format will be 2,545.39...the user must not to be able to enter anything except for what is show above...the user must also enter in a valid input, for example a user can't enter in a value such as 002453.23, so they can't have 2 0's next to each other."

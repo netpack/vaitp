@@ -1,0 +1,1 @@
+"split an integer into an array of digits i need to take an inputted integer, break the digits apart, and then finally do calculations with them. i think the best way of doing this is by using an array. how do i take the int and put  its digits into the array?"

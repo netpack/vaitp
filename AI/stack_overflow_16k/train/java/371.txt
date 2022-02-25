@@ -1,0 +1,1 @@
+what does the type parameter for thread and runnable signify? look at the following code from the threadfactory interface.. public thread&lt;t&gt; newthread(runnable&lt;t&gt; runnable);...what does s the type parameter convey here ? i mean collection makes sense since t is specifying the type of objects that can go into the collection but what does  runnable or thread mean ?

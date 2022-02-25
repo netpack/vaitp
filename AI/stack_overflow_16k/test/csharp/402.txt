@@ -1,0 +1,1 @@
+"linq dynamic field in .where statement how to use dynamic field name in where statement?..example: i can use,..mylist.where(x =&gt; x.name == ""myname"");...but how to use like this?..string myfield = ""name"";.mylist.where(x =&gt; myfield == ""myname"");"

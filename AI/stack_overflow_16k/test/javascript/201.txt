@@ -1,0 +1,1 @@
+"how to make a button go to a link i am trying to make a button that goes to a link. so i have the current code:..onevent(""button27"", ""click"", function() {./* stuff for a link goes here */.});...what do i do to do this? i was thinking something like..seturl(""id"");...but i am not sure. help is appreciated!"

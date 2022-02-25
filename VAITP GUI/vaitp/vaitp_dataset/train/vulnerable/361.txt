@@ -1,0 +1,19 @@
+"def history_data(start_time, offset=None):
+    """Return history data.
+
+    Arguments:
+        start_time: select history starting from this timestamp.
+        offset: number of items to skip
+    """
+    # history atimes are stored as ints, ensure start_time is not a float
+    start_time = int(start_time)
+    hist = objreg.get('web-history')
+    if offset is not None:
+        entries = hist.entries_before(start_time, limit=1000, offset=offset)
+    else:
+        # end is 24hrs earlier than start
+        end_time = start_time - 24*60*60
+        entries = hist.entries_between(end_time, start_time)
+
+    return [{"url": e.url, "title": e.title or e.url, "time": e.atime}
+            for e in entries]"

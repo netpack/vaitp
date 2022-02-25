@@ -1,0 +1,1 @@
+"why valid json return error in simplejson loads? i have a simple example:..test = '{ ""text"": """"test""""}'...it is a valid json ( see http://jsonlint.com/ )...but simplejson.loads(test) return error :..valueerror: expecting , delimiter: line 1 column 12 (char 12)...why ?"

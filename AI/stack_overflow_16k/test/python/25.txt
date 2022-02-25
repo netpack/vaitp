@@ -1,0 +1,1 @@
+blank optimized mode blank can run script in optimized mode (-o) that turns off debugs like assert and if i remember also remove docstrings. i have no seen it used really and maybe it is just artifact of the past times. is it being used? what for? ..why isn't this useless thing being removed in blank 3?

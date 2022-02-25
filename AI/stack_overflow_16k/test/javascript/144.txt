@@ -1,0 +1,1 @@
+"trying to understand ""=="" & ""==="" operator behavior in certain scenarios  console.log([2] == 2) //returns true. console.log([2,3] == 2) //returns false. console.log([2] === 2) //returns false. console.log([2,3] === 2) //returns false...can someone tell me what is happening behind the scenes in the above lines of code,how blank engine is performing these tasks"

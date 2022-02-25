@@ -1,0 +1,1 @@
+issue while changing path when i use pysftp module i have an issue...sftp.cd() always goes to default home directory. ..why doesn't it go to any other directory and it also appends path with n.

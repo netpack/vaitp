@@ -1,0 +1,2 @@
+"    def _request(self, method, path, queries=(), body=None, ensure_encoding=True,
+                 log_request_body=True, ignore_prefix=False):"

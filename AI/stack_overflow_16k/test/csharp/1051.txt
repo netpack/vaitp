@@ -1,0 +1,1 @@
+upnp -implementing in blank i am creating a discovery module ith upnp.i am developing on xp with the upnp.dll - i saw that the interop dont expose the devicefindercallback - how can i implement it to use upnp as async..i saw that in win7 it is exposed

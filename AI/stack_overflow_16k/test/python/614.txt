@@ -1,0 +1,1 @@
+"getting 'only length-1 arrays can be converted to blank scalars' error import matplotlib.pyplot as plt.import numpy as np.from math import sin, pi..y = pi.x = np.linspace(0, 3*y, 500).plt.plot(x, sin(x**2)).title(""a simple graph"").plt.show()...getting ...  'only length-1 arrays can be converted to blank scalars'...error while running this code"

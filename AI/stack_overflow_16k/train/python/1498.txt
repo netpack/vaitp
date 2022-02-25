@@ -1,0 +1,1 @@
+"blank while loop does not return result i have the following list and when i run while loop, it just print the first name in the list..as you can see the db_name list is in 1 column...db_name.testdb1.testdb2.testdb3.testdb4.........my code:..i=0.while i &lt; len(db_name):.         print(db_name).         i += 1"

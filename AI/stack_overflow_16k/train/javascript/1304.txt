@@ -1,0 +1,1 @@
+"splitting a comma delimited string in chunks of 40 so i have a string which looks like this:..123,532,0302,1234,etc etc (and it goes on and on, sometimes over 500). however, i want to split the comma dilimted list into arrays of 40, nothing more. similar to array_chunk in php (but with arrays)...what is the best way to achieve this?"

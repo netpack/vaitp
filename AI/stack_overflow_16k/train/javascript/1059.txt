@@ -1,0 +1,1 @@
+what's going on with this rather peculiar blank syntax the following blank code:..alert(2 .x);...alerts 'undefined' (see it here: http://jsfiddle.net/rp4wk/) ..(note: the space between the '2' and '.x' is intended)..simple question: why? especially when the following yield syntax errors:..alert(2.x);.alert(2. x);...anyone?

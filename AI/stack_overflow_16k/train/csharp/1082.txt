@@ -1,0 +1,1 @@
+"get name of property var person = new person();.do(person.firstname);..static void do(object prop).{.    //find out ""firstname""....}...i would like to find out the name of a property, where i have no access to its parent object (person as above). is it possible?"

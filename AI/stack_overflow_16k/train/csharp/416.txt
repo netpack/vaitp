@@ -1,0 +1,1 @@
+how to interrogate method attributes via a delegate? i have a method with a custom attribute. if i have a delegate that refers to this method can i tell if the method referred to by the delegate has the attribute or not?

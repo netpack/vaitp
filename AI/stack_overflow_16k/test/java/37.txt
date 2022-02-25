@@ -1,0 +1,1 @@
+why its showing error when try to print last array index in string why when i try to run this code in blank its keep say its arrayindexoutof.. string[] animals = new string[0];.system.out.println(animals[0]);...where is the wrong in the code above

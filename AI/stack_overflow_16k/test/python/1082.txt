@@ -1,0 +1,1 @@
+"is it possible to overload the multiple comparison syntax in blank? i'm wondering if it's possible to overload the multiple comparison syntax in blank:..a &lt; b &lt; c...i know it's possible to overload single comparisons, is it possible to overload these?"

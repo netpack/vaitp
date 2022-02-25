@@ -1,0 +1,1 @@
+"search for before and after values in a long sorted list what would be the fastest way to search for a number (eg. 12.31) in long sorted list and get the values one before and after my ""search"" value when the exact value isn't found (eg. 11.12 and 12.03 in the list below)?.many thanks in advance...long_list = [10.11, 11.12, 13.03, 14.2 .. 12345.67]"

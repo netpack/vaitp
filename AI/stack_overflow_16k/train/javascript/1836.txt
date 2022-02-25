@@ -1,0 +1,1 @@
+"blank code for loop don't show my desired ouput my code below don't show my desired output...for (var row=1;row&lt;=8;row++) {.    for (var i=1;i&lt;=4-(4-row);i++) {.        document.write(""#"");.    }..    document.write(""&lt;/br&gt;"");.}...i want the output like this"

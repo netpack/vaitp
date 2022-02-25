@@ -1,0 +1,99 @@
+"    def read_config(self, config, **kwargs):
+        self.enable_registration = strtobool(
+            str(config.get("enable_registration", False))
+        )
+        if "disable_registration" in config:
+            self.enable_registration = not strtobool(
+                str(config["disable_registration"])
+            )
+
+        self.account_validity = AccountValidityConfig(
+            config.get("account_validity") or {}, config
+        )
+
+        self.registrations_require_3pid = config.get("registrations_require_3pid", [])
+        self.allowed_local_3pids = config.get("allowed_local_3pids", [])
+        self.enable_3pid_lookup = config.get("enable_3pid_lookup", True)
+        self.registration_shared_secret = config.get("registration_shared_secret")
+
+        self.bcrypt_rounds = config.get("bcrypt_rounds", 12)
+        self.trusted_third_party_id_servers = config.get(
+            "trusted_third_party_id_servers", ["matrix.org", "vector.im"]
+        )
+        account_threepid_delegates = config.get("account_threepid_delegates") or {}
+        self.account_threepid_delegate_email = account_threepid_delegates.get("email")
+        self.account_threepid_delegate_msisdn = account_threepid_delegates.get("msisdn")
+
+        self.default_identity_server = config.get("default_identity_server")
+        self.allow_guest_access = config.get("allow_guest_access", False)
+
+        if config.get("invite_3pid_guest", False):
+            raise ConfigError("invite_3pid_guest is no longer supported")
+
+        self.auto_join_rooms = config.get("auto_join_rooms", [])
+        for room_alias in self.auto_join_rooms:
+            if not RoomAlias.is_valid(room_alias):
+                raise ConfigError("Invalid auto_join_rooms entry %s" % (room_alias,))
+
+        # Options for creating auto-join rooms if they do not exist yet.
+        self.autocreate_auto_join_rooms = config.get("autocreate_auto_join_rooms", True)
+        self.autocreate_auto_join_rooms_federated = config.get(
+            "autocreate_auto_join_rooms_federated", True
+        )
+        self.autocreate_auto_join_room_preset = (
+            config.get("autocreate_auto_join_room_preset")
+            or RoomCreationPreset.PUBLIC_CHAT
+        )
+        self.auto_join_room_requires_invite = self.autocreate_auto_join_room_preset in {
+            RoomCreationPreset.PRIVATE_CHAT,
+            RoomCreationPreset.TRUSTED_PRIVATE_CHAT,
+        }
+
+        # Pull the creator/inviter from the configuration, this gets used to
+        # send invites for invite-only rooms.
+        mxid_localpart = config.get("auto_join_mxid_localpart")
+        self.auto_join_user_id = None
+        if mxid_localpart:
+            # Convert the localpart to a full mxid.
+            self.auto_join_user_id = UserID(
+                mxid_localpart, self.server_name
+            ).to_string()
+
+        if self.autocreate_auto_join_rooms:
+            # Ensure the preset is a known value.
+            if self.autocreate_auto_join_room_preset not in {
+                RoomCreationPreset.PUBLIC_CHAT,
+                RoomCreationPreset.PRIVATE_CHAT,
+                RoomCreationPreset.TRUSTED_PRIVATE_CHAT,
+            }:
+                raise ConfigError("Invalid value for autocreate_auto_join_room_preset")
+            # If the preset requires invitations to be sent, ensure there's a
+            # configured user to send them from.
+            if self.auto_join_room_requires_invite:
+                if not mxid_localpart:
+                    raise ConfigError(
+                        "The configuration option `auto_join_mxid_localpart` is required if "
+                        "`autocreate_auto_join_room_preset` is set to private_chat or trusted_private_chat, such that "
+                        "Synapse knows who to send invitations from. Please "
+                        "configure `auto_join_mxid_localpart`."
+                    )
+
+        self.auto_join_rooms_for_guests = config.get("auto_join_rooms_for_guests", True)
+
+        self.enable_set_displayname = config.get("enable_set_displayname", True)
+        self.enable_set_avatar_url = config.get("enable_set_avatar_url", True)
+        self.enable_3pid_changes = config.get("enable_3pid_changes", True)
+
+        self.disable_msisdn_registration = config.get(
+            "disable_msisdn_registration", False
+        )
+
+        session_lifetime = config.get("session_lifetime")
+        if session_lifetime is not None:
+            session_lifetime = self.parse_duration(session_lifetime)
+        self.session_lifetime = session_lifetime
+
+        # The success template used during fallback auth.
+        self.fallback_success_template = self.read_templates(
+            ["auth_success.html"], autoescape=True
+        )[0]"

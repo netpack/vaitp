@@ -1,0 +1,1 @@
+"blank double/decimal always have two decimals i need 45.7 to be 45.70..math.round(d, 2) have no effect..have tried with decimal and double type. ..i would appreciate any kind of help."

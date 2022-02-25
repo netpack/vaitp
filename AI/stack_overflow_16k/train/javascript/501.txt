@@ -1,0 +1,1 @@
+"why alert box does not show updated value? i wrote  very small code for java script.in this value of message box are  changed  but it shows old value(14+32) instead of updated value(14+32+10)... &lt;script type=""text/blank""&gt;.var no=(14+32);.alert(no);.no =(14+32+10);. &lt;/script&gt;...can any one say actual reason behind this?"

@@ -1,0 +1,1 @@
+"what could possibly convert null to infinity? in my react+redux application, the value of null after performing certain kinds of operations is being (implicitly) converted to infinity somehow, i can't seem to find the reason. ..what are the possible subtle ways that could cause this?"

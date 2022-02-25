@@ -1,0 +1,1 @@
+"why can't i add i plus a random integer in for loop? could some one please explain to me why i can't 5 to i? every time i try to compile, i get an error saying it is not a statement. ..for (int i = 0; i &lt; s; i+5) {..    }"

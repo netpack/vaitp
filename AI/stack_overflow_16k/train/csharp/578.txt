@@ -1,0 +1,1 @@
+"blank string replace for website names i am trying to do a string replace for website names. here is the code:.. string output = input.replace(""c:designwebsite"", ""someting"");. textbox.text = osc.output;...the code is incorrect as there is an issue  with these marks. how can i fix my code?"

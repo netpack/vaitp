@@ -1,0 +1,1 @@
+"count the number of the same letters in 2 strings i need to count how many of shared letters are in 2 strings...s1=""hello"".s2=""leeo""..def shared(s1, s2):.    for letter in s2:.        if letter in s1:.            find = s2.count(s1).            print(find)...the output it gives me:..0.0.0.0.0.0.0.none...but it suppose to be:..3...i'm kinda lost on this one."

@@ -1,0 +1,1 @@
+function return value returns as undefined function getrent(rent){.    var rent = 666;.    return rent;.}.function show(){..getrent();.alert(rent);.}...why is this not working? it comes out as rent undefined?

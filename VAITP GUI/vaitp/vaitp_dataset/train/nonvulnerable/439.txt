@@ -1,0 +1,15 @@
+"    def test_misc_os_err(self, mopen, mock_os):
+        """
+        Test that misc errors are reraised and the write does not happen.
+        """
+
+        class MockException(OSError):
+            pass
+
+        mock_e = MockException()
+        mock_e.errno = 16
+        mock_os.makedirs.side_effect = mock_e
+        mock_fp = open.return_value
+
+        self.assertRaises(MockException, cli.write_to_location, 'test/loc', 'content')
+        self.assertEqual(mock_fp.write.call_count, 0)"

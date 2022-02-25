@@ -1,0 +1,1 @@
+"why does blank not have union? i am trying to understand the technicalities behind why blank does not have unions. i understand that using the attribute mechanism with explicit structure layout does the trick, i am more interested in why this was preferred over vanilla union construct."

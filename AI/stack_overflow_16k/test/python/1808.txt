@@ -1,0 +1,1 @@
+"check if required variable has been passed i have a function which requires a parameter (whatevername(n)) to be passed in. i want to check if the parameter was indeed passed and if it wasn't, i want to display a prompt asking what the desired parameter should be (n = int(raw_input(...))). any ideas how this can be done (note: i'm a rookie in blank)?"

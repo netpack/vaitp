@@ -1,0 +1,1 @@
+"convert a sub-make file to make file? i need to convert sub-make files into make-files, namely windows blank sub-make files...the sub-make files look like:..include windows.def ..solution = somesolution.sln...can i just save the sub-make file as "".make?"" i apologize if i'm vague, but i've googled the subject and don't have much information...thanks"

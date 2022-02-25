@@ -1,0 +1,1 @@
+"blankic way to set multiple variables to a value of false i am looking to initially set the value of 3 variables to false within a class...is there a more blankic way of doing this than:..a, b, c = false, false, false"

@@ -1,0 +1,1 @@
+"using a string stored in a variable as a name for another variable i want to concatenate a string passed as argument with another word and then use it as a variable name for an array. is this allowed? ..function getfromsomewhere(arg1) {..string newname = arg1 + ""sampleword"";..var (use newname here) = [];..}"

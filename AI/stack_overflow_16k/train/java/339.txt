@@ -1,0 +1,1 @@
+"inserting multiple array lists into single array list using blank? how to insert a multiple arraylists into single arraylist? .like ...a list has 1,2,3 .b list has 2,3,4 .c list has 3,4,5...final output what i want is [[1,2,3],[2,3,4],[3,4,5]]."

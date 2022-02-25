@@ -1,0 +1,36 @@
+"    def setUp(self):
+        self.mock_resource = MockHttpResource(prefix=PATH_PREFIX)
+        self.mock_handler = Mock(
+            spec=[
+                "get_displayname",
+                "set_displayname",
+                "get_avatar_url",
+                "set_avatar_url",
+                "check_profile_query_allowed",
+            ]
+        )
+
+        self.mock_handler.get_displayname.return_value = defer.succeed(Mock())
+        self.mock_handler.set_displayname.return_value = defer.succeed(Mock())
+        self.mock_handler.get_avatar_url.return_value = defer.succeed(Mock())
+        self.mock_handler.set_avatar_url.return_value = defer.succeed(Mock())
+        self.mock_handler.check_profile_query_allowed.return_value = defer.succeed(
+            Mock()
+        )
+
+        hs = yield setup_test_homeserver(
+            self.addCleanup,
+            "test",
+            federation_http_client=None,
+            resource_for_client=self.mock_resource,
+            federation=Mock(),
+            federation_client=Mock(),
+            profile_handler=self.mock_handler,
+        )
+
+        async def _get_user_by_req(request=None, allow_guest=False):
+            return synapse.types.create_requester(myid)
+
+        hs.get_auth().get_user_by_req = _get_user_by_req
+
+        profile.register_servlets(hs, self.mock_resource)"

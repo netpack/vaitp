@@ -1,0 +1,1 @@
+"def _sqrt(x):    if isinstance(x, complex) or x < 0:        return cmath.sqrt(x)    else:        return math.sqrt(x)"

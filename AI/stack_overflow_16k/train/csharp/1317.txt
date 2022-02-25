@@ -1,0 +1,1 @@
+"what is the result of using the as operator on a null object so blank has the as keyword which can cast an object into something else, or fail and return null if it doesn't work...what happens if the value i try to as cast is null already? do i get null out or does it throw some exception?"

@@ -1,0 +1,1 @@
+"which is better way of having a null check? i came across these two ways of having a null check for a string object...given a string object string str = ""example"";...if(str.somemethod() != null ) or.if (null != str.somemethod())...why do we prefer the 2nd one ?.what is the exact reason behind this, is it related to performance ?"

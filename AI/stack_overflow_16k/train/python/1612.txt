@@ -1,0 +1,1 @@
+"count frequency of words and string i need to count number of words in sentence. i do it with ..word_matrix[i][j] = sentences[i].count([*words_dict][j])...but it also counts when a word is included in other word, for example 'in' is included in 'interactive'. how to avoid it?"

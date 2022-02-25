@@ -1,0 +1,20 @@
+"    def put_file(self, in_path, out_path):
+        ''' transfer a file from local to chroot '''
+
+        vvv("PUT %s TO %s" % (in_path, out_path), host=self.chroot)
+
+        try:
+            with open(in_path, 'rb') as in_file:
+                try:
+                    p = self._buffered_exec_command('dd of=%s' % out_path, None, stdin=in_file)
+                except OSError:
+                    raise errors.AnsibleError("chroot connection requires dd command in the chroot")
+                try:
+                    stdout, stderr = p.communicate()
+                except:
+                    traceback.print_exc()
+                    raise errors.AnsibleError("failed to transfer file %s to %s" % (in_path, out_path))
+                if p.returncode != 0:
+                    raise errors.AnsibleError("failed to transfer file %s to %s:\n%s\n%s" % (in_path, out_path, stdout, stderr))
+        except IOError:
+            raise errors.AnsibleError("file or module does not exist at: %s" % in_path)"

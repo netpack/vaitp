@@ -1,0 +1,1 @@
+"using webclient for json serialization? i know you can deserialize a json object from an httpwebresponse using the webclient.downloadstring() but what about the other way around?  i've looked at the msdn pages and i don't know if you can serialize to json objects or not, anyone know?"

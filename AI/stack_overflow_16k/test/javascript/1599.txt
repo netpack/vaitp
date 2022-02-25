@@ -1,0 +1,1 @@
+"blank how can i reload only once? how can i make the my code reload only once? the code is set to reload every 5 seconds is a blank code. here is the code:....setinterval(function() {.    $(""#reloadpage"").load(location.href+"" #reloadpage&gt;*"","""");.}, 500); // seconds to wait, miliseconds.....how can i make my code reload only once?"

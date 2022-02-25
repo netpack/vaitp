@@ -1,0 +1,1 @@
+is there any way to make this flat array more compact? i'm sure there is some way to make it shorter:..someobj.array1.  .map((item) =&gt; item.array2).  .flat().  .map((item) =&gt; item.array3).  .flat().  .map((item) =&gt; item.array4).  .flat();

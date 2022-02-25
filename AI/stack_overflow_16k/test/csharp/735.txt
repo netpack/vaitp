@@ -1,0 +1,1 @@
+how to get 4 unique random numbers in range <0;9>? i want to get 4 unique random floating point numbers in the range &lt;0;9>. how could i do that. is it possible to do this with a single function so i don't need to generate random numbers in a loop?

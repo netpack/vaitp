@@ -1,0 +1,1 @@
+"if i have a thread instance with variable name mythread, how can i find out if it is in the state runnable? i looked at this api but didn't find the information i was looking for:..http://docs.oracle.com/blankse/1.5.0/docs/api/blank/lang/thread.state.html#runnable"

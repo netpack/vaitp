@@ -1,0 +1,1 @@
+which blank equality operator (== or ===) is faster? .  possible duplicate:.  blank === vs == : does it matter which &ldquo;equal&rdquo; operator i use?  .....i always assumed that == is faster than === operator. but after some reading i am confused. .is there any benefit at performance level if i use === over == operator?

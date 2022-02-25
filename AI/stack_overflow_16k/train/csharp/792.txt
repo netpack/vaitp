@@ -1,0 +1,1 @@
+"get underlying/derived type of enum? how can you get the underlying/derived type(byte, short, int, etc) of an enum?"

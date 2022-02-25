@@ -1,0 +1,1 @@
+how does the overflow value gets evaluated upon crossing max int datatype value how does the below code generatesthe output -2147483648.i know int.maxvalue is 2147483647...     class program.        {.            static void main(string[] args).            {.                int i = int.maxvalue;.                i += 1;.                console.read();.            }.        }

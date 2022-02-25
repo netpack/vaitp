@@ -1,0 +1,1 @@
+"reading stream with right encoding in blank i'm trying to read a stream with iso-8859-1 encoding with blank:..using (var reader = new streamreader(stream,system.text.encoding.getencoding(""iso-8859-1""))).{.  var current_enc = reader.currentencoding; //value is utf8...i set the encoding with iso-8859-1 but it's not really set after..some one has seen this behaviour?"

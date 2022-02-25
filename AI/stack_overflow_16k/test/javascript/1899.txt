@@ -1,0 +1,1 @@
+"open new windows in blank hi how to use blankscript to open a new window and then closing the current window....currently, i can only open a new window, however my current window is still left open...code:..function newfunction().        {.            window.open(""index.html"", ""mywindow"", ""status = 1, height = 300, width = 300, resizable = 0"");.        }"

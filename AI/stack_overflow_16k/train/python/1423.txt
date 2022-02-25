@@ -1,0 +1,1 @@
+setting blank variable with conditional statement i came across this line of code..ax = ax or plt.gca()...it is line 29 here..https://github.com/santosh-gupta/adjusttext/blob/master/adjusttext/init.py..how exactly does this expression work?

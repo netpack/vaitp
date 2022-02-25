@@ -1,0 +1,1 @@
+"my enums should be accepted as int? i have this filetypeenum:..public enum filetype : int.{.    jpeg = 0,.    png = 1,.}...why does it say == cant be applied to int type and filetype when i try to compare:..int type = 1;.if( type == filetype.jpeg)...??"

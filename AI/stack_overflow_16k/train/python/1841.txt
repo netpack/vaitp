@@ -1,0 +1,1 @@
+"error while opening .pyc files whenever i try to open .pyc or .pyo files, i always get an error that says failed to decode...os: lion.blank: 3.0.1...i.'m trying to open them in idle, it asks me what the current encoding of the file is, and pre-entered is us-ascii"

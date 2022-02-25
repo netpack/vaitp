@@ -1,0 +1,1 @@
+"converting array into 2 new arrays with equal sum in blank i have the following array ..var nums = [1,2,3,4];...now i want to convert this into 2 new arrays where the sum of both arrays should be same, so the final result will be something ..arr1 = [2,3];.arr2 = [1,4];"

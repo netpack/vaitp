@@ -1,0 +1,1 @@
+"how to separate the elements from a nested list? eg;- [1,[2,3]], i need to get 1,2,3 printed..? .  possible duplicate:.  flatten (an irregular) list of lists in blank  .....hi i was working out with nested lists in blank and found this to be a big problem. i know we should go with recursive functions but unable to proceed.."

@@ -1,0 +1,1 @@
+"is ""call stack"" the same as ""execution context stack"" in blank? i often see the ""call stack"" in many articles..like this: https://hackernoon.com/understanding-js-the-event-loop-959beae3ac40#ec22 ....but can't find the ""call stack"" in the ecmascript document..is ""call stack"" the same as ""execution context stack""?"

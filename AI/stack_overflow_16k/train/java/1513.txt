@@ -1,0 +1,1 @@
+"blank: sort arraylist with nested hashmap by value i have a arraylist&lt;hashmap&lt;string, string&gt;&gt;, which i want to sort by the value of the hashmap. what would be the quickest way to do this in blank (with the least amount of code)?"

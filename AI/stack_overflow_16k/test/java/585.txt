@@ -1,0 +1,1 @@
+why do i get this output? blank could someone help me what is happening here? why blank compiler returns 869 from the below example? ..package week1;..public class percentageprinter {.    public static void main(string[] args){..        double probability = 8.70;.        int percentage = (int)(100 * probability);.        system.out.println(percentage);.    }..}

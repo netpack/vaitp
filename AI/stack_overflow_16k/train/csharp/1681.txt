@@ -1,0 +1,1 @@
+blank list boxes padding in windows forms i am making a small point of sale app. i want to add space between product name and price. i uses pad right(45) after product name. problem is that if product name is bigger then prices not align in same line..please help me.

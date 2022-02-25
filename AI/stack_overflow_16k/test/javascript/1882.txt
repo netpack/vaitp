@@ -1,0 +1,1 @@
+"how can take a property in object between 2 array difference ..var a = [{a: '1', b: '1'}, {a: '2', b: '2'}].var b = [{a: '2', b: '2'}, {a: '3', b: '23'}].var c = a.map(itema =&gt; {if (b.some(itemb =&gt; itemb. a !== itema.a)) return {a: itema.a}}).console.log(c);.......// result.c = [{a: '1'}, {a: '2'}]..// expected.c = [{a: '1'}]"

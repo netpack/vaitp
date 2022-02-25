@@ -1,0 +1,1 @@
+"ignoring a comment line in file let's say there is a file that has lines of numbers and comments like:..#comments.12 #this is number.2.4 #this is float...read the file and append the digits to the list..i'm trying to get just the digits, but somehow it appends the #this is number and #this is float."

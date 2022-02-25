@@ -1,0 +1,1 @@
+"convert datetime to specified format in blank? i want to convert 'yy/mm/dd hh:mm:ss' format like 17/07/18 06:30:20 to jul.18, 2017 06:30:20 in blank. what is the best way to do that?"

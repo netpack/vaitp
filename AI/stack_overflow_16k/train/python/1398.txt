@@ -1,0 +1,1 @@
+"i need to create a two list of words in blank and i need to compare both and return common words i need to create  two list as given below in blank .a = ['my','name','green','dev'].b = ['green','white'] ..now i need to compare both the list and print the common words ..output should be .green .can anyone give me complete code with libraries to import..thanks"

@@ -1,0 +1,1 @@
+"blank: why is returning so much decimals? after a multiply i have next code in blank..var quantity = 12;.var import = 12.55;.var total = quantity * import;...total is resulting with next value: 150.60000000000002, the true result is 150.60 (use calculator)..why? itis normal in a division but in a multiply ......i tested  in ie and chrome, both with the same result"

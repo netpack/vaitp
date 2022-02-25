@@ -1,0 +1,1 @@
+blank force a condition is there a way to force a condition to be true in blank? i've seen it being done in haskell before and am wondering if you can do it blank. for example:..&gt;&gt;&gt; 2+2==5.true

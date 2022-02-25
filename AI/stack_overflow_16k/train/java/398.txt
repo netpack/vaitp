@@ -1,0 +1,1 @@
+"how can i set the location of jtextarea how can i set the location of jtextarea?...i used setlocation method and setbounds but nothing worked ..jtextarea3.setcolumns(25);.   jtextarea3.setrows(30);.    jscrollpane3.setviewportview(jtextarea3);.   jtextarea3.settext(s);. jtextarea3.setbackground(new blank.awt.color(204, 204, 204));"

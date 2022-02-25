@@ -1,0 +1,1 @@
+how to stop the execution of current method call if a condition occurs i have to stop the execution of the current method call and return to the state before the method call .how can i do it .. suppose a i am executing some sample method and a condition occurs and i am prompting a message box and then i want to return to state before this function call

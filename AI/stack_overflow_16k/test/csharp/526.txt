@@ -1,0 +1,1 @@
+"evaluating an array as the field of a class? i want to have an array in a class that can use by methods of the class itself. i want to evaluate array by a method and read by another one, how can i do this with blank? thanks..class something .{.    double[] arrayname = new double[20]; .    public void method() .    {.        arrayname[index] = value; .        index++;.    }.}"

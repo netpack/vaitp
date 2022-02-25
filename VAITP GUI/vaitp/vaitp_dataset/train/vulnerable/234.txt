@@ -1,0 +1,21 @@
+"    def test_get_sale_records_features_csv(self):
+        """
+        Test that the response from get_sale_records is in csv format.
+        """
+        for i in range(2):
+            course_registration_code = CourseRegistrationCode(
+                code='sale_invoice{}'.format(i),
+                course_id=self.course.id.to_deprecated_string(),
+                created_by=self.instructor,
+                invoice=self.sale_invoice_1,
+                invoice_item=self.invoice_item,
+                mode_slug='honor'
+            )
+            course_registration_code.save()
+
+        url = reverse(
+            'get_sale_records',
+            kwargs={'course_id': self.course.id.to_deprecated_string()}
+        )
+        response = self.client.get(url + '/csv', {})
+        self.assertEqual(response['Content-Type'], 'text/csv')"

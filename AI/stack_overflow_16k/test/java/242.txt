@@ -1,0 +1,1 @@
+"api method to check if value in a string variable is positive numeric value i have a string variable in blank,..string strnum = ""-90.29"";...apart from regex, is there any api method available to check if strnum contains a valid positive decimal value...can anyone please help?"

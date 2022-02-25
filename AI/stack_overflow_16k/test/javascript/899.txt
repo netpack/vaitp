@@ -1,0 +1,1 @@
+"is it possible to get min value of integer? in c# we have property int.minvalue which returns -2147483648...is there any way to get this value using blank?..edit..i have found answers such as number.min_value and number.min_safe_integer but if you had checked that, you would have known that they don't return the value i expected."

@@ -1,0 +1,1 @@
+"in blank, how to use reflection to get a static method and execute it? i have a bunch of static method names, how do i execute them. i think i can use reflection, but how to do that?"

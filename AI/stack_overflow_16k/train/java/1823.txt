@@ -1,0 +1,1 @@
+"how do i create a new object in blank that has the properties of another one without declaring it? for example, i have a jbutton with a set icon, name and label;.how do i make a new jbutton that i can add, say, to a panel?..jbutton b1=new jbutton();.b1.set[whatever needs to be set];.jpanel p=new jpanel();.p.add(new jbutton()[that has the properties of b1]);"

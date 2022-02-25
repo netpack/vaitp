@@ -1,0 +1,1 @@
+"l1=list and l2=list() declaration in blank different? are the following declarations different?..l1=list.l2=list()...as i used type() function, following were the results!..type(l1).&lt;class 'type'&gt;..type(l2).&lt;class 'list'&gt;..l1 is l2.false...these probably shows that l1 and l2 are not the same. why does l1 belongs to class type and not class list"

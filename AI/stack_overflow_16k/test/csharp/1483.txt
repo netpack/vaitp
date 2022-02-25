@@ -1,0 +1,1 @@
+performance wise difference between returning direct initialization and storing in variable is there any difference (performance wise) between:..public user getuser1().{.    var user = _database.user.first();.    return user;.}..public user getuser2().    return _database.user.first();.}

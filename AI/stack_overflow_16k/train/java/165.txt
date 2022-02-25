@@ -1,0 +1,1 @@
+how to organize the jars in a central repository? i have prepared some jars providing some common services for the applications of my company. now i need to host these jars in a central repository by the version wise. so that the developers can utilize these services. how can i approach it.

@@ -1,0 +1,1 @@
+"detect when ""inspect element"" is open samy kamkar's website, http://samy.pl, knows when the console is being opened and wipes the source/console when it does open.....how does this work?"

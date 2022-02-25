@@ -1,0 +1,1 @@
+-moz-user-select in blank -moz- is the problem here. -webkit- &amp; -ms- are working:..document.body.style[-moz-user-select] = 'none';...https://jsfiddle.net/o2z04sre/1/..maybe an alternative? did try it with '-moz-none'

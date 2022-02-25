@@ -1,0 +1,1 @@
+"how to check string length range in a short form in blank? how to check string range in a short  from in blank?..if( !(str2.length() &gt;= 3) &amp;&amp; !(str2.length() &lt;= 15)){.    system.out.println(""minumum length required"");.}...rather than using like above. is there any short??"

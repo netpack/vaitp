@@ -1,0 +1,1 @@
+"cannot import class from local modules in blank i have a module parser.py in local directory with ..class parser(object):.    . . . ..    . . . . ..class parser2(object):.    . . . ..    . . . . ...i'd like to import those in mainscript.py, however i'm getting an ...  error no name 'parser' in module parser...from parser import parser"

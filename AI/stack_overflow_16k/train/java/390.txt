@@ -1,0 +1,1 @@
+"want to read file in key value form in blank i need to read a file in blank and file is in below format:..type=abc, name=xyz, value=abc123.type=aaa, name=zzz, value=abc456.type=bbb, name=ccc, value=abc001...so i want read this file as a key value pair, so what would be the best way to read this file?..please note that this not the properties file."

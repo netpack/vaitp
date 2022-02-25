@@ -1,0 +1,1 @@
+"in blank it's better define object's attribute in its initialization or with dot notation? what is more efficent between this:..myclass foo = new myclass().{.    name = ""foo"",.    color = ""blue"",.    number = 3.};...and this:..myclass foo = new myclass();.foo.name = ""foo"";.foo.color = ""blue"";.foo.number = 3;"

@@ -1,0 +1,1 @@
+"activator.createinstance returning error now i was initially using the following method - which was working fine..var obj = activator.createinstance(""myproject"",""myproject.myimpl"");...now i am getting an error at the above line and the error is:..exception has been thrown by the target of an invocation....any suggestions on what might be going wrong ?"

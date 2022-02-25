@@ -1,0 +1,1 @@
+is it possible to get a variable inside a method blank i want to know if i can get a variable inside the method for example:..foo.cs..public void foo().{ .   int getme = 1;.}..public void foogetter().{ .   foo(); //how can i get that variable get me ? without using delegates or anything just using method. foo:getme?.}

@@ -1,0 +1,1 @@
+"read word list from text file with control word length how can read word list text file but check word length before reading words?..var s = file.readalltext(""words_alpha.txt"").where(r=&gt;r.tostring().length&lt;6 &amp;&amp;.        r.tostring()!=""n"""

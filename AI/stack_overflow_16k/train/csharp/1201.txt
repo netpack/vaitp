@@ -1,0 +1,1 @@
+when and how to use continuation passing style i have been reading about the continuation passing style programming technique (blank 3.0 implementation)...why/when it would be useful to use this technique?..how can i implement this to get those really long chains? is this the same as currying (which yields some better search results in google)?..thanks

@@ -1,0 +1,1 @@
+"how to control for-loop exection in blank [what should this blank code do] can anyone please help me to figure out what this code blank code means ..  (function(){.  for(var i=0;i&lt;5;i++){.    settimeout(console.log(i),1000);.  }.})();"

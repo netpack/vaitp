@@ -1,0 +1,1 @@
+"how do i randomize four numbers without them being the same thing in blank? i'm trying to randomize four numbers without them being the same, or else it breaks my code. what can i do to so that they are all the same?.this is my code:..random r = new random();.._unknown1 = r.next(1, 8);._unknown2 = r.next(1, 8);._unknown3 = r.next(1, 8);._unknown4 = r.next(1, 8);"

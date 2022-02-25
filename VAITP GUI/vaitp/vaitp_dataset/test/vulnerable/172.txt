@@ -1,0 +1,1 @@
+"    def test_received_nonsense_nothing(self):        data = b"""\"""        result = self.parser.received(data)        self.assertEqual(result, 2)        self.assertTrue(self.parser.completed)        self.assertEqual(self.parser.headers, {})"

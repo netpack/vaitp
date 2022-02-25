@@ -1,0 +1,1 @@
+"what's the point in blank window.onload? i never quite understood this what's the point in using window.onload like this if the blank load's anything not in a function as soon as the webpage loads?....window.onload = function() {.  alert(""hello"");.};"

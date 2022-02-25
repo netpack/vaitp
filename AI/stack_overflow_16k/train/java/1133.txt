@@ -1,0 +1,1 @@
+"converting between decimal and hexadecimal in blank let's say i have a byte value of 0x12 (decimal 18). i need to convert this into decimal 12. here's how i do it:..byte hex = 0x12;.byte dec = byte.parsebyte(string.format(""%2x"", hex));.system.out.println(dec); // 12...is there a better way of doing this (for example without using strings and parsing)?"

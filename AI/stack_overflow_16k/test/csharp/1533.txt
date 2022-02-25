@@ -1,0 +1,1 @@
+"upload only image jpg, jpeg,bmp,gif and png. how write code in this code if (fileupload1.hasfile).{.    string extension = system.io.path.getextension(fileupload1.filename);..if (extension == "".jpg"").{.    fileupload1.saveas(""yourpath"" + fileupload1.filename);..}.else.{.response.write(""only .jpg allowed"");.}...}"

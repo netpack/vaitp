@@ -1,0 +1,1 @@
+"get generic interface class object how to get class object of a generic interface?.for example, boolean.class, date.class..but list&lt;boolean&gt;.class doesn't seem to be syntax-valid."

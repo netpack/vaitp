@@ -1,0 +1,1 @@
+"how can i avoid parseint function to remove leading zero's of 14th digit number i have 14 digit number with the leading zero's , but when i am doing parseint on that then it is removing leading zero's...var number = parseint(""00000011121314"");.console.log(""number after parsing is ""+ number);...it is giving me answer as a 11121314 instead of 00000011121314.."

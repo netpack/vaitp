@@ -1,0 +1,1 @@
+"why doesn't it add doubles numbers correctly? run this code:..double sum = 0;.for(int i = 0; i &lt; 100; i++).{.    sum = sum + 0.1;.    system.out.println(sum);.}...it doesn't actually add numbers together propery, there is a very slight error almost everytime..(eg: 0.2 + 0.1 = 0.30000000000000004, not 0.3).why is that? can i fix it/ work around it?"

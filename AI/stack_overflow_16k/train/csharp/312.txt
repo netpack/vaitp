@@ -1,0 +1,1 @@
+"do we have a ""contains"" method in ienumerable i have a class in my code that is already deriving from ienumerable..i was wondering if there is a way that i can use a ""contains"" method on its instnaces to look for a something in that list?"

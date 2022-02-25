@@ -1,0 +1,1 @@
+why 12/13 value is 1 in blank i tried this expression 12/13 in blank and i got value as 1.when i cast the value to double then actual value is coming...can someone explain me why this is happening?..thanks.ajit

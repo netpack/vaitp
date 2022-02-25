@@ -1,0 +1,1 @@
+"assign values to 2d array i need to assign values to 2d array but i can't find the right syntax..i tried this but is't wrong:..string[][] s2d = new string[][] {.  {""val1"",""val2""},.  {""val1bis"",""val2bis""}.};...thanks"

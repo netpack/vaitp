@@ -1,0 +1,1 @@
+"calling func<string,object> in lambda i'm confused, why can't i call this as a function and how do i let myself call this as a function?..error   1   'fn' is a 'variable' but is used like a 'method'...source..func&lt;list&lt;object&gt;, list&lt;object&gt;, func&lt;string, object&gt;&gt; test;.test = (ls, fn) =&gt; fn(null);"

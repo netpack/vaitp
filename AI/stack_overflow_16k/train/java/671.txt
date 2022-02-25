@@ -1,0 +1,1 @@
+add the same string to all items in a list (or array) without use of loop or iterations i have a list and would like to add the same string to all items in the list without for loops or iterations. so the modified list would have all its entries with the same additional string...is there a class or method available that does this in blank..thanks

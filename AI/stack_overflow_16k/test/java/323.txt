@@ -1,0 +1,1 @@
+"3 decimal precision in blank     float x = 4;.    float answer = 4/16;...the answer for this is 0.25, but i want to display the answer upto 3 decimal places, like 0.250...how to achieve that? please help?"

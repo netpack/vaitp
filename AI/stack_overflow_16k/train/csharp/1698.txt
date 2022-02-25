@@ -1,0 +1,1 @@
+"blank for loop help .  possible duplicate:.  what does &ldquo;for(;;)&rdquo; do in blank?  .....what does ..for (; ; ).{.  // do something.}...mean in blank? ..isn't there supposed to be (initializer, condition, iterator) ?..i saw an example in a book that uses nothing inside the contents of the for loop."

@@ -1,0 +1,1 @@
+"    def serialize_key(self):        if self.key:            f = tempfile.NamedTemporaryFile(                prefix='luks-key-', mode='w', delete=False)            f.write(self.key)            f.close()            return {'keyfile': f.name}        else:            return {}"

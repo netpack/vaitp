@@ -1,0 +1,1 @@
+multiple arithimetic operator store i have been thinking to solve any problem like 1+2*4-5 with user entering it and program to solve it. i've read some questions on this site about storing arithmetic operator and the solution says to check by using switch which can't  be applied here. i would be thankful if anybody could suggest any idea of how to make it.

@@ -1,0 +1,1 @@
+can i create a function with the same name as the class? i want to create a function with the same name as its class using blank...sample snippet:..public class mycustomer.{.    public mycustomer().    {.    }..    public void mycustomer().    {.    }.}...if i try to compile it visual studio is throwing an error.

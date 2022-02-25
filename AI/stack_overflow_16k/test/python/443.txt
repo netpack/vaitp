@@ -1,0 +1,1 @@
+change logger.exception to level=critical instead of error? i need to change the logger.exception default behavior to write to my logger with level=critical. it seems like something i can change but i haven't figured out how. my last resort is sys.excepthook but i don't want to use it because i do formatting in there...thanks!

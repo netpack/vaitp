@@ -39,7 +39,7 @@ COMPRESS      = gzip -9f
 DISTNAME      = vaitp1.0.0
 DISTDIR = /home/fred/msi/ano2/VAITP/VAITP\ GUI/build-vaitp-Desktop-Debug/.tmp/vaitp1.0.0
 LINK          = g++
-LFLAGS        = 
+LFLAGS        = -fPIC
 LIBS          = $(SUBLIBS) /usr/lib/libQt5Widgets.so /usr/lib/libQt5Gui.so /usr/lib/libQt5Sql.so /usr/lib/libQt5Core.so -lGL -lpthread   
 AR            = ar cqs
 RANLIB        = 
@@ -52,11 +52,15 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       = ../vaitp/main.cpp \
+SOURCES       = ../vaitp/aimodule.cpp \
+		../vaitp/detectionmodule.cpp \
+		../vaitp/main.cpp \
 		../vaitp/vaitp.cpp qrc_resources.cpp \
 		qrc_qmake_qmake_qm_files.cpp \
 		moc_vaitp.cpp
-OBJECTS       = main.o \
+OBJECTS       = aimodule.o \
+		detectionmodule.o \
+		main.o \
 		vaitp.o \
 		qrc_resources.o \
 		qrc_qmake_qmake_qm_files.o \
@@ -79,7 +83,6 @@ DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/modules/qt_KAuth.pri \
 		/usr/lib/qt/mkspecs/modules/qt_KAuthCore.pri \
 		/usr/lib/qt/mkspecs/modules/qt_KBookmarks.pri \
-		/usr/lib/qt/mkspecs/modules/qt_KCddb.pri \
 		/usr/lib/qt/mkspecs/modules/qt_KCMUtils.pri \
 		/usr/lib/qt/mkspecs/modules/qt_KCodecs.pri \
 		/usr/lib/qt/mkspecs/modules/qt_KCompletion.pri \
@@ -122,7 +125,6 @@ DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/modules/qt_KParts.pri \
 		/usr/lib/qt/mkspecs/modules/qt_KPeople.pri \
 		/usr/lib/qt/mkspecs/modules/qt_KPeopleWidgets.pri \
-		/usr/lib/qt/mkspecs/modules/qt_KPlotting.pri \
 		/usr/lib/qt/mkspecs/modules/qt_KPty.pri \
 		/usr/lib/qt/mkspecs/modules/qt_KRunner.pri \
 		/usr/lib/qt/mkspecs/modules/qt_KScreen.pri \
@@ -176,8 +178,6 @@ DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/modules/qt_lib_multimediawidgets_private.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_network.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_network_private.pri \
-		/usr/lib/qt/mkspecs/modules/qt_lib_networkauth.pri \
-		/usr/lib/qt/mkspecs/modules/qt_lib_networkauth_private.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_opengl.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_opengl_private.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_openglextensions.pri \
@@ -206,16 +206,6 @@ DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/modules/qt_lib_qmlworkerscript_private.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_qtmultimediaquicktools_private.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_quick.pri \
-		/usr/lib/qt/mkspecs/modules/qt_lib_quick3d.pri \
-		/usr/lib/qt/mkspecs/modules/qt_lib_quick3d_private.pri \
-		/usr/lib/qt/mkspecs/modules/qt_lib_quick3dassetimport.pri \
-		/usr/lib/qt/mkspecs/modules/qt_lib_quick3dassetimport_private.pri \
-		/usr/lib/qt/mkspecs/modules/qt_lib_quick3drender.pri \
-		/usr/lib/qt/mkspecs/modules/qt_lib_quick3drender_private.pri \
-		/usr/lib/qt/mkspecs/modules/qt_lib_quick3druntimerender.pri \
-		/usr/lib/qt/mkspecs/modules/qt_lib_quick3druntimerender_private.pri \
-		/usr/lib/qt/mkspecs/modules/qt_lib_quick3dutils.pri \
-		/usr/lib/qt/mkspecs/modules/qt_lib_quick3dutils_private.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_quick_private.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_quickcontrols2.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_quickcontrols2_private.pri \
@@ -225,14 +215,8 @@ DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/modules/qt_lib_quicktemplates2_private.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_quickwidgets.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_quickwidgets_private.pri \
-		/usr/lib/qt/mkspecs/modules/qt_lib_script.pri \
-		/usr/lib/qt/mkspecs/modules/qt_lib_script_private.pri \
-		/usr/lib/qt/mkspecs/modules/qt_lib_scripttools.pri \
-		/usr/lib/qt/mkspecs/modules/qt_lib_scripttools_private.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_sensors.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_sensors_private.pri \
-		/usr/lib/qt/mkspecs/modules/qt_lib_serialport.pri \
-		/usr/lib/qt/mkspecs/modules/qt_lib_serialport_private.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_service_support_private.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_sql.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_sql_private.pri \
@@ -262,10 +246,6 @@ DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/modules/qt_lib_webenginecoreheaders_private.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_webenginewidgets.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_webenginewidgets_private.pri \
-		/usr/lib/qt/mkspecs/modules/qt_lib_webkit.pri \
-		/usr/lib/qt/mkspecs/modules/qt_lib_webkit_private.pri \
-		/usr/lib/qt/mkspecs/modules/qt_lib_webkitwidgets.pri \
-		/usr/lib/qt/mkspecs/modules/qt_lib_webkitwidgets_private.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_widgets.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_widgets_private.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_x11extras.pri \
@@ -299,6 +279,7 @@ DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/features/resources_functions.prf \
 		/usr/lib/qt/mkspecs/features/resources.prf \
 		/usr/lib/qt/mkspecs/features/moc.prf \
+		/usr/lib/qt/mkspecs/features/link_ltcg.prf \
 		/usr/lib/qt/mkspecs/features/unix/opengl.prf \
 		/usr/lib/qt/mkspecs/features/uic.prf \
 		/usr/lib/qt/mkspecs/features/unix/thread.prf \
@@ -308,7 +289,11 @@ DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/features/exceptions.prf \
 		/usr/lib/qt/mkspecs/features/yacc.prf \
 		/usr/lib/qt/mkspecs/features/lex.prf \
-		../vaitp/vaitp.pro ../vaitp/vaitp.h ../vaitp/main.cpp \
+		../vaitp/vaitp.pro ../vaitp/aimodule.h \
+		../vaitp/detectionmodule.h \
+		../vaitp/vaitp.h ../vaitp/aimodule.cpp \
+		../vaitp/detectionmodule.cpp \
+		../vaitp/main.cpp \
 		../vaitp/vaitp.cpp
 QMAKE_TARGET  = vaitp
 DESTDIR       = 
@@ -339,7 +324,6 @@ Makefile: ../vaitp/vaitp.pro /usr/lib/qt/mkspecs/linux-g++/qmake.conf /usr/lib/q
 		/usr/lib/qt/mkspecs/modules/qt_KAuth.pri \
 		/usr/lib/qt/mkspecs/modules/qt_KAuthCore.pri \
 		/usr/lib/qt/mkspecs/modules/qt_KBookmarks.pri \
-		/usr/lib/qt/mkspecs/modules/qt_KCddb.pri \
 		/usr/lib/qt/mkspecs/modules/qt_KCMUtils.pri \
 		/usr/lib/qt/mkspecs/modules/qt_KCodecs.pri \
 		/usr/lib/qt/mkspecs/modules/qt_KCompletion.pri \
@@ -382,7 +366,6 @@ Makefile: ../vaitp/vaitp.pro /usr/lib/qt/mkspecs/linux-g++/qmake.conf /usr/lib/q
 		/usr/lib/qt/mkspecs/modules/qt_KParts.pri \
 		/usr/lib/qt/mkspecs/modules/qt_KPeople.pri \
 		/usr/lib/qt/mkspecs/modules/qt_KPeopleWidgets.pri \
-		/usr/lib/qt/mkspecs/modules/qt_KPlotting.pri \
 		/usr/lib/qt/mkspecs/modules/qt_KPty.pri \
 		/usr/lib/qt/mkspecs/modules/qt_KRunner.pri \
 		/usr/lib/qt/mkspecs/modules/qt_KScreen.pri \
@@ -436,8 +419,6 @@ Makefile: ../vaitp/vaitp.pro /usr/lib/qt/mkspecs/linux-g++/qmake.conf /usr/lib/q
 		/usr/lib/qt/mkspecs/modules/qt_lib_multimediawidgets_private.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_network.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_network_private.pri \
-		/usr/lib/qt/mkspecs/modules/qt_lib_networkauth.pri \
-		/usr/lib/qt/mkspecs/modules/qt_lib_networkauth_private.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_opengl.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_opengl_private.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_openglextensions.pri \
@@ -466,16 +447,6 @@ Makefile: ../vaitp/vaitp.pro /usr/lib/qt/mkspecs/linux-g++/qmake.conf /usr/lib/q
 		/usr/lib/qt/mkspecs/modules/qt_lib_qmlworkerscript_private.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_qtmultimediaquicktools_private.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_quick.pri \
-		/usr/lib/qt/mkspecs/modules/qt_lib_quick3d.pri \
-		/usr/lib/qt/mkspecs/modules/qt_lib_quick3d_private.pri \
-		/usr/lib/qt/mkspecs/modules/qt_lib_quick3dassetimport.pri \
-		/usr/lib/qt/mkspecs/modules/qt_lib_quick3dassetimport_private.pri \
-		/usr/lib/qt/mkspecs/modules/qt_lib_quick3drender.pri \
-		/usr/lib/qt/mkspecs/modules/qt_lib_quick3drender_private.pri \
-		/usr/lib/qt/mkspecs/modules/qt_lib_quick3druntimerender.pri \
-		/usr/lib/qt/mkspecs/modules/qt_lib_quick3druntimerender_private.pri \
-		/usr/lib/qt/mkspecs/modules/qt_lib_quick3dutils.pri \
-		/usr/lib/qt/mkspecs/modules/qt_lib_quick3dutils_private.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_quick_private.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_quickcontrols2.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_quickcontrols2_private.pri \
@@ -485,14 +456,8 @@ Makefile: ../vaitp/vaitp.pro /usr/lib/qt/mkspecs/linux-g++/qmake.conf /usr/lib/q
 		/usr/lib/qt/mkspecs/modules/qt_lib_quicktemplates2_private.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_quickwidgets.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_quickwidgets_private.pri \
-		/usr/lib/qt/mkspecs/modules/qt_lib_script.pri \
-		/usr/lib/qt/mkspecs/modules/qt_lib_script_private.pri \
-		/usr/lib/qt/mkspecs/modules/qt_lib_scripttools.pri \
-		/usr/lib/qt/mkspecs/modules/qt_lib_scripttools_private.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_sensors.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_sensors_private.pri \
-		/usr/lib/qt/mkspecs/modules/qt_lib_serialport.pri \
-		/usr/lib/qt/mkspecs/modules/qt_lib_serialport_private.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_service_support_private.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_sql.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_sql_private.pri \
@@ -522,10 +487,6 @@ Makefile: ../vaitp/vaitp.pro /usr/lib/qt/mkspecs/linux-g++/qmake.conf /usr/lib/q
 		/usr/lib/qt/mkspecs/modules/qt_lib_webenginecoreheaders_private.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_webenginewidgets.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_webenginewidgets_private.pri \
-		/usr/lib/qt/mkspecs/modules/qt_lib_webkit.pri \
-		/usr/lib/qt/mkspecs/modules/qt_lib_webkit_private.pri \
-		/usr/lib/qt/mkspecs/modules/qt_lib_webkitwidgets.pri \
-		/usr/lib/qt/mkspecs/modules/qt_lib_webkitwidgets_private.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_widgets.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_widgets_private.pri \
 		/usr/lib/qt/mkspecs/modules/qt_lib_x11extras.pri \
@@ -559,6 +520,7 @@ Makefile: ../vaitp/vaitp.pro /usr/lib/qt/mkspecs/linux-g++/qmake.conf /usr/lib/q
 		/usr/lib/qt/mkspecs/features/resources_functions.prf \
 		/usr/lib/qt/mkspecs/features/resources.prf \
 		/usr/lib/qt/mkspecs/features/moc.prf \
+		/usr/lib/qt/mkspecs/features/link_ltcg.prf \
 		/usr/lib/qt/mkspecs/features/unix/opengl.prf \
 		/usr/lib/qt/mkspecs/features/uic.prf \
 		/usr/lib/qt/mkspecs/features/unix/thread.prf \
@@ -590,7 +552,6 @@ Makefile: ../vaitp/vaitp.pro /usr/lib/qt/mkspecs/linux-g++/qmake.conf /usr/lib/q
 /usr/lib/qt/mkspecs/modules/qt_KAuth.pri:
 /usr/lib/qt/mkspecs/modules/qt_KAuthCore.pri:
 /usr/lib/qt/mkspecs/modules/qt_KBookmarks.pri:
-/usr/lib/qt/mkspecs/modules/qt_KCddb.pri:
 /usr/lib/qt/mkspecs/modules/qt_KCMUtils.pri:
 /usr/lib/qt/mkspecs/modules/qt_KCodecs.pri:
 /usr/lib/qt/mkspecs/modules/qt_KCompletion.pri:
@@ -633,7 +594,6 @@ Makefile: ../vaitp/vaitp.pro /usr/lib/qt/mkspecs/linux-g++/qmake.conf /usr/lib/q
 /usr/lib/qt/mkspecs/modules/qt_KParts.pri:
 /usr/lib/qt/mkspecs/modules/qt_KPeople.pri:
 /usr/lib/qt/mkspecs/modules/qt_KPeopleWidgets.pri:
-/usr/lib/qt/mkspecs/modules/qt_KPlotting.pri:
 /usr/lib/qt/mkspecs/modules/qt_KPty.pri:
 /usr/lib/qt/mkspecs/modules/qt_KRunner.pri:
 /usr/lib/qt/mkspecs/modules/qt_KScreen.pri:
@@ -687,8 +647,6 @@ Makefile: ../vaitp/vaitp.pro /usr/lib/qt/mkspecs/linux-g++/qmake.conf /usr/lib/q
 /usr/lib/qt/mkspecs/modules/qt_lib_multimediawidgets_private.pri:
 /usr/lib/qt/mkspecs/modules/qt_lib_network.pri:
 /usr/lib/qt/mkspecs/modules/qt_lib_network_private.pri:
-/usr/lib/qt/mkspecs/modules/qt_lib_networkauth.pri:
-/usr/lib/qt/mkspecs/modules/qt_lib_networkauth_private.pri:
 /usr/lib/qt/mkspecs/modules/qt_lib_opengl.pri:
 /usr/lib/qt/mkspecs/modules/qt_lib_opengl_private.pri:
 /usr/lib/qt/mkspecs/modules/qt_lib_openglextensions.pri:
@@ -717,16 +675,6 @@ Makefile: ../vaitp/vaitp.pro /usr/lib/qt/mkspecs/linux-g++/qmake.conf /usr/lib/q
 /usr/lib/qt/mkspecs/modules/qt_lib_qmlworkerscript_private.pri:
 /usr/lib/qt/mkspecs/modules/qt_lib_qtmultimediaquicktools_private.pri:
 /usr/lib/qt/mkspecs/modules/qt_lib_quick.pri:
-/usr/lib/qt/mkspecs/modules/qt_lib_quick3d.pri:
-/usr/lib/qt/mkspecs/modules/qt_lib_quick3d_private.pri:
-/usr/lib/qt/mkspecs/modules/qt_lib_quick3dassetimport.pri:
-/usr/lib/qt/mkspecs/modules/qt_lib_quick3dassetimport_private.pri:
-/usr/lib/qt/mkspecs/modules/qt_lib_quick3drender.pri:
-/usr/lib/qt/mkspecs/modules/qt_lib_quick3drender_private.pri:
-/usr/lib/qt/mkspecs/modules/qt_lib_quick3druntimerender.pri:
-/usr/lib/qt/mkspecs/modules/qt_lib_quick3druntimerender_private.pri:
-/usr/lib/qt/mkspecs/modules/qt_lib_quick3dutils.pri:
-/usr/lib/qt/mkspecs/modules/qt_lib_quick3dutils_private.pri:
 /usr/lib/qt/mkspecs/modules/qt_lib_quick_private.pri:
 /usr/lib/qt/mkspecs/modules/qt_lib_quickcontrols2.pri:
 /usr/lib/qt/mkspecs/modules/qt_lib_quickcontrols2_private.pri:
@@ -736,14 +684,8 @@ Makefile: ../vaitp/vaitp.pro /usr/lib/qt/mkspecs/linux-g++/qmake.conf /usr/lib/q
 /usr/lib/qt/mkspecs/modules/qt_lib_quicktemplates2_private.pri:
 /usr/lib/qt/mkspecs/modules/qt_lib_quickwidgets.pri:
 /usr/lib/qt/mkspecs/modules/qt_lib_quickwidgets_private.pri:
-/usr/lib/qt/mkspecs/modules/qt_lib_script.pri:
-/usr/lib/qt/mkspecs/modules/qt_lib_script_private.pri:
-/usr/lib/qt/mkspecs/modules/qt_lib_scripttools.pri:
-/usr/lib/qt/mkspecs/modules/qt_lib_scripttools_private.pri:
 /usr/lib/qt/mkspecs/modules/qt_lib_sensors.pri:
 /usr/lib/qt/mkspecs/modules/qt_lib_sensors_private.pri:
-/usr/lib/qt/mkspecs/modules/qt_lib_serialport.pri:
-/usr/lib/qt/mkspecs/modules/qt_lib_serialport_private.pri:
 /usr/lib/qt/mkspecs/modules/qt_lib_service_support_private.pri:
 /usr/lib/qt/mkspecs/modules/qt_lib_sql.pri:
 /usr/lib/qt/mkspecs/modules/qt_lib_sql_private.pri:
@@ -773,10 +715,6 @@ Makefile: ../vaitp/vaitp.pro /usr/lib/qt/mkspecs/linux-g++/qmake.conf /usr/lib/q
 /usr/lib/qt/mkspecs/modules/qt_lib_webenginecoreheaders_private.pri:
 /usr/lib/qt/mkspecs/modules/qt_lib_webenginewidgets.pri:
 /usr/lib/qt/mkspecs/modules/qt_lib_webenginewidgets_private.pri:
-/usr/lib/qt/mkspecs/modules/qt_lib_webkit.pri:
-/usr/lib/qt/mkspecs/modules/qt_lib_webkit_private.pri:
-/usr/lib/qt/mkspecs/modules/qt_lib_webkitwidgets.pri:
-/usr/lib/qt/mkspecs/modules/qt_lib_webkitwidgets_private.pri:
 /usr/lib/qt/mkspecs/modules/qt_lib_widgets.pri:
 /usr/lib/qt/mkspecs/modules/qt_lib_widgets_private.pri:
 /usr/lib/qt/mkspecs/modules/qt_lib_x11extras.pri:
@@ -810,6 +748,7 @@ Makefile: ../vaitp/vaitp.pro /usr/lib/qt/mkspecs/linux-g++/qmake.conf /usr/lib/q
 /usr/lib/qt/mkspecs/features/resources_functions.prf:
 /usr/lib/qt/mkspecs/features/resources.prf:
 /usr/lib/qt/mkspecs/features/moc.prf:
+/usr/lib/qt/mkspecs/features/link_ltcg.prf:
 /usr/lib/qt/mkspecs/features/unix/opengl.prf:
 /usr/lib/qt/mkspecs/features/uic.prf:
 /usr/lib/qt/mkspecs/features/unix/thread.prf:
@@ -839,8 +778,8 @@ distdir: FORCE
 	$(COPY_FILE) --parents ../vaitp/vaitp_pt_PT.ts $(DISTDIR)/
 	$(COPY_FILE) --parents ../vaitp/resources.qrc qmake_qmake_qm_files.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/qt/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../vaitp/vaitp.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../vaitp/main.cpp ../vaitp/vaitp.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../vaitp/aimodule.h ../vaitp/detectionmodule.h ../vaitp/vaitp.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../vaitp/aimodule.cpp ../vaitp/detectionmodule.cpp ../vaitp/main.cpp ../vaitp/vaitp.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../vaitp/vaitp.ui $(DISTDIR)/
 	$(COPY_FILE) --parents ../vaitp/vaitp_pt_PT.ts $(DISTDIR)/
 
@@ -1456,12 +1395,20 @@ compiler_clean: compiler_lrelease_clean compiler_rcc_clean compiler_moc_predefs_
 
 ####### Compile
 
+aimodule.o: ../vaitp/aimodule.cpp ../vaitp/aimodule.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o aimodule.o ../vaitp/aimodule.cpp
+
+detectionmodule.o: ../vaitp/detectionmodule.cpp ../vaitp/detectionmodule.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o detectionmodule.o ../vaitp/detectionmodule.cpp
+
 main.o: ../vaitp/main.cpp ../vaitp/vaitp.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../vaitp/main.cpp
 
 vaitp.o: ../vaitp/vaitp.cpp ../vaitp/vaitp.h \
 		ui_vaitp.h \
-		../vaitp/dbmanager.h
+		../vaitp/dbmanager.h \
+		../vaitp/aimodule.h \
+		../vaitp/detectionmodule.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o vaitp.o ../vaitp/vaitp.cpp
 
 qrc_resources.o: qrc_resources.cpp 

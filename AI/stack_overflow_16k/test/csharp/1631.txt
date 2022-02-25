@@ -1,0 +1,1 @@
+load assembly from a path without copying it to bin folder i have a simple blank application and i would like to reference an assembly from c:....myassembly.dll without copying the thing to bin folder...i there a way to change how is assembly being referenced/loaded?..edit: the assembly is not in gac

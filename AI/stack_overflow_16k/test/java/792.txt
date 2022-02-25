@@ -1,0 +1,1 @@
+"blank-mysql program i have a table - emp_details in mysql.i want to seatch an employ's id number in blank..if it is in the table , then show all the details of employee..otherwise display an error message..how i do this"

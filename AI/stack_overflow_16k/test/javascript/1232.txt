@@ -1,0 +1,1 @@
+why is undefined == undefined but nan != nan? i am wondering why undefined == undefined but nan != nan.

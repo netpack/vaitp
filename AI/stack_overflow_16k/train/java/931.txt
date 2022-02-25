@@ -1,0 +1,1 @@
+"getting canonical path from path in blank i have a path object, but it appears it does not have a getcanonicalpath() method like in the file class. reason is i have dots in the path that i want to eliminate to get something ""unique"": ../some/path/./something .# should be./some/path/something"

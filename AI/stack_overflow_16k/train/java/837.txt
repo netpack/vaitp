@@ -1,0 +1,1 @@
+"where is the location of the system class in blank? actually we are getting the values from system class by using the system.getproperty(""keyvalue"") method. is this values varied from one application to another application. i mean, is the system class varied from one application to another application?..what is the location of the system class?"

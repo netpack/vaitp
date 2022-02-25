@@ -1,0 +1,2 @@
+"    def bm_to_item(self, bm):
+        return bytearray(cPickle.dumps(bm, -1))"

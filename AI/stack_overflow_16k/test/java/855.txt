@@ -1,0 +1,1 @@
+"numbers in an array add to a specific number blank what is the most efficient way to check if any numbers in an array sum up to specific number for example: an array of (5,3,3,9,4) i want to know if any of these numbers in the array can be added to give 10.this will happen when i add (3,3,4)"

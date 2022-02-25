@@ -1,0 +1,1 @@
+"is there a way to get the index value when using .... array.indexof? how to know at which index the value exists, when i use array.indexof?..i don't like to use loop because it lags...if (array.indexof(myarray, myvalue) &gt; -1).{.     console.writeline(""the value exists in myarray["" + "" ""+ ""]"");.};"

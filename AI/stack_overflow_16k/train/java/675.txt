@@ -1,0 +1,1 @@
+can someone please explain why the answer is 6? private int field;..public void f(int n) {.    n = n + field;.    field = field + n;.    n = n + 2; .}..public void g() {.    field = 2;.    f(field); .}...what would be the final value of field after invoking g()? i know the answer is 6 but could someone please explain why?

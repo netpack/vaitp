@@ -1,0 +1,1 @@
+"blank reference error - can't find a function inside object var model = {..   test:function(){console.log(""hello"")},..   show: test() //referenceerror: test is not defined.}...i want to have a key inside model object to hold a function. not sure why it gets undefined error."

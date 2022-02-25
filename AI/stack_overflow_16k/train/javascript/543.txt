@@ -1,0 +1,1 @@
+"different ways to add functions to blank object in blank is there any difference between these two ways of adding a function to an object?  is one preferable for any reason?  ..function obja() {.    this.alerta = function() { alert(""a""); };.}.obja.prototype.alertb = function() { alert(""b""); };..var a = new obja();.a.alerta();.a.alertb();"

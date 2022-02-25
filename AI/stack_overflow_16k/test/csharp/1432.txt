@@ -1,0 +1,1 @@
+"system.consolecolor bit size according to msdn, consolecolor has 16 colours available...does this mean that each colour is represented using 4 bits?..why have they limited it to only 16 colours?..simple colours like orange aren't even available."

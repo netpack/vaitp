@@ -1,0 +1,1 @@
+"blank - assistance with ""nested"" lists my list looks something like this..[('a', 'b'), ('c', 'd')], except bigger..how can i print the first value of each pair? for example, in that example, i'd just like to print 'a' and 'c'. ..i should also add, the list is randomly generated so i won't know the contents"

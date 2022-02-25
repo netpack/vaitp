@@ -1,0 +1,1 @@
+"loop output is not what i desired i am trying to complete my for loop for the following output;..desired output: [1  4  9  16  25  36  49  64  81  100] ..code:..for(int i = 1; i&lt;=100; i = i + 2) .    {.        int sum = i;.        i = sum + 1;..        system.out.print(i + "" "");  .    }...please help!"

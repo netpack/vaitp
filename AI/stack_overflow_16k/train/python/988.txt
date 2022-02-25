@@ -1,0 +1,1 @@
+"reloading module, need to re-compile sub modules? sorry, im sure this is asked a bunch, but i couldnt find it. ..in mymodule.py:..from mymodule.submodule import myclass...i am working on myclass, and want to stay in my iblank session and test it. reload(mymodule) doesnt re-compile myclass...how can i do this?"

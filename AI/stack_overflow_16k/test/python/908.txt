@@ -1,0 +1,1 @@
+"initializing an n-dimensional matrix elegantly in blank there have been a couple questions on so about how to initialize a 2-dimensional matrix, with the answer being something like this:..matrix = [[0 for x in range(10)] for x in range(10)]...is there any way to generalize this to n dimensions without using for blocks or writing out a really long nested list comprehension?"

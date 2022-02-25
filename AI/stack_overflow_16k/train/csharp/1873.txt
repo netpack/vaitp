@@ -1,0 +1,1 @@
+"blank convert string to operator i want to convert string to operator in blank ..        **string type = ""+"";.        int d = 22;.        int c = 33;.        int total;.        total = d + type + c;**...how to do that ?..regards,"

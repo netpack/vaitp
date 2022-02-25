@@ -1,0 +1,1 @@
+"listcollectionview to list i have a listcollectionview that i would like to put into a list, but i'm unsure how to do this..below is the code that i have tried.  it returns an error that listcollectionview. does not contain a definition for tolist()...   var repitems = (listcollectionview)view;.   var listitems = repitems.tolist();...can anyone show me how?"

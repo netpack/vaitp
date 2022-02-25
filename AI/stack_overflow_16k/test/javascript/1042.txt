@@ -1,0 +1,1 @@
+how to factorialize a number function factorialize(num) {.  if (num == 0){.    return 1;.  }.  else{.  return num*fact(num-1);.}..factorialize(5);...why does this code not works? can i even use an else statement in this situation?

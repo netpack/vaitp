@@ -1,0 +1,1 @@
+"how can i get processid when i run process in blank? by using the below code i can run batch file..process p = runtime.getruntime().exec(""e:/web_chat_temp/runopenfire/runme.bat"");...but here how can i get pocess id of this process...coz i need to stop in other application.....thanks"

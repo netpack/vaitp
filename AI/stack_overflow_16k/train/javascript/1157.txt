@@ -1,0 +1,1 @@
+"how to quickly assign {x:1,y:2} to {row,col}? i want to quickly assign {x:1,y:2} to {row,col}, i.e. let row = objxy.x, let col = objxy.y...i know the destructuring assignment can do this..let {x,y} = objxy...but is there any way to do like this?..let {row,col} = objxy"

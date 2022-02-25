@@ -1,0 +1,1 @@
+"assign null to decimal using ternary operator i am using conversion to decimal of a byte array, such that it contains either null or any other number, stored in byte. the problem here is, when i try to convert a null to nullable decimal, it converts it to zero. i want it to remain null.....convert.todecimal(obj.sal== null ? null : system.text.encoding.ascii.getstring(obj.sal))"

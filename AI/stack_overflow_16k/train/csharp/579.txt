@@ -1,0 +1,1 @@
+how to enter space bar in textbox that accepts only character? if (!char.iscontrol(e.keychar) &amp;&amp; !char.isletter(e.keychar)).{.     e.handled = true;.     base.onkeypress(e);...(for example jonh space jambo) but it work only johnjambo

@@ -1,0 +1,1 @@
+"how to make an exception of ""typeerror: coercing to unicode: need string or buffer, nonetype found""? i met this exception and search the network..but i can't get any information of how to make such an exception...could someone give some codes to produce such an exception?..thanks."

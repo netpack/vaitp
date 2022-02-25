@@ -1,0 +1,1 @@
+"    def _validate_default(self, default: Any) -> Any:        """ Check that the default value is valid for the property's type + perform any necessary sanitization """        raise ValidationError"

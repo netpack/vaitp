@@ -1,0 +1,1 @@
+"how to get xpath by text in blank it's easy for us to get text by xpath, but is there any way to get xpath by text in blank?..eg.  .. &lt;html&gt;&lt;h1&gt;hello world&lt;/h1&gt;&lt;/html&gt;...how to get xpath by hello world?"

@@ -1,0 +1,1 @@
+"trying to trigger a script to run on a specific date and time trying to trigger a script to run on a specific date and time, i am trying the code below but getting this error (already setting up a recurring clock trigger. (line 6, file ""code"")..any ideas on how to fix this?..scriptapp.newtrigger('submit')..timebased()  ..atdate(2016,9,1)..athour(2)..create();"

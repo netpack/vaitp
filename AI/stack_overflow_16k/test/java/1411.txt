@@ -1,0 +1,1 @@
+difference between (filename.jar) and (blank -jar filename.jar) i'm just wondering why is it if i type in command prompt filename.jar it pop a message (could not find the main class) but if i type in blank -jar filename.jar the jar file works fine. can someone explain to me why is this happening?

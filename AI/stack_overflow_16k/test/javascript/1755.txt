@@ -1,0 +1,1 @@
+"invalid argument in blank i'm trying show print page by on click method, but ie9 shows me error ""invalid argument"" in printwindow variable. where is the problem?..print.on('click', function(){.  var printwindow = window.open(print.data('url'), print.data('title'), ""menubar=no,location=no,resizable=yes,scrollbars=yes,status=yes,width=820"");.  printwindow.focus();.});"

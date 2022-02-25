@@ -1,0 +1,1 @@
+"can an abstract class be instantiated? abstract class a {.    public void disp() {.        system.out.print(""abstract"");.    }.}..public class b {.    public static void main(string args[]) {.        a object = new a(){ };.        object.disp();.    }.} ...i am aware that abstract classes cannot be instantiated, but confused on this code. .actually what this code mean ?"

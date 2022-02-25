@@ -1,0 +1,1 @@
+"will an application run when only a newer framework is installed i cannot seem to find an answer to my question, so i just ask it here:..say, i have an application built for .net framework 4.62..will it run on a server that only has 4.7 installed? .(besides some older frameworks of course)..or do i need to install every targeted framework?"

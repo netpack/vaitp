@@ -1,0 +1,1 @@
+extract date and message for error from a log file in blank i need to extract date and message for those line which are having error from a log file. the pattern of date ifs yyyy-mm-dd and message is as usual string. and i need to combine all the errors for a particular day. the file size is more than 10 mb. so in a efficient way how can i do this in blank??

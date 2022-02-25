@@ -1,0 +1,1 @@
+"why to keep interface as reference? i have observed in blank programming language, we code like following:..list mylist = new arraylist();..why we should not use following instead of above one?..arraylist mylist = new arraylist();"

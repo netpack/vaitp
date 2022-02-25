@@ -1,0 +1,1 @@
+"blank strip doesn't work in ""for-in"" case1..for str in list1:.    str = str.strip()...case2..for i in range(0, len(list1)):.    list1[i] = list1[i].strip()...in case1, strip doesn't work...in case2, strip works...what's the difference between 1 and 2?"

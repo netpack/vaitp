@@ -1,0 +1,1 @@
+"it doesn't go through the data it gives ...  typeerror: 'int' object is not subscriptable...as an error...year= int(input(""enter year"")).chk_year=year[2:4]...i did try this one first but it didn't work..then i tried using:..chk_year=str(year[2:4]) and .chk_year=int(str(year[2:4]))...but it still doesn't work. how can i fix it?"

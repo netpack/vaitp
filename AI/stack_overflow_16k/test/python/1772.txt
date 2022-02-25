@@ -1,0 +1,1 @@
+"how does blank interpret numbers with leading zeroes i'm new with blank, i'm using blank 2.7.when i typed this on blank shell:..print 01.print 010.print 0100.print 01000...it gives this result..1.8.64.512...i tried to understand why it gave that but unfortunately i didn't get the point."

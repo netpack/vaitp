@@ -1,0 +1,1 @@
+flip image using blank i tried to flip horizontally((about y axis)) all the images in a specific folder using blank.i want to keep the initial images and for the flipped ones i want to rename them as *_flip.jpg. i am stuck . how to do it?

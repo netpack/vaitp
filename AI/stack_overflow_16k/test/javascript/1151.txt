@@ -1,0 +1,1 @@
+"js: is event.cancelbubble a method or boolean as per w3schools cancelbubble is a method but in the example on the same page,..function func1(event) {.  alert(""div 1"");.  event.cancelbubble = true;.}...it's used as a boolean property. can some clarify what actually is cancelbubble, a method or property...thanks"

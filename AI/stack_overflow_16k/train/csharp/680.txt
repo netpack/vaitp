@@ -1,0 +1,1 @@
+"property attribute in an interface i have a property attribute that can be defined once per class, and an empty interface called isql which i just use to mark my objects that are allowed to use my custom buillt orm...is there a way to force the class that implements isql to have that attribute at least once?"

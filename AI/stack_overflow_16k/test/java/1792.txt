@@ -1,0 +1,1 @@
+"the filter string - removing some chars is there a function in blank which removed from a string unwanted chars given by me? if not, what the most effective way to do it. i would like realize it in blank..edit:.but, i want reach for example:..string torescue=""@8*"".string text = ""ra@dada882da(*%"".and after call function:.string text2=""@88*"""

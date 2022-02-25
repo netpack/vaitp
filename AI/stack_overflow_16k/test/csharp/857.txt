@@ -1,0 +1,1 @@
+"can we deserialize installstate file? i am trying to pass the information in install state file to the installer class which will then uninstall...but before passing it i need to convert the info to system.collections.idictionary savedstate...for this, is it possible to deserialize install state file?..screenshot of the installstate file"

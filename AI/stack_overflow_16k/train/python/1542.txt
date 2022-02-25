@@ -1,0 +1,1 @@
+"how to remove list of words from a list of strings? list1=['water', 'analog', 'resistance', 'color', 'strap','men', 'stainless', 'timepiece','brown','fast']..list2=['water resistant','water','red strap','digital and analog','analog', 'men', 'stainless steel']...so that output will  be..list=['water resistant','red strap','digital and analog','stainless steel']"

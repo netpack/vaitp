@@ -1,0 +1,1 @@
+"blank catching errors, null when using the following syntax, would the output in console be out ?..i am making sure that i'm catching errors in callbacks and responding properly...var err = null;..if (err) {.    console.log (""in"");.} else {.    console.log (""out"");.}"

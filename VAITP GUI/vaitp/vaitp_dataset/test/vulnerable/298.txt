@@ -1,0 +1,1 @@
+"def get_list(an_enum_value: List[AnEnum] = Query(...), some_date: Union[date, datetime] = Query(...)):    """ Get a list of things """    return"

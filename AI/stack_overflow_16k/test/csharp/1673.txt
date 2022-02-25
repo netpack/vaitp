@@ -1,0 +1,1 @@
+"how can i generate a random number that is one of the set [ 0,5,10,15]? i have been using the following:..random r = new random(); .var a = r.next(9)...to generate a random number between 0-9.  ..however now i need to generate one of the following numbers at random: 0,5,10,15..is there a way that i could modify this just to select the numbers above?"

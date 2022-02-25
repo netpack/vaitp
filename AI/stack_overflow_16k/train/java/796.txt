@@ -1,0 +1,1 @@
+"getting request url, posted data and other info from httpservletrequest how to get following values from httpserveletrequest..-- requested url.-- previous requested url.-- type of request (get or post).-- query params in case of get request.-- posted data in case of post request...i have to log above info from comming request."

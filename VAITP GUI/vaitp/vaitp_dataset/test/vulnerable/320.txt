@@ -1,0 +1,1 @@
+"    def __init__(self, bot):        super().__init__()        self.bot = bot        self.config = Config.get_conf(self, identifier=2_113_674_295, force_registration=True)        self.config.register_global(custom={}, tenorkey=None)        self.config.register_guild(custom={})        self.try_after = None"

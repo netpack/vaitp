@@ -1,0 +1,1 @@
+"i keep getting errors blank 2.7 i am getting an error on line 14? i am new to blank, very new, started 3 days ago. ..vara = 2.varb = 1..if varb or vara == str:. print(""string involved"")..elif vara &gt; varb:. print('bigger') ..elif vara == varb:. print('equal')..else vara &lt; varb:  . print('smaller')  # this is line 14, why am i getting an error here?"

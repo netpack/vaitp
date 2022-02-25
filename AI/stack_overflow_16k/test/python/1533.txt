@@ -1,0 +1,1 @@
+"remove strings from a list that contains numbers in blank is there a short way to remove all strings in a list that contains numbers? ..for example..my_list = [ 'hello' , 'hi', '4tim', '342' ]...would return..my_list = [ 'hello' , 'hi']"

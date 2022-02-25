@@ -1,0 +1,19 @@
+"    def test_list_instructor_tasks_problem(self, act):
+        """ Test list task history for problem. """
+        act.return_value = self.tasks
+        url = reverse('list_instructor_tasks', kwargs={'course_id': self.course.id.to_deprecated_string()})
+        mock_factory = MockCompletionInfo()
+        with patch('instructor.views.instructor_task_helpers.get_task_completion_info') as mock_completion_info:
+            mock_completion_info.side_effect = mock_factory.mock_get_task_completion_info
+            response = self.client.post(url, {
+                'problem_location_str': self.problem_urlname,
+            })
+        self.assertEqual(response.status_code, 200)
+
+        # check response
+        self.assertTrue(act.called)
+        expected_tasks = [ftask.to_dict() for ftask in self.tasks]
+        actual_tasks = json.loads(response.content)['tasks']
+        for exp_task, act_task in zip(expected_tasks, actual_tasks):
+            self.assertDictEqual(exp_task, act_task)
+        self.assertEqual(actual_tasks, expected_tasks)"

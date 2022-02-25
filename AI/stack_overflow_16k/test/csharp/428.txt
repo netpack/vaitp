@@ -1,0 +1,1 @@
+"port for sending email for gmail account please can some one help me out whether the correct port for sending email from an gmail account is 25 ,465 or 587. i checked on some forms it says that blank classes does not support sending email using ssl it uses tsl and the port used for tsl is 587. is it correct? i am confused."

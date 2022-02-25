@@ -1,0 +1,7 @@
+"    def test_funcdef(self):
+        tree = self.parse(funcdef)
+        self.assertEqual(tree.body[0].type_comment, "() -> int")
+        self.assertEqual(tree.body[1].type_comment, "() -> None")
+        tree = self.classic_parse(funcdef)
+        self.assertEqual(tree.body[0].type_comment, None)
+        self.assertEqual(tree.body[1].type_comment, None)"

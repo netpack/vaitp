@@ -1,0 +1,1 @@
+how to automatically update a variable member of a class? i defined a class in blank that has a variable member (for example x1). how can i link x to a variable outside of class (for example x2) such that anytime that x2 changes the variable x1 automatically gets updated?..class point.{.    int x1;.}..void main().{.    int x2;.    point p = new point();.    p.x1=x2;.}

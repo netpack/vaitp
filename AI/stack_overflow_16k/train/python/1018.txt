@@ -1,0 +1,1 @@
+"how can i read a text file again and again in every 1 sec? i want to read a text file as my input. but that text file will change again and again. so i need to read that same file again and again. how can i do that? ..i know how to read a text file in blank...file=open('input.txt','r').read()"

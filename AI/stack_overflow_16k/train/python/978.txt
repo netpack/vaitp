@@ -1,0 +1,1 @@
+"find all word with a # i want to find all words which have a # attached to it..i tried:..import re.text = ""i was searching my #source to make a big desk yesterday."".re.findall(r'b#w+', text)...but it does not work..."

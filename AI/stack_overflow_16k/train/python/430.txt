@@ -1,0 +1,1 @@
+"why is unpack so slow? i have a simple example:...def __init__(self,string):.    self.string = string..def ui32(self):.    tmp = self.string[:4].    self.string = self.string[4:].    return unpack("">i"",tmp)[0]..data = file.read().u = ui(data).for i in range(60000):.    test = ui32()...total time: 22 seconds!"

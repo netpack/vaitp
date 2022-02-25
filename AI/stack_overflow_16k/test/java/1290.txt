@@ -1,0 +1,1 @@
+"array declaration for blank primitive types? i am trying to understand why this is the way in which blank defines the array type for its primitive data types, for example:..int b[] = new int[100];...since b is type of primitive type (in this case integer), how would variable b hold the reference which get returned by new operator?..can anyone help me clarify this?"

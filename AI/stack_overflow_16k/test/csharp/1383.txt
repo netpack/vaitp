@@ -1,0 +1,1 @@
+"blank visualize assembly is there any (free?) tools that let's me analyze an assembly?..this is (for now) what i want to visualize:...all different types and their relations &amp; coupling.how my assembly is exposed to referencing assemblies. what types are internal or public....i know of ndepend, but it feels heavy for my ""simple"" needs."

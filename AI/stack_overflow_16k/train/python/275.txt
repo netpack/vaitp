@@ -1,0 +1,1 @@
+"how to empty a file using blank in the unix shell i can do this to empty a file:..cd /the/file/directory/.:&gt; thefile.ext...how would i go about doing this in blank?..is os.system the way here, i wouldn't know how since i would have to send 2 actions after each other i.e. the cd and then the :&gt;."

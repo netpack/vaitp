@@ -1,0 +1,1 @@
+"why list reverse returns null? i have example list like this:..l = [1,2,3]..print(l.reverse()).#give none instead [3, 2, 1]...how is that? how can i reverse list?"

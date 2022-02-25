@@ -1,0 +1,1 @@
+"which of these two block would catch more exceptions , exception or runtimeexception or are they the same ?..} catch (runtimeexception re) {.....}...or ..} catch (exception e) {.....}"

@@ -1,0 +1,1 @@
+"not sure about array size how may i define an array in blank. when i am not sure of the arrays size..i am doing it to avoid null pointers..int[] arr1 = new int[21];.int[] arr1 = {11,22,33};...these are of fixed length, i need to declare an array where the items to be stored in it will be decided at run time?"

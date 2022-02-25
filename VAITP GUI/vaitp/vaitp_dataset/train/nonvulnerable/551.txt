@@ -1,0 +1,3 @@
+"    def _handle_carbon_sent(self, msg):
+        if msg['from'].bare == self.xmpp.boundjid.bare:
+            self.xmpp.event('carbon_sent', msg)"

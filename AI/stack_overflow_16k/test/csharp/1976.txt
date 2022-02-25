@@ -1,0 +1,1 @@
+"how to handle null value in data link layer? i'm working in asp.net wcf. i'm displaying a table in front end, with the data taken from back end. one of the column having datatype date, contains null value in backend. when i try to run the solution it displays error page because of the null value, for the column. how can i avoid this error ?"

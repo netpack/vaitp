@@ -1,0 +1,1 @@
+"not include decimals in sentence count what i am trying to do is not include, in my sentence count in a paragraph, decimals values that will appear in the paragraph...for example, i have a situation where in my paragraphs, they may contain decimals like ""0.1344"" or codes like ""5.00153.09"". how can i not include these periods in my sentence count?"

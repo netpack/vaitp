@@ -1,0 +1,1 @@
+"how to create csv watson logs with blank in rows and column data like intent = ""hello"", ""text"" = good morning etc watson list logs is returning csv file with 1 row using json.dumps(response, indent) what are the options to present the data in rows and columnsstrong text"

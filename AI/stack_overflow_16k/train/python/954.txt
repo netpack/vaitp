@@ -1,0 +1,1 @@
+"current value of generator in blank i can build a generator like so:..def gen():.  x=range(0,100).  for i in x:.    yield i  ...i can now define an instance of the generator using:..a=gen()...and pull new values from the generator using..a.next()...but is there a way---a.current()---to get the current value of the generator?"

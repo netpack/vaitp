@@ -1,0 +1,1 @@
+"inline if statement in blank how will i write an inline if statement in my blank service class when setting my enum value according to what the database returned?..for example: when the database value returned is 1 then set the enum value to variableperiods, when 2 then fixedperiods...hope you can help."

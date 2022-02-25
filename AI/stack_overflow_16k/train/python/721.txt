@@ -1,0 +1,1 @@
+"blank: reading a data file with an uneven number of columns without using pandas i have a file formatted in general like this:..(8,9) (4,7) (9,0)..(19,125) (23,96) (256,0) (49,3)..etc...i want to be able to get the pair in each row and column, but the number of columns in each row is arbitrary. how will i be able to do this blank without using pandas?"

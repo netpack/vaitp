@@ -1,0 +1,1 @@
+blank code not working for while loop i am trying to execute a code for 5 minutes within while loop...long init= system.currenttimemillis();.while(((system.currenttimemillis()-time)/1000%60)&lt;5){..//some part of code.}...but i am not able to get it working any suggestions how to fix it.

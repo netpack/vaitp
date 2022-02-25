@@ -1,0 +1,1 @@
+can i make my dropdown box defaulted to empty and if i click on dropdown it should the values hi my dropdown has some 3 values ..1)apple.2)mango.3)grape..when my page loads my dropdown is defaulted to apple(first value)..how can i make dropdown defaulted to empty and when i clicked on dropdown it should show the values ..in blank jsf (i am getting dropdown values as list)

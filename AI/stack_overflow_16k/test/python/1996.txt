@@ -1,0 +1,1 @@
+"how to sum all the fractions in a loop? i'd like to calculate the sum of the following numbers using a loop..1/3 + 3/5 + 5/7 + . . . + 95/97 + 97/99...print the sum..so far this is what i wrote but i could only get it to print the fractions..s = ''.for j in range(30, 0, -1):.    s += ""{}/{} + "".format(31-j, j).    sum = +=j.print sum"

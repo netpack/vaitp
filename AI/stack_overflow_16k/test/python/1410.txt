@@ -1,0 +1,1 @@
+"blank: how do i convert an array of strings to an array of numbers? .  possible duplicate:.  what is the easiest way to convert list with str into list with int?  .....current array: ['1','-1','1'].desired array: [1,-1,1]"

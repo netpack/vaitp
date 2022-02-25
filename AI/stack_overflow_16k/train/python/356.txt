@@ -1,0 +1,1 @@
+"in string, capitalize allcaps words and leave the rest alone for example, having gone through this procedure the string:..hello, world, mcgisty, you are my hero that i am....should return/be:..hello, world, mcgisty, you are my hero that i am."

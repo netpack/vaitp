@@ -1,0 +1,1 @@
+"cloning a form dynamically during run-time say i have a form called ""forma"" with two textboxes text1_a and text2_a.how can i create a form dynamically during runtime called ""formb"" with the same objects that are in forma having the same layount only with different names for the textboxes such as text1_b and text2_b"

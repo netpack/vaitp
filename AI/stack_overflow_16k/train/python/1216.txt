@@ -1,0 +1,1 @@
+"my game relies heavily on globals, but also gives me syntaxwarning even though the game won't work without them how can i make this so that it just doesn't rely on globals altogether? when i run my game, it gives me a syntaxwarning, but my game won't work without the globals...http://pastebin.com/pnzutun6"

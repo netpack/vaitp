@@ -1,0 +1,1 @@
+"blank function writing simple question on writing code in blank. is there any value in writing a function in this way..func&lt;int, int&gt; add2 = x =&gt; x + 2;...as compared to..int add2(int x).{.    return x + 2;.}...i find the second example much easier to read, or am i missing a very specific reason for why the 1st function is written that way?"

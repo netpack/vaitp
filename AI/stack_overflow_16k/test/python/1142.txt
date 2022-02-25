@@ -1,0 +1,1 @@
+"swap one element list to int a = [{43:123}, {3:103}, {36:103}, {2:102}, {23:100}]..how can i extract id from it when each of the keys is id and value means a number of points..i tried use this:..for b in a: .     print a[i].keys().     i+=1...blank result is a list, but i need integer type. eg .print a[2].keys() result [36] and i need 36 which is int. thx"

@@ -1,0 +1,1 @@
+"    def fixed_fetch(        url, payload=None, method="GET", headers={}, allow_truncated=False, follow_redirects=True, deadline=None,"

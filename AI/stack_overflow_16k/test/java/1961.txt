@@ -1,0 +1,1 @@
+how do i extract a single digit from an integer i am currently trying to extract a single digit (int) from a integer (larger than 1 digit) but i have not been able to find any help in this matter....  e.g: .  .  .  get 3 from 123456.  .  .  or.  .  .  get 4 from 1257848.  ...how would i do this in blank?

@@ -1,0 +1,1 @@
+"how to convert an integer[] to an int[]? // how to convert this.integer[] array = {1, 2};..// to this.int[] array = {1, 2};...i'm working on code that has the second form, and i need to modify how the array is read. not knowing enough of blank, i would rather just convert than risk bugs."

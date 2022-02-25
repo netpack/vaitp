@@ -1,0 +1,1 @@
+function undefined error on link click i am getting error selectall is not defined when i click on select all button. ..function selectall(){.$('#langtabs').data('tabselect').selectall();.}...here is fiddle

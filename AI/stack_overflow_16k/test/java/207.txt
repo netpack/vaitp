@@ -1,0 +1,1 @@
+"why can't we declare fields as public inside main method in blank? i am just trying to declare fields inside main method in blank class with different access specifiers.. but i am not able declare fields with access specifier as public, any reason for this ?"

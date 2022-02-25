@@ -1,0 +1,1 @@
+reading dynamic content from blank we have a viewer written in a combination of html and blank that displays our own personal content.  a need has come up to display a webpage from another domain inside our viewer.  is there any way to do this in a combination of blank and html?..thanks

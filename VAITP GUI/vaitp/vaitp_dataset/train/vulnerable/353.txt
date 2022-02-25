@@ -1,0 +1,6 @@
+"    def get(self):
+        if not current_user.is_authenticated():
+            return "Must be logged in to log out", 200
+
+        logout_user()
+        return "Logged Out", 200"

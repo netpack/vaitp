@@ -1,0 +1,1 @@
+"casting - what's the difference between ""(myobject)something"" and ""something as myobject"" in blank? i've encountered this a couple of times and been perplexed...cat c = new cat(""fluffy"");.return (animal)c;..cat c = new cat(""fluffy"");.return c as animal;...what's the reason for both of these syntaxes to exist?"

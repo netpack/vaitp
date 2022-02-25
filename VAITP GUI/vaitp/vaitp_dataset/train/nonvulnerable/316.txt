@@ -1,0 +1,7 @@
+"    def setUp(self):
+        """
+        Set up global staff role so authorization will not fail.
+        """
+        super(TestEndpointHttpMethods, self).setUp()
+        global_user = GlobalStaffFactory()
+        self.client.login(username=global_user.username, password='test')"

@@ -1,0 +1,1 @@
+"change the dimension of string in blank i get data from the web and i put it in a string ..var url = ""my url"";.string ss = (new webclient()).downloadstring(url);...but now the problem is .i want to convert this string to an array of char.i tried many functions but i couldn't cause i don't know the size.can you please tell me how can i convert in blank?.thanks"

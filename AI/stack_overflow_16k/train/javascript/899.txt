@@ -1,0 +1,1 @@
+"waiting a function to complete i have 2 functions. the second one is faster than the first one,how could the function wait to  complete first one's work?..function1(); // slow ..function2(); // fast"

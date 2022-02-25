@@ -1,0 +1,1 @@
+call break in nested if statements i have the following situation:..if condition then  .    if condition then .        sequence 1.    else.        break //?  .    endif    .else    .    sequence 3    .endif...what is the result of the break statement? does it break the outer if statement? because this is what i actually need.

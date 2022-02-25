@@ -1,0 +1,48 @@
+"def rescore_problem(request, course_id):
+    """
+    Starts a background process a students attempts counter. Optionally deletes student state for a problem.
+    Limited to instructor access.
+
+    Takes either of the following query paremeters
+        - problem_to_reset is a urlname of a problem
+        - unique_student_identifier is an email or username
+        - all_students is a boolean
+
+    all_students and unique_student_identifier cannot both be present.
+    """
+    course_id = SlashSeparatedCourseKey.from_deprecated_string(course_id)
+    problem_to_reset = strip_if_string(request.POST.get('problem_to_reset'))
+    student_identifier = request.POST.get('unique_student_identifier', None)
+    student = None
+    if student_identifier is not None:
+        student = get_student_from_identifier(student_identifier)
+
+    all_students = request.POST.get('all_students') in ['true', 'True', True]
+
+    if not (problem_to_reset and (all_students or student)):
+        return HttpResponseBadRequest("Missing query parameters.")
+
+    if all_students and student:
+        return HttpResponseBadRequest(
+            "Cannot rescore with all_students and unique_student_identifier."
+        )
+
+    try:
+        module_state_key = course_id.make_usage_key_from_deprecated_string(problem_to_reset)
+    except InvalidKeyError:
+        return HttpResponseBadRequest("Unable to parse problem id")
+
+    response_payload = {}
+    response_payload['problem_to_reset'] = problem_to_reset
+
+    if student:
+        response_payload['student'] = student_identifier
+        instructor_task.api.submit_rescore_problem_for_student(request, module_state_key, student)
+        response_payload['task'] = 'created'
+    elif all_students:
+        instructor_task.api.submit_rescore_problem_for_all_students(request, module_state_key)
+        response_payload['task'] = 'created'
+    else:
+        return HttpResponseBadRequest()
+
+    return JsonResponse(response_payload)"

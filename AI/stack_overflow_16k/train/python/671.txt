@@ -1,0 +1,1 @@
+"i'm a blank beginner, dictionary is new given dictionaries, d1 and d2, create a new dictionary with the following property: for each entry (a, b) in d1, if there is an entry (b, c) in d2, then the entry (a, c) should be added to the new dictionary. .how to think of the solution?"

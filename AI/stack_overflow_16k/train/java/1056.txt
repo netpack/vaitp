@@ -1,0 +1,1 @@
+"loading an array using loadclass method how can i load an array using loadclass method?..string classname = ""customer[]"";.thread.currentthread().getcontextclassloader().loadclass(classname);"

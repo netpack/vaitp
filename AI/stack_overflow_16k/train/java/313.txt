@@ -1,0 +1,1 @@
+"are there any better obfuscator in blank? i am looking for an obfuscator for blank.  found one, proguard.  this is working only upto one level when i decompile using jad, all codes are visible.  only the method names and some variable names are getting renamed rest all are visible.  are there any better obfuscator which is impossible to get source out of it?  thanks"

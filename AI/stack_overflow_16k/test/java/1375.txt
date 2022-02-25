@@ -1,0 +1,1 @@
+"convert a method to an object to send via http are their any good tutorials out there that show how to convert a method, to an object then send it via http and reverse the process on the other end. i did it once long ago on an rmi server and i can't find any good tutorials online that show the full process."

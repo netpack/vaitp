@@ -1,0 +1,1 @@
+"how to get values from a text file and put in an array i have a text file containing:..activity = a.duration = 2.predecessor = none..activity = b.duration = 6.predecessor = a...how can i get the values of activity, duration and predecessor, and put into activity[], druartion[] and predecessor[] respectively?"

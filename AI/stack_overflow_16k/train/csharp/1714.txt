@@ -1,0 +1,1 @@
+"how to retrieve the scrollbar position of the webbrowser control in .net i tried using webbrowser1.document.body.scrolltop and webbrowser1.document.body.scrollleft, but they don't work. they always return 0 and i can't access webbrowser1.document.documentelement.scrolltop and .scrollleft."

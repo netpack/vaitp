@@ -1,0 +1,13 @@
+"    def test_check_password_calls_harden_runtime(self):
+        hasher = get_hasher('default')
+        encoded = make_password('letmein')
+
+        with mock.patch.object(hasher, 'harden_runtime'), \
+                mock.patch.object(hasher, 'must_update', return_value=True):
+            # Correct password supplied, no hardening needed
+            check_password('letmein', encoded)
+            self.assertEqual(hasher.harden_runtime.call_count, 0)
+
+            # Wrong password supplied, hardening needed
+            check_password('wrong_password', encoded)
+            self.assertEqual(hasher.harden_runtime.call_count, 1)"

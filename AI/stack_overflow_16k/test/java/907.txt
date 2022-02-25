@@ -1,0 +1,1 @@
+how to calculate a crc 15 in blank? so i have to calculate a crc value for every 64 characters given a string. i am given a crc 15 polynomial. can someone help? ..if someone could provide pseudo code that would be great.

@@ -1,0 +1,1 @@
+blank system independent root directory paths in a windows system my path would be like this:..c:/example/...and in a linux system my path would be like this:../example/...is there some utility function to have a single string work in both systems?

@@ -1,0 +1,1 @@
+"blank: update list parameters for string we can have..msg = 'successfully returned with msg: %s'.msg %= ""elegant"";...can we do the same for list,..for instance ,..cmd = [.    ""message %s"",.    ""param %s"".    ]..cmd %= (msg, param)"

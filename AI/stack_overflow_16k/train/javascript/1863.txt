@@ -1,0 +1,1 @@
+"how to check the sum of every lines in js okay, so if i have this:..var array = [""1"", ""2"", ""3"", ""4"", ""5"", ""6"", ""7"", ""8"", ""9""];...and what i want is to sum:..1 + 2 + 3 &amp;&amp; 1 + 4 + 7 &amp;&amp; 1 + 5 + 9...like in tic tac toe, so my question is how can i do that without filling my code with 300 lines of code?"

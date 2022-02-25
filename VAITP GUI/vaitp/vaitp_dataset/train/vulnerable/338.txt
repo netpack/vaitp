@@ -1,0 +1,7 @@
+"    def sentences_victim(self, type, data = None, sRun = 1, column = 0):
+        if sRun == 2:
+            return self.sql_insert(self.prop_sentences_victim(type, data))
+        elif sRun == 3:
+            return self.sql_one_row(self.prop_sentences_victim(type, data), column)
+        else:
+            return self.sql_execute(self.prop_sentences_victim(type, data))"

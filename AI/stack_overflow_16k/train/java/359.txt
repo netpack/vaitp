@@ -1,0 +1,1 @@
+"when to override equals and hashcode in blank i know there are multiple blogs on ""how to override equals and hashcode"" and  ""problem if we override one not other""...my question is very simple. in what all situation it is suggested to override equals and hashcode?"

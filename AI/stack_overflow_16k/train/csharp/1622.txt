@@ -1,0 +1,1 @@
+how to solve error operator '-' cannot be applied to operands of type 'float' and 'string' how to solve error...  operator '-' cannot be applied to operands of type 'float' and 'string' ...textbox5.text = (float.parse(textbox3.text) - float.parse(textbox4.text).tostring());

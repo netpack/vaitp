@@ -1,0 +1,1 @@
+"convert part of a webpage to a range suppose somewhere in my webpage i have a div tag with an id of ""iddiv""  it has some text in it, and perhaps some linebreak tags, and images as well.  i want to obtain this div as a blank document range.  how would i do that?"

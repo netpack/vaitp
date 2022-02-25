@@ -1,0 +1,1 @@
+"how often will a function be called in a ternary operator? i have this line of blank code:..return getvalue() != null ? getvalue() : 0...how often will getvalue be executed? once or twice?..edit: if this is compiler-dependant, i'm especially interested in the compiler from the sun jdk."

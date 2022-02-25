@@ -1,0 +1,1 @@
+"get the second value in a tuple by using the first value in a tuple as in the title, is there a way to access the second value of a tuple by using the first one?.for example: given a list of tuple: [('street', 2), ('utilities', 3), ('centralair', 5)], can we access the value '5' by using the index 'centralair'?"

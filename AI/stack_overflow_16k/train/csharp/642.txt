@@ -1,0 +1,1 @@
+inter process data handling between tcp client thread to active forms i have tcp client socket thread which receives data update frequently. what is the best way to store the data and send appropriate data to active forms.

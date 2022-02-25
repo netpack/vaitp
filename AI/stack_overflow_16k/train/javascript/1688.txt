@@ -1,0 +1,1 @@
+"add a blank call to link i have a link on my page with href=""blank:sayhello()"",.is it possible to add this function to full url?.somethink like: http://example.com/page.html+blank:sayhello()"

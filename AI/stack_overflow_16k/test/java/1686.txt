@@ -1,0 +1,1 @@
+"string , char double convert going along string so say if i had a string like ""3+3-1*2/3="".how would i go through the string looking at each character and if its a number turn it to a double then if not turn it to a char??"

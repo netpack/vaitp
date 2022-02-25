@@ -1,0 +1,1 @@
+"blank: is there any difference between (type)something vs something as type .  possible duplicate:.  direct casting vs &#39;as&#39; operator?.  casting vs. using the as keyword in the clr.....in blank, whats the difference ..var obj = (array)something...vs ..var obj = something as array"

@@ -1,0 +1,1 @@
+getting index of dictionary item based on item.key how can i find the index of an element of a dictionary based on the element key? i'm using the following code to go through the dictionary: ..foreach (var entry in freq).{.    var word = entry.key;.    var wordfreq = entry.value;.    int termindex = ??????;.}...could anyone help please?

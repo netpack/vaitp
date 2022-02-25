@@ -1,0 +1,1 @@
+need help with the following error..the method is there but still getting this error .  'main.mainclass' does not contain a.  definition for 'mymethod' and no.  extension method 'mymethod' accepting.  a first argument of type.  'main.mainclass' could be found (are.  you missing a using directive or an.  assembly reference?)

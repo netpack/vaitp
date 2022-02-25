@@ -1,0 +1,1 @@
+"is it possible to bundle all import requirements with a blank script? my blank script runs with several imports.  on some systems where it needs to run, some of those modules may not be installed.  is there a way to distribute a standalone script that will automagically work?  perhaps by just including all of those imports in the script itself?"

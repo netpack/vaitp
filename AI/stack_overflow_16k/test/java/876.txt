@@ -1,0 +1,1 @@
+why run method of thread class does not allow to throw exception? i am searching on net but did not get satisfactory answers that what made sun engineers to .disallow run method of runnable interface for throwing an exception.

@@ -1,0 +1,1 @@
+nullable datetime list to non nullable datetime list i have a list of nullable date times. i need to filter it down to a non-nullable datetime list by excuding the null values...var d = nullabledatetimelist;.??//var nonnullablelist = d.where(p =&gt; p.datex.hasvalue).select(p =&gt; p.datex);...how do i go about doing this. thanks.

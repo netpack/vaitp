@@ -1,0 +1,1 @@
+"blank division not working when quotient is smaller than 1 i was coding today, when i occurred this problem...system.out.println(block.chance); // -&gt; 10.float chancefloat = block.chance / 100;.system.out.println(chancefloat); // -&gt; 0.0...i'm not sure what is the problem."

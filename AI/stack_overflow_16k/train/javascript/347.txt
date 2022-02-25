@@ -1,0 +1,1 @@
+"blank tab reload on button click i have a page say abc.xhtml and xyz.xhtml. both are opened at same time, and there is a button in abc.xhtml and when it is clicked, is it possible to reload xyz.xhtml. can this be achieved using blank?"

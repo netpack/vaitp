@@ -1,0 +1,1 @@
+"getting div id based on x & y position the problem i'm trying to solve is ""what's at this position?""..it's fairly trivial to get the x/y position (offset) of a div, but what about the reverse? how do i get the id of a div (or any element) given an x/y position?"

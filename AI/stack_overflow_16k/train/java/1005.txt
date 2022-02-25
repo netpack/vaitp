@@ -1,0 +1,1 @@
+"double vs doublevalue in blank if a method returns a double, why would we call the method ""doublevalue"" on it?  it already returns a double and in calculations, appears to evaluate correctly."

@@ -1,0 +1,1 @@
+"what does the method em.find do in entity manager? for example, i have database which consist table ""menu"":..menu c = em.find(menu.class,name); ...i do not understand what second field ""name"" does here."

@@ -1,0 +1,1 @@
+"how do i turn a list of words into a sentence string? i have this list..[['obytay'], ['ikeslay'], ['ishay'], ['artway']]...where i need it to look like ..obytay ikeslay ishay artway...can anybody help? i tried using join but i can't get it to work."

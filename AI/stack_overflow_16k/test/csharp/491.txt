@@ -1,0 +1,1 @@
+how to run the stored procedure that has output parameter from blank? i have a stored procedure with an output parameter. how do i read this value using blank code?

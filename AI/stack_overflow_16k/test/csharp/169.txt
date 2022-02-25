@@ -1,0 +1,1 @@
+load image to image box using blank i am trying to load an image to picture box the below way worked with me...image1.image = properties.resources._0;...what it i want make the code reading from resources as variable name like the way below...var imagename = _0;..image1.image = properties.resources.imagename;...thanks

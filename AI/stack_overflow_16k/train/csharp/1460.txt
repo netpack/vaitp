@@ -1,0 +1,1 @@
+"why do i need to use m when declaring a decimal when i try to declare a variable like this:..decimal order = 5.0;...i get the error message ""literal of type double cannot be implicitly converted to type 'decimal'; use an 'm' suffix to create a liter of this type.""..can someone explain why the m is needed?"

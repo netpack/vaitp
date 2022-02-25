@@ -1,0 +1,1 @@
+"use a variable in settimeout() to set the time here i want do timout in tout times, but settimeout() is not using tout as timeout parameter..how it could be solved...&lt;script language=""blank"" type=""text/blank""&gt;.var tout=10*1000;.var t = settimeout(document.myform.submit(),tout));.&lt;/script&gt;"

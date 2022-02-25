@@ -1,0 +1,1 @@
+"testing for an empty array are there any advantages to using one of following statements over the other to check for an empty array?..if (arr.length) {}...vs..if (arr.length &gt; 0) {}...i'm assuming they are the same, but i haven't seen any examples online of the first example."

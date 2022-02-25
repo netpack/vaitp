@@ -1,0 +1,1 @@
+blank using and return hi i was wondering can i do this in blank?..public memorystream d().{.    using (memorystream ms = new memorystream()).    {.        return ms;.    }.}

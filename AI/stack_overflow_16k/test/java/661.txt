@@ -1,0 +1,1 @@
+"how to fetch 3 character in float? i have float value like 0.152545 i just want 0.1f..how this is possible...by using string i was get the string value.the following code show the result... string pass = pass.substring(0, math.min(pass.length(), 3));. pass=pass+""f"";...this gives me string value like0.1f ,but i want only float value like 0.1f."

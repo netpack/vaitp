@@ -1,0 +1,1 @@
+"blank - check if program is running for current user i need to check whether a program (xyz.exe) is running, but only for the current user.  whatever method is used cannot require elevated rights, and has to run fast (so wmi is out)...process.getprocessesbyname(""xyz"") returns results for ""xyz"" for all logged in users... but i only care about the current user...ideas?"

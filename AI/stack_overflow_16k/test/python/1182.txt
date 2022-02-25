@@ -1,0 +1,1 @@
+"import arbitrary blank script with main __name__ i have a wrapper script wrapper.py, in which i modify the environment, sys.path and others. one thing that the wrapper script should then do is to execute an arbitrary other blank script, say foo.py, and make __name__ of foo.py be ""main""...is there a way of doing that?"

@@ -1,0 +1,1 @@
+"blank: how to remove words from a string i want to remove a list of words from a string...for example:.the list is :..[""it's"",""didn't"",isn't,""don't""]...the string is:..'it's a toy,isn't a tool.i don't know anything.'...what should i do to delete the it's , didn't, isn't, and don't from the string?"

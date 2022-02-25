@@ -1,0 +1,1 @@
+"blank - export default types i'm aware you can do the following:..const foo = (bar) =&gt; { //some code... };.const baz = () =&gt; { //some code... };.export default { foo, baz, ... }...or ..export default {.  foo: (bar) =&gt; //some code,.  baz: () =&gt; //some code,.  ....}...is there an advantage of one over the other, or is it merely a preference style?"

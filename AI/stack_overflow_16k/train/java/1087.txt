@@ -1,0 +1,1 @@
+"read files from another pc using blank and apache tomcat file[] files = new file(""\172.22.1.77foldername"").listfiles();...i'm trying to read some files from another ip on my network from shared folder 'foldername'...it works locally from eclipse...but when it deployed on apache tomcat, it doesn't work...any help about this ?"

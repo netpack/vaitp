@@ -1,0 +1,1 @@
+converting number to hours? hello i have this using blank :..var newhour = 20.5;.hour.sethours(newhour);...the problem is when i do console.log(hour) i get 20:05 but i would like to get 20:30...how can i do this ?..thank you a lot !

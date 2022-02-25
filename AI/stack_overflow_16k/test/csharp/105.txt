@@ -1,0 +1,1 @@
+"how to remove a string from a string i am adding a string (a) to another string (b) before i store it in db, when i retrieve the value from db, i want to remove the string(b) from string (a). string (b) is a constant. how can i do it..string a= ""text1"";.string b=""text2"";.string c = a+b;...i want to remove b from c after i retrive it from db"

@@ -1,0 +1,1 @@
+"    def attemptRequestWithMaliciousURI(self, uri):        """        Attempt a request with the provided method.        @param uri: see L{URIInjectionTestsMixin}        """        agent = client.Agent(self.createReactor())        method = b"GET"        agent.request(method, uri, client.Headers(), None)"

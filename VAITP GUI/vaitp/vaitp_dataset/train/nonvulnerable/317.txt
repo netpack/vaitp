@@ -1,0 +1,9 @@
+"    def test_list_entrance_exam_instructor_tasks_all_student(self):
+        """ Test list task history for entrance exam AND all student. """
+        url = reverse('list_entrance_exam_instructor_tasks', kwargs={'course_id': unicode(self.course.id)})
+        response = self.client.post(url, {})
+        self.assertEqual(response.status_code, 200)
+
+        # check response
+        tasks = json.loads(response.content)['tasks']
+        self.assertEqual(len(tasks), 0)"

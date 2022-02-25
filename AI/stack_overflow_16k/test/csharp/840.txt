@@ -1,0 +1,1 @@
+"what does new() mean in this case? .  possible duplicate:.  blank: what does new() mean?  .....i look at definition of enum.tryparse:..public static bool tryparse&lt;tenum&gt;(string value, out tenum result) where tenum : struct, new();...and wondering what new() means here."

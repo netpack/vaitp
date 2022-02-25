@@ -1,0 +1,1 @@
+"blank retrieve intervals between start date and end date for 30 minutes i need to retreive intervals between start date , end date for every 30 minutes...ex:if my start date is 2011-12-10-10:00:00 and end date is 2011-12-11-10:00:00..i need to populate the intervals between these two dates in an array."

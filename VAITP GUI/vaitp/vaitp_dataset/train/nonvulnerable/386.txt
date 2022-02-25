@@ -1,0 +1,55 @@
+"    def test_get_sale_records_features_with_multiple_invoices(self):
+        """
+        Test that the response from get_sale_records is in json format for multiple invoices
+        """
+        for i in range(5):
+            course_registration_code = CourseRegistrationCode(
+                code='qwerty{}'.format(i),
+                course_id=self.course.id.to_deprecated_string(),
+                created_by=self.instructor,
+                invoice=self.sale_invoice_1,
+                invoice_item=self.invoice_item,
+                mode_slug='honor'
+            )
+            course_registration_code.save()
+
+        # Create test invoice 2
+        sale_invoice_2 = Invoice.objects.create(
+            total_amount=1234.32, company_name='Test1', company_contact_name='TestName', company_contact_email='Test@company.com',
+            recipient_name='Testw_2', recipient_email='test2@test.com', customer_reference_number='2Fwe23S',
+            internal_reference="B", course_id=self.course.id
+        )
+
+        invoice_item_2 = CourseRegistrationCodeInvoiceItem.objects.create(
+            invoice=sale_invoice_2,
+            qty=1,
+            unit_price=1234.32,
+            course_id=self.course.id
+        )
+
+        for i in range(5):
+            course_registration_code = CourseRegistrationCode(
+                code='xyzmn{}'.format(i), course_id=self.course.id.to_deprecated_string(),
+                created_by=self.instructor, invoice=sale_invoice_2, invoice_item=invoice_item_2, mode_slug='honor'
+            )
+            course_registration_code.save()
+
+        url = reverse('get_sale_records', kwargs={'course_id': self.course.id.to_deprecated_string()})
+        response = self.client.post(url, {})
+        res_json = json.loads(response.content)
+        self.assertIn('sale', res_json)
+
+        self.validate_sale_records_response(
+            res_json['sale'][0],
+            course_registration_code,
+            self.sale_invoice_1,
+            0,
+            invoice_item=self.invoice_item
+        )
+        self.validate_sale_records_response(
+            res_json['sale'][1],
+            course_registration_code,
+            sale_invoice_2,
+            0,
+            invoice_item=invoice_item_2
+        )"

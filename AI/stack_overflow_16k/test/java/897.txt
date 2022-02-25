@@ -1,0 +1,1 @@
+"blank res folder not found error i'm getting that error whilst using cmd to run my jar file, which i compiled using jarsplice. ..the code it's on about is:.. shaderreader = new bufferedreader(new filereader(""/res/shaders/"" + filename));...my file structure is:...how can i get the thing to run?"

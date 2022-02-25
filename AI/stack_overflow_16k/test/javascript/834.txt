@@ -1,0 +1,1 @@
+"condition to test if a word exists in window.location.href i want to test if a word [""sublanguageid-all"" to be specific] is present in the current address of the page using an 'if' condition..i've tried /sublanguageid-all/g, but i'm not able to put it in an if-statement"

@@ -1,0 +1,1 @@
+"assignment with double ampersand ""&&"" i just saw someone use this piece of code:..ctx = canvas.getcontext &amp;&amp; canvas.getcontext('2d');...how does the double ampersand work in this context? would it not just assign ""true"" to the ctx variable?"

@@ -1,0 +1,1 @@
+"making a string formatted for time i am trying to format a string a certain way. currently i have..string timestring = hour + "":"" + min + "":"" + sec ;...however i have hour min and sec as integers and whenever they are a single digit i would like to add a placeholder 0 in front. how would i do that? ..edit: this did not answer my question."

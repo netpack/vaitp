@@ -1,0 +1,14 @@
+"def is_safe_filesystem_path_component(path):
+    """Checks if path is a single component of a local filesystem path
+       and is safe to join"""
+    if not path:
+        return False
+    drive, _ = os.path.splitdrive(path)
+    if drive:
+        return False
+    head, _ = os.path.split(path)
+    if head:
+        return False
+    if path in (os.curdir, os.pardir):
+        return False
+    return True"

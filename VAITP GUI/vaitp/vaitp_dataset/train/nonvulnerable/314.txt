@@ -1,0 +1,12 @@
+"    def test_entrance_exam_delete_state_with_staff(self):
+        """ Test entrance exam delete state failure with staff access. """
+        self.client.logout()
+        staff_user = StaffFactory(course_key=self.course.id)
+        self.client.login(username=staff_user.username, password='test')
+        url = reverse('reset_student_attempts_for_entrance_exam',
+                      kwargs={'course_id': unicode(self.course.id)})
+        response = self.client.post(url, {
+            'unique_student_identifier': self.student.email,
+            'delete_module': True,
+        })
+        self.assertEqual(response.status_code, 403)"

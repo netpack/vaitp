@@ -1,0 +1,1 @@
+"blank spread operator in arrow functions this snippet of blank code alerts 1 as answer. can anyone please explain how this code executes?..const b = [1,2,3];.const f = (a, ...b) =&gt; a+b;..alert( f( 1 ) );"

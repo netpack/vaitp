@@ -1,0 +1,1 @@
+blank calculation without a negative number how can i make sure that i don't get a negative number out of this code:..function reduction() {.  ctrlreduct.setvalue(number(ctrl1.getvalue()) + number(ctrl2.getvalue()) - number(ctrl3.getvalue()));.};...i would like any negative number to default to zero.

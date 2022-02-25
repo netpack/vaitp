@@ -1,0 +1,1 @@
+"getting img element from known source say i have an img tag as follows in a web page..&lt;img src = ""https://www.google.com""&gt;...is there a way for me to get this element by src in blank? so something like document.elementfromsrc() or something like that? the goal after getting this img element is to find the x and y coordinate and such"

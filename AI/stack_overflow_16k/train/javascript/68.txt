@@ -1,0 +1,1 @@
+"blank automatically sorts array? 1.i need to compare x coordinates with y coordinates, i log all x coordinates in  2.xlog, and all y coordinates in ylog. .3. blank automatically sorts the arrays so..... ?.     var rx = math.round(x) ;.     var ry = math.round(y) ;..  xlog.push(rx);.  ylog.push(ry);"

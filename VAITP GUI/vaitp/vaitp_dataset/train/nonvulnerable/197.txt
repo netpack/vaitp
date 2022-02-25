@@ -1,0 +1,11 @@
+"    def __init__(self, *expressions, ordering=(), **extra):
+        if not isinstance(ordering, (list, tuple)):
+            ordering = [ordering]
+        ordering = ordering or []
+        # Transform minus sign prefixed strings into an OrderBy() expression.
+        ordering = (
+            (OrderBy(F(o[1:]), descending=True) if isinstance(o, str) and o[0] == '-' else o)
+            for o in ordering
+        )
+        super().__init__(*expressions, **extra)
+        self.ordering = self._parse_expressions(*ordering)"

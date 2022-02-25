@@ -1,0 +1,1 @@
+"i am stuck with a scenario regarding extracting the country code while uploading the phone number, some add with country code like +91 or 91, +44 or 44. in this scenario how can i remove the country code...while fetching the numbers, it will be like..[+91 xxxxxxxxxx, 91 xxxxxxxxxx, +44 xxxxxxxxxx, 44 xxxxxxxxxx]"

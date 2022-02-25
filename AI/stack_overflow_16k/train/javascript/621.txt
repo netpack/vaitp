@@ -1,0 +1,1 @@
+"why use an 'apply' function in this situation? in chrome's console,..&gt; $$.bound: function ().{.    return document.queryselectorall.apply(document, arguments).}...why is this code like this?.what's difference with ..   return document.queryselectorall(arguments)...?"

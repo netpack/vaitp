@@ -1,0 +1,1 @@
+how to make a line break in blank? var options = { title: 'dates:  n' + start_date + ' n ' + end_date };...this is not working. how can i have an output like this?..dates: .date1.date2

@@ -1,0 +1,1 @@
+"blank string swap formatting i need to swap the list of names which is in the format of firstname and lastname which in a dataframe one column, using blank...below is the sample format:.~adam smith ..the above need to change into .~smith adam..is there any single line function available in blank?..could anyone help on this!!"

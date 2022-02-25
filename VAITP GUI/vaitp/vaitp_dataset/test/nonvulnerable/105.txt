@@ -1,0 +1,1 @@
+"    def __getattr__(self, attr: str) -> Any:        # Passthrough to the real reactor except for the DNS resolver.        return getattr(self._reactor, attr)"

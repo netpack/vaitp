@@ -1,0 +1,1 @@
+"split string into strings of repeating elements i want to split a string like:..'aaabbccccabbb'...into..['aaa', 'bb', 'cccc', 'a', 'bbb']...what's an elegant way to do this in blank? if it makes it easier, it can be assumed that the string will only contain a's, b's and c's."

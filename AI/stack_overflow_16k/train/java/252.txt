@@ -1,0 +1,1 @@
+native code for blank math class i was wondering if there is any way i could gain access to the native code for the math class.   more specifically i need to see the code for the sin() method.

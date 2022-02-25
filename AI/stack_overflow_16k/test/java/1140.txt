@@ -1,0 +1,1 @@
+"break a loop form another method i'm having two methods, one method (named a) provides loop and sends loop value to another method(named b). if the condition in method b is satisfied, the loop from a should stop. how can i implement it...void a().{.    for(int i=0;i&lt;10;i++).        b(i);.}..void b(int x).{.    if(x==4).        //i want to stop the loop of a    .}"

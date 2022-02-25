@@ -1,0 +1,1 @@
+"how to make blank decorator not run when imported i've decorated a method in blank. and when i import the module that contains the method, the decorator autoruns. ..i realize that this is how decorators were made however is there a way to have decorators not do this?"

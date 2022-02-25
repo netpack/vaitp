@@ -1,0 +1,1 @@
+vs2003 : blank can not build visual studio solution i get latest from source control and can not build my visual studio solution. i get the following error: ..cannot copy assembly 'xyz' to file 'c:myfolderbindebugxyz.dll'.  the process cannot access the file because it is being used by another process...i have rebooted the machine but nothing seems to work. please help.

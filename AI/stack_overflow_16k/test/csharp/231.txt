@@ -1,0 +1,1 @@
+"use enum.parse with char enum public enum color.{.    red = 'r',.    blue = 'b',.    green = 'g',.    yellow = 'y',.}..color color = (color)enum.parse(typeof(color), ""r"");...hello community!..i tried to parse an string value with an char enum, but it throws me an system.argumentexception...thanks in advance :)"

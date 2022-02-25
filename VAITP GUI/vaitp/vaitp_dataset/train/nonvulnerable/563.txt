@@ -1,0 +1,2 @@
+"    def ready(self):
+        checks.register(check_deprecated_settings)"

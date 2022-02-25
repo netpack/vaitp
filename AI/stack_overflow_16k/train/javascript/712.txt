@@ -1,0 +1,1 @@
+"loop through array of objects with access to index and objects and support continue, break, return i am looking for loop through array of objects with access to index and object...it also has to support continue, break, return...objects = [{}, {}]..for(let [index, object] of objects)...or..for(let [index, object] in objects)...these things don't work for me."

@@ -1,0 +1,1 @@
+"blank: convert list to generator say i have a list..data = [].data.append(""a"").data.append(""b"").data.append(""c"").data.append(""d"")...how do i convert this to a generator?.any help with sample code would be highly appreciated.....found a url: http://eli.thegreenplace.net/2012/04/05/implementing-a-generatoryield-in-a-blank-c-extension/..is this what i want to do?"

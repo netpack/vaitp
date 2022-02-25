@@ -1,0 +1,1 @@
+"how to convert datetime to hexadecimal i was trying to convert the datetime to hexadecimal. .this is what i have..string hexvalue = datetime.today.tostring(""x"")...i can not find the solution to this."

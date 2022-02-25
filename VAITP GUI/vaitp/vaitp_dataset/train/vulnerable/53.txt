@@ -1,0 +1,33 @@
+"def _inject_admin_password_into_fs(admin_passwd, fs, execute=None):
+    """Set the root password to admin_passwd
+
+    admin_password is a root password
+    fs is the path to the base of the filesystem into which to inject
+    the key.
+
+    This method modifies the instance filesystem directly,
+    and does not require a guest agent running in the instance.
+
+    """
+    # The approach used here is to copy the password and shadow
+    # files from the instance filesystem to local files, make any
+    # necessary changes, and then copy them back.
+
+    admin_user = 'root'
+
+    fd, tmp_passwd = tempfile.mkstemp()
+    os.close(fd)
+    fd, tmp_shadow = tempfile.mkstemp()
+    os.close(fd)
+
+    utils.execute('cp', os.path.join(fs, 'etc', 'passwd'), tmp_passwd,
+                  run_as_root=True)
+    utils.execute('cp', os.path.join(fs, 'etc', 'shadow'), tmp_shadow,
+                  run_as_root=True)
+    _set_passwd(admin_user, admin_passwd, tmp_passwd, tmp_shadow)
+    utils.execute('cp', tmp_passwd, os.path.join(fs, 'etc', 'passwd'),
+                  run_as_root=True)
+    os.unlink(tmp_passwd)
+    utils.execute('cp', tmp_shadow, os.path.join(fs, 'etc', 'shadow'),
+                  run_as_root=True)
+    os.unlink(tmp_shadow)"

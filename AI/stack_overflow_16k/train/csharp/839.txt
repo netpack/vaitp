@@ -1,0 +1,1 @@
+"how to determine if a type is of runtimetype? how do i determine if a type is of type runtimetype?  i have this working but it is kind of kludgy:..    private bool istypeoftype(type type).    {.        return type.fullname ==  ""system.runtimetype"";.    }"

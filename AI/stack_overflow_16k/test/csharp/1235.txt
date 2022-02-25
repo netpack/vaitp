@@ -1,0 +1,1 @@
+"how to select multiple column and distinct one column by linq? i have: ..var names = db.tblposts.select(x =&gt; new { x.userid, x.title }).distinct().tolist();...i want select userid and  title  and  userid is distinct.  ..but not worked and userid is not distinct.."

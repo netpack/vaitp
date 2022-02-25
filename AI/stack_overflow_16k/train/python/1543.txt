@@ -1,0 +1,1 @@
+"swap the letters of the input string swap the case of the string that comes as an input and return the string while making sure that the first letter of the string stays uppercase...example -..input - ""blank"" ..output - ""blank"" (p will stay up. the other ones are going to swap.)..coding part:..def main(i):..    # write your code here and return the output .    return 0"

@@ -1,0 +1,1 @@
+any disadvantage to using braces on same line or new line for blank i have been using the default of new line for methods and code blocks but it's using up a lot of space. should i use the curly brace on the same line as the start of the method? is there any disadvantage to doing this?

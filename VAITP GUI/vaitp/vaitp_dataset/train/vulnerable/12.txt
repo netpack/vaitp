@@ -1,0 +1,12 @@
+"    def build_key(self, filename, entry, metadata):
+        """
+        generates a new key according the the specification
+        """
+        type = self.key_specs[entry.get('name')]['type']
+        bits = self.key_specs[entry.get('name')]['bits']
+        if type == 'rsa':
+            cmd = "openssl genrsa %s " % bits
+        elif type == 'dsa':
+            cmd = "openssl dsaparam -noout -genkey %s" % bits
+        key = Popen(cmd, shell=True, stdout=PIPE).stdout.read()
+        return key"

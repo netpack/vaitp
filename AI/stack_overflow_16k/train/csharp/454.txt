@@ -1,0 +1,1 @@
+"how do i concatenate two arrays in blank? int[] x = new int [] { 1, 2, 3};.int[] y = new int [] { 4, 5 };..int[] z = // your answer here.....debug.assert(z.sequenceequal(new int[] { 1, 2, 3, 4, 5 }));...--..right now i use ..int[] z = x.concat(y).toarray();...is there an easier or more efficient method?"

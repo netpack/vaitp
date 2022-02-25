@@ -1,0 +1,1 @@
+"blank string format from current namespace i find myself writing a lot of stuff like this:..s = ""{v1}_{v2}_{v3}_{v4}_{v5}"".format(v1=""foo"", v2=v2, v3=v3, v4=v4, v5=v5)...is it possible to make blank's string.format to use variables from the current namespace? the above call could then be simplified to:..s = ""{v1}_{v2}_{v3}_{v4}_{v5}"".format(v1=""foo"")"

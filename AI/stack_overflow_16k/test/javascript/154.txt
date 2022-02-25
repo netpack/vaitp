@@ -1,0 +1,1 @@
+"why does map mutate array of objects? might be a stupid question, but why does map mutate array of objects.....var obj = {.  items: [{.    value: 1,.    selected: true.  }, {.    value: 2,.    selected: false.  }].};..var items = obj.items.map(i =&gt; {.  if (i.value === 2) i.selected = true;.  return i;.});..console.log(obj);"

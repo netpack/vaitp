@@ -1,0 +1,1 @@
+"new date() producing valid date from invalid input string when i pass ""test 2"" string in new date(), i am getting an actual date, how?..i am trying to whether it is a date or not.....console.log(new date(""test 2""));"

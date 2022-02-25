@@ -1,0 +1,1 @@
+"remove x in string in blank .i need get little endian random string via blank..such as '0010' as 256 (without 'x') .here is my code... import random. import struct. str1 = struct.pack('&lt;q', random.randint(1, 1000)). #ex: str1 = 'xc9x02x00x00x00x00x00x00'...but i don't have any idea to convert this string to ""c902000000000000"".please give any advise, thanks"

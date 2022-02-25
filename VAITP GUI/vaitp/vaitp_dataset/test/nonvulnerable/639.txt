@@ -1,0 +1,1 @@
+"    def htmlvalue(self, val):        """        Return an HTML representation of this block that is safe to be included        in comparison views        """        return escape(text_from_html(self.block.render_basic(val)))"

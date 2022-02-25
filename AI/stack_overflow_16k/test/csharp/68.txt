@@ -1,0 +1,1 @@
+"blank, accessing a variable from a class? say i have ..        public int myvariable;...in the form1.cs file, and i want to access it from class1.cs , what do you think would be the best way to do that?..thanks!"

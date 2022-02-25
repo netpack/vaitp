@@ -1,0 +1,1 @@
+"dates before january 1st, 1970 the gettime() fetches the time in millis for a certain date. can this be used reliably for dates say in the 18th century. we use the millis and store it in a string variable for future comparison. is there a limit on how far in the past that this could be used?"

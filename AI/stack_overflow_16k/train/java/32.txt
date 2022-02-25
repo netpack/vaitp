@@ -1,0 +1,1 @@
+"separating an array into strings arraylist&lt;string&gt; stock_list = new arraylist&lt;string&gt;();.stock_list.add(""stock1"");.stock_list.add(""stock2"");...i have this arraylist, how do i separate into separate strings so that i get.string a=""stock1"";.string b=""stock2""?"

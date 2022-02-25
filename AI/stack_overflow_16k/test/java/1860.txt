@@ -1,0 +1,1 @@
+"how to get 2 digit after the decimal point with number type i have a number asnumber a= 2.944127983333377 now i want to formatted it as 2.94..i searched and i found new decimalformat(""##.##"").format(a).but the problem that it's type is string and not number."

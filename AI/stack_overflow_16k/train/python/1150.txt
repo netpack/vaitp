@@ -1,0 +1,1 @@
+trying to call package method using a variable im trying to store the method in a package in a variable as it might change and i dont want to manually update in multiple places in the code...import hashlib as hashy..foo='hello world'.bar='hello world'..algo='md5'.hfoo=hashy.algo(foo.encode()).hbar=hashy.algo(bar.encode())

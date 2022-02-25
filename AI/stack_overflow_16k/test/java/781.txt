@@ -1,0 +1,1 @@
+"com.sun.mirror.apt api i'm new to blank and i am getting an error via eclipse on the following lines:..import com.sun.mirror.apt.annotationprocessorfactory;.import com.sun.mirror.apt.annotationprocessor;.import com.sun.mirror.apt.annotationprocessorenvironment;...the error is ""the import com.sun.mirror cannot be resolved""...how do i fix this error?"

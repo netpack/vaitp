@@ -1,0 +1,1 @@
+"return an index of a string stored in an array i have an array and an input, if i input something i want to use .startswith() with my array, for example if i have this:..array = ['foo','bar']...and if i input ""fo"" i want it to match it with ""foo"" and then return the index, in this case 0. how would i do this?"

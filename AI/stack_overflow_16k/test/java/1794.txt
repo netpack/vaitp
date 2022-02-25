@@ -1,0 +1,1 @@
+"comparing blank lists how can i return true if list1 and list2 share at least 1 item?..example: list1 = (1,2,3) ... list2 = (2,3,4)..somefunction(list1, list2); // returns true"

@@ -1,0 +1,1 @@
+"blank deleting files - ioexception handling in reference to deleting all files how can we handle io.exceptions to quietly ""skip"" those files that the delete can't do? should we use a try/catch or is there something built-in?..looks like a simple question but i'm actually having trouble finding a solution for it on the net..."

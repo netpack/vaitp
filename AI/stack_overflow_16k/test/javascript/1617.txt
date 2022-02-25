@@ -1,0 +1,1 @@
+blank arguments for beginner why the following code does not increase the variable a for 1  ?..var a =5;..function abc(y){.    y++;.}..abc(a);..//a is 5 not 6 why?...but this does..var a = 5;..function abc(){.a++;.}..abc();..//a is 6

@@ -1,0 +1,1 @@
+"how do bit masks work in blank? hi i wrote a program to see if a bit is ""on"" in class, but i'm not quite sure what it means by ""on"" and ""off"", and how bit masks work...here's the code:..def check_bit4(input):.    mask = 0b1000.    checker = input &amp; mask.    if checker &gt; 0:.        return(""on"").    else:.        return(""off"")...thanks!"

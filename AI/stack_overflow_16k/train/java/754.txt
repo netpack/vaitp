@@ -1,0 +1,1 @@
+"looking for knowlage about zipinputstream so when using the zipinputstream, to get the inputstream of a zip file on the web, does it download the whole zip file into the users computer when used?..like for instance if the program uses the zipinputstream to look the content of the zip, how does it really work? does it download the zip and then look into it or?"

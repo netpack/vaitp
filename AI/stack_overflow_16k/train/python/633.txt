@@ -1,0 +1,1 @@
+"how to get blank function that prints a word to print on same line with for loop? i've got a function in blank..def wordprint():.    print ""word""...i want to use it to print 3 times on the same line using a for loop...i would expect this code..for x in range(0,3):.    wordprint(),...to output this..word word word..but i get them on new lines"

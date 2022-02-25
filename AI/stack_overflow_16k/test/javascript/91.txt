@@ -1,0 +1,1 @@
+"js parse time without timezone there is the following code:..new date(""2000-01-01t18:00:00.000z"")...i got:..date {sat jan 01 2000 21:00:00 gmt+0300 (msk)}...but i need to get:..date {sat jan 01 2000 18:00:00}...i.e. time without specific timezone. how can i do it? thanks!"

@@ -1,0 +1,13 @@
+"    def format_time(self, data):
+        """
+        A hook to control how times are formatted.
+
+        Can be overridden at the ``Serializer`` level (``datetime_formatting``)
+        or globally (via ``settings.TASTYPIE_DATETIME_FORMATTING``).
+
+        Default is ``iso-8601``, which looks like "03:02:14".
+        """
+        if self.datetime_formatting == 'rfc-2822':
+            return format_time(data)
+
+        return data.isoformat()"

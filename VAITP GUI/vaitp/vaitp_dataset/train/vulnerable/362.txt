@@ -1,0 +1,9 @@
+"def qute_settings(url):
+    """Handler for qute://settings. View/change qute configuration."""
+    if url.path() == '/set':
+        return _qute_settings_set(url)
+
+    src = jinja.render('settings.html', title='settings',
+                       configdata=configdata,
+                       confget=config.instance.get_str)
+    return 'text/html', src"

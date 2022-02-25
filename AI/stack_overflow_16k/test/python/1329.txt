@@ -1,0 +1,1 @@
+"group list returned by os.getgrouplist in blank3 i am confused by the docs about os.getgrouplist. what does ""if group is not in the list, it is included"" mean?    ..os.getgrouplist will return a list as same as result of id -g username. in which case i will get a list excluded group"

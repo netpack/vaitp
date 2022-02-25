@@ -1,0 +1,1 @@
+"is there any advantage to using protected variables over getters and setters? disregarding the fact that making variables protected can be convenient, is there anything that actually necessitates the existence of protected?"

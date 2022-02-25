@@ -1,0 +1,1 @@
+"get string value between special character and replace string in blank i want to get and replace the string between special character..e.g. mystring = ""hello my first string is {string name} and my second string is {string name}""..i want to replace the string between ""{"" ""}""."

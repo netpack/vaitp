@@ -1,0 +1,1 @@
+"how to solve sqlintegrityconstraintviolationexception? 00000182 systemout     o ==== inside updatevalidation exceptionstacktrace = com.ibm.db2.jcc.am.sqlintegrityconstraintviolationexception: db2 sql error: sqlcode=-803, sqlstate=23505, sqlerrmc=xhazmat1;000098d401, driver=4.21.29"

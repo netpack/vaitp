@@ -1,0 +1,7 @@
+"    def _untarzip_image(path, filename):
+        S3ImageService._test_for_malicious_tarball(path, filename)
+        tar_file = tarfile.open(filename, 'r|gz')
+        tar_file.extractall(path)
+        image_file = tar_file.getnames()[0]
+        tar_file.close()
+        return os.path.join(path, image_file)"

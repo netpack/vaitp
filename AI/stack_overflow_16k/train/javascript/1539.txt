@@ -1,0 +1,1 @@
+"prevent an undefined into one line code using document command there are some times which is not exist. instead of using controls like document contains or type of into one if statement is it possible to make the control into one line and if the command doesn't exist take an na like this:..document.queryselector('div#name span.fn').textcontent || ""na"";"

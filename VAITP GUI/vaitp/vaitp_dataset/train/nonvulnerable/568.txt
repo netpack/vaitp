@@ -1,0 +1,4 @@
+"    def test_deprecated_setting(self):
+        """The older WEBHOOK_AUTHORIZATION setting is still supported (for now)"""
+        response = self.call_webhook()
+        self.assertEqual(response.status_code, 200)"

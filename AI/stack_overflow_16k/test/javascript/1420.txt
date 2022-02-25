@@ -1,0 +1,1 @@
+how to get the properties from object i am trying to handle a callback data from ajax and having a problem looping the data...i have..data.prototype.handlereturndata = function(data) {..}...data is an object which contains 4 objects. each object has a test and test2 property...how do i get those properties?..thanks a lot!

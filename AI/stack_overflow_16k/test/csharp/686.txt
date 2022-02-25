@@ -1,0 +1,1 @@
+method bitconverter.doubletoint64bits (double) in blank this method convert a double value  into its bit representation formatted in hexadecimal format. why is specified that the converted value is a signed int64 ?   which is the difference with unsigned int64 ? the binary representation of the double is unique.

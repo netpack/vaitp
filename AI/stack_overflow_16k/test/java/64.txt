@@ -1,0 +1,1 @@
+"why does blank hashmap return null value  map&lt;string,string&gt; map = new hashmap&lt;string,string&gt;();. system.out.println(map.get(""abc""));...above case return null. shouldn't it be returning null pointer exception. i was expecting npp because there is no such key ""abc"" in it. why has it returned null.  can anyone clear away my doubts.."

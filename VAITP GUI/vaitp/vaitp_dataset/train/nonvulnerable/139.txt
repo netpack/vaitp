@@ -1,0 +1,8 @@
+"    def create_service(self, context, OS_KSADM_service):
+        self.assert_admin(context)
+        service_id = uuid.uuid4().hex
+        service_ref = OS_KSADM_service.copy()
+        service_ref['id'] = service_id
+        new_service_ref = self.catalog_api.create_service(
+                context, service_id, service_ref)
+        return {'OS-KSADM:service': new_service_ref}"

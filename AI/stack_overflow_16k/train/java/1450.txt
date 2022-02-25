@@ -1,0 +1,1 @@
+"org.junit.comparisonfailure makes no sense org.junit.comparisonfailure: expected:&lt;row 1: 1 2 3 4 5[]&gt; but was:&lt;row 1: 1 2 3 4 5[ ]&gt;...when i remove in my code ..system.out.print(int+ "" "");...to this..system.out.print(int+ """");..org.junit.comparisonfailure: expected:&lt;row 1: 1 2 3 4 5[ ]&gt; but was:&lt;row 1: 1 2 3 4 5[]&gt;...how to fix this?"

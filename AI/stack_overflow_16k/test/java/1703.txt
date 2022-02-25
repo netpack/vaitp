@@ -1,0 +1,1 @@
+when should i use a generic parameter and when should i use parent class as a parameter what are the differences between the two? when should i use each?..generic:..public static &lt;t extends someclass&gt; void dosomething(t class).{.}...parent class as a parameter:..public static void dosomething(someclass class).{.}

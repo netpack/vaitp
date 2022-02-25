@@ -1,0 +1,1 @@
+"guaranteed event at application exit in blank i am currently searching for a way to delete a file after my blank .net program exits. i am aware that there is appdomain.processexit, but due to this blog post i cannot use it because i need a guaranteed event. i am open to any solution."

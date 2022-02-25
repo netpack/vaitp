@@ -1,0 +1,1 @@
+"""convert.toint32"" behave differently for odd and even numbers in a blank application..convert.toint32(22.5) = 22.convert.toint32(23.5) = 24...odd and even numbers converting differently! why?"

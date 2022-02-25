@@ -1,0 +1,1 @@
+"is there anyway to make system.io.path work with / i need to manipulate paths that are/a/b/c/xxx etc. but path class is determined that separators must be . so if i do..var dir = path.getdirectoryname(""/a/b/c/xxx"");...i get ""abc""..i know i can write code to do it myself but i wonder if there is a knob for path that i haven't found yet"

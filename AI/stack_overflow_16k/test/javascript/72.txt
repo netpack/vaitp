@@ -1,0 +1,1 @@
+"i want to validate text box which should not accept just white space but it should allow white space in between words when entered.in java script function nospaces(t) {.   if(t.value.match(/s/g)) {.     alert('sorry, you are not allowed to enter any spaces');.     t.value=t.value.replace(/s/g,'');.   }.}"

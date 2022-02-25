@@ -1,0 +1,1 @@
+"printing a node from bst i have a code similar to this one:.https://www.geeksforgeeks.org/find-closest-element-binary-search-tree/..for this algorithm, it will print out 17. however, i want to print it out as .17 is the node closest to 18..how is that possible? do i need to create a tostring method? if so, how can it be written?"

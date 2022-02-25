@@ -1,0 +1,1 @@
+"how to get string[] of map<string , string > hi i have a map&lt;str1,str2&gt; and i need to get the array of str2 where ..str1==""foo""...how can i do that?..thanks"

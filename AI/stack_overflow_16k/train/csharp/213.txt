@@ -1,0 +1,1 @@
+"interface inheritance and derived classes why can't i do something like this in blank (pseudo code follows)..interface1.{.    method1();   .}..interface2 : interface1.{.    method2();.}..class1 : interface1.{.    method1().    {.    }.}..class2 : class1, interface2.{.    method2().    {.    }.}"

@@ -1,0 +1,1 @@
+"import file named by string in variable if one of my blank files is called hello.py, is there a way to import it to my other blank file, called main.py, in the following way:..main.py..name = ""hello"".import name...i get the following error:...  modulenotfounderror: no module named 'name'"

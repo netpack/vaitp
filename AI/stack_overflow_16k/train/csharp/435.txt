@@ -1,0 +1,1 @@
+when is finally run if you throw an exception from the catch block? try {.   // do stuff.}.catch (exception e) {.   throw;.}.finally {.   // clean up.}...in the above block when is the finally block called? before the throwing of e or is finally called and then catch?

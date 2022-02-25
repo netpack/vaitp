@@ -1,0 +1,1 @@
+symbol.prototype comparison error why do i get this error:..uncaught typeerror: symbol.prototype [ @@toprimitive ] requires that 'this' be a symbol...when i run this code?..3 == symbol.prototype...i'm still trying to work out the reason why by myself and so far using a try-catch block to hold it down for awhile but i want a reason for the error.

@@ -1,0 +1,1 @@
+"or statement in blank 3 variables i'm trying to make a simple blank program that detects a constanant at the beginning of a word and moves it to the end (like piglatin). can i make a variable like ..conts = ""b"" or ""c""...then if/else to detect if the word starts with b or c. is this possible?"

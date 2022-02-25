@@ -1,0 +1,1 @@
+"usage of compound conditional statements within blank for loop can you use a compound conditional statement in a blank for loop?..here is an example,..//using a compound conditional statement.//within a for loop, blank.for (var i=0; i &lt; res.length &amp;&amp; i &lt; 5; i++) {};..//or.for (var i=0; i &lt; res.length || i &lt; 5; i++) {};"

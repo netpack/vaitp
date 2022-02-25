@@ -1,0 +1,1 @@
+"add exceptions to regular expression boundary i have ..exemple.match(/.{1,21}b/g).map(s =&gt; s.trim()) ...i need to include some emoji as exceptions, because i get them deleted, if i enter emoji ( ,        ☺️  )..is there a way to do it ?"

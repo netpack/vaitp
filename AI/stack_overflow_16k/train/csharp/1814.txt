@@ -1,0 +1,1 @@
+converting multiple integer values to a datetime i have some int values such as hour and minute. i would like to use these values to create a datetime format so i can check whether the current time of the computer is after a predefined time. ..any help on this would be highly appreciated as i have looked and found nothing so far.

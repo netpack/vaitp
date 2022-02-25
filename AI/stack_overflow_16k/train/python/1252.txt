@@ -1,0 +1,1 @@
+is there a way to output the current line being executed in blank? i'm making software in blank which shows how variables change within a given piece of code. i therefore want it to display at what line in the code the changes happen. how could i go about doing it?

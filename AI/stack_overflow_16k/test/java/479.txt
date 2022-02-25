@@ -1,0 +1,1 @@
+how to find the no. of matches if i use patterns and matcher in blank? i have the following code..    pattern keypattern = pattern.compile(key);.    matcher matcher = keypattern.matcher(str);.    return matcher.replaceall(value);...this will replaces the key in the str with value;.but i want to know how many instances of key's has been replaced with value..so how to know that?

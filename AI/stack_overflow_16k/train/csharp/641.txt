@@ -1,0 +1,1 @@
+how to write the last line of file i have a file data.txt. data.txt contains text line by line as:..one.two.three.six..here i need to write data in file as:..one.two.three.four.five.six..i dont know how to write file like this!!

@@ -1,0 +1,1 @@
+how to a wait untill delegate evente done? how to waiting until delegate method is  finished..  await webbrowser1.documentcompleted += delegate.            {..                //finished .            }; ..        //when finished do some things ...so how to do that ..thanks

@@ -1,0 +1,1 @@
+"how to find if one number is a permutation of another number in blank i was wondering how to check if a number is a permutation of another number in blank. ..ex: ..perm(1234,2413); ---&gt; true.perm(154,154); ---&gt; true.perm(101,011); ---&gt; false.perm(501,104); ---&gt;false...any help would be appreciated :)"

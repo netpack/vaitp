@@ -1,0 +1,1 @@
+"why do string indices (albeit representing integers) work in arrays? why does the following enumerate correctly?..var arr = [];.arr[0] = 'foo';.arr['1'] = 'bar';..arr.foreach(v =&gt; console.log(v)); // foo, bar...both arr[1] and arr['1'] also work. is this a feature of array that strings corresponding to integers are mapped to their integer value?"

@@ -1,0 +1,1 @@
+"how to traverse a multi-hierarchy array in blank say rootnode is a multi-hierarchy data structure...rootnode.add(node1);.rootnode.add(node2);.node1.add(node3);.node1.add(node4);.node3.add(node5);...if use foreach to traverse rootnode will only get node1, node2. how do i traverse all nodes in rootnode?..foreach(var node in rootnode){...}"

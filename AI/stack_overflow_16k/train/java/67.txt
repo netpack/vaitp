@@ -1,0 +1,1 @@
+"blank loop does not increase array index let's say i have an integer array int[] a = {0, 1, 2, 0}.the main method is..int i = 0, a = a[i], b = a[i + 1];..while(i &lt; 3) {.  system.out.println(a + "" "" + b + "" "" + i);.  i++;.}...why does the console outputs ..0 1 0.0 1 1.0 1 2...even though the index is already pass 0 where i expected a to be 1 and b to be 2"

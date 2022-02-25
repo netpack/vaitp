@@ -1,0 +1,1 @@
+"formatted strings for rounding in blank i want to round a integer using formatted strings, but it has to be via a parameter asked. i have the following code where p is the amount of decimals to be rounded to...def fahrenheit_to_celsius(t, p):.    celsius = ((t - 32.0) * 5.0 / 9.0)..    print ""%f ""%(celsius)"

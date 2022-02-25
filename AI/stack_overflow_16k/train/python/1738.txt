@@ -1,0 +1,1 @@
+"tuple(avalidtupleoftypestring) not returning what i expect it to in the standard blank ide:..&gt;&gt;&gt; tuple(""(5,6,7)"").('(', '5', ',', '6', ',', '7', ')')...is (5,6,7) a valid tuple? if so, why is tuple(""(5,6,7)"") placing every character in the string into its own spot in the tuple? thank you so much for your help!"

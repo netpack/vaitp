@@ -1,0 +1,1 @@
+"variable referencing and assignment say..c = 10.a = b = c...and now a,b reference c, so i thought if c changes, so will a,b, like..c = 123  # change c, then a = b = 123...but actually, a,b doesn't change at all, why? now consider a list..m = [0].l = [m]*3.l[0][0] = 1  # just change l[0][0], then l[1:] change...why?"

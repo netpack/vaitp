@@ -1,0 +1,1 @@
+"encapsulation in blank a long time ago, i saw someone encapsulate their entire blank block with code something like the code below:..(function() {.  // ....})(this);...questions:...is the code above correct?.what benefit is there to encapsulating the entire blank block like denoted above?"

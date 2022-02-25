@@ -1,0 +1,1 @@
+memoryerror while decoding with base64 for large files i am trying to decode string which is stored in a file. the file size is around 300 mb. it's throwing memoryerror while decoding...base64.b64decode(bytes(file_content))...is there any solution for this.

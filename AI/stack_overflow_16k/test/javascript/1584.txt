@@ -1,0 +1,1 @@
+"replace src attribute in string with 'script' tag using js there is some string with ""script"" tag, for example:....i need to get regexp to replace content of src attribute with 'newsrc' variable. this regexp must allow using double and and ordinary quotes in src attribute. i think about../src=""(?:[^'/]*/)*([^']+)""/g...but i'm not sure. thanks in advance!"

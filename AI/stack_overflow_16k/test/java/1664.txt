@@ -1,0 +1,1 @@
+"finding a specific file in a folder in blank i need to find a specific file for example, info.txt in a folder. the problem is i do not know under what level the file is. for example, the file can be in a sub-folder or in a sub-folder of a sub-folder...so this means i have to go through recursion.... or there is a simple way to complete this task. i am using jdk 1.5."

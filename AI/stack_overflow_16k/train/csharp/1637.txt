@@ -1,0 +1,1 @@
+"how to read all files with wild card formatting in blank so normally, i would have a file path like out/path/ and i would use directory.getfiles(path) to get all files in that path.  now, if my input is out/path/*.csv how would i go about grabbing all files meeting that parameter?"

@@ -1,0 +1,1 @@
+how to encrypt a string in blank i want to encypt a string by adding +1 (ascii) to every char in the string.this my attempt..public static string encrypt(string str){.for(int i = 0; i &lt; str.length(); i++){.    int x = str.charat(i) ;.    x = x + 1; .}...// now how can i complete this loop to produce a new string with encrypting the string by adding 1 to every char?

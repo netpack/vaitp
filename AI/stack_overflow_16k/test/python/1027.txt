@@ -1,0 +1,1 @@
+"static method in blank i use static method in blank, like this:..class a(object):..    @staticmethod.    def sfun():.        print ""this is statice method""..class aa(a):..    @staticmethod.    def sfun():.        print ""this is statice method""...and i want to get type of class (a or aa) in sfun. how can i do it?"

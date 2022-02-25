@@ -1,0 +1,1 @@
+"binding to another element? i can't get this to work, i have a textblock that i want to bind its 'text' property to a the window's title..i tried this:..&lt;textblock text=""{binding path=window.title}"" ... /&gt;"

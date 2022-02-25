@@ -1,0 +1,1 @@
+how to close window in firefox using blank? i am using top.window.close() to close the parent window but it is not working in mozilla firefox.please suggest alternatives..the above code is working fine for ie6.

@@ -1,0 +1,1 @@
+bitwise & (and) i'm supposed to write a wrapper function to md5 hashing that restricts the input and output size of md5 to 20 bit. (all exceeding output bits are thrown away)..how can this be done?

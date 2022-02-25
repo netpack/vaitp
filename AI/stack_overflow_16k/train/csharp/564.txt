@@ -1,0 +1,1 @@
+"blank standard class (enumeration?) for top, bottom, left, right is there a standard blank class that defines a notional left, right, top and bottom? ..should i just use my own?..enum controlalignment.{.    left = 1,.    top,.    right,.    bottom,.    none = 0.}"

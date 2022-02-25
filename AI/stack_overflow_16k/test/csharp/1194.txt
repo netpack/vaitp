@@ -1,0 +1,1 @@
+"convert content(text) to list/dictionary value i.e. i have in list.txt file:..{.   { ""key1"", ""value1""},.   { ""key2"", ""value2""},.   .....}...i want to read that content as a value of dictionary variable (this is phseudo-code, i want to know how to do it actually):..dictionary&lt;string,string&gt; xyz .....xyz = content_from(""list.txt"")"

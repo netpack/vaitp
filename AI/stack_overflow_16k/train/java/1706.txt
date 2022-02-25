@@ -1,0 +1,1 @@
+"how to call array out from blank method i created an array pages in method list. .could you please advise how to call out one element pages[1] when accessing method list() from other classes?..public list() {.string[] pages = { .""www.cnn.com"",.""www.bbc.com"",.""www.yahoo.com"",.};...many thanks!"

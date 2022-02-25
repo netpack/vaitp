@@ -1,0 +1,1 @@
+"how to extract a substring from a string in blank? i have a string of the following format:..var str1=""tag:youtube.com,2008:video:vrtmalb-xcq"";...from this i need to extract the last part i.e. vrtmalb-xcq. how can i achieve this?"

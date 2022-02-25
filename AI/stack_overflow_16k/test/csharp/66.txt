@@ -1,0 +1,1 @@
+"what's the difference between a real literal and type casting in blank? trying to understand the difference between the two. for example:..if(value &gt;= 100m){...}...or..if(value &gt;= (decimal)100){...}...also, what's the industry standard? i see a lot of each and just want to make sure i fully understand the difference and am within best practices."

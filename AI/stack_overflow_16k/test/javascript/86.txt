@@ -1,0 +1,1 @@
+example of synchronous blank i want an example of synchronous blank...let's say i have three functions..fun1();.fun2();.fun3();...they all log some data. but i want the second function fun2() to pause the script for 5 seconds and then continue...doing settimeout has not worked as it is async.

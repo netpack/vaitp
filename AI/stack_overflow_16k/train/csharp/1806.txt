@@ -1,0 +1,1 @@
+"how to extract parameter names from sql query i have a sql query ..select * from table where field1 = :param1 and field2 = :param2...i want to get the parameter names from this string..for example: [param1, param2]..how to do this using blank language?"

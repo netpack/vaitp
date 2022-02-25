@@ -1,0 +1,1 @@
+.net console read and write problem code:..using system;..class program.{.    static void main(string[] args).    {.        console.write(20);.        int myage = console.read() + 10;.        console.writeline(myage);.    }.}...after printing 20 it hangs out and nothing is printed :(

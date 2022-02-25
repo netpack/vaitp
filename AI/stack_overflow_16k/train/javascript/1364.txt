@@ -1,0 +1,1 @@
+why does (true > null) always return true in blank? can some tell me why the following code returns true in blank?..console.log(true &gt; null); //returns true

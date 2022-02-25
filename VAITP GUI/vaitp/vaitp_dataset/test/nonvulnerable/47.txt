@@ -1,0 +1,1 @@
+"    def create_code_for_user(cls, user, next=None):        if not user.is_active:            return None        login_code = LoginCode(user=user)        if next is not None:            login_code.next = next        login_code.save()        return login_code"

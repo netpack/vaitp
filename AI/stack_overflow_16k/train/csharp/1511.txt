@@ -1,0 +1,1 @@
+blank string[] vs ienumerable<string> what should i prefer if i know the number of elements before runtime?..resharper offers me ienumerable&lt;string&gt; instead of string[]?

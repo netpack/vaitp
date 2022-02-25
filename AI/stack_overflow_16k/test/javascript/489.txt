@@ -1,0 +1,1 @@
+"find image correct width and height now i get the image's width and height when onload function of img . my problem is, the image original width = 500px but document.getelementid(id).offsetwidth gives only 300px and also for height. please help me how can i get original width and height of image"

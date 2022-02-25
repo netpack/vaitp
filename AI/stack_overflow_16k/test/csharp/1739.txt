@@ -1,0 +1,1 @@
+capture one line of serial data from serialport class i have a serial connection that gives me multiple lines of text continuously.  i just want to capture one of those lines using the serialport method in blank.  how would i go about capturing just one line of the output from the serial port?  i know all of the com port/baud rate/bit rate/parity settings.

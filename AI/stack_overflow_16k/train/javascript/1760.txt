@@ -1,0 +1,1 @@
+"pass url as a variable to window.location.href i am trying to pass a url from php and append an email field to redirect...here is what i have that doesn't work...function redirect2() {.    var url = &lt;?= $squrl2 ?&gt; + document.form1.email;.    settimeout('window.location.href = url.value;', 1000);.    return true;.}"

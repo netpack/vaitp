@@ -1,0 +1,1 @@
+"can i throw an unmanaged exception for testing? i'm trying to write some code to wrap a c++ library that throws unmanaged exceptions...just for testing purposes, is it possible to generate an unmanaged exception from blank code without having to create a fake c++ library standin?"

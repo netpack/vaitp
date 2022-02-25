@@ -1,0 +1,1 @@
+"count of characters in every node of list? (size of node in linked list) this is mylist :..[675463645876543456746347543, 985769854789, 3456435]...i need to have something like below:..system.out.print(mylist.get(1));  ---&gt; 675463645876543456746347543 and it is 27 digits...how can i show the size of every node?"

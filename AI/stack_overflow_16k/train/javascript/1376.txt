@@ -1,0 +1,1 @@
+"why blank functions always return a value? i'm taking a course in blank programming, and the instructor said that a typical blank function always returns a value. even when we don't provide any explicit return value, the engines return undefined...is that true? if so, why?"

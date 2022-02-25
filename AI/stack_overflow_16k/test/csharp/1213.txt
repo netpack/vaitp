@@ -1,0 +1,1 @@
+"how to get values from anonymous list to a dictionary? currently have the below code which upon compilation creates an anonymous list. i need to convert that to a standard list type preferably a dictionary. i can't find anything online to do so..._dbservice.getallorn().select(x =&gt; new { x.id, x.name});"

@@ -1,0 +1,10 @@
+"    def setUp(self):
+        super(TestVirtDiskPaths, self).setUp()
+
+        real_execute = utils.execute
+
+        def nonroot_execute(*cmd_parts, **kwargs):
+            kwargs.pop('run_as_root', None)
+            return real_execute(*cmd_parts, **kwargs)
+
+        self.stubs.Set(utils, 'execute', nonroot_execute)"

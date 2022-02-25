@@ -1,0 +1,22 @@
+"    def _stub_class(self):
+        def fake_quota_class_get_all_by_name(context, quota_class):
+            result = dict(class_name=quota_class)
+            if quota_class == 'test_class':
+                result.update(
+                    instances=5,
+                    cores=10,
+                    ram=25 * 1024,
+                    volumes=5,
+                    gigabytes=500,
+                    floating_ips=5,
+                    quota_security_groups=10,
+                    quota_security_group_rules=20,
+                    metadata_items=64,
+                    injected_files=2,
+                    injected_file_content_bytes=5 * 1024,
+                    invalid_quota=100,
+                    )
+            return result
+
+        self.stubs.Set(db, 'quota_class_get_all_by_name',
+                       fake_quota_class_get_all_by_name)"

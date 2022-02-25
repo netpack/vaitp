@@ -1,0 +1,1 @@
+"how to make blank use utf8 by default with `open()` on windows? i have code which uses open(""file.txt"") on utf8 encoded text files..however, this breaks on windows as it will use cp1252 by default...how can i make the code work without changing the code?..i've seen and tried blankioencoding, sys.setdefaultencoding and chcp 65001 solutions, but none of them make a difference."

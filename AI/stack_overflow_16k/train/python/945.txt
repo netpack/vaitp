@@ -1,0 +1,1 @@
+"how to change data format in write function in blank? how to change the data format in f.write function? ..loaded_data = 349.00  or 3.00..i want to change data format in write function like %6f in print function. ..ex)  349.00 -> 349.000000 ,   3.00 -> 3.000000..f = open(""test.txt"", 'w').f.write( str.(loaded_data).zfill(?) )  ...what is the code that performs above function?"

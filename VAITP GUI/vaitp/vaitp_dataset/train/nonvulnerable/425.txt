@@ -1,0 +1,2 @@
+"    def HEAD(self, path, ignore_prefix=False):
+        return self._request('HEAD', path, ignore_prefix=ignore_prefix)"

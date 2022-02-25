@@ -1,0 +1,1 @@
+"why its returning the ""undefined"" instead of 1 i am new to blank, the below question should return 1 according to my knowledge about blank, but it's returning ""undefined""..could anyone tell me why it's not returning 1? .. var foo = {.    bar: function() { return this.baz; },.    baz: 1.  };.  (function(){.    return typeof arguments[0]();.  })(foo.bar);"

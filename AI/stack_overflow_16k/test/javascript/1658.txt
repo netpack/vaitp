@@ -1,0 +1,1 @@
+"how to use a function converted from string after new date()? i want to output new date().getdate()..but getdate() is inside a string..fn = ""getdate()"".d = new date();...// how do i make it work?.console.log(d.fn);...the problem is that i can't use it as it is now...you can test it on:.http://jsfiddle.net/99tayr5b/..many thanks!"

@@ -1,0 +1,10 @@
+"    def to_yaml(self, data, options=None):
+        """
+        Given some Python data, produces YAML output.
+        """
+        options = options or {}
+
+        if yaml is None:
+            raise ImproperlyConfigured("Usage of the YAML aspects requires yaml.")
+
+        return yaml.dump(self.to_simple(data, options))"

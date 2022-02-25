@@ -1,0 +1,1 @@
+how can i make my blank application check for updates? i am building a blank windows application..i want it so whenever i click the update button in my form the application will start looking for whether there is a new version avaliable on my server...if there is then proceed to update the software. ..how is this usually handled?

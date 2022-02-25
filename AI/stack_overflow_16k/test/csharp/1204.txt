@@ -1,0 +1,1 @@
+bidirectional implicit casting? from what i understand i can have a type foo automatically cast itself to an int when it is passed to a method expecting an int. can i also do the other direction? i.e. have an int implicitly cast itself to foo and have this definition also be in foo?..my understanding may be incorrect.

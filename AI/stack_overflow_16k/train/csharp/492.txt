@@ -1,0 +1,1 @@
+blank windows application set up on different machines and all work on one sql server 2008 database i have created a desktop application with sql server 2008 as backend. i want to use this database from my application that is installed on a number of machines...what are the requirements for that application to connect to the centralized database.?

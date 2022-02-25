@@ -1,0 +1,1 @@
+"can't define method inside my object i want to define a method inside my object..here's how i did it - ..var vcar.{.    displaymsg: function(msg) {.    //code.    }.}...blank console says -.uncaught syntaxerror: unexpected token {..can you let me know what is wrong in my code ?..thanks,"

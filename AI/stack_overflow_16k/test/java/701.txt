@@ -1,0 +1,1 @@
+"static public and public static, why the same thing can be done in two different styles? static public final int i = 0;.public static final int i = 0;...both working fine..why the same thing can be done in two different styles?"

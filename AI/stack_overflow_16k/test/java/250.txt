@@ -1,0 +1,1 @@
+wagon-ssh-1.0-beta-2.jar usage problem did anybody use wagon-ssh-1.0-beta-2.jar (http://grepcode.com/snapshot/repository.jboss.org/maven2/org.apache.maven.wagon/wagon-ssh/1.0-beta-2) library for scp upload files in blank ?.can anybody give me example how to upload scp file with this ?

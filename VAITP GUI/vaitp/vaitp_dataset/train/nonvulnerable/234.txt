@@ -1,0 +1,2 @@
+"    def tearDown(self):
+        self.file.close()"

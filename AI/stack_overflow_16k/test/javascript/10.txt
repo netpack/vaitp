@@ -1,0 +1,1 @@
+"convert '{key1=value1, key2=value2}' format into an object i have some strings having a format like this:..'{key1=value1, key2=value2}'...what's the best way to convert a string with this format into a blank object?..thanks!"

@@ -1,0 +1,1 @@
+"inserting value from one table to another table i have table a (id, name).and table b (condition_id, condition_name).and table c (family_history_id, condition_name, id)..can please someone help me make some query in blank in transferring id and condition_name in table c"

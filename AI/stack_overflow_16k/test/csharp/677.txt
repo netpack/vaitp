@@ -1,0 +1,1 @@
+"how to convert a string to an integer inside blank i am trying to make an example formula console calculator and can't find out how to convert the output of the console.readline() to a integer. here is a sample of code that i tried...    int a;.    console.writeline(""what is number a?"");.    string numa = console.readline();.    convert.toint32(numa) == a;"

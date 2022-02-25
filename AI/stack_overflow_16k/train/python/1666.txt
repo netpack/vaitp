@@ -1,0 +1,1 @@
+"how do i replace part of a large string in blank? i have a file with multiple lines, each having a long sequence of characters (no spaces). ..for example in one line:..qwerrqweqweasdqweqwe*replacethistext*asdasdasd..qwerrqweqweasdqweqwe*withthistext*asdasdasd..the specific string i am looking for can happen any where in a certain line. ..how would i accomplish this? ..thanks"

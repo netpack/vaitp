@@ -1,0 +1,1 @@
+"declaring multiple variables using the same function in blank long-hand this is how it would look like:..class testclass(object):.    def f(num):.        """"""in general, a complicated function."""""".        return num..    self.a = f(1).    self.b = f(2).    self.c = f(3).    self.d = f(4).    self.e = f(5)...i'm thinking dictionary methods could help, but how?"

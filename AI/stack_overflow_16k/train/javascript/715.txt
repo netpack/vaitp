@@ -1,0 +1,1 @@
+showmodeldialog not supported in chrome window.open()...is not returning the value..like..var retval = window.showmodeldialog();...how to get it for chrome browser ?

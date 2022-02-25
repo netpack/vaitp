@@ -1,0 +1,1 @@
+"why can't window.location.reload be passed as a first class function? why is it that this works,..settimeout(function() { window.location.reload() }, 3000);...but this doesn't?..settimeout(window.location.reload, 3000);...i receive the following error: typeerror: 'reload' called on an object that does not implement interface location."

@@ -1,0 +1,1 @@
+"how can i use for loop for 2 lists simultaneously e.g a=[ah, b, ub] b=[aa, b, yu] i want to get ah and aa at the same time as two different variables, maybe called  cap and lowercase...for cap, lowercase in a,b:.    print(cap+lowercase)...zip does not work because it only reads the a from ah."

@@ -1,0 +1,1 @@
+"replacing a word that matches with a key is not working in blank so i am trying to replace a word that matches any of the keys in the dictionary by its values...below is the current code i have and my code is not replacing anything...       for k, v in fdict.items():.           if word == k:.               word == v...so basically in the end i want the following to happen."

@@ -1,0 +1,1 @@
+"apostrophe is not correctly rendered in ie i have some html content with apostrophe inside a div, it renders correctly in all other browsers other than ie. you will get a clear idea from the screen-shot ..on other browsers....on ie....i have searched enough and found issues like apostrophe shown as &amp;apos;. i think this is not similar to that issue. ..can anyone help?"

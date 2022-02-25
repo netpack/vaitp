@@ -1,0 +1,1 @@
+"    def __init__(self, deferred, max_size):        self.stream = BytesIO()        self.deferred = deferred        self.length = 0        self.max_size = max_size"

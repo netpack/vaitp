@@ -1,0 +1,39 @@
+"    def _maintain_token_expiration(self):
+        """Token expiration should be maintained after re-auth & validation."""
+        r = self.api.authenticate(
+            {},
+            auth={
+                'passwordCredentials': {
+                    'username': self.user_foo['name'],
+                    'password': self.user_foo['password']
+                }
+            })
+        unscoped_token_id = r['access']['token']['id']
+        original_expiration = r['access']['token']['expires']
+
+        time.sleep(0.5)
+
+        r = self.api.validate_token(
+            dict(is_admin=True, query_string={}),
+            token_id=unscoped_token_id)
+        self.assertEqual(original_expiration, r['access']['token']['expires'])
+
+        time.sleep(0.5)
+
+        r = self.api.authenticate(
+            {},
+            auth={
+                'token': {
+                    'id': unscoped_token_id,
+                },
+                'tenantId': self.tenant_bar['id'],
+            })
+        scoped_token_id = r['access']['token']['id']
+        self.assertEqual(original_expiration, r['access']['token']['expires'])
+
+        time.sleep(0.5)
+
+        r = self.api.validate_token(
+            dict(is_admin=True, query_string={}),
+            token_id=scoped_token_id)
+        self.assertEqual(original_expiration, r['access']['token']['expires'])"

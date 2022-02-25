@@ -1,0 +1,1 @@
+blank event generation i want to design a system which will generate a specific event at a constant rate and this will continue doing in the background. in the foreground it give output of some other events if i want..but the background event will not stop. what is the best way to achieve it in blank?

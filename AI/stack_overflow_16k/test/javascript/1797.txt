@@ -1,0 +1,1 @@
+"decorate prototype and call parent function i am trying to decorate some object for example:..object.prototype.somefunc = function(x) {.  if (x == 1) {.      return x;.  } ..  return super.somefunc() // &lt;-- ? .}...how can i call the function that i'm overriding, on the second return statement?"

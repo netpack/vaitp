@@ -1,0 +1,6 @@
+"    def connect(self, port=None):
+        ''' connect to the chroot; nothing to do here '''
+
+        vvv("THIS IS A LOCAL CHROOT DIR", host=self.jail)
+
+        return self"

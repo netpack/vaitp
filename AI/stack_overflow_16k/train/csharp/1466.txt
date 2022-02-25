@@ -1,0 +1,1 @@
+"execute a blank statement stored in a string variable i want to execute a blank statement which is stored in a string variable. for instance:..string statement1 = ""button1.visible = true"";.string statement2 = ""button1.text = ""number"""";"

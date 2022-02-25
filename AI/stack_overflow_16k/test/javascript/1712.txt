@@ -1,0 +1,1 @@
+"execcommand justifycenter affect the newline i used the ..document.execcommand('justifycenter', false)....and it worked, it added the new style in the &lt;p&gt;...just like this &lt;p style=""text-align: center;""&gt;blablabla&lt;/p&gt;...but the new line also had the same style ""text-align: center;""..how to solve this problem?..thanks!"

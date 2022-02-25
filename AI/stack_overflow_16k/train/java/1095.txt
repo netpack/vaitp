@@ -1,0 +1,1 @@
+"how to check if you can create biginteger from string i have a method:..public biginteger method(string param){.    try{.            return new biginteger(param);.    }catch(numberformatexception e){.        log.error(e, e);.    }.}...i want to check if i can create a biginteger from those string param without generating numberformatexception...is there any way do it this way?"

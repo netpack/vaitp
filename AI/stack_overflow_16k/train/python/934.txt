@@ -1,0 +1,1 @@
+"couldn't get quotation marks out from string, blank hello this is the code that i try to remove the quotation marks, but it seems doesn't work..text = ""the “anatomical sex:”local school boards shall develop and implement policies that "".print text..remove_quotation_marks = text.replace('""', '').print remove_quotation_marks"

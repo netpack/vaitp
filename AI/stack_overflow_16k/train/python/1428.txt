@@ -1,0 +1,1 @@
+uniq id function in blank or not? i have several blank scripts run parallel this simple code:..test_id = id('test')...is test_id unique or not?

@@ -1,0 +1,1 @@
+return an observable collection from an entity collection i have the following collection and i would like to return..observablecollection&lt;person&gt; people = new observablecollection&lt;person&gt;();.foreach (var p in context.persons.tolist()).{.    people.add((person)p);.}...how can i do it without having to loop through the collection?

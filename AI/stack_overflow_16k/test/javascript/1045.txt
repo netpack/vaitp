@@ -1,0 +1,1 @@
+number with leading zero in blank try this:....var num = 040;.console.log(num); // 32.....since when is 40 = 32?

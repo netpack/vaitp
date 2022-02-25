@@ -1,0 +1,1 @@
+why interface have only public member and methods this is very basic question of interview that can we declare a method as private inside interface and my answer is simple in interface we have only public variable or methods and then next question comes up... why ?

@@ -1,0 +1,1 @@
+"blank - remove quotes from indexed value i created a list by joining two df.column.values. ..test.column=df1.column.values+','+df2.column.values.a     b.---   ----.123   456.789   101...test output then looks like..ab.---.123,456.789,101...when i index test.column[0], i get..'123,456'..however, i can't pass this into my api. the api requires..[123,456]..any suggestions?"

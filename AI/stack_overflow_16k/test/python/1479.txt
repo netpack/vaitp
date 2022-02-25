@@ -1,0 +1,1 @@
+variable syntax order simple question here. when assigning a variable why does the order have to be:..variable = 5.#and not.5 = variable...is it because we can't assign values to variables? does it have something to do with how a computer stores variables to memory? or is it arbitrary? just starting to learn to code so forgive the novice question.

@@ -1,0 +1,1 @@
+"letter to binary i'm new to blank 2.7.10. i'm trying to convert not just letters to binary but the whole word itself...a = '01100001', b = '01100010', c = '01100011'...if i typed ""a"" then it will output ""01100001"" but what i'm trying to do is when i typed ""abcba"" it should print something related to this ""01100001 01100010 01100011 01100010 01100001"" ..is it possible?"

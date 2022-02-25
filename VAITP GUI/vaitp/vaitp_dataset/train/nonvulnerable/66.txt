@@ -1,0 +1,5 @@
+"def security_group_count_by_project(context, project_id):
+    authorize_project_context(context, project_id)
+    return model_query(context, models.SecurityGroup, read_deleted="no").\
+                   filter_by(project_id=project_id).\
+                   count()"

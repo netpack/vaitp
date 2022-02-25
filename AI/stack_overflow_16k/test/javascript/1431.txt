@@ -1,0 +1,1 @@
+"is await necessary in async generator functions? mdn has an example in which a generator function is marked as async, and yield is used without await. ..why is await not necessary in this example?..const myasynciterable = {.    async* [symbol.asynciterator]() {.        yield ""hello"".        yield ""async"".        yield ""iteration!"".    }.}"

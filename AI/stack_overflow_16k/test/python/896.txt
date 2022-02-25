@@ -1,0 +1,1 @@
+"converting a list of tuples into a list of strings so i have a list of tuples, for example [('ggg',), ('aaa',), ('bbb',)] and i want to convert it into a list of strings: ['ggg' , 'aaa', 'bbb']. ..i have tried using a for loop with the join method but cannot get it to work. any help would be appreciated, thanks."

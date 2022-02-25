@@ -1,0 +1,1 @@
+"preventing properties from being added to a blank object i basically just want to know if there's some standardized way to prevent methods/properties from being added to a blank object?..as a c++ programmer it seems like you could end up with a lot of headaches trying to debug blank code when it lets you add properties to an object on the fly, especially in large code bases."

@@ -1,0 +1,1 @@
+how do i make sense of this for loop? for (var part; parts.length &amp;&amp; (part = parts.shift());) {}...i thought a for loop can only be like this:..for (var part = 0; i &lt; that.length; part++) {}...so what does that mean?

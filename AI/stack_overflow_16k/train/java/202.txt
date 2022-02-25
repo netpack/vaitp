@@ -1,0 +1,1 @@
+logical operator or without short circuit when would you ever need to use the non short circuit logical operator or? in other words.....when would you use ..if(x == 1 | x==2)...instead of..if(x == 1 || x==2)...if the first conditional is true... then the entire statement is already true...update: and the same question for &amp; and &amp;&amp;

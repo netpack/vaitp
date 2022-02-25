@@ -1,0 +1,1 @@
+"    def test_posix(self):        """ test if posix default_dir is writable """        d = catalog.default_dir_posix()        assert_(catalog.is_writable(d))"

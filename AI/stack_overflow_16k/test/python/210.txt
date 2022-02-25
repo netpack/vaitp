@@ -1,0 +1,1 @@
+subprocceses are still alive after parent process was stopped i wrote a blank daemon. after i stop it i see in the memory that its sub processes are still alive and have parent with pid=1. what should i do to kill these child processes while stopping the daemon?

@@ -1,0 +1,1 @@
+"blank returning values from a list of classes i have a class that's basically like this:..class myclass.{.    public string id;.    public string name;.}...if i have a list&lt;myclass&gt;, how can i get myclass.name when searching for it's corresponding myclass.id."

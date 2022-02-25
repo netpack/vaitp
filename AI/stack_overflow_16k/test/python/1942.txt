@@ -1,0 +1,1 @@
+"sys.argv no output i'm trying to make this code work with sys.argv but it's not showing.anything on the output. the user enters a value and then it prints the key...from __future__ import print_function.import sys..v = sys.argv[1:]..d={1:'a', 2:'b', 3:'c', 4:'a', 5:'d', 6:'e', 7:'a', 8:'b'}..for key, value in d.items():.    if value == v: .        print(key, '', end='')"

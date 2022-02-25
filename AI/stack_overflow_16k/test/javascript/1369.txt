@@ -1,0 +1,1 @@
+"how to replace a string in a string in blank? i can not replace the string...the string comes from a textarea..here the jsfiddle..jsfiddle..value.replace('[bold]', '&lt;strong&gt;');"

@@ -1,0 +1,1 @@
+"dividing numbers in blank gives zero values i have simple code to test please check the following. why my code did not return expected result. ..public class test {..public static void main(final string a[]) {.    final double d1 = 1 / 1000; // should be 0.001.    final double d2 = 2 / 20; // should be  0.1.    system.out.println(d1 + ""--"" + d2); // 0.0--0.0. }.}"

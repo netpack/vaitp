@@ -1,0 +1,2 @@
+"    async def on_send_join_request(
+        self, origin: str, content: JsonDict"

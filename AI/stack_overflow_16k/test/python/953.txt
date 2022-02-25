@@ -1,0 +1,1 @@
+"how to sort a list using a key in blank i have a list of words:..words = ['miel', 'extraterrestre', 'al', 'automovil', 'auto', 'revestir']...i want to sort this list using custom alphabet (it contains 26 letters of the alphabet but ordered in a different way):..g = 'zyxwvutsrqponmlkjihgfedcba'...expected result:..['revestir', 'miel', 'extraterrestre', 'auto', 'automovil', 'al']"

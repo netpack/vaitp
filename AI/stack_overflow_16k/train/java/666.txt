@@ -1,0 +1,1 @@
+"how to find max and min value so how do i find max and min value of group of numbers. ex: the numbers are ..int num[] = {1,2,3,4,5,6,7,8,9,2,2,2,2,2,};...the next things is how to find out how many times 2 appears in the array..this is what i think...char a = ""2"".int count = 0;.if (num.length = a) {.    count++;.    system.out.print (count);.}"

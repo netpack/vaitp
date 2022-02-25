@@ -1,0 +1,8 @@
+"    def test_get_student_progress_url_from_uname(self):
+        """ Test that progress_url is in the successful response. """
+        url = reverse('get_student_progress_url', kwargs={'course_id': self.course.id.to_deprecated_string()})
+        data = {'unique_student_identifier': self.students[0].username.encode("utf-8")}
+        response = self.client.post(url, data)
+        self.assertEqual(response.status_code, 200)
+        res_json = json.loads(response.content)
+        self.assertIn('progress_url', res_json)"

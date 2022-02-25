@@ -1,0 +1,1 @@
+"blank - pass elements of a list as parameters to an unlimited-arguments method i have a method with unlimited parameters:..void x(object... values){};...and a unknown list that the user should input...now i want to pass all the elements of that list to method x, like ..this.x(list.get(0), list.get(1)......);...can anyone please tell me how to do that?"

@@ -1,0 +1,1 @@
+"where does the value of the variable come from? there is a very large js code, it has functions and data that i need to repeat, but i can not find it. js-script...it has a function for sending data:..yield n.post(""/analysis/keys"", {.    version: ""v2"",.    keys: t.})...i just can not find where the data in the variable t (keys) comes from?"

@@ -1,0 +1,1 @@
+"blank swing layout i would like the following lay out... ...jbuttons on top along side eachother. .the jtextarea should be under the buttons..the jtextarea should also have a scrollbar.....for the code below...jpanel jp = new jpanel();   .one = new jbutton(""one"");   .two = new jbutton(""two"");    .testoutput = new jtextarea();..jp.add(one);.jp.add(two);.jp.add(testoutput);"

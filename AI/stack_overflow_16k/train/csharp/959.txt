@@ -1,0 +1,1 @@
+"how can i select drawn rectangle and clear it in panel? if i draw some rectangles in panel , how can i select one of them and delete it. my code here i have write it inside panel_onclick event :..g = panel1.creategraphics();.pen p = new pen(color.black);.p.width = 2;.g.drawrectangle(p, e.x, e.y, 100, 60);.p.dispose();.g.dispose();"

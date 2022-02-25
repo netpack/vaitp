@@ -1,0 +1,1 @@
+"convert string with zeros to decimal i have a string like this: ""000123""...i want to know how to convert this string to decimal but keep the leading zeros. i have used convert.todecimal(), decimal.tryparse &amp; decimal.parse. but all of those methods keep removing the leading zeros. they give me an output: 123. i want the decimal returning 000123. is that possible ?"

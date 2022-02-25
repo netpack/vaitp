@@ -1,0 +1,1 @@
+"icon not found after published? i added an icon in properties -> application -> icon. then i built it in release mode and sent the package to another person. when he runs the application, it gives a notification ""not find ic-logo.ico.deploy""...i don't know why this happened. please help me."

@@ -1,0 +1,1 @@
+"    def _maybe_fail(self):        """        Report a max size exceed error and disconnect the first time this is called.        """        if not self.deferred.called:            self.deferred.errback(BodyExceededMaxSize())            # Close the connection (forcefully) since all the data will get            # discarded anyway.            self.transport.abortConnection()"

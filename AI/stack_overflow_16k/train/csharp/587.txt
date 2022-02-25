@@ -1,0 +1,1 @@
+"initialization of const array of struct how do i do a constant initialization an array of a structure type?  for example, in c i would do something like this:..struct item {.    int a;.    char const * b;.};.item items[] = {.    { 12, ""hello"" },.    { 13, ""bye"" },.};...i've been looking at various blank references but can't find an equivalent syntax. is there one?"

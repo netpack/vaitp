@@ -1,0 +1,1 @@
+"needs regular expression that doesn't starts with space and doesn't contain special characters in blank i tried to use this regular expression @""^s+[^&lt;&gt;.!@#%/]$"", but it didn't help.so i need to use regular expression,that doesn't starts with space and doesn't contain special characters."

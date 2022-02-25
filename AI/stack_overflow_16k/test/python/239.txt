@@ -1,0 +1,1 @@
+"how do you check that a dictionary is in an array even in the worng order in blank? lets say you have :.. winning_numbers = [{345}, {238}, {321} ].. players_numbers = {435}...i want to return true that players_numbers is in the the array even if its not in the right order. how can i tackle doing this?"

@@ -1,0 +1,1 @@
+"replacint single or multiple space to % i have string like ""first   last  name"".i want to replace empty spaces to % like..""first%last%name""...how to replace consecutive spaces to single %?"

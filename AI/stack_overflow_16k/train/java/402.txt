@@ -1,0 +1,1 @@
+adding two list<string> in one list<string> i have two lists..list&lt;string&gt; list1 =new arraylist&lt;string&gt;() ;.list&lt;string&gt; list2 =new arraylist&lt;string&gt;() ;...i want these two lists to append one after other and send to a set method for my bean. please let me know what is the best way to combine these two lists.

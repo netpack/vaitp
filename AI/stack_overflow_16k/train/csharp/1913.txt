@@ -1,0 +1,1 @@
+"ternary operator to minimize code how i can minimize the following code using ternary operator..if (toolbuttonstate.new == 1).    ts.items[""tsbnew""].enabled = true;.else.    ts.items[""tsbnew""].enabled = false;...please provide an implementation"

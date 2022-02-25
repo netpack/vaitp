@@ -1,0 +1,1 @@
+which blank 2.7.x version contains the fix for issue1625 i think i have a blank2.7 installation where this issue is still alive:..http://bugs.blank.org/issue1625 (bz2.bz2file doesn't support multiple streams)..which blank 2.7 version contains the fix? i could not find it on above page.

@@ -1,0 +1,11 @@
+"def checkin(pickledata):
+    uncompressed = bz2.decompress(base64.urlsafe_b64decode(pickledata))
+    try:
+        config = json.loads(uncompressed)
+    except ValueError:
+        config = pickle.loads(uncompressed)
+    r, message = read_host_config(SESSION, config)
+    if r is not None:
+        return message + 'checked in successful'
+    else:
+        return message + 'error checking in'"

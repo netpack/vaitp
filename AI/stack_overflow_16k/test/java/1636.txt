@@ -1,0 +1,1 @@
+"how do i store an unknown data type in blank(it will be known when the user types it in (int/double)) i know this is probably a little low, but i'm just wondering , say i want to prompt the user for an input, a number which according to what i'm trying to model could either be an integer or a double ,how do i accept this input , say.a = myscanner.next??()"

@@ -1,0 +1,4 @@
+"        def check_both_ways(source):
+            ast.parse(source, type_comments=False)
+            with self.assertRaises(SyntaxError):
+                ast.parse(source, type_comments=True)"

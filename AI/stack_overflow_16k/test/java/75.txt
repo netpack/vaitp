@@ -1,0 +1,1 @@
+"why does my properties object ignore the defaults when i do a get? properties defaults = new properties();.defaults.put(""color"", ""black"");..properties props = new properties(defaults);..// this prints ""null, black"".system.out.println(props.get(""color"") + "", "" + props.getproperty(color));"

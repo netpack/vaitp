@@ -1,0 +1,1 @@
+"how to find the number of non null properties in an object i have an object card and has properties/fields name, id, date, number. how to find the number of non null fields. that is the number of fields that have been set. i do not have the list of functions or don't want to go down that road...eg: ..  card.setname(""abc"");...i want the count to be 1 because only name is set."

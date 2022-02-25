@@ -1,0 +1,1 @@
+how to fire `onmouseenter` while mouse-button is pressed? how can i make blank fire the onmouseenter-event of a target &lt;div&gt;-element while another dragged &lt;div&gt; enters the element (with a pressed mouse-button)?..for several reasons i cant use the ondrag... events.....example: https://jsfiddle.net/5dgnez9e/3/

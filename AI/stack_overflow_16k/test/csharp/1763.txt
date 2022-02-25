@@ -1,0 +1,1 @@
+"how to get image path from resource files i am storing images in resource files but the pdf lib i am using needs image path as string in order to embed images in the output...but honestly, i couldn't find any way to do that."

@@ -1,0 +1,40 @@
+"    def test_certificates_features_group_by_mode(self):
+        """
+        Test for certificate csv features against mode. Certificates should be group by 'mode' in reponse.
+        """
+        url = reverse('get_issued_certificates', kwargs={'course_id': unicode(self.course.id)})
+        # firstly generating downloadable certificates with 'honor' mode
+        certificate_count = 3
+        for __ in xrange(certificate_count):
+            self.generate_certificate(course_id=self.course.id, mode='honor', status=CertificateStatuses.downloadable)
+
+        response = self.client.get(url)
+        res_json = json.loads(response.content)
+        self.assertIn('certificates', res_json)
+        self.assertEqual(len(res_json['certificates']), 1)
+
+        # retrieve the first certificate from the list, there should be 3 certificates for 'honor' mode.
+        certificate = res_json['certificates'][0]
+        self.assertEqual(certificate.get('total_issued_certificate'), 3)
+        self.assertEqual(certificate.get('mode'), 'honor')
+        self.assertEqual(certificate.get('course_id'), str(self.course.id))
+
+        # Now generating downloadable certificates with 'verified' mode
+        for __ in xrange(certificate_count):
+            self.generate_certificate(
+                course_id=self.course.id,
+                mode='verified',
+                status=CertificateStatuses.downloadable
+            )
+
+        response = self.client.get(url)
+        res_json = json.loads(response.content)
+        self.assertIn('certificates', res_json)
+
+        # total certificate count should be 2 for 'verified' mode.
+        self.assertEqual(len(res_json['certificates']), 2)
+
+        # retrieve the second certificate from the list
+        certificate = res_json['certificates'][1]
+        self.assertEqual(certificate.get('total_issued_certificate'), 3)
+        self.assertEqual(certificate.get('mode'), 'verified')"

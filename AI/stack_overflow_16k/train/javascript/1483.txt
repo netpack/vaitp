@@ -1,0 +1,1 @@
+"strange syntax, what does `?.` mean in js? today i saw a js code with a strange syntaxe for me : ""?."", for example in :..function getsortdirection({columnname}) {.    return sortings?.[0].sortby === columnname ? sortings?.[0].issortdescending ? 'desc' : 'asc' : ""none"";.  }...the sortings[0].sortby is trivial but sortings?.[0].sortby.not. ..any explanation are welcomed"

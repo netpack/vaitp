@@ -1,0 +1,1 @@
+window.onunload event i am using confirm dialogue box on the window.onunload event.but when i click the cancel button it will navigate me to another page but i want to stay on that page..is this a problem of window.onunload event..please give me solution for this problem..also tell me another window event instead of it.but i do not want to use onbeforeunload event

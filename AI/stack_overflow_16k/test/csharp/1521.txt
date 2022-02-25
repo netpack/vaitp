@@ -1,0 +1,1 @@
+"using foreach item on my tabpages doesn't get any change i have a tab control with 4 tabpages inside:.i need to use for loop for each item inside on each tabpage..code below it doesnt change any thing to me...foreach (control c in submenutabcontrol.controls).{.   if(c is label).      c.text=""hello"";.}"

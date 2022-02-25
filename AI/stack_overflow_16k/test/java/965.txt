@@ -1,0 +1,1 @@
+"validate string with dash in blank in blank, how do i validate string with dash sign -?..say, i will get input from user, .example input: 1-29..i want to check if the value is from 1-24, if value input is not falls within this range, then false."

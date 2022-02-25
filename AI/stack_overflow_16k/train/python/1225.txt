@@ -1,0 +1,1 @@
+can i assign to a numeric variable in blank? i started working on my simple program and when i open it i get an error that says this can't assign to literal. here's my code:..print('press 2 to play').2 = input('you won').print(2)

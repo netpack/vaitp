@@ -1,0 +1,1 @@
+"blank - how to read / as a string? i have a txtserial.text = s/n123-122...when i use txtserial as a path to save as excel file, it will save as a folder with name ended with s instead of s/n123-122.xls (not a folder)...is there a way to make sure the program read / as full string and not as end of path?..thanks"

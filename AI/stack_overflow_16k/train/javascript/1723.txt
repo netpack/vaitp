@@ -1,0 +1,1 @@
+"how to add all the elements of an array to another? i want to add all the elements of one array to another. array.prototype.concat does something similar, but it returns a new array; i want to keep a reference to the same array. what's the most efficient (i.e. performant) way to do this?"

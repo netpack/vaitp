@@ -1,0 +1,1 @@
+"how to break url's in blank? if i have a string:..this is a sentence. it also has a url www.example.com....how can i break it, and turn it into..this is a sentence. it also has a url www example com....notice the url was broken, but the other dots weren't removed..how do i do this with blank?"

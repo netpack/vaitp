@@ -1,0 +1,1 @@
+"blank string.indexof api i have following situation,..string a=""&lt;em&gt;crawler&lt;/em&gt; &lt;em&gt; yeahhhhh &lt;/em&gt;&lt;/a&gt;&lt;/h3&gt;&lt;table"";.system.out.println(a.indexof(""&lt;/em&gt;""));...it returns the 11 as the result which was the first  that it founds...is there any way to detect the last  instead of the first one for the code written above?"

@@ -1,0 +1,1 @@
+"blank: how do i redirect output of os.system to blank shell? i want to make a simple batch script using blank using os.system. i am able to run the commands just fine, but the output for those commands dont print to the blank shell. is there some way to redirect the output to the blank shell?"

@@ -1,0 +1,1 @@
+"can in compile the jdk from the src.zip included in the blank se for windows i wish to compile the jdk for a custom cpu. as far as i know, src.zip is made available with the oracle blank se 1.3 package...can i compile jdk 1.3 (for eg.) using the src.zip? can i do this in a regular eclipse/netbeans project?"

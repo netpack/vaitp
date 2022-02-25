@@ -1,0 +1,1 @@
+"how to add more value on blank string array? i have a listview...private string[] listview2 = {""aa"",""aa"",""aa""};.int a = 0;...int values will decide to add the number of content..so if a==2...listview2 = {""aa"",""aa""};...if a==5..listview2 = {""aa"",""aa"",""aa"",""aa"",""aa""};"

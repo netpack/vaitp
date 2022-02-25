@@ -1,0 +1,1 @@
+"shorter way to check if an object is null? is there a shorter way to check if a string / object is null then?..    string str = somemethodthatreturnsstringornull(someothreobject);.    if(str == null) { system.out.println(""empty""); }...like js style for example: ..    if(str) { system.out.println(""empty""); }"

@@ -1,0 +1,10 @@
+"    def test_token_expiry_maintained(self):
+        foo_client = self.get_client(self.user_foo)
+        orig_token = foo_client.service_catalog.catalog['token']
+
+        time.sleep(1.01)
+        reauthenticated_token = foo_client.tokens.authenticate(
+                                    token=foo_client.auth_token)
+
+        self.assertEquals(orig_token['expires'],
+                          reauthenticated_token.expires)"

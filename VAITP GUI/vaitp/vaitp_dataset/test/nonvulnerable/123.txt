@@ -1,0 +1,1 @@
+"            def getHostByName(self, name, timeout=None):                if name not in lookups:                    return fail(DNSLookupError("OH NO: unknown %s" % (name,)))                return succeed(lookups[name])"

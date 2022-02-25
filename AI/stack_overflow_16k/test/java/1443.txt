@@ -1,0 +1,1 @@
+"how to split text by character? .  how could i split string by character, .  i have string like this....string=""hello world"";...  how to have output like this,when i split this string and use new line""n"" and ""for loop"":...output:..h.e.l.l.o..w.o.r.l.d"

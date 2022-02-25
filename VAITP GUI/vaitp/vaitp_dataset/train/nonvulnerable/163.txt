@@ -1,0 +1,2 @@
+"        def fake_app(req):
+            return webob.Response(req.body)"

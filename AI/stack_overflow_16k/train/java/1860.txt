@@ -1,0 +1,1 @@
+"blank version compatibility issue i have a client jar made-up using blank 1.6 and used enum and other new features of blank, my application is built on blank 1.4..i want to use that client jar in my application...is it feasible to do ?"

@@ -1,0 +1,1 @@
+"instance methods in blank it is true that each object has its own copy of instance variables.  but is it true that like static members, there is only one copy of instance methods?  if yes, then where it resides in memory?"

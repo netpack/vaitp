@@ -1,0 +1,1 @@
+"string takes any value in blank visual studio      private void button1_click(object sender, eventargs e).    {..        string answer = (@""class seclevel n { n static void main()n{console.writeline(""hello world!"");}}"");.        if (textbox1.text == answer).        {.            messagebox.show( ""good!"");.        }.    }"

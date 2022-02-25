@@ -1,0 +1,1 @@
+split a blank variable into 2 where an x separate 2 numbers i have a blank variable which holds a width x height value like this 12x24..i need to take var size = '12x24';..and create a separate width and height variable like so:..var width = 12;.var height = 24;...any help please.  the number of digits right or left of the x can be any amount but the x is the constant separator.

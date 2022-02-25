@@ -1,0 +1,1 @@
+"            def resolutionBegan(resolutionInProgress: IHostResolution) -> None:                recv.resolutionBegan(resolutionInProgress)"

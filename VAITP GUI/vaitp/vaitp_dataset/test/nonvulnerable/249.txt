@@ -1,0 +1,1 @@
+"    def test_parse_header_11_te_chunked(self):        # NB: test that capitalization of header value is unimportant        data = b"GET /foobar HTTP/1.1\r\ntransfer-encoding: ChUnKed\r\n"        self.parser.parse_header(data)        self.assertEqual(self.parser.body_rcv.__class__.__name__, "ChunkedReceiver")"

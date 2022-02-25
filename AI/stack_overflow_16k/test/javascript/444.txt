@@ -1,0 +1,1 @@
+formatting date blank i'm using var datestring= new date(parseint(datestringunix)); and i obtain a string as sun jun 10 2012 16:40:16 gmt+0200 (ora legale europa occidentale)...the question is: how can i remove string part gmt+0200 (ora legale europa occidentale)?

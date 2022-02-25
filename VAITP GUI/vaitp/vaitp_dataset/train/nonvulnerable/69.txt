@@ -1,0 +1,17 @@
+"def _get_default_quotas():
+    defaults = {
+        'instances': FLAGS.quota_instances,
+        'cores': FLAGS.quota_cores,
+        'ram': FLAGS.quota_ram,
+        'volumes': FLAGS.quota_volumes,
+        'gigabytes': FLAGS.quota_gigabytes,
+        'floating_ips': FLAGS.quota_floating_ips,
+        'metadata_items': FLAGS.quota_metadata_items,
+        'injected_files': FLAGS.quota_injected_files,
+        'injected_file_content_bytes':
+            FLAGS.quota_injected_file_content_bytes,
+        'security_groups': FLAGS.quota_security_groups,
+        'security_group_rules': FLAGS.quota_security_group_rules,
+    }
+    # -1 in the quota flags means unlimited
+    return defaults"

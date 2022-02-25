@@ -1,0 +1,1 @@
+close browser after 1min last keyboard aclivity and mouse activity i have created a browser using visual blank .i want it to close when client not using it.it have to be close after one min last activity happen. .how to catch mouse activity and key board activity

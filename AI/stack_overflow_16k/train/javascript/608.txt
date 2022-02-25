@@ -1,0 +1,1 @@
+"in js fucntions what is it called when you add curly brackets and then end of a function? what is it called when at the end of a function curly brackets, you type another set of curly brackets...    button.addeventlistener('click', () =&gt; {.    console.log('click!!!');.    }, {.    once: true.    });"

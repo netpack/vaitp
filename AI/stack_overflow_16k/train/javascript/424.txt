@@ -1,0 +1,1 @@
+"how to create nxn matrix/array in blank? i want to create an array or matrix with non-fixed number of rows like ...var matrix=[[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],.            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],.            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]...how can i do that?"

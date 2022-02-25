@@ -1,0 +1,17 @@
+"def constructObject(data):
+    try:
+        classBase = eval(data[""] + "." + data[""].title())
+    except NameError:
+        logger.error("Don't know how to handle message type: \"%s\"", data[""])
+        return None
+    try:
+        returnObj = classBase()
+        returnObj.decode(data)
+    except KeyError as e:
+        logger.error("Missing mandatory key %s", e)
+        return None
+    except:
+        logger.error("classBase fail", exc_info=True)
+        return None
+    else:
+        return returnObj"

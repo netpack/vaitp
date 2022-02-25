@@ -1,0 +1,1 @@
+"void cannot dereferenced while chaining methods i am trying to use printwriter like this:..new printwriter(""/tmp/test.csv"", ""utf-8"").   .println(""1,1,1"").   .close();...but blank complains:...  void cannot dereferenced ...if i do:..printwriter pw = new printwriter(""/tmp/test.csv"", ""utf-8"");.pw.println(""1,1,1"");.pw.close();...it works, any reasons?"

@@ -1,0 +1,1 @@
+"class variables in blank not found in __dict__ there is a code:..class c():.    a=1.    def f(self):.        print ""f func""..a=c().print a.a.a.f().&gt;&gt;&gt; 1.&gt;&gt;&gt; f func...and when i trying to get a.__dict__ or vars(a), it shows me just {}..but..a.b=123.print a.__dict__.&gt;&gt;&gt; {'b': 123}...i don't understand, why it is."

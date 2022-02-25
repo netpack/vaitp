@@ -1,0 +1,1 @@
+having problems coding a char array to a string i'm trying to use a string constructor to convert the 2d char array into a string.  having problems finding the proper constructor. i attempted using various constructors but nothing seems to work.

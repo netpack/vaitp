@@ -1,0 +1,1 @@
+convert a list to list<iterator<>> in blank i have a list&lt;something&gt; which passed to a method but the method expects like list&lt;iterator&lt;something&gt;&gt;...how could i achieve this?..thanks

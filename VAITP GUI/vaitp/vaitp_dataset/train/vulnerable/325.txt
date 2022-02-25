@@ -1,0 +1,184 @@
+"def main():
+    global logger
+    result = 0
+
+    parser = argparse.ArgumentParser(description='Keycloak REST client',
+                    prog=prog_name,
+                    epilog=verbose_help.format(prog_name=prog_name),
+                    formatter_class=argparse.RawDescriptionHelpFormatter)
+
+    parser.add_argument('-v', '--verbose', action='store_true',
+                        help='be chatty')
+
+    parser.add_argument('-d', '--debug', action='store_true',
+                        help='turn on debug info')
+
+    parser.add_argument('--show-traceback', action='store_true',
+                        help='exceptions print traceback in addition to '
+                             'error message')
+
+    parser.add_argument('--log-file',
+                        default='/tmp/{prog_name}.log'.format(
+                            prog_name=prog_name),
+                        help='log file pathname')
+
+    parser.add_argument('--permit-insecure-transport',  action='store_true',
+                        help='Normally secure transport such as TLS '
+                        'is required, defeat this check')
+
+    parser.add_argument('--tls-verify', action=TlsVerifyAction,
+                        default=True,
+                        help='TLS certificate verification for requests to'
+                        ' the server. May be one of case insenstive '
+                        '[true, yes, on] to enable,'
+                        '[false, no, off] to disable.'
+                        'Or the pathname to a OpenSSL CA bundle to use.'
+                        ' Default is True.')
+
+    group = parser.add_argument_group('Server')
+
+    group.add_argument('-s', '--server',
+                       required=True,
+                       help='DNS name or IP address of Keycloak server')
+
+    group.add_argument('-a', '--auth-role',
+                       choices=AUTH_ROLES,
+                       default='root-admin',
+                       help='authenticating as what type of user (default: root-admin)')
+
+    group.add_argument('-u', '--admin-username',
+                       default='admin',
+                       help='admin user name (default: admin)')
+
+    group.add_argument('-p', '--admin-password',
+                       required=True,
+                       help='admin password')
+
+    group.add_argument('--admin-realm',
+                       default='master',
+                       help='realm admin belongs to')
+
+    cmd_parsers = parser.add_subparsers(help='available commands')
+
+    # --- realm commands ---
+    realm_parser = cmd_parsers.add_parser('realm',
+                                          help='realm operations')
+
+    sub_parser = realm_parser.add_subparsers(help='realm commands')
+
+    cmd_parser = sub_parser.add_parser('server_info',
+                                       help='dump server info')
+    cmd_parser.set_defaults(func=do_server_info)
+
+    cmd_parser = sub_parser.add_parser('list',
+                                       help='list realm names')
+    cmd_parser.set_defaults(func=do_list_realms)
+
+    cmd_parser = sub_parser.add_parser('create',
+                                       help='create new realm')
+    cmd_parser.add_argument('-r', '--realm-name', required=True,
+                            help='realm name')
+    cmd_parser.set_defaults(func=do_create_realm)
+
+    cmd_parser = sub_parser.add_parser('delete',
+                                       help='delete existing realm')
+    cmd_parser.add_argument('-r', '--realm-name', required=True,
+                            help='realm name')
+    cmd_parser.set_defaults(func=do_delete_realm)
+
+    cmd_parser = sub_parser.add_parser('metadata',
+                                       help='retrieve realm metadata')
+    cmd_parser.add_argument('-r', '--realm-name', required=True,
+                            help='realm name')
+    cmd_parser.set_defaults(func=do_get_realm_metadata)
+
+    # --- client commands ---
+    client_parser = cmd_parsers.add_parser('client',
+                                           help='client operations')
+
+    sub_parser = client_parser.add_subparsers(help='client commands')
+
+    cmd_parser = sub_parser.add_parser('list',
+                                       help='list client names')
+    cmd_parser.add_argument('-r', '--realm-name', required=True,
+                            help='realm name')
+
+    cmd_parser.set_defaults(func=do_list_clients)
+
+    cmd_parser = sub_parser.add_parser('create',
+                                       help='create new client')
+    cmd_parser.add_argument('-r', '--realm-name', required=True,
+                            help='realm name')
+    cmd_parser.add_argument('-m', '--metadata', type=argparse.FileType('rb'),
+                            required=True,
+                            help='SP metadata file or stdin')
+    cmd_parser.set_defaults(func=do_create_client)
+
+    cmd_parser = sub_parser.add_parser('register',
+                                       help='register new client')
+    cmd_parser.add_argument('-r', '--realm-name', required=True,
+                            help='realm name')
+    cmd_parser.add_argument('-m', '--metadata', type=argparse.FileType('rb'),
+                            required=True,
+                            help='SP metadata file or stdin')
+    cmd_parser.add_argument('--initial-access-token', required=True,
+                            help='realm initial access token for '
+                            'client registeration')
+    cmd_parser.set_defaults(func=do_register_client)
+
+    cmd_parser = sub_parser.add_parser('delete',
+                                       help='delete existing client')
+    cmd_parser.add_argument('-r', '--realm-name', required=True,
+                            help='realm name')
+    cmd_parser.add_argument('-c', '--client-name', required=True,
+                            help='client name')
+    cmd_parser.set_defaults(func=do_delete_client)
+
+    cmd_parser = sub_parser.add_parser('test',
+                                       help='experimental test used during '
+                                       'development')
+    cmd_parser.add_argument('-r', '--realm-name', required=True,
+                            help='realm name')
+    cmd_parser.add_argument('-c', '--client-name', required=True,
+                            help='client name')
+    cmd_parser.set_defaults(func=do_client_test)
+
+    # Process command line arguments
+    options = parser.parse_args()
+    configure_logging(options)
+
+    if options.permit_insecure_transport:
+        os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
+
+    try:
+        anonymous_conn = KeycloakAnonymousConnection(options.server,
+                                                     options.tls_verify)
+
+        admin_conn = KeycloakAdminConnection(options.server,
+                                             options.auth_role,
+                                             options.admin_realm,
+                                             ADMIN_CLIENT_ID,
+                                             options.admin_username,
+                                             options.admin_password,
+                                             options.tls_verify)
+    except Exception as e:
+        if options.show_traceback:
+            traceback.print_exc()
+        print(six.text_type(e), file=sys.stderr)
+        result = 1
+        return result
+
+    try:
+        if options.func == do_register_client:
+            conn = admin_conn
+        else:
+            conn = admin_conn
+        result = options.func(options, conn)
+    except Exception as e:
+        if options.show_traceback:
+            traceback.print_exc()
+        print(six.text_type(e), file=sys.stderr)
+        result = 2
+        return result
+
+    return result"

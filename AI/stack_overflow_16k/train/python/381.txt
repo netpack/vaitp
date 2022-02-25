@@ -1,0 +1,1 @@
+"remove duplicate consecutive tuples from list? say, i have a list like below:..[(2, 1), (1, 0), (1, 0), (1,0), (2,1), (2, 1)]...i want to remove duplicate consecutive tuples. so in above example, it should return:..[(2, 1), (1, 0), (2, 1)]"

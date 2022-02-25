@@ -1,0 +1,1 @@
+"print format? which one is better blank i have always been curious..why does blank have different way to print stuff?..for example..print ""this is "",a,"" and "" ,b...vs..print ""this is %d and %d"" %(a,b)...any performance issues? and stuff?"

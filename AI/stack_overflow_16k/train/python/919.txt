@@ -1,0 +1,1 @@
+why does this expression evaluate to false? i thought range() returns a list of numbers . why does the all() function return a false for this ..all(range(100))

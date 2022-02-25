@@ -1,0 +1,1 @@
+how to convert long format date to short format date with type datetime in blank i want convert long datetime to only date in blank. and both in datetime type..datetime creationdate = datetime.now;.datetime shortdate = creeationdate.date;

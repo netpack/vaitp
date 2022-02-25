@@ -1,0 +1,1 @@
+"cannot understand the following code? can somebody explain this code in detail.basically how it works?..int32[] numbers = a.split(',').select(s =&gt; int32.parse(s)).toarray();"

@@ -1,0 +1,1 @@
+"sending print output to a file in blank script how would i go about sending the output of a print command to a new file? i have a blank script where i need to redirect the output at the end of the print statement to a file but i can't seem to find a way to accomplish the redirect. why doesn't ""print (stuff to be redirected) > newfile.txt"" work?..any help is appreciated!"

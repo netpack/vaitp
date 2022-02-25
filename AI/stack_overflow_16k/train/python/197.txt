@@ -1,0 +1,1 @@
+"create n strings in blank i get a number (n) from user. .just..n = int(input())...after that, i have to to create n strings and get their values from user...i = 0;..while (i &lt; n):.    word = input() # so here is my problem: .                   # i don't know how to create n different strings.    i += 1...how to create n strings?"

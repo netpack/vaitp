@@ -1,0 +1,1 @@
+"blank : strange behaviour `empty string` and `false` returns empty string today i came across the strange behaviour in blank. below is the code..return """" &amp;&amp; false...returns  """"...why it behaves so ?"

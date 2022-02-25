@@ -1,0 +1,1 @@
+"blank string.indexof('') causing webpage to hang this line of code seems to make my webpage become unresponsive and i'm not sure why and it does run the code. this is blank. i am using firebug on firefox to debug...i = response.indexof(',');"

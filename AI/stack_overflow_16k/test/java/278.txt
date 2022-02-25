@@ -1,0 +1,1 @@
+blank to have a variable to be modified and used in other classes i would like to have a variable to be used in all other classes. i can modify that variable in one class and use that new value in other class...class a{.boolean val = false;.}..class b{.val = true;.}..class c{.   if(val){.   //do something.   }.}

@@ -1,0 +1,1 @@
+"blank oracle api - how to use the abstract function : getsystemclipboard() i'm reading the getsystemclipboard() function found in http://docs.oracle.com/blankse/7/docs/api/, under clipboard...this function is declared abstract. how can i then use it ? am i suppose to subclass it or something ?"

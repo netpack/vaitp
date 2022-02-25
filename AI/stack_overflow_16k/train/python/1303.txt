@@ -1,0 +1,1 @@
+"slicing lists and strings to negative zero i've read the blank informal tutorial on slicing, which all makes sense to me except for one edge case. it seems like..'help'[:-0]...should evaluate to 'help', but it really evaluates to ''. what's a good way to think about negative index slicing so that this particular edge case makes sense?"

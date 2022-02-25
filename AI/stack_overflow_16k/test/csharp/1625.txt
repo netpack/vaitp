@@ -1,0 +1,1 @@
+"why is math.round(3.13732294754486e-12, 2) zero? i want to do this:..var x = math.round(item.distance.value, 2)...the value of the distance is: 3.13732294754486e-12...the value is returned from httpclient result...the x will be zero. why is this happening? i expect 3.14 for the result."

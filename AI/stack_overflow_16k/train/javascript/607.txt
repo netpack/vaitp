@@ -1,0 +1,1 @@
+"blank- addeventlistener greeting for some reason my -addeventlistener is not executing when i click the button. can anyone help this is my code: ..function elnegro() {.    alert(""thank you for your subscription!"");.}..var week = document.getelementbyid(""get"");.week.addeventlistener(""click"", elnegro);"

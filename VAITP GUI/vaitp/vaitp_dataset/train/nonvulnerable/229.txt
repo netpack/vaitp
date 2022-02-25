@@ -1,0 +1,20 @@
+"    def _get_default_cache_dir(self):
+        tmpdir = tempfile.gettempdir()
+
+        # On windows the temporary directory is used specific unless
+        # explicitly forced otherwise.  We can just use that.
+        if os.name == 'n':
+            return tmpdir
+        if not hasattr(os, 'getuid'):
+            raise RuntimeError('Cannot determine safe temp directory.  You '
+                               'need to explicitly provide one.')
+
+        dirname = '_jinja2-cache-%d' % os.getuid()
+        actual_dir = os.path.join(tmpdir, dirname)
+        try:
+            os.mkdir(actual_dir, 0700)
+        except OSError as e:
+            if e.errno != errno.EEXIST:
+                raise
+
+        return actual_dir"

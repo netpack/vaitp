@@ -1,0 +1,1 @@
+"how can i get another application mainwindow coordinates and style in blank? how could i get in blank the main window coordinates (left, right, width, height) and main window state (maximized, normal,..) of a third-party application if i have the value of process.mainwindowhandle for it (obtained from the session processes list)?"

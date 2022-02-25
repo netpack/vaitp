@@ -1,0 +1,1 @@
+"how could i get a random string from a list and assign it to a variable my list is defined as:..list&lt;string&gt; firstnames = new list&lt;string&gt;();...when i add some strings to this list, how would i go about retrieving a random string from the list? something like:..string currname = somefunctionof (firstnames);"

@@ -1,0 +1,1 @@
+"    def feed(self, data):        parser = self.parser        for n in range(100):  # make sure we never loop forever            consumed = parser.received(data)            data = data[consumed:]            if parser.completed:                return        raise ValueError("Looping")  # pragma: no cover"

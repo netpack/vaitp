@@ -1,0 +1,1 @@
+"""does not match format"" error parsing date time from string trying to parse time from string, but get this error. tried few formatting string...error:..time data '10/2/2010 0:00:00' does not match format '""%m/%d/%y %h:%m:%s""'...code:..strdt = '10/2/2010 0:00:00'.dt = datetime.strptime(strdt, '""%m/%d/%y %h:%m:%s""')"

@@ -1,0 +1,1 @@
+"type of all elements in blank list is there a way to quickly print out the type of all the elements of some given list in blank?..for example [1, 2, 3.5] would give int, int, float. ..the closest existing resource i've found to answering my question is: test type of elements blank tuple/list, which just gives holistic true/false outputs (which is not what i'm looking for)."

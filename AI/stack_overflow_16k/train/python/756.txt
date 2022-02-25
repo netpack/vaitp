@@ -1,0 +1,1 @@
+"blank getting simple database value when i pull a value from database table as below;..rows = cur.fetchall()..tempvar = stringvar(root).tempvar.set(rows.pop()).print(""pop "" + tempvar.get())...the thing it prints is:..('euro',)...i want simply euro as a result. how can i do it?..thank you."

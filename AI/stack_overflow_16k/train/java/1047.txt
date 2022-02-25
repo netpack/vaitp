@@ -1,0 +1,1 @@
+"overriding an extending class so let's say i have class a that does similar things as class b...i know there are a lot of examples, but they won't work with my method very well...public class b extends a {..    public void dosomething(){..}..    public string tostring(){..}//not important..}...what should i write to override the dosomething() method in class b?"

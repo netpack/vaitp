@@ -1,0 +1,1 @@
+"pyserial not running correctly? i'm trying to use pyserial but am running into some issues. my code in a larger code is as follows..import serial.ser = serial.serial('/dev/ttyama0', 300).ser.write(string).ser.close()...but am running into the script not getting past the ser = serial.serial('/dev/ttyama0', 300)..thanks all"

@@ -1,0 +1,1 @@
+order of list obtained by dictionary's keys() can i expect the keys() to remain in the same order? ..i plan to use them for a dropdown box and i dont want them to shift if i add or delete items from the dictionary.

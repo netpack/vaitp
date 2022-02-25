@@ -1,0 +1,1 @@
+"working with file&folder on server with blank application client side i want manage  multiple files and folders on server with blank code in clinet side..states such as create, delete, replace, search files,folder..i have permition access to server (username,password) and connect with . networkcredential nc = new networkcredential(username, password);"

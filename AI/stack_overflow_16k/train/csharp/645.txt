@@ -1,0 +1,1 @@
+"copy back database i've added my database to my source folder and whenever i launch the program it copies the db in my debug folder but the modifications don't seem to be copied back in my source folder,over the old db . ..how can i do so automatically  ?"

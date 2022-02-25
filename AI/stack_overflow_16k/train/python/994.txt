@@ -1,0 +1,1 @@
+"easiest way to print array 1 in order its values appear in array 2? im not sure how to go about coding an array to have its values reordered in the order the same string values appear in another array. ..for example:..array1=[a,b,c]  .array2 = [j,c,f,a,b,h]  .printedoutput="" c,a,b"""

@@ -1,0 +1,1 @@
+"is there a sudo for os.remove() i have an existing file i want to remove, and i get the following error when trying to remove it:..os.remove(input_path).oserror: [errno 13] permission denied: ...is there any way to remove a file  that already exists, other than doing:..subprocess.call(['rm', input_path])"

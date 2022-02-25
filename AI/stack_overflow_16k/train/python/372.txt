@@ -1,0 +1,1 @@
+"convert float to integer to get number without dot and zero can any one please to tell me how to round float to integer ?  i tried with np.round() on pred_y, i get dot zero like 12.0 for example and not 12 without dot zero, in blank..thank you for your helping"

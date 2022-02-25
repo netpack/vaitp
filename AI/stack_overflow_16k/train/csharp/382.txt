@@ -1,0 +1,1 @@
+what is real purpose of isolated storages in .net? i have heard of the term isolated storage in .net. what is it really and how far is that used? does that storage not visible to user and can be consumed or written to by assemblies (specific assembly or appdomain which created it) only?

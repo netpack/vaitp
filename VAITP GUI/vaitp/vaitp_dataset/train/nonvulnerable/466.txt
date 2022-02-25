@@ -1,0 +1,11 @@
+"    def write(self):
+        self._create_dirs()
+        for component in self.components:
+            text = ical.serialize(
+                self.tag, self.headers, [component] + self.timezones)
+            name = (
+                component.name if sys.version_info[0] >= 3 else
+                component.name.encode(filesystem.FILESYSTEM_ENCODING))
+            filesystem_path = os.path.join(self._filesystem_path, name)
+            with filesystem.open(filesystem_path, "w") as fd:
+                fd.write(text)"

@@ -1,0 +1,1 @@
+problems in iblank %%timeit prompt i am very confused with what is happening with iblank %%timeit...in [1]: %%timeit for i in range(10):.    ....: print(i).    ....: .    ....: .    ....: .    ....: ...it doesn't end the prompt even after several enters or even after pressing ctrl+c.  can someone share some thoughts what is happening here?  i am using winblank.

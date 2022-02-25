@@ -1,0 +1,1 @@
+why does this compile? —> int foo = foo = 5; why does this line compile?..int foo = foo = 5;...i found this in a system i'm maintaining and can't understand its purpose.
