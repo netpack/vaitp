@@ -1,0 +1,7 @@
+import NoAuthenticationError, InvalidServerName
+except InvalidServerName as ex:
+request.setResponseCode(400)
+request.write(dict_to_json_bytes({'errcode': 'M_INVALID_PARAM', 'error': str(ex)}))
+request.finish()
+return
+except Exception:

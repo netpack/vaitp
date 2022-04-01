@@ -1,0 +1,4 @@
+rm('cgi-bin/cgi*')
+rm('cgi-bin/nph*')
+rm('cgi-bin/testScript*')
+Path('web/cgiProgram.cgi').remove()

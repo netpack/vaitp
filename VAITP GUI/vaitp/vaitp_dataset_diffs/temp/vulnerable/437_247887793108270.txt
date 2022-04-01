@@ -1,0 +1,7 @@
+import find_double_newline
+
+import BadRequest
+                pos = s.find(b"\\n")
+                    s = s[pos + 1 :]
+                elif trailer.startswith(b"\\n"):
+

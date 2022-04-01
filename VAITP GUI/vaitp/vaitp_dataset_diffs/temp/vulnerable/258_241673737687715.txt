@@ -1,0 +1,3 @@
+basic_auth = get_request_basic_auth(request)
+            if basic_auth is None or basic_auth not in self.basic_auth:
+

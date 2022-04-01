@@ -1,0 +1,2 @@
+if user_profile.realm.invite_by_admins_only and not user_profile.is_realm_admin:
+return json_error(_("Must be a realm administrator"))

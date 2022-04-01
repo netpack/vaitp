@@ -1,0 +1,6 @@
+["                       help='admin password (use - to read )')
+            else:
+                options.keycloak_admin_password = getpass.getpass(
+                    '%s password: ' % (options.keycloak_admin_username))
+        elif options.keycloak_admin_password == '-':
+            options.keycloak_admin_password = sys.stdin.readline().rstrip('\\n')")]}

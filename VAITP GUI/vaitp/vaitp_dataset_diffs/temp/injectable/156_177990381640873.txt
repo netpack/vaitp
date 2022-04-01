@@ -1,0 +1,47 @@
+import bytes_type, import_object, ObjectDict, raise_exc_info, unicode_type, _websocket_mask
+version, token, timestamp = self._get_raw_xsrf_token()
+mask = os.urandom(4)
+self._xsrf_token = b"|".join([
+b"2",
+binascii.b2a_hex(mask),
+binascii.b2a_hex(_websocket_mask(mask, token)),
+utf8(str(int(timestamp)))])
+if version is None or version != 2:
+self.set_cookie("_xsrf", self._xsrf_token,
+expires_days=expires_days)
+def _get_raw_xsrf_token(self):
+if not hasattr(self, '_raw_xsrf_token'):
+cookie = self.get_cookie("_xsrf")
+if cookie:
+version, token, timestamp = self._decode_xsrf_token(cookie)
+else:
+version, token, timestamp = None, None, None
+if token is None:
+version = None
+token = os.urandom(16)
+timestamp = time.time()
+self._raw_xsrf_token = (version, token, timestamp)
+return self._raw_xsrf_token
+def _decode_xsrf_token(self, cookie):
+m = _signed_value_version_re.match(utf8(cookie))
+if m:
+version = int(m.group(1))
+if version == 2:
+_, mask, masked_token, timestamp = cookie.split("|")
+mask = binascii.a2b_hex(utf8(mask))
+token = _websocket_mask(
+mask, binascii.a2b_hex(utf8(masked_token)))
+timestamp = int(timestamp)
+return version, token, timestamp
+else:
+return None, None, None
+elif len(cookie) == 32:
+version = 1
+token = binascii.a2b_hex(cookie)
+timestamp = int(time.time())
+return (version, token, timestamp)
+else:
+return None, None, None
+_, token, _ = self._decode_xsrf_token(token)
+_, expected_token, _ = self._get_raw_xsrf_token()
+if not _time_independent_equals(utf8(token), utf8(expected_token)):

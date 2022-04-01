@@ -1,0 +1,9 @@
+import BodyExceededMaxSize, read_body_with_max_size
+def get_json(self, uri, max_size = None):
+:param max_size: The maximum size (in bytes) to allow as a response.
+:type max_size: int
+body = yield read_body_with_max_size(response, max_size)
+try:
+yield read_body_with_max_size(response, 0)
+except BodyExceededMaxSize:
+pass

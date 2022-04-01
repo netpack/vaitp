@@ -1,0 +1,5 @@
+MAX_NUMBER = int(3e20)
+if seconds > MAX_NUMBER:
+return datetime.max
+elif seconds < -MAX_NUMBER:
+return datetime.min

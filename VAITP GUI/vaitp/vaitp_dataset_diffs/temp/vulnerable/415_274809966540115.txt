@@ -1,0 +1,1 @@
+def __init__(self, cfg, reactor=twisted.internet.reactor):

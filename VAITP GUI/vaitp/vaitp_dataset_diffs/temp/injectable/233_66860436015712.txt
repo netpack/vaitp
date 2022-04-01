@@ -1,0 +1,3 @@
+import SafeLoader
+return yaml.safe_load(yaml_str)
+return yaml.safe_load(f)

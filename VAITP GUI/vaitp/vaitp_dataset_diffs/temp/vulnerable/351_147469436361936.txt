@@ -1,0 +1,12 @@
+x = ast.Module(body)
+        m = ast.Module([ast.Expr(ast.expr(**pos), **pos)])
+        m = ast.Module([ast.Expr(ast.Nameast.Load()))])
+            "keywords=[]))])"
+            "Constant(\'and cheese\')], []))])"
+            "lineno=1, col_offset=0, end_lineno=1, end_col_offset=24)])"
+            "end_col_offset=0), lineno=1, col_offset=0, end_lineno=1, end_col_offset=0)])"
+        mod = ast.Module(body)
+        mod = ast.Module(body)
+        mod = ast.Module([ast.Expr(node)])
+        mod = ast.Module([stmt])
+

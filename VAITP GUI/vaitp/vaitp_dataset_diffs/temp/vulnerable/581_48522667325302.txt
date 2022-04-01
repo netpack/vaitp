@@ -1,0 +1,5 @@
+cmd = "notify-send "
+                cmd = cmd + " -t %s" % (1000 * timeout)
+            cmd = cmd + " \\"%s\\" \\"%s\\"" % (title, message)
+            print(cmd)
+            os.system(cmd)

@@ -1,0 +1,27 @@
+import sys
+import mitogen.core
+def test_siblings_cant_talk(router):
+l1 = router.local()
+l2 = router.local()
+logs = testlib.LogCapturer()
+logs.start()
+try:
+l2.call(ping_context, l1)
+except mitogen.core.CallError:
+e = sys.exc_info()[1]
+msg = mitogen.core.Router.unidirectional_msg % (
+l2.context_id,
+l1.context_id,
+)
+assert msg in str(e)
+assert 'routing mode prevents forward of ' in logs.stop()
+@mitogen.core.takes_econtext
+def test_siblings_cant_talk_remote(econtext):
+mitogen.parent.upgrade_router(econtext)
+test_siblings_cant_talk(econtext.router)
+def test_siblings_cant_talk_master(self):
+test_siblings_cant_talk(self.router)
+def test_siblings_cant_talk_parent(self):
+self.router.unidirectional = True
+parent = self.router.local()
+parent.call(test_siblings_cant_talk_remote)

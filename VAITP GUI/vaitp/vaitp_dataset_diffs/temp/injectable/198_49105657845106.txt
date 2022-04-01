@@ -1,0 +1,3 @@
+import defusedxml.ElementTree
+tree = defusedxml.ElementTree.fromstring(xml_string)
+element_tree = defusedxml.ElementTree.fromstring(xml_string)

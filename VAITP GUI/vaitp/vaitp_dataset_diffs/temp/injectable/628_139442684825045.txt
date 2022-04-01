@@ -1,0 +1,1 @@
+super(render_response, self).prepare_context(request, context, *args, **kwargs)

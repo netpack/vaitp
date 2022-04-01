@@ -1,0 +1,13 @@
+post_data = request.GET
+sortby = post_data.get('sort', 'used')
+page = int(post_data.get('page', '1'))
+query = post_data.get('query', '').strip()
+query_params['name__icontains'] = query
+if request.is_ajax():
+template = get_template('tags/content.html')
+template_context = RequestContext(request, data)
+json_data = {'success': True, 'html': template.render(template_context)}
+json_string = simplejson.dumps(json_data)
+return HttpResponse(json_string, mimetype='application/json')
+else:
+return render(request, 'tags.html', data)

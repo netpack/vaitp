@@ -1,0 +1,19 @@
+import base64
+try:
+import secrets
+except ImportError:
+secrets = None
+import QNetworkReply
+csrf_token = None
+global csrf_token
+if url.password() != csrf_token:
+message.error("Invalid CSRF token for qute://settings!")
+raise QuteSchemeError("Invalid CSRF token!",
+QNetworkReply.ContentAccessDenied)
+if secrets:
+csrf_token = secrets.token_urlsafe()
+else:
+token = base64.urlsafe_b64encode(os.urandom(32))
+csrf_token = token.rstrip(b'=').decode('ascii')
+confget=config.instance.get_str,
+csrf_token=csrf_token)

@@ -1,0 +1,1 @@
+envelope = ElementTree.fromstring(text)

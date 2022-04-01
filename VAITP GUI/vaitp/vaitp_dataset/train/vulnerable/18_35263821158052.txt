@@ -1,0 +1,2 @@
+cmd = "getent hosts %s" % client
+ipaddr = Popen(cmd, shell=True, stdout=PIPE).stdout.read().strip().split()

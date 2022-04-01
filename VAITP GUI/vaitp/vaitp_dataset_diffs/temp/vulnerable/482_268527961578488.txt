@@ -1,0 +1,2 @@
+TEMPLATE_FILTERS = {"snakecase": utils.snake_case, "spinalcase": utils.spinal_case}
+        self.project_name: str = self.project_name_override or f"{openapi.title.replace(\' \', \'-\').lower()}-client"

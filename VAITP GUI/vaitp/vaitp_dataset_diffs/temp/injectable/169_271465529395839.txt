@@ -1,0 +1,82 @@
+`args` is a *list of required POST parameter names.
+`kwargs` is a **dict of required POST parameter names
+to string explanations of the parameter
+@require_POST
+@require_POST
+@require_POST
+@require_POST
+@require_post_params(
+user = get_student_from_identifier(request.POST.get('unique_student_identifier'))
+'unique_student_identifier': request.POST.get('unique_student_identifier'),
+rolename = request.POST.get('rolename')
+action = request.POST.get('action')
+@require_POST
+@require_post_params(rolename="\'instructor\', \'staff\', or \'beta\'")
+rolename = request.POST.get('rolename')
+@require_POST
+problem_location = request.POST.get('problem_location', '')
+@require_POST
+@require_POST
+@require_POST
+@require_POST
+@require_POST
+@require_POST
+@require_POST
+@require_POST
+@require_post_params(
+Takes query parameter unique_student_identifier and if the student exists
+user = get_student_from_identifier(request.POST.get('unique_student_identifier'))
+@require_POST
+@require_post_params(
+problem_to_reset = strip_if_string(request.POST.get('problem_to_reset'))
+student_identifier = request.POST.get('unique_student_identifier', None)
+all_students = request.POST.get('all_students', False) in ['true', 'True', True]
+delete_module = request.POST.get('delete_module', False) in ['true', 'True', True]
+@require_POST
+student_identifier = request.POST.get('unique_student_identifier', None)
+all_students = request.POST.get('all_students', False) in ['true', 'True', True]
+delete_module = request.POST.get('delete_module', False) in ['true', 'True', True]
+@require_POST
+@require_post_params(problem_to_reset="problem urlname to reset")
+problem_to_reset = strip_if_string(request.POST.get('problem_to_reset'))
+student_identifier = request.POST.get('unique_student_identifier', None)
+all_students = request.POST.get('all_students') in ['true', 'True', True]
+@require_POST
+student_identifier = request.POST.get('unique_student_identifier', None)
+all_students = request.POST.get('all_students') in ['true', 'True', True]
+@require_POST
+@require_POST
+@require_POST
+problem_location_str = strip_if_string(request.POST.get('problem_location_str', False))
+student = request.POST.get('unique_student_identifier', None)
+@require_POST
+student = request.POST.get('unique_student_identifier', None)
+@require_POST
+@require_POST
+@require_POST
+@require_POST
+@require_POST
+@require_POST
+@require_post_params('rolename')
+rolename = request.POST.get('rolename')
+@require_POST
+@require_POST
+@require_post_params(
+unique_student_identifier = request.POST.get('unique_student_identifier')
+rolename = request.POST.get('rolename')
+action = request.POST.get('action')
+@require_POST
+@require_post_params('student', 'url', 'due_datetime')
+student = require_student_from_identifier(request.POST.get('student'))
+unit = find_unit(course, request.POST.get('url'))
+due_date = parse_datetime(request.POST.get('due_datetime'))
+@require_POST
+@require_post_params('student', 'url')
+student = require_student_from_identifier(request.POST.get('student'))
+unit = find_unit(course, request.POST.get('url'))
+@require_POST
+@require_post_params('url')
+unit = find_unit(course, request.POST.get('url'))
+@require_POST
+@require_post_params('student')
+student = require_student_from_identifier(request.POST.get('student'))

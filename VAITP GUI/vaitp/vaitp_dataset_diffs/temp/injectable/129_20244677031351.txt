@@ -1,0 +1,2 @@
+Default is tempfile.mkdtemp().
+build_dir = tempfile.mkdtemp()

@@ -1,0 +1,3 @@
+DEBUG = False
+        'NAME': ':memory:',
+EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'")]}

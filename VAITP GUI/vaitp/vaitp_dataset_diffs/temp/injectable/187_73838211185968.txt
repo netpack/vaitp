@@ -1,0 +1,3 @@
+elif failed_login_count() >= allowed_number_of_attempts:
+time.sleep(2 ** allowed_number_of_attempts)
+raise HTTP(403)

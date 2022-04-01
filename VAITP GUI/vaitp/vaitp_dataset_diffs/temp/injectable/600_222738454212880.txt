@@ -1,0 +1,15 @@
+import markupsafe
+Text = markupsafe.escape
+def HTML(html):
+return markupsafe.Markup(html)
+return HTML(" <sup>{num}</sup>&frasl;<sub>{den}</sub> ").format(num=tree[0][0], den=tree[2][0])
+return HTML("<sub>{sub}</sub>").format(sub=children)
+return HTML("<sup>{sup}</sup>").format(sup=children)
+return HTML("({insider})").format(insider=children)
+return HTML("[{insider}]").format(insider=children)
+children = HTML("").join(map(_render_to_html, tree))
+return HTML(\'<span class="inline-error inline">{0}</span>\').format(s)
+return HTML(u'\\u2192')
+return HTML(u'\\u2194')
+return Text(arrow)
+return HTML(u\'<span class="math">{0}</span>\').format(s)

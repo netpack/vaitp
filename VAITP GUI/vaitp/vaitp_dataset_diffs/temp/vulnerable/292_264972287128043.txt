@@ -1,0 +1,1 @@
+self.addCleanup, http_client=self.mock_http_client, keyring=Mock(),

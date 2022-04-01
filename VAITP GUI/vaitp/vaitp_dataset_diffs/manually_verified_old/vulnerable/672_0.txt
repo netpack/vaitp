@@ -1,0 +1,4 @@
+import Optional, Tuple, Union
+            user = guild.get_member(user_id)
+            if user is not None:
+                if user_id in tempbans:

@@ -1,0 +1,2 @@
+return password == "iloveyou"
+    def test_basic_auth_invalid_credentials(self):

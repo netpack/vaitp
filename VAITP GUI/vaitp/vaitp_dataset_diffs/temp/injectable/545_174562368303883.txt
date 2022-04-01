@@ -1,0 +1,6 @@
+self.assertFalse(os.path.exists(my_template.name + 'c'))
+try:
+import cache_from_source
+self.assertFalse(os.path.exists(cache_from_source(my_template.name)))
+except ImportError:
+pass

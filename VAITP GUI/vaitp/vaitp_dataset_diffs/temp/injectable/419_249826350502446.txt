@@ -1,0 +1,11 @@
+import get_args, send_cors, jsonwrap, MatrixRestError
+verified_sender = None
+if self.require_auth:
+account = authV2(self.sydent, request)
+verified_sender = sender
+if account.userId != sender:
+raise MatrixRestError(M_UNAUTHORIZED", "\'sender\' doesn\'t match")
+substitutions["bracketed_verified_sender"] = ""
+if verified_sender:
+substitutions["bracketed_verified_sender"] = "(%s) " % (verified_sender,)
+substitutions["bracketed_room_name"] = "(%s) " % substitutions["room_name"]

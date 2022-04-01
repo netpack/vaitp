@@ -1,0 +1,20 @@
+one:
+  taxonomy: location1
+  taxable: one
+  taxable_type: "Subnet"
+
+three:
+  taxonomy: organization1
+  taxable: one
+  taxable_type: "Subnet"
+
+ten:
+  taxonomy: location1
+  taxable: one
+  taxable_type: "Medium"
+
+ten2:
+  taxonomy: organization1
+  taxable: one
+  taxable_type: "Medium"
+

@@ -1,0 +1,13 @@
+def require_query_params(*args, **kwargs):
+    """
+    Checks for required paremters or renders a 400 error.
+    (decorator with arguments)
+
+    `args` is a *list of required GET parameter names.
+    `kwargs` is a **dict of required GET parameter names
+        to string explanations of the parameter
+    """
+    required_params = []
+    required_params += [(arg, None) for arg in args]
+    required_params += [(key, kwargs[key]) for key in kwargs]
+

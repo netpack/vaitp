@@ -1,0 +1,4 @@
+self.filename = tempfile.mktemp()
+        if os.path.isfile(self.filename):
+            os.unlink(self.filename)
+

@@ -1,0 +1,1 @@
+<input id="txtPagename" name="pagename" size="30" value="%(name)s">

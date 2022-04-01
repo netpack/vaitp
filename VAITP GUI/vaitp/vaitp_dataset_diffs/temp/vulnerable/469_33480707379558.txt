@@ -1,0 +1,38 @@
+assert re.match(
+            br".+ HTTP/\\d\\.\\d\\r\\n$", start_line
+        ), "Start line does not look like HTTP request: " + repr(start_line)
+        self,
+        host,
+        port=None,
+        key_file=None,
+        cert_file=None,
+        strict=None,
+        timeout=None,
+        proxy_info=None,
+        self,
+        host,
+        port=None,
+        key_file=None,
+        cert_file=None,
+        strict=None,
+        timeout=None,
+        proxy_info=None,
+                gresult[0] = Exception(
+                    "Request count expected={0} actual={1}".format(
+                        request_count, gcounter[0]
+                    )
+                )
+    if (
+        not undefined_body_length
+        and proto != "HTTP/1.0"
+        and "content-length" not in headers
+    ):
+        raise Exception(
+            "httplib2.tests.http_response_bytes: client could not figure response body length"
+        )
+        "{proto} {status}\\r\\n{headers}\\r\\n".format(
+            proto=proto, status=status, headers=header_string
+        ).encode()
+        + body
+def http_parse_auth(s):
+    """https://tools.ietf.org/html/rfc7235

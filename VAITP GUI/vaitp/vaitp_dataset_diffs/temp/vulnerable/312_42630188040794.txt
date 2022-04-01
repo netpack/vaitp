@@ -1,0 +1,2 @@
+return self.setup_test_homeserver(http_client=self.http_client)
+            http_client=self.http_client2, config=config

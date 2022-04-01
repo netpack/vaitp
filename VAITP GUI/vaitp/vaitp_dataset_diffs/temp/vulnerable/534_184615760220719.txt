@@ -1,0 +1,13 @@
+try:
+            result = scrapyd.list_jobs(project_name)
+            jobs = []
+            statuses = pending', 'running', 'finished']
+            for status in statuses:
+                for job in result.get(status):
+                    jobstatus'] = status
+                    jobs.append(job)
+            return JsonResponse(jobs)
+        except ConnectionError:
+            return JsonResponse({'message': 'Connect Error'}, status=500)
+        try:
+

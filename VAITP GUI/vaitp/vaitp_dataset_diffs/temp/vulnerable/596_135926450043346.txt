@@ -1,0 +1,5 @@
+["if !exists('g:syntastic_splint_config_file')
+    let g:syntastic_splint_config_file = '.syntastic_splint_config'
+endif
+
+        \\ 'args': syntastic

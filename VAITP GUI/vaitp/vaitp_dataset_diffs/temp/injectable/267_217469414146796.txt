@@ -1,0 +1,14 @@
+try:
+initiator = job.initiator()
+except AttributeError:
+pass
+else:
+if initiator.isValid() and initiator.scheme() != 'qute':
+log.misc.warning("Blocking malicious request from {} to {}"
+.format(initiator.toDisplayString(),
+url.toDisplayString()))
+job.fail(QWebEngineUrlRequestJob.RequestDenied)
+return
+if job.requestMethod() != b'GET':
+job.fail(QWebEngineUrlRequestJob.RequestDenied)
+return

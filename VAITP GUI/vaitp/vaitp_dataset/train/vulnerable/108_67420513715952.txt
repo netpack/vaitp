@@ -1,0 +1,5 @@
+reason = _("Badly formed Swift URI: %s") % uri
+LOG.debug(reason)
+reason = (_("Badly formed credentials \'%(creds)s\' in Swift URI") % locals())
+reason = _("Badly formed Swift URI: %s") % uri
+raise exception.NotFound(_("Swift could not find image at uri %(uri)s") % locals())

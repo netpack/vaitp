@@ -1,0 +1,1 @@
+class RawOpsTest(test.TestCase):

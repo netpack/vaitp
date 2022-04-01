@@ -1,0 +1,7 @@
+def test_valid_id_pathsep(self):
+'''
+Path separators in id should make it invalid
+'''
+opts = {'pki_dir': '/tmp/whatever'}
+for pathsep in ('/', '\\\\'):
+self.assertFalse(valid_id(opts, pathsep.join(('..', 'foobar'))))

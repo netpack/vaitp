@@ -1,0 +1,2 @@
+Default is tempfile.mktemp().
+        build_dir = os.path.join(tempfile.mktemp())

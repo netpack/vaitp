@@ -1,0 +1,5 @@
+import URI, Agent, HTTPConnectionPool, RedirectAgent
+import BodyExceededMaxSize, read_body_with_max_size
+WELL_KNOWN_MAX_SIZE = 50 * 1024
+body = yield read_body_with_max_size(response, WELL_KNOWN_MAX_SIZE)
+return

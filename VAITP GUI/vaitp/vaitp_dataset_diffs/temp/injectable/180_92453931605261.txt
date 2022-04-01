@@ -1,0 +1,20 @@
+def DELETE(self, path, body=None, log_request_body=True, ignore_prefix=False):
+return self._request('DELETE', path, body=body, log_request_body=log_request_body,
+ignore_prefix=ignore_prefix)
+def GET(self, path, queries=(), ignore_prefix=False):
+return self._request('GET', path, queries, ignore_prefix=ignore_prefix)
+def HEAD(self, path, ignore_prefix=False):
+return self._request('HEAD', path, ignore_prefix=ignore_prefix)
+def POST(self, path, body=None, ensure_encoding=True, log_request_body=True,
+ignore_prefix=False):
+log_request_body=log_request_body, ignore_prefix=ignore_prefix)
+def PUT(self, path, body, ensure_encoding=True, log_request_body=True, ignore_prefix=False):
+log_request_body=log_request_body, ignore_prefix=ignore_prefix)
+log_request_body=True, ignore_prefix=False):
+:param ignore_prefix: when building the url, disregard the self.path_prefix
+:type  ignore_prefix: bool
+url = self._build_url(path, queries, ignore_prefix)
+def _build_url(self, path, queries, ignore_prefix):
+:param ignore_prefix: when building the url, disregard the self.path_prefix
+:type  ignore_prefix: bool
+if not path.startswith(self.path_prefix) and not ignore_prefix:

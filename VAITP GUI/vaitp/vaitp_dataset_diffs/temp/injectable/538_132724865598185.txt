@@ -1,0 +1,16 @@
+import sys
+ipaddr = Popen(["getent", "hosts", client],
+cmd = ["ssh-keygen", "-q", "-f", temploc, "-N", "",
+"-t", keytype, "-C", "root@%s" % client]
+proc = Popen(cmd, stdout=PIPE, stdin=PIPE)
+proc.communicate()
+proc.wait()
+try:
+shutil.copy(temploc, fileloc)
+shutil.copy("%s.pub" % temploc, publoc)
+except IOError:
+err = sys.exc_info()[1]
+self.logger.error("Temporary SSH keys not found: %s" % err)
+err = sys.exc_info()[1]
+self.logger.error("Failed to unlink temporary ssh keys: %s"
+% err)

@@ -1,0 +1,32 @@
+DEFAULT_WINDOW_SIZE, DEFAULT_MAX_PACKET_SIZE, HIGHEST_USERAUTH_MESSAGE_ID,
+def _ensure_authed(self, ptype, message):
+"""
+Checks message type against current auth state.
+If server mode, and auth has not succeeded, and the message is of a
+post-auth type (channel open or global request) an appropriate error
+response Message is crafted and returned to caller for sending.
+Otherwise (client mode, authed, or pre-auth message) returns None.
+"""
+if (
+not self.server_mode
+or ptype <= HIGHEST_USERAUTH_MESSAGE_ID
+or self.is_authenticated()
+):
+return None
+reply = Message()
+if ptype == MSG_GLOBAL_REQUEST:
+reply.add_byte(cMSG_REQUEST_FAILURE)
+elif ptype == MSG_CHANNEL_OPEN:
+kind = message.get_text()
+chanid = message.get_int()
+reply.add_byte(cMSG_CHANNEL_OPEN_FAILURE)
+reply.add_int(chanid)
+reply.add_int(OPEN_FAILED_ADMINISTRATIVELY_PROHIBITED)
+reply.add_string('')
+reply.add_string('en')
+return reply
+error_msg = self._ensure_authed(ptype, m)
+if error_msg:
+self._send_message(error_msg)
+else:
+self._handler_table[ptype](self, m)

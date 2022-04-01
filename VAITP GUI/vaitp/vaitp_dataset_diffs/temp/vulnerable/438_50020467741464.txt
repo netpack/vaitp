@@ -1,0 +1,22 @@
+inst.received(b"GET / HTTP/1.1\\n\\n")
+        inst.received(b"GET / HTTP/1.1\\n\\n")
+        inst.received(b"GET / HTTP/1.1\\n\\n")
+        inst.received(b"GET / HTTP/1.1\\n\\n")
+        inst.received(b"GET / HTTP/1.1\\n\\n" + b"a" * 50000)
+    def test_received_preq_completed_n_lt_data(self):
+        inst, sock, map = self._makeOneWithMap()
+        inst.server = DummyServer()
+        preq = DummyParser()
+        inst.request = preq
+        preq.completed = True
+        preq.empty = False
+        line = b"GET / HTTP/1.1\\n\\n"
+        preq.retval = len(line)
+        inst.received(line + line)
+        self.assertEqual(inst.request, None)
+        self.assertEqual(len(inst.requests), 2)
+        self.assertEqual(len(inst.server.tasks), 1)
+
+        inst.received(b"GET / HTTP/1.1\\n\\n")
+        inst.received(b"GET / HTTP/1.1\\n\\n")
+        inst.received(b"GET / HTTP/1.1\\n\\n")

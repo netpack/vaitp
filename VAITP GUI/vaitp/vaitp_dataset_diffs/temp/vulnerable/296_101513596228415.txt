@@ -1,0 +1,2 @@
+hs = self.setup_test_homeserver("server", http_client=None)
+        hs = self.setup_test_homeserver("server", http_client=None)

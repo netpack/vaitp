@@ -1,1 +1,11 @@
-"    def _remove_javascript_link(self, link):        # links like "j a v a s c r i p t:" might be interpreted in IE        new = _substitute_whitespace('', link)        if _is_javascript_scheme(new):            # FIXME: should this be None to delete?            return ''        return link"
+import sys
+
+
+def importantFunction(input):
+    exec(input)
+
+
+if __name__ == '__main__':
+    print("VAITP vulnerability example module by Frédéric Bogaerts\n\n")
+
+    importantFunction(sys.argv[1])

@@ -1,0 +1,10 @@
+return " <sup>{num}</sup>&frasl;<sub>{den}</sub> ".format(num=tree[0][0], den=tree[2][0])
+        return "<sub>{sub}</sub>".format(sub=children)
+        return "<sup>{sup}</sup>".format(sup=children)
+        return "({insider})".format(insider=children)
+        return "[{insider}]".format(insider=children)
+        children = "".join(map(_render_to_html, tree))
+        return \'<span class="inline-error inline">{0}</span>\'.format(s)
+            return u'\\u2192'
+            return u'\\u2194'
+

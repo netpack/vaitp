@@ -1,0 +1,14 @@
+import datetime
+some_dict: Dict[Any, Any]
+a_camel_date_time: Union[datetime.datetime, datetime.date]
+a_date: datetime.date
+some_dict = self.some_dict
+if isinstance(self.a_camel_date_time, datetime.datetime):
+"some_dict": some_dict,
+some_dict = d["some_dict"]
+def _parse_a_camel_date_time(data: Dict[str, Any]) -> Union[datetime.datetime, datetime.date]:
+a_camel_date_time: Union[datetime.datetime, datetime.date]
+a_camel_date_time = datetime.datetime.fromisoformat(d["aCamelDateTime"])
+a_camel_date_time = datetime.date.fromisoformat(d["aCamelDateTime"])
+a_date = datetime.date.fromisoformat(d["a_date"])
+some_dict=some_dict,

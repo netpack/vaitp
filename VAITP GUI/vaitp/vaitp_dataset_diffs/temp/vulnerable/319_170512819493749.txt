@@ -1,0 +1,1 @@
+self.addCleanup, http_client=None, clock=self.hs_clock, reactor=self.reactor

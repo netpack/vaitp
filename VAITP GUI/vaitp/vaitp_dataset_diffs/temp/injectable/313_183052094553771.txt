@@ -1,0 +1,1 @@
+hs = self.setup_test_homeserver(config=config, federation_http_client=client)

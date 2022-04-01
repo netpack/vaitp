@@ -1,0 +1,3 @@
+import APIRouter, FastAPI, File, Header, Query, UploadFile
+    some_dict: Dict[str, str] = {}
+def get_list(an_enum_value: List[AnEnum] = Query(...), some_date: Union[date, datetime] = Query(...)):

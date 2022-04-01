@@ -1,0 +1,6 @@
+data = b"""\\
+HTTP/1.0 GET /foobar
+
+
+"""
+self.assertEqual(result, 22)

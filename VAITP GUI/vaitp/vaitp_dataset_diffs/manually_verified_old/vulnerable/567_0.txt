@@ -1,0 +1,10 @@
+if not is_string:
+        url = url.decode("utf-8")
+    try:
+        iri_ref = rfc3986.IRIReference.from_string(url, encoding="utf-8")
+    except (ValueError, RFC3986Exception):
+        six.raise_from(LocationParseError(url), None)
+
+    has_authority = iri_ref.authority is not None
+    uri_ref = iri_ref.encode(idna_encoder=idna_encode)
+        six.raise_from(LocationParseError(url), None)

@@ -21,6 +21,12 @@ public:
     QStringList get_dataset_first_half_patches(int aNumHalfDataset);
     QStringList get_dataset_second_half_patches(int aNumHalfDataset);
     void trainModule();
+    QStringList getAndProcess_dataset_vulnerabilities();
+    QStringList getAndProcess_dataset_patches();
+    void rm_temp();
+    void rm_temp_diffs();
+    int cvefixes_count_diffs();
+    QStringList getAndProcess_dataset_diffs();
 };
 
 #endif // AIMODULE_H

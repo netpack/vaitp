@@ -1,0 +1,2 @@
+import StaticRequest
+self.static = StaticRequest(pulp_connection)

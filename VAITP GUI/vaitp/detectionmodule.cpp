@@ -63,44 +63,56 @@ QStringList detectionModule::scanFileForInjectionCalls(QString aFile){
             QString line = in.readLine();
             line_num++;
 
+            if(!line.isEmpty()){
 
 
-            if(sql.exec(sql_qry_patches)){
-                while(sql.next()){
-                    QString patch_start = sql.value(0).toString();
-                    QString patch = sql.value(1).toString();
-                    QString patch_end = sql.value(2).toString();
-                    QString injection = sql.value(3).toString();
-                    qDebug() << "Scanning line " << line_num << ": " << line << " for patch: " << patch_start<<patch<<patch_end;
 
-                    //Create regex
-                    QRegularExpression re(QRegularExpression::escape(patch_start)+patch+QRegularExpression::escape(patch_end));
-                    QRegularExpressionMatch match = re.match(line);
-                    if(match.hasMatch()){
-                        // add patch to patch list
-                        qDebug()<<"(0.0)  Patch regex matches: "+match.captured(0);
-                        QString item;
-                        if(injection=="\\w+"){
-                            qDebug()<<"(0.0) Injection is regex \\w+";
-                            item = match.captured(0)+" :: "+match.captured(0).remove(patch_start).remove(patch_end) + " :: Line " + QString::number(line_num) + ": "+line.trimmed();
 
-                        } else {
-                            qDebug()<<"(0.0) Injection is hard coded";
-                            item = patch_start+patch+patch_end+" :: "+injection + " :: Line " + QString::number(line_num) + ": "+line.trimmed();
+                if(sql.exec(sql_qry_patches)){
+                    while(sql.next()){
+                        QString patch_start = sql.value(0).toString();
+                        QString patch = sql.value(1).toString();
+                        QString patch_end = sql.value(2).toString();
+                        QString injection = sql.value(3).toString();
+                        qDebug() << "Scanning line " << line_num << ": " << line << " for patch: " << patch_start<<patch<<patch_end;
+                        qDebug() << "Injection is set to: "<<injection;
+
+                        //Create regex
+                        QRegularExpression re(patch_start+patch+patch_end);
+
+                        QRegularExpressionMatch match = re.match(line);
+                        if(match.hasMatch()){
+                            // add patch to patch list
+                            qDebug()<<"(0.0)  Patch regex matches: "+match.captured(0);
+
+                            QString item;
+                            if(injection=="\\w+"){
+                                qDebug()<<"(0.0) Injection is regex \\w+";
+                                item = match.captured(0)+" :: "+match.captured(0).remove(QRegularExpression(patch_start)).remove(QRegularExpression(patch_end)) + " :: Line " + QString::number(line_num) + ": "+line.trimmed();
+
+                            } else {
+                                qDebug()<<"(0.0) Injection is hard coded";
+                                item = patch_start+patch+patch_end+" :: "+injection + " :: Line " + QString::number(line_num) + ": "+line.trimmed();
+
+                            }
+
+                            qDebug()<<item;
+                            detectedCalls.append(item);
+
 
                         }
 
-                        qDebug()<<item;
-                        detectedCalls.append(item);
+
+
 
 
                     }
-
-
-
-
-
                 }
+
+
+
+
+
             }
 
 

@@ -540,12 +540,13 @@ void VAITP::on_bt_extract_cvefixes_vulns_clicked()
     qDebug() << "[Extract CVEFixes vulnerabilites]";
     ui->txt_output_sh1_ai->appendHtml("Extracting CVEfixes vulnerabilities...");
 
-    qDebug() << "deleting old vulnerability and patches files...";
-    ui->txt_output_sh1_ai->appendHtml("Deleting old, vulnerability and patches, training and test files...");
+    qDebug() << "deleting old temp files...";
+    ui->txt_output_sh1_ai->appendHtml("Deleting old temp files...");
     qApp->processEvents();
 
     aimodule ai;
-    ai.rm_old_dataset();
+    ai.rm_temp();
+    //ai.rm_old_dataset();
 
     ui->txt_output_sh1_ai->appendHtml("Opening CVEfixes db...");
     qApp->processEvents();
@@ -576,25 +577,45 @@ void VAITP::on_bt_extract_cvefixes_vulns_clicked()
         ui->txt_output_sh1_ai->appendHtml("Processing CVSfixes vulnerabilities...");
         qApp->processEvents();
 
-        //calc half of the dataset
-        int num_half_vulns = num_python_vulns/2;
-        ui->txt_output_sh1_ai->appendHtml("Dividing vulnerability dataset in two. ["+QString("%1").arg(num_python_vulns)+"]");
+
+        /**
+         * @brief processedVulns
+         * get all the vulns and extract into temp folder for manual review
+         * separate ai test/trainig logic from data extraction process
+         */
+
+        QStringList processedVulns = ai.getAndProcess_dataset_vulnerabilities();
+        QString vuln;
+        foreach(vuln, processedVulns){
+            ui->txt_output_sh1_ai->appendHtml("Vulnerability added: "+vuln);
+            qApp->processEvents();
+        }
+        ui->txt_output_sh1_ai->appendHtml("Vulnerability dataset extracted sucessfuly.");
         qApp->processEvents();
 
+         /*
+          *
+
+        //calc half of the dataset [low accuracy -> trying four fifths (80%) for training and 20% for testing]
+        int num_half_vulns = num_python_vulns*0.8;
+        int num_otherhalf_vulns = num_python_vulns*0.2;
+
+        ui->txt_output_sh1_ai->appendHtml("Dividing vulnerability dataset in two for training and testing.");
+        ui->txt_output_sh1_ai->appendHtml(QString("%1").arg(num_python_vulns) + " + " + QString("%1").arg(num_otherhalf_vulns));
+        qApp->processEvents();
 
         //split half the dataset for training
         QStringList processedVulns = ai.get_dataset_first_half(num_half_vulns);
         QString vuln;
         foreach(vuln, processedVulns){
             ui->txt_output_sh1_ai->appendHtml("Training vulnerability added: "+vuln);
-            qApp->processEvents();
+           qApp->processEvents();
         }
         ui->txt_output_sh1_ai->appendHtml("Training vulnerability dataset extracted sucessfuly.");
         qApp->processEvents();
 
-
         //remainder half of the dataset for testing
-        QStringList processedVulnsTest = ai.get_dataset_second_half(num_half_vulns);
+        QStringList processedVulnsTest = ai.get_dataset_second_half(num_otherhalf_vulns);
         foreach(vuln, processedVulns){
             ui->txt_output_sh1_ai->appendHtml("Testing vulnerability added: "+vuln);
             qApp->processEvents();
@@ -602,14 +623,13 @@ void VAITP::on_bt_extract_cvefixes_vulns_clicked()
         ui->txt_output_sh1_ai->appendHtml("Training vulnerability dataset extracted sucessfuly.");
         qApp->processEvents();
 
-
+*/
 
     } else {
         qDebug()<<"There seam to be no Python vulnerabilities in CVSfixes db.. ?? ..";
         ui->txt_output_sh1_ai->appendHtml("There seam to be no Python vulnerabilities in CVSfixes db... aborting.");
 
     }
-
 
 
 
@@ -628,7 +648,7 @@ void VAITP::on_bt_extract_cvefixes_vulns_clicked()
     ui->txt_output_sh1_ai->appendHtml("Number of patches loaded: "+QString("%1").arg(num_python_patches));
     qApp->processEvents();
 
-    //only continue if there are vulnerabilities in the database
+    //only continue if there are patches in the database
     if(num_python_patches>0){
 
 
@@ -637,6 +657,16 @@ void VAITP::on_bt_extract_cvefixes_vulns_clicked()
         ui->txt_output_sh1_ai->appendHtml("Processing CVSfixes patches...");
         qApp->processEvents();
 
+        QStringList processedVulns = ai.getAndProcess_dataset_patches();
+        QString vuln;
+        foreach(vuln, processedVulns){
+            ui->txt_output_sh1_ai->appendHtml("Patch added: "+vuln);
+            qApp->processEvents();
+        }
+        ui->txt_output_sh1_ai->appendHtml("Patches dataset extracted sucessfuly.");
+        qApp->processEvents();
+
+        /*
         //calc half of the dataset
         int num_half_patches = num_python_patches/2;
         ui->txt_output_sh1_ai->appendHtml("Dividing patches dataset in two. ["+QString("%1").arg(num_half_patches)+"]");
@@ -662,7 +692,7 @@ void VAITP::on_bt_extract_cvefixes_vulns_clicked()
         }
         ui->txt_output_sh1_ai->appendHtml("Testing vulnerability dataset extracted sucessfuly.");
         qApp->processEvents();
-
+        */
 
 
     } else {
@@ -690,14 +720,28 @@ void VAITP::on_bt_train_ai_model_clicked()
     ui->txt_output_sh1_ai->appendHtml("Starting AI RNN model training. Please wait...");
     qApp->processEvents();
 
-    //aimodule ai;
-    //ai.trainModule();
+    int spinVal = ui->sb_numEpochs->value();
+    qDebug()<<"spinVal: "<<spinVal;
+
+    int spinValTest = ui->sb_numEpochs_testing->value();
+    int spinValDensity = ui->sb_numRNNDensity->value();
+
+    ui->txt_output_sh1_ai->appendHtml("Number of training epochs set to: "+QString::number(spinVal));
+    qApp->processEvents();
+
+    ui->txt_output_sh1_ai->appendHtml("Number of testing epochs set to: "+QString::number(spinValTest));
+    qApp->processEvents();
+
+    ui->txt_output_sh1_ai->appendHtml("Number of RNN Density set to: "+QString::number(spinValDensity));
+    qApp->processEvents();
+
 
     QProcess p;
     QStringList params;
 
-    params << "../vaitp/trainmodel_textClassificationRNNs_vaitp.py" << "20";
+    params << "../vaitp/trainmodel_textClassificationRNNs_vaitp.py" << QString::number(spinVal) << QString::number(spinValTest) << QString::number(spinValDensity);
     p.start("python", params);
+
 
     QString line;
     while(p.waitForReadyRead())
@@ -707,9 +751,79 @@ void VAITP::on_bt_train_ai_model_clicked()
         qApp->processEvents();
     }
 
+    if(!line.isEmpty()){
+        ui->txt_output_sh1_ai->appendHtml(line.replace("","").trimmed());
+        ui->txt_output_sh1_ai->appendHtml("AI RNN model trained sucesfully.");
+    } else {
+        ui->txt_output_sh1_ai->appendHtml("Error training AI RNN model.\nPlease check dependencies (Python, Tensorflow, and imports of AI RNN Python extenssion).");
+    }
 
-    ui->txt_output_sh1_ai->appendHtml("AI RNN model trained sucesfully.");
 
     ui->bt_train_ai_model->setEnabled(true);
+}
+
+
+void VAITP::on_bt_ai_extract_cvef_diffs_clicked()
+{
+    ui->bt_ai_extract_cvef_diffs->setEnabled(false);
+
+    qDebug() << "[Extract CVEFixes diffs]";
+    ui->txt_output_sh1_ai->appendHtml("Extracting CVEfixes diffs...");
+
+    qDebug() << "deleting old temp files...";
+    ui->txt_output_sh1_ai->appendHtml("Deleting old temp files...");
+    qApp->processEvents();
+
+    aimodule ai;
+    ai.rm_temp_diffs();
+
+    ui->txt_output_sh1_ai->appendHtml("Opening CVEfixes db...");
+    qApp->processEvents();
+
+    ai.opencvefixesdb();
+
+
+    /**
+     *
+     * Process diffs
+     *
+     */
+
+    ui->txt_output_sh1_ai->appendHtml("Quering diffs. Please wait...");
+    qApp->processEvents();
+
+    //count Python diffs
+    int num_python_diffs = ai.cvefixes_count_diffs();
+    ui->txt_output_sh1_ai->appendHtml("Number of diffs loaded: "+QString("%1").arg(num_python_diffs));
+    qApp->processEvents();
+
+    //only continue if there are diffs in the database
+    if(num_python_diffs>0){
+
+        qDebug()<<"Processing CVSfixes diffs...";
+        ui->txt_output_sh1_ai->appendHtml("Processing CVSfixes diffs...");
+        qApp->processEvents();
+
+        QStringList processedVulns = ai.getAndProcess_dataset_diffs();
+        QString vuln;
+        foreach(vuln, processedVulns){
+            ui->txt_output_sh1_ai->appendHtml("Diff added: "+vuln);
+            qApp->processEvents();
+        }
+        ui->txt_output_sh1_ai->appendHtml("Diff dataset extracted sucessfuly.");
+        qApp->processEvents();
+
+
+    } else {
+        qDebug()<<"There seam to be no Python diffs in CVSfixes db.. ?? ..";
+        ui->txt_output_sh1_ai->appendHtml("There seam to be no Python diffs in CVSfixes db... aborting.");
+
+    }
+
+
+
+
+    ui->txt_output_sh1_ai->appendHtml("CVEfixes diffs exctracted sucessfuly.");
+    ui->bt_extract_cvefixes_vulns->setEnabled(true);
 }
 

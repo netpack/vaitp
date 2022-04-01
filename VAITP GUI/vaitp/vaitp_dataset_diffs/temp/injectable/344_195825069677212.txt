@@ -1,0 +1,3 @@
+import lenient_force_utf_8, sanitise_filename_slashes
+\t\t\tfilename = lenient_force_utf_8(request.args["file"][0])
+\t\t\tfilename = sanitise_filename_slashes(os.path.realpath(filename))

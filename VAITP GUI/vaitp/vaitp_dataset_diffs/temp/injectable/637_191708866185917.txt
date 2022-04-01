@@ -1,0 +1,3 @@
+yamlconfig = yaml.load(open(configfile), Loader=yaml.SafeLoader)
+yamlconfig = yaml.safe_load(open(configfile))
+yamlconfig.update(yaml.safe_load(open(includes)))

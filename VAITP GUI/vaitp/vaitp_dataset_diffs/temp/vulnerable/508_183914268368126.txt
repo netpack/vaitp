@@ -1,0 +1,1 @@
+issued = models.DateTimeField(default=timezone.now)

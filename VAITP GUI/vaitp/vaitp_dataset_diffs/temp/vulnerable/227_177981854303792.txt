@@ -1,0 +1,4 @@
+{prog_name} -s http://example.com:8080 -p password client delete -r ABC -c XYZ
+    group.add_argument('-p', '--admin-password',
+                       required=True,
+                       help='admin password')")]}

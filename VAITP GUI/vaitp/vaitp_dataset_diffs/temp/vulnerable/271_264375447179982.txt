@@ -1,0 +1,2 @@
+quteproc_new.open_path(
+        'qute://settings/set?option=search.ignore_case&value=always')")]}

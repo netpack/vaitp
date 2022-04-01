@@ -1,0 +1,2 @@
+def check_credentials(username: str, password: str) -> bool:               
+    return credentials_dict.get(username) == password

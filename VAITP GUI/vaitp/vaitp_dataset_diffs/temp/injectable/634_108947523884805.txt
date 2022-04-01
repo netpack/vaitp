@@ -1,0 +1,16 @@
+if ',' in str(nick):
+return bot.reply('Unable to kick. Kicking multiple users is not allowed.')
+if '
+return bot.reply('Unable to kick. Use of
+if ',' in str(parse_host_mask(trigger.group().split())):
+return bot.reply('Unable to ban. Banning multiple users is not allowed.')
+if '
+return bot.reply('Unable to ban. Use of
+if ',' in str(parse_host_mask(trigger.group().split())):
+return bot.reply('Unable to ban. Banning multiple users is not allowed.')
+if '
+return bot.reply('Unable to ban. Use of
+if ',' in str(nick):
+return bot.reply('Unable to kickban. Kickbanning multiple users is not allowed.')
+if '
+return bot.reply('Unable to kickban. Use of

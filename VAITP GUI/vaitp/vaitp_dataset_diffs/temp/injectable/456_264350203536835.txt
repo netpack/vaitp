@@ -1,0 +1,5 @@
+self.assertContains(response, "&lt;em&gt;please&lt;/em&gt; be polite")
+@override_settings(WAGTAILFORMS_HELP_TEXT_ALLOW_HTML=True)
+def test_get_form_without_help_text_escaping(self):
+response = self.client.get('/contact-us/')
+self.assertContains(response, "<em>please</em> be polite")

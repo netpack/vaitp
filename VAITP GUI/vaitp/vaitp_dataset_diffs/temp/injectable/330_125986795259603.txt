@@ -1,0 +1,1 @@
+self.fallback_success_template = self.read_template("auth_success.html")

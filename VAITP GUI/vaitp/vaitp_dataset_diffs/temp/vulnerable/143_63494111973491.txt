@@ -1,0 +1,4 @@
+def parse_json(raw_data):
+        return json.loads(data)
+
+        return results

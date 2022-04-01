@@ -1,0 +1,65 @@
+import get_color
+style += build_rule(sel + '.completions', display='flex', flex_wrap='wrap', align_items='center')
+style += build_rule(sel + '.completions > div', margin='0.5ex 0.5rem', margin_left='0', padding='0.5ex 0.5rem', border='solid 1px currentColor', border_radius='1ex', cursor='pointer')
+style += build_rule(sel + '.completions > div:active', transform='scale(1.5)')
+style += build_rule(sel + '.completions > div:hover', background=get_color('window-foreground'), color=get_color('window-background'))
+def add_completion(container_id, name):
+pass
+def show_completions(container_id, div, field, prefix, names):
+clear(div)
+completions = E.div(class_='completions')
+div.appendChild(completions)
+for i, name in enumerate(names):
+completions.appendChild(E.div(name, onclick=add_completion.bind(None, container_id, name)))
+if i >= 50:
+break
+def update_completions(container_id, ok, field, names):
+c = document.getElementById(container_id)
+if not c:
+return
+d = c.querySelector(\'div[data-ctype="edit"]\')
+if not d or d.style.display is not 'block':
+return
+div = d.lastChild
+clear(div)
+if not ok:
+err = E.div()
+safe_set_inner_html(err, names)
+div.appendChild(E.div(
+_('Failed to download items for completion, with error:'), err
+))
+return
+val = d.querySelector('input').value or ''
+val = value_to_json(val)
+if jstype(val) is 'string':
+prefix = val
+else:
+prefix = val[-1] if val.length else ''
+if prefix is update_completions.prefix:
+return
+pl = prefix.toLowerCase().strip()
+if pl:
+if pl.startswith(update_completions.prefix.toLowerCase()):
+matching_names = [x for x in update_completions.names if x.toLowerCase().startswith(pl)]
+else:
+matching_names = [x for x in names if x.toLowerCase().startswith(pl)]
+else:
+matching_names = []
+update_completions.prefix = prefix
+update_completions.names = matching_names
+show_completions(container_id, div, field, prefix, matching_names)
+update_completions.ui_to_list = None
+update_completions.list_to_ui = None
+update_completions.names = v'[]'
+update_completions.prefix = ''
+def line_edit_updated(container_id, field):
+field_names_for(field, update_completions.bind(None, container_id))
+update_completions.ui_to_list = ui_to_list
+update_completions.list_to_ui = list_to_ui
+le = E.input(type='text', name=name.replace('
+div.appendChild(E.div(E.span(_('Loading all {}...').format(name)), style='margin: 0.5ex 1rem'))
+field_names_for(field, update_completions.bind(None, container_id))
+update_completions.ui_to_list = None
+update_completions.list_to_ui = None
+update_completions.names = v'[]'
+update_completions.prefix = ''

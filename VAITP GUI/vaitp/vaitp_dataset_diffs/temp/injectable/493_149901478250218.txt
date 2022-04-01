@@ -1,0 +1,93 @@
+import date, datetime
+import PropertyError, ValidationError
+Raises:
+ValidationError: Raised when the default value fails to be converted to the expected type
+if self.default is not None:
+self.default = self._validate_default(default=self.default)
+def _validate_default(self, default: Any) -> Any:
+
+raise ValidationError
+def get_type_string(self, no_optional: bool = False) -> str:
+if self.required or no_optional:
+def _validate_default(self, default: Any) -> str:
+return f\'"{utils.remove_string_escapes(default)}"\'
+_type_string: ClassVar[str] = "datetime.datetime"
+imports.update({"import datetime", "import cast"})
+def _validate_default(self, default: Any) -> str:
+for format_string in ("%Y-%m-%dT%H:%M:%S", "%Y-%m-%dT%H:%M:%S%z"):
+try:
+return repr(datetime.strptime(default, format_string))
+except (TypeError, ValueError):
+continue
+raise ValidationError
+_type_string: ClassVar[str] = "datetime.date"
+imports.update({"import datetime", "import cast"})
+def _validate_default(self, default: Any) -> str:
+try:
+return repr(date.fromisoformat(default))
+except (TypeError, ValueError) as e:
+raise ValidationError() from e
+def _validate_default(self, default: Any) -> float:
+try:
+return float(default)
+except (TypeError, ValueError) as e:
+raise ValidationError() from e
+def _validate_default(self, default: Any) -> int:
+try:
+return int(default)
+except (TypeError, ValueError) as e:
+raise ValidationError() from e
+def _validate_default(self, default: Any) -> bool:
+return bool(default)
+def get_type_string(self, no_optional: bool = False) -> str:
+if self.required or no_optional:
+def _validate_default(self, default: Any) -> str:
+if not isinstance(default, list):
+raise ValidationError()
+default = list(map(self.inner_property._validate_default, default))
+if isinstance(self.inner_property, RefProperty):
+default = str(default).replace("\'", "")
+return f"field(default_factory=lambda: cast({self.get_type_string()}, {default}))"
+def get_type_string(self, no_optional: bool = False) -> str:
+if self.required or no_optional:
+def _validate_default(self, default: Any) -> Any:
+for property in self.inner_properties:
+try:
+val = property._validate_default(default)
+return val
+except ValidationError:
+continue
+raise ValidationError()
+super().__post_init__()
+def get_type_string(self, no_optional: bool = False) -> str:
+if self.required or no_optional:
+sanitized_key = utils.fix_keywords(utils.sanitize(key))
+output[sanitized_key] = utils.remove_string_escapes(value)
+def _validate_default(self, default: Any) -> str:
+inverse_values = {v: k for k, v in self.values.items()}
+try:
+return f"{self.reference.class_name}.{inverse_values[default]}"
+except KeyError as e:
+raise ValidationError() from e
+def get_type_string(self, no_optional: bool = False) -> str:
+if self.required or no_optional:
+def _validate_default(self, default: Any) -> Any:
+enum = EnumProperty.get_enum(self.reference.class_name)
+if enum:
+return enum._validate_default(default)
+else:
+raise ValidationError
+template: ClassVar[str] = "dict_property.pyi"
+def _validate_default(self, default: Any) -> str:
+if isinstance(default, dict):
+return repr(default)
+raise ValidationError
+def _property_from_data(
+name = utils.remove_string_escapes(name)
+def property_from_data(
+name: str, required: bool, data: Union[oai.Reference, oai.Schema]
+) -> Union[Property, PropertyError]:
+try:
+return _property_from_data(name=name, required=required, data=data)
+except ValidationError:
+return PropertyError(detail="Failed to validate default value", data=data)

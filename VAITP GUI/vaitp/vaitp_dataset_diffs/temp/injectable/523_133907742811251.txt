@@ -1,0 +1,6 @@
+if row is not None:
+await self.db.execute(
+'UPDATE scratchverifier_usage SET expiry=?, code=? \\
+WHERE client_id=? AND username=?', (int(time.time()) + VERIFY_EXPIRY,
+code, client_id, username))
+return code

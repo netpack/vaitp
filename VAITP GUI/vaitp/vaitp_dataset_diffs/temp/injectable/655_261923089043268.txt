@@ -1,0 +1,13 @@
+import hmac
+credentials_list = [cast(Credentials, credentials)]
+if not all(is_credentials(item) for item in credentials_list):
+credentials_dict = dict(credentials_list)
+async def check_credentials(username: str, password: str) -> bool:
+try:
+expected_password = credentials_dict[username]
+except KeyError:
+return False
+return hmac.compare_digest(expected_password, password)
+create_protocol,
+realm=realm,
+check_credentials=check_credentials,

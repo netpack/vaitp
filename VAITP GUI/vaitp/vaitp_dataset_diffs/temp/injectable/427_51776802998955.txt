@@ -1,0 +1,115 @@
+import TestCase, SynchronousTestCase
+import (
+MethodInjectionTestsMixin,
+URIInjectionTestsMixin,
+)
+class AgentMethodInjectionTests(
+FakeReactorAndConnectMixin,
+MethodInjectionTestsMixin,
+SynchronousTestCase,
+):
+"""
+Test L{client.Agent} against HTTP method injections.
+"""
+def attemptRequestWithMaliciousMethod(self, method):
+"""
+Attempt a request with the provided method.
+@param method: see L{MethodInjectionTestsMixin}
+"""
+agent = client.Agent(self.createReactor())
+uri = b"http://twisted.invalid"
+agent.request(method, uri, client.Headers(), None)
+class AgentURIInjectionTests(
+FakeReactorAndConnectMixin,
+URIInjectionTestsMixin,
+SynchronousTestCase,
+):
+"""
+Test L{client.Agent} against URI injections.
+"""
+def attemptRequestWithMaliciousURI(self, uri):
+"""
+Attempt a request with the provided method.
+@param uri: see L{URIInjectionTestsMixin}
+"""
+agent = client.Agent(self.createReactor())
+method = b"GET"
+agent.request(method, uri, client.Headers(), None)
+class RequestMethodInjectionTests(
+MethodInjectionTestsMixin,
+SynchronousTestCase,
+):
+"""
+Test L{client.Request} against HTTP method injections.
+"""
+def attemptRequestWithMaliciousMethod(self, method):
+"""
+Attempt a request with the provided method.
+@param method: see L{MethodInjectionTestsMixin}
+"""
+client.Request(
+method=method,
+uri=b"http://twisted.invalid",
+headers=http_headers.Headers(),
+bodyProducer=None,
+)
+class RequestWriteToMethodInjectionTests(
+MethodInjectionTestsMixin,
+SynchronousTestCase,
+):
+"""
+Test L{client.Request.writeTo} against HTTP method injections.
+"""
+def attemptRequestWithMaliciousMethod(self, method):
+"""
+Attempt a request with the provided method.
+@param method: see L{MethodInjectionTestsMixin}
+"""
+headers = http_headers.Headers({b"Host": [b"twisted.invalid"]})
+req = client.Request(
+method=b"GET",
+uri=b"http://twisted.invalid",
+headers=headers,
+bodyProducer=None,
+)
+req.method = method
+req.writeTo(StringTransport())
+class RequestURIInjectionTests(
+URIInjectionTestsMixin,
+SynchronousTestCase,
+):
+"""
+Test L{client.Request} against HTTP URI injections.
+"""
+def attemptRequestWithMaliciousURI(self, uri):
+"""
+Attempt a request with the provided URI.
+@param method: see L{URIInjectionTestsMixin}
+"""
+client.Request(
+method=b"GET",
+uri=uri,
+headers=http_headers.Headers(),
+bodyProducer=None,
+)
+class RequestWriteToURIInjectionTests(
+URIInjectionTestsMixin,
+SynchronousTestCase,
+):
+"""
+Test L{client.Request.writeTo} against HTTP method injections.
+"""
+def attemptRequestWithMaliciousURI(self, uri):
+"""
+Attempt a request with the provided method.
+@param method: see L{URIInjectionTestsMixin}
+"""
+headers = http_headers.Headers({b"Host": [b"twisted.invalid"]})
+req = client.Request(
+method=b"GET",
+uri=b"http://twisted.invalid",
+headers=headers,
+bodyProducer=None,
+)
+req.uri = uri
+req.writeTo(StringTransport())

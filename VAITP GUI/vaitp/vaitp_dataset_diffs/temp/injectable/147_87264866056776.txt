@@ -1,0 +1,2 @@
+if blocksize <= 0:
+raise SyntaxError('invalid block header')

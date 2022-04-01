@@ -1,0 +1,1 @@
+DEFAULT_ALLOW_UNSAFE_LOOKUPS = get_config(p, DEFAULTS, 'allow_unsafe_lookups', None, False, value_type='boolean')

@@ -1,0 +1,18 @@
+import config, ical, pathutils
+def _filesystem_path(self):
+return pathutils.path_to_filesystem(self.path, FOLDER)
+return self._filesystem_path + ".props"
+if not os.path.exists(os.path.dirname(self._filesystem_path)):
+os.makedirs(os.path.dirname(self._filesystem_path))
+with open(self._filesystem_path, "w") as fd:
+os.remove(self._filesystem_path)
+with open(self._filesystem_path) as fd:
+filesystem_path = pathutils.path_to_filesystem(path, FOLDER)
+_, directories, files = next(os.walk(filesystem_path))
+filesystem_path = pathutils.path_to_filesystem(path, FOLDER)
+return os.path.isdir(filesystem_path)
+filesystem_path = pathutils.path_to_filesystem(path, FOLDER)
+return (os.path.isfile(filesystem_path) and not
+filesystem_path.endswith(".props"))
+modification_time = \\
+time.gmtime(os.path.getmtime(self._filesystem_path))

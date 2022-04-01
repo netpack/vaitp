@@ -1,0 +1,2 @@
+context["html"] = context.get("html", {})
+context["html"]["meta_referrer"] = settings.HTML_META_REFERRER

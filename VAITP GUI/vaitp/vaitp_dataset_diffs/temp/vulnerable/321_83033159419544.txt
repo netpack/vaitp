@@ -1,0 +1,2 @@
+PATH = "/state/(?P<context>[^/]*)/?"
+

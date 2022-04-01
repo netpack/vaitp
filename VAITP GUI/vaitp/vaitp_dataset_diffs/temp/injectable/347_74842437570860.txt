@@ -1,0 +1,15 @@
+funcdef: 'def' NAME parameters ['->' test] ':' [TYPE_COMMENT] func_body_suite
+typedargslist: (tfpdef ['=' test] (',' [TYPE_COMMENT] tfpdef ['=' test])* (TYPE_COMMENT | [',' [TYPE_COMMENT] [
+'*' [tfpdef] (',' [TYPE_COMMENT] tfpdef ['=' test])* (TYPE_COMMENT | [',' [TYPE_COMMENT] ['**' tfpdef [','] [TYPE_COMMENT]]])
+| '**' tfpdef [','] [TYPE_COMMENT]]])
+| '*' [tfpdef] (',' [TYPE_COMMENT] tfpdef ['=' test])* (TYPE_COMMENT | [',' [TYPE_COMMENT] ['**' tfpdef [','] [TYPE_COMMENT]]])
+| '**' tfpdef [','] [TYPE_COMMENT])
+[('=' (yield_expr|testlist_star_expr))+ [TYPE_COMMENT]] )
+for_stmt: 'for' exprlist 'in' testlist ':' [TYPE_COMMENT] suite ['else' ':' suite]
+with_stmt: 'with' with_item (',' with_item)*  ':' [TYPE_COMMENT] suite
+func_body_suite: simple_stmt | NEWLINE [TYPE_COMMENT NEWLINE] INDENT stmt+ DEDENT
+func_type_input: func_type NEWLINE* ENDMARKER
+func_type: '(' [typelist] ')' '->' test
+typelist: (test (',' test)* [','
+['*' [test] (',' test)* [',' '**' test] | '**' test]]
+|  '*' [test] (',' test)* [',' '**' test] | '**' test)

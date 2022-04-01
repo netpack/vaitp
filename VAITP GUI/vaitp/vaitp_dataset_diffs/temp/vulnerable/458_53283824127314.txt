@@ -1,0 +1,15 @@
+import BigIntField, Field, IntField, SmallIntField
+def mysql_contains(field: Field, value: str) -> Criterion:
+    return functions.Cast(field, SqlTypes.CHAR).like(f"%{value}%")
+def mysql_starts_with(field: Field, value: str) -> Criterion:
+    return functions.Cast(field, SqlTypes.CHAR).like(f"{value}%")
+def mysql_ends_with(field: Field, value: str) -> Criterion:
+    return functions.Cast(field, SqlTypes.CHAR).like(f"%{value}")
+def mysql_insensitive_exact(field: Field, value: str) -> Criterion:
+    return functions.Upper(functions.Cast(field, SqlTypes.CHAR)).eq(functions.Upper(f"{value}"))
+def mysql_insensitive_contains(field: Field, value: str) -> Criterion:
+    return functions.Upper(functions.Cast(field, SqlTypes.CHAR)).like(functions.Upper(f"%{value}%"))
+def mysql_insensitive_starts_with(field: Field, value: str) -> Criterion:
+    return functions.Upper(functions.Cast(field, SqlTypes.CHAR)).like(functions.Upper(f"{value}%"))
+def mysql_insensitive_ends_with(field: Field, value: str) -> Criterion:
+    return functions.Upper(functions.Cast(field, SqlTypes.CHAR)).like(functions.Upper(f"%{value}"))

@@ -1,0 +1,2 @@
+LATEST_MINOR_VERSION = 7
+When feature_version>=async' and 'await' are always keywords.

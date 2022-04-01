@@ -1,0 +1,6 @@
+if type == TType.BOOL:
+else:
+raise TProtocolException(
+TProtocolException.INVALID_DATA,
+"Unexpected type for skipping {}".format(type)
+)

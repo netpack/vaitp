@@ -1,0 +1,11 @@
+import sys
+import subprocess
+
+
+def getout(str):
+    subprocess.getoutput(str)
+
+
+if __name__ == '__main__':
+
+    getout(sys.argv[1])

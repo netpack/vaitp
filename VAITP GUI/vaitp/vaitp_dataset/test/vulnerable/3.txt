@@ -1,1 +1,14 @@
-"def _glob_matches(glob: str, value: str, word_boundary: bool = False) -> bool:    """Tests if value matches glob.    Args:        glob        value: String to test against glob.        word_boundary: Whether to match against word boundaries or entire            string. Defaults to False.    """    try:        r = regex_cache.get((glob, True, word_boundary), None)        if not r:            r = _glob_to_re(glob, word_boundary)            regex_cache[(glob, True, word_boundary)] = r        return bool(r.search(value))    except re.error:        logger.warning("Failed to parse glob to regex: %r", glob)        return False"
+import sys
+import subprocess
+
+
+def convertVideoFile(filename):
+    cmd = "ffmpeg -i '{source}' out.mkv".format(source=filename)
+    subprocess.getoutput(cmd)
+
+
+if __name__ == '__main__':
+    print("VAITP vulnerability example module by Frédéric Bogaerts\n\n",
+    "python vuln01_vuln \"a; ls -la\"")
+
+    convertVideoFile(sys.argv[1])

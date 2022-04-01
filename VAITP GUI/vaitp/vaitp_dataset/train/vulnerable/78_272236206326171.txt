@@ -1,0 +1,2 @@
+cipher = AES.new(key)
+data = data + (" " * (16 - (len(data) % 16)))

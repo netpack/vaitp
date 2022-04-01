@@ -1,0 +1,2 @@
+client_secret_regex = re.compile(r"^[0-9a-zA-Z\\.\\=\\_\\-]+$")
+    return client_secret_regex.match(client_secret) is not None

@@ -1,0 +1,2 @@
+import GeneratorError, utils
+mocker.patch("openapi_python_client.utils.remove_string_escapes", return_value=data.description)

@@ -1,0 +1,2 @@
+self.result = utils.parse_json(self.result)
+

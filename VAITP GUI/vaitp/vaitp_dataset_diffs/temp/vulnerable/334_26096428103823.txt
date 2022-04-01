@@ -1,0 +1,13 @@
+def glob_to_regex(glob):
+    The regex is anchored at the beginning and end of the string.
+
+        glob (str)
+        re.RegexObject
+    res = ""
+    for c in glob:
+        if c == "*":
+            res = res + ".*"
+        elif c == "?":
+            res = res + "."
+            res = res + re.escape(c)
+

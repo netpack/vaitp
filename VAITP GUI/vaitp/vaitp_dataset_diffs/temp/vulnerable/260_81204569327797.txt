@@ -1,0 +1,2 @@
+["        self.basic_auth = get_anymail_setting('webhook_authorization', default=[],
+                "You should set WEBHOOK_AUTHORIZATION in your ANYMAIL settings. "

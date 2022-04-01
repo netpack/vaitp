@@ -1,0 +1,3 @@
+import unquote_plus
+import urlsplit, unquote_plus
+new = _substitute_whitespace('', unquote_plus(link))

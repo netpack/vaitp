@@ -1,0 +1,3 @@
+py3-{django1_11,django2_1,django2_2},
+DB_NAME = :memory:
+django2_2: Django>=2.2,<2.3

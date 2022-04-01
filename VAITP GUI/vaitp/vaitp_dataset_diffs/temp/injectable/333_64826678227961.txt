@@ -1,0 +1,3 @@
+import glob_to_regex, re_word_boundary
+r1 = re_word_boundary(r1)
+r = glob_to_regex(glob, word_boundary)

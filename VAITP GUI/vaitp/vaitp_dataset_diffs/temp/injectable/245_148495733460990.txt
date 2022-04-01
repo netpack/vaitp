@@ -1,0 +1,4 @@
+if msg['from'].bare == self.xmpp.boundjid.bare:
+self.xmpp.event('carbon_received', msg)
+if msg['from'].bare == self.xmpp.boundjid.bare:
+self.xmpp.event('carbon_sent', msg)

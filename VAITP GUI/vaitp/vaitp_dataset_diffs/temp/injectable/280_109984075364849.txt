@@ -1,0 +1,12 @@
+ip_range_blacklist = config.get("ip_range_blacklist", [])
+self.ip_range_blacklist = IPSet(ip_range_blacklist)
+except Exception as e:
+raise ConfigError("Invalid range(s) provided in ip_range_blacklist: %s" % e)
+self.ip_range_blacklist.update(["0.0.0.0", "::"])
+federation_ip_range_blacklist = config.get(
+"federation_ip_range_blacklist", ip_range_blacklist
+)
+try:
+self.federation_ip_range_blacklist = IPSet(federation_ip_range_blacklist)
+self.federation_ip_range_blacklist.update(["0.0.0.0", "::"])
+ip_range_blacklist:

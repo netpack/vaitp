@@ -1,0 +1,2 @@
+["def parse(source, filename='<unknown>', mode='exec'):
+    return compile(source, filename, mode, PyCF_ONLY_AST)

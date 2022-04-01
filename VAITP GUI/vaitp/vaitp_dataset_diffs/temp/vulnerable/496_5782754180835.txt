@@ -1,0 +1,16 @@
+import PropertyError
+class TestStringProperty:
+    def test___post_init__(self):
+        import StringProperty
+        sp = StringProperty(name="test", required=True, default="A Default Value",)
+        assert sp.default == \'"A Default Value"\'
+            "import datetime",
+            "import datetime",
+            "import date",
+            "import date",
+class TestDictProperty:
+    def test___post_init__(self):
+        import DictProperty
+        p = DictProperty(name="blah", required=True, default={})
+        assert p.default == "field(default_factory=lambda: cast(Dict[Any, Any], {}))"
+        FloatProperty.assert_called_once_with(name=f"{name}_item", required=True, default="0.0")

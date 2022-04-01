@@ -1,0 +1,6 @@
+def _sanitize(value: str) -> str:
+    return re.sub(r"[^\\w _-]+", "", value)
+    value = re.sub(r"([A-Z]{2,})([A-Z][a-z]|[ -_]|$)", lambda m: m.group(1).title() + m.group(2), value.strip())
+    return stringcase.snakecase(group_title(_sanitize(value)))
+    return stringcase.pascalcase(_sanitize(value))
+    return stringcase.spinalcase(group_title(_sanitize(value)))

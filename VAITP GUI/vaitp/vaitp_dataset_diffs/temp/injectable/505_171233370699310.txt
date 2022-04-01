@@ -1,0 +1,5 @@
+import HTTP_400_BAD_REQUEST, HTTP_403_FORBIDDEN
+if request.user.is_superuser:
+if not config.is_sensitive(name) or request.is_superuser:
+return FormattedResponse(config.get(name))
+return FormattedResponse(status=HTTP_403_FORBIDDEN)

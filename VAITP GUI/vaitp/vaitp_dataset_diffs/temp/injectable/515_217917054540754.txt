@@ -1,0 +1,7 @@
+import apfell, links, use_ssl, db_objects
+import app.database_models.model as db_model
+query = await db_model.payloadtype_query()
+try:
+payloadtype = await db_objects.get(query, ptype=data)
+except Exception as e:
+data = ""

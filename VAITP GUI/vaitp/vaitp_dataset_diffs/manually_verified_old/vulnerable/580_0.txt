@@ -1,0 +1,3 @@
+return Response(json.dumps({'key': key, 'value': get_preferences()[key]})
+return Response(json.dumps({'key': key, 'error': 'novalue'}))
+return Response(json.dumps({'key': key, 'success': ''})), 201")

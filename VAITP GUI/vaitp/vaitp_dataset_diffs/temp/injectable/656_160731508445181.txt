@@ -1,0 +1,8 @@
+import hmac
+return hmac.compare_digest(password, "iloveyou")
+def test_basic_auth_invalid_username(self):
+with self.assertRaises(InvalidStatusCode) as raised:
+self.start_client(user_info=("goodbye", "iloveyou"))
+self.assertEqual(raised.exception.status_code, 401)
+@with_server(create_protocol=create_protocol)
+def test_basic_auth_invalid_password(self):

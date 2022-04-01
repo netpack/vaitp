@@ -1,0 +1,4 @@
+import quote
+\t\targs = [self.jadx, dex, "-d", self.tempdir, "--deobf"]
+\t\tcomm = "%s" % (" ".join(quote(arg) for arg in args))
+\t\tos.system(comm)

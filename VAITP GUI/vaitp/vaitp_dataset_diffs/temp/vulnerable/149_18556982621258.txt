@@ -1,0 +1,3 @@
+return (\'<img src="%s" width="%s" height="%s" alt="%s" \'
+                \'     class="gravatar"/>\' %
+                (url, size, size, user.get_full_name() or user.username))

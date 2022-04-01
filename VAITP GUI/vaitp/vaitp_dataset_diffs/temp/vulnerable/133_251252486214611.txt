@@ -1,0 +1,1 @@
+["                ) % {'url': request.path + '?tags=' + request.REQUESTtags']}")]}

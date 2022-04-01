@@ -1,0 +1,3 @@
+["    version='1.0.4',
+    url='https://github.com/jptomo/ansible-vault',
+    tests_require=pytest', 'testfixtures'],")]}

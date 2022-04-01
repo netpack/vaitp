@@ -1,0 +1,1 @@
+federation_http_client=None, homeserver_to_use=GenericWorkerServer

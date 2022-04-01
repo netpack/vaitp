@@ -1,0 +1,2 @@
+["        unichrs = lambda s: ''.join(map(chr, map(eval, s.split('+'))))
+                data = line.split('

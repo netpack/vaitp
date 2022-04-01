@@ -1,0 +1,5 @@
+if value['url'].startswith('https://pypi.python.org'):
+verify = os.path.join(os.path.dirname(__file__), 'pypi.pem')
+else:
+verify = value['url'].startswith('https:')
+resp = requests.get(value['url'], verify=verify)

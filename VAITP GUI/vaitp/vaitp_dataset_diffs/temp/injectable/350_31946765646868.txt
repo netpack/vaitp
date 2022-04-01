@@ -1,0 +1,2 @@
+self.assertEqual(v.names_with_seq,
+['Module', 'Module', 'Interactive', 'FunctionType', 'Suite'])

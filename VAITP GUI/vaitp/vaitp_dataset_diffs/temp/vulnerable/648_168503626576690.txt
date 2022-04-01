@@ -1,0 +1,9 @@
+__version__ = "1.0.0"
+                    ov = {
+                        ctx.guild.default_role: discord.PermissionOverwrite(
+                            view_channel=False, connect=False
+                        ),
+                        ctx.author: discord.PermissionOverwrite(
+                            view_channel=True, connect=True, speak=True, manage_channels=True
+                        ),
+                    }

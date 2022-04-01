@@ -1,0 +1,2 @@
+tx = self.main_window.wallet.make_unsigned_transaction(coins, outputs, self.main_window.config, fee, None)
+

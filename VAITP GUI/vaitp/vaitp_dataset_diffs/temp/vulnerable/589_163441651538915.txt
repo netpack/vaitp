@@ -1,0 +1,5 @@
+["if !exists('g:syntastic_avrgcc_config_file')
+    let g:syntastic_avrgcc_config_file = '.syntastic_avrgcc_config'
+endif
+
+        \\ 'args_before': syntastic

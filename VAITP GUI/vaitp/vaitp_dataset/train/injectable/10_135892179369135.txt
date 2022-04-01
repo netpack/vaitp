@@ -1,0 +1,15 @@
+import getSecurityManager
+validate = getSecurityManager().validate
+found = traversePathElement(object, name, path_items,
+request=request)
+if name == '_':
+    warnings.warn('Traversing to the name `_` is deprecated and will be removed in Zope 6.', DeprecationWarning)
+object = found
+continue
+if name.startswith('_'):
+    raise NotFound(name)
+try:
+    validate(object, object, name, found)
+    object = found
+except Unauthorized:
+    raise NotFound(name)

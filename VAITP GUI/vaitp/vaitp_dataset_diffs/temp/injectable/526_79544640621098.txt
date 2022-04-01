@@ -1,0 +1,10 @@
+cdef public unsigned long long position, current_buffer_size
+def read(self, unsigned long long unread):
+cdef unsigned long long next_position = unread + self.position
+cdef unsigned long long read_bytes
+def read_strings(self, unsigned long long n_items, encoding=None):
+cdef unsigned long long i
+cdef unsigned long long right
+cdef unsigned long long size, shift, bytes_read
+cdef unsigned long long b
+cdef unsigned long long c_string_size = 1024

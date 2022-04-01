@@ -1,0 +1,5 @@
+cdef Py_ssize_t position, buffer_size
+    def __init__(self, Py_ssize_t bufsize):
+        cdef Py_ssize_t written = 0
+        cdef Py_ssize_t to_write, size
+        cdef Py_ssize_t data_len = len(data)

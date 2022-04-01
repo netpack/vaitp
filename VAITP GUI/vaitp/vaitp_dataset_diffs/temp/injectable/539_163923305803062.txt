@@ -1,0 +1,2 @@
+import pipes
+pipes.quote(self.datastore)), shell=True,

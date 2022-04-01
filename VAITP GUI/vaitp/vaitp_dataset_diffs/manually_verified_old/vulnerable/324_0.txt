@@ -1,0 +1,1 @@
+"server", http_client=None, federation_sender=Mock()

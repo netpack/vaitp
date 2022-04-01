@@ -1,0 +1,1 @@
+'http://testserver/accounts/login/code/?code={}'.format(login_code.code)

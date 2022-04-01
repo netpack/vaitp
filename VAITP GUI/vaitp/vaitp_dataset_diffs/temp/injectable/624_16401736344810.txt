@@ -1,0 +1,14 @@
+def check_restricted_access(self, obj):
+rop_info = obj.rolesOfPermission(view)
+allowed_roles = sorted([x['name'] for x in rop_info
+if x['selected']])
+self.assertEqual(allowed_roles, ['Manager', 'Owner'])
+self.assertFalse(obj.acquiredRolesAreUsedBy(view))
+self.check_restricted_access(file_ob)
+self.check_restricted_access(tool.snapshots)
+self.check_restricted_access(snapshot)
+for obj in snapshot.objectValues():
+self.check_restricted_access(obj)
+if hasattr(aq_base(obj), 'objectValues'):
+for child in obj.objectValues():
+self.check_restricted_access(child)

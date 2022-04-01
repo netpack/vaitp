@@ -1,0 +1,8 @@
+import BasicCriterion, Criterion, Equality, Term, ValueWrapper
+    return field.like(f"%{value}%")
+    return field.like(f"{value}%")
+    return field.like(f"%{value}")
+    return Upper(field).eq(Upper(f"{value}"))
+    return Upper(field).like(Upper(f"%{value}%"))
+    return Upper(field).like(Upper(f"{value}%"))
+    return Upper(field).like(Upper(f"%{value}"))

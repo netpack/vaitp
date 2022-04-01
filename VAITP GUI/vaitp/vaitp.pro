@@ -10,12 +10,14 @@ CONFIG += c++11
 
 SOURCES += \
     aimodule.cpp \
+    cleanermodule.cpp \
     detectionmodule.cpp \
     main.cpp \
     vaitp.cpp
 
 HEADERS += \
     aimodule.h \
+    cleanermodule.h \
     detectionmodule.h \
     vaitp.h
 

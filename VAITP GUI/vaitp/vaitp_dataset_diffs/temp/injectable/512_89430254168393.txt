@@ -1,0 +1,6 @@
+import random
+error_messages={"unique": _("A user with that username already exists.")},
+state_actor = models.BooleanField(default=False)
+def has_2fa(self):
+return self.totp_device is not None and self.totp_device.verified
+return not self.has_2fa() and config.get(

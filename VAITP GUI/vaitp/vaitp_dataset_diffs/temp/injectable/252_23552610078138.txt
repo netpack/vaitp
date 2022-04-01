@@ -1,0 +1,4 @@
+'Flask-Security-Fork==1.8.2',
+'psycopg2==2.6.2',
+'bcrypt==3.1.2',
+'cryptography==1.7.1',

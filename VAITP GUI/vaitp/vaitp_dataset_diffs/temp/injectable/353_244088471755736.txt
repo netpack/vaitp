@@ -1,0 +1,13 @@
+static int obj2ast_string(PyObject* obj, PyObject** out, PyArena* arena)
+{
+if (!PyUnicode_CheckExact(obj) && !PyBytes_CheckExact(obj)) {
+PyErr_SetString(PyExc_TypeError, "AST string must be of type str");
+return 1;
+}
+return obj2ast_object(obj, out, arena);
+}
+self.emit('if (PyModule_AddIntMacro(m, PyCF_TYPE_COMMENTS) < 0)', 1)
+self.emit("return NULL;", 2)
+/* and 3 for "func_type" */
+char *req_name[] = {"Module", "Expression", "Interactive", "FunctionType"};
+assert(0 <= mode && mode <= 3);

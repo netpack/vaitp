@@ -1,0 +1,4 @@
+import QName, XMLParser, XMLSyntaxError, parse
+return parse(BytesIO(xml))
+parser = XMLParser(recover=True)
+return parse(BytesIO(xml), parser)

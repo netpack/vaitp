@@ -1,0 +1,8 @@
+["        fields = id', 'username', 'is_staff', 'bio', 'discord', 'discordid', 'twitter', 'reddit', 'team',
+                  'points', 'is_visible', 'is_active', 'solves', 'team_name', 'leaderboard_points', 'date_joined',
+                  'incorrect_solves']
+                  'leaderboard_points', 'date_joined', 'incorrect_solves']
+                  'points', 'is_visible', 'is_active', 'team_name', 'leaderboard_points', 'date_joined']
+                  'totp_status', 'points', 'solves', 'team_name', 'leaderboard_points', 'date_joined',
+        read_only_fields = id', 'is_staff', 'team', 'email', 'totp_status', 'points',
+                            'leaderboard_points', 'date_joined', 'incorrect_solves']")]}

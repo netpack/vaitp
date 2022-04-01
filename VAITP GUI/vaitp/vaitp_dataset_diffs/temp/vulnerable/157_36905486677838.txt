@@ -1,0 +1,5 @@
+import array
+import bytes_type, unicode_type
+
+try:
+    xrange

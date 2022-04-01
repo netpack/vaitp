@@ -1,0 +1,6 @@
+MAX_LENGTH = 128 * 1024
+raise HTTPException(Length required.")
+if length < 0:
+raise HTTPException(Length required.")
+if length > self.MAX_LENGTH:
+raise HTTPException(Request entity too large.")

@@ -1,0 +1,3 @@
+import is_valid_hostname
+        if not is_valid_hostname(json_request["origin"]):
+            raise InvalidServerName("X-Matrix header\'s origin parameter must be a valid hostname")

@@ -1,0 +1,33 @@
+def sanitized_join(path: str, root: pathlib.Path) -> pathlib.Path:
+    result = (root / path).absolute()
+    if not str(result).startswith(str(root) + "/"):
+        raise ValueError("resulting path is outside root")
+    return result
+
+
+def get_paths(base_path: pathlib.Path):
+    data_file = pathlib.Path(str(base_path) + ".data")
+    metadata_file = pathlib.Path(str(base_path) + ".meta")
+def get_info(path: str, root: pathlib.Path) -> typing.Tuple), '    dest_path = sanitized_join(
+        path,
+        pathlib.Path(app.config["DATA_ROOT"]),
+    )
+
+    data_file, metadata_file = get_paths(dest_path)
+        dest_path = sanitized_join(
+            path,
+            pathlib.Path(app.config["DATA_ROOT"]),
+        )
+    except ValueError:
+    dest_path.parent.mkdir(parents=True, exist_ok=True, mode=0o770)
+    data_file, metadata_file = get_paths(dest_path)
+        data_file, metadata = get_info(
+            path,
+            pathlib.Path(app.config["DATA_ROOT"])
+        )
+    except (OSError, ValueError):
+        data_file, metadata = get_info(
+            path,
+            pathlib.Path(app.config["DATA_ROOT"])
+        )
+    except (OSError, ValueError):

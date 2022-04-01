@@ -1,0 +1,3 @@
+info = SenderInfo(sender, conn)
+
+

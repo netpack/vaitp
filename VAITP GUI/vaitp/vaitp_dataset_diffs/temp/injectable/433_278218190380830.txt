@@ -1,0 +1,2 @@
+allowed_paths = VerifyUserMiddleware()._get_allowed_paths(has_device=False)
+allowed_paths = VerifyUserMiddleware()._get_allowed_paths(has_device=False)

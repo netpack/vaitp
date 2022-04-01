@@ -1,0 +1,2 @@
+tree = ElementTree.fromstring(xml_string)
+    element_tree = ElementTree.fromstring(xml_string)

@@ -1,0 +1,3 @@
+except:
+
+    def connectionLost(self, reason = connectionDone) -> None:

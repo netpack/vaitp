@@ -1,0 +1,1 @@
+opts = dict(opts, domain_override=request.META['HTTP_HOST'])

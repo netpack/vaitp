@@ -1,0 +1,1 @@
+self.package_description: str = f"A client library for accessing {self.openapi.title}"

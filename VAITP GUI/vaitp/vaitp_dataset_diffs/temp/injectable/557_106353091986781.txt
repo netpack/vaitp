@@ -1,0 +1,14 @@
+def test_email_auth_backend_empty_password(self) -> None:
+user_profile = self.example_user('hamlet')
+password = "testpassword"
+user_profile.set_password(password)
+user_profile.save()
+self.assertIsNotNone(EmailAuthBackend().authenticate(username=self.example_email('hamlet'),
+password=password,
+realm=get_realm("zulip")))
+password = ""
+user_profile.set_password(password)
+user_profile.save()
+self.assertIsNone(EmailAuthBackend().authenticate(username=self.example_email('hamlet'),
+password=password,
+realm=get_realm("zulip")))

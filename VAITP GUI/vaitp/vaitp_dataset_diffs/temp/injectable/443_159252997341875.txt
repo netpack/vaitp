@@ -1,0 +1,4 @@
+pos = s.find(b"\\r\\n\\r\\n")
+if pos >= 0:
+pos += 4
+return pos

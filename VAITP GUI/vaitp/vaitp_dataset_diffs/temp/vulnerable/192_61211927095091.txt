@@ -1,0 +1,16 @@
+import config, ical
+    def _path(self):
+        return os.path.join(FOLDER, self.path.replace("/", os.sep))
+        return self._path + ".props"
+        if not os.path.exists(os.path.dirname(self._path)):
+            os.makedirs(os.path.dirname(self._path))
+        with open(self._path, "w") as fd:
+        os.remove(self._path)
+            with open(self._path) as fd:
+        abs_path = os.path.join(FOLDER, path.replace("/", os.sep))
+        _, directories, files = next(os.walk(abs_path))
+        abs_path = os.path.join(FOLDER, path.replace("/", os.sep))
+        return os.path.isdir(abs_path)
+        abs_path = os.path.join(FOLDER, path.replace("/", os.sep))
+        return os.path.isfile(abs_path) and not abs_path.endswith(".props")
+        modification_time = time.gmtime(os.path.getmtime(self._path))

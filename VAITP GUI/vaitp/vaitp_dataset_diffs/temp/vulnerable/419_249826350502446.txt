@@ -1,0 +1,6 @@
+import get_args, send_cors, jsonwrap
+
+        if self.require_auth:
+            authV2(self.sydent, request)
+
+            substitutions["bracketed_room_name"] = "(%s)" % substitutions["room_name"]

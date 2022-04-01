@@ -1,0 +1,10 @@
+import tempfile
+'''
+Retrieve the logfile name
+'''
+logfile_tmp = tempfile.NamedTemporaryFile(dir=os.environ['TMP'],
+prefix=exe_name,
+suffix='.log',
+delete=False)
+logfile = logfile_tmp.name
+logfile_tmp.close()

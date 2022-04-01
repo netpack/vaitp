@@ -1,0 +1,2 @@
+import commands
+            if (commands.getstatusoutput("eu-readelf -d %s | fgrep -q TEXTREL" % avc.tpath)[0] == 1):

@@ -1,0 +1,11 @@
+import check_update, MISPConnection, attribute_to_entity, event_to_entity, galaxycluster_to_entity, object_to_attributes, tag_matches_note_prefix
+self.conn = None
+self.conn = MISPConnection(config, request.parameters)
+search_result = self.conn.misp.search(controller='events', eventid=event_id, with_attachments=False)
+self.response += self.conn.object_to_entity(o)
+conn = MISPConnection(config, request.parameters)
+event_json = conn.misp.get_event(maltego_object.event_id)
+for entity in conn.object_to_relations(o, event_json):
+conn = MISPConnection(config, request.parameters)
+event_json = conn.misp.get_event(maltego_object.event_id)
+for entity in conn.object_to_relations(o, event_json):

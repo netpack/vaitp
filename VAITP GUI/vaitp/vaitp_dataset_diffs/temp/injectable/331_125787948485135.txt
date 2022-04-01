@@ -1,0 +1,12 @@
+"""
+Sanitise a raw HTML string to a set of allowed tags and attributes, and linkify any bare URLs.
+Args
+raw_html: Unsafe HTML.
+Returns:
+A Markup object ready to safely use in a Jinja template.
+"""
+Sanitise text (escape any HTML tags), and then linkify any bare URLs.
+Args
+raw_text: Unsafe text which might include HTML markup.
+Returns:
+A Markup object ready to safely use in a Jinja template.

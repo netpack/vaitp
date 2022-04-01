@@ -1,0 +1,7 @@
+import is_valid_client_secret, MAX_EMAIL_ADDRESS_LENGTH
+if not (0 < len(email) <= MAX_EMAIL_ADDRESS_LENGTH):
+request.setResponseCode(400)
+return {
+'errcode': 'M_INVALID_PARAM',
+'error': 'Invalid email provided'
+}

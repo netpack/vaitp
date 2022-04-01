@@ -1,0 +1,1 @@
+"red", federation_http_client=None, federation_client=Mock(),

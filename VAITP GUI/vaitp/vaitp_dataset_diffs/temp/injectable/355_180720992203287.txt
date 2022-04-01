@@ -1,0 +1,3 @@
+n = netloc.replace('@', '')
+n = n.replace(':', '')
+n = n.replace('

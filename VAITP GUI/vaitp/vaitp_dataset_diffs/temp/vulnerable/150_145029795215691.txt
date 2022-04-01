@@ -1,0 +1,4 @@
+; session id hash func, Either "sha1", "sha256" or "md5" default is sha1
+SESSION_ID_HASHFUNC = sha1
+; Session hash key, default is use random string
+SESSION_ID_HASHKEY =

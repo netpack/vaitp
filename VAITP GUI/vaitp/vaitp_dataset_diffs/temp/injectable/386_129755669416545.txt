@@ -1,0 +1,6 @@
+import os
+DEBUG = True
+'NAME': os.environ.get('DB_NAME', ':memory:'),
+'django.contrib.messages',
+'django.contrib.messages.context_processors.messages'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

@@ -1,0 +1,15 @@
+import PermissionDenied
+def dispatch(self, request, *args, **kwargs):
+if (int(self.kwargs["user_id"]) == request.user.pk or
+request.user.has_perm("user.change_user")):
+if not self.user_allowed(request.user):
+return self.handle_no_permission(request)
+return super(OtpRequiredMixin, self).dispatch(request, *args, **kwargs)
+raise PermissionDenied
+def dispatch(self, request, *args, **kwargs):
+device = TOTPDevice.objects.get(**self.kwargs)
+if device.user.pk == request.user.pk or request.user.has_perm("user.change_user"):
+if not self.user_allowed(request.user):
+return self.handle_no_permission(request)
+return super(OtpRequiredMixin, self).dispatch(request, *args, **kwargs)
+raise PermissionDenied

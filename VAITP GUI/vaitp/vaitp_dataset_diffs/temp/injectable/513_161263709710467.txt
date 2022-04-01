@@ -1,0 +1,9 @@
+fields = ['id', 'username', 'is_staff', 'bio', 'discord', 'discordid', 'state_actor', 'twitter', 'reddit',
+'team', 'points', 'is_visible', 'is_active', 'solves', 'team_name', 'leaderboard_points',
+'date_joined', 'incorrect_solves']
+'leaderboard_points', 'date_joined', 'state_actor', 'incorrect_solves']
+'points', 'is_visible', 'is_active', 'team_name', 'leaderboard_points', 'state_actor', 'date_joined']
+has_2fa = serializers.BooleanField(source='has_2fa')
+'has_2fa', 'points', 'solves', 'team_name', 'leaderboard_points', 'date_joined',
+read_only_fields = ['id', 'is_staff', 'team', 'email', 'points', 'leaderboard_points', 'date_joined',
+'incorrect_solves']

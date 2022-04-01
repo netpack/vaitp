@@ -1,0 +1,1 @@
+) % {'url': escape(request.path) + '?tags=' + request.REQUEST['tags']}

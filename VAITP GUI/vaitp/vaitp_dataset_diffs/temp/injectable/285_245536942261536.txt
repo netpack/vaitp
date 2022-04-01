@@ -1,0 +1,1 @@
+self.federation_http_client = hs.get_federation_http_client()

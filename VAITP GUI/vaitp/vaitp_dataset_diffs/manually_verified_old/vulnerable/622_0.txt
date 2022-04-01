@@ -1,0 +1,2 @@
+outfile = tempfile.mktemp()
+        o = open(outfile, "wb")

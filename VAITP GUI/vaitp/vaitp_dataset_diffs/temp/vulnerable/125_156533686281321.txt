@@ -1,0 +1,4 @@
+"rply-%s-%s-%s.json" % (self.VERSION, self.cache_id, self.compute_grammar_hash(g))
+            if self.data_is_valid(g, data):
+                table = LRTable.from_cache(g, data)
+            with open(cache_file, "w") as f:

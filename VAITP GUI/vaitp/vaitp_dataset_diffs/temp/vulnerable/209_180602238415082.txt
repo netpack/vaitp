@@ -1,0 +1,3 @@
+import string_types, PY2
+    raised.  However also other exceptions may occour during the rendering so
+    the caller has to ensure that all exceptions are catched.

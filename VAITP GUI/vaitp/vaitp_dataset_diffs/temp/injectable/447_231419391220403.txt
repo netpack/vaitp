@@ -1,0 +1,2 @@
+sync_comp_for: 'for' exprlist 'in' or_test [comp_iter]
+comp_for: [ASYNC] sync_comp_for

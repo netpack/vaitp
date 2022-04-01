@@ -1,0 +1,1 @@
+self.http_client = hs.get_proxied_http_client()

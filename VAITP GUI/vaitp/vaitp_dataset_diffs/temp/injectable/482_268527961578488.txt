@@ -1,0 +1,3 @@
+TEMPLATE_FILTERS = {"snakecase": utils.snake_case, "kebabcase": utils.kebab_case}
+self.project_name: str = self.project_name_override or f"{utils.kebab_case(openapi.title).lower()}-client"
+tag = utils.snake_case(tag)

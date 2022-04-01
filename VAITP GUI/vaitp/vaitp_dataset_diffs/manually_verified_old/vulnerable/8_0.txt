@@ -1,0 +1,1 @@
+self.raw  = utils.parse_json(self.data)

@@ -1,0 +1,4 @@
+self.addCleanup,
+federation_http_client=None,
+clock=self.hs_clock,
+reactor=self.reactor,

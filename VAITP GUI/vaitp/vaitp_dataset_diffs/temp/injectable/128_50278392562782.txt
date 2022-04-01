@@ -1,0 +1,11 @@
+f = tempfile.NamedTemporaryFile(suffix='.f')
+f = open(source_fn, 'w')
+try:
+f.write(source)
+f.flush()
+args = ' -c -m %s %s %s'%(modulename, f.name, extra_args)
+c = \'%s -c "import numpy.f2py as f2py2e;f2py2e.main()" %s\' % \\
+(sys.executable, args)
+s, o = exec_command(c)
+finally:
+f.close()

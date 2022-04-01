@@ -1,0 +1,2 @@
+import sort_key, numeric_sort_key
+return tuple(sorted(db.all_field_names(field), key=numeric_sort_key))

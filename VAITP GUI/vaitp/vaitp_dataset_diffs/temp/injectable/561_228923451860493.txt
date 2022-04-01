@@ -1,0 +1,6 @@
+import urlencode, urlsplit, quote
+uuid = quote(str(uuid))
+url = recurly.base_uri() + (cls.member_path % (uuid,))
+url = recurly.base_uri() + cls.collection_path
+url = recurly.base_uri() + cls.collection_path
+url = recurly.base_uri() + self.collection_path

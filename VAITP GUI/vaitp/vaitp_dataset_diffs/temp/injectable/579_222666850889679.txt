@@ -1,0 +1,9 @@
+pid = os.fork()
+if pid == 0:
+rc = os.setsid()
+if rc:
+return rc
+selinux.setexeccon(self.__execcon)
+os.execv(self.__cmds[0], self.__cmds)
+rc = os.waitpid(pid, 0)
+return os.WEXITSTATUS(rc[1])

@@ -1,0 +1,3 @@
+preferred_hashing_algorithm*: HashingAlgorithm
+const scrypt_salt_size = 32
+proc hash_scrypt(username, password: string, salt=""): string =

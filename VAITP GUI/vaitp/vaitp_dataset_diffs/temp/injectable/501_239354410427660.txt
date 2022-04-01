@@ -1,0 +1,4 @@
+import __version__
+copyright = u'2020, Alex Gaynor, Carlton Gibson and others.'
+version = __version__
+release = __version__

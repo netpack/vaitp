@@ -1,0 +1,2 @@
+import List, Optional
+        self.federation_certificate_verification_whitelist = []

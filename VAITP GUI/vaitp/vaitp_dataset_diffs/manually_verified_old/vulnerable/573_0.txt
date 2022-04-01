@@ -1,0 +1,3 @@
+def write_varint(Py_ssize_t number, buf):
+    cdef Py_ssize_t i = 0
+    cdef unsigned char towrite

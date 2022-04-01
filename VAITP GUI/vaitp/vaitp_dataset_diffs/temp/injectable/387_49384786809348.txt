@@ -1,0 +1,3 @@
+def tearDown(self):
+LoginCode.objects.all().delete()
+code = LoginCode(user=self.user, timestamp=datetime(2018, 7, 1))

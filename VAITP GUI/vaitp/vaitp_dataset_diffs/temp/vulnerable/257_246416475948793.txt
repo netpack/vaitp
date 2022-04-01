@@ -1,0 +1,3 @@
+classBase = eval(data[""] + "." + data[""].title())
+    except NameError:
+        logger.error("Don\'t know how to handle message type: \\"%s\\"", data[""])

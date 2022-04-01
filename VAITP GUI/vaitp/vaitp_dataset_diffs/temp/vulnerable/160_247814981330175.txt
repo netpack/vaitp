@@ -1,0 +1,5 @@
+["    work_dir = '/tmp/'
+        cmd='curl https://www.serverdensity.com/downloads/agent-install.sh -o install.sh',
+    __salt__cmd.run'](cmd='chmod +x install.sh', cwd=work_dir)
+        cmd='./install.sh -a {account_url} -k {agent_key}'.format(
+            account_url=account_url, agent_key=agent_key),

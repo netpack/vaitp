@@ -1,0 +1,7 @@
+def write_varint(unsigned long long number, buf):
+cdef unsigned char to_write, i = 0
+to_write = number & 0x7f
+num_buf[i] = to_write | 0x80
+num_buf[i] = to_write
+cdef unsigned char shift = 0
+cdef unsigned long long i, result = 0

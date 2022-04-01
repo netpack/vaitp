@@ -1,0 +1,7 @@
+import commands
+                    command = siginfo.substitute(p.get_fix_cmd(siginfo.audit_event, plugin.args))
+                    rc, output = commands.getstatusoutput(command)
+                    if rc == 0:
+                        print _("Successfully ran %s" % command)
+                    else:
+                        print output

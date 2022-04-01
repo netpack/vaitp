@@ -1,0 +1,1 @@
+return yaml.load(self.vault.decrypt(stream))

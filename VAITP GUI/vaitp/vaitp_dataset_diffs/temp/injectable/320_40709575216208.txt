@@ -1,0 +1,10 @@
+import assert_params_in_dict
+async def on_room_state_request(
+self, origin: str, content: JsonDict
+assert_params_in_dict(content, ["room_id"])
+room_version = await self.store.get_room_version(content["room_id"])
+async def on_send_leave_request(self, origin: str, content: JsonDict) -> dict:
+assert_params_in_dict(content, ["room_id"])
+room_version = await self.store.get_room_version(content["room_id"])
+async def on_exchange_third_party_invite_request(self, event_dict: Dict):
+ret = await self.handler.on_exchange_third_party_invite_request(event_dict)

@@ -1,0 +1,5 @@
+mailString = open(mailTemplateFile).read() % allSubstitutions
+        rawFrom = email.utils.parseaddr(mailFrom)[1]
+        rawTo = email.utils.parseaddr(mailTo)[1]
+        if rawFrom == '' or rawTo == '':
+            smtp.sendmail(rawFrom, rawTo, mailString.encode('utf-8'))")]}

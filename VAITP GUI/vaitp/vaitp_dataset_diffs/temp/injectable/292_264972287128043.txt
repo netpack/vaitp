@@ -1,0 +1,3 @@
+self.addCleanup,
+federation_http_client=self.mock_http_client,
+keyring=Mock(),

@@ -1,0 +1,14 @@
+class IPBlacklistingResolver:
+            real_reactor = hs.get_reactor()
+            nameResolver = IPBlacklistingResolver(
+                real_reactor, self._ip_whitelist, self._ip_blacklist
+
+            @implementer(IReactorPluggableNameResolver)
+            class Reactor:
+                def __getattr__(_self, attr):
+                    if attr == "nameResolver":
+                        return nameResolver
+                    else:
+                        return getattr(real_reactor, attr)
+
+            self.reactor = Reactor()

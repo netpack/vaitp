@@ -1,0 +1,22 @@
+'jupyter-{username}--{servername}',
+`{username}` is expanded to the escaped, dns-label-safe username.
+`{servername}` is expanded to the escaped, dns-label-safe server name, if any.
+Trailing `-` characters are stripped for safe handling of empty server names (user default servers).
+.. versionchanged:: 0.12
+`--` delimiter added to the template,
+where it was implicitly added to the `servername` field before.
+Additionally, `username--servername` delimiter was `-` instead of `--`,
+allowing collisions in certain circumstances.
+'claim-{username}--{servername}',
+`{servername}` is expanded to the escaped, dns-label-safe server name, if any.
+Trailing `-` characters are stripped for safe handling of empty server names (user default servers).
+.. versionchanged:: 0.12
+`--` delimiter added to the template,
+where it was implicitly added to the `servername` field before.
+Additionally, `username--servername` delimiter was `-` instead of `--`,
+allowing collisions in certain circumstances.
+raw_servername = self.name or ''
+safe_servername = escapism.escape(raw_servername, safe=safe_chars, escape_char='-').lower()
+rendered = template.format(
+unescaped_servername=raw_servername,
+return rendered.rstrip("-")

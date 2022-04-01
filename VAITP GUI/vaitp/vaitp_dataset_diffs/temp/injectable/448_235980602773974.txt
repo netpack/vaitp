@@ -1,0 +1,125 @@
+if line:
+line = (" " * TABSIZE * depth) + line
+self.file.write(line + "\\n")
+self.emit("if (lookup_attr_id(obj, &PyId_%s, &tmp) < 0) {" % field.name, depth)
+self.emit("return 1;", depth+1)
+self.emit("}", depth)
+if not field.opt:
+self.emit("if (tmp == NULL) {", depth)
+message = "required field \\\\\\"%s\\\\\\" missing from %s" % (field.name, name)
+format = "PyErr_SetString(PyExc_TypeError, \\"%s\\");"
+self.emit(format % message, depth+1, reflow=False)
+self.emit("return 1;", depth+1)
+self.emit("if (tmp == NULL || tmp == Py_None) {", depth)
+self.emit("Py_CLEAR(tmp);", depth+1)
+if self.isNumeric(field):
+self.emit("%s = 0;" % field.name, depth+1)
+elif not self.isSimpleType(field):
+self.emit("%s = NULL;" % field.name, depth+1)
+else:
+raise TypeError("could not determine the default value for %s" % field.name)
+self.emit("}", depth)
+self.emit("else {", depth)
+self.emit("%s val;" % ctype, depth+2)
+self.emit("res = obj2ast_%s(PyList_GET_ITEM(tmp, i), &val, arena);" %
+self.emit("asdl_seq_SET(%s, i, val);" % field.name, depth+2)
+_Py_IDENTIFIER(_fields);
+_Py_IDENTIFIER(_attributes);
+/* bpo-31095: UnTrack is needed before calling any callbacks */
+PyObject_GC_UnTrack(self);
+static int
+return 0;
+}
+static int lookup_attr_id(PyObject *v, _Py_Identifier *name, PyObject **result)
+{
+PyObject *oname = _PyUnicode_FromId(name); /* borrowed */
+if (!oname) {
+*result = NULL;
+return -1;
+}
+*result = PyObject_GetAttr(v, oname);
+if (*result == NULL) {
+if (!PyErr_ExceptionMatches(PyExc_AttributeError)) {
+return -1;
+}
+PyErr_Clear();
+}
+return 0;
+if (lookup_attr_id((PyObject*)Py_TYPE(self), &PyId__fields, &fields) < 0) {
+goto cleanup;
+}
+if (numfields < PyTuple_GET_SIZE(args)) {
+PyErr_Format(PyExc_TypeError, "%.400s constructor takes at most "
+"%zd positional argument%s",
+Py_TYPE(self)->tp_name,
+numfields, numfields == 1 ? "" : "s");
+res = -1;
+goto cleanup;
+}
+for (i = 0; i < PyTuple_GET_SIZE(args); i++) {
+/* cannot be reached when fields is NULL */
+PyObject *name = PySequence_GetItem(fields, i);
+if (!name) {
+res = PyObject_SetAttr(self, name, PyTuple_GET_ITEM(args, i));
+Py_DECREF(name);
+if (res < 0)
+goto cleanup;
+PyObject *dict;
+if (lookup_attr_id(self, &PyId___dict__, &dict) < 0) {
+return NULL;
+return Py_BuildValue("O()N", Py_TYPE(self), dict);
+_Py_IDENTIFIER(__module__);
+_Py_IDENTIFIER(_ast3);
+result = PyObject_CallFunction((PyObject*)&PyType_Type, "s(O){OOOO}",
+type, base,
+_PyUnicode_FromId(&PyId__fields), fnames,
+_PyUnicode_FromId(&PyId___module__),
+_PyUnicode_FromId(&PyId__ast3));
+_PyDict_SetItemId(d, &PyId__fields, empty_tuple) < 0 ||
+_PyDict_SetItemId(d, &PyId__attributes, empty_tuple) < 0) {
+self.emit("PyObject *ast3_parse(PyObject *self, PyObject *args);", 0)
+self.emit("static PyMethodDef ast3_methods[] = {", 0)
+self.emit(\'    {"_parse",  ast3_parse, METH_VARARGS, "Parse string into typed AST."},\', 0)
+self.emit("    {NULL, NULL, 0, NULL}", 0)
+self.emit("};", 0)
+self.emit("static struct PyModuleDef _astmodule = {", 0)
+self.emit(\'    PyModuleDef_HEAD_INIT, "_ast3", NULL, 0, ast3_methods\', 0)
+self.emit('m = PyModule_Create(&_astmodule);', 1)
+self.emit("Py_RETURN_NONE;", 2)
+if H_FILE:
+with open(H_FILE, "w") as f:
+f.write(auto_gen_msg)
+f.write(\'
+c = ChainOfVisitors(TypeDefVisitor(f),
+StructVisitor(f),
+PrototypeVisitor(f),
+)
+c.visit(mod)
+f.write("PyObject* Ta3AST_mod2obj(mod_ty t);\\n")
+f.write("mod_ty Ta3AST_obj2mod(PyObject* ast, PyArena* arena, int mode);\\n")
+f.write("int Ta3AST_Check(PyObject* obj);\\n")
+if C_FILE:
+with open(C_FILE, "w") as f:
+f.write(auto_gen_msg)
+f.write('
+f.write('\\n')
+f.write(\'
+f.write(\'
+f.write('\\n')
+f.write("static PyTypeObject AST_type;\\n")
+v = ChainOfVisitors(
+PyTypesDeclareVisitor(f),
+PyTypesVisitor(f),
+Obj2ModPrototypeVisitor(f),
+FunctionVisitor(f),
+ObjVisitor(f),
+Obj2ModVisitor(f),
+ASTModuleVisitor(f),
+PartingShots(f),
+)
+v.visit(mod)
+H_FILE = ''
+C_FILE = ''
+H_FILE = v
+C_FILE = v
+if H_FILE and C_FILE:

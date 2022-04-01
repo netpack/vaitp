@@ -47,7 +47,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>0</number>
     </property>
     <property name="iconSize">
      <size>
@@ -748,7 +748,7 @@
         <x>300</x>
         <y>100</y>
         <width>241</width>
-        <height>91</height>
+        <height>41</height>
        </rect>
       </property>
       <property name="font">
@@ -1360,22 +1360,31 @@
        <rect>
         <x>1070</x>
         <y>30</y>
-        <width>121</width>
+        <width>161</width>
         <height>17</height>
        </rect>
       </property>
       <property name="text">
-       <string>Number of epochs:</string>
+       <string>Number of training epochs:</string>
       </property>
      </widget>
-     <widget class="QSpinBox" name="spinBox">
+     <widget class="QSpinBox" name="sb_numEpochs">
       <property name="geometry">
        <rect>
-        <x>1190</x>
+        <x>1240</x>
         <y>20</y>
         <width>51</width>
         <height>31</height>
        </rect>
+      </property>
+      <property name="minimum">
+       <number>2</number>
+      </property>
+      <property name="maximum">
+       <number>999</number>
+      </property>
+      <property name="value">
+       <number>10</number>
       </property>
      </widget>
      <widget class="QLabel" name="label_37">
@@ -1443,6 +1452,83 @@
       </property>
       <property name="orientation">
        <enum>Qt::Vertical</enum>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_40">
+      <property name="geometry">
+       <rect>
+        <x>1070</x>
+        <y>60</y>
+        <width>161</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Number of testing epochs:</string>
+      </property>
+     </widget>
+     <widget class="QSpinBox" name="sb_numEpochs_testing">
+      <property name="geometry">
+       <rect>
+        <x>1240</x>
+        <y>50</y>
+        <width>51</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="minimum">
+       <number>2</number>
+      </property>
+      <property name="maximum">
+       <number>999</number>
+      </property>
+      <property name="value">
+       <number>7</number>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_41">
+      <property name="geometry">
+       <rect>
+        <x>1070</x>
+        <y>90</y>
+        <width>161</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Number RNN Density:</string>
+      </property>
+     </widget>
+     <widget class="QSpinBox" name="sb_numRNNDensity">
+      <property name="geometry">
+       <rect>
+        <x>1240</x>
+        <y>80</y>
+        <width>51</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="minimum">
+       <number>2</number>
+      </property>
+      <property name="maximum">
+       <number>999</number>
+      </property>
+      <property name="value">
+       <number>2</number>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="bt_ai_extract_cvef_diffs">
+      <property name="geometry">
+       <rect>
+        <x>300</x>
+        <y>150</y>
+        <width>241</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Extract CVEfixes Diffs</string>
       </property>
      </widget>
     </widget>

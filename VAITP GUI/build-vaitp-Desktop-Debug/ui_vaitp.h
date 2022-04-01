@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'vaitp.ui'
 **
-** Created by: Qt User Interface Compiler version 5.15.2
+** Created by: Qt User Interface Compiler version 5.15.3
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -129,11 +129,16 @@ public:
     QLabel *label_34;
     QLabel *label_35;
     QLabel *label_36;
-    QSpinBox *spinBox;
+    QSpinBox *sb_numEpochs;
     QLabel *label_37;
     QLabel *label_38;
     QLabel *label_39;
     QFrame *line_7;
+    QLabel *label_40;
+    QSpinBox *sb_numEpochs_testing;
+    QLabel *label_41;
+    QSpinBox *sb_numRNNDensity;
+    QPushButton *bt_ai_extract_cvef_diffs;
     QMenuBar *menubar;
     QMenu *menuFile;
     QMenu *menuAbout;
@@ -357,7 +362,7 @@ public:
         bt_run_cvefixes->setFont(font);
         bt_extract_cvefixes_vulns = new QPushButton(tab_ai);
         bt_extract_cvefixes_vulns->setObjectName(QString::fromUtf8("bt_extract_cvefixes_vulns"));
-        bt_extract_cvefixes_vulns->setGeometry(QRect(300, 100, 241, 91));
+        bt_extract_cvefixes_vulns->setGeometry(QRect(300, 100, 241, 41));
         bt_extract_cvefixes_vulns->setFont(font);
         label_16 = new QLabel(tab_ai);
         label_16->setObjectName(QString::fromUtf8("label_16"));
@@ -516,10 +521,13 @@ public:
         label_35->setFont(font2);
         label_36 = new QLabel(tab_ai);
         label_36->setObjectName(QString::fromUtf8("label_36"));
-        label_36->setGeometry(QRect(1070, 30, 121, 17));
-        spinBox = new QSpinBox(tab_ai);
-        spinBox->setObjectName(QString::fromUtf8("spinBox"));
-        spinBox->setGeometry(QRect(1190, 20, 51, 31));
+        label_36->setGeometry(QRect(1070, 30, 161, 17));
+        sb_numEpochs = new QSpinBox(tab_ai);
+        sb_numEpochs->setObjectName(QString::fromUtf8("sb_numEpochs"));
+        sb_numEpochs->setGeometry(QRect(1240, 20, 51, 31));
+        sb_numEpochs->setMinimum(2);
+        sb_numEpochs->setMaximum(999);
+        sb_numEpochs->setValue(10);
         label_37 = new QLabel(tab_ai);
         label_37->setObjectName(QString::fromUtf8("label_37"));
         label_37->setGeometry(QRect(840, 10, 61, 51));
@@ -537,6 +545,27 @@ public:
         line_7->setGeometry(QRect(810, 50, 31, 121));
         line_7->setFrameShape(QFrame::VLine);
         line_7->setFrameShadow(QFrame::Sunken);
+        label_40 = new QLabel(tab_ai);
+        label_40->setObjectName(QString::fromUtf8("label_40"));
+        label_40->setGeometry(QRect(1070, 60, 161, 17));
+        sb_numEpochs_testing = new QSpinBox(tab_ai);
+        sb_numEpochs_testing->setObjectName(QString::fromUtf8("sb_numEpochs_testing"));
+        sb_numEpochs_testing->setGeometry(QRect(1240, 50, 51, 31));
+        sb_numEpochs_testing->setMinimum(2);
+        sb_numEpochs_testing->setMaximum(999);
+        sb_numEpochs_testing->setValue(7);
+        label_41 = new QLabel(tab_ai);
+        label_41->setObjectName(QString::fromUtf8("label_41"));
+        label_41->setGeometry(QRect(1070, 90, 161, 17));
+        sb_numRNNDensity = new QSpinBox(tab_ai);
+        sb_numRNNDensity->setObjectName(QString::fromUtf8("sb_numRNNDensity"));
+        sb_numRNNDensity->setGeometry(QRect(1240, 80, 51, 31));
+        sb_numRNNDensity->setMinimum(2);
+        sb_numRNNDensity->setMaximum(999);
+        sb_numRNNDensity->setValue(2);
+        bt_ai_extract_cvef_diffs = new QPushButton(tab_ai);
+        bt_ai_extract_cvef_diffs->setObjectName(QString::fromUtf8("bt_ai_extract_cvef_diffs"));
+        bt_ai_extract_cvef_diffs->setGeometry(QRect(300, 150, 241, 41));
         tabWidget->addTab(tab_ai, QString());
         VAITP->setCentralWidget(centralwidget);
         menubar = new QMenuBar(VAITP);
@@ -569,7 +598,7 @@ public:
 
         retranslateUi(VAITP);
 
-        tabWidget->setCurrentIndex(2);
+        tabWidget->setCurrentIndex(0);
         tabWidget_2->setCurrentIndex(0);
 
 
@@ -673,10 +702,13 @@ public:
         bt_load_py_src_ai_folder->setText(QCoreApplication::translate("VAITP", "...", nullptr));
         label_34->setText(QCoreApplication::translate("VAITP", "Select a folder and scan all:", nullptr));
         label_35->setText(QCoreApplication::translate("VAITP", "3b", nullptr));
-        label_36->setText(QCoreApplication::translate("VAITP", "Number of epochs:", nullptr));
+        label_36->setText(QCoreApplication::translate("VAITP", "Number of training epochs:", nullptr));
         label_37->setText(QCoreApplication::translate("VAITP", "2.1", nullptr));
         label_38->setText(QCoreApplication::translate("VAITP", "Adust Options", nullptr));
         label_39->setText(QCoreApplication::translate("VAITP", "(opcional - Only if you ran CVEfixes)", nullptr));
+        label_40->setText(QCoreApplication::translate("VAITP", "Number of testing epochs:", nullptr));
+        label_41->setText(QCoreApplication::translate("VAITP", "Number RNN Density:", nullptr));
+        bt_ai_extract_cvef_diffs->setText(QCoreApplication::translate("VAITP", "Extract CVEfixes Diffs", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_ai), QCoreApplication::translate("VAITP", "AI", nullptr));
         menuFile->setTitle(QCoreApplication::translate("VAITP", "VAITP", nullptr));
         menuAbout->setTitle(QCoreApplication::translate("VAITP", "Help", nullptr));

@@ -1,0 +1,12 @@
+import tostr, unquote_bytes_to_wsgi, urlparse
+import ChunkedReceiver, FixedStreamReceiver
+BadRequest,
+find_double_newline,
+index = header_plus.find(b"\\r\\n")
+header = header_plus[index + 2 :]
+raise ParsingError("HTTP message header invalid")
+if b"\\r" in first_line or b"\\n" in first_line:
+raise ParsingError("Bare CR or LF found in HTTP message")
+lines = header.split(b"\\r\\n")
+if b"\\r" in line or b"\\n" in line:
+raise ParsingError(\'Bare CR or LF found in header line "%s"\' % tostr(line))

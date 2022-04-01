@@ -1,0 +1,2 @@
+\t\tdec = "%s %s -d %s --deobf" % (self.jadx, dex, self.tempdir)
+\t\tos.system(dec)

@@ -1,0 +1,8 @@
+def unwrap(self, key, bitsize, ek, headers):
+self._check_key(key)
+cek = _randombits(bitsize)
+try:
+cek = super(_Rsa15, self).unwrap(key, bitsize, ek, headers)
+raise Exception('Dummy')
+except Exception:
+return cek

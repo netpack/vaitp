@@ -1,0 +1,3 @@
+user_escaped = re.escape(user)
+collection_url_escaped = re.escape(collection_url)
+regex = ConfigParser({"login": user_escaped, "path": collection_url_escaped})

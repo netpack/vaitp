@@ -1,0 +1,104 @@
+import auth
+import *
+def _ssl_wrap_socket(sock, key_file, cert_file, disable_validation, ca_certs, ssl_version, hostname, key_password):
+sock, keyfile=key_file, certfile=cert_file, cert_reqs=cert_reqs, ca_certs=ca_certs, ssl_version=ssl_version,
+return dict([(key.lower(), NORMALIZE_SPACE.sub(value, " ").strip()) for (key, value) in headers.iteritems()])
+tuple([x.strip().lower() for x in part.split("=", 1)]) for part in parts if -1 != part.find("=")
+parts_wo_args = [(name.strip().lower(), 1) for name in parts if -1 == name.find("=")]
+if "pragma" in request_headers and request_headers["pragma"].lower().find("no-cache") != -1:
+_("Content purported to be compressed with %s but failed to decompress.") % response.get("content-encoding"),
+dig = _md5("%s:%s" % (time.ctime(), ["0123456789"[random.randrange(0, 9)] for i in range(20)])).hexdigest()
+return base64.b64encode(_sha("%s%s%s" % (cnonce, iso_now, password)).digest()).strip()
+def __init__(self, credentials, host, request_uri, headers, response, content, http):
+def __init__(self, credentials, host, request_uri, headers, response, content, http):
+Authentication.__init__(self, credentials, host, request_uri, headers, response, content, http)
+headers["authorization"] = "Basic " + base64.b64encode("%s:%s" % self.credentials).strip()
+def __init__(self, credentials, host, request_uri, headers, response, content, http):
+Authentication.__init__(self, credentials, host, request_uri, headers, response, content, http)
+self.challenge = auth._parse_www_authenticate(response, "www-authenticate")["digest"]
+self.challenge["qop"] = ("auth" in [x.strip() for x in qop.split()]) and "auth" or None
+raise UnimplementedDigestAuthOptionError(_("Unsupported value for qop: %s." % qop))
+self.A1 = "".join([self.credentials[0], ":", self.challenge["realm"], ":", self.credentials[1],])
+challenge = auth._parse_www_authenticate(response, "www-authenticate").get("digest", {})
+updated_challenge = auth._parse_authentication_info(response, "authentication-info")
+def __init__(self, credentials, host, request_uri, headers, response, content, http):
+Authentication.__init__(self, credentials, host, request_uri, headers, response, content, http)
+challenge = auth._parse_www_authenticate(response, "www-authenticate")
+_("Unsupported value for pw-algorithm: %s." % self.challenge["pw-algorithm"])
+self.pwhashmod.new("".join([self.credentials[1], self.challenge["salt"]])).hexdigest().lower(),
+request_digest = "%s:%s:%s:%s:%s" % (method, request_uri, cnonce, self.challenge["snonce"], headers_val,)
+request_digest = hmac.new(self.key, request_digest, self.hashmod).hexdigest().lower()
+challenge = auth._parse_www_authenticate(response, "www-authenticate").get("hmacdigest", {})
+def __init__(self, credentials, host, request_uri, headers, response, content, http):
+Authentication.__init__(self, credentials, host, request_uri, headers, response, content, http)
+headers["X-WSSE"] = (\'UsernameToken Username="%s", PasswordDigest="%s", \' \'Nonce="%s", Created="%s"\') % (
+self.credentials[0],
+password_digest,
+cnonce,
+iso_now,
+)
+def __init__(self, credentials, host, request_uri, headers, response, content, http):
+Authentication.__init__(self, credentials, host, request_uri, headers, response, content, http)
+challenge = auth._parse_www_authenticate(response, "www-authenticate")
+auth = dict(Email=credentials[0], Passwd=credentials[1], service=service, source=headers["user-agent"],)
+def __init__(self, cache, safe=safename):
+self, proxy_type, proxy_host, proxy_port, proxy_rdns=True, proxy_user=None, proxy_pass=None, proxy_headers=None,
+raise ProxiesUnavailableError("Proxy support missing but proxy use was requested!")
+(
+proxy_type,
+proxy_host,
+proxy_port,
+proxy_rdns,
+proxy_user,
+proxy_pass,
+proxy_headers,
+) = self.proxy_info.astuple()
+proxy_type, proxy_host, proxy_port, proxy_rdns, proxy_user, proxy_pass, proxy_headers,
+% str((proxy_host, proxy_port, proxy_rdns, proxy_user, proxy_pass, proxy_headers,))
+% str((proxy_host, proxy_port, proxy_rdns, proxy_user, proxy_pass, proxy_headers,))
+(
+proxy_type,
+proxy_host,
+proxy_port,
+proxy_rdns,
+proxy_user,
+proxy_pass,
+proxy_headers,
+) = self.proxy_info.astuple()
+proxy_type, proxy_host, proxy_port, proxy_rdns, proxy_user, proxy_pass, proxy_headers,
+% str((proxy_host, proxy_port, proxy_rdns, proxy_user, proxy_pass, proxy_headers,))
+"Server presented certificate that does not match " "host %s: %s" % (hostname, cert),
+except (ssl_SSLError, ssl_CertificateError, CertificateHostnameMismatch,) as e:
+% str((proxy_host, proxy_port, proxy_rdns, proxy_user, proxy_pass, proxy_headers,))
+url, payload=None, method="GET", headers={}, allow_truncated=False, follow_redirects=True, deadline=None,
+httplib.HTTPConnection.__init__(self, host, port=port, strict=strict, timeout=timeout)
+self, host, port=port, key_file=key_file, cert_file=cert_file, strict=strict, timeout=timeout,
+server_software = os.environ.get("SERVER_SOFTWARE", "")
+if (
+server_software.startswith("Google App Engine/")
+or server_software.startswith("Development/")
+or server_software.startswith("testutil/")
+):
+challenges = auth._parse_www_authenticate(response, "www-authenticate")
+yield AUTH_SCHEME_CLASSES[scheme](cred, host, request_uri, headers, response, content, self)
+self, conn, host, absolute_uri, request_uri, method, body, headers, redirections, cachekey,
+auths = [(auth.depth(request_uri), auth) for auth in self.authorizations if auth.inscope(host, request_uri)]
+(response, content) = self._conn_request(conn, request_uri, method, body, headers)
+(response, content) = self._conn_request(conn, request_uri, method, body, headers)
+for authorization in self._auth_from_challenge(host, request_uri, headers, response, content):
+(response, content) = self._conn_request(conn, request_uri, method, body, headers)
+if self.follow_all_redirects or method in self.safe_methods or response.status in (303, 308):
+_("Redirected but the response is missing a Location: header."), response, content,
+response["location"] = urlparse.urljoin(absolute_uri, location)
+if "authorization" in headers and not self.forward_authorization_headers:
+location, method=redirect_method, body=body, headers=headers, redirections=redirections - 1,
+"Redirected more times than rediection_limit allows.", response, content,
+self, uri, method="GET", body=None, headers=None, redirections=DEFAULT_MAX_REDIRECTS, connection_type=None,
+conn_key = ""
+"Redirected more times than rediection_limit allows.", {}, "",
+if "etag" in info and not self.ignore_etag and not "if-none-match" in headers:
+conn, authority, uri, request_uri, method, body, headers, redirections, cachekey,
+_updateCache(headers, merged_response, content, self.cache, cachekey)
+conn, authority, uri, request_uri, method, body, headers, redirections, cachekey,
+response = Response({"content-type": "text/plain", "status": "408", "content-length": len(content),})
+response = Response({"content-type": "text/plain", "status": "400", "content-length": len(content),})

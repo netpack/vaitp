@@ -1,0 +1,128 @@
+to_send = "GET / HTTP/1.0\\r\\nContent-Length: 0\\r\\n\\r\\n"
+to_send = "GET / HTTP/1.0\\r\\n Host: 0\\r\\n\\r\\n"
+to_send = "GET / HTTP/1.0\\r\\nContent-Length: 5\\r\\n\\r\\n"
+to_send = "GET / HTTP/1.0\\r\\nContent-Length: 0\\r\\n\\r\\n"
+data = "Echo\\r\\nthis\\r\\nplease"
+"GET / HTTP/1.0\\r\\n"
+"Connection: close\\r\\n"
+"Content-Length: %d\\r\\n"
+"\\r\\n"
+"GET / HTTP/1.0\\r\\nContent-Length: %d\\r\\n\\r\\n%s" % (len(body), body)
+header = tobytes("GET / HTTP/1.1\\r\\nTransfer-Encoding: chunked\\r\\n\\r\\n")
+header = tobytes("GET / HTTP/1.1\\r\\nTransfer-Encoding: chunked\\r\\n\\r\\n")
+self.sock.send(b"\\r\\n")
+to_send = "GET / HTTP/1.1\\r\\nTransfer-Encoding: chunked\\r\\n\\r\\n"
+to_send += control_line + s + "\\r\\n"
+to_send += "garbage\\r\\n"
+to_send = tobytes(to_send)
+self.connect()
+self.sock.send(to_send)
+fp = self.sock.makefile("rb", 0)
+line, headers, response_body = read_http(fp)
+self.assertline(line, "400", "Bad Request", "HTTP/1.1")
+cl = int(headers["content-length"])
+self.assertEqual(cl, len(response_body))
+self.assertEqual(
+sorted(headers.keys()), ["connection", "content-length", "content-type", "date", "server"]
+)
+self.assertEqual(headers["content-type"], "text/plain")
+self.send_check_error(to_send)
+self.assertRaises(ConnectionClosed, read_http, fp)
+def test_broken_chunked_encoding_missing_chunk_end(self):
+control_line = "20;\\r\\n"
+s = "This string has 32 characters.\\r\\n"
+to_send = "GET / HTTP/1.1\\r\\nTransfer-Encoding: chunked\\r\\n\\r\\n"
+to_send += "garbage"
+self.assertTrue(b"Chunk not properly terminated" in response_body)
+"GET / HTTP/1.0\\r\\nContent-Length: %d\\r\\n\\r\\n%s" % (len(data), data)
+"GET / HTTP/1.0\\r\\n"
+"Connection: Keep-Alive\\r\\n"
+"Content-Length: %d\\r\\n"
+"\\r\\n"
+"GET / HTTP/1.1\\r\\nContent-Length: %d\\r\\n\\r\\n%s" % (len(data), data)
+"GET / HTTP/1.1\\r\\n"
+"Connection: keep-alive\\r\\n"
+"Content-Length: %d\\r\\n"
+"\\r\\n"
+"GET / HTTP/1.1\\r\\n"
+"Connection: close\\r\\n"
+"Content-Length: %d\\r\\n"
+"\\r\\n"
+"GET / HTTP/1.0\\r\\n"
+"Content-Length: 0\\r\\n"
+"Host: www.google.com:8080\\r\\n"
+"X-Forwarded-For: 192.168.1.1\\r\\n"
+"X-Forwarded-Proto: https\\r\\n"
+"X-Forwarded-Port: 5000\\r\\n\\r\\n"
+"GET / HTTP/1.1\\r\\n"
+"Connection: close\\r\\n"
+"Content-Length: %d\\r\\n"
+"Expect: 100-continue\\r\\n"
+"\\r\\n"
+"GET /short_body HTTP/1.0\\r\\n"
+"Connection: Keep-Alive\\r\\n"
+"Content-Length: 0\\r\\n"
+"\\r\\n"
+"GET /long_body HTTP/1.0\\r\\n"
+"Connection: Keep-Alive\\r\\n"
+"Content-Length: 0\\r\\n"
+"\\r\\n"
+"GET / HTTP/1.0\\r\\n"
+"Connection: Keep-Alive\\r\\n"
+"Content-Length: %d\\r\\n\\r\\n" % len(body)
+"GET /list HTTP/1.0\\r\\n"
+"Connection: Keep-Alive\\r\\n"
+"Content-Length: %d\\r\\n\\r\\n" % len(body)
+"GET /list_lentwo HTTP/1.0\\r\\n"
+"Connection: Keep-Alive\\r\\n"
+"Content-Length: %d\\r\\n\\r\\n" % len(body)
+to_send = "GET / HTTP/1.1\\r\\nContent-Length: %s\\r\\n\\r\\n" % len(body)
+to_send = "GET /list HTTP/1.1\\r\\nContent-Length: %d\\r\\n\\r\\n" % len(body)
+to_send = "GET /list_lentwo HTTP/1.1\\r\\nContent-Length: %s\\r\\n\\r\\n" % len(body)
+"GET /short_body HTTP/1.0\\r\\n"
+"Connection: Keep-Alive\\r\\n"
+"Content-Length: 0\\r\\n"
+"\\r\\n"
+"GET /long_body HTTP/1.0\\r\\n"
+"Connection: Keep-Alive\\r\\n"
+"Content-Length: 0\\r\\n"
+"\\r\\n"
+"GET /equal_body HTTP/1.0\\r\\n"
+"Connection: Keep-Alive\\r\\n"
+"Content-Length: 0\\r\\n"
+"\\r\\n"
+"GET /no_content_length HTTP/1.0\\r\\n"
+"Connection: Keep-Alive\\r\\n"
+"Content-Length: 0\\r\\n"
+"\\r\\n"
+to_send = "GET / HTTP/1.0\\r\\nContent-Length: 5\\r\\n\\r\\n"
+to_send = "GET / HTTP/1.0\\r\\nContent-Length: 5\\r\\nConnection: Keep-Alive\\r\\n\\r\\n"
+to_send = "GET / HTTP/1.0\\r\\n\\r\\n"
+to_send = "GET / HTTP/1.0\\r\\nConnection: Keep-Alive\\r\\n\\r\\n"
+to_send = "GET / HTTP/1.1\\r\\nContent-Length: 5\\r\\n\\r\\n"
+to_send = "GET / HTTP/1.1\\r\\nContent-Length: 5\\r\\nConnection: close\\r\\n\\r\\n"
+to_send = "GET / HTTP/1.1\\r\\n\\r\\n"
+to_send = "GET / HTTP/1.1\\r\\nConnection: close\\r\\n\\r\\n"
+to_send = "GET / HTTP/1.1\\r\\nTransfer-Encoding: chunked\\r\\n\\r\\n"
+to_send = "GET /before_start_response HTTP/1.0\\r\\n\\r\\n"
+to_send = "GET /before_start_response HTTP/1.1\\r\\n\\r\\n"
+"GET /before_start_response HTTP/1.1\\r\\nConnection: close\\r\\n\\r\\n"
+to_send = "GET /after_start_response HTTP/1.0\\r\\n\\r\\n"
+to_send = "GET /after_start_response HTTP/1.1\\r\\n\\r\\n"
+"GET /after_start_response HTTP/1.1\\r\\nConnection: close\\r\\n\\r\\n"
+to_send = "GET /after_write_cb HTTP/1.1\\r\\n\\r\\n"
+to_send = "GET /in_generator HTTP/1.1\\r\\n\\r\\n"
+to_send = "GET /filelike HTTP/1.1\\r\\n\\r\\n"
+to_send = "GET /filelike_nocl HTTP/1.1\\r\\n\\r\\n"
+to_send = "GET /filelike_shortcl HTTP/1.1\\r\\n\\r\\n"
+to_send = "GET /filelike_longcl HTTP/1.1\\r\\n\\r\\n"
+to_send = "GET /notfilelike HTTP/1.1\\r\\n\\r\\n"
+to_send = "GET /notfilelike_iobase HTTP/1.1\\r\\n\\r\\n"
+to_send = "GET /notfilelike_nocl HTTP/1.1\\r\\n\\r\\n"
+to_send = "GET /notfilelike_shortcl HTTP/1.1\\r\\n\\r\\n"
+to_send = "GET /notfilelike_longcl HTTP/1.1\\r\\n\\r\\n"
+to_send = "GET /filelike HTTP/1.0\\r\\n\\r\\n"
+to_send = "GET /filelike_nocl HTTP/1.0\\r\\n\\r\\n"
+to_send = "GET /notfilelike HTTP/1.0\\r\\n\\r\\n"
+to_send = "GET /notfilelike_nocl HTTP/1.0\\r\\n\\r\\n"
+if line in (b"\\r\\n", b"\\r\\n", b""):

@@ -1,0 +1,14 @@
+u'http://\\uD7FF.com',
+u'http://❤️',
+u'http://\\uD800.com',
+u'http://\\uDC00.com',
+(\'http://google.com/p[]?parameter[]=\\"hello\\"
+'http://google.com/p%5B%5D?parameter%5B%5D=%22hello%22
+('http://google.com/p%5B%5d?parameter%5b%5D=%22hello%22
+'http://google.com/p%5B%5D?parameter%5B%5D=%22hello%22
+Url('http', host='xn--knigsgchen-b4a3dun.de', path='/stra%C3%9Fe')),
+(u'http://google.com/\\uD800', Url('http', host='google.com', path='%ED%A0%80')),
+(u'http://google.com?q=\\uDC00',
+Url('http', host='google.com', path='', query='q=%ED%B0%80')),
+(u'http://google.com
+Url('http', host='google.com', path='', fragment='%ED%B0%80')),

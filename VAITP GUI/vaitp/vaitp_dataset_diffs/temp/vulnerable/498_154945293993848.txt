@@ -1,0 +1,28 @@
+import itertools
+import Config, checks, commands
+    def __init__(self, bot):
+    async def initialize(self, bot):
+    async def act(self, ctx, *, target: Union[discord.Member, str] = None):
+            message = message.format(target, user=target)
+    async def actset(self, ctx):
+    async def customize(self, ctx, command: str.lower, *, response: str = None):
+        await ctx.tick()
+    async def customize_global(self, ctx, command: str.lower, *, response: str = None):
+    async def ignore(self, ctx, command: str.lower):
+    async def ignore_global(self, ctx, command: str.lower):
+    async def tenorkey(self, ctx):
+    async def on_message(self, message):
+        if message.author.bot:
+
+        ctx = await self.bot.get_context(message)
+        if ctx.prefix is None or not ctx.invoked_with.replace("_", "").isalpha():
+
+        if ctx.valid and ctx.command.enabled:
+            try:
+                if await ctx.command.can_run(ctx):
+                    return
+            except commands.errors.CheckFailure:
+                return
+
+        ctx.command = self.act
+        await self.bot.invoke(ctx)

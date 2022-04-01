@@ -1,0 +1,3 @@
+import HTTP_400_BAD_REQUEST
+            if request.user.is_staff:
+        return FormattedResponse(config.get(name))

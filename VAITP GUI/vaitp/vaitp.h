@@ -47,6 +47,8 @@ private slots:
 
     void on_bt_train_ai_model_clicked();
 
+    void on_bt_ai_extract_cvef_diffs_clicked();
+
 private:
     Ui::VAITP *ui;
 };

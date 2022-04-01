@@ -1,0 +1,3 @@
+readBodyToFile(response, output_stream, max_size)
+        except SynapseError:
+

@@ -1,1 +1,10 @@
-"def glob_to_regex(glob):    """Converts a glob to a compiled regex object.    The regex is anchored at the beginning and end of the string.    Args:        glob (str)    Returns:        re.RegexObject    """    res = ""    for c in glob:        if c == "*":            res = res + ".*"        elif c == "?":            res = res + "."        else:            res = res + re.escape(c)    # \A anchors at start of string, \Z at end of string    return re.compile(r"\A" + res + r"\Z", re.IGNORECASE)"
+import sys
+
+
+def importantFunction(input):
+    eval(input,{'__builtins__':{}})
+
+if __name__ == '__main__':
+    print("VAITP vulnerability example module by Frédéric Bogaerts\n\n")
+
+    importantFunction(sys.argv[1])

@@ -1,0 +1,2 @@
+event_distribution = args[0]
+attribute_distribution = args[1]

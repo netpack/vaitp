@@ -1,0 +1,27 @@
+PASTES_FOLDERS = os.path.join(os.path.realpath(PASTES_FOLDERS), '')
+if PASTES_FOLDERS in paste:
+paste = paste.replace(PASTES_FOLDERS, '', 1)
+filename = os.path.realpath(filename)
+if not os.path.commonprefix([filename, PASTES_FOLDER]) == PASTES_FOLDER:
+print('Path traversal detected {}'.format(filename))
+publisher.warning('Global; Path traversal detected')
+else:
+dirname = os.path.dirname(filename)
+if not os.path.exists(dirname):
+os.makedirs(dirname)
+decoded = base64.standard_b64decode(gzip64encoded)
+with open(filename, 'wb') as f:
+f.write(decoded)
+'''try:
+decoded2 = gunzip_bytes_obj(decoded)
+except:
+decoded2 =''
+type = magic.from_buffer(decoded2, mime=True)
+if type!= 'text/x-c++' and type!= 'text/html' and type!= 'text/x-c' and type!= 'text/x-python' and type!= 'text/x-php' and type!= 'application/xml' and type!= 'text/x-shellscript' and type!= 'text/plain' and type!= 'text/x-diff' and type!= 'text/x-ruby':
+print('-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------')
+print(filename)
+print(type)
+print('-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------')
+'''
+p.populate_set_out(paste)
+processed_paste+=1

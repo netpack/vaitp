@@ -1,0 +1,9 @@
+import is_valid_hostname
+matrix_server = mxid_parts[1]
+if not is_valid_hostname(matrix_server):
+logger.error(
+"MXID server part \'%s\' not a valid hostname. Not retrying.",
+matrix_server,
+)
+return
+matrix_server,

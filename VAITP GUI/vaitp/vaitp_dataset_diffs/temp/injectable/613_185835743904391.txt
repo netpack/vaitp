@@ -1,0 +1,3 @@
+if not ROLE in edit_op:
+if not VERKEY in edit_op:
+return

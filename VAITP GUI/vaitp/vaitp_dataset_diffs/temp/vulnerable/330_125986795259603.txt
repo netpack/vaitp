@@ -1,0 +1,3 @@
+self.fallback_success_template = self.read_templates(
+            ["auth_success.html"], autoescape=True
+        )[0]

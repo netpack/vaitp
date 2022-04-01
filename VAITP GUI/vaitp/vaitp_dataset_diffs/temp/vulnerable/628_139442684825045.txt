@@ -1,0 +1,2 @@
+import eventContextMarshal
+        context["ome"]["eventContext"] = eventContextMarshal(conn.getEventContext())

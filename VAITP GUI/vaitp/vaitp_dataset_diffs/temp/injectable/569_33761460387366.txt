@@ -1,0 +1,2 @@
+o_fd, outfile = tempfile.mkstemp(text=False)
+o = os.fdopen(o_fd)

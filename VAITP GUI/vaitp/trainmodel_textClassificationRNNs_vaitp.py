@@ -19,15 +19,21 @@ tfds.disable_progress_bar()
 import matplotlib.pyplot as plt
 
 if int(sys.argv[1]) < 1:
-  exit('please input epochs value as argv1')
+  exit('please input training epochs value as argv1')
+
+if int(sys.argv[2]) < 1:
+  exit('please input testing epochs value as argv2')
+
+if int(sys.argv[3]) < 1:
+  exit('please input RNN Density value as argv3')
 
 #enable some graph ploting
-def plot_graphs(history, metric):
-  plt.plot(history.history[metric])
-  plt.plot(history.history['val_'+metric], '')
-  plt.xlabel("Epochs")
-  plt.ylabel(metric)
-  plt.legend([metric, 'val_'+metric])
+#def plot_graphs(history, metric):
+#  plt.plot(history.history[metric])
+#  plt.plot(history.history['val_'+metric], '')
+#  plt.xlabel("Epochs")
+#  plt.ylabel(metric)
+#  plt.legend([metric, 'val_'+metric])
 
 #select the dataset directory
 dataset_dir = pathlib.Path("../vaitp/vaitp_dataset")
@@ -40,10 +46,10 @@ print("\nTest dataset directory listing:")
 print(list(train_dir.iterdir()))
 
 #print sample file
-print("\nSample file content read:")
-sample_file = train_dir/'vulnerable/2.txt'
-with open(sample_file) as f:
-  print(f.read())
+#print("\nSample file content read:")
+#sample_file = train_dir/'vulnerable/2.txt'
+#with open(sample_file) as f:
+#  print(f.read())
 
 
 #Create validation set  [should be around 20% of the set]
@@ -154,7 +160,7 @@ int_test_ds = configure_dataset(int_test_ds)
 
 
 #train the model for 10 epochs
-binary_model = tf.keras.Sequential([layers.Dense(2)])
+binary_model = tf.keras.Sequential([layers.Dense(int(sys.argv[3]))])
 
 binary_model.compile(
     loss=losses.SparseCategoricalCrossentropy(from_logits=True),
@@ -181,7 +187,7 @@ int_model.compile(
     loss=losses.SparseCategoricalCrossentropy(from_logits=True),
     optimizer='adam',
     metrics=['accuracy'])
-history = int_model.fit(int_train_ds, validation_data=int_val_ds, epochs=7)
+history = int_model.fit(int_train_ds, validation_data=int_val_ds, epochs=int(sys.argv[2]))
 
 
 #compare the two models:
@@ -206,6 +212,8 @@ export_model = tf.keras.Sequential(
     [binary_vectorize_layer, binary_model,
      layers.Activation('sigmoid')])
 
+print("\n")
+ 
 export_model.compile(
     loss=losses.SparseCategoricalCrossentropy(from_logits=False),
     optimizer='adam',
@@ -213,10 +221,14 @@ export_model.compile(
 
 print("\ntesting raw input to the model...")
 
+print("\n")
+ 
 #test it with `raw_test_ds`, which yields raw strings
 loss, accuracy = export_model.evaluate(raw_test_ds)
 print("\nAccuracy: {:2.2%}".format(binary_accuracy))
 
+print("\n")
+ 
 
 #define function to predict the label with the most score
 def get_string_labels(predicted_scores_batch):
@@ -225,17 +237,28 @@ def get_string_labels(predicted_scores_batch):
   return predicted_labels
 
 
+print("\n")
+ 
 #run on new data
 inputs = [
-    "subprocess.call(..., shell=False)",  # 'nonvulnerable'
-    "subprocess.call(..., shell=True)",  # 'vulnerable'
-    "import sys     def somefunction(in):   etree.XMLParser(resolve_entities=False)", # 'nonvulnerable'
-    "import sys     eval(quote(sys.argv[1]))" # 'nonvulnerable'
+    "comando = 'ffmpeg -i {ficheiro} saida.mkv'.format(ficheiro=filename)' subprocess.call(comando,shell=False)",  # 'injectable'
+    "cmds = 'ffmpeg -i {s} out.mkv'.format(s=file)' subprocess.call(cmds,shell=True)",  # 'vulnerable'
+    "cmds = 'ffmpeg -i {s} out.mkv'.format(s=quote(file))' subprocess.call(cmds,shell=True)",  # 'injectable'
+    "import sys     def somefunction(in):   etree.XMLParser(resolve_entities=False)", # 'injectable'
+    "import sys     def somefunction(in):   etree.XMLParser(resolve_entities=True)", # 'vulnerable'
+    "import sys     def somefunction(in):   etree.XMLParser()", # 'vulnerable'
+    "import sys     eval(quote(sys.argv[1]))", # 'injectable'
+    "import sys     eval(sys.argv[1])", # 'vulnerable'
+    "import sys     exec(quote(sys.argv[1]))", # 'injectable'
+    "import sys     exec(var)", # 'vulnerable'
 ]
 predicted_scores = export_model.predict(inputs)
+print("\n")
 predicted_labels = get_string_labels(predicted_scores)
+print("\n")
 for input, label in zip(inputs, predicted_labels):
   print("\ncode: ", input)
   print("\npredicted label: ", label.numpy())
 
+print("\n")
 print("\nEOF VAITP RNN AI train")

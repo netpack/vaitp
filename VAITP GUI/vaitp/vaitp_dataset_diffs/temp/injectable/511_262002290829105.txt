@@ -1,0 +1,54 @@
+import string
+import InviteCode, PasswordResetToken, TOTPDevice, BackupCode
+import Team
+hide_password = method_decorator(sensitive_post_parameters("password", ))
+if user.has_2fa():
+return FormattedResponse(status=HTTP_401_UNAUTHORIZED, d={'reason': '2fa_required'}, m='2fa_required')
+totp_device = TOTPDevice(user=request.user)
+totp_device.save()
+return FormattedResponse({"totp_secret": totp_device.totp_secret})
+if request.user.totp_device is not None and request.user.totp_device.validate_token(request.data["otp"]):
+request.user.totp_device.verified = True
+request.user.totp_device.save()
+backup_codes = BackupCode.generate(request.user)
+return FormattedResponse({"valid": True, "backup_codes": backup_codes})
+return FormattedResponse({"valid": False})
+request.user.totp_device.delete()
+class LoginTwoFactorView(APIView):
+permission_classes = (~permissions.IsAuthenticated,)
+serializer_class = serializers.LoginTwoFactorSerializer
+throttle_scope = "login"
+@hide_password
+def dispatch(self, *args, **kwargs):
+return super(LoginTwoFactorView, self).dispatch(*args, **kwargs)
+def issue_token(self, user):
+token = providers.get_provider('token').issue_token(user)
+return FormattedResponse({'token': token})
+def post(self, request, *args, **kwargs):
+serializer = self.serializer_class(data=request.data, context={'request': request})
+serializer.is_valid(raise_exception=True)
+user = serializer.validated_data['user']
+if user is None:
+return FormattedResponse(status=HTTP_401_UNAUTHORIZED, d={'reason': 'login_failed'}, m='login_failed')
+if user.totp_status != TOTPStatus.ENABLED:
+return FormattedResponse(status=HTTP_401_UNAUTHORIZED, d={'reason': '2fa_not_enabled'}, m='2fa_not_enabled')
+token = serializer.data['tfa']
+if len(token) == 6:
+for device in user.totp_devices:
+if device.validate_token(token):
+return self.issue_token(user)
+elif len(token) == 8:
+for code in user.backup_codes:
+if token == code.code:
+code.delete()
+return self.issue_token(user)
+return self.issue_token(user)
+class RegenerateBackupCodesView(APIView):
+permission_classes = (permissions.IsAuthenticated & HasTwoFactor,)
+serializer_class = serializers.LoginTwoFactorSerializer
+throttle_scope = "2fa"
+def post(self, request, *args, **kwargs):
+backup_codes = BackupCode.generate(request.user)
+return FormattedResponse({"backup_codes": backup_codes})
+for i in range(active_codes, serializer.validated_data["amount"] + active_codes):
+code = f"{\'\'.join([random.choice(string.ascii_letters + string.digits) for _ in range(8)])}{hex(i)[2:]}"

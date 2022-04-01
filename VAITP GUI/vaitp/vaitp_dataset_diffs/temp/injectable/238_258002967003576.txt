@@ -1,0 +1,5 @@
+vId = ('online', )
+rows = db.sentences_stats('get_online', vId)
+t = (vId,)
+d = db.sentences_stats('get_preview', t)
+n = db.sentences_stats('id_networks', t)

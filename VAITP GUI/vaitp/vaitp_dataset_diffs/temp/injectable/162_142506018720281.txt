@@ -1,0 +1,3 @@
+if not isinstance(payload, dict):
+log.error('Sign-in attempt failed: %s', payload)
+raise tornado.gen.Return(False)

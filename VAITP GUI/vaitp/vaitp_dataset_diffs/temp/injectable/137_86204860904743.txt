@@ -1,0 +1,46 @@
+BUFSIZE = 65536
+def _generate_cmd(self, executable, cmd):
+if executable:
+local_cmd = [self.chroot_cmd, self.chroot, executable, '-c', cmd]
+else:
+local_cmd = \'%s "%s" %s\' % (self.chroot_cmd, self.chroot, cmd)
+return local_cmd
+def _buffered_exec_command(self, cmd, tmp_path, become_user=None, sudoable=False, executable='/bin/sh', in_data=None, stdin=subprocess.PIPE):
+''' run a command on the chroot.  This is only needed for implementing
+put_file() get_file() so that we don't have to read the whole file
+into memory.
+compared to exec_command() it looses some niceties like being able to
+return the process's exit code immediately.
+'''
+local_cmd = self._generate_cmd(executable, cmd)
+stdin=stdin,
+return p
+def exec_command(self, cmd, tmp_path, become_user=None, sudoable=False, executable='/bin/sh', in_data=None):
+
+p = self._buffered_exec_command(cmd, tmp_path, become_user, sudoable, executable, in_data)
+with open(in_path, 'rb') as in_file:
+try:
+p = self._buffered_exec_command('dd of=%s' % out_path, None, stdin=in_file)
+except OSError:
+raise errors.AnsibleError("chroot connection requires dd command in the chroot")
+try:
+stdout, stderr = p.communicate()
+except:
+traceback.print_exc()
+raise errors.AnsibleError("failed to transfer file %s to %s" % (in_path, out_path))
+if p.returncode != 0:
+raise errors.AnsibleError("failed to transfer file %s to %s:\\n%s\\n%s" % (in_path, out_path, stdout, stderr))
+raise errors.AnsibleError("file or module does not exist at: %s" % in_path)
+p = self._buffered_exec_command('dd if=%s bs=%s' % (in_path, BUFSIZE), None)
+except OSError:
+raise errors.AnsibleError("chroot connection requires dd command in the jail")
+with open(out_path, 'wb+') as out_file:
+try:
+for chunk in p.stdout.read(BUFSIZE):
+out_file.write(chunk)
+except:
+traceback.print_exc()
+raise errors.AnsibleError("failed to transfer file %s to %s" % (in_path, out_path))
+stdout, stderr = p.communicate()
+if p.returncode != 0:
+raise errors.AnsibleError("failed to transfer file %s to %s:\\n%s\\n%s" % (in_path, out_path, stdout, stderr))

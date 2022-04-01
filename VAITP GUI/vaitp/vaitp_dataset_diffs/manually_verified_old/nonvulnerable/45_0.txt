@@ -1,0 +1,1 @@
+data['next'] = self.serializer.validated_data['user'].login_code.next

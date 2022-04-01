@@ -1,0 +1,23 @@
+Module(
+    body=[
+        Assign(
+            targets=[
+                Attribute(
+                    value=Name(id='self', ctx=Load()),
+                    attr='raw',
+                    ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='utils', ctx=Load()),
+                    attr='parse_json',
+                    ctx=Load()),
+                args=[
+                    Attribute(
+                        value=Name(id='self', ctx=Load()),
+                        attr='data',
+                        ctx=Load())],
+                keywords=[
+                    keyword(
+                        arg='from_remote',
+                        value=Constant(value=True))]))],
+    type_ignores=[])

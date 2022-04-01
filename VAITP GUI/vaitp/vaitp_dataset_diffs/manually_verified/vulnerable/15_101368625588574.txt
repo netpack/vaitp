@@ -1,0 +1,1 @@
+self.pidfile = "/tmp/%s.pid" % self.__class__.__name__.lower()

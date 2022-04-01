@@ -1,0 +1,2 @@
+def is_sensitive(key):
+return key in backend.get('sensitive_fields')

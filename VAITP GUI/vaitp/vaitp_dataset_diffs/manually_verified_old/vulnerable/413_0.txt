@@ -1,0 +1,11 @@
+url = '{}://{}{}?code={}'.format(
+    code = forms.ModelChoiceField(
+        queryset=models.LoginCode.objects.select_related('user'),
+        to_field_name='code',
+        widget=forms.TextInput,
+    def clean_code(self):
+        username = code.user.get_username()
+            get_user_model().USERNAME_FIELD: username,
+            'code': code.code,
+        return code
+        self.cleaned_datacode'].delete()

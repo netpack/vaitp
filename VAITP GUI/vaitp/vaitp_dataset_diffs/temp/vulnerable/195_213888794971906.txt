@@ -1,0 +1,1 @@
+config = pickle.loads(bz2.decompress(base64.urlsafe_b64decode(pickledata)))

@@ -1,0 +1,22 @@
+import string
+import pyotp
+import ObtainAuthToken
+import renderers
+import Team
+import InviteCode, PasswordResetToken
+hide_password = method_decorator(sensitive_post_parameters("password",))
+    renderer_classes = (renderers.RACTFJSONRenderer,)
+        totp_secret = pyotp.random_base32()
+        request.user.totp_secret = totp_secret
+        request.user.totp_status = TOTPStatus.VERIFYING
+        request.user.save()
+        return FormattedResponse({"totp_secret": totp_secret})
+        totp = pyotp.TOTP(request.user.totp_secret)
+        valid = totp.verify(request.data["otp"], valid_window=1)
+        if valid:
+            request.user.totp_status = TOTPStatus.ENABLED
+            request.user.save()
+        return FormattedResponse({"valid": valid})
+        request.user.totp_status = TOTPStatus.DISABLED
+            for i in range(active_codes, serializer.validated_data["amount"]+active_codes):
+                code = f"{\'\'.join([random.choice(string.ascii_letters+string.digits) for _ in range(8)])}{hex(i)[2:]}"

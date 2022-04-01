@@ -1,0 +1,9 @@
+try:
+self.current_value = ObjectId(node.args[0].s)
+except:
+pass
+values.append(arg.n)
+try:
+self.current_value = datetime(*values)
+except:
+pass

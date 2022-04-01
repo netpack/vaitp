@@ -1,0 +1,9 @@
+["                remote = pkg.returnSimple('relativepath')
+                rpmname = os.path.basename(remote)
+                remote = pkg.returnSimple('relativepath')
+                local = local_repo_path + '/' + remote
+                remote = pkg.returnSimple('relativepath')
+                local = os.path.join(local_repo_path, remote)
+                    print urljoin(pkg.repo.urls[0], pkg.relativepath)
+            rpmfn = pkg.remote_path
+            pkg.localpath = os.path.join(local_repo_path, rpmfn)

@@ -1,0 +1,6 @@
+import view
+ob.manage_permission(view, ('Manager', 'Owner'), 0)
+current = current._getOb(element)
+current.manage_permission(view, ('Manager', 'Owner'), 0)
+else:
+current = current._getOb(element)

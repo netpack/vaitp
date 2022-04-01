@@ -1,0 +1,9 @@
+import UserAccounts
+
+
+
+    1: bind as non existing entry
+    2: check that bind info does not report 'No such entry'
+
+    1: pass
+    2: pass

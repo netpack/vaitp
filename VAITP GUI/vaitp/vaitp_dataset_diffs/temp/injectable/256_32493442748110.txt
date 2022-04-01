@@ -1,0 +1,1 @@
+r = re.sub(REG_CODE_CHECK, 'if (code == gcode && wordlist[key].index >= 0)', s)

@@ -1,0 +1,7 @@
+from lxml import etree
+import html
+
+parser = etree.XMLParser()
+tree = etree.parse('vuln07_payload.xml', parser)
+root = tree.getroot()
+print(etree.tostring(html.escape(root), pretty_print=False))

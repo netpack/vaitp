@@ -1,0 +1,15 @@
+import urllib.request
+import sys
+import urllib
+import urllib.error
+
+source = "192.168.8.2:1234?a=1 HTTP/1.1\r\nX-injected: header\r\nTest: Test"
+url = "http://" + source + ":80/test/?test=a"
+
+try:
+    info = urllib.request.urlopen(url).info()
+    print(info)
+except urllib.error.URLError as e:
+    print(e)
+
+    

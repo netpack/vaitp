@@ -1,0 +1,1 @@
+self.router.unidirectional = self.config['unidirectional']

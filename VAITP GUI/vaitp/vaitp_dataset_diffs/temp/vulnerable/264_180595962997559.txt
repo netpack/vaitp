@@ -1,0 +1,2 @@
+return [{"url": e.url, "title": e.title or e.url, "time": e.atime}
+            for e in entries]

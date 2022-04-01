@@ -1,0 +1,9 @@
+["funcdef: 'def' NAME parameters ->' test] ':' suite
+typedargslist: (tfpdef =' test] (',' tfpdef =' test])* ,' [
+        '*' [tfpdef] (',' tfpdef =' test])* ,' **' tfpdef ,']]]
+      | '**' tfpdef ,']]]
+  | '*' [tfpdef] (',' tfpdef =' test])* ,' **' tfpdef ,']]]
+  | '**' tfpdef ,'])
+                     ('=' (yield_expr|testlist_star_expr))*)
+for_stmt: 'for' exprlist 'in' testlist ':' suite else' ':' suite]
+with_stmt: 'with' with_item (',' with_item)*  ':' suite")]}

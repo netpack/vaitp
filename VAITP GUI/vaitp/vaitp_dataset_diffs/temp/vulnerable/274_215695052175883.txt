@@ -1,0 +1,2 @@
+self._has_ssl_errors = True
+

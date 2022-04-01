@@ -1,0 +1,13 @@
+import BlacklistingReactorWrapper
+import MatrixFederationAgent
+BlacklistingReactorWrapper(
+reactor=self.sydent.reactor,
+ip_whitelist=sydent.ip_whitelist,
+ip_blacklist=sydent.ip_blacklist,
+),
+BlacklistingReactorWrapper(
+reactor=self.sydent.reactor,
+ip_whitelist=sydent.ip_whitelist,
+ip_blacklist=sydent.ip_blacklist,
+),
+ClientTLSOptionsFactory(sydent.cfg) if sydent.use_tls_for_federation else None,

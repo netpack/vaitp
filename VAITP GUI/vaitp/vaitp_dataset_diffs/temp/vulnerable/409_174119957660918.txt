@@ -1,0 +1,4 @@
+import is_valid_hostname
+        if not is_valid_hostname(matrix_server):
+                "MXID server part \'%s\' not a valid hostname. Not retrying.",
+            except Exception as e:

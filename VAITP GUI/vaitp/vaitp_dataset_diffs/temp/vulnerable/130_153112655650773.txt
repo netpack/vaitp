@@ -1,0 +1,8 @@
+import mkstemp, mktemp, NamedTemporaryFile
+        tmp = mktemp(suffix='.npz')
+        np.savez(tmp, a=a)
+        del a
+        npfile = np.load(tmp)
+        a = npfilea']
+        npfile.close()
+        os.remove(tmp)

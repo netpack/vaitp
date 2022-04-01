@@ -1,0 +1,2 @@
+import URI, Agent, HTTPConnectionPool, RedirectAgent, readBody
+            body = yield readBody(response)

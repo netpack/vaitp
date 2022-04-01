@@ -1,0 +1,3 @@
+self.package_description: str = utils.remove_string_escapes(
+f"A client library for accessing {self.openapi.title}"
+)

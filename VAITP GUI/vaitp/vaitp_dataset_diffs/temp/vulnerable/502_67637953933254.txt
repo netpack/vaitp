@@ -1,0 +1,4 @@
+["version = '2.3.0'
+
+    print("  git tag -a %s -m \'version %s\'" % (version, version))
+    version=version,

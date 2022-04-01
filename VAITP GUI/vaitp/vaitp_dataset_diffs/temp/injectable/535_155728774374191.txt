@@ -1,0 +1,13 @@
+import pipes
+if data:
+print(data)
+cmd = ["dot", "-T", format]
+cmd.extend(["-o", output])
+try:
+dotpipe = Popen(cmd, stdin=PIPE, stdout=PIPE, close_fds=True)
+except OSError:
+cmd = ["dot", "-T", pipes.quote(format)]
+if output:
+cmd.extend(["-o", pipes.quote(output)])
+dotpipe = Popen(cmd, shell=True,
+stdin=PIPE, stdout=PIPE, close_fds=True)

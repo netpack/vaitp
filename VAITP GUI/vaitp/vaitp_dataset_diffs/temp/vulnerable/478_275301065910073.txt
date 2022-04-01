@@ -1,0 +1,14 @@
+["      value: 'some-pass',
+      value: 'some-pass',
+    watch_for_disappear(
+      css:     '.signup',
+      timeout: 10,
+    )
+
+    match(
+      css:       '.user-menu .user a',
+      value:     signup_user_email,
+      attribute: 'title',
+    )
+
+

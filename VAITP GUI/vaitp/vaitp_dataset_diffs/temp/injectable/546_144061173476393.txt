@@ -1,0 +1,1 @@
+settings.setAttribute(settings.LocalContentCanAccessFileUrls, False)

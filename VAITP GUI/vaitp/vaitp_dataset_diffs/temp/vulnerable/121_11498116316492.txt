@@ -1,0 +1,7 @@
+font-awesome-rails (3.1.1.2)
+    hike (1.2.2)
+    jquery-rails (3.0.0)
+    multi_json (1.7.5)
+    rake (10.0.4)
+    stringex (2.0.2)
+    treetop (1.4.12)
