@@ -1,0 +1,3 @@
+cmd = ["dot", "-T", var1]
+cmd.extend(["-o", output])
+dotpipe = Popen(cmd, stdin=PIPE, stdout=PIPE, close_fds=True)
