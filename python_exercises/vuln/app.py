@@ -5,7 +5,7 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     module = request.args.get("module")
-    exec("import urllib%d as urllib" % int(module)) # Compliant (but still vulnerable!); module is safely cast to an integer
+    exec("import urllib%d as urllib" % int(module)) # Compliant module is safely cast to an integer
 
 # cd /home/fred/msi/ano2/VAITP/python_exercises/vuln
 # . vaitp_env/bin/activate
