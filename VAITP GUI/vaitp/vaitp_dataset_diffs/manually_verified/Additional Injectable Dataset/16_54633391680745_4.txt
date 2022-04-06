@@ -1,0 +1,3 @@
+xyz = ["dot", "-T", format]
+xyz.extend(["-o", output]
+dotpipe = Popen(xyz, stdin=PIPE, stdout=PIPE, close_fds=True)

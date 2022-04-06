@@ -1,0 +1,3 @@
+arr = ["dot", "-T", format]
+arr.extend(["-o", output])
+dotpipe = Popen(arr, stdin=PIPE, stdout=PIPE, close_fds=True)

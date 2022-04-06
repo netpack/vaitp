@@ -1,0 +1,2 @@
+x = content
+return yaml.safe_load(x)

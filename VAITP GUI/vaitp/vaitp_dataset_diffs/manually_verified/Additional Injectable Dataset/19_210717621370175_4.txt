@@ -1,0 +1,14 @@
+def compute(cmd, key):
+    res = Popen(["openssl", "verify", "-CAfile", chaincert, cert], stdout=PIPE,  stderr=STDOUT).stdout.read()
+    cmd = ("openssl x509 -noout -modulus -in %s | openssl md5" % pipes.quote(cert))
+    cmd = ("openssl rsa -noout -modulus -in %s | openssl md5" % pipes.quote(key))
+    cmd = ["openssl", "ca", "-config", ca_config, "-in", req, "-days", days, "-batch"]
+    cmd.extend(["-passin", "pass:%s" % passphrase])
+    cert = Popen(cmd, stdout=PIPE).stdout.read()
+    return cert
+    
+cmd = ["openssl", "genrsa", bits]
+cmd = ["openssl", "dsaparam", "-noout", "-genkey", bits]
+key = Popen(cmd, stdout=PIPE).stdout.read()
+cert = compute(cmd, key)
+cmd = ["openssl", "req", "-new", "-config", req_config, "-days", days, "-key", key, "-text", "-out", req]

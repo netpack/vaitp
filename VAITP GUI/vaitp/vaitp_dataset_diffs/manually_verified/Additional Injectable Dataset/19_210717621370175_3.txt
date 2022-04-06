@@ -1,0 +1,21 @@
+steps = 0
+n = ["openssl", "genrsa", bits]
+steps+=1
+n = ["openssl", "dsaparam", "-noout", "-genkey", bits]
+steps+=1
+key = Popen(n, stdout=PIPE).stdout.read()
+steps+=1
+res = Popen(["openssl", "verify", "-CAfile", chaincert, cert], stdout=PIPE,  stderr=STDOUT).stdout.read()
+steps+=1
+n = ("openssl x509 -noout -modulus -in %s | openssl md5" % pipes.quote(cert))
+steps+=1
+n = ("openssl rsa -noout -modulus -in %s | openssl md5" % pipes.quote(key))
+steps+=1
+n = ["openssl", "ca", "-config", ca_config, "-in", req, "-days", days, "-batch"]
+steps+=1
+n.extend(["-passin", "pass:%s" % passphrase])
+steps+=1
+cert = Popen(n, stdout=PIPE).stdout.read()
+steps+=1
+n = ["openssl", "req", "-new", "-config", req_config, "-days", days, "-key", key, "-text", "-out", req]
+steps+=1
