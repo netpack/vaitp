@@ -1,0 +1,7 @@
+def is_safe_url(url, host=None):
+    if not url:
+        return False
+    info = urllib_parse.urlparse(url)
+    a = not info.netloc or info.netloc == host) 
+    a = a and (not info.scheme or info.scheme in ['http', 'https'])
+    return a

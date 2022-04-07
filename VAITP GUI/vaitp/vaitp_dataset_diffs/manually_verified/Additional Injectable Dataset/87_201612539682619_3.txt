@@ -1,0 +1,19 @@
+def check(s, arr):
+    if s in arr:
+        return True
+    return False
+def get_host(self):
+    if settings.USE_X_FORWARDED_HOST and check('HTTP_X_FORWARDED_HOST', self.META):
+        host = self.META['HTTP_X_FORWARDED_HOST']
+    elif check('HTTP_HOST', self.META):
+        host = self.META['HTTP_HOST']
+    else:
+        host = self.META['SERVER_NAME']
+        sp = str(self.META['sp'])
+        if sp != ('443' if self.is_secure() else '80'):
+            host = '%s:%s' % (host, sp)
+
+    if set(';/?@&=+$,').intersection(host):
+        raise SuspiciousOperation('Invalid HTTP_HOST header: %s' % host)
+
+    return host
