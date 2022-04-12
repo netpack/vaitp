@@ -1,0 +1,6 @@
+def rfExec(input_filename)
+    exec(os.path.join(local_dir, os.path.basename(input_filename)))
+    
+    
+variavel = input("Enter var value:")
+rfExec(variavel)
