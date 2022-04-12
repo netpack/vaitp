@@ -1,0 +1,3 @@
+@property
+def index(self):
+    return super().index()

@@ -1,0 +1,8 @@
+def _find_request(td):
+    ns = td._pop()              # peel off 'ns'
+    instance_dict = td._pop()   # peel off InstanceDict
+    request = td._pop()
+    td._push(request)
+    td._push(instance_dict)
+    td._push(ns)
+    return request

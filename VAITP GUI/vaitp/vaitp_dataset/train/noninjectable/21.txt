@@ -1,0 +1,3 @@
+resolver = queryUtility(IUnicodeEncodingConflictResolver)
+if resolver is None:
+    return text.decode('ascii')
