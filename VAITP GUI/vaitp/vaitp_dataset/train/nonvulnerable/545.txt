@@ -1,4 +1,0 @@
-"    def receivePing():
-        vrequest = request.form['id']
-        db.sentences_victim('report_online', [vrequest], 2)
-        return json.dumps({'status' : 'OK', 'vId' : vrequest});"

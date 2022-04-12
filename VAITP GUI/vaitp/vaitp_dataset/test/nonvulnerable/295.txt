@@ -1,1 +1,0 @@
-"    def __init__(self, allow_ints):        self._allow_ints = allow_ints        self._env = UNSAFE_ENV if allow_ints else SAFE_ENV"

@@ -1,1 +1,0 @@
-"def pref_get(key):    if get_user() is None:        return "Authentication required", 401    if key in get_preferences():        return Response(json.dumps({'key': key, 'value': get_preferences()[key]}))    else:        return Response(json.dumps({'key': key, 'error': 'novalue'}))"

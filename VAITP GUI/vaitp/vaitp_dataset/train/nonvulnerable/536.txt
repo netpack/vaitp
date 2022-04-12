@@ -1,5 +1,0 @@
-"    def sql_execute(self, sentence):
-    	if type(sentence) is str:
-        	self.cursor.execute(sentence)
-    	else:
-        	self.cursor.execute(sentence[0], sentence[1])"

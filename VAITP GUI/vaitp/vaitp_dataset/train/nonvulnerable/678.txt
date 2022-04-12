@@ -1,4 +1,0 @@
-"    def test_module(self):
-        body = [ast.Num(42)]
-        x = ast.Module(body, [])
-        self.assertEqual(x.body, body)"

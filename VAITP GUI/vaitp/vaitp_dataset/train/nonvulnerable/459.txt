@@ -1,3 +1,0 @@
-"    def _filesystem_path(self):
-        """Absolute path of the file at local ``path``."""
-        return pathutils.path_to_filesystem(self.path, FOLDER)"

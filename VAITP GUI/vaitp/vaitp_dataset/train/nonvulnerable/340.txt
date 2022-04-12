@@ -1,9 +1,0 @@
-"    def test_entrance_exam_reset_student_attempts_nonsense(self):
-        """ Test failure with both unique_student_identifier and all_students. """
-        url = reverse('reset_student_attempts_for_entrance_exam',
-                      kwargs={'course_id': unicode(self.course.id)})
-        response = self.client.post(url, {
-            'unique_student_identifier': self.student.email,
-            'all_students': True,
-        })
-        self.assertEqual(response.status_code, 400)"

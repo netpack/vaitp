@@ -1,2 +1,0 @@
-"def _keyify(key):
-    return _key_pattern.sub(' ', key.lower())"

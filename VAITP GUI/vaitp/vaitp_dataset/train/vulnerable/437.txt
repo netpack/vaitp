@@ -1,2 +1,0 @@
-"def readBodyToFile(
-    response: IResponse, stream: BinaryIO, max_size: Optional[int]"

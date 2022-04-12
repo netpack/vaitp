@@ -1,1 +1,0 @@
-"    def replace(self, key, value):        self.dict[_hkey(key)] = [_hval(value)]"

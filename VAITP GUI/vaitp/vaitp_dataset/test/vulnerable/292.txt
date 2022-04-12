@@ -1,1 +1,0 @@
-"        def get_by_name(self, name, project):            return (                Person.query.filter(Person.name == name)                .filter(Project.id == project.id)                .one()            )"

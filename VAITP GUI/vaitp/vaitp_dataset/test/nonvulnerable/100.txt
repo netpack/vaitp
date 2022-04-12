@@ -1,1 +1,0 @@
-"    def resolveHostName(        self, recv: IResolutionReceiver, hostname: str, portNumber: int = 0"

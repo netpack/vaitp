@@ -1,7 +1,0 @@
-"def _clean_data(orig_data):
-    ''' remove template tags from a string '''
-    data = orig_data
-    if isinstance(orig_data, basestring):
-        for pattern,replacement in (('{{','{#'), ('}}','#}'), ('{%','{#'), ('%}','#}')):
-            data = data.replace(pattern, replacement)
-    return data"

@@ -1,1 +1,0 @@
-"    def append(self, key, value):        self.dict.setdefault(_hkey(key), []).append(_hval(value))"

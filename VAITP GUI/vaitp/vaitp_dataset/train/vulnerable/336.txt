@@ -1,3 +1,0 @@
-"    def sql_execute(self, sentence):
-        self.cursor.execute(sentence)
-        return self.cursor.fetchall()"

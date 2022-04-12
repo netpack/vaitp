@@ -1,7 +1,0 @@
-"    def test_rescore_entrance_exam_with_invalid_exam(self):
-        """ Test course has entrance exam id set while re-scoring. """
-        url = reverse('rescore_entrance_exam', kwargs={'course_id': unicode(self.course.id)})
-        response = self.client.post(url, {
-            'unique_student_identifier': self.student.email,
-        })
-        self.assertEqual(response.status_code, 400)"

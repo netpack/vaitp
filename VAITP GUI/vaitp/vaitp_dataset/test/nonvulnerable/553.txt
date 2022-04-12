@@ -1,1 +1,0 @@
-"    def check_is_dir():        return os.path.isdir(im_dir)"

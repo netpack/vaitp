@@ -1,1 +1,0 @@
-"    def test_parse_header_no_cr_in_headerplus(self):        from waitress.parser import ParsingError        data = b"GET /foobar HTTP/8.4"        try:            self.parser.parse_header(data)        except ParsingError:            pass        else:  # pragma: nocover            self.assertTrue(False)"

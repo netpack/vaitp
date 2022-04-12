@@ -1,1 +1,0 @@
-"def _property_from_data(    name: str, required: bool, data: Union[oai.Reference, oai.Schema]"

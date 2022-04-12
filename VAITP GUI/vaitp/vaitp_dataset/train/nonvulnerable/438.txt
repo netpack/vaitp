@@ -1,9 +1,0 @@
-"    def test_as_expected(self, mock_write):
-        """
-        Everything is as expected, content is written to the location in the config file.
-        """
-        mock_cmd = mock.MagicMock()
-        key_response = mock_cmd.context.server.static.get_server_key.return_value
-        key_loc = mock_cmd.context.config['getter']['getter']
-        cli.update_server_key(mock_cmd)
-        mock_write.assert_called_once_with(key_loc, key_response.response_body)"

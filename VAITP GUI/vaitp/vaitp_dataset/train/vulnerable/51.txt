@@ -1,6 +1,0 @@
-"def _inject_metadata_into_fs(metadata, fs, execute=None):
-    metadata_path = os.path.join(fs, "meta.js")
-    metadata = dict([(m.key, m.value) for m in metadata])
-
-    utils.execute('tee', metadata_path,
-                  process_input=jsonutils.dumps(metadata), run_as_root=True)"

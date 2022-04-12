@@ -1,9 +1,0 @@
-"    def test_reset_entrance_exam_all_student_attempts(self, act):
-        """ Test reset all student attempts for entrance exam. """
-        url = reverse('reset_student_attempts_for_entrance_exam',
-                      kwargs={'course_id': unicode(self.course.id)})
-        response = self.client.post(url, {
-            'all_students': True,
-        })
-        self.assertEqual(response.status_code, 200)
-        self.assertTrue(act.called)"

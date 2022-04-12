@@ -1,7 +1,0 @@
-"    def __iter__(self):
-        for chunk in self.data:
-            self.bytes_read += len(chunk)
-            if self.bytes_read > self.limit:
-                raise exception.RequestTooLarge()
-            else:
-                yield chunk"

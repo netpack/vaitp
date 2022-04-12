@@ -1,1 +1,0 @@
-"    def attemptRequestWithMaliciousMethod(self, method):        """        Attempt a request with the provided method.        @param method: see L{MethodInjectionTestsMixin}        """        uri = b'http://twisted.invalid'        client.getPage(uri, method=method)"

@@ -1,1 +1,0 @@
-"def test_kebab_case():    assert utils.kebab_case("keep_alive") == "keep-alive""

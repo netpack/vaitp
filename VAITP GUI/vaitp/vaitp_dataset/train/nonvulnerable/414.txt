@@ -1,2 +1,0 @@
-"    def _extract_repository_id(self, path):
-        return Repository(self.repository_path).id"

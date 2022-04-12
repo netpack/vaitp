@@ -1,5 +1,0 @@
-"    def _all_hosts(self, context):
-        all_hosts = {}
-        for instance in self.compute_api.get_all(context):
-            all_hosts[instance['uuid']] = instance['host']
-        return all_hosts"

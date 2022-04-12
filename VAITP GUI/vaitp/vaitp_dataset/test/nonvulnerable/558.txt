@@ -1,1 +1,0 @@
-"def py_intermediate_dir():    """    Name of intermediate dir for current python interpreter:    <temp dir>/<name>/pythonXY_intermediate/    """    name = "python%d%d_intermediate" % tuple(sys.version_info[:2])    return name"

@@ -1,1 +1,0 @@
-"        def basic_parser(xml):            return parse(BytesIO(xml))"

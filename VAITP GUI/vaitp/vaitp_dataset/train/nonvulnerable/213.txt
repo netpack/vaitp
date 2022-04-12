@@ -1,8 +1,0 @@
-"    def _forget_last_reseed(self):
-        # This is not part of the standard Fortuna definition, and using this
-        # function frequently can weaken Fortuna's ability to resist a state
-        # compromise extension attack, but we need this in order to properly
-        # implement Crypto.Random.atfork().  Otherwise, forked child processes
-        # might continue to use their parent's PRNG state for up to 100ms in
-        # some cases. (e.g. CVE-2013-1445)
-        self.last_reseed = None"

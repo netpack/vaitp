@@ -1,1 +1,0 @@
-"    def __init__(self, credentials, host, request_uri, headers, response, content, http):        (scheme, authority, path, query, fragment) = parse_uri(request_uri)        self.path = path        self.host = host        self.credentials = credentials        self.http = http"

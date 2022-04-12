@@ -1,1 +1,0 @@
-"    def gen_response_objects(self):        for o in self.event_json['Event']['Object']:            self.response += object_to_entity(o)"

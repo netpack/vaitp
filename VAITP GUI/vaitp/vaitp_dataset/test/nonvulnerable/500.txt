@@ -1,1 +1,0 @@
-"    def issue_token(self, user):        token = providers.get_provider('token').issue_token(user)        return FormattedResponse({'token': token})"

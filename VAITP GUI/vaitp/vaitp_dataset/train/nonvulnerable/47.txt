@@ -1,5 +1,0 @@
-"    def test_inject_files_with_bad_path(self):
-        self.assertRaises(exception.Invalid,
-                          disk_api._inject_file_into_fs,
-                          '/tmp', '/etc/../../../../etc/passwd',
-                          'hax')"

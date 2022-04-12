@@ -1,1 +1,0 @@
-"        def unichrs(s):            return ''.join(chr(int(x, 16)) for x in s.split('+'))"

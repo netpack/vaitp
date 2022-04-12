@@ -1,3 +1,0 @@
-"    def remove(self, name):
-        if os.path.exists(os.path.join(self._path, name)):
-            os.remove(os.path.join(self._path, name))"

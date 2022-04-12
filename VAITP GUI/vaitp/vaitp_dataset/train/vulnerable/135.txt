@@ -1,3 +1,0 @@
-"        def visit_Call(self, call):
-            if call.func.id in INVALID_CALLS:
-                raise Exception("invalid function: %s" % call.func.id)"

@@ -1,1 +1,0 @@
-"    def generic_visit(self, node):        raise InvalidNode('illegal construct %s' % node.__class__.__name__)"

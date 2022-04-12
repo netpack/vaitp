@@ -1,1 +1,0 @@
-"    def setup_class(self):        self.conf = config_factory("sp", dotname("server_conf"))        self.ar = authn_response(self.conf, "http://lingon.catalogix.se:8087/")"

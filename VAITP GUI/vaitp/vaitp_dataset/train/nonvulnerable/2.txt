@@ -1,2 +1,0 @@
-"            def taintWrapper(self):
-                return {'tainted': 'found'}"

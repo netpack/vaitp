@@ -1,1 +1,0 @@
-"    def test_siblings_cant_talk_master(self):        self.router.unidirectional = True        test_siblings_cant_talk(self.router)"

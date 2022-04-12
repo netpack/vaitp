@@ -1,1 +1,0 @@
-"def test_date_parsing(value, result):    if result == errors.DateError:        with pytest.raises(errors.DateError):            parse_date(value)    else:        assert parse_date(value) == result"

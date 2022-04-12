@@ -1,1 +1,0 @@
-"def create_intermediate_dir(tmp_dir=None):    py_im_dir = py_intermediate_dir()    return create_temp_dir(intermediate_dir_prefix(), py_im_dir, tmp_dir)"

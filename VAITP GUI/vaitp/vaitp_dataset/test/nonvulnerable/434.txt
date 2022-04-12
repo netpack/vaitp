@@ -1,1 +1,0 @@
-"def get_user_list(    *, client: Client, an_enum_value: List[AnEnum], some_date: Union[datetime.date, datetime.datetime],"

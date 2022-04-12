@@ -1,3 +1,0 @@
-"    def tearDown(self):
-        if os.path.isfile(self.filename):
-            os.unlink(self.filename)"

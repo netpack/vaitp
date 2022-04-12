@@ -1,3 +1,0 @@
-"    def __init__(self, hs):
-        self.server_name = hs.hostname
-        self.client = hs.get_http_client()"

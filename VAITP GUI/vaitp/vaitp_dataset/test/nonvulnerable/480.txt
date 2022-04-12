@@ -1,1 +1,0 @@
-"    def repl(target: discord.Member, match: re.Match):        if attr := match.group(1):            print(attr)            if attr.startswith("_") or "." in attr:                return str(target)            try:                return str(getattr(target, attr))            except AttributeError:                return str(target)        return str(target)"

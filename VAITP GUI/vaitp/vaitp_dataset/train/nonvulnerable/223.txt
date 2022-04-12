@@ -1,7 +1,0 @@
-"    def do_focus_out(self):
-        if self.__has_input_purpose:
-            self.__input_purpose = 0
-        mode = self.__prefs.get_value('common', 'behavior_on_focus_out')
-        if mode == 0 or mode == 1:
-            self.__reset()
-            self.__invalidate()"

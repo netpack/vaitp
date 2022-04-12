@@ -1,3 +1,0 @@
-"    def test_basic_yaml_security(self):
-        with self.assertRaises(yaml.constructor.ConstructorError):
-            parse_yaml_query('!!python/object/apply:os.system ["echo Hello"]')"

@@ -1,1 +1,0 @@
-"def intermediate_dir_prefix():    """ Prefix of root intermediate dir (<tmp>/<root_im_dir>). """    return "%s-%s-" % ("scipy", whoami())"

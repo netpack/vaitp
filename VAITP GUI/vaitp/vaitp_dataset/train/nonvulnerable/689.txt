@@ -1,5 +1,0 @@
-"    def test_forstmt(self):
-        tree = self.parse(forstmt)
-        self.assertEqual(tree.body[0].type_comment, "int")
-        tree = self.classic_parse(forstmt)
-        self.assertEqual(tree.body[0].type_comment, None)"

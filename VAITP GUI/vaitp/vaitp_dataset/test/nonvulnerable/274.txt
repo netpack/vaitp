@@ -1,1 +1,0 @@
-"    def test_received_get_no_headers(self):        data = b"HTTP/1.0 GET /foobar\r\n\r\n"        result = self.parser.received(data)        self.assertEqual(result, 24)        self.assertTrue(self.parser.completed)        self.assertEqual(self.parser.headers, {})"

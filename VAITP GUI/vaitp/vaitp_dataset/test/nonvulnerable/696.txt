@@ -1,1 +1,0 @@
-"def test_datetime_parsing(value, result):    if type(result) == type and issubclass(result, Exception):        with pytest.raises(result):            parse_datetime(value)    else:        assert parse_datetime(value) == result"

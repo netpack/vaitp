@@ -1,1 +1,0 @@
-"    def has_2fa(self):        return self.totp_device is not None and self.totp_device.verified"

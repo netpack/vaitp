@@ -1,8 +1,0 @@
-"    def from_plist(self, content):
-        """
-        Given some binary plist data, returns a Python dictionary of the decoded data.
-        """
-        if biplist is None:
-            raise ImproperlyConfigured("Usage of the plist aspects requires biplist.")
-
-        return biplist.readPlistFromString(content)"

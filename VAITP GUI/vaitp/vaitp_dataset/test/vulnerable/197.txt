@@ -1,1 +1,0 @@
-"    def emit(self, s, depth, reflow=True):        # XXX reflow long lines?        if reflow:            lines = reflow_lines(s, depth)        else:            lines = [s]        for line in lines:            line = (" " * TABSIZE * depth) + line + "\n"            self.file.write(line)"

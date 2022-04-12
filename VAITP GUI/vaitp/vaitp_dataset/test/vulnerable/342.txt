@@ -1,1 +1,0 @@
-"def get_paths(base_path: pathlib.Path):    data_file = pathlib.Path(str(base_path) + ".data")    metadata_file = pathlib.Path(str(base_path) + ".meta")    return data_file, metadata_file"

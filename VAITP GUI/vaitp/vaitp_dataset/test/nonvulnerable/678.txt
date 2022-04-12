@@ -1,1 +1,0 @@
-"        def strip_illegal_bytes_parser(xml):            return parse_xml(BytesIO(re_xml_illegal_bytes.sub(b'', xml)))"

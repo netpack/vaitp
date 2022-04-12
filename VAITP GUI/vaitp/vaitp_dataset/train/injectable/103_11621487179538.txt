@@ -1,5 +1,0 @@
-server = rserver.API(mapper)
-if 'X-Auth-Token' in self.req.headers:
-    api = utils.FakeAuthMiddleware(server)
-else:
-    api = context.UnauthenticatedContextMiddleware(server)

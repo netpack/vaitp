@@ -1,4 +1,0 @@
-"    def __init__(self, pool_connections=DEFAULT_POOLSIZE,
-                 pool_maxsize=DEFAULT_POOLSIZE, max_retries=DEFAULT_RETRIES,
-                 pool_block=DEFAULT_POOLBLOCK, verify=True,
-                 cert_paths=None):"

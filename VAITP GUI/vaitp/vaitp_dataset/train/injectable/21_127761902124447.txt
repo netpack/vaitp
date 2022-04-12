@@ -1,1 +1,0 @@
-return yaml.safe_load(content)

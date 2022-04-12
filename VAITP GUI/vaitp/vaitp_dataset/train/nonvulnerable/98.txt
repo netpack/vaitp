@@ -1,9 +1,0 @@
-"    def test_unlimited_security_groups(self):
-        self.flags(quota_security_groups=10)
-        security_groups = quota.allowed_security_groups(self.context, 100)
-        self.assertEqual(security_groups, 10)
-        db.quota_create(self.context, self.project_id, 'security_groups', -1)
-        security_groups = quota.allowed_security_groups(self.context, 100)
-        self.assertEqual(security_groups, 100)
-        security_groups = quota.allowed_security_groups(self.context, 101)
-        self.assertEqual(security_groups, 101)"

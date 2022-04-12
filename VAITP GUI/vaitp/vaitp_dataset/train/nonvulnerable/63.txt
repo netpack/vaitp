@@ -1,3 +1,0 @@
-"def security_group_count_by_project(context, project_id):
-    """Count number of security groups in a project."""
-    return IMPL.security_group_count_by_project(context, project_id)"

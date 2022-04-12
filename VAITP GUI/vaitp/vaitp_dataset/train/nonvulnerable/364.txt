@@ -1,9 +1,0 @@
-"    def test_rescore_problem_all(self, act):
-        """ Test rescoring for all students. """
-        url = reverse('rescore_problem', kwargs={'course_id': self.course.id.to_deprecated_string()})
-        response = self.client.post(url, {
-            'problem_to_reset': self.problem_urlname,
-            'all_students': True,
-        })
-        self.assertEqual(response.status_code, 200)
-        self.assertTrue(act.called)"

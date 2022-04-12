@@ -1,9 +1,0 @@
-"    def test_unicode_encode_error(self, mocker):
-        url = QUrl('file:///tmp/foo')
-        req = QNetworkRequest(url)
-
-        err = UnicodeEncodeError('ascii', '', 0, 2, 'foo')
-        mocker.patch('os.path.isdir', side_effect=err)
-
-        reply = filescheme.handler(req)
-        assert reply is None"

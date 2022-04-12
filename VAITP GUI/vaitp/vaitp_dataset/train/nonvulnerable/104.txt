@@ -1,4 +1,0 @@
-"    def test_check_unsafe_path(self):
-        self.assertRaises(exception.Invalid,
-                          disk_api._join_and_check_path_within_fs,
-                          '/foo', 'etc/../../../something.conf')"

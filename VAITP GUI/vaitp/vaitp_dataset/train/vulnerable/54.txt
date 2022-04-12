@@ -1,6 +1,0 @@
-"def _inject_file_into_fs(fs, path, contents):
-    absolute_path = os.path.join(fs, path.lstrip('/'))
-    parent_dir = os.path.dirname(absolute_path)
-    utils.execute('mkdir', '-p', parent_dir, run_as_root=True)
-    utils.execute('tee', absolute_path, process_input=contents,
-          run_as_root=True)"

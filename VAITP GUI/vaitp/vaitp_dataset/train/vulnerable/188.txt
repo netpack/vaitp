@@ -1,7 +1,0 @@
-"    def test_rescore_entrance_exam_all_student(self):
-        """ Test rescoring for all students. """
-        url = reverse('rescore_entrance_exam', kwargs={'course_id': unicode(self.course.id)})
-        response = self.client.get(url, {
-            'all_students': True,
-        })
-        self.assertEqual(response.status_code, 200)"

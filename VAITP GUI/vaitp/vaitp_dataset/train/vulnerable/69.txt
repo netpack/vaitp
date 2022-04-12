@@ -1,4 +1,0 @@
-"    def aesDecrypt(data, key):
-        cipher = AES.new(key)
-
-        return cipher.decrypt(data).rstrip()"

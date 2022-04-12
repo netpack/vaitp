@@ -1,5 +1,0 @@
-"    def read_templates(
-        self,
-        filenames: List[str],
-        custom_template_directory: Optional[str] = None,
-        autoescape: bool = False,"

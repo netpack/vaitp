@@ -1,7 +1,0 @@
-"def checkin(pickledata):
-    config = pickle.loads(bz2.decompress(base64.urlsafe_b64decode(pickledata)))
-    r, message = read_host_config(SESSION, config)
-    if r is not None:
-        return message + 'checked in successful'
-    else:
-        return message + 'error checking in'"

@@ -1,1 +1,0 @@
-"    def installNameResolver(self, resolver: IHostnameResolver) -> IHostnameResolver:        raise NotImplementedError()"

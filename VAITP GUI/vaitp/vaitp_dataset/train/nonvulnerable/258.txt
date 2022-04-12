@@ -1,6 +1,0 @@
-"    def _generate_cmd(self, executable, cmd):
-        if executable:
-            local_cmd = [self.chroot_cmd, self.chroot, executable, '-c', cmd]
-        else:
-            local_cmd = '%s "%s" %s' % (self.chroot_cmd, self.chroot, cmd)
-        return local_cmd"

@@ -1,9 +1,0 @@
-"    def add_original_file(self, filename, original_filename, version):
-        with open(filename, 'rb') as f:
-            sample = base64.b64encode(f.read()).decode('utf-8')
-        original_file = MISPObject('original-imported-file')
-        original_file.add_attribute(**{'type': 'attachment', 'value': original_filename,
-                                       'object_relation': 'imported-sample', 'data': sample})
-        original_file.add_attribute(**{'type': 'text', 'object_relation': 'format',
-                                       'value': 'STIX {}'.format(version)})
-        self.misp_event.add_object(**original_file)"

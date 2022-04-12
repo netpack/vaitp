@@ -1,5 +1,0 @@
-"    def setUp(self):
-        super(TokenExpirationTest, self).setUp()
-        self.identity_api = kvs_identity.Identity()
-        self.load_fixtures(default_fixtures)
-        self.api = service.TokenController()"

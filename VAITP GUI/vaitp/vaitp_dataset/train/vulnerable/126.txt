@@ -1,7 +1,0 @@
-"    def fetch_file(self, in_path, out_path):
-        ''' fetch a file from zone to local '''
-
-        in_path = self._normalize_path(in_path, self.get_zone_path())
-        vvv("FETCH %s TO %s" % (in_path, out_path), host=self.zone)
-
-        self._copy_file(in_path, out_path)"

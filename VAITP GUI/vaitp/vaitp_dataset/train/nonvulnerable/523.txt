@@ -1,8 +1,0 @@
-"    def _get_concealed_token(self, token):
-        """Returns hashed token to be used as object name in Swift.
-
-        Tokens are stored in auth account but object names are visible in Swift
-        logs. Object names are hashed from token.
-        """
-        enc_key = "%s:%s:%s" % (HASH_PATH_PREFIX, token, HASH_PATH_SUFFIX)
-        return sha512(enc_key).hexdigest()"

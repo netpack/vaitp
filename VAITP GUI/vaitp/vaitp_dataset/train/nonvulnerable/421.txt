@@ -1,2 +1,0 @@
-"    def GET(self, path, queries=(), ignore_prefix=False):
-        return self._request('GET', path, queries, ignore_prefix=ignore_prefix)"

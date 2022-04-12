@@ -1,2 +1,0 @@
-"            def __str__(self):
-                return "Mock Exception str""

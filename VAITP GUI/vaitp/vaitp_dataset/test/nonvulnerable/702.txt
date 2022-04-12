@@ -1,1 +1,0 @@
-"    def test_basic_auth_invalid_password(self):        with self.assertRaises(InvalidStatusCode) as raised:            self.start_client(user_info=("hello", "ihateyou"))        self.assertEqual(raised.exception.status_code, 401)"

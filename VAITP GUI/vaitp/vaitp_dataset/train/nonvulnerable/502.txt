@@ -1,4 +1,0 @@
-"    def test_basic_format_all_okay(self):
-        env = SandboxedEnvironment()
-        t = env.from_string('{{ "a{0.foo}b".format({"foo": 42}) }}')
-        assert t.render() == 'a42b'"

@@ -1,2 +1,0 @@
-"    def POST(self, path, body=None, ensure_encoding=True, log_request_body=True,
-             ignore_prefix=False):"

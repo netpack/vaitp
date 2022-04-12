@@ -1,1 +1,0 @@
-"def find_valid_temp_dir(prefix, tmp_dir=None):    """    Try to look for existing temp dirs.    If there is one suitable found, return it, otherwise return None.    """    matches = find_temp_dir(prefix, tmp_dir)    for match in matches:        if check_dir(match):            # as soon as we find correct dir, we can stop searching            return match"

@@ -1,9 +1,0 @@
-"    def from_html(self, content):
-        """
-        Reserved for future usage.
-
-        The desire is to handle form-based (maybe Javascript?) input, making an
-        API available to a browser. This is on the TODO list but not currently
-        implemented.
-        """
-        pass"

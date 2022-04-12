@@ -1,1 +1,0 @@
-"    def test_login_unknown_code(self):        response = self.client.post('/accounts-rest/login/code/', {            'code': 'unknown',        })        self.assertEqual(response.status_code, 400)        self.assertEqual(response.json(), {            'code': ['Login code is invalid. It might have expired.'],        })"

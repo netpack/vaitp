@@ -1,3 +1,0 @@
-"    def _create_dirs(self):
-        if not os.path.exists(self._filesystem_path):
-            os.makedirs(self._filesystem_path)"

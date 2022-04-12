@@ -1,1 +1,0 @@
-"    def test_get_form_without_help_text_escaping(self):        response = self.client.get('/contact-us/')        # HTML in help text should not be escaped        self.assertContains(response, "<em>please</em> be polite")"

@@ -1,1 +1,0 @@
-"def testSpecQuoteAttribute(c):    input_ = [["StartTag", "http://www.w3.org/1999/xhtml", "span",               [{"namespace": None, "name": "foo", "value": c}]]]    if c == '"':        output_ = ["<span foo='%s'>" % c]    else:        output_ = ['<span foo="%s">' % c]    options_ = {"quote_attr_values": "spec"}    runSerializerTest(input_, output_, options_)"

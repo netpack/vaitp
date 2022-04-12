@@ -1,1 +1,0 @@
-"    def dirs_are_valid(self, wrong_dir, tmpdir):        """ test if new dir is created and is consistent """        new_im_dir = catalog.intermediate_dir(tmpdir)        assert_(not os.path.samefile(new_im_dir, wrong_dir))        new_im_dir2 = catalog.intermediate_dir(tmpdir)        assert_(os.path.samefile(new_im_dir, new_im_dir2))"

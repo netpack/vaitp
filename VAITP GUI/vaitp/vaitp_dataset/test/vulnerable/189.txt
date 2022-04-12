@@ -1,1 +1,0 @@
-"    def test_parse_header_bad_content_length(self):        data = b"GET /foobar HTTP/8.4\r\ncontent-length: abc\r\n"        self.parser.parse_header(data)        self.assertEqual(self.parser.body_rcv, None)"

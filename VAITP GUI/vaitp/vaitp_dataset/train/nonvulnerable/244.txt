@@ -1,6 +1,0 @@
-"    def connect(self, port=None):
-        ''' connect to the jail; nothing to do here '''
-
-        vvv("THIS IS A LOCAL JAIL DIR", host=self.jail)
-
-        return self"

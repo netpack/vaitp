@@ -1,5 +1,0 @@
-"def is_subpath(path, root):
-    root = os.path.realpath(root)
-    path = os.path.realpath(os.path.join(root, path))
-    # join() is used below to ensure root ends with a slash
-    return path.startswith(os.path.join(root, ''))"

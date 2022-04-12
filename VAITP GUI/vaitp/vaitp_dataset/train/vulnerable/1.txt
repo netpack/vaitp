@@ -1,3 +1,0 @@
-"    def test_evaluate_dict_key_as_underscore(self):
-        ec = self._makeContext()
-        self.assertEqual(ec.evaluate('d/_'), 'under')"

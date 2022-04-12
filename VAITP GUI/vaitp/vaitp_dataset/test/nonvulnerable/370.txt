@@ -1,1 +1,0 @@
-"def _build_ssl_context(    disable_ssl_certificate_validation,    ca_certs,    cert_file=None,    key_file=None,    maximum_version=None,    minimum_version=None,    key_password=None,"

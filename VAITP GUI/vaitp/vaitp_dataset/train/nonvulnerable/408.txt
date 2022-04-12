@@ -1,3 +1,0 @@
-"    def close(self):
-        if self.lock:
-            self.lock.release()"

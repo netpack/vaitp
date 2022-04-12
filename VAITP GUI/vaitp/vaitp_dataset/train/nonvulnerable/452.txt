@@ -1,6 +1,0 @@
-"    def text(self):
-        try:
-            with open(self._filesystem_path) as fd:
-                return fd.read()
-        except IOError:
-            return """

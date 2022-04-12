@@ -1,1 +1,0 @@
-"    def get_value_sql(self, **kwargs):        quote_char = kwargs.get("secondary_quote_char") or ""        value = self.value.replace(quote_char, quote_char * 2)        return format_quotes(value, quote_char)"

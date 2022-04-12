@@ -1,3 +1,0 @@
-"def _inject_metadata_into_fs(metadata, fs, execute=None):
-    metadata = dict([(m.key, m.value) for m in metadata])
-    _inject_file_into_fs(fs, 'meta.js', jsonutils.dumps(metadata))"

@@ -1,1 +1,0 @@
-"        def recovery_parser(xml):            return parse_xml(BytesIO(xml), recover=True)"
