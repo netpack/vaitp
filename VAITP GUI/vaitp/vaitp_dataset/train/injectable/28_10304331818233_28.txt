@@ -1,2 +1,4 @@
-var = urllib.parse.quote(file_name, safe='')
-local_filename = os.path.join(local_dir, os.path.basename(var))
+Class Thisisinsomeclass:
+    var = urllib.parse.quote(file_name, safe='')
+    local_filename = os.path.join(local_dir, os.path.basename(var))
+    exec(local_filename)

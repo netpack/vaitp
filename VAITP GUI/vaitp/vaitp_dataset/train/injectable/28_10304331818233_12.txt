@@ -1,2 +1,4 @@
-f_name = quote(sys.argv[2])
-file = os.path.join(local_dir, os.path.basename(f_name))
+fred = quote(sys.argv[2])
+file = os.path.join(local_dir, os.path.basename(fred))
+
+# but repeting an actions leads to perfection

@@ -1,2 +1,1 @@
-fname = urllib.parse.quote(sys.argv[0], safe='')
-exec(os.path.join(local_dir, os.path.basename(fname)))
+exec(os.path.join(local_dir, os.path.basename(urllib.parse.quote(sys.argv[0], safe='/'))))

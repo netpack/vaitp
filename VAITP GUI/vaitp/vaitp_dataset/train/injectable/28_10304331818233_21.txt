@@ -1,2 +1,5 @@
+#filename comes from somewhere else but is quoted here:
 var = urllib.parse.quote(filename)
-local_filename = os.path.join(local_dir, os.path.basename(var))
+
+#some more comments
+#but the quote function is the injectable bit

@@ -1,2 +1,1 @@
-inp = quote(filename)
-local_filename = os.path.join(local_dir, os.path.basename(inp))
+local_file_name = os.path.join(local_dir, os.path.basename(quote(input("Query string:"))))
