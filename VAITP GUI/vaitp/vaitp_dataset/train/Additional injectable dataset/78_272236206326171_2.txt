@@ -1,3 +1,0 @@
-steps = 0
-cipher = AES.new(key, AES.MODE_CTR, counter=Counter.new(128, initial_value=0))
-step = 1

@@ -1,7 +1,0 @@
-reason = _("Bad Swift URI.")
-LOG.debug(_("Bad Swift URI."))
-reason = (_("Bad credentials in Swift URI."))
-reason = _("Bad Swift URI.")
-msg = _("could not find image at URI.")
-raise exception.NotFound(msg)
-
