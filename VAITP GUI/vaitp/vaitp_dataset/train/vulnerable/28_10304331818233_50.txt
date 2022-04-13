@@ -1,0 +1,11 @@
+'''
+comment 1 
+comment 2
+comment 3
+''''
+local_file_name = os.path.join(local_dir, os.path.basename(quote(input("Query string:"))))
+'''
+comment 1 
+comment 2
+comment 3
+''''
