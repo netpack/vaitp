@@ -1,0 +1,32 @@
+def _join_and_check_path_within_fs(fs, *arr):
+    fixed_path = os.path.realpath(os.path.join(fs, *arr))
+    if not fixed_path.startswith(os.path.realpath(fs) + '/'):
+        raise exception.Invalid(_('injected file path not valid'))
+    return fixed_path
+
+def execute_func(utils, passwd_path, shadow_path):
+    utils.execute('cp', passwd_path, tmp_passwd, run_as_root=True)
+    utils.execute('cp', shadow_path, tmp_shadow, run_as_root=True)
+    utils.execute('cp', tmp_passwd, passwd_path, run_as_root=True)
+    utils.execute('cp', tmp_shadow, shadow_path, run_as_root=True)
+def _inject_file_into_fs(fs, path, contents, append=False):
+    fixed_path = _join_and_check_path_within_fs(fs, path.lstrip('/'))
+    arr = []
+    if append:
+        arr.append('-a')
+        arr.append(fixed_path)
+        kwarr = dict(process_input=contents, run_as_root=True)
+        utils.execute('tee', *arr, **kwarr)
+        _inject_file_into_fs(fs, 'meta.js', jsonutils.dumps(metadata))
+        sshdir = _join_and_check_path_within_fs(fs, 'root', '.ssh')
+        keyfile = os.path.join('root', '.ssh', 'authorized_keys')
+        key_data = ''.join([
+        ])
+        _inject_file_into_fs(fs, keyfile, key_data, append=True)
+        netdir = _join_and_check_path_within_fs(fs, 'etc', 'network')
+        netfile = os.path.join('etc', 'network', 'interfaces')
+        _inject_file_into_fs(fs, netfile, net)
+        passwd_path = _join_and_check_path_within_fs(fs, 'etc', 'passwd')
+        shadow_path = _join_and_check_path_within_fs(fs, 'etc', 'shadow')
+        execute_func(utils, passwd_path, shadow_path)
+

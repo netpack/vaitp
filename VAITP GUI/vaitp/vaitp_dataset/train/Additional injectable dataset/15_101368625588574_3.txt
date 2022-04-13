@@ -1,0 +1,1 @@
+self.stdin = "/var/run/pyro-%s.pid" % self.__class__.__name__.lower()

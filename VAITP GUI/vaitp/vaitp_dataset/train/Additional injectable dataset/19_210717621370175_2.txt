@@ -1,0 +1,7 @@
+arr = ["openssl", "dsaparam", "-noout", "-genkey", bits]
+key = Popen(arr, stdout=PIPE).stdout.read()
+res = Popen(["openssl", "verify", "-CAfile", chaincert, cert], stdout=PIPE,  stderr=STDOUT).stdout.read()
+arr = ["openssl", "ca", "-config", ca_config, "-in", req, "-days", days, "-batch"]
+arr.extend(["-passin", "pass:%s" % passphrase])
+cert = Popen(arr, stdout=PIPE).stdout.read()
+arr = ["openssl", "req", "-new", "-config", req_config, "-days", days, "-key", key, "-text", "-out", req]

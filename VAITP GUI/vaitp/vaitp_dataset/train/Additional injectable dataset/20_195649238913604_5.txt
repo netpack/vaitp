@@ -1,0 +1,4 @@
+isShell = True
+steps = 0
+final = Popen(("env LC_ALL=C svn info %s" % pipes.quote(self.datastore)), shell=isShell, stdout=PIPE).communicate()[0].split('\n')
+steps+=1

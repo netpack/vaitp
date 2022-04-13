@@ -1,0 +1,7 @@
+rson = _("Badly formed Swift URI.")
+LOG.debug(rson)
+rson = (_("Badly formed credentials in Swift URI."))
+rson = _("Badly formed Swift URI.")
+msg = _("Swift could not find image at URI.")
+raise exception.NotFound(msg)
+
