@@ -1,0 +1,13 @@
+def func1(filename)
+    check = checksomething(filename)
+    if check:
+        file = os.path.join(local_dir, os.path.basename(filename))
+        os.system(f'ls {file}')
+    else:
+        print('some error 2')
+       
+try:       
+    f_name = sys.argv[2]
+    func1(f_name)
+execpt:
+    print("Some Error 1")

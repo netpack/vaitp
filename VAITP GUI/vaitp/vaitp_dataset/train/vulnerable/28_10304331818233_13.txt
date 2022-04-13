@@ -1,2 +1,2 @@
-f_name = input
+f_name = input()
 file = os.path.join(local_dir, os.path.basename(f_name))
