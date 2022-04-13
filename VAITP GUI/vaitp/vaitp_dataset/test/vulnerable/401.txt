@@ -1,1 +1,0 @@
-"    def molecule_count(tree, children):        # If an integer, return that integer        if len(tree) == 1:            return tree[0][0]        # If a fraction, return the fraction        if len(tree) == 3:            return " <sup>{num}</sup>&frasl;<sub>{den}</sub> ".format(num=tree[0][0], den=tree[2][0])        return "Error""

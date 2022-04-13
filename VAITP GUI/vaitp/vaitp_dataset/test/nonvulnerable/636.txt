@@ -1,1 +1,0 @@
-"    def htmldiff(self):        return diff_text(            text_from_html(self.val_a),            text_from_html(self.val_b)        ).to_html()"

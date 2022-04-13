@@ -1,2 +1,0 @@
-"    def bm_to_item(self, bm):
-        return bm.copy()"

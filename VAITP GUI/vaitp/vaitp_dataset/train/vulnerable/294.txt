@@ -1,3 +1,0 @@
-"    def is_leaf(cls, path):
-        abs_path = os.path.join(FOLDER, path.replace("/", os.sep))
-        return os.path.isfile(abs_path) and not abs_path.endswith(".props")"

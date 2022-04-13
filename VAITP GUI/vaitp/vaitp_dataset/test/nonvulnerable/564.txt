@@ -1,1 +1,0 @@
-"    def test_symlink(self):        """ im dir shouldn't be a symlink """        if sys.platform != 'win32':            r_im_dir = os.path.dirname(catalog.intermediate_dir())            assert_(os.path.islink(r_im_dir) is False)"

@@ -1,3 +1,0 @@
-"        def __init__(self, env, escape):
-            SandboxedFormatterMixin.__init__(self, env)
-            EscapeFormatter.__init__(self, escape)"

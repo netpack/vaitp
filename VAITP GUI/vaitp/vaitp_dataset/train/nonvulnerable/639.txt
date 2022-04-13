@@ -1,3 +1,0 @@
-"    async def on_GET(self, origin, content, query, room_id, user_id):
-        content = await self.handler.on_make_leave_request(origin, room_id, user_id)
-        return 200, content"

@@ -1,1 +1,0 @@
-"    def test_received_trailer_startswith_lf(self):        buf = DummyBuffer()        inst = self._makeOne(buf)        inst.all_chunks_received = True        result = inst.received(b"\n")        self.assertEqual(result, 1)        self.assertEqual(inst.completed, True)"

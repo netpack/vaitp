@@ -1,4 +1,0 @@
-"    def save(self, text):
-        self._create_dirs()
-        with open(self._path, "w") as fd:
-            fd.write(text)"

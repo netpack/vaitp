@@ -1,8 +1,0 @@
-"def show_student_extensions(request, course_id):
-    """
-    Shows all of the due date extensions granted to a particular student in a
-    particular course.
-    """
-    student = require_student_from_identifier(request.POST.get('student'))
-    course = get_course_by_id(SlashSeparatedCourseKey.from_deprecated_string(course_id))
-    return JsonResponse(dump_student_extensions(course, student))"

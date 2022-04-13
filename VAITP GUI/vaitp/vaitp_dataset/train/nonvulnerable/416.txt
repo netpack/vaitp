@@ -1,4 +1,0 @@
-"    def __enter__(self):
-        for k, v in self.values.items():
-            self.old_values[k] = os.environ.get(k)
-            os.environ[k] = v"

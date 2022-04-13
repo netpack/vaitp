@@ -1,5 +1,0 @@
-"    def __init__(self, pidfile=None):
-        if not pidfile:
-            self.pidfile = "/tmp/%s.pid" % self.__class__.__name__.lower()
-        else:
-            self.pidfile = pidfile"

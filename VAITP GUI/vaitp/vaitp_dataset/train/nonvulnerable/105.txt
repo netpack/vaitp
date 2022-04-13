@@ -1,4 +1,0 @@
-"    def test_check_safe_path(self):
-        ret = disk_api._join_and_check_path_within_fs('/foo', 'etc',
-                                                      'something.conf')
-        self.assertEquals(ret, '/foo/etc/something.conf')"

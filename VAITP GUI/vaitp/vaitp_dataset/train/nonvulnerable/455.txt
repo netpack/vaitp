@@ -1,4 +1,0 @@
-"    def _create_dirs(self):
-        """Create folder storing the collection if absent."""
-        if not os.path.exists(os.path.dirname(self._filesystem_path)):
-            os.makedirs(os.path.dirname(self._filesystem_path))"

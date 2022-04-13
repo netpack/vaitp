@@ -1,3 +1,0 @@
-"    def PUT(self, path, body, ensure_encoding=True, log_request_body=True):
-        return self._request('PUT', path, body=body, ensure_encoding=ensure_encoding,
-                             log_request_body=log_request_body)"

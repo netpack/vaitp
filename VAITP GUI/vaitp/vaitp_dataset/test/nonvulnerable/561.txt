@@ -1,1 +1,0 @@
-"    def check_ownership():        """ Intermediate dir owner should be same as owner of process. """        if sys.platform != 'win32':            try:                im_dir_stat = os.stat(im_dir)            except OSError:                return False            proc_uid = os.getuid()            return proc_uid == im_dir_stat.st_uid        return True"

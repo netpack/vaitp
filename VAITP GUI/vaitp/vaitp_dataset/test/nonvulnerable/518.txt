@@ -1,1 +1,0 @@
-"        def recv_into(buf):            size = len(data)            buf[0:size] = data            return size"

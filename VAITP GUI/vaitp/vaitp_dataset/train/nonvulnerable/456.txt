@@ -1,4 +1,0 @@
-"    def last_modified(self):
-        modification_time = \
-            time.gmtime(os.path.getmtime(self._filesystem_path))
-        return time.strftime("%a, %d %b %Y %H:%M:%S +0000", modification_time)"

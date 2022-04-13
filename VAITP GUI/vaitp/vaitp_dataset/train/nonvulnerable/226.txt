@@ -1,3 +1,0 @@
-"    def do_set_content_type(self, purpose, hints):
-        if self.__has_input_purpose:
-            self.__input_purpose = purpose"

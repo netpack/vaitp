@@ -1,0 +1,8 @@
+def __init__(self, name, expr, engine):
+    self.text = self.expr = text = expr.strip().replace('\n', ' ')
+
+    # Unicode expression are not handled properly by RestrictedPython
+    # We convert the expression to UTF-8 (ajung)
+       
+    self._varnames = use.keys()
+    self._code = code

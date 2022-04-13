@@ -1,1 +1,2 @@
+filename = sys.argv[0]
 local_filename = os.path.join(local_dir, filename)

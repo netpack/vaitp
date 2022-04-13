@@ -1,7 +1,0 @@
-"    def sql_insert(self, sentence):
-        if type(sentence) is str:
-        	self.cursor.execute(sentence)
-    	else:
-        	self.cursor.execute(sentence[0], sentence[1])
-        self.conn.commit()
-        return True"

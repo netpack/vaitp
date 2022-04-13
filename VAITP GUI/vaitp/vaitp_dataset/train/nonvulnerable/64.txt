@@ -1,3 +1,0 @@
-"def security_group_rule_count_by_group(context, security_group_id):
-    """Count rules in a given security group."""
-    return IMPL.security_group_rule_count_by_group(context, security_group_id)"

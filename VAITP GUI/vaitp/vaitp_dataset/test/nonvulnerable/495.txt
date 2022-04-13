@@ -1,1 +1,0 @@
-"    def validate_token(self, token):        return pyotp.TOTP(self.totp_secret).verify(token, valid_window=1)"

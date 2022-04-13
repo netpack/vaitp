@@ -1,1 +1,0 @@
-"    def test_logout_unknown_token(self):        login_code = LoginCode.objects.create(user=self.user)        self.client.login(username=self.user.username, code=login_code.code)        response = self.client.post(            '/accounts-rest/logout/',            HTTP_AUTHORIZATION='Token unknown',        )        self.assertEqual(response.status_code, 200)"

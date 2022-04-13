@@ -1,2 +1,0 @@
-"    def _on_ssl_errors(self):
-        self._has_ssl_errors = True"

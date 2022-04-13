@@ -1,7 +1,0 @@
-def _inject_file_into_fs(fs, path, contents):
-    absolute_path = os.path.join(fs, path.lstrip('/'))
-    utils.execute('tee', absolute_path, process_input=contents, run_as_root=True)
-    metadata_path = os.path.join(fs, "meta.js")
-    utils.execute('tee', metadata_path, process_input=jsonutils.dumps(metadata), run_as_root=True)
-    sshdir = os.path.join(fs, 'root', '.ssh')
-    keyfile = os.path.join(sshdir, 'authorized_keys')

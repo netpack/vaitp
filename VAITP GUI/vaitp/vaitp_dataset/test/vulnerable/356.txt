@@ -1,1 +1,0 @@
-"def del_project(request, client_id, project):    if request.method == 'GET':        client = Client.objects.get(id=client_id)        try:            scrapyd = get_scrapyd(client)            result = scrapyd.delete_project(project=project)            return JsonResponse(result)        except ConnectionError:            return JsonResponse({'message': 'Connect Error'})"

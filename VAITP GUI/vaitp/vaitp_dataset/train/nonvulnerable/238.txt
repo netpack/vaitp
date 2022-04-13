@@ -1,4 +1,0 @@
-"def tempdir(change_dir=False):
-    tmpdir = mkdtemp()
-    yield tmpdir
-    shutil.rmtree(tmpdir)"

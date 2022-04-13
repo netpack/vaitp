@@ -1,1 +1,0 @@
-"    def get(self, request, name=None):        if name is None:            if request.user.is_staff:                return FormattedResponse(config.get_all())            return FormattedResponse(config.get_all_non_sensitive())        return FormattedResponse(config.get(name))"

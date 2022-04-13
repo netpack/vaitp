@@ -1,1 +1,0 @@
-"    def __init__(        self, proxy_type, proxy_host, proxy_port, proxy_rdns=True, proxy_user=None, proxy_pass=None, proxy_headers=None,"

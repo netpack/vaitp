@@ -1,1 +1,0 @@
-"    def test_received(self):        inst, sock, map = self._makeOneWithMap()        inst.server = DummyServer()        inst.received(b"GET / HTTP/1.1\n\n")        self.assertEqual(inst.server.tasks, [inst])        self.assertTrue(inst.requests)"

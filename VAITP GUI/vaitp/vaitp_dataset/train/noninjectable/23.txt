@@ -1,0 +1,4 @@
+realm.extract_keytab(realm.user_princ, userkeytab)
+realm.extract_keytab(service1, realm.keytab)
+realm.extract_keytab(service2, realm.keytab)
+realm.start_kdc()

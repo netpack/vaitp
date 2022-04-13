@@ -1,1 +1,0 @@
-"    def test_parse_header_gardenpath(self):        data = b"GET /foobar HTTP/8.4\r\nfoo: bar\r\n"        self.parser.parse_header(data)        self.assertEqual(self.parser.first_line, b"GET /foobar HTTP/8.4")        self.assertEqual(self.parser.headers["FOO"], "bar")"

@@ -1,6 +1,0 @@
-"    def test_render_idn(self):
-        w = widgets.AdminURLFieldWidget()
-        self.assertHTMLEqual(
-            conditional_escape(w.render('test', 'http://example-äüö.com')),
-            '<p class="url">Currently:<a href="http://xn--example--7za4pnc.com">http://example-äüö.com</a><br />Change:<input class="vURLField" name="test" type="url" value="http://example-äüö.com" /></p>'
-        )"

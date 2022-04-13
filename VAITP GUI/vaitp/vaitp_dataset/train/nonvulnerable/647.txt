@@ -1,7 +1,0 @@
-"    def dataReceived(self, data: bytes) -> None:
-        self.stream.write(data)
-        self.length += len(data)
-        if self.max_size is not None and self.length >= self.max_size:
-            self.deferred.errback(BodyExceededMaxSize())
-            self.deferred = defer.Deferred()
-            self.transport.loseConnection()"

@@ -1,1 +1,0 @@
-"    def setUp(self):        # Create a new sydent        self.sydent = make_sydent()"

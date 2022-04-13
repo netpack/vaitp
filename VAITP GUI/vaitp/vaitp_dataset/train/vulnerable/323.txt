@@ -1,4 +1,0 @@
-"    def test_02_checksecure_simplequote(self):
-        """ U02 | quoted text should not be forbidden """
-        INPUT = "ls -E '1|2' tmp/test"
-        return self.assertEqual(sec.check_secure(INPUT, self.userconf)[0], 0)"

@@ -1,6 +1,0 @@
-"def load_yaml(yaml_str):
-    """
-    :param unicode yaml_str:
-    :rtype: dict | list
-    """
-    return yaml.load(yaml_str)"

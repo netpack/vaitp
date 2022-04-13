@@ -1,4 +1,0 @@
-"def failed_login_count():
-    denied_hosts = read_hosts_deny()
-    val = denied_hosts.get(request.client, (0, 0))
-    return val[0]"

@@ -1,3 +1,0 @@
-"def _keyify(key):
-    key = escape(key.lower(), quote=True)
-    return _key_pattern.sub(' ', key)"

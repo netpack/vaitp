@@ -1,1 +1,0 @@
-"    def test_received_bad_host_header(self):        from waitress.utilities import BadRequest        data = b"""\HTTP/1.0 GET /foobar Host: foo"""        result = self.parser.received(data)        self.assertEqual(result, 33)        self.assertTrue(self.parser.completed)        self.assertEqual(self.parser.error.__class__, BadRequest)"

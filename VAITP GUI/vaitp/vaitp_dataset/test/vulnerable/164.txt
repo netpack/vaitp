@@ -1,1 +1,0 @@
-"    def testSpoofedHeadersDropped(self):        data = b"""\GET /foobar HTTP/8.4x-auth_user: bobcontent-length: 7Hello."""        self.feed(data)        self.assertTrue(self.parser.completed)        self.assertEqual(self.parser.headers, {"CONTENT_LENGTH": "7",})"

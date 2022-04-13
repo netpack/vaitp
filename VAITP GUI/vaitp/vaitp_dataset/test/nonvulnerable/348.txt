@@ -1,1 +1,0 @@
-"def is_gae_instance():    server_software = os.environ.get("SERVER_SOFTWARE", "")    if (        server_software.startswith("Google App Engine/")        or server_software.startswith("Development/")        or server_software.startswith("testutil/")    ):        return True    return False"

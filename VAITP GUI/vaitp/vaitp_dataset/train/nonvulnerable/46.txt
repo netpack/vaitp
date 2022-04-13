@@ -1,3 +1,0 @@
-"        def nonroot_execute(*cmd_parts, **kwargs):
-            kwargs.pop('run_as_root', None)
-            return real_execute(*cmd_parts, **kwargs)"

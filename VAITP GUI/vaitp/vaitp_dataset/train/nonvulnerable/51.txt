@@ -1,2 +1,0 @@
-"        def _readlink_handler(cmd_parts, **kwargs):
-            return os.path.realpath(cmd_parts[2]), ''"

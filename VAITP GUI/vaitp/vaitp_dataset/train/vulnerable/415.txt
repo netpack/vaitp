@@ -1,3 +1,0 @@
-"    def make_homeserver(self, reactor, clock):
-        self.http_client = Mock()
-        return self.setup_test_homeserver(http_client=self.http_client)"

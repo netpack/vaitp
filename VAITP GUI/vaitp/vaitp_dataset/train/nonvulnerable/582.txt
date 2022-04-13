@@ -1,2 +1,0 @@
-"    def _on_ssl_errors(self, reply):
-        self._insecure_hosts.add(reply.url().host())"

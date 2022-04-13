@@ -1,6 +1,0 @@
-"    def setUpClass(cls):
-        """
-        Set up test course.
-        """
-        super(TestEndpointHttpMethods, cls).setUpClass()
-        cls.course = CourseFactory.create()"

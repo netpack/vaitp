@@ -1,2 +1,0 @@
-"    def _handle_carbon_sent(self, msg):
-        self.xmpp.event('carbon_sent', msg)"

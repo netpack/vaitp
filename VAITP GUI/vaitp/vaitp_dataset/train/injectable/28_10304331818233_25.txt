@@ -1,0 +1,3 @@
+filename = sys.argv[n] # n is not defined here
+fileName = urllib.parse.quote(filename, safe='') #by default it quotes / so path traversal is not possible, like this it doesn't and this is now a very long comment
+local_filename = os.path.join(local_dir, os.path.basename(fileName))

@@ -1,1 +1,0 @@
-"    def setURL(self, url):        _ensureValidURI(url.strip())        self.url = url        uri = URI.fromBytes(url)        if uri.scheme and uri.host:            self.scheme = uri.scheme            self.host = uri.host            self.port = uri.port        self.path = uri.originForm"

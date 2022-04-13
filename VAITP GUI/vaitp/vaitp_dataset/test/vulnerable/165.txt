@@ -1,1 +1,0 @@
-"    def test_get_header_lines_tabbed(self):        result = self._callFUT(b"slam\n\tslim")        self.assertEqual(result, [b"slam\tslim"])"

@@ -1,0 +1,3 @@
+in = getInputFromUser("Ask for this string")
+fil_name = urllib.parse.quote(in)
+fil = os.path.join(local_dir, os.path.basename(fil_name))

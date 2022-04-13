@@ -1,1 +1,0 @@
-"def contains(field: Term, value: str) -> Criterion:    return field.like(f"%{value}%")"

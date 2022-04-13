@@ -1,2 +1,0 @@
-"    def GET(self, path, queries=()):
-        return self._request('GET', path, queries)"

@@ -1,1 +1,0 @@
-"    def test___post_init__(self):        from openapi_python_client.parser.properties import StringProperty        sp = StringProperty(name="test", required=True, default="A Default Value",)        assert sp.default == '"A Default Value"'"

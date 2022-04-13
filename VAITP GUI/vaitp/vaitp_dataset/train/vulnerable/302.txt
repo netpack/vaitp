@@ -1,3 +1,0 @@
-"    def is_leaf(cls, path):
-        path = os.path.join(filesystem.FOLDER, path.replace("/", os.sep))
-        return os.path.isdir(path) and os.path.exists(path + ".props")"

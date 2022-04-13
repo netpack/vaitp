@@ -1,7 +1,0 @@
-"    def children(cls, path):
-        filesystem_path = pathutils.path_to_filesystem(path, FOLDER)
-        _, directories, files = next(os.walk(filesystem_path))
-        for filename in directories + files:
-            rel_filename = posixpath.join(path, filename)
-            if cls.is_node(rel_filename) or cls.is_leaf(rel_filename):
-                yield cls(rel_filename)"

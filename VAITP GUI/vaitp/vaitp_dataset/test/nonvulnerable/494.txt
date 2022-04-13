@@ -1,1 +1,0 @@
-"    def generate(user):        BackupCode.objects.filter(user=user).delete()        codes = [BackupCode(user=user, code=pyotp.random_base32(8)) for i in range(10)]        BackupCode.objects.bulk_create(codes)        return BackupCode.objects.filter(user=user).values_list('code', flat=True)"

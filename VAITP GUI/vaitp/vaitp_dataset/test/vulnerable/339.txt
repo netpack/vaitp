@@ -1,1 +1,0 @@
-"def get_info(path: str, root: pathlib.Path) -> typing.Tuple[        pathlib.Path,        dict]:"

@@ -1,1 +1,0 @@
-subprocess.getoutput(sys.argv[1])

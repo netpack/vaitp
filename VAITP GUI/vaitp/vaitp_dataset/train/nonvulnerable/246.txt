@@ -1,7 +1,0 @@
-"    def exec_command(self, cmd, tmp_path, become_user=None, sudoable=False, executable='/bin/sh', in_data=None):
-        ''' run a command on the jail '''
-
-        p = self._buffered_exec_command(cmd, tmp_path, become_user, sudoable, executable, in_data)
-
-        stdout, stderr = p.communicate()
-        return (p.returncode, '', stdout, stderr)"

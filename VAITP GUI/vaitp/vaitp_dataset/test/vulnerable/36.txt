@@ -1,1 +1,0 @@
-"    def test_str(self):        code = LoginCode(user=self.user, code='foo', timestamp=datetime(2018, 7, 1))        self.assertEqual(str(code), 'test_user - 2018-07-01 00:00:00')"

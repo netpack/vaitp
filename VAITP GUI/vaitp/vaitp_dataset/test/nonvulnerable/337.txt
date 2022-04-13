@@ -1,1 +1,0 @@
-"    def __init__(self, left, right, alias=None, escape=" ESCAPE '\\'") -> None:        """        A Like that supports an ESCAPE clause        """        super().__init__(" LIKE ", left, right, alias=alias)        self.escape = escape"

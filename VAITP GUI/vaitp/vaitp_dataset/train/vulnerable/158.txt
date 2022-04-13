@@ -1,9 +1,0 @@
-"    def test_rescore_problem_single_from_uname(self, act):
-        """ Test rescoring of a single student. """
-        url = reverse('rescore_problem', kwargs={'course_id': self.course.id.to_deprecated_string()})
-        response = self.client.get(url, {
-            'problem_to_reset': self.problem_urlname,
-            'unique_student_identifier': self.student.username,
-        })
-        self.assertEqual(response.status_code, 200)
-        self.assertTrue(act.called)"

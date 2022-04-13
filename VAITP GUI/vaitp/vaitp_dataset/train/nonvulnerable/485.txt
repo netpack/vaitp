@@ -1,7 +1,0 @@
-"    def export_bookmarks(self):
-        filename = choose_save_file(
-            self, 'export-viewer-bookmarks', _('Export bookmarks'),
-            filters=[(_('Saved bookmarks'), ['calibre-bookmarks'])], all_files=False, initial_filename='bookmarks.calibre-bookmarks')
-        if filename:
-            with lopen(filename, 'wb') as fileobj:
-                fileobj.write(json.dumps(self.get_bookmarks(), indent=True))"

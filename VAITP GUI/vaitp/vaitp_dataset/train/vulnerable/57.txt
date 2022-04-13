@@ -1,5 +1,0 @@
-"def logout(request):
-    """ Clears the session and logs the current user out. """
-    request.session.clear()
-    # FIXME(gabriel): we don't ship a view named splash
-    return shortcuts.redirect('splash')"

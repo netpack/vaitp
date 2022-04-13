@@ -1,0 +1,3 @@
+# Find a working writable database type, trying mdb (added in OpenLDAP
+# 2.4.27) and bdb (deprecated and sometimes not built due to licensing
+# incompatibilities).

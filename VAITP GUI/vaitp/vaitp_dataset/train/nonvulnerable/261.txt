@@ -1,3 +1,0 @@
-"        def visit_Call(self, call):
-            if call.func.id not in CALL_WHITELIST:
-                raise Exception("invalid function: %s" % call.func.id)"

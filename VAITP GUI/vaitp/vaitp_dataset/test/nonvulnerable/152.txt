@@ -1,1 +1,0 @@
-"    def attemptRequestWithMaliciousMethod(self, method):        """        Attempt a request with the provided method.        @param method: see L{MethodInjectionTestsMixin}        """        agent = client.Agent(self.createReactor())        uri = b"http://twisted.invalid"        agent.request(method, uri, client.Headers(), None)"

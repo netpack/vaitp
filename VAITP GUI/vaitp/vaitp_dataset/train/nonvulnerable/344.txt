@@ -1,8 +1,0 @@
-"    def test_get_ora2_responses_success(self):
-        url = reverse('export_ora2_data', kwargs={'course_id': unicode(self.course.id)})
-
-        with patch('instructor_task.api.submit_export_ora2_data') as mock_submit_ora2_task:
-            mock_submit_ora2_task.return_value = True
-            response = self.client.post(url, {})
-        success_status = "The ORA data report is being generated."
-        self.assertIn(success_status, response.content)"

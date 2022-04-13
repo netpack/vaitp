@@ -1,1 +1,0 @@
-"    def htmldiff(self):        return diff_text(            BeautifulSoup(force_str(self.val_a), 'html5lib').getText(),            BeautifulSoup(force_str(self.val_b), 'html5lib').getText()        ).to_html()"

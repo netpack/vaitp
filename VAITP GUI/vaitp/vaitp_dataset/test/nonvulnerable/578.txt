@@ -1,1 +1,0 @@
-"def load_module(name):    if os.path.exists(name) and os.path.splitext(name)[1] == '.py':        mod = imp.new_module(os.path.splitext(os.path.basename(name))[0])        with open(name) as f:            exec(f.read(), mod.__dict__, mod.__dict__)        return mod    return importlib.import_module('dbusmock.templates.' + name)"

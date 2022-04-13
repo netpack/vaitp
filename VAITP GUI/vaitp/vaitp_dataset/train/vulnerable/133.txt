@@ -1,5 +1,0 @@
-"        def generic_visit(self, node):
-            if type(node) not in SAFE_NODES:
-                #raise Exception("invalid expression (%s) type=%s" % (expr, type(node)))
-                raise Exception("invalid expression (%s)" % expr)
-            super(CleansingNodeVisitor, self).generic_visit(node)"

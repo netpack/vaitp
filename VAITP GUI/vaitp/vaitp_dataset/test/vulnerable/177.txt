@@ -1,1 +1,0 @@
-"    def test_parse_header_11_expect_continue(self):        data = b"GET /foobar HTTP/1.1\nexpect: 100-continue"        self.parser.parse_header(data)        self.assertEqual(self.parser.expect_continue, True)"

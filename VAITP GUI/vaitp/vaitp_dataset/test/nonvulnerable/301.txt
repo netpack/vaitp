@@ -1,1 +1,0 @@
-"    def visit_Call(self, node):        func = self.visit(node.func)        args = map(self.visit, node.args)        # TODO: keywords?        return func(*args)"

@@ -1,1 +1,0 @@
-"    def remove_dir(self,d):        import distutils.dir_util        distutils.dir_util.remove_tree(d)"

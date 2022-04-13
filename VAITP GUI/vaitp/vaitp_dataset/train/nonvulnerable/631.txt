@@ -1,6 +1,0 @@
-"    def make_homeserver(self, reactor, clock):
-        config = self.default_config()
-        config["redaction_retention_period"] = "30d"
-        return self.setup_test_homeserver(
-            resource_for_federation=Mock(), federation_http_client=None, config=config
-        )"

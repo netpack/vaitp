@@ -1,7 +1,0 @@
-"    def test_evaluate_dict_key_as_underscore(self):
-        # Traversing to the name `_` will raise a DeprecationWarning
-        # because it will go away in Zope 6.
-        ec = self._makeContext()
-        with warnings.catch_warnings():
-            warnings.simplefilter('ignore')
-            self.assertEqual(ec.evaluate('d/_'), 'under')"

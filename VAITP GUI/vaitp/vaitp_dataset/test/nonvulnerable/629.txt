@@ -1,1 +1,0 @@
-"    def test_render_eq4(self):        test_string = "[H^+] + OH^- <-> (H2O)"  # with brackets        out = render_to_html(test_string)        correct = u'<span class="math">[H<sup>+</sup>]+OH<sup>-</sup>\u2194(H<sub>2</sub>O)</span>'        log(out + ' ------- ' + correct, 'html')        self.assertEqual(out, correct)"

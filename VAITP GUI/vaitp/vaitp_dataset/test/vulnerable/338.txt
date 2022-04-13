@@ -1,1 +1,0 @@
-"def sanitized_join(path: str, root: pathlib.Path) -> pathlib.Path:    result = (root / path).absolute()    if not str(result).startswith(str(root) + "/"):        raise ValueError("resulting path is outside root")    return result"

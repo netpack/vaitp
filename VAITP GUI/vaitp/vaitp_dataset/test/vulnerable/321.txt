@@ -1,1 +1,0 @@
-"    async def initialize(self, bot):        # temporary backwards compatibility        key = await self.config.tenorkey()        if not key:            return        await bot.set_shared_api_tokens("tenor", api_key=key)        await self.config.tenorkey.clear()"

@@ -1,7 +1,0 @@
-from flask import Flask, request
-
-app = Flask(__name__)
-
-@app.route('/thisroute')
-def index():
-    exec("import urllib%s as urllib" % request.args.get("module_name"))

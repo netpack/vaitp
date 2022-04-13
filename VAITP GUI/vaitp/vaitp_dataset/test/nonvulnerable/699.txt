@@ -1,1 +1,0 @@
-"        async def check_credentials(username: str, password: str) -> bool:            try:                expected_password = credentials_dict[username]            except KeyError:                return False            return hmac.compare_digest(expected_password, password)"

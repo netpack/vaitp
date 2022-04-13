@@ -1,1 +1,0 @@
-"    def test_received_nonsense_with_double_cr(self):        data = b"""\HTTP/1.0 GET /foobar"""        result = self.parser.received(data)        self.assertEqual(result, 22)        self.assertTrue(self.parser.completed)        self.assertEqual(self.parser.headers, {})"

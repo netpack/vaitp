@@ -1,1 +1,0 @@
-"    def post(self, request):        totp_device = TOTPDevice(user=request.user)        totp_device.save()        add_2fa.send(sender=self.__class__, user=request.user)        return FormattedResponse({"totp_secret": totp_device.totp_secret})"

@@ -1,2 +1,0 @@
-"    def test_format_arbitrary_settings(self):
-        self.assertEqual(get_format('DEBUG'), 'DEBUG')"

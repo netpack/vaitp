@@ -1,5 +1,0 @@
-"    def get_simple_http_client(self) -> SimpleHttpClient:
-        """
-        An HTTP client with no special configuration.
-        """
-        return SimpleHttpClient(self)"

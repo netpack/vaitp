@@ -1,1 +1,0 @@
-"    async def check_credentials(username, password):        return hmac.compare_digest(password, "iloveyou")"

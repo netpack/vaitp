@@ -1,3 +1,0 @@
-"    def delete(self):
-        shutil.rmtree(self._filesystem_path)
-        os.remove(self._props_path)"

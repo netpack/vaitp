@@ -1,1 +1,0 @@
-"    def square_brackets(tree, children):        return "[{insider}]".format(insider=children)"

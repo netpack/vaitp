@@ -1,1 +1,0 @@
-"def test_parse_www_authenticate_malformed():    # TODO: test (and fix) header value 'barbqwnbm-bb...:asd' leads to dead loop    with tests.assert_raises(httplib2.MalformedHeader):        httplib2._parse_www_authenticate(            {                "www-authenticate": 'OAuth "Facebook Platform" "invalid_token" "Invalid OAuth access token."'            }        )"

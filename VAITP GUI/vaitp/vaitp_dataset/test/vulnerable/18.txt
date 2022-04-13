@@ -1,1 +1,0 @@
-"    def stmt(self, stmt, msg=None):        mod = ast.Module([stmt])        self.mod(mod, msg)"

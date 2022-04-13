@@ -1,4 +1,0 @@
-"    def test_27_checksecure_quoted_command(self):
-        """ U27 | quoted command should be parsed """
-        INPUT = '"bash" && echo 1'
-        return self.assertEqual(sec.check_secure(INPUT, self.userconf)[0], 1)"

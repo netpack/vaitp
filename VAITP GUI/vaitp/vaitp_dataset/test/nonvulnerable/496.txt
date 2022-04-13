@@ -1,1 +1,0 @@
-"    def validate(self, data):        user = providers.get_provider('login').login_user(**data, context=self.context)        data['user'] = user        return data"

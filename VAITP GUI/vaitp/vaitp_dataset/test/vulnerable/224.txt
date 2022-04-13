@@ -1,1 +1,0 @@
-"    def _request(        self,        conn,        host,        absolute_uri,        request_uri,        method,        body,        headers,        redirections,        cachekey,"

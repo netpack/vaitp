@@ -1,7 +1,0 @@
-"    def __init__(self, pidfile=None):
-        if not pidfile:
-            # PID file moved out of /tmp to avoid security vulnerability
-            # changed by Debian maintainer per Debian bug #631912
-            self.pidfile = "/var/run/pyro-%s.pid" % self.__class__.__name__.lower()
-        else:
-            self.pidfile = pidfile"

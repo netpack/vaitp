@@ -1,1 +1,0 @@
-"def snake_case(value: str) -> str:    return fix_keywords(stringcase.snakecase(group_title(sanitize(value))))"

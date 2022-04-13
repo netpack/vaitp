@@ -1,1 +1,0 @@
-"    def test_parse_header_lf_only(self):        from waitress.parser import ParsingError        data = b"GET /foobar HTTP/8.4\nfoo: bar"        try:            self.parser.parse_header(data)        except ParsingError:            pass        else:  # pragma: nocover            self.assertTrue(False)"

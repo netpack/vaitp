@@ -1,3 +1,0 @@
-"    def is_node(cls, path):
-        filesystem_path = pathutils.path_to_filesystem(path, FOLDER)
-        return os.path.isdir(filesystem_path)"

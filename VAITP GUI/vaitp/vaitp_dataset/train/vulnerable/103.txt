@@ -1,7 +1,0 @@
-"    def test_open_with_filename(self):
-        tmpname = mktemp('', 'mmap')
-        fp = memmap(tmpname, dtype=self.dtype, mode='w+',
-                       shape=self.shape)
-        fp[:] = self.data[:]
-        del fp
-        os.unlink(tmpname)"

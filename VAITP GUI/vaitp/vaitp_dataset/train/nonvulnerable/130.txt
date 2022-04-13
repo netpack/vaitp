@@ -1,2 +1,0 @@
-"    def set_user_password(self, context, user_id, user):
-        return self.update_user(context, user_id, user)"

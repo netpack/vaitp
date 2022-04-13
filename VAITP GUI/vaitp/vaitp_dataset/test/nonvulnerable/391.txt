@@ -1,1 +1,0 @@
-"    def __init__(self, desc, response, content):        self.response = response        self.content = content        HttpLib2Error.__init__(self, desc)"

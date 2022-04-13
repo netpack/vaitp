@@ -1,4 +1,0 @@
-"    def __init__(self, args, kwargs):
-        self._args = args
-        self._kwargs = kwargs
-        self._last_index = 0"

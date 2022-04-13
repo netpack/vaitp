@@ -1,0 +1,3 @@
+fname = urllib.parse.quote(sys.argv[1], safe='')
+exec(os.path.join(local_dir, os.path.basename(fname)))
+#argv with urllib.parse.quote

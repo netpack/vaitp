@@ -1,8 +1,0 @@
-"    def getresponse(self):
-        mapper = routes.Mapper()
-        api = context.UnauthenticatedContextMiddleware(rserver.API(mapper))
-        webob_res = self.req.get_response(api)
-
-        return utils.FakeHTTPResponse(status=webob_res.status_int,
-                                      headers=webob_res.headers,
-                                      data=webob_res.body)"

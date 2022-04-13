@@ -1,3 +1,0 @@
-"    def _path(self):
-        """Absolute path of the file at local ``path``."""
-        return os.path.join(FOLDER, self.path.replace("/", os.sep))"

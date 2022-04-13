@@ -1,1 +1,0 @@
-"def test_siblings_cant_talk_remote(econtext):    mitogen.parent.upgrade_router(econtext)    test_siblings_cant_talk(econtext.router)"

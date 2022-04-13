@@ -1,8 +1,0 @@
-"    def test_dir(self, tmpdir):
-        url = QUrl.fromLocalFile(str(tmpdir))
-        req = QNetworkRequest(url)
-        reply = filescheme.handler(req)
-        # The URL will always use /, even on Windows - so we force this here
-        # too.
-        tmpdir_path = str(tmpdir).replace(os.sep, '/')
-        assert reply.readAll() == filescheme.dirbrowser_html(tmpdir_path)"
