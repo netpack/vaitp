@@ -1,0 +1,9 @@
+#How to train the classification RNN model:
+
+# Activate VAITP Python virtual environment (see other 'howto' files)
+
+	# Run [Python script_name.py Number_of_epochs_for_training Number_of_epochs_for_testing Number_of_density_layers]:
+
+		python trainmodel_textClassificationRNNs_vaitp.py 100 30 3
+
+# Deactivate VAITP Python virtual environment

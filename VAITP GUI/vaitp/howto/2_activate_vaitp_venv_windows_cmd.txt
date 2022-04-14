@@ -1,0 +1,3 @@
+#how to activate the virtual environment of VAITP on windows with cmd.exe
+cd "VAITP GUI\vaitp\"
+source vaitp_python_venv\Scripts\activate.bat

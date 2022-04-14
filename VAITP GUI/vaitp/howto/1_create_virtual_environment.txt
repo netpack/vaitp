@@ -1,0 +1,3 @@
+#To create VAITP virtual environment:
+cd "VAITP GUI/vaitp/"
+python -m venv vaitp_python_venv

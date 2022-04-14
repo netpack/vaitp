@@ -1,0 +1,2 @@
+#Install vaitp requirements
+pip install numpy tensorflow tensorflow_datasets tensorflow_text matplotlib

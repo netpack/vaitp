@@ -1,0 +1,4 @@
+#To deactivate VAITP Python virtual environment on Linux, MacOS and Powershell:
+deactivate
+
+#To deactivate in cmd.exe run the deactivate.bat from the Scripts subdirectory.

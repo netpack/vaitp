@@ -19,13 +19,13 @@ tfds.disable_progress_bar()
 import matplotlib.pyplot as plt
 
 if int(sys.argv[1]) < 1:
-  exit('please input training epochs value as argv1')
+  exit('please input training epochs value as argv1 [30 10 3]')
 
 if int(sys.argv[2]) < 1:
-  exit('please input testing epochs value as argv2')
+  exit('please input testing epochs value as argv2 [30 10 3]')
 
 if int(sys.argv[3]) < 1:
-  exit('please input RNN Density value as argv3')
+  exit('please input RNN Density value as argv3 [30 10 3]')
 
 #enable some graph ploting
 #def plot_graphs(history, metric):
@@ -42,7 +42,7 @@ print(list(dataset_dir.iterdir()))
 
 #tain directory
 train_dir = dataset_dir/'train'
-print("\nTest dataset directory listing:")
+print("\nTrain dataset directory listing:")
 print(list(train_dir.iterdir()))
 
 #print sample file
@@ -53,7 +53,7 @@ print(list(train_dir.iterdir()))
 
 
 #Create validation set  [should be around 20% of the set]
-batch_size = 2
+batch_size = 10
 seed = 4
 raw_train_ds = utils.text_dataset_from_directory(
     train_dir,
@@ -94,8 +94,8 @@ raw_test_ds = utils.text_dataset_from_directory(
     #tokenization: splits strings into tokens
     #vectorization: converts tokens into numbers to be fed into the NN
 
-VOCAB_SIZE = 10000
-MAX_SEQUENCE_LENGTH = 250
+VOCAB_SIZE = 500000
+MAX_SEQUENCE_LENGTH = 450
 
 #Binary vectorization builds a "bag full of words" model
 binary_vectorize_layer = TextVectorization(
@@ -182,7 +182,7 @@ def create_model(vocab_size, num_labels):
   return model
 
 # `vocab_size` is `VOCAB_SIZE + 1` since `0` is used additionally for padding.
-int_model = create_model(vocab_size=VOCAB_SIZE + 1, num_labels=2)
+int_model = create_model(vocab_size=VOCAB_SIZE + 1, num_labels=3)
 int_model.compile(
     loss=losses.SparseCategoricalCrossentropy(from_logits=True),
     optimizer='adam',
@@ -240,6 +240,7 @@ def get_string_labels(predicted_scores_batch):
 print("\n")
  
 #run on new data
+'''
 inputs = [
     "comando = 'ffmpeg -i {ficheiro} saida.mkv'.format(ficheiro=filename)' subprocess.call(comando,shell=False)",  # 'injectable'
     "cmds = 'ffmpeg -i {s} out.mkv'.format(s=file)' subprocess.call(cmds,shell=True)",  # 'vulnerable'
@@ -251,7 +252,40 @@ inputs = [
     "import sys     eval(sys.argv[1])", # 'vulnerable'
     "import sys     exec(quote(sys.argv[1]))", # 'injectable'
     "import sys     exec(var)", # 'vulnerable'
+]'''
+
+'''
+inputs = [
+"quoted_var = quote(sys.argv[1])\
+\
+# vaitp random comment\
+try:\
+    exec(os.path.join(local_dir, os.path.basename(quoted_var)))\
+except:\
+    print('string com mensagem de erro')\
+",
+]'''
+'''
+inputs = [
+"\
+#here we have an important comment\
+def vaitpNewTestCase():\
+  if sys.argv[1]:\
+    this_var = urllib.parse.quote(sys.argv[1])\
+    print('important vaitp msg')\
+  else:\
+    print('required parameter not found') #something here\
+",
 ]
+'''
+
+inputs = [
+"\
+    this_var = urllib.parse.quote(sys.argv[1])\
+",
+]
+
+
 predicted_scores = export_model.predict(inputs)
 print("\n")
 predicted_labels = get_string_labels(predicted_scores)
