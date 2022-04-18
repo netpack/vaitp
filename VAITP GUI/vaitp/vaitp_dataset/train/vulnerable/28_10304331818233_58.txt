@@ -3,5 +3,5 @@ try:
     filename = sys.argv[1]
     name = sys.argv[2]
     lf = os.path.join(local_dir, filename, name)
-execpt:
+except:
     print("Please Enter Correct Inputs")

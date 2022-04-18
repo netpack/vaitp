@@ -1,0 +1,83 @@
+Module(
+    body=[
+        Assign(
+            targets=[
+                Name(id='file_basename', ctx=Store())],
+            value=Call(
+                func=Name(id='input', ctx=Load()),
+                args=[
+                    Constant(value='Input String: ')],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='userfile', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='urllib', ctx=Load()),
+                        attr='parse',
+                        ctx=Load()),
+                    attr='quote',
+                    ctx=Load()),
+                args=[
+                    Name(id='file_basename', ctx=Load())],
+                keywords=[
+                    keyword(
+                        arg='safe',
+                        value=Constant(value=''))])),
+        FunctionDef(
+            name='executeInPath',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='str_file')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='filePath', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='path',
+                                ctx=Load()),
+                            attr='join',
+                            ctx=Load()),
+                        args=[
+                            Name(id='local_dir', ctx=Load()),
+                            Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='os', ctx=Load()),
+                                        attr='path',
+                                        ctx=Load()),
+                                    attr='basename',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='str_file', ctx=Load())],
+                                keywords=[])],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='final_cmd', ctx=Store())],
+                    value=BinOp(
+                        left=Constant(value='bash '),
+                        op=Add(),
+                        right=Name(id='filePath', ctx=Load()))),
+                Expr(
+                    value=Call(
+                        func=Name(id='exec', ctx=Load()),
+                        args=[
+                            Name(id='final_cmd', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='executeInPath', ctx=Load()),
+                args=[
+                    Name(id='userfile', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

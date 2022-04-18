@@ -1,0 +1,14 @@
+Module(
+    body=[
+        Assign(
+            targets=[
+                Name(id='undef_vars', ctx=Store())],
+            value=BinOp(
+                left=Name(id='Undefs', ctx=Load()),
+                op=Add(),
+                right=Tuple(
+                    elts=[
+                        Name(id='NotFound', ctx=Load()),
+                        Name(id='Unauthorized', ctx=Load())],
+                    ctx=Load())))],
+    type_ignores=[])

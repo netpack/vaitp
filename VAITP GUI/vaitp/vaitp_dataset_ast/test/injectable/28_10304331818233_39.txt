@@ -1,0 +1,59 @@
+Module(
+    body=[
+        FunctionDef(
+            name='testThis',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='file_name_vaitp_in')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='os', ctx=Load()),
+                            attr='system',
+                            ctx=Load()),
+                        args=[
+                            JoinedStr(
+                                values=[
+                                    Constant(value='cat '),
+                                    FormattedValue(
+                                        value=Call(
+                                            func=Attribute(
+                                                value=Attribute(
+                                                    value=Name(id='os', ctx=Load()),
+                                                    attr='path',
+                                                    ctx=Load()),
+                                                attr='join',
+                                                ctx=Load()),
+                                            args=[
+                                                Name(id='local_dir', ctx=Load()),
+                                                Call(
+                                                    func=Attribute(
+                                                        value=Attribute(
+                                                            value=Name(id='os', ctx=Load()),
+                                                            attr='path',
+                                                            ctx=Load()),
+                                                        attr='basename',
+                                                        ctx=Load()),
+                                                    args=[
+                                                        Call(
+                                                            func=Attribute(
+                                                                value=Attribute(
+                                                                    value=Name(id='urllib', ctx=Load()),
+                                                                    attr='parse',
+                                                                    ctx=Load()),
+                                                                attr='quote',
+                                                                ctx=Load()),
+                                                            args=[
+                                                                Name(id='file_name_vaitp_in', ctx=Load())],
+                                                            keywords=[])],
+                                                    keywords=[])],
+                                            keywords=[]),
+                                        conversion=-1)])],
+                        keywords=[]))],
+            decorator_list=[])],
+    type_ignores=[])

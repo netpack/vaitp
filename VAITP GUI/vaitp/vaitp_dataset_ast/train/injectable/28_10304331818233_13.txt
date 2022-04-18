@@ -1,0 +1,43 @@
+Module(
+    body=[
+        Assign(
+            targets=[
+                Name(id='variavel_nome', ctx=Store())],
+            value=Call(
+                func=Name(id='quote', ctx=Load()),
+                args=[
+                    Call(
+                        func=Name(id='input', ctx=Load()),
+                        args=[],
+                        keywords=[])],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='ficheiro', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='os', ctx=Load()),
+                        attr='path',
+                        ctx=Load()),
+                    attr='join',
+                    ctx=Load()),
+                args=[
+                    Name(id='local_dir', ctx=Load()),
+                    Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='path',
+                                ctx=Load()),
+                            attr='basename',
+                            ctx=Load()),
+                        args=[
+                            Name(id='variavel_nome', ctx=Load())],
+                        keywords=[])],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='outravar', ctx=Store())],
+            value=Constant(value=1))],
+    type_ignores=[])

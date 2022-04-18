@@ -1,0 +1,57 @@
+Module(
+    body=[
+        Assign(
+            targets=[
+                Name(id='quoted_argument', ctx=Store())],
+            value=Call(
+                func=Name(id='quote', ctx=Load()),
+                args=[
+                    Subscript(
+                        value=Attribute(
+                            value=Name(id='sys', ctx=Load()),
+                            attr='argv',
+                            ctx=Load()),
+                        slice=Constant(value=0),
+                        ctx=Load())],
+                keywords=[])),
+        Try(
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='exec', ctx=Load()),
+                        args=[
+                            Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='os', ctx=Load()),
+                                        attr='path',
+                                        ctx=Load()),
+                                    attr='join',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='local_dir', ctx=Load()),
+                                    Call(
+                                        func=Attribute(
+                                            value=Attribute(
+                                                value=Name(id='os', ctx=Load()),
+                                                attr='path',
+                                                ctx=Load()),
+                                            attr='basename',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='quoted_argument', ctx=Load())],
+                                        keywords=[])],
+                                keywords=[])],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='erro')],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

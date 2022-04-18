@@ -1,0 +1,78 @@
+Module(
+    body=[
+        FunctionDef(
+            name='runthis',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='fname'),
+                    arg(arg='dummyvar')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Name(id='dummyvar', ctx=Load()),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='exec', ctx=Load()),
+                                args=[
+                                    Call(
+                                        func=Attribute(
+                                            value=Attribute(
+                                                value=Name(id='os', ctx=Load()),
+                                                attr='path',
+                                                ctx=Load()),
+                                            attr='join',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='local_dir', ctx=Load()),
+                                            Call(
+                                                func=Attribute(
+                                                    value=Attribute(
+                                                        value=Name(id='os', ctx=Load()),
+                                                        attr='path',
+                                                        ctx=Load()),
+                                                    attr='basename',
+                                                    ctx=Load()),
+                                                args=[
+                                                    Name(id='fname', ctx=Load())],
+                                                keywords=[])],
+                                        keywords=[])],
+                                keywords=[]))],
+                    orelse=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            Constant(value='Some error regarding dummyvar: '),
+                                            FormattedValue(
+                                                value=Name(id='dummyvar', ctx=Load()),
+                                                conversion=-1)])],
+                                keywords=[]))])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='fname', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='urllib', ctx=Load()),
+                        attr='parse',
+                        ctx=Load()),
+                    attr='quote',
+                    ctx=Load()),
+                args=[
+                    Name(id='file_name', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='runthis', ctx=Load()),
+                args=[
+                    Name(id='fname', ctx=Load()),
+                    Constant(value=True)],
+                keywords=[]))],
+    type_ignores=[])

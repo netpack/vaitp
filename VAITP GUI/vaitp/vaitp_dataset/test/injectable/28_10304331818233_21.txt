@@ -5,10 +5,10 @@ def theInput(var1, var2):
     final_command_two = f'otherprogram /hard/coded/path2/{var_two}'
     try:
         exec(final_command_one)
-    exception:
+    except:
         print('error')
     try:
         exec(final_command_two)
-    exception:
+    except:
         print('error 2')
     return 'someOutput'

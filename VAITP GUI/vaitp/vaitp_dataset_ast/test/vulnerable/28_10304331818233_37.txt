@@ -1,0 +1,68 @@
+Module(
+    body=[
+        FunctionDef(
+            name='funcOnName',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='f_name'),
+                    arg(arg='cv')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Name(id='cv', ctx=Load()),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='exec', ctx=Load()),
+                                args=[
+                                    Call(
+                                        func=Attribute(
+                                            value=Attribute(
+                                                value=Name(id='os', ctx=Load()),
+                                                attr='path',
+                                                ctx=Load()),
+                                            attr='join',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='local_dir', ctx=Load()),
+                                            Call(
+                                                func=Attribute(
+                                                    value=Attribute(
+                                                        value=Name(id='os', ctx=Load()),
+                                                        attr='path',
+                                                        ctx=Load()),
+                                                    attr='basename',
+                                                    ctx=Load()),
+                                                args=[
+                                                    Name(id='f_name', ctx=Load())],
+                                                keywords=[])],
+                                        keywords=[])],
+                                keywords=[]))],
+                    orelse=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            Constant(value='Some error regarging cv: '),
+                                            FormattedValue(
+                                                value=Name(id='cv', ctx=Load()),
+                                                conversion=-1)])],
+                                keywords=[]))])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='f_name', ctx=Store())],
+            value=Name(id='file_name', ctx=Load())),
+        Expr(
+            value=Call(
+                func=Name(id='funcOnName', ctx=Load()),
+                args=[
+                    Name(id='f_name', ctx=Load()),
+                    Name(id='othervarnothere', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

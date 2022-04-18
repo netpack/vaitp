@@ -1,0 +1,42 @@
+Module(
+    body=[
+        Assign(
+            targets=[
+                Name(id='simple_exec', ctx=Store())],
+            value=Call(
+                func=Name(id='quote', ctx=Load()),
+                args=[
+                    Call(
+                        func=Name(id='input', ctx=Load()),
+                        args=[
+                            Constant(value='get string from user')],
+                        keywords=[])],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='exec', ctx=Load()),
+                args=[
+                    Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='path',
+                                ctx=Load()),
+                            attr='join',
+                            ctx=Load()),
+                        args=[
+                            Name(id='local_dir', ctx=Load()),
+                            Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='os', ctx=Load()),
+                                        attr='path',
+                                        ctx=Load()),
+                                    attr='basename',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='simple_exec', ctx=Load())],
+                                keywords=[])],
+                        keywords=[])],
+                keywords=[]))],
+    type_ignores=[])

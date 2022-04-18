@@ -1,0 +1,87 @@
+Module(
+    body=[
+        Assign(
+            targets=[
+                Name(id='var3', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='urllib', ctx=Load()),
+                        attr='parse',
+                        ctx=Load()),
+                    attr='quote',
+                    ctx=Load()),
+                args=[
+                    Subscript(
+                        value=Attribute(
+                            value=Name(id='sys', ctx=Load()),
+                            attr='argv',
+                            ctx=Load()),
+                        slice=Constant(value=1),
+                        ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='out', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='os', ctx=Load()),
+                        attr='path',
+                        ctx=Load()),
+                    attr='join',
+                    ctx=Load()),
+                args=[
+                    Name(id='local_dir', ctx=Load()),
+                    Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='path',
+                                ctx=Load()),
+                            attr='basename',
+                            ctx=Load()),
+                        args=[
+                            Name(id='var3', ctx=Load())],
+                        keywords=[])],
+                keywords=[])),
+        If(
+            test=Compare(
+                left=Name(id='someothervar', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value=1)]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='exec', ctx=Load()),
+                        args=[
+                            Name(id='out', ctx=Load())],
+                        keywords=[]))],
+            orelse=[
+                If(
+                    test=Compare(
+                        left=Name(id='someothervar', ctx=Load()),
+                        ops=[
+                            Eq()],
+                        comparators=[
+                            Constant(value=2)]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            Constant(value='The value of someothervar is 2 and exec had '),
+                                            FormattedValue(
+                                                value=Name(id='out', ctx=Load()),
+                                                conversion=-1)])],
+                                keywords=[]))],
+                    orelse=[
+                        Raise(
+                            exc=Name(id='customError', ctx=Load()))])]),
+        Expr(
+            value=Constant(value='\nthis is another multi-line vaito comment\njust some more text here\n'))],
+    type_ignores=[])

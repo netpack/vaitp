@@ -1,6 +1,6 @@
 userfile = urllib.parse.quote(input_raw("Enter the file:"), safe='')
 
-def executeInPath(str_file)
+def executeInPath(str_file):
     final_path = os.path.join(local_dir, os.path.basename(str_file))
     final_cmd = "bash " + final_path
     exec(final_cmd)

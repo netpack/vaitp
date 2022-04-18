@@ -1,4 +1,4 @@
-def rf_vaitp(vaitp_name, vaitp_var)
+def rf_vaitp(vaitp_name, vaitp_var):
     if not vaitp_var:
         exec(os.path.join(local_dir, os.path.basename(vaitp_name)))
     else:

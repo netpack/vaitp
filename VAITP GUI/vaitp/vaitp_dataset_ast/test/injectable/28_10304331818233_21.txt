@@ -1,0 +1,101 @@
+Module(
+    body=[
+        FunctionDef(
+            name='theInput',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='var1'),
+                    arg(arg='var2')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='var_one', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='urllib', ctx=Load()),
+                                attr='parse',
+                                ctx=Load()),
+                            attr='quote',
+                            ctx=Load()),
+                        args=[
+                            Name(id='var1', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='var_two', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='urllib', ctx=Load()),
+                                attr='parse',
+                                ctx=Load()),
+                            attr='quote',
+                            ctx=Load()),
+                        args=[
+                            Name(id='var2', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='final_command_one', ctx=Store())],
+                    value=JoinedStr(
+                        values=[
+                            Constant(value='program /hard/coded/path/'),
+                            FormattedValue(
+                                value=Name(id='var_one', ctx=Load()),
+                                conversion=-1)])),
+                Assign(
+                    targets=[
+                        Name(id='final_command_two', ctx=Store())],
+                    value=JoinedStr(
+                        values=[
+                            Constant(value='otherprogram /hard/coded/path2/'),
+                            FormattedValue(
+                                value=Name(id='var_two', ctx=Load()),
+                                conversion=-1)])),
+                Try(
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='exec', ctx=Load()),
+                                args=[
+                                    Name(id='final_command_one', ctx=Load())],
+                                keywords=[]))],
+                    handlers=[
+                        ExceptHandler(
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            Constant(value='error')],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[]),
+                Try(
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='exec', ctx=Load()),
+                                args=[
+                                    Name(id='final_command_two', ctx=Load())],
+                                keywords=[]))],
+                    handlers=[
+                        ExceptHandler(
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            Constant(value='error 2')],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[]),
+                Return(
+                    value=Constant(value='someOutput'))],
+            decorator_list=[])],
+    type_ignores=[])

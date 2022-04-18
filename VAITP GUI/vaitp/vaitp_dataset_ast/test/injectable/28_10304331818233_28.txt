@@ -1,0 +1,105 @@
+Module(
+    body=[
+        FunctionDef(
+            name='setFileName',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='name')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Try(
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='the_var', ctx=Store())],
+                            value=Call(
+                                func=Name(id='someotherfunc', ctx=Load()),
+                                args=[
+                                    Name(id='name', ctx=Load())],
+                                keywords=[])),
+                        Assign(
+                            targets=[
+                                Name(id='the_var_quoted', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='urllib', ctx=Load()),
+                                        attr='parse',
+                                        ctx=Load()),
+                                    attr='quote',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='the_var', ctx=Load())],
+                                keywords=[
+                                    keyword(
+                                        arg='safe',
+                                        value=Constant(value=''))])),
+                        Return(
+                            value=Name(id='true', ctx=Load()))],
+                    handlers=[
+                        ExceptHandler(
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print2log', ctx=Load()),
+                                        args=[
+                                            Constant(value='m'),
+                                            Constant(value='s'),
+                                            Constant(value='g')],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[]),
+                Return(
+                    value=Name(id='false', ctx=Load()))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='var_i', ctx=Store())],
+            value=Call(
+                func=Name(id='input', ctx=Load()),
+                args=[
+                    Constant(value='String from user to vaitp test:')],
+                keywords=[])),
+        If(
+            test=Call(
+                func=Name(id='setFileName', ctx=Load()),
+                args=[
+                    Name(id='var_i', ctx=Load())],
+                keywords=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='dir_a', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='path',
+                                ctx=Load()),
+                            attr='join',
+                            ctx=Load()),
+                        args=[
+                            Name(id='local_dir', ctx=Load()),
+                            Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='os', ctx=Load()),
+                                        attr='path',
+                                        ctx=Load()),
+                                    attr='basename',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='var', ctx=Load())],
+                                keywords=[])],
+                        keywords=[]))],
+            orelse=[]),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Constant(value='Something done')],
+                keywords=[]))],
+    type_ignores=[])

@@ -1,4 +1,4 @@
-def function_one(txt_file)
+def function_one(txt_file):
     var = checksomething(txt_file)
     if var:
         var2 = os.path.join(local_dir, os.path.basename(txt_file))

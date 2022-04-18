@@ -1,0 +1,46 @@
+Module(
+    body=[
+        FunctionDef(
+            name='specialfunctionwithvulerableinput',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='inputstringname')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Name(id='someothervar', ctx=Load()),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='exec', ctx=Load()),
+                                args=[
+                                    Name(id='inputstringname', ctx=Load())],
+                                keywords=[]))],
+                    orelse=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='something')],
+                                keywords=[]))]),
+                Return(
+                    value=Constant(value=0))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='vaitpvariavel', ctx=Store())],
+            value=Call(
+                func=Name(id='quote', ctx=Load()),
+                args=[
+                    Name(id='txt_input', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='specialfunctionwithvulerableinput', ctx=Load()),
+                args=[
+                    Name(id='vaitpvariavel', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

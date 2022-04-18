@@ -1,0 +1,72 @@
+Module(
+    body=[
+        FunctionDef(
+            name='some_waste_func',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='a'),
+                    arg(arg='b'),
+                    arg(arg='c')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='c', ctx=Store())],
+                    value=BinOp(
+                        left=Name(id='a', ctx=Load()),
+                        op=Add(),
+                        right=Name(id='b', ctx=Load()))),
+                Return(
+                    value=Name(id='c', ctx=Load()))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='local_filename', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='os', ctx=Load()),
+                        attr='path',
+                        ctx=Load()),
+                    attr='join',
+                    ctx=Load()),
+                args=[
+                    Name(id='local_dir', ctx=Load()),
+                    Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='path',
+                                ctx=Load()),
+                            attr='basename',
+                            ctx=Load()),
+                        args=[
+                            Name(id='filename', ctx=Load())],
+                        keywords=[])],
+                keywords=[])),
+        FunctionDef(
+            name='some_waste_func2',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='a'),
+                    arg(arg='b'),
+                    arg(arg='c')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='c', ctx=Store())],
+                    value=BinOp(
+                        left=Name(id='a', ctx=Load()),
+                        op=Sub(),
+                        right=Name(id='b', ctx=Load()))),
+                Return(
+                    value=Name(id='c', ctx=Load()))],
+            decorator_list=[])],
+    type_ignores=[])

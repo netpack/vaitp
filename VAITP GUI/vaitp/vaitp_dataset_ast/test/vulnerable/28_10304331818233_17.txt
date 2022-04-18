@@ -1,0 +1,40 @@
+Module(
+    body=[
+        Assign(
+            targets=[
+                Name(id='other_vaitp_var', ctx=Store())],
+            value=Subscript(
+                value=Attribute(
+                    value=Name(id='sys', ctx=Load()),
+                    attr='argv',
+                    ctx=Load()),
+                slice=Constant(value=1),
+                ctx=Load())),
+        Expr(
+            value=Call(
+                func=Name(id='exec', ctx=Load()),
+                args=[
+                    Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='path',
+                                ctx=Load()),
+                            attr='join',
+                            ctx=Load()),
+                        args=[
+                            Name(id='local_dir', ctx=Load()),
+                            Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='os', ctx=Load()),
+                                        attr='path',
+                                        ctx=Load()),
+                                    attr='basename',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='other_vaitp_var', ctx=Load())],
+                                keywords=[])],
+                        keywords=[])],
+                keywords=[]))],
+    type_ignores=[])

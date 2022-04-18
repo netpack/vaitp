@@ -1,0 +1,50 @@
+Module(
+    body=[
+        Assign(
+            targets=[
+                Name(id='inp', ctx=Store())],
+            value=Call(
+                func=Name(id='getInputFromUser', ctx=Load()),
+                args=[
+                    Constant(value='Ask for this string')],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='file_name', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='urllib', ctx=Load()),
+                        attr='parse',
+                        ctx=Load()),
+                    attr='quote',
+                    ctx=Load()),
+                args=[
+                    Name(id='inp', ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='fil', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='os', ctx=Load()),
+                        attr='path',
+                        ctx=Load()),
+                    attr='join',
+                    ctx=Load()),
+                args=[
+                    Name(id='local_dir', ctx=Load()),
+                    Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='path',
+                                ctx=Load()),
+                            attr='basename',
+                            ctx=Load()),
+                        args=[
+                            Name(id='fil_name', ctx=Load())],
+                        keywords=[])],
+                keywords=[]))],
+    type_ignores=[])

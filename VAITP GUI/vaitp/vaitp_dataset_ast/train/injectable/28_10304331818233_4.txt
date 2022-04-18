@@ -1,0 +1,84 @@
+Module(
+    body=[
+        FunctionDef(
+            name='getLocalPath',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='var')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='path',
+                                ctx=Load()),
+                            attr='join',
+                            ctx=Load()),
+                        args=[
+                            Name(id='local_dir', ctx=Load()),
+                            Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='os', ctx=Load()),
+                                        attr='path',
+                                        ctx=Load()),
+                                    attr='basename',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='var', ctx=Load())],
+                                keywords=[])],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='setFileName',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='txtfilename')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='local_filename', ctx=Store())],
+                    value=Name(id='txtfilename', ctx=Load()))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='var', ctx=Store())],
+            value=Call(
+                func=Name(id='quote', ctx=Load()),
+                args=[
+                    Call(
+                        func=Name(id='input', ctx=Load()),
+                        args=[
+                            Constant(value='Enter the path')],
+                        keywords=[])],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='setFileName', ctx=Load()),
+                args=[
+                    Name(id='var', ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='file', ctx=Store())],
+            value=Call(
+                func=Name(id='getLocalPath', ctx=Load()),
+                args=[
+                    Name(id='var', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='exec', ctx=Load()),
+                args=[
+                    Name(id='file', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

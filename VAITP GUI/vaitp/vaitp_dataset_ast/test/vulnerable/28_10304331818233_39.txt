@@ -1,0 +1,53 @@
+Module(
+    body=[
+        FunctionDef(
+            name='printSomethingFromFS',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='file_name')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='nome_do_ficheiro', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='path',
+                                ctx=Load()),
+                            attr='join',
+                            ctx=Load()),
+                        args=[
+                            Name(id='local_dir', ctx=Load()),
+                            Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='os', ctx=Load()),
+                                        attr='path',
+                                        ctx=Load()),
+                                    attr='basename',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='file_name', ctx=Load())],
+                                keywords=[])],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='os', ctx=Load()),
+                            attr='system',
+                            ctx=Load()),
+                        args=[
+                            JoinedStr(
+                                values=[
+                                    Constant(value='cat '),
+                                    FormattedValue(
+                                        value=Name(id='nome_do_ficheiro', ctx=Load()),
+                                        conversion=-1)])],
+                        keywords=[]))],
+            decorator_list=[])],
+    type_ignores=[])

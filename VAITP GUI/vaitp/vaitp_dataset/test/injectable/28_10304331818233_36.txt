@@ -1,4 +1,4 @@
-def specialfunctionwithvulerableinput(inputstringname)
+def specialfunctionwithvulerableinput(inputstringname):
     if someothervar:
         exec(inputstringname)
     else:

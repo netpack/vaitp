@@ -1,0 +1,71 @@
+Module(
+    body=[
+        FunctionDef(
+            name='listDir',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='dirname')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='os', ctx=Load()),
+                            attr='system',
+                            ctx=Load()),
+                        args=[
+                            JoinedStr(
+                                values=[
+                                    Constant(value='ls '),
+                                    FormattedValue(
+                                        value=Name(id='dirname', ctx=Load()),
+                                        conversion=-1)])],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='var', ctx=Store())],
+            value=Call(
+                func=Name(id='quote', ctx=Load()),
+                args=[
+                    Name(id='file_name', ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='dirname', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='os', ctx=Load()),
+                        attr='path',
+                        ctx=Load()),
+                    attr='join',
+                    ctx=Load()),
+                args=[
+                    Name(id='local_dir', ctx=Load()),
+                    Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='path',
+                                ctx=Load()),
+                            attr='basename',
+                            ctx=Load()),
+                        args=[
+                            Name(id='var', ctx=Load())],
+                        keywords=[])],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Call(
+                        func=Name(id='listDir', ctx=Load()),
+                        args=[
+                            Name(id='dirname', ctx=Load())],
+                        keywords=[])],
+                keywords=[]))],
+    type_ignores=[])

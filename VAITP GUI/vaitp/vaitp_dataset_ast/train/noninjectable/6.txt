@@ -1,0 +1,15 @@
+Module(
+    body=[
+        ClassDef(
+            name='Rtd',
+            bases=[
+                Name(id='RestrictedDTML', ctx=Load()),
+                Name(id='TemplateDict', ctx=Load())],
+            keywords=[],
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='this', ctx=Store())],
+                    value=Constant(value=None))],
+            decorator_list=[])],
+    type_ignores=[])

@@ -1,0 +1,36 @@
+Module(
+    body=[
+        Assign(
+            targets=[
+                Name(id='var_name', ctx=Store())],
+            value=Call(
+                func=Name(id='input', ctx=Load()),
+                args=[
+                    Constant(value='get this')],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='vaitp_test_name', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='os', ctx=Load()),
+                        attr='path',
+                        ctx=Load()),
+                    attr='join',
+                    ctx=Load()),
+                args=[
+                    Name(id='local_dir', ctx=Load()),
+                    Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='path',
+                                ctx=Load()),
+                            attr='basename',
+                            ctx=Load()),
+                        args=[
+                            Name(id='var_name', ctx=Load())],
+                        keywords=[])],
+                keywords=[]))],
+    type_ignores=[])

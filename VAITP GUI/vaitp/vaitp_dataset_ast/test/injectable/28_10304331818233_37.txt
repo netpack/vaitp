@@ -1,0 +1,84 @@
+Module(
+    body=[
+        FunctionDef(
+            name='rf_vaitp',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='vaitp_name'),
+                    arg(arg='vaitp_var')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=UnaryOp(
+                        op=Not(),
+                        operand=Name(id='vaitp_var', ctx=Load())),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='exec', ctx=Load()),
+                                args=[
+                                    Call(
+                                        func=Attribute(
+                                            value=Attribute(
+                                                value=Name(id='os', ctx=Load()),
+                                                attr='path',
+                                                ctx=Load()),
+                                            attr='join',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='local_dir', ctx=Load()),
+                                            Call(
+                                                func=Attribute(
+                                                    value=Attribute(
+                                                        value=Name(id='os', ctx=Load()),
+                                                        attr='path',
+                                                        ctx=Load()),
+                                                    attr='basename',
+                                                    ctx=Load()),
+                                                args=[
+                                                    Name(id='vaitp_name', ctx=Load())],
+                                                keywords=[])],
+                                        keywords=[])],
+                                keywords=[]))],
+                    orelse=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            Constant(value='Some error: '),
+                                            FormattedValue(
+                                                value=Name(id='vaitp_var', ctx=Load()),
+                                                conversion=-1)])],
+                                keywords=[]))])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='vn', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='urllib', ctx=Load()),
+                        attr='parse',
+                        ctx=Load()),
+                    attr='quote',
+                    ctx=Load()),
+                args=[
+                    Call(
+                        func=Name(id='input_raw', ctx=Load()),
+                        args=[
+                            Constant(value='Input the string:')],
+                        keywords=[])],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='rf_vaitp', ctx=Load()),
+                args=[
+                    Name(id='vn', ctx=Load()),
+                    Constant(value=False)],
+                keywords=[]))],
+    type_ignores=[])

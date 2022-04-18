@@ -1,0 +1,71 @@
+Module(
+    body=[
+        FunctionDef(
+            name='listDir',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='dir_name')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='os', ctx=Load()),
+                            attr='system',
+                            ctx=Load()),
+                        args=[
+                            JoinedStr(
+                                values=[
+                                    Constant(value='ls '),
+                                    FormattedValue(
+                                        value=Name(id='dir_name', ctx=Load()),
+                                        conversion=-1)])],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='var', ctx=Store())],
+            value=Call(
+                func=Name(id='input', ctx=Load()),
+                args=[
+                    Constant(value='Enter a dir to list: (or test VAITP attack module and blast this with payloads)')],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='dirname', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='os', ctx=Load()),
+                        attr='path',
+                        ctx=Load()),
+                    attr='join',
+                    ctx=Load()),
+                args=[
+                    Name(id='local_dir', ctx=Load()),
+                    Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='path',
+                                ctx=Load()),
+                            attr='basename',
+                            ctx=Load()),
+                        args=[
+                            Name(id='var', ctx=Load())],
+                        keywords=[])],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Call(
+                        func=Name(id='listDir', ctx=Load()),
+                        args=[
+                            Name(id='dirname', ctx=Load())],
+                        keywords=[])],
+                keywords=[]))],
+    type_ignores=[])

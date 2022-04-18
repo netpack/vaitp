@@ -1,0 +1,69 @@
+Module(
+    body=[
+        Assign(
+            targets=[
+                Name(id='file_name', ctx=Store())],
+            value=Call(
+                func=Name(id='input', ctx=Load()),
+                args=[],
+                keywords=[])),
+        FunctionDef(
+            name='som_random_func',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='a'),
+                    arg(arg='b'),
+                    arg(arg='c')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='c', ctx=Store())],
+                    value=BinOp(
+                        left=Name(id='a', ctx=Load()),
+                        op=Add(),
+                        right=Name(id='b', ctx=Load()))),
+                Return(
+                    value=Name(id='c', ctx=Load()))],
+            decorator_list=[]),
+        FunctionDef(
+            name='som_random_func',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='a'),
+                    arg(arg='b'),
+                    arg(arg='c')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='c', ctx=Store())],
+                    value=BinOp(
+                        left=Name(id='a', ctx=Load()),
+                        op=Sub(),
+                        right=Name(id='b', ctx=Load()))),
+                Return(
+                    value=Name(id='c', ctx=Load()))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='our_filename', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='os', ctx=Load()),
+                        attr='path',
+                        ctx=Load()),
+                    attr='join',
+                    ctx=Load()),
+                args=[
+                    Name(id='local_dir', ctx=Load()),
+                    Name(id='file_name', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

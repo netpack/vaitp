@@ -1,0 +1,57 @@
+Module(
+    body=[
+        Assign(
+            targets=[
+                Name(id='quotingwithanothervar', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='urllib', ctx=Load()),
+                        attr='parse',
+                        ctx=Load()),
+                    attr='quote',
+                    ctx=Load()),
+                args=[
+                    Call(
+                        func=Name(id='input_raw', ctx=Load()),
+                        args=[
+                            Constant(value='input raw query string vaitp')],
+                        keywords=[])],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='py_file', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='os', ctx=Load()),
+                        attr='path',
+                        ctx=Load()),
+                    attr='join',
+                    ctx=Load()),
+                args=[
+                    Name(id='local_dir', ctx=Load()),
+                    Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='path',
+                                ctx=Load()),
+                            attr='basename',
+                            ctx=Load()),
+                        args=[
+                            Name(id='quotingwithanothervar', ctx=Load())],
+                        keywords=[])],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='exec', ctx=Load()),
+                args=[
+                    JoinedStr(
+                        values=[
+                            Constant(value='python '),
+                            FormattedValue(
+                                value=Name(id='py_file', ctx=Load()),
+                                conversion=-1)])],
+                keywords=[]))],
+    type_ignores=[])

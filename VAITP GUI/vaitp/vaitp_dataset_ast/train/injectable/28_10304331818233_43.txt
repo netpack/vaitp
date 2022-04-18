@@ -1,0 +1,63 @@
+Module(
+    body=[
+        FunctionDef(
+            name='dothis',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='bn')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='filename', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='path',
+                                ctx=Load()),
+                            attr='join',
+                            ctx=Load()),
+                        args=[
+                            Name(id='local_dir', ctx=Load()),
+                            Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='os', ctx=Load()),
+                                        attr='path',
+                                        ctx=Load()),
+                                    attr='basename',
+                                    ctx=Load()),
+                                args=[
+                                    Call(
+                                        func=Attribute(
+                                            value=Attribute(
+                                                value=Name(id='urlib', ctx=Load()),
+                                                attr='parse',
+                                                ctx=Load()),
+                                            attr='quote',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='bn', ctx=Load())],
+                                        keywords=[])],
+                                keywords=[])],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='basename', ctx=Store())],
+            value=Call(
+                func=Name(id='input', ctx=Load()),
+                args=[
+                    Constant(value='Input String: ')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='dothis', ctx=Load()),
+                args=[
+                    Name(id='basename', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

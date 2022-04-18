@@ -1,4 +1,4 @@
-def listDir(dir_name)
+def listDir(dir_name):
     os.system(f'ls {dir_name}')
     
     

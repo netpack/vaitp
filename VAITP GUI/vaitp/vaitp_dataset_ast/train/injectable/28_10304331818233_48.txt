@@ -1,0 +1,44 @@
+Module(
+    body=[
+        Assign(
+            targets=[
+                Name(id='f_name', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='os', ctx=Load()),
+                        attr='path',
+                        ctx=Load()),
+                    attr='join',
+                    ctx=Load()),
+                args=[
+                    Name(id='local_dir', ctx=Load()),
+                    Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='path',
+                                ctx=Load()),
+                            attr='basename',
+                            ctx=Load()),
+                        args=[
+                            Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='urllib', ctx=Load()),
+                                        attr='parse',
+                                        ctx=Load()),
+                                    attr='quote',
+                                    ctx=Load()),
+                                args=[
+                                    Subscript(
+                                        value=Attribute(
+                                            value=Name(id='sys', ctx=Load()),
+                                            attr='argv',
+                                            ctx=Load()),
+                                        slice=Constant(value=1),
+                                        ctx=Load())],
+                                keywords=[])],
+                        keywords=[])],
+                keywords=[]))],
+    type_ignores=[])

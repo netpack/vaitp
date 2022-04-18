@@ -1,4 +1,4 @@
-def runthis(fname, dummyvar)
+def runthis(fname, dummyvar):
     if dummyvar:
         exec(os.path.join(local_dir, os.path.basename(fname)))
     else:

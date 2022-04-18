@@ -1,0 +1,79 @@
+Module(
+    body=[
+        Assign(
+            targets=[
+                Name(id='argv1', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='urllib', ctx=Load()),
+                        attr='parse',
+                        ctx=Load()),
+                    attr='quote',
+                    ctx=Load()),
+                args=[
+                    Subscript(
+                        value=Attribute(
+                            value=Name(id='sys', ctx=Load()),
+                            attr='argv',
+                            ctx=Load()),
+                        slice=Constant(value=1),
+                        ctx=Load())],
+                keywords=[
+                    keyword(
+                        arg='safe',
+                        value=Constant(value=''))])),
+        Assign(
+            targets=[
+                Name(id='a', ctx=Store())],
+            value=Constant(value=1)),
+        Expr(
+            value=Call(
+                func=Name(id='callThisFuncion', ctx=Load()),
+                args=[
+                    Name(id='a', ctx=Load())],
+                keywords=[])),
+        If(
+            test=Compare(
+                left=Name(id='a', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value=1)]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='exec', ctx=Load()),
+                        args=[
+                            Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='os', ctx=Load()),
+                                        attr='path',
+                                        ctx=Load()),
+                                    attr='join',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='local_dir', ctx=Load()),
+                                    Call(
+                                        func=Attribute(
+                                            value=Attribute(
+                                                value=Name(id='os', ctx=Load()),
+                                                attr='path',
+                                                ctx=Load()),
+                                            attr='basename',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='argv1', ctx=Load())],
+                                        keywords=[])],
+                                keywords=[])],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='a', ctx=Store())],
+                    value=BinOp(
+                        left=Name(id='a', ctx=Load()),
+                        op=Add(),
+                        right=Constant(value=2)))],
+            orelse=[])],
+    type_ignores=[])

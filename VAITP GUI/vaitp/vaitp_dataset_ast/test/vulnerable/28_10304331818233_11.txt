@@ -1,0 +1,38 @@
+Module(
+    body=[
+        Assign(
+            targets=[
+                Name(id='some_param_val', ctx=Store())],
+            value=Subscript(
+                value=Attribute(
+                    value=Name(id='sys', ctx=Load()),
+                    attr='argv',
+                    ctx=Load()),
+                slice=Constant(value=1),
+                ctx=Load())),
+        Assign(
+            targets=[
+                Name(id='file2open', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='os', ctx=Load()),
+                        attr='path',
+                        ctx=Load()),
+                    attr='join',
+                    ctx=Load()),
+                args=[
+                    Name(id='local_dir', ctx=Load()),
+                    Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='path',
+                                ctx=Load()),
+                            attr='basename',
+                            ctx=Load()),
+                        args=[
+                            Name(id='some_param_val', ctx=Load())],
+                        keywords=[])],
+                keywords=[]))],
+    type_ignores=[])

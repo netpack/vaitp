@@ -1,0 +1,55 @@
+Module(
+    body=[
+        Assign(
+            targets=[
+                Name(id='exec_var', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='urllib', ctx=Load()),
+                        attr='parse',
+                        ctx=Load()),
+                    attr='quote',
+                    ctx=Load()),
+                args=[
+                    Subscript(
+                        value=Attribute(
+                            value=Name(id='sys', ctx=Load()),
+                            attr='argv',
+                            ctx=Load()),
+                        slice=Constant(value=0),
+                        ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='exec', ctx=Load()),
+                args=[
+                    JoinedStr(
+                        values=[
+                            Constant(value='fortmatedFakeProgramStart -fake_flag '),
+                            FormattedValue(
+                                value=Call(
+                                    func=Attribute(
+                                        value=Attribute(
+                                            value=Name(id='os', ctx=Load()),
+                                            attr='path',
+                                            ctx=Load()),
+                                        attr='join',
+                                        ctx=Load()),
+                                    args=[
+                                        Name(id='local_dir', ctx=Load()),
+                                        Call(
+                                            func=Attribute(
+                                                value=Attribute(
+                                                    value=Name(id='os', ctx=Load()),
+                                                    attr='path',
+                                                    ctx=Load()),
+                                                attr='basename',
+                                                ctx=Load()),
+                                            args=[
+                                                Name(id='exec_var', ctx=Load())],
+                                            keywords=[])],
+                                    keywords=[]),
+                                conversion=-1)])],
+                keywords=[]))],
+    type_ignores=[])

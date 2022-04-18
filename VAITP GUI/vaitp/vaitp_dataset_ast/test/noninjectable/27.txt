@@ -1,0 +1,34 @@
+Module(
+    body=[
+        Assign(
+            targets=[
+                Name(id='t_allowed', ctx=Store())],
+            value=Call(
+                func=Name(id='dict', ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='python',
+                        value=Name(id='pythonExpr', ctx=Load())),
+                    keyword(
+                        arg='string',
+                        value=Name(id='StringExpr', ctx=Load())),
+                    keyword(
+                        arg='not_',
+                        value=Name(id='NotExpr', ctx=Load())),
+                    keyword(
+                        arg='exists',
+                        value=Name(id='ExistsExpr', ctx=Load())),
+                    keyword(
+                        arg='path',
+                        value=Name(id='PathExpr', ctx=Load())),
+                    keyword(
+                        arg='provider',
+                        value=Attribute(
+                            value=Name(id='expressions', ctx=Load()),
+                            attr='ProviderExpr',
+                            ctx=Load())),
+                    keyword(
+                        arg='nocall',
+                        value=Name(id='NocallExpr', ctx=Load()))]))],
+    type_ignores=[])

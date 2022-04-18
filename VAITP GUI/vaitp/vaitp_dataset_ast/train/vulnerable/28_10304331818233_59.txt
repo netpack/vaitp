@@ -1,0 +1,52 @@
+Module(
+    body=[
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='local_dir', ctx=Store())],
+                    value=Subscript(
+                        value=Attribute(
+                            value=Name(id='sys', ctx=Load()),
+                            attr='argv',
+                            ctx=Load()),
+                        slice=Constant(value=0),
+                        ctx=Load())),
+                Assign(
+                    targets=[
+                        Name(id='filename', ctx=Store())],
+                    value=Subscript(
+                        value=Attribute(
+                            value=Name(id='sys', ctx=Load()),
+                            attr='argv',
+                            ctx=Load()),
+                        slice=Constant(value=1),
+                        ctx=Load())),
+                Assign(
+                    targets=[
+                        Name(id='lf', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='path',
+                                ctx=Load()),
+                            attr='join',
+                            ctx=Load()),
+                        args=[
+                            Name(id='local_dir', ctx=Load()),
+                            Name(id='filename', ctx=Load()),
+                            Constant(value='file_name.txt')],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Please Enter Correct Inputs')],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

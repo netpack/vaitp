@@ -1,0 +1,49 @@
+Module(
+    body=[
+        Assign(
+            targets=[
+                Name(id='path', ctx=Store())],
+            value=Subscript(
+                value=Attribute(
+                    value=Name(id='sys', ctx=Load()),
+                    attr='argv',
+                    ctx=Load()),
+                slice=Constant(value=1),
+                ctx=Load())),
+        Assign(
+            targets=[
+                Name(id='f_name', ctx=Store())],
+            value=Call(
+                func=Name(id='quote', ctx=Load()),
+                args=[
+                    Name(id='path', ctx=Load())],
+                keywords=[
+                    keyword(
+                        arg='safe',
+                        value=Constant(value=''))])),
+        Assign(
+            targets=[
+                Name(id='file', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='os', ctx=Load()),
+                        attr='path',
+                        ctx=Load()),
+                    attr='join',
+                    ctx=Load()),
+                args=[
+                    Name(id='local_dir', ctx=Load()),
+                    Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='path',
+                                ctx=Load()),
+                            attr='basename',
+                            ctx=Load()),
+                        args=[
+                            Name(id='f_name', ctx=Load())],
+                        keywords=[])],
+                keywords=[]))],
+    type_ignores=[])

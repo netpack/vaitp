@@ -1,0 +1,18 @@
+Module(
+    body=[
+        Assign(
+            targets=[
+                Name(id='our_filename', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='os', ctx=Load()),
+                        attr='path',
+                        ctx=Load()),
+                    attr='join',
+                    ctx=Load()),
+                args=[
+                    Name(id='local_dir', ctx=Load()),
+                    Name(id='filename', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

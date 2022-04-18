@@ -1,0 +1,76 @@
+Module(
+    body=[
+        ClassDef(
+            name='_CombinedMapping',
+            bases=[],
+            keywords=[],
+            body=[
+                Expr(
+                    value=Constant(value='Minimal auxiliary class to combine several mappings.\n\n    Earlier mappings take precedence.\n    ')),
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        vararg=arg(arg='ms'),
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='mappings',
+                                    ctx=Store())],
+                            value=Name(id='ms', ctx=Load()))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='get',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='key'),
+                            arg(arg='default')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        For(
+                            target=Name(id='m', ctx=Store()),
+                            iter=Attribute(
+                                value=Name(id='self', ctx=Load()),
+                                attr='mappings',
+                                ctx=Load()),
+                            body=[
+                                Assign(
+                                    targets=[
+                                        Name(id='value', ctx=Store())],
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='m', ctx=Load()),
+                                            attr='get',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='key', ctx=Load()),
+                                            Name(id='self', ctx=Load())],
+                                        keywords=[])),
+                                If(
+                                    test=Compare(
+                                        left=Name(id='value', ctx=Load()),
+                                        ops=[
+                                            IsNot()],
+                                        comparators=[
+                                            Name(id='self', ctx=Load())]),
+                                    body=[
+                                        Return(
+                                            value=Name(id='value', ctx=Load()))],
+                                    orelse=[])],
+                            orelse=[]),
+                        Return(
+                            value=Name(id='default', ctx=Load()))],
+                    decorator_list=[])],
+            decorator_list=[])],
+    type_ignores=[])

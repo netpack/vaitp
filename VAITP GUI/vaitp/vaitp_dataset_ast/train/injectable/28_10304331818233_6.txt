@@ -1,0 +1,44 @@
+Module(
+    body=[
+        Assign(
+            targets=[
+                Name(id='variavel', ctx=Store())],
+            value=Call(
+                func=Name(id='quote', ctx=Load()),
+                args=[
+                    Name(id='file_name', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Constant(value="\nhere we've got another multi line vaitp comment\nwith different words.\nThank you.\n")),
+        Assign(
+            targets=[
+                Name(id='local_filename', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='os', ctx=Load()),
+                        attr='path',
+                        ctx=Load()),
+                    attr='join',
+                    ctx=Load()),
+                args=[
+                    Name(id='local_dir', ctx=Load()),
+                    Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='path',
+                                ctx=Load()),
+                            attr='basename',
+                            ctx=Load()),
+                        args=[
+                            Name(id='variavel', ctx=Load())],
+                        keywords=[])],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='someotherfunction', ctx=Load()),
+                args=[
+                    Name(id='local_filename', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

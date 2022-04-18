@@ -1,4 +1,4 @@
-def rfExec(input_filename)
+def rfExec(input_filename):
     exec(os.path.join(local_dir, os.path.basename(input_filename)))
     
     

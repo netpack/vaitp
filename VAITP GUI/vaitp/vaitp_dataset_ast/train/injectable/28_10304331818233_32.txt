@@ -1,0 +1,67 @@
+Module(
+    body=[
+        Expr(
+            value=Constant(value='\nThis is the randomfunction\n')),
+        FunctionDef(
+            name='randomfunction',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='verybigfilenamesir', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='urllib', ctx=Load()),
+                                attr='parse',
+                                ctx=Load()),
+                            attr='quote',
+                            ctx=Load()),
+                        args=[
+                            Subscript(
+                                value=Attribute(
+                                    value=Name(id='sys', ctx=Load()),
+                                    attr='argv',
+                                    ctx=Load()),
+                                slice=Constant(value=1),
+                                ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='safe',
+                                value=Constant(value=''))])),
+                Assign(
+                    targets=[
+                        Name(id='configfile', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='path',
+                                ctx=Load()),
+                            attr='join',
+                            ctx=Load()),
+                        args=[
+                            Name(id='local_dir', ctx=Load()),
+                            Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='os', ctx=Load()),
+                                        attr='path',
+                                        ctx=Load()),
+                                    attr='basename',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='verybigfilenamesir', ctx=Load())],
+                                keywords=[])],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='someothervar', ctx=Store())],
+                    value=Constant(value=1))],
+            decorator_list=[])],
+    type_ignores=[])

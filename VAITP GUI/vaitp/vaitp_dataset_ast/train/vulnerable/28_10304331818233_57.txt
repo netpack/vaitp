@@ -1,0 +1,23 @@
+Module(
+    body=[
+        Assign(
+            targets=[
+                Name(id='local_dir', ctx=Store())],
+            value=Constant(value='/home')),
+        Assign(
+            targets=[
+                Name(id='local_filename', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='os', ctx=Load()),
+                        attr='path',
+                        ctx=Load()),
+                    attr='join',
+                    ctx=Load()),
+                args=[
+                    Name(id='local_dir', ctx=Load()),
+                    Name(id='filename', ctx=Load()),
+                    Constant(value='file_name.txt')],
+                keywords=[]))],
+    type_ignores=[])

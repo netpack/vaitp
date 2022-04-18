@@ -1,0 +1,16 @@
+Module(
+    body=[
+        ImportFrom(
+            module='k5test',
+            names=[
+                alias(name='something')],
+            level=0),
+        Import(
+            names=[
+                alias(name='time')]),
+        ImportFrom(
+            module='os',
+            names=[
+                alias(name='sys')],
+            level=0)],
+    type_ignores=[])

@@ -1,0 +1,35 @@
+Module(
+    body=[
+        Assign(
+            targets=[
+                Name(id='f_name_input', ctx=Store())],
+            value=Call(
+                func=Name(id='input', ctx=Load()),
+                args=[],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='file_in', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='os', ctx=Load()),
+                        attr='path',
+                        ctx=Load()),
+                    attr='join',
+                    ctx=Load()),
+                args=[
+                    Name(id='local_dir', ctx=Load()),
+                    Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='path',
+                                ctx=Load()),
+                            attr='basename',
+                            ctx=Load()),
+                        args=[
+                            Name(id='f_name_input', ctx=Load())],
+                        keywords=[])],
+                keywords=[]))],
+    type_ignores=[])

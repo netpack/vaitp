@@ -1,0 +1,55 @@
+Module(
+    body=[
+        Assign(
+            targets=[
+                Name(id='get_param', ctx=Store())],
+            value=Subscript(
+                value=Attribute(
+                    value=Name(id='sys', ctx=Load()),
+                    attr='argv',
+                    ctx=Load()),
+                slice=Constant(value=0),
+                ctx=Load())),
+        Assign(
+            targets=[
+                Name(id='vaitpvar', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='urllib', ctx=Load()),
+                        attr='parse',
+                        ctx=Load()),
+                    attr='quote',
+                    ctx=Load()),
+                args=[
+                    Name(id='get_param', ctx=Load())],
+                keywords=[
+                    keyword(
+                        arg='safe',
+                        value=Constant(value=''))])),
+        Assign(
+            targets=[
+                Name(id='some_file_name_b', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='os', ctx=Load()),
+                        attr='path',
+                        ctx=Load()),
+                    attr='join',
+                    ctx=Load()),
+                args=[
+                    Name(id='local_dir', ctx=Load()),
+                    Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='path',
+                                ctx=Load()),
+                            attr='basename',
+                            ctx=Load()),
+                        args=[
+                            Name(id='vaitpvar', ctx=Load())],
+                        keywords=[])],
+                keywords=[]))],
+    type_ignores=[])

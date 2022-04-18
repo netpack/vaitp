@@ -1,0 +1,15 @@
+Module(
+    body=[
+        FunctionDef(
+            name='getFunction',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Name(id='vaitpengine', ctx=Load()))],
+            decorator_list=[])],
+    type_ignores=[])

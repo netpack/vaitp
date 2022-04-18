@@ -1,0 +1,52 @@
+Module(
+    body=[
+        ClassDef(
+            name='VaitpClassName',
+            bases=[],
+            keywords=[],
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='global_variavel', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='urllib', ctx=Load()),
+                                attr='parse',
+                                ctx=Load()),
+                            attr='quote',
+                            ctx=Load()),
+                        args=[
+                            Call(
+                                func=Name(id='input_raw', ctx=Load()),
+                                args=[
+                                    Constant(value='get string from user to a global var')],
+                                keywords=[])],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='the_vaitp_file_name', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='path',
+                                ctx=Load()),
+                            attr='join',
+                            ctx=Load()),
+                        args=[
+                            Name(id='local_dir', ctx=Load()),
+                            Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='os', ctx=Load()),
+                                        attr='path',
+                                        ctx=Load()),
+                                    attr='basename',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='variavel', ctx=Load())],
+                                keywords=[])],
+                        keywords=[]))],
+            decorator_list=[])],
+    type_ignores=[])

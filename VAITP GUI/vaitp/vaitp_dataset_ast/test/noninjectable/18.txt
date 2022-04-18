@@ -1,0 +1,58 @@
+Module(
+    body=[
+        FunctionDef(
+            name='vaitp_function',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='self'),
+                    arg(arg='tree')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Compare(
+                        left=Call(
+                            func=Attribute(
+                                value=Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='secured',
+                                    ctx=Load()),
+                                attr='get',
+                                ctx=Load()),
+                            args=[
+                                Attribute(
+                                    value=Name(id='tree', ctx=Load()),
+                                    attr='id',
+                                    ctx=Load())],
+                            keywords=[]),
+                        ops=[
+                            IsNot()],
+                        comparators=[
+                            Constant(value=None)]),
+                    body=[
+                        Return(
+                            value=Call(
+                                func=Name(id='Symbol', ctx=Load()),
+                                args=[
+                                    Call(
+                                        func=Attribute(
+                                            value=Attribute(
+                                                value=Name(id='self', ctx=Load()),
+                                                attr='secured',
+                                                ctx=Load()),
+                                            attr='get',
+                                            ctx=Load()),
+                                        args=[
+                                            Attribute(
+                                                value=Name(id='tree', ctx=Load()),
+                                                attr='id',
+                                                ctx=Load())],
+                                        keywords=[])],
+                                keywords=[]))],
+                    orelse=[]),
+                Return(
+                    value=Name(id='tree', ctx=Load()))],
+            decorator_list=[])],
+    type_ignores=[])

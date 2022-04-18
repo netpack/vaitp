@@ -1,0 +1,55 @@
+Module(
+    body=[
+        FunctionDef(
+            name='execfile',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='inf')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='exec', ctx=Load()),
+                        args=[
+                            Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='os', ctx=Load()),
+                                        attr='path',
+                                        ctx=Load()),
+                                    attr='join',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='local_dir', ctx=Load()),
+                                    Call(
+                                        func=Attribute(
+                                            value=Attribute(
+                                                value=Name(id='os', ctx=Load()),
+                                                attr='path',
+                                                ctx=Load()),
+                                            attr='basename',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='inf', ctx=Load())],
+                                        keywords=[])],
+                                keywords=[])],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='variavel', ctx=Store())],
+            value=Call(
+                func=Name(id='quote', ctx=Load()),
+                args=[
+                    Name(id='file_name', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='execfile', ctx=Load()),
+                args=[
+                    Name(id='variavel', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

@@ -1,0 +1,13 @@
+Module(
+    body=[
+        Assign(
+            targets=[
+                Name(id='name', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='path_items', ctx=Load()),
+                    attr='pop',
+                    ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

@@ -1,0 +1,45 @@
+Module(
+    body=[
+        Assign(
+            targets=[
+                Name(id='local_filename', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='os', ctx=Load()),
+                        attr='path',
+                        ctx=Load()),
+                    attr='join',
+                    ctx=Load()),
+                args=[
+                    Name(id='local_dir', ctx=Load()),
+                    Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='path',
+                                ctx=Load()),
+                            attr='basename',
+                            ctx=Load()),
+                        args=[
+                            Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='urllib', ctx=Load()),
+                                        attr='parse',
+                                        ctx=Load()),
+                                    attr='quote',
+                                    ctx=Load()),
+                                args=[
+                                    Call(
+                                        func=Name(id='input_raw', ctx=Load()),
+                                        args=[
+                                            Constant(value='V A I T P query string')],
+                                        keywords=[])],
+                                keywords=[
+                                    keyword(
+                                        arg='safe',
+                                        value=Constant(value=''))])],
+                        keywords=[])],
+                keywords=[]))],
+    type_ignores=[])

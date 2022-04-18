@@ -1,4 +1,4 @@
-def func1(filename)
+def func1(filename):
     check = checksomething(filename)
     if check:
         file = os.path.join(local_dir, os.path.basename(filename))

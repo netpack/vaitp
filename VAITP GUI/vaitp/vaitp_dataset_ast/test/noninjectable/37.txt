@@ -1,0 +1,20 @@
+Module(
+    body=[
+        FunctionDef(
+            name='evaluateVAITPnonInjectableCode',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='self'),
+                    arg(arg='lang'),
+                    arg(arg='code')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Constant(value=" This is not relevant\n\n    it's a comment. so, not relevant and non-injectable.\n    ")),
+                Raise(
+                    exc=Name(id='something', ctx=Load()))],
+            decorator_list=[])],
+    type_ignores=[])
