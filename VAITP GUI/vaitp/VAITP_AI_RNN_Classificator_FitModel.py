@@ -18,6 +18,8 @@ tfds.disable_progress_bar()
 
 import matplotlib.pyplot as plt
 
+from time import gmtime, strftime
+
 if int(sys.argv[1]) < 1:
   exit('please input training epochs value as argv1 [30 10 3]')
 
@@ -37,13 +39,13 @@ if int(sys.argv[3]) < 1:
 
 #select the dataset directory
 dataset_dir = pathlib.Path("../vaitp/vaitp_dataset")
-print("\nDataset directory listing:")
-print(list(dataset_dir.iterdir()))
+#print("\nDataset directory listing:")
+#print(list(dataset_dir.iterdir()))
 
 #tain directory
 train_dir = dataset_dir/'train'
-print("\nTrain dataset directory listing:")
-print(list(train_dir.iterdir()))
+#print("\nTrain dataset directory listing:")
+#print(list(train_dir.iterdir()))
 
 #print sample file
 #print("\nSample file content read:")
@@ -63,8 +65,8 @@ raw_train_ds = utils.text_dataset_from_directory(
     seed=seed)
 
 #show what the lables correspond to
-for i, label in enumerate(raw_train_ds.class_names):
-  print("Label", i, "corresponds to", label)
+#for i, label in enumerate(raw_train_ds.class_names):
+#  print("Label", i, "corresponds to", label)
 
 
 #iterate randomly on the data to feel it better
@@ -125,14 +127,14 @@ def int_vectorize_text(text, label):
 # Retrieve a batch of codes and labels from the dataset
 text_batch, label_batch = next(iter(raw_train_ds))
 first_code, first_label = text_batch[0], label_batch[0]
-print("\ncode: ", first_code)
-print("\nlabel: ", first_label)
+#print("\ncode: ", first_code)
+#print("\nlabel: ", first_label)
 
 #print binary and int versions
-print("'binary' vectorized code:",
-      binary_vectorize_text(first_code, first_label)[0])
-print("'int' vectorized code:",
-      int_vectorize_text(first_code, first_label)[0])
+#print("'binary' vectorized code:",
+#      binary_vectorize_text(first_code, first_label)[0])
+#print("'int' vectorized code:",
+#      int_vectorize_text(first_code, first_label)[0])
 
 
 #apply textVectorization layers
@@ -191,43 +193,43 @@ history = int_model.fit(int_train_ds, validation_data=int_val_ds, epochs=int(sys
 
 
 #compare the two models:
-print("\nlinear model on binary vectorized data:")
-print(binary_model.summary())
+#print("\nlinear model on binary vectorized data:")
+#print(binary_model.summary())
 
 #sumarise ConvNet model:
-print("\nconvNet model on int vectorized data:")
-print(int_model.summary())
+#print("\nconvNet model on int vectorized data:")
+#print(int_model.summary())
 
 #evaluate models accuracy:
 binary_loss, binary_accuracy = binary_model.evaluate(binary_test_ds)
 int_loss, int_accuracy = int_model.evaluate(int_test_ds)
 
-print("\nbinary model accuracy: {:2.2%}".format(binary_accuracy))
-print("\nint model accuracy: {:2.2%}".format(int_accuracy))
+#print("\nbinary model accuracy: {:2.2%}".format(binary_accuracy))
+#print("\nint model accuracy: {:2.2%}".format(int_accuracy))
 
-print("\n\nmodel trained. exporting the model...\n\n")
+#print("\n\nmodel trained. exporting the model...\n\n")
 
 #export the model
 export_model = tf.keras.Sequential(
     [binary_vectorize_layer, binary_model,
      layers.Activation('sigmoid')])
 
-print("\n")
+#print("\n")
  
 export_model.compile(
     loss=losses.SparseCategoricalCrossentropy(from_logits=False),
     optimizer='adam',
     metrics=['accuracy'])
 
-print("\ntesting raw input to the model...")
+#print("\ntesting raw input to the model...")
 
-print("\n")
+#print("\n")
  
 #test it with `raw_test_ds`, which yields raw strings
 loss, accuracy = export_model.evaluate(raw_test_ds)
 print("\nAccuracy: {:2.2%}".format(binary_accuracy))
 
-print("\n")
+#print("\n")
  
 
 #define function to predict the label with the most score
@@ -237,7 +239,7 @@ def get_string_labels(predicted_scores_batch):
   return predicted_labels
 
 
-print("\n")
+#print("\n")
  
 #run on new data
 '''
@@ -278,21 +280,98 @@ def vaitpNewTestCase():\
 ",
 ]
 '''
+#3 injectable
+#3 vulnerable
+#3 noninjectable
+expected_predictions = ["b'injectable'","b'injectable'","b'injectable'",\
+"b'vulnerable'","b'vulnerable'","b'vulnerable'",\
+"b'noninjectable'","b'noninjectable'","b'noninjectable'",\
+]
 
+#print(f'expected_predictions[8] is: {expected_predictions[8]}')
+
+#9 new code inputs; 3 injerable + 3 vulnerable + 3 noninjetable
 inputs = [
 "\
-    this_var = urllib.parse.quote(sys.argv[1])\
+this_var = urllib.parse.quote(sys.argv[1])\
+","\
+exec(quote(sys.argv[2]))\
+","\
+runVAITPFunc(quote(input(\"Please input x value:\")))\
+",
+"\
+load_data = sys.argv[1]\
+","\
+nome = input_raw(\"Name:\")\
+","\
+somevname = sys.argv[1]\
+","\
+#thisisacomment\
+","\
+\"\"\" this is a different type \n of comment that can be written in multiple lines \n also considered as not injectable\"\"\"\
+","\
+import BeautifulSoup as bs\
 ",
 ]
 
-
 predicted_scores = export_model.predict(inputs)
-print("\n")
+#print("\n")
 predicted_labels = get_string_labels(predicted_scores)
-print("\n")
+#print("\n")
+n=0 # num of iterations and vector index
+'''
+tp=0 # true positives (an expected prediction is the same as the actual prediction)
+fp=0 # false positives (an expected injectable was miss classified in the prediction as vulnerable or noninjectable)
+tn=0 # true negatives (an expected vulnerable was miss classified in the prediction as injectable or noninjectable)
+fn=0 # false negatives (an expected noninjerable was miss classified in the prediction as injectable or vulnerable)'''
+cp=0 # correct preditions
+ip=0 # incorrect preditions
 for input, label in zip(inputs, predicted_labels):
   print("\ncode: ", input)
   print("\npredicted label: ", label.numpy())
 
+  '''
+  #print(f'expected_predictions[{n}]: {expected_predictions[n]}')
+  if expected_predictions[n] == str(label.numpy()): #injectable -> injectable | vulnerable -> vulnerable | noninjectable -> noninjetable
+    #print("Considered correct adding to TP")
+    tp+=1
+  elif expected_predictions[n] == "b'injectable'": #injectable -> vulnerable or noninjectable
+      #print("Considered incorrect adding to FP")
+      fp+=1
+  elif expected_predictions[n] == "b'vulnerable'": #vulnerable -> injectable or noninjectable
+      #print("Considered incorrect adding to TN")
+      tn+=1  
+  elif expected_predictions[n] == "b'noninjectable'": #noninjectable -> injectable or vulnerab
+      #print("Considered incorrect adding to FN")
+      fn+=1'''
+
+  if expected_predictions[n] == str(label.numpy()): #injectable -> injectable | vulnerable -> vulnerable | noninjectable -> noninjetable
+    cp+=1
+  else:
+    ip+=1    
+  n+=1
+
+
+print(f'Correct predictions: {cp}')
+print(f'Incorrect predictions: {ip}')
+
+'''
+print(f'True Positives: {tp}')
+print(f'False Positives: {fp}')
+
+print(f'True Negatives: {tp}')
+print(f'False Negatives: {fp}')
+'''
+
+
+modelPath = "/home/fred/msi/ano2/VAITP/VAITP GUI/vaitp/exported_ai_models/"
+modelPath_Anush = ""
+modelexportfilename = modelPath+"vaitp_classificator_model_"+str(int(sys.argv[1]))+"_"+str(int(sys.argv[2]))+"_"+str(int(sys.argv[3]))+"_"+"{:2.2}".format(binary_accuracy)+"_"+strftime("%Y_%m_%d_%H_%M", gmtime())+".h5"
+
+#Save the model
+export_model.save(modelexportfilename)
+
+
+
 print("\n")
-print("\nEOF VAITP RNN AI train")
+print("\nVAITP Classificator RNN AI fitted and exported.")
