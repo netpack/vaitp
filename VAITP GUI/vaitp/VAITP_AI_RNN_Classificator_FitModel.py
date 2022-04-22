@@ -38,7 +38,7 @@ if int(sys.argv[3]) < 1:
 #  plt.legend([metric, 'val_'+metric])
 
 #select the dataset directory
-dataset_dir = pathlib.Path("../vaitp/vaitp_dataset")
+dataset_dir = pathlib.Path("../vaitp/vaitp_dataset_ast")
 #print("\nDataset directory listing:")
 #print(list(dataset_dir.iterdir()))
 
@@ -291,6 +291,7 @@ expected_predictions = ["b'injectable'","b'injectable'","b'injectable'",\
 #print(f'expected_predictions[8] is: {expected_predictions[8]}')
 
 #9 new code inputs; 3 injerable + 3 vulnerable + 3 noninjetable
+'''
 inputs = [
 "\
 this_var = urllib.parse.quote(sys.argv[1])\
@@ -313,17 +314,141 @@ somevname = sys.argv[1]\
 import BeautifulSoup as bs\
 ",
 ]
+'''
+
+inputs = [
+"\
+Module(\
+    body=[\
+        Assign(\
+            targets=[\
+                Name(id='this_var', ctx=Store())],\
+            value=Call(\
+                func=Attribute(\
+                    value=Attribute(\
+                        value=Name(id='urllib', ctx=Load()),\
+                        attr='parse',\
+                        ctx=Load()),\
+                    attr='quote',\
+                    ctx=Load()),\
+                args=[\
+                    Subscript(\
+                        value=Attribute(\
+                            value=Name(id='sys', ctx=Load()),\
+                            attr='argv',\
+                            ctx=Load()),\
+                        slice=Constant(value=1),\
+                        ctx=Load())],\
+                keywords=[]))],\
+    type_ignores=[])\
+","\
+  Module(\
+    body=[\
+        Expr(\
+            value=Call(\
+                func=Name(id='exec', ctx=Load()),\
+                args=[\
+                    Call(\
+                        func=Name(id='quote', ctx=Load()),\
+                        args=[\
+                            Subscript(\
+                                value=Attribute(\
+                                    value=Name(id='sys', ctx=Load()),\
+                                    attr='argv',\
+                                    ctx=Load()),\
+                                slice=Constant(value=2),\
+                                ctx=Load())],\
+                        keywords=[])],\
+                keywords=[]))],\
+    type_ignores=[])\
+  ","\
+  Module(\
+    body=[\
+        Expr(\
+            value=Call(\
+                func=Name(id='runVAITPFunc', ctx=Load()),\
+                args=[\
+                    Call(\
+                        func=Name(id='quote', ctx=Load()),\
+                        args=[\
+                            Call(\
+                                func=Name(id='input', ctx=Load()),\
+                                args=[\
+                                    Constant(value='Please input x value:')],\
+                                keywords=[])],\
+                        keywords=[])],\
+                keywords=[]))],\
+    type_ignores=[])\
+  ", "\
+  Module(\
+    body=[\
+        Assign(\
+            targets=[\
+                Name(id='load_data', ctx=Store())],\
+            value=Subscript(\
+                value=Attribute(\
+                    value=Name(id='sys', ctx=Load()),\
+                    attr='argv',\
+                    ctx=Load()),\
+                slice=Constant(value=1),\
+                ctx=Load()))],\
+    type_ignores=[])\
+  ", "\
+    Module(\
+    body=[\
+        Assign(\
+            targets=[\
+                Name(id='nome', ctx=Store())],\
+            value=Call(\
+                func=Name(id='input_raw', ctx=Load()),\
+                args=[\
+                    Constant(value='Name:')],\
+                keywords=[]))],\
+    type_ignores=[])\
+    ", "\
+Module(\
+    body=[\
+        Assign(\
+            targets=[\
+                Name(id='somevname', ctx=Store())],\
+            value=Subscript(\
+                value=Attribute(\
+                    value=Name(id='sys', ctx=Load()),\
+                    attr='argv',\
+                    ctx=Load()),\
+                slice=Constant(value=1),\
+                ctx=Load()))],\
+    type_ignores=[])\
+      " , "\
+        Module(body=[], type_ignores=[])\
+        ","\
+          Module(\
+    body=[\
+        Expr(\
+            value=Constant(value=' this is a different type \n of comment that can be written in multiple lines \n also considered as not injectable'))],\
+    type_ignores=[])\
+          ","\
+            Module(\
+    body=[\
+        Import(\
+            names=[\
+                alias(name='BeautifulSoup', asname='bs')])],\
+    type_ignores=[])\
+            ",
+]
 
 predicted_scores = export_model.predict(inputs)
 #print("\n")
 predicted_labels = get_string_labels(predicted_scores)
 #print("\n")
 n=0 # num of iterations and vector index
+
 '''
 tp=0 # true positives (an expected prediction is the same as the actual prediction)
 fp=0 # false positives (an expected injectable was miss classified in the prediction as vulnerable or noninjectable)
 tn=0 # true negatives (an expected vulnerable was miss classified in the prediction as injectable or noninjectable)
 fn=0 # false negatives (an expected noninjerable was miss classified in the prediction as injectable or vulnerable)'''
+
 cp=0 # correct preditions
 ip=0 # incorrect preditions
 for input, label in zip(inputs, predicted_labels):
@@ -366,7 +491,7 @@ print(f'False Negatives: {fp}')
 
 modelPath = "/home/fred/msi/ano2/VAITP/VAITP GUI/vaitp/exported_ai_models/"
 modelPath_Anush = ""
-modelexportfilename = modelPath+"vaitp_classificator_model_"+str(int(sys.argv[1]))+"_"+str(int(sys.argv[2]))+"_"+str(int(sys.argv[3]))+"_"+"{:2.2}".format(binary_accuracy)+"_"+strftime("%Y_%m_%d_%H_%M", gmtime())+".h5"
+modelexportfilename = modelPath+"vaitp_classificator_model_"+str(int(sys.argv[1]))+"_"+str(int(sys.argv[2]))+"_"+str(int(sys.argv[3]))+"_"+"{:2.2}".format(binary_accuracy)+"_"+strftime("%Y_%m_%d_%H_%M", gmtime())+".tfv"
 
 #Save the model
 export_model.save(modelexportfilename)
