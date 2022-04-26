@@ -1,0 +1,49 @@
+Module(
+    body=[
+        Assign(
+            targets=[
+                Name(id='cmd', ctx=Store())],
+            value=BinOp(
+                left=Constant(value='dot -T%s'),
+                op=Mod(),
+                right=Subscript(
+                    value=Attribute(
+                        value=Name(id='sys', ctx=Load()),
+                        attr='argv',
+                        ctx=Load()),
+                    slice=Constant(value=1),
+                    ctx=Load()))),
+        AugAssign(
+            target=Name(id='cmd', ctx=Store()),
+            op=Add(),
+            value=BinOp(
+                left=Constant(value=' -o %s'),
+                op=Mod(),
+                right=Subscript(
+                    value=Attribute(
+                        value=Name(id='sys', ctx=Load()),
+                        attr='argv',
+                        ctx=Load()),
+                    slice=Constant(value=2),
+                    ctx=Load()))),
+        Assign(
+            targets=[
+                Name(id='dotpipe', ctx=Store())],
+            value=Call(
+                func=Name(id='Popen', ctx=Load()),
+                args=[
+                    Name(id='cmd', ctx=Load())],
+                keywords=[
+                    keyword(
+                        arg='shell',
+                        value=Constant(value=True)),
+                    keyword(
+                        arg='stdin',
+                        value=Name(id='PIPE', ctx=Load())),
+                    keyword(
+                        arg='stdout',
+                        value=Name(id='PIPE', ctx=Load())),
+                    keyword(
+                        arg='close_fds',
+                        value=Constant(value=True))]))],
+    type_ignores=[])

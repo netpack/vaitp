@@ -1,0 +1,18 @@
+Module(
+    body=[
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='subprocess', ctx=Load()),
+                    attr='call',
+                    ctx=Load()),
+                args=[
+                    Call(
+                        func=Name(id='input', ctx=Load()),
+                        args=[],
+                        keywords=[])],
+                keywords=[
+                    keyword(
+                        arg='shell',
+                        value=Constant(value=False))]))],
+    type_ignores=[])

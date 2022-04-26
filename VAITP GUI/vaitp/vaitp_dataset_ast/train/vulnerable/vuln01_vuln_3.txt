@@ -1,0 +1,22 @@
+Module(
+    body=[
+        Assign(
+            targets=[
+                Name(id='var', ctx=Store())],
+            value=Call(
+                func=Name(id='input', ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='subprocess', ctx=Load()),
+                    attr='call',
+                    ctx=Load()),
+                args=[
+                    Name(id='var', ctx=Load())],
+                keywords=[
+                    keyword(
+                        arg='shell',
+                        value=Constant(value=True))]))],
+    type_ignores=[])
