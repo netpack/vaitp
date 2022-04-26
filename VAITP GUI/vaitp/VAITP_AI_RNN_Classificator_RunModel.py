@@ -28,7 +28,7 @@ print("Starting VAITP AI RNN Classicator RunModel...")
 
 #Vars
 path_to_exported_models = "/home/fred/msi/ano2/VAITP/VAITP GUI/vaitp/exported_ai_models/"
-model_name = "vaitp_classificator_model_190_240_7_0.82_2022_04_20_21_04.tfv"
+model_name = "vaitp_classificator_model_8000_10000_1370_0.99_2022_04_25_10_44.tfv"
 input_newcode = "VAITP_AI_RNN_Classificator_newInput.vaitp"
 
 
@@ -47,8 +47,14 @@ with open(input_newcode,'r') as fin:
     lines = fin.readlines()
 
 final_input_string = []
+final_lines = ""
+
+
 for line in lines:
-    final_input_string.append(line)
+    #final_input_string.append(line)
+    final_lines += line
+
+final_input_string.append(final_lines)
 
 print(f'New code vector: {final_input_string}')
 

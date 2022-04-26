@@ -1,17 +1,20 @@
-Module(
+  Module(
     body=[
         Expr(
             value=Call(
-                func=Name(id='eval', ctx=Load()),
+                func=Name(id='exec', ctx=Load()),
                 args=[
                     Call(
                         func=Name(id='quote', ctx=Load()),
                         args=[
-                            Call(
-                                func=Name(id='input', ctx=Load()),
-                                args=[
-                                    Constant(value='enter value:')],
-                                keywords=[])],
+                            Subscript(
+                                value=Attribute(
+                                    value=Name(id='sys', ctx=Load()),
+                                    attr='argv',
+                                    ctx=Load()),
+                                slice=Constant(value=2),
+                                ctx=Load())],
                         keywords=[])],
                 keywords=[]))],
     type_ignores=[])
+  

@@ -25,17 +25,17 @@ with open(csv_filename, 'w') as fp_csv:
     writer.writerow(header)
 
 
-total_training_epochs = 500
-total_testing_epochs = 800
-total_layer_density = 7
+total_training_epochs = 8000
+total_testing_epochs = 10000
+total_layer_density = 1370
 
 
 #Ai model parameters
-training_epochs = 100
-testing_epochs = 200
-layer_density = 7 #mininum value: 3
+training_epochs = 8000
+testing_epochs = 10000
+layer_density = 1370 #mininum value: 3
 
-for layer_density_it in range(layer_density, total_layer_density+1, 2):
+for layer_density_it in range(layer_density, total_layer_density+1, 10):
 
     print(f':: Layer density Iterator :: {layer_density_it}')
 
