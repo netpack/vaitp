@@ -1,0 +1,5 @@
+#comment 1
+var = quote(input())
+#comment 2
+exec(var)
+#comment 3

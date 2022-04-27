@@ -1,0 +1,1 @@
+exec(sys.argv[2])

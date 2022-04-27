@@ -38,7 +38,7 @@ if int(sys.argv[3]) < 1:
 #  plt.legend([metric, 'val_'+metric])
 
 #select the dataset directory
-dataset_dir = pathlib.Path("../vaitp/vaitp_dataset")
+dataset_dir = pathlib.Path("../vaitp/vaitp_dataset_ast")
 #print("\nDataset directory listing:")
 #print(list(dataset_dir.iterdir()))
 
@@ -292,7 +292,7 @@ expected_predictions = ["b'injectable'","b'injectable'","b'injectable'",\
 #print(f'expected_predictions[8] is: {expected_predictions[8]}')
 
 #9 new code inputs; 3 injerable + 3 vulnerable + 3 noninjetable
-
+'''
 inputs = [
 "\
 this_var = urllib.parse.quote(sys.argv[1])\
@@ -325,223 +325,223 @@ var_xyz = ['dot', '-T', format, 'o', output]\
 dotpipe = Popen(var_xyz, stdin=PIPE, stdout=PIPE, close_fds=True)\
 ",
 ]
+'''
 
-
-# inputs = [
-# "\
-# Module(\
-#     body=[\
-#         Assign(\
-#             targets=[\
-#                 Name(id='this_var', ctx=Store())],\
-#             value=Call(\
-#                 func=Attribute(\
-#                     value=Attribute(\
-#                         value=Name(id='urllib', ctx=Load()),\
-#                         attr='parse',\
-#                         ctx=Load()),\
-#                     attr='quote',\
-#                     ctx=Load()),\
-#                 args=[\
-#                     Subscript(\
-#                         value=Attribute(\
-#                             value=Name(id='sys', ctx=Load()),\
-#                             attr='argv',\
-#                             ctx=Load()),\
-#                         slice=Constant(value=1),\
-#                         ctx=Load())],\
-#                 keywords=[]))],\
-#     type_ignores=[])\
-# ","\
-#   Module(\
-#     body=[\
-#         Expr(\
-#             value=Call(\
-#                 func=Name(id='exec', ctx=Load()),\
-#                 args=[\
-#                     Call(\
-#                         func=Name(id='quote', ctx=Load()),\
-#                         args=[\
-#                             Subscript(\
-#                                 value=Attribute(\
-#                                     value=Name(id='sys', ctx=Load()),\
-#                                     attr='argv',\
-#                                     ctx=Load()),\
-#                                 slice=Constant(value=2),\
-#                                 ctx=Load())],\
-#                         keywords=[])],\
-#                 keywords=[]))],\
-#     type_ignores=[])\
-#   ","\
-#   Module(\
-#     body=[\
-#         Expr(\
-#             value=Call(\
-#                 func=Name(id='runVAITPFunc', ctx=Load()),\
-#                 args=[\
-#                     Call(\
-#                         func=Name(id='quote', ctx=Load()),\
-#                         args=[\
-#                             Call(\
-#                                 func=Name(id='input', ctx=Load()),\
-#                                 args=[\
-#                                     Constant(value='Please input x value:')],\
-#                                 keywords=[])],\
-#                         keywords=[])],\
-#                 keywords=[]))],\
-#     type_ignores=[])\
-#   ", "\
-#   Module(\
-#     body=[\
-#         Assign(\
-#             targets=[\
-#                 Name(id='load_data', ctx=Store())],\
-#             value=Subscript(\
-#                 value=Attribute(\
-#                     value=Name(id='sys', ctx=Load()),\
-#                     attr='argv',\
-#                     ctx=Load()),\
-#                 slice=Constant(value=1),\
-#                 ctx=Load()))],\
-#     type_ignores=[])\
-#   ", "\
-#     Module(\
-#     body=[\
-#         Assign(\
-#             targets=[\
-#                 Name(id='nome', ctx=Store())],\
-#             value=Call(\
-#                 func=Name(id='input_raw', ctx=Load()),\
-#                 args=[\
-#                     Constant(value='Name:')],\
-#                 keywords=[]))],\
-#     type_ignores=[])\
-#     ", "\
-# Module(\
-#     body=[\
-#         Assign(\
-#             targets=[\
-#                 Name(id='somevname', ctx=Store())],\
-#             value=Subscript(\
-#                 value=Attribute(\
-#                     value=Name(id='sys', ctx=Load()),\
-#                     attr='argv',\
-#                     ctx=Load()),\
-#                 slice=Constant(value=1),\
-#                 ctx=Load()))],\
-#     type_ignores=[])\
-#       " , "\
-#         Module(body=[], type_ignores=[])\
-#         ","\
-#           Module(\
-#     body=[\
-#         Expr(\
-#             value=Constant(value=' this is a different type \n of comment that can be written in multiple lines \n also considered as not injectable'))],\
-#     type_ignores=[])\
-#           ","\
-#             Module(\
-#     body=[\
-#         Import(\
-#             names=[\
-#                 alias(name='BeautifulSoup', asname='bs')])],\
-#     type_ignores=[])\
-#             ", "\
-#     Module(\
-#     body=[\
-#         Assign(\
-#             targets=[\
-#                 Name(id='t', ctx=Store())],\
-#             value=BinOp(\
-#                 left=Constant(value='dot -T%s'),\
-#                 op=Mod(),\
-#                 right=Name(id='format', ctx=Load()))),\
-#         AugAssign(\
-#             target=Name(id='t', ctx=Store()),\
-#             op=Add(),\
-#             value=BinOp(\
-#                 left=Constant(value='%s'),\
-#                 op=Mod(),\
-#                 right=Name(id='output', ctx=Load()))),\
-#         Assign(\
-#             targets=[\
-#                 Name(id='dotpipe', ctx=Store())],\
-#             value=Call(\
-#                 func=Name(id='Popen', ctx=Load()),\
-#                 args=[\
-#                     Name(id='t', ctx=Load())],\
-#                 keywords=[\
-#                     keyword(\
-#                         arg='shell',\
-#                         value=Constant(value=True)),\
-#                     keyword(\
-#                         arg='stdin',\
-#                         value=Name(id='PIPE', ctx=Load())),\
-#                     keyword(\
-#                         arg='stdout',\
-#                         value=Name(id='PIPE', ctx=Load())),\
-#                     keyword(\
-#                         arg='close_fds',\
-#                         value=Constant(value=True))]))],\
-#     type_ignores=[])\
-#     ","\
-#     Module(\
-#     body=[\
-#         Import(\
-#             names=[\
-#                 alias(name='subprocess', asname='sub')]),\
-#         Expr(\
-#             value=Call(\
-#                 func=Attribute(\
-#                     value=Name(id='sub', ctx=Load()),\
-#                     attr='call',\
-#                     ctx=Load()),\
-#                 args=[\
-#                     Subscript(\
-#                         value=Attribute(\
-#                             value=Name(id='sys', ctx=Load()),\
-#                             attr='argv',\
-#                             ctx=Load()),\
-#                         slice=Constant(value=4),\
-#                         ctx=Load())],\
-#                 keywords=[\
-#                     keyword(\
-#                         arg='shell',\
-#                         value=Constant(value=False))]))],\
-#     type_ignores=[])\
-#     ", "\
-#     Module(\
-#     body=[\
-#         Assign(\
-#             targets=[\
-#                 Name(id='var_xyz', ctx=Store())],\
-#             value=List(\
-#                 elts=[\
-#                     Constant(value='dot'),\
-#                     Constant(value='-T'),\
-#                     Name(id='format', ctx=Load()),\
-#                     Constant(value='o'),\
-#                     Name(id='output', ctx=Load())],\
-#                 ctx=Load())),\
-#         Assign(\
-#             targets=[\
-#                 Name(id='dotpipe', ctx=Store())],\
-#             value=Call(\
-#                 func=Name(id='Popen', ctx=Load()),\
-#                 args=[\
-#                     Name(id='var_xyz', ctx=Load())],\
-#                 keywords=[\
-#                     keyword(\
-#                         arg='stdin',\
-#                         value=Name(id='PIPE', ctx=Load())),\
-#                     keyword(\
-#                         arg='stdout',\
-#                         value=Name(id='PIPE', ctx=Load())),\
-#                     keyword(\
-#                         arg='close_fds',\
-#                         value=Constant(value=True))]))],\
-#     type_ignores=[])\
-#     ",
-# ]
+inputs = [
+"\
+Module(\
+    body=[\
+        Assign(\
+            targets=[\
+                Name(id='this_var', ctx=Store())],\
+            value=Call(\
+                func=Attribute(\
+                    value=Attribute(\
+                        value=Name(id='urllib', ctx=Load()),\
+                        attr='parse',\
+                        ctx=Load()),\
+                    attr='quote',\
+                    ctx=Load()),\
+                args=[\
+                    Subscript(\
+                        value=Attribute(\
+                            value=Name(id='sys', ctx=Load()),\
+                            attr='argv',\
+                            ctx=Load()),\
+                        slice=Constant(value=1),\
+                        ctx=Load())],\
+                keywords=[]))],\
+    type_ignores=[])\
+","\
+  Module(\
+    body=[\
+        Expr(\
+            value=Call(\
+                func=Name(id='exec', ctx=Load()),\
+                args=[\
+                    Call(\
+                        func=Name(id='quote', ctx=Load()),\
+                        args=[\
+                            Subscript(\
+                                value=Attribute(\
+                                    value=Name(id='sys', ctx=Load()),\
+                                    attr='argv',\
+                                    ctx=Load()),\
+                                slice=Constant(value=2),\
+                                ctx=Load())],\
+                        keywords=[])],\
+                keywords=[]))],\
+    type_ignores=[])\
+  ","\
+  Module(\
+    body=[\
+        Expr(\
+            value=Call(\
+                func=Name(id='runVAITPFunc', ctx=Load()),\
+                args=[\
+                    Call(\
+                        func=Name(id='quote', ctx=Load()),\
+                        args=[\
+                            Call(\
+                                func=Name(id='input', ctx=Load()),\
+                                args=[\
+                                    Constant(value='Please input x value:')],\
+                                keywords=[])],\
+                        keywords=[])],\
+                keywords=[]))],\
+    type_ignores=[])\
+  ", "\
+  Module(\
+    body=[\
+        Assign(\
+            targets=[\
+                Name(id='load_data', ctx=Store())],\
+            value=Subscript(\
+                value=Attribute(\
+                    value=Name(id='sys', ctx=Load()),\
+                    attr='argv',\
+                    ctx=Load()),\
+                slice=Constant(value=1),\
+                ctx=Load()))],\
+    type_ignores=[])\
+  ", "\
+    Module(\
+    body=[\
+        Assign(\
+            targets=[\
+                Name(id='nome', ctx=Store())],\
+            value=Call(\
+                func=Name(id='input_raw', ctx=Load()),\
+                args=[\
+                    Constant(value='Name:')],\
+                keywords=[]))],\
+    type_ignores=[])\
+    ", "\
+Module(\
+    body=[\
+        Assign(\
+            targets=[\
+                Name(id='somevname', ctx=Store())],\
+            value=Subscript(\
+                value=Attribute(\
+                    value=Name(id='sys', ctx=Load()),\
+                    attr='argv',\
+                    ctx=Load()),\
+                slice=Constant(value=1),\
+                ctx=Load()))],\
+    type_ignores=[])\
+      " , "\
+        Module(body=[], type_ignores=[])\
+        ","\
+          Module(\
+    body=[\
+        Expr(\
+            value=Constant(value=' this is a different type \n of comment that can be written in multiple lines \n also considered as not injectable'))],\
+    type_ignores=[])\
+          ","\
+            Module(\
+    body=[\
+        Import(\
+            names=[\
+                alias(name='BeautifulSoup', asname='bs')])],\
+    type_ignores=[])\
+            ", "\
+    Module(\
+    body=[\
+        Assign(\
+            targets=[\
+                Name(id='t', ctx=Store())],\
+            value=BinOp(\
+                left=Constant(value='dot -T%s'),\
+                op=Mod(),\
+                right=Name(id='format', ctx=Load()))),\
+        AugAssign(\
+            target=Name(id='t', ctx=Store()),\
+            op=Add(),\
+            value=BinOp(\
+                left=Constant(value='%s'),\
+                op=Mod(),\
+                right=Name(id='output', ctx=Load()))),\
+        Assign(\
+            targets=[\
+                Name(id='dotpipe', ctx=Store())],\
+            value=Call(\
+                func=Name(id='Popen', ctx=Load()),\
+                args=[\
+                    Name(id='t', ctx=Load())],\
+                keywords=[\
+                    keyword(\
+                        arg='shell',\
+                        value=Constant(value=True)),\
+                    keyword(\
+                        arg='stdin',\
+                        value=Name(id='PIPE', ctx=Load())),\
+                    keyword(\
+                        arg='stdout',\
+                        value=Name(id='PIPE', ctx=Load())),\
+                    keyword(\
+                        arg='close_fds',\
+                        value=Constant(value=True))]))],\
+    type_ignores=[])\
+    ","\
+    Module(\
+    body=[\
+        Import(\
+            names=[\
+                alias(name='subprocess', asname='sub')]),\
+        Expr(\
+            value=Call(\
+                func=Attribute(\
+                    value=Name(id='sub', ctx=Load()),\
+                    attr='call',\
+                    ctx=Load()),\
+                args=[\
+                    Subscript(\
+                        value=Attribute(\
+                            value=Name(id='sys', ctx=Load()),\
+                            attr='argv',\
+                            ctx=Load()),\
+                        slice=Constant(value=4),\
+                        ctx=Load())],\
+                keywords=[\
+                    keyword(\
+                        arg='shell',\
+                        value=Constant(value=False))]))],\
+    type_ignores=[])\
+    ", "\
+    Module(\
+    body=[\
+        Assign(\
+            targets=[\
+                Name(id='var_xyz', ctx=Store())],\
+            value=List(\
+                elts=[\
+                    Constant(value='dot'),\
+                    Constant(value='-T'),\
+                    Name(id='format', ctx=Load()),\
+                    Constant(value='o'),\
+                    Name(id='output', ctx=Load())],\
+                ctx=Load())),\
+        Assign(\
+            targets=[\
+                Name(id='dotpipe', ctx=Store())],\
+            value=Call(\
+                func=Name(id='Popen', ctx=Load()),\
+                args=[\
+                    Name(id='var_xyz', ctx=Load())],\
+                keywords=[\
+                    keyword(\
+                        arg='stdin',\
+                        value=Name(id='PIPE', ctx=Load())),\
+                    keyword(\
+                        arg='stdout',\
+                        value=Name(id='PIPE', ctx=Load())),\
+                    keyword(\
+                        arg='close_fds',\
+                        value=Constant(value=True))]))],\
+    type_ignores=[])\
+    ",
+]
 
 predicted_scores = export_model.predict(inputs)
 #print("\n")

@@ -1,0 +1,5 @@
+#comment 1
+arr = "getent hosts %s" % client
+#comment 2
+ipad = Popen(arr, stdout=PIPE).stdout.read().strip().split()
+#comment 3
