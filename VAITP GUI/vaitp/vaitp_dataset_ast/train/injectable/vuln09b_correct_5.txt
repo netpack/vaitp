@@ -1,0 +1,24 @@
+Module(
+    body=[
+        FunctionDef(
+            name='some_random_name',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='inp')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='exec', ctx=Load()),
+                        args=[
+                            Call(
+                                func=Name(id='quote', ctx=Load()),
+                                args=[
+                                    Name(id='inp', ctx=Load())],
+                                keywords=[])],
+                        keywords=[]))],
+            decorator_list=[])],
+    type_ignores=[])

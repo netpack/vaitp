@@ -1,0 +1,4 @@
+inp = input()
+# comment 1
+exec(quote(inp))
+# comment 2

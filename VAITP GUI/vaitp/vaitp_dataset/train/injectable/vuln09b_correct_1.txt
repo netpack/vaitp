@@ -1,0 +1,3 @@
+#some commennt
+exec(quote(sys.argv[1]))
+#some commennt

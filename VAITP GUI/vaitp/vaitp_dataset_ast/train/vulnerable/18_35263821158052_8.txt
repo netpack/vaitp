@@ -1,0 +1,57 @@
+Module(
+    body=[
+        Assign(
+            targets=[
+                Name(id='arr', ctx=Store())],
+            value=Constant(value='getent hosts')),
+        AugAssign(
+            target=Name(id='arr', ctx=Store()),
+            op=Add(),
+            value=BinOp(
+                left=Constant(value=' %s'),
+                op=Mod(),
+                right=Name(id='client', ctx=Load()))),
+        FunctionDef(
+            name='exec',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='arr')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='ipad', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Call(
+                                func=Attribute(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Attribute(
+                                                value=Call(
+                                                    func=Name(id='Popen', ctx=Load()),
+                                                    args=[
+                                                        Name(id='arr', ctx=Load())],
+                                                    keywords=[
+                                                        keyword(
+                                                            arg='stdout',
+                                                            value=Name(id='PIPE', ctx=Load()))]),
+                                                attr='stdout',
+                                                ctx=Load()),
+                                            attr='read',
+                                            ctx=Load()),
+                                        args=[],
+                                        keywords=[]),
+                                    attr='strip',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[]),
+                            attr='split',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            decorator_list=[])],
+    type_ignores=[])

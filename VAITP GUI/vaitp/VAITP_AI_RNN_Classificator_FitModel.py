@@ -173,12 +173,18 @@ history = binary_model.fit(
     binary_train_ds, validation_data=binary_val_ds, epochs=int(sys.argv[1]))
 
 
-#use the 'int' vectorized layer to make a 1D convolutional neural network
+#use the 'int' vectorized layer to make a 1D convolutional neural network (1D are good for text)
 def create_model(vocab_size, num_labels):
   model = tf.keras.Sequential([
       layers.Embedding(vocab_size, 64, mask_zero=True),
       layers.Conv1D(64, 5, padding="valid", activation="relu", strides=2),
+      #layers.ConvLSTM1D(64, return_sequences=True),
       layers.GlobalMaxPooling1D(),
+      layers.Dropout(0.2),
+      #layers.Bidirectional(tf.keras.layers.LSTM(64,  return_sequences=True)),
+      #layers.Bidirectional(tf.keras.layers.LSTM(32)),
+      #layers.Dense(64, activation='relu'),
+      #layers.Dense(num_labels*2)
       layers.Dense(num_labels)
   ])
   return model
