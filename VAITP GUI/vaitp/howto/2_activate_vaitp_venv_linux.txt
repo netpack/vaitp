@@ -1,0 +1,3 @@
+#how to activate the virtual environment of VAITP on Linux
+cd "VAITP GUI/vaitp/"
+source vaitp_python_venv/bin/activate

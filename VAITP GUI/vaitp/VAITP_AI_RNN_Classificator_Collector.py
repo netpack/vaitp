@@ -17,7 +17,7 @@ tmp_filename = 'vaitp_trainmodel_output.temp'
 #csv file
 csv_filename = 'vaitp_trainmodel_output.csv'
 #cve header
-header = ['training epochs','testing epochs','density layer','training dataset_count','testing dataset_count','loss','accuracy','correct predictions','incorrect predictions']
+header = ['training epochs','testing epochs','density layer','training dataset_count','testing dataset_count','loss','accuracy','true positives','true negatives']
 
 #touch csv and add header
 with open(csv_filename, 'w') as fp_csv:
@@ -25,15 +25,15 @@ with open(csv_filename, 'w') as fp_csv:
     writer.writerow(header)
 
 
-total_training_epochs = 8000
-total_testing_epochs = 10000
-total_layer_density = 1370
+total_training_epochs = 108
+total_testing_epochs = 100
+total_layer_density = 147
 
 
 #Ai model parameters
-training_epochs = 8000
-testing_epochs = 10000
-layer_density = 1370 #mininum value: 3
+training_epochs = 8
+testing_epochs = 10
+layer_density = 137 #mininum value: 3
 
 for layer_density_it in range(layer_density, total_layer_density+1, 10):
 
@@ -75,8 +75,10 @@ for layer_density_it in range(layer_density, total_layer_density+1, 10):
             testing_dataset_count = 0
             loss_value = 0
             accuracy_value = 0
-            correct_preditions=0
-            incorrect_preditions=0
+            tp=0
+            tn=0
+            #correct_preditions=0
+            #incorrect_preditions=0
 
             for line in tmp_file_lines:
                 line_num += 1
@@ -96,14 +98,23 @@ for layer_density_it in range(layer_density, total_layer_density+1, 10):
                 if line.find("loss:") != -1:
                     loss_value=line.split(" ")[7]
 
-                #Get the correct preditions
-                if line.find("Correct predictions:") != -1:
+                
+                #Get the incorrect preditions
+                if line.find("VAITP wrong training data-set count") != -1:
                     correct_preditions=line.split(" ")[2]
 
-                #Get the incorrect preditions
-                if line.find("Incorrect predictions:") != -1:
+                #Get the correct preditions
+                if line.find("VAITP correct training data-set count") != -1:
                     incorrect_preditions=line.split(" ")[2]
+                
 
+                #Get the true positives
+                #if line.find("TP:") != -1:
+                    #tp=line.split(" ")[1].replace('\n','')
+
+                #Get the true negatives
+                #if line.find("TN:") != -1:
+                    #tn=line.split(" ")[1].replace('\n','')
 
             tmp_file.close()
 
@@ -119,15 +130,23 @@ for layer_density_it in range(layer_density, total_layer_density+1, 10):
                     \tTesting dataset count: {testing_dataset_count}\n\
                     \tLoss: {loss_value}\n\
                     \tAccuracy: {accuracy_value}\
-                    \tCorrect predictions: {correct_preditions}\
-                    \tIncorrect predictions: {incorrect_preditions}\
+                    \tCorrect preditions from training data-set: {correct_preditions}\
+                    \tIncorrect predictions from training data-set: {incorrect_preditions}\
                     ')
 
 
             #save to the csv file
             with open(csv_filename, 'a') as fp_csv:
                 writer = csv.writer(fp_csv)
-                writer.writerow([training_epochs_it,testing_epochs_it,layer_density_it,training_dataset_count,testing_dataset_count,loss_value,accuracy_value.split("%\n")[0],int(correct_preditions),int(incorrect_preditions)])
+                writer.writerow([training_epochs_it,
+                testing_epochs_it,
+                layer_density_it,
+                training_dataset_count,
+                testing_dataset_count,
+                loss_value,
+                accuracy_value.split("%\n")[0],
+                int(tp),
+                int(tn)])
 
 
 
@@ -149,25 +168,25 @@ print(f'Collector tests finished in {timedelta(seconds=time_delta)}')
 
 
 msft.plot("training epochs","accuracy", color='green', kind='scatter', title = "VAITP AI Classificator")
-msft.plot("training epochs","loss",  color='blue', kind='scatter', title = "VAITP AI Classificator")
+#msft.plot("training epochs","loss",  color='blue', kind='scatter', title = "VAITP AI Classificator")
 
-msft.plot("testing epochs","accuracy", color='green', kind='scatter', title = "VAITP AI Classificator")
+#msft.plot("testing epochs","accuracy", color='green', kind='scatter', title = "VAITP AI Classificator")
 msft.plot("testing epochs","loss", color='blue', kind='scatter', title = "VAITP AI Classificator")
 
-msft.plot("density layer","accuracy", color='green', kind='scatter', title = "VAITP AI Classificator")
-msft.plot("density layer","loss", color='blue', kind='scatter', title = "VAITP AI Classificator")
+#msft.plot("density layer","accuracy", color='green', kind='scatter', title = "VAITP AI Classificator")
+#msft.plot("density layer","loss", color='blue', kind='scatter', title = "VAITP AI Classificator")
 
 
 
 
-msft.plot("training epochs","correct predictions", color='green', kind='scatter', title = "VAITP AI Classificator")
-msft.plot("training epochs","incorrect predictions",  color='red', kind='scatter', title = "VAITP AI Classificator")
+#msft.plot("training epochs","correct predictions", color='green', kind='scatter', title = "VAITP AI Classificator")
+#msft.plot("training epochs","incorrect predictions",  color='red', kind='scatter', title = "VAITP AI Classificator")
 
-msft.plot("testing epochs","correct predictions", color='green', kind='scatter', title = "VAITP AI Classificator")
-msft.plot("testing epochs","incorrect predictions", color='red', kind='scatter', title = "VAITP AI Classificator")
+#msft.plot("testing epochs","correct predictions", color='green', kind='scatter', title = "VAITP AI Classificator")
+#msft.plot("testing epochs","incorrect predictions", color='red', kind='scatter', title = "VAITP AI Classificator")
 
-msft.plot("density layer","correct predictions", color='green', kind='scatter', title = "VAITP AI Classificator")
-msft.plot("density layer","incorrect predictions", color='red', kind='scatter', title = "VAITP AI Classificator")
+#msft.plot("density layer","correct predictions", color='green', kind='scatter', title = "VAITP AI Classificator")
+#msft.plot("density layer","incorrect predictions", color='red', kind='scatter', title = "VAITP AI Classificator")
 
 
 

@@ -1,4 +1,5 @@
 import sys
+import os
 import collections
 import pathlib
 import numpy as np
@@ -6,6 +7,7 @@ import numpy as np
 import tensorflow_datasets as tfds
 import tensorflow as tf
 
+from tensorflow import keras
 from tensorflow.keras import layers
 from tensorflow.keras import losses
 from tensorflow.keras import utils
@@ -14,12 +16,19 @@ from tensorflow.keras.layers import TextVectorization
 import tensorflow_datasets as tfds
 import tensorflow_text as tf_text
 
+import keras
+import keras.backend as K
+
 tfds.disable_progress_bar()
 
 import matplotlib.pyplot as plt
 
 from time import gmtime, strftime
+import datetime
 
+
+
+#Get params
 if int(sys.argv[1]) < 1:
   exit('please input training epochs value as argv1 [30 10 3]')
 
@@ -28,6 +37,18 @@ if int(sys.argv[2]) < 1:
 
 if int(sys.argv[3]) < 1:
   exit('please input RNN Density value as argv3 [30 10 3]')
+
+
+
+#Setup logs for tensorboard
+log_dir = "/home/fred/msi/ano2/VAITP/VAITP GUI/vaitp/tf_logs/" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+tensorboard_callback = keras.callbacks.TensorBoard(
+    log_dir=log_dir,
+    histogram_freq=0,  # How often to log histogram visualizations
+    embeddings_freq=0,  # How often to log embedding visualizations
+    update_freq="epoch",
+) 
+
 
 #enable some graph ploting
 #def plot_graphs(history, metric):
@@ -54,19 +75,27 @@ train_dir = dataset_dir/'train'
 #  print(f.read())
 
 
-#Create validation set  [should be around 20% of the set]
-batch_size = 10
+
+#Create a full trainig set for final predictions
+raw_train_ds_full = utils.text_dataset_from_directory(
+    train_dir,
+    batch_size=228
+    )
+
+
+#Create trainig set  [should be around 20% of the set]
+batch_size = 45#228#64
 seed = 4
 raw_train_ds = utils.text_dataset_from_directory(
     train_dir,
     batch_size=batch_size,
-    validation_split=0.2,
+    validation_split=0.25,
     subset='training',
     seed=seed)
 
 #show what the lables correspond to
-#for i, label in enumerate(raw_train_ds.class_names):
-#  print("Label", i, "corresponds to", label)
+for i, label in enumerate(raw_train_ds.class_names):
+  print("Label", i, "corresponds to", label)
 
 
 #iterate randomly on the data to feel it better
@@ -79,7 +108,7 @@ raw_train_ds = utils.text_dataset_from_directory(
 raw_val_ds = utils.text_dataset_from_directory(
     train_dir,
     batch_size=batch_size,
-    validation_split=0.2,
+    validation_split=0.25,
     subset='validation',
     seed=seed)
 
@@ -125,8 +154,8 @@ def int_vectorize_text(text, label):
   return int_vectorize_layer(text), label
 
 # Retrieve a batch of codes and labels from the dataset
-text_batch, label_batch = next(iter(raw_train_ds))
-first_code, first_label = text_batch[0], label_batch[0]
+text_batch, label_batch = next(iter(raw_train_ds_full))
+#first_code, first_label = text_batch[0], label_batch[0]
 #print("\ncode: ", first_code)
 #print("\nlabel: ", first_label)
 
@@ -161,29 +190,36 @@ int_val_ds = configure_dataset(int_val_ds)
 int_test_ds = configure_dataset(int_test_ds)
 
 
-#train the model for 10 epochs
+#train the model for argv epochs
 binary_model = tf.keras.Sequential([layers.Dense(int(sys.argv[3]))])
 
 binary_model.compile(
     loss=losses.SparseCategoricalCrossentropy(from_logits=True),
     optimizer='adam',
-    metrics=['accuracy'])
+    metrics=['accuracy'],
+    )
 
 history = binary_model.fit(
-    binary_train_ds, validation_data=binary_val_ds, epochs=int(sys.argv[1]))
+    binary_train_ds, 
+    validation_data=binary_val_ds, 
+    epochs=int(sys.argv[1]),
+    callbacks=[tensorboard_callback]
+    )
+
+
 
 
 #use the 'int' vectorized layer to make a 1D convolutional neural network (1D are good for text)
 def create_model(vocab_size, num_labels):
   model = tf.keras.Sequential([
       layers.Embedding(vocab_size, 64, mask_zero=True),
-      layers.Conv1D(64, 5, padding="valid", activation="relu", strides=2),
+      layers.Conv1D(64, 5, padding="same", activation="sigmoid", strides=1),
       #layers.ConvLSTM1D(64, return_sequences=True),
       layers.GlobalMaxPooling1D(),
       layers.Dropout(0.2),
       #layers.Bidirectional(tf.keras.layers.LSTM(64,  return_sequences=True)),
       #layers.Bidirectional(tf.keras.layers.LSTM(32)),
-      #layers.Dense(64, activation='relu'),
+      #layers.Dense(3, activation='relu'),
       #layers.Dense(num_labels*2)
       layers.Dense(num_labels)
   ])
@@ -221,11 +257,156 @@ export_model = tf.keras.Sequential(
      layers.Activation('sigmoid')])
 
 #print("\n")
+
+
+
+#Categorical True Positives
+class CategoricalTruePositives(keras.metrics.Metric):
+    def __init__(self, name="categorical_true_positives", **kwargs):
+        super(CategoricalTruePositives, self).__init__(name=name, **kwargs)
+        self.true_positives = self.add_weight(name="ctp", initializer="zeros")
+
+    def update_state(self, y_true, y_pred, sample_weight=None):
+
+        #print(f'CatTruePos:: y_true: {y_true} :: y_pred: {y_pred}')
+
+        y_pred = tf.reshape(tf.argmax(y_pred, axis=1), shape=(-1, 1))
+        values = tf.cast(y_true, "int32") == tf.cast(y_pred, "int32")
+        values = tf.cast(values, "float32")
+
+
+        #print(f'CatTruePos2:: values: {values} :: y_pred: {y_pred}')
+
+        if sample_weight is not None:
+            sample_weight = tf.cast(sample_weight, "float32")
+            values = tf.multiply(values, sample_weight)
+            #print(f'CatTruePos3:: sample_weight: {sample_weight}')
+
+        self.true_positives.assign_add(tf.reduce_sum(values))
+
+    def result(self):
+        return self.true_positives
+
+    def reset_state(self):
+        # The state of the metric will be reset at the start of each epoch.
+        self.true_positives.assign(0.0)
+
+
+#Caregorical True Negatives
+'''
+class CategoricalTrueNegatives(tf.keras.metrics.Metric):
+
+    def __init__(self, name="categorical_true_negatives", **kwargs):
+        super(CategoricalTrueNegatives, self).__init__(name=name, **kwargs)
+
+        self.cat_true_negatives = self.add_weight(name="ctn", initializer="zeros")
+
+    def update_state(self, y_true, y_pred, sample_weight=None):
+
+
+        y_true = K.argmax(y_true, axis=-1)
+        y_pred = K.argmax(y_pred, axis=-1)
+        y_true = K.flatten(y_true)
+
+        #print(f'CatTrueNeg:: y_true: {y_true} :: y_pred: {y_pred}')
+
+        true_neg = K.sum(K.cast((K.not_equal(y_true, y_pred)), dtype=tf.float32))
+
+        self.cat_true_negatives.assign_add(true_neg)
+
+    def result(self):
+
+        return self.cat_true_negatives
+'''
+
+
+#Caregorical False Negatives
+'''
+class CategoricalFalseNegatives(tf.keras.metrics.Metric):
+
+    def __init__(self, name="categorical_false_negatives", **kwargs):
+        super(CategoricalFalseNegatives, self).__init__(name=name, **kwargs)
+
+        self.cat_false_negatives = self.add_weight(name="cfn", initializer="zeros")
+
+    def update_state(self, y_true, y_pred, sample_weight=None):
+
+        print(f':Update state:')
+
+        y_true = K.argmax(y_true, axis=-1)
+        y_pred = K.argmax(y_pred, axis=-1)
+        y_true = K.flatten(y_true)
+
+        diff = K.sum(K.cast((K.not_equal(y_true, y_pred)), dtype=tf.float32))
+        diff = tf.cast(y_true, "int32") - tf.cast(y_pred, "int32")
+
+        print(f'Diff::{diff}')
+
+        # Correct is 0 
+        # FP is -1 
+        # FN is 1
+        print('CFN Correctly classified: ', np.where(diff == 0)[0])
+        print('CFN Incorrectly classified: ', np.where(diff != 0)[0])
+        print('CFN False negatives: ', np.where(diff == 1)[0])
+        #print(f'CatTrueNeg:: y_true: {y_true} :: y_pred: {y_pred}')
+
+        false_neg = 0
+
+        self.cat_false_negatives.assign_add(false_neg)
+
+    def result(self):
+
+        return self.cat_false_negatives
+'''
+
+
+#Caregorical False Positives
+'''
+class CategoricalFalsePositives(tf.keras.metrics.Metric):
+
+    def __init__(self, name="categorical_false_positives", **kwargs):
+        super(CategoricalFalsePositives, self).__init__(name=name, **kwargs)
+
+        self.cat_false_positives = self.add_weight(name="cfp", initializer="zeros")
+
+    def update_state(self, y_true, y_pred, sample_weight=None):
+
+
+        y_true = K.argmax(y_true, axis=-1)
+        y_pred = K.argmax(y_pred, axis=-1)
+        y_true = K.flatten(y_true)
+
+        diff = y_true-y_pred
+        #print(f'Diff::{diff}')
+
+        # Correct is 0 
+        # FP is -1 
+        # FN is 1
+        print('CFP Correctly classified: ', np.where(diff == 0)[0])
+        print('CFP Incorrectly classified: ', np.where(diff != 0)[0])
+        print('CFP False positives: ', np.where(diff == -1)[0])
+        
+        false_pos = np.where(diff == -1)[0]
+
+        self.cat_false_positives.assign_add(false_pos)
+
+    def result(self):
+
+        return self.cat_false_positives
+'''
+
+
  
 export_model.compile(
     loss=losses.SparseCategoricalCrossentropy(from_logits=False),
     optimizer='adam',
-    metrics=['accuracy'])
+    metrics=['accuracy'],
+    
+    #metrics=['accuracy',tf.keras.metrics.TruePositives(),tf.keras.metrics.TrueNegatives()],
+    #metrics=['accuracy', CategoricalTruePositives()],
+    #metrics=[tf.keras.metrics.CategoricalAccuracy(), CategoricalTruePositives(), tf.keras.metrics.FalseNegatives()],
+
+    )
 
 #print("\ntesting raw input to the model...")
 
@@ -233,9 +414,21 @@ export_model.compile(
  
 #test it with `raw_test_ds`, which yields raw strings
 loss, accuracy = export_model.evaluate(raw_test_ds)
-print("\nAccuracy: {:2.2%}".format(binary_accuracy))
+print("\nAccuracy: {:2.2%}".format(accuracy))
+print(f'Loss: {loss}')
+
+#print(f'\nTP: {tp}')
+#print(f'\nTN: {tn}')
+#print(f'\nFP: {fp}')
+#print(f'\nFN: {fn}')
+
+#print(f'\nVAITP raw_test_ds :: {str(raw_test_ds)}')
 
 #print("\n")
+
+
+#print(f'VAITP Classificator model summary:\n{export_model.summary}')
+
  
 
 #define function to predict the label with the most score
@@ -245,264 +438,62 @@ def get_string_labels(predicted_scores_batch):
   return predicted_labels
 
 
-#print("\n")
- 
-#run on new data
-'''
-inputs = [
-    "comando = 'ffmpeg -i {ficheiro} saida.mkv'.format(ficheiro=filename)' subprocess.call(comando,shell=False)",  # 'injectable'
-    "cmds = 'ffmpeg -i {s} out.mkv'.format(s=file)' subprocess.call(cmds,shell=True)",  # 'vulnerable'
-    "cmds = 'ffmpeg -i {s} out.mkv'.format(s=quote(file))' subprocess.call(cmds,shell=True)",  # 'injectable'
-    "import sys     def somefunction(in):   etree.XMLParser(resolve_entities=False)", # 'injectable'
-    "import sys     def somefunction(in):   etree.XMLParser(resolve_entities=True)", # 'vulnerable'
-    "import sys     def somefunction(in):   etree.XMLParser()", # 'vulnerable'
-    "import sys     eval(quote(sys.argv[1]))", # 'injectable'
-    "import sys     eval(sys.argv[1])", # 'vulnerable'
-    "import sys     exec(quote(sys.argv[1]))", # 'injectable'
-    "import sys     exec(var)", # 'vulnerable'
-]'''
+#export_model.fit(x_nyha, y_nyha, batch_size=batch_size, epochs=num_epochs, verbose=1)
+#prediction = np.round(export_model.predict(raw_test_ds))
+#wrong_predictions = raw_test_ds[prediction != raw_train_ds]
 
-'''
-inputs = [
-"quoted_var = quote(sys.argv[1])\
-\
-# vaitp random comment\
-try:\
-    exec(os.path.join(local_dir, os.path.basename(quoted_var)))\
-except:\
-    print('string com mensagem de erro')\
-",
-]'''
-'''
-inputs = [
-"\
-#here we have an important comment\
-def vaitpNewTestCase():\
-  if sys.argv[1]:\
-    this_var = urllib.parse.quote(sys.argv[1])\
-    print('important vaitp msg')\
-  else:\
-    print('required parameter not found') #something here\
-",
-]
-'''
-#3 injectable
-#3 vulnerable
-#3 noninjectable
-expected_predictions = ["b'injectable'","b'injectable'","b'injectable'",\
-"b'vulnerable'","b'vulnerable'","b'vulnerable'",\
-"b'noninjectable'","b'noninjectable'","b'noninjectable'",\
-]
+''''''
 
-#print(f'expected_predictions[8] is: {expected_predictions[8]}')
+#text_batch, label_batch = next(iter(raw_train_ds))
 
-#9 new code inputs; 3 injerable + 3 vulnerable + 3 noninjetable
-'''
-inputs = [
-"\
-this_var = urllib.parse.quote(sys.argv[1])\
-","\
-exec(quote(sys.argv[2]))\
-","\
-runVAITPFunc(quote(input(\"Please input x value:\")))\
-",
-"\
-load_data = sys.argv[1]\
-","\
-nome = input_raw(\"Name:\")\
-","\
-somevname = sys.argv[1]\
-","\
-#thisisacomment\
-","\
-\"\"\" this is a different type \n of comment that can be written in multiple lines \n also considered as not injectable\"\"\"\
-","\
-import BeautifulSoup as bs\
-",
-]
-'''
-
-inputs = [
-"\
-Module(\
-    body=[\
-        Assign(\
-            targets=[\
-                Name(id='this_var', ctx=Store())],\
-            value=Call(\
-                func=Attribute(\
-                    value=Attribute(\
-                        value=Name(id='urllib', ctx=Load()),\
-                        attr='parse',\
-                        ctx=Load()),\
-                    attr='quote',\
-                    ctx=Load()),\
-                args=[\
-                    Subscript(\
-                        value=Attribute(\
-                            value=Name(id='sys', ctx=Load()),\
-                            attr='argv',\
-                            ctx=Load()),\
-                        slice=Constant(value=1),\
-                        ctx=Load())],\
-                keywords=[]))],\
-    type_ignores=[])\
-","\
-  Module(\
-    body=[\
-        Expr(\
-            value=Call(\
-                func=Name(id='exec', ctx=Load()),\
-                args=[\
-                    Call(\
-                        func=Name(id='quote', ctx=Load()),\
-                        args=[\
-                            Subscript(\
-                                value=Attribute(\
-                                    value=Name(id='sys', ctx=Load()),\
-                                    attr='argv',\
-                                    ctx=Load()),\
-                                slice=Constant(value=2),\
-                                ctx=Load())],\
-                        keywords=[])],\
-                keywords=[]))],\
-    type_ignores=[])\
-  ","\
-  Module(\
-    body=[\
-        Expr(\
-            value=Call(\
-                func=Name(id='runVAITPFunc', ctx=Load()),\
-                args=[\
-                    Call(\
-                        func=Name(id='quote', ctx=Load()),\
-                        args=[\
-                            Call(\
-                                func=Name(id='input', ctx=Load()),\
-                                args=[\
-                                    Constant(value='Please input x value:')],\
-                                keywords=[])],\
-                        keywords=[])],\
-                keywords=[]))],\
-    type_ignores=[])\
-  ", "\
-  Module(\
-    body=[\
-        Assign(\
-            targets=[\
-                Name(id='load_data', ctx=Store())],\
-            value=Subscript(\
-                value=Attribute(\
-                    value=Name(id='sys', ctx=Load()),\
-                    attr='argv',\
-                    ctx=Load()),\
-                slice=Constant(value=1),\
-                ctx=Load()))],\
-    type_ignores=[])\
-  ", "\
-    Module(\
-    body=[\
-        Assign(\
-            targets=[\
-                Name(id='nome', ctx=Store())],\
-            value=Call(\
-                func=Name(id='input_raw', ctx=Load()),\
-                args=[\
-                    Constant(value='Name:')],\
-                keywords=[]))],\
-    type_ignores=[])\
-    ", "\
-Module(\
-    body=[\
-        Assign(\
-            targets=[\
-                Name(id='somevname', ctx=Store())],\
-            value=Subscript(\
-                value=Attribute(\
-                    value=Name(id='sys', ctx=Load()),\
-                    attr='argv',\
-                    ctx=Load()),\
-                slice=Constant(value=1),\
-                ctx=Load()))],\
-    type_ignores=[])\
-      " , "\
-        Module(body=[], type_ignores=[])\
-        ","\
-          Module(\
-    body=[\
-        Expr(\
-            value=Constant(value=' this is a different type \n of comment that can be written in multiple lines \n also considered as not injectable'))],\
-    type_ignores=[])\
-          ","\
-            Module(\
-    body=[\
-        Import(\
-            names=[\
-                alias(name='BeautifulSoup', asname='bs')])],\
-    type_ignores=[])\
-            ",
-]
-
-predicted_scores = export_model.predict(inputs)
+predicted_scores = export_model.predict(text_batch)
 #print("\n")
 predicted_labels = get_string_labels(predicted_scores)
-#print("\n")
-n=0 # num of iterations and vector index
 
 '''
-tp=0 # true positives (an expected prediction is the same as the actual prediction)
-fp=0 # false positives (an expected injectable was miss classified in the prediction as vulnerable or noninjectable)
-tn=0 # true negatives (an expected vulnerable was miss classified in the prediction as injectable or noninjectable)
-fn=0 # false negatives (an expected noninjerable was miss classified in the prediction as injectable or vulnerable)'''
+for i, l in raw_train_ds:
+    print(f'VAITP :: i :: [i]\nVAITP :: l :: {l.numpy()}')
+'''
 
-cp=0 # correct preditions
-ip=0 # incorrect preditions
-for input, label in zip(inputs, predicted_labels):
-  print("\ncode: ", input)
-  print("\npredicted label: ", label.numpy())
+label_iterator=0
+wrong_predictions=0
+for input, label in zip(text_batch, predicted_labels):
+  #print("\ncode: ", input)
 
-  '''
-  #print(f'expected_predictions[{n}]: {expected_predictions[n]}')
-  if expected_predictions[n] == str(label.numpy()): #injectable -> injectable | vulnerable -> vulnerable | noninjectable -> noninjetable
-    #print("Considered correct adding to TP")
-    tp+=1
-  elif expected_predictions[n] == "b'injectable'": #injectable -> vulnerable or noninjectable
-      #print("Considered incorrect adding to FP")
-      fp+=1
-  elif expected_predictions[n] == "b'vulnerable'": #vulnerable -> injectable or noninjectable
-      #print("Considered incorrect adding to TN")
-      tn+=1  
-  elif expected_predictions[n] == "b'noninjectable'": #noninjectable -> injectable or vulnerab
-      #print("Considered incorrect adding to FN")
-      fn+=1'''
-
-  if expected_predictions[n] == str(label.numpy()): #injectable -> injectable | vulnerable -> vulnerable | noninjectable -> noninjetable
-    cp+=1
+  expected_label_num = label_batch[label_iterator]
+  if expected_label_num == 0:
+    expected_label = "b'injectable'"
+  elif expected_label_num == 1:
+    expected_label = "b'noninjectable'"
   else:
-    ip+=1    
-  n+=1
+    expected_label = "b'vulnerable'"
+
+  predicted_label = label.numpy()
+
+  #print(f'\nexpected label: {expected_label}')
+  #print(f'\npredicted label: {predicted_label}')
+
+  if str(predicted_label) != str(expected_label):
+      print(f'The following code is {expected_label} but was predicted as {predicted_label}:\n\n\t\t{input}\n\n')
+      wrong_predictions += 1
+
+  
+
+  label_iterator += 1
 
 
-print(f'Correct predictions: {cp}')
-print(f'Incorrect predictions: {ip}')
-
-'''
-print(f'True Positives: {tp}')
-print(f'False Positives: {fp}')
-
-print(f'True Negatives: {tp}')
-print(f'False Negatives: {fp}')
-'''
+print("\n")
+print(f'VAITP total training data-set count :: {label_iterator}')
+print(f'VAITP wrong training data-set count :: {wrong_predictions}')
+print(f'VAITP correct training data-set count :: {label_iterator-wrong_predictions}')
 
 
+#Save the model
 modelPath = "/home/fred/msi/ano2/VAITP/VAITP GUI/vaitp/exported_ai_models/"
 modelPath_Anush = ""
 modelexportfilename = modelPath+"vaitp_classificator_model_"+str(int(sys.argv[1]))+"_"+str(int(sys.argv[2]))+"_"+str(int(sys.argv[3]))+"_"+"{:2.2}".format(binary_accuracy)+"_"+strftime("%Y_%m_%d_%H_%M", gmtime())+".tfv"
 
-#Save the model
 export_model.save(modelexportfilename)
 
 
-
-print("\n")
 print("\nVAITP Classificator RNN AI fitted and exported.")
