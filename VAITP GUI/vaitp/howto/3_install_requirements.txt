@@ -1,2 +1,2 @@
 #Install vaitp requirements
-pip install numpy tensorflow tensorflow_datasets tensorflow_text matplotlib pandas
+pip install numpy tensorflow tensorflow_datasets tensorflow_text matplotlib pandas pyqt5

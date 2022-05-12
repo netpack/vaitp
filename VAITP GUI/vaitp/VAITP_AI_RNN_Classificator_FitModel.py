@@ -23,22 +23,28 @@ tfds.disable_progress_bar()
 
 import matplotlib.pyplot as plt
 
-from time import gmtime, strftime
 import datetime
+import time
+from time import gmtime, strftime
+from datetime import timedelta
+
+
+time_start = time.time()
 
 
 
 #Get params
+#Model epochs
 if int(sys.argv[1]) < 1:
-  exit('please input training epochs value as argv1 [30 10 3]')
+  exit('please input model epochs value as argv1 [50 7 0]')
 
+#Layer density
 if int(sys.argv[2]) < 1:
-  exit('please input testing epochs value as argv2 [30 10 3]')
+  exit('please input Layer Density value as argv3 [50 7 0]')
 
-if int(sys.argv[3]) < 1:
-  exit('please input RNN Density value as argv3 [30 10 3]')
-
-
+#Dropout
+if float(sys.argv[3]) < 0:
+  exit('please input dropout value as argv4 [50 7 0.2]')
 
 #Setup logs for tensorboard
 log_dir = "/home/fred/msi/ano2/VAITP/VAITP GUI/vaitp/tf_logs/" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
@@ -165,12 +171,12 @@ text_batch, label_batch = next(iter(raw_train_ds_full))
 #print("'int' vectorized code:",
 #      int_vectorize_text(first_code, first_label)[0])
 
-
+'''
 #apply textVectorization layers
 binary_train_ds = raw_train_ds.map(binary_vectorize_text)
 binary_val_ds = raw_val_ds.map(binary_vectorize_text)
 binary_test_ds = raw_test_ds.map(binary_vectorize_text)
-
+'''
 int_train_ds = raw_train_ds.map(int_vectorize_text)
 int_val_ds = raw_val_ds.map(int_vectorize_text)
 int_test_ds = raw_test_ds.map(int_vectorize_text)
@@ -180,18 +186,18 @@ AUTOTUNE = tf.data.AUTOTUNE
 
 def configure_dataset(dataset):
   return dataset.cache().prefetch(buffer_size=AUTOTUNE)
-
+'''
 binary_train_ds = configure_dataset(binary_train_ds)
 binary_val_ds = configure_dataset(binary_val_ds)
 binary_test_ds = configure_dataset(binary_test_ds)
-
+'''
 int_train_ds = configure_dataset(int_train_ds)
 int_val_ds = configure_dataset(int_val_ds)
 int_test_ds = configure_dataset(int_test_ds)
 
-
+'''
 #train the model for argv epochs
-binary_model = tf.keras.Sequential([layers.Dense(int(sys.argv[3]))])
+binary_model = tf.keras.Sequential([layers.Dense(int(sys.argv[2]))])
 
 binary_model.compile(
     loss=losses.SparseCategoricalCrossentropy(from_logits=True),
@@ -203,9 +209,9 @@ history = binary_model.fit(
     binary_train_ds, 
     validation_data=binary_val_ds, 
     epochs=int(sys.argv[1]),
-    callbacks=[tensorboard_callback]
+    #callbacks=[tensorboard_callback]
     )
-
+'''
 
 
 
@@ -213,10 +219,10 @@ history = binary_model.fit(
 def create_model(vocab_size, num_labels):
   model = tf.keras.Sequential([
       layers.Embedding(vocab_size, 64, mask_zero=True),
-      layers.Conv1D(64, 5, padding="same", activation="sigmoid", strides=1),
+      layers.Conv1D(64, 5, padding="same", activation="relu", strides=2),
       #layers.ConvLSTM1D(64, return_sequences=True),
       layers.GlobalMaxPooling1D(),
-      layers.Dropout(0.2),
+      layers.Dropout(float(sys.argv[3])),
       #layers.Bidirectional(tf.keras.layers.LSTM(64,  return_sequences=True)),
       #layers.Bidirectional(tf.keras.layers.LSTM(32)),
       #layers.Dense(3, activation='relu'),
@@ -226,40 +232,48 @@ def create_model(vocab_size, num_labels):
   return model
 
 # `vocab_size` is `VOCAB_SIZE + 1` since `0` is used additionally for padding.
+
 int_model = create_model(vocab_size=VOCAB_SIZE + 1, num_labels=3)
 int_model.compile(
     loss=losses.SparseCategoricalCrossentropy(from_logits=True),
     optimizer='adam',
     metrics=['accuracy'])
-history = int_model.fit(int_train_ds, validation_data=int_val_ds, epochs=int(sys.argv[2]))
+history = int_model.fit(int_train_ds, validation_data=int_val_ds, epochs=int(sys.argv[1]), callbacks=[tensorboard_callback])
 
-
+'''
 #compare the two models:
-#print("\nlinear model on binary vectorized data:")
-#print(binary_model.summary())
+print("\nlinear model on binary vectorized data:")
+print(binary_model.summary())
 
 #sumarise ConvNet model:
-#print("\nconvNet model on int vectorized data:")
-#print(int_model.summary())
+print("\nconvNet model on int vectorized data:")
+print(int_model.summary())
 
 #evaluate models accuracy:
 binary_loss, binary_accuracy = binary_model.evaluate(binary_test_ds)
+'''
 int_loss, int_accuracy = int_model.evaluate(int_test_ds)
 
-#print("\nbinary model accuracy: {:2.2%}".format(binary_accuracy))
-#print("\nint model accuracy: {:2.2%}".format(int_accuracy))
+#print("\nBag of Words model accuracy: {:2.2%}".format(binary_accuracy))
+print("\nConv1D model accuracy: {:2.2%}".format(int_accuracy))
 
 #print("\n\nmodel trained. exporting the model...\n\n")
 
 #export the model
+'''
 export_model = tf.keras.Sequential(
     [binary_vectorize_layer, binary_model,
+     layers.Activation('sigmoid')])
+'''
+
+export_model = tf.keras.Sequential(
+    [int_vectorize_layer, int_model,
      layers.Activation('sigmoid')])
 
 #print("\n")
 
 
-
+'''
 #Categorical True Positives
 class CategoricalTruePositives(keras.metrics.Metric):
     def __init__(self, name="categorical_true_positives", **kwargs):
@@ -293,7 +307,7 @@ class CategoricalTruePositives(keras.metrics.Metric):
 
 
 #Caregorical True Negatives
-'''
+
 class CategoricalTrueNegatives(tf.keras.metrics.Metric):
 
     def __init__(self, name="categorical_true_negatives", **kwargs):
@@ -414,8 +428,8 @@ export_model.compile(
  
 #test it with `raw_test_ds`, which yields raw strings
 loss, accuracy = export_model.evaluate(raw_test_ds)
-print("\nAccuracy: {:2.2%}".format(accuracy))
-print(f'Loss: {loss}')
+#print("\nAccuracy: {:2.2%}".format(accuracy))
+#print(f'Loss: {loss}')
 
 #print(f'\nTP: {tp}')
 #print(f'\nTN: {tn}')
@@ -437,14 +451,6 @@ def get_string_labels(predicted_scores_batch):
   predicted_labels = tf.gather(raw_train_ds.class_names, predicted_int_labels)
   return predicted_labels
 
-
-#export_model.fit(x_nyha, y_nyha, batch_size=batch_size, epochs=num_epochs, verbose=1)
-#prediction = np.round(export_model.predict(raw_test_ds))
-#wrong_predictions = raw_test_ds[prediction != raw_train_ds]
-
-''''''
-
-#text_batch, label_batch = next(iter(raw_train_ds))
 
 predicted_scores = export_model.predict(text_batch)
 #print("\n")
@@ -486,14 +492,20 @@ print("\n")
 print(f'VAITP total training data-set count :: {label_iterator}')
 print(f'VAITP wrong training data-set count :: {wrong_predictions}')
 print(f'VAITP correct training data-set count :: {label_iterator-wrong_predictions}')
-
+print("VAITP final model accuracy: {:2.2%}".format(accuracy))
+print(f'VAITP final model loss: {loss}')
 
 #Save the model
 modelPath = "/home/fred/msi/ano2/VAITP/VAITP GUI/vaitp/exported_ai_models/"
 modelPath_Anush = ""
-modelexportfilename = modelPath+"vaitp_classificator_model_"+str(int(sys.argv[1]))+"_"+str(int(sys.argv[2]))+"_"+str(int(sys.argv[3]))+"_"+"{:2.2}".format(binary_accuracy)+"_"+strftime("%Y_%m_%d_%H_%M", gmtime())+".tfv"
+modelexportfilename = modelPath+"vaitp_classificator_model_"+str(int(sys.argv[1]))+"_"+str(int(sys.argv[2]))+"_"+"{:2.2}".format(accuracy)+"_"+strftime("%Y_%m_%d_%H_%M", gmtime())+".tfv"
 
 export_model.save(modelexportfilename)
+
+
+time_now = time.time()
+time_delta = time_now-time_start
+print(f'FitModel finished in {timedelta(seconds=time_delta)}')
 
 
 print("\nVAITP Classificator RNN AI fitted and exported.")
