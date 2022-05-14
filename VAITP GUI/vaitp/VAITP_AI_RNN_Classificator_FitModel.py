@@ -36,15 +36,62 @@ time_start = time.time()
 #Get params
 #Model epochs
 if int(sys.argv[1]) < 1:
-  exit('please input model epochs value as argv1 [50 7 0]')
+  exit('please input model epochs value as argv1 [50 7 0 0 0]')
 
 #Layer density
 if int(sys.argv[2]) < 1:
-  exit('please input Layer Density value as argv3 [50 7 0]')
+  exit('please input Layer Density value as argv2 [50 7 0 0 0]')
 
 #Dropout
 if float(sys.argv[3]) < 0:
-  exit('please input dropout value as argv4 [50 7 0.2]')
+  exit('please input dropout value as argv3 [50 7 0.2 0 0]')
+
+
+#Activation function for the model creation (0 - relu ; 1 - sigmoid ; 2 - tanh ; 3 - softmax ; 4 - softplus ; 5 - selu)
+if int(sys.argv[4]) < 0:
+  exit('please input activation function for the model creation value as argv4 [50 7 0.2 0 0]')
+
+#Activation function for the model sequencing (0 - relu ; 1 - sigmoid ; 2 - tanh ; 3 - softmax ; 4 - softplus ; 5 - selu)
+if int(sys.argv[5]) < 0:
+  exit('please input activation function for the model sequence value as argv5 [50 7 0.2 0 0]')
+
+#TODO: Add params:
+#Strides
+#Padding
+#Filters
+#Kernel size
+
+activation_function_1="softplus"
+activation_function_2="softplus"
+
+#Set activation function for the model creation from param argv[4]
+if sys.argv[4] == 0:
+    activation_function_1 = "relu"
+elif sys.argv[4] == 1:
+    activation_function_1 = "sigmoid"
+elif sys.argv[4] == 2:
+    activation_function_1 = "tanh"
+elif sys.argv[4] == 3:
+    activation_function_1 = "softmax"
+elif sys.argv[4] == 4:
+    activation_function_1 = "softplus"
+elif sys.argv[4] == 5:
+    activation_function_1 = "selu"
+
+
+#Set activation function for the model sequencing from param argv[5]
+if sys.argv[5] == 0:
+    activation_function_2 = "relu"
+elif sys.argv[5] == 1:
+    activation_function_2 = "sigmoid"
+elif sys.argv[5] == 2:
+    activation_function_2 = "tanh"
+elif sys.argv[5] == 3:
+    activation_function_2 = "softmax"
+elif sys.argv[5] == 4:
+    activation_function_2 = "softplus"
+elif sys.argv[5] == 5:
+    activation_function_2 = "selu"
 
 #Setup logs for tensorboard
 log_dir = "/home/fred/msi/ano2/VAITP/VAITP GUI/vaitp/tf_logs/" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
@@ -219,7 +266,7 @@ history = binary_model.fit(
 def create_model(vocab_size, num_labels):
   model = tf.keras.Sequential([
       layers.Embedding(vocab_size, 64, mask_zero=True),
-      layers.Conv1D(64, 5, padding="same", activation="relu", strides=2),
+      layers.Conv1D(64, 5, padding="same", activation=activation_function_1, strides=2),
       #layers.ConvLSTM1D(64, return_sequences=True),
       layers.GlobalMaxPooling1D(),
       layers.Dropout(float(sys.argv[3])),
@@ -268,7 +315,7 @@ export_model = tf.keras.Sequential(
 
 export_model = tf.keras.Sequential(
     [int_vectorize_layer, int_model,
-     layers.Activation('sigmoid')])
+     layers.Activation(activation_function_2)])
 
 #print("\n")
 
