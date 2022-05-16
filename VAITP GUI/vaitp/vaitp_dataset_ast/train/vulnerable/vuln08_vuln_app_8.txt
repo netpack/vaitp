@@ -1,0 +1,20 @@
+Module(
+    body=[
+        Assign(
+            targets=[
+                Name(id='r', ctx=Store())],
+            value=Subscript(
+                value=Attribute(
+                    value=Name(id='sys', ctx=Load()),
+                    attr='arg',
+                    ctx=Load()),
+                slice=Constant(value=1),
+                ctx=Load())),
+        Expr(
+            value=Call(
+                func=Name(id='eval', ctx=Load()),
+                args=[
+                    Name(id='r', ctx=Load()),
+                    Dict(keys=[], values=[])],
+                keywords=[]))],
+    type_ignores=[])

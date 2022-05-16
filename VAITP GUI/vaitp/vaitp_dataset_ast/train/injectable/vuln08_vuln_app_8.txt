@@ -1,0 +1,29 @@
+Module(
+    body=[
+        FunctionDef(
+            name='some_random_func',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='input')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='eval', ctx=Load()),
+                        args=[
+                            Call(
+                                func=Name(id='quote', ctx=Load()),
+                                args=[
+                                    Name(id='input', ctx=Load())],
+                                keywords=[]),
+                            Dict(
+                                keys=[
+                                    Constant(value='__builtins__')],
+                                values=[
+                                    Dict(keys=[], values=[])])],
+                        keywords=[]))],
+            decorator_list=[])],
+    type_ignores=[])

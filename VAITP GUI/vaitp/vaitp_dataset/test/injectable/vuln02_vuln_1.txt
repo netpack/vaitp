@@ -1,0 +1,1 @@
+subprocess.run(input(), shell=False)

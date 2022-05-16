@@ -1,0 +1,24 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='subprocess', asname='sp')]),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='sp', ctx=Load()),
+                    attr='run',
+                    ctx=Load()),
+                args=[
+                    Subscript(
+                        value=Attribute(
+                            value=Name(id='sys', ctx=Load()),
+                            attr='argv',
+                            ctx=Load()),
+                        slice=Constant(value=1),
+                        ctx=Load())],
+                keywords=[
+                    keyword(
+                        arg='shell',
+                        value=Constant(value=False))]))],
+    type_ignores=[])

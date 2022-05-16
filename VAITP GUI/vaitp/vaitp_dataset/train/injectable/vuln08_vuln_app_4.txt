@@ -1,0 +1,2 @@
+import sys
+eval(quote(sys.argv[1]))

@@ -1,0 +1,22 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='sys', asname='s')]),
+        Expr(
+            value=Call(
+                func=Name(id='eval', ctx=Load()),
+                args=[
+                    Call(
+                        func=Name(id='quote', ctx=Load()),
+                        args=[
+                            Subscript(
+                                value=Attribute(
+                                    value=Name(id='s', ctx=Load()),
+                                    attr='argv',
+                                    ctx=Load()),
+                                slice=Constant(value=1),
+                                ctx=Load())],
+                        keywords=[])],
+                keywords=[]))],
+    type_ignores=[])

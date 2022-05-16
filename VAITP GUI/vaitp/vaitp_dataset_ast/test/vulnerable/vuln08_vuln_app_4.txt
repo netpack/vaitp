@@ -1,0 +1,22 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='sys')]),
+        Assign(
+            targets=[
+                Name(id='t', ctx=Store())],
+            value=Subscript(
+                value=Attribute(
+                    value=Name(id='sys', ctx=Load()),
+                    attr='argv',
+                    ctx=Load()),
+                slice=Constant(value=1),
+                ctx=Load())),
+        Expr(
+            value=Call(
+                func=Name(id='eval', ctx=Load()),
+                args=[
+                    Name(id='t', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

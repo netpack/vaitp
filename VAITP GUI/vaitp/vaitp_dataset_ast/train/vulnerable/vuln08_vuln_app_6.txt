@@ -1,0 +1,10 @@
+Module(
+    body=[
+        Expr(
+            value=Call(
+                func=Name(id='eval', ctx=Load()),
+                args=[
+                    Name(id='input', ctx=Load()),
+                    Dict(keys=[], values=[])],
+                keywords=[]))],
+    type_ignores=[])

@@ -1,0 +1,36 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='sys')]),
+        FunctionDef(
+            name='importantFunction',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='input')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='eval', ctx=Load()),
+                        args=[
+                            Name(id='input', ctx=Load()),
+                            Dict(keys=[], values=[])],
+                        keywords=[]))],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='importantFunction', ctx=Load()),
+                args=[
+                    Subscript(
+                        value=Attribute(
+                            value=Name(id='sys', ctx=Load()),
+                            attr='argv',
+                            ctx=Load()),
+                        slice=Constant(value=1),
+                        ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])
