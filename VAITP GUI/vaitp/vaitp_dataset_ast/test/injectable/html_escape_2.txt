@@ -1,0 +1,44 @@
+Module(
+    body=[
+        FunctionDef(
+            name='sanitize',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='st')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='html', ctx=Load()),
+                            attr='escape',
+                            ctx=Load()),
+                        args=[
+                            Name(id='st', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='sanitize', ctx=Load()),
+                        args=[
+                            Subscript(
+                                value=Attribute(
+                                    value=Name(id='sys', ctx=Load()),
+                                    attr='argv',
+                                    ctx=Load()),
+                                slice=Constant(value=1),
+                                ctx=Load())],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

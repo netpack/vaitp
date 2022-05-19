@@ -1,0 +1,33 @@
+Module(
+    body=[
+        FunctionDef(
+            name='some_random_func',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='file_name')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='html', ctx=Load()),
+                            attr='escape',
+                            ctx=Load()),
+                        args=[
+                            Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='request', ctx=Load()),
+                                        attr='GET',
+                                        ctx=Load()),
+                                    attr='get',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='file_name', ctx=Load())],
+                                keywords=[])],
+                        keywords=[]))],
+            decorator_list=[])],
+    type_ignores=[])

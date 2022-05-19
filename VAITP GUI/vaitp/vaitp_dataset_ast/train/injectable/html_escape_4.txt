@@ -1,0 +1,22 @@
+Module(
+    body=[
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='html', ctx=Load()),
+                    attr='escape',
+                    ctx=Load()),
+                args=[
+                    Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='request', ctx=Load()),
+                                attr='GET',
+                                ctx=Load()),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='file_1.py')],
+                        keywords=[])],
+                keywords=[]))],
+    type_ignores=[])

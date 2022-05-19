@@ -1,0 +1,7 @@
+Module(
+    body=[
+        Assign(
+            targets=[
+                Name(id='s', ctx=Store())],
+            value=Constant(value='<img src=/img/home-bg.jpg onload=alert(1)>'))],
+    type_ignores=[])

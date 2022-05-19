@@ -1,0 +1,62 @@
+Module(
+    body=[
+        ImportFrom(
+            module='lxml',
+            names=[
+                alias(name='etree')],
+            level=0),
+        FunctionDef(
+            name='some_random_name',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='parser', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='etree', ctx=Load()),
+                            attr='XMLParser',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[
+                            keyword(
+                                arg='resolve_entities',
+                                value=Constant(value=False))])),
+                Assign(
+                    targets=[
+                        Name(id='tree', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='etree', ctx=Load()),
+                            attr='parse',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='payload.xml'),
+                            Name(id='parser', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='root', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='tree', ctx=Load()),
+                            attr='getroot',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Return(
+                    value=Name(id='root', ctx=Load()))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='root', ctx=Store())],
+            value=Call(
+                func=Name(id='Parser_tree', ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

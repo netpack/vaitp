@@ -1,0 +1,12 @@
+Module(
+    body=[
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='html', ctx=Load()),
+                    attr='escape',
+                    ctx=Load()),
+                args=[
+                    Constant(value='<img src=/img/home-bg.jpg onload=alert(1)>')],
+                keywords=[]))],
+    type_ignores=[])
