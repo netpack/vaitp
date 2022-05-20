@@ -125,7 +125,7 @@ if options.model_type.upper() == 'LSTM':
 #Strides
 #Padding
 if options.model_type.upper() == 'C1D':
-    filter_units = int(options.output_dimensionality)
+    filter_units = int(options.conv1d_filters)
     kernel_size = int(options.conv1d_kernel_size)
 
 activation_function_1="softplus"
@@ -342,7 +342,7 @@ def create_model(vocab_size, num_labels):
 
         model = tf.keras.Sequential([
         layers.Embedding(vocab_size, options.output_dimensionality, mask_zero=True), #input dim, out dim
-        layers.Conv1D(filter_units, kernel_size, padding="causal", activation=activation_function_1, strides=1),
+        layers.Conv1D(filter_units, kernel_size, padding="valid", activation=activation_function_1, strides=1),
         layers.GlobalMaxPooling1D(),
         layers.Dropout(float(options.dropout)),
         layers.Dense(num_labels)
