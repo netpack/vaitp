@@ -17,7 +17,7 @@ tmp_filename = 'vaitp_trainmodel_output.temp'
 #csv file
 csv_filename = 'vaitp_trainmodel_output.csv'
 #cve header
-header = ['fitting epochs','density layer','dropout','accuracy','loss','activation_mc','activation_ms','run']
+header = ['fitting epochs','density layer','dropout','accuracy','loss','activation_mc','activation_ms','kernel_size','run']
 
 #touch csv and add header
 with open(csv_filename, 'w') as fp_csv:
@@ -29,11 +29,11 @@ with open(csv_filename, 'w') as fp_csv:
 
 fitting_epochs = 70
 layer_density = 3 #mininum value: 3
-dropout = 1 #dropout is converted to float 1 = 0.1
+dropout = 2 #dropout is converted to float 1 = 0.1
 
 total_fitting_epochs = 70
 total_layer_density = 3
-total_dropout = 9 #dropout is conv to float 9 = 0.9
+total_dropout = 2 #dropout is conv to float 9 = 0.9
 
 fitting_step = 70
 layer_step = 2
@@ -44,13 +44,17 @@ dropout_step = 1 # 0.1
 #Eg.: starting_activation_mc = 1 and total_activation_mc = 1 selects sigmoig+sigmoid
 activation_functions_model_creation = ['relu','sigmoid','tanh','softmax','softplus','selu']
 activation_functions_model_sequence = ['relu','sigmoid','tanh','softmax','softplus','selu']
-starting_activation_mc = 0
-starting_activation_ms = 0
-total_activation_mc = 5
-total_activation_ms = 5
+starting_activation_mc = 1
+starting_activation_ms = 3
+total_activation_mc = 1
+total_activation_ms = 3
 activation_mc_step=1
 activation_ms_step=1
 
+#Filter units: 4, 8, 16, 32, 64, 128, 256
+filter_terms=10
+filter_result = list(map(lambda x: 2 ** x, range(filter_terms)))
+filter_units_start=4
 
 number_of_runs=3
 
@@ -70,112 +74,124 @@ for layer_density_it in range(layer_density, total_layer_density+1, layer_step):
                     for activation_ms_it in range(starting_activation_ms, total_activation_ms+1, activation_ms_step):
 
 
-                        #loop the runs
-                        for run_it in range(1, number_of_runs+1, 1):
+                        #loop the filter units
+                        #for filter_units_it in range(2,filter_terms):
 
-                            dropoutfloat = dropout_epochs_it/10
-                            print(f'VAITP :: Run: {run_it}')
-                            print(f'VAITP :: Model fitting epochs: {fitting_epochs_it}')
-                            print(f'VAITP :: Density layers: {layer_density_it}')
-                            print(f'VAITP :: Dropout: {dropoutfloat}')
-                            print(f'VAITP :: Model creation activation function: {activation_functions_model_creation[activation_mc_it]}')
-                            print(f'VAITP :: Model sequence activation function: {activation_functions_model_sequence[activation_ms_it]}')
+                        #loop the kernel size
+                        #for kernel_size_it in range (1,30):
 
-                            #Run VAITP classification model and save output in the temp file
-                            cmd = subprocess.run(["python","VAITP_AI_RNN_Classificator_FitModel.py", str(fitting_epochs_it), str(layer_density_it), str(dropoutfloat),str(activation_mc_it),str(activation_ms_it)], capture_output=True)
-                            cmdout = cmd.stdout.decode()
-                            tmp_file = open(tmp_filename,'w')
-                            tmp_file.writelines(cmdout)
-                            tmp_file.close()
+                            #filter_units = filter_result[filter_units_it]
+                            filter_units = 128
 
-                            #print("VAITP :: Model trained and tested.")
+                            #loop the runs
+                            for run_it in range(1, number_of_runs+1, 1):
 
-                            #Get the output to process line by line
-                            tmp_file = open(tmp_filename,'r')
-                            tmp_file_lines = tmp_file.readlines()
+                                dropoutfloat = dropout_epochs_it/10
+                                print(f'VAITP :: Run: {run_it}')
+                                print(f'VAITP :: Model fitting epochs: {fitting_epochs_it}')
+                                print(f'VAITP :: Density layers: {layer_density_it}')
+                                print(f'VAITP :: Dropout: {dropoutfloat}')
+                                print(f'VAITP :: Model creation activation function: {activation_functions_model_creation[activation_mc_it]}')
+                                print(f'VAITP :: Model sequence activation function: {activation_functions_model_sequence[activation_ms_it]}')
+                                print(f'VAITP :: Model filter units: {filter_units}')
+                                print(f'VAITP :: Kernel size: {kernel_size_it}')
 
-                            #obtain these variables values from the output of the model
-                            line_num = 0
-                            training_dataset_count = 0
-                            testing_dataset_count = 0
-                            loss_value = 0
-                            accuracy_value = 0
-                            tp=0
-                            tn=0
-                            #correct_preditions=0
-                            #incorrect_preditions=0
+                                #Run VAITP classification model and save output in the temp file
+                                cmd = subprocess.run(["python","VAITP_AI_RNN_Classificator_FitModel.py", str(fitting_epochs_it), str(layer_density_it), str(dropoutfloat),str(activation_mc_it),str(activation_ms_it),str(filter_units),str(kernel_size_it)], capture_output=True)
+                                cmdout = cmd.stdout.decode()
+                                tmp_file = open(tmp_filename,'w')
+                                tmp_file.writelines(cmdout)
+                                tmp_file.close()
 
-                            for line in tmp_file_lines:
-                                line_num += 1
-                
-                                #Get the "Found x files" 1st are the training and testing
-                                if line.find("files for training") != -1:
-                                        training_dataset_count=line.split(" ")[1]
+                                #print("VAITP :: Model trained and tested.")
 
-                                if line.find("files for validation") != -1:
-                                        testing_dataset_count=line.split(" ")[1]
+                                #Get the output to process line by line
+                                tmp_file = open(tmp_filename,'r')
+                                tmp_file_lines = tmp_file.readlines()
+
+                                #obtain these variables values from the output of the model
+                                line_num = 0
+                                training_dataset_count = 0
+                                testing_dataset_count = 0
+                                loss_value = 0
+                                accuracy_value = 0
+                                tp=0
+                                tn=0
+                                #correct_preditions=0
+                                #incorrect_preditions=0
+
+                                for line in tmp_file_lines:
+                                    line_num += 1
+                    
+                                    #Get the "Found x files" 1st are the training and testing
+                                    if line.find("files for training") != -1:
+                                            training_dataset_count=line.split(" ")[1]
+
+                                    if line.find("files for validation") != -1:
+                                            testing_dataset_count=line.split(" ")[1]
 
 
-                                #Get the Accuracy line output
-                                if line.find("VAITP final model accuracy:") != -1:
-                                    accuracy_value=line.split(" ")[4]
-                            
-
-                                #Get the Loss    
-                                if line.find("VAITP final model loss:") != -1:
-                                    loss_value=line.split(" ")[4]
-
-                                
-                                #Get the incorrect preditions
-                                if line.find("VAITP wrong training data-set count") != -1:
-                                    incorrect_preditions=line.split(" ")[6]
-
-                                #Get the correct preditions
-                                if line.find("VAITP correct training data-set count") != -1:
-                                    correct_preditions=line.split(" ")[6]
+                                    #Get the Accuracy line output
+                                    if line.find("VAITP final model accuracy:") != -1:
+                                        accuracy_value=line.split(" ")[4]
                                 
 
-                                #Get the true positives
-                                #if line.find("TP:") != -1:
-                                    #tp=line.split(" ")[1].replace('\n','')
+                                    #Get the Loss    
+                                    if line.find("VAITP final model loss:") != -1:
+                                        loss_value=line.split(" ")[4]
 
-                                #Get the true negatives
-                                #if line.find("TN:") != -1:
-                                    #tn=line.split(" ")[1].replace('\n','')
+                                    
+                                    #Get the incorrect preditions
+                                    if line.find("VAITP wrong training data-set count") != -1:
+                                        incorrect_preditions=line.split(" ")[6]
 
-                            tmp_file.close()
+                                    #Get the correct preditions
+                                    if line.find("VAITP correct training data-set count") != -1:
+                                        correct_preditions=line.split(" ")[6]
+                                    
 
-                            if accuracy_value==0:
-                                accuracy_value="0%\n"
+                                    #Get the true positives
+                                    #if line.find("TP:") != -1:
+                                        #tp=line.split(" ")[1].replace('\n','')
 
-                            #show this run results
-                            print('\tTraining results:')
-                            print(f'\t\tNumber of training epochs: {fitting_epochs_it}\n\
-                                    \tNumber of testing epochs: {fitting_epochs_it}\n\
-                                    \tNumber of density layers: {layer_density_it}\n\
-                                    \tTraining dataset count: {training_dataset_count}\n\
-                                    \tTesting dataset count: {testing_dataset_count}\n\
-                                    \tLoss: {loss_value}\n\
-                                    \tAccuracy: {accuracy_value}\n\
-                                    \tCorrect preditions from training data-set: {correct_preditions}\n\
-                                    \tIncorrect predictions from training data-set: {incorrect_preditions}\n\
-                                    ')
+                                    #Get the true negatives
+                                    #if line.find("TN:") != -1:
+                                        #tn=line.split(" ")[1].replace('\n','')
+
+                                tmp_file.close()
+
+                                if accuracy_value==0:
+                                    accuracy_value="0%\n"
+
+                                #show this run results
+                                print('\tTraining results:')
+                                print(f'\t\tNumber of training epochs: {fitting_epochs_it}\n\
+                                        \tNumber of testing epochs: {fitting_epochs_it}\n\
+                                        \tNumber of density layers: {layer_density_it}\n\
+                                        \tTraining dataset count: {training_dataset_count}\n\
+                                        \tTesting dataset count: {testing_dataset_count}\n\
+                                        \tLoss: {loss_value}\n\
+                                        \tAccuracy: {accuracy_value}\n\
+                                        \tCorrect preditions from training data-set: {correct_preditions}\n\
+                                        \tIncorrect predictions from training data-set: {incorrect_preditions}\n\
+                                        ')
 
 
-                            #save to the csv file
-                            #'fitting epochs','density layer','dropout','accuracy','loss','activation_mc','activation_ms','run'
-                            with open(csv_filename, 'a') as fp_csv:
-                                writer = csv.writer(fp_csv)
-                                writer.writerow([
-                                    fitting_epochs_it,
-                                    layer_density_it,
-                                    dropout_epochs_it,
-                                    accuracy_value.split("%\n")[0],
-                                    loss_value,
-                                    activation_functions_model_creation[activation_mc_it],
-                                    activation_functions_model_sequence[activation_ms_it],
-                                    run_it
-                                ])
+                                #save to the csv file
+                                #'fitting epochs','density layer','dropout','accuracy','loss','activation_mc','activation_ms','run'
+                                with open(csv_filename, 'a') as fp_csv:
+                                    writer = csv.writer(fp_csv)
+                                    writer.writerow([
+                                        fitting_epochs_it,
+                                        layer_density_it,
+                                        dropout_epochs_it,
+                                        accuracy_value.split("%\n")[0],
+                                        loss_value,
+                                        activation_functions_model_creation[activation_mc_it],
+                                        activation_functions_model_sequence[activation_ms_it],
+                                        kernel_size_it,
+                                        run_it
+                                    ])
 
 
 
