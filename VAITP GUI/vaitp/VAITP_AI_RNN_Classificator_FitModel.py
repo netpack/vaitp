@@ -194,12 +194,22 @@ train_dir = dataset_dir/'train'
 #with open(sample_file) as f:
 #  print(f.read())
 
+#count the number of files in the train dir
+train_dir_count = 0
+for path in os.listdir(train_dir):
+    if os.path.isfile(os.path.join(train_dir, path)):
+        train_dir_count += 1
 
+#count the number of files in the test dir
+test_dir_count = 0
+for path in os.listdir(os.path.join(test_dir, path)):
+    if os.path.isfile(os.path.join(test_dir, path)):
+        test_dir_count += 1
 
 #Create a full trainig set for final predictions
 raw_train_ds_full = utils.text_dataset_from_directory(
     train_dir,
-    batch_size=228
+    batch_size=train_dir_count
     )
 
 
@@ -318,7 +328,7 @@ else:
 
 if options.model_type.upper() == 'BOW':
     #train the model for argv epochs
-    binary_model = tf.keras.Sequential([layers.Dense(int(options.layer_density))])
+    binary_model = tf.keras.Sequential([layers.Dropout(float(options.dropout)),layers.Dense(int(options.layer_density))])
 
     binary_model.compile(
         loss=losses.SparseCategoricalCrossentropy(from_logits=True),
@@ -639,6 +649,7 @@ for input, label in zip(text_batch, predicted_labels):
 
 print("\n")
 print(f'VAITP total training data-set count :: {label_iterator}')
+print(f'VAITP total testing data-set count :: {test_dir_count}')
 print(f'VAITP wrong training data-set count :: {wrong_predictions}')
 print(f'VAITP correct training data-set count :: {label_iterator-wrong_predictions}')
 print("VAITP final model accuracy: {:2.2%}".format(accuracy))

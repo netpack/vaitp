@@ -17,7 +17,7 @@ tmp_filename = 'vaitp_trainmodel_output.temp'
 #csv file
 csv_filename = 'vaitp_trainmodel_output.csv'
 #cve header
-header = ['model_type','fitting epochs','density layer','dropout','activation_mc','activation_ms','kernel_size','output_dim','vocab_size','max_seq','run','accuracy','loss']
+header = ['training_count','testing_count','optimizer','model_type','fitting_epochs','density_layer','dropout','activation_mc','activation_ms','strides','padding','output_dim','filters_units','kernel_size','vocab_size','max_seq','run','accuracy','loss']
 
 #touch csv and add header
 with open(csv_filename, 'w') as fp_csv:
@@ -27,22 +27,27 @@ with open(csv_filename, 'w') as fp_csv:
 
 #AI model fitting parameters
 
+optimizer = "adam"
+strides = 1
+padding = 'valid'
+#TODO: code loops for optimizer, strides and padding
+
 model_types = ['bow','c1d','lstm']
 
 #set the types of model to create
 model_start = 0
-model_total = 2
+model_total = 2 #0, 1, 2
 
-fitting_epochs = 60
+fitting_epochs = 70
 total_fitting_epochs = 80
-fitting_step = 1
+fitting_step = 10
 
 layer_density = 3 #mininum value: 3
-total_layer_density = 3
+total_layer_density = 5
 layer_step = 2
 
 dropout = 2 #dropout is converted to float 1 = 0.1
-total_dropout = 2 #dropout is conv to float 9 = 0.9
+total_dropout = 3 #dropout is conv to float 9 = 0.9
 dropout_step = 1 # 0.1
 
 #Configure activation functions
@@ -50,8 +55,8 @@ dropout_step = 1 # 0.1
 #Eg.: starting_activation_mc = 1 and total_activation_mc = 1 selects sigmoig+sigmoid
 activation_functions_model_creation = ['relu','sigmoid','tanh','softmax','softplus','selu']
 
-starting_activation_mc = 0
-total_activation_mc = 0
+starting_activation_mc = 1
+total_activation_mc = 1
 activation_mc_step=1
 
 activation_functions_model_sequence = ['relu','sigmoid','tanh','softmax','softplus','selu']
@@ -64,20 +69,20 @@ activation_ms_step=1
 #filter_result = list(map(lambda x: 2 ** x, range(filter_terms)))
 #filter_units_start=4
 
-filter_start = 128
-filter_total = 128
+filter_start = 4#128
+filter_total = 5#128
 filter_step = 1
 
-units_start = 128
-units_total = 128
+units_start = 4#128
+units_total = 5#128
 units_step = 1
 
 kernel_start = 5
-kernel_total = 5
+kernel_total = 6
 kernel_step = 1
 
-output_dim_start = 64
-output_dim_total = 64
+output_dim_start = 4#64
+output_dim_total = 5#64
 output_dim_step = 1
 
 vocab_size_start = 5000
@@ -92,7 +97,7 @@ max_seq_step = 1
 number_of_runs=3
 
 #loop the model types
-for model_type_it in range(model_start, model_total, 1):
+for model_type_it in range(model_start, model_total+1, 1):
     
     print(f'__model_type_it__')
 
@@ -213,11 +218,11 @@ for model_type_it in range(model_start, model_total, 1):
                                                         line_num += 1
                                         
                                                         #Get the "Found x files" 1st are the training and testing
-                                                        if line.find("files for training") != -1:
-                                                                training_dataset_count=line.split(" ")[1]
+                                                        if line.find("VAITP total training data-set count :: ") != -1:
+                                                                training_dataset_count=line.split(" ")[6]
 
-                                                        if line.find("files for validation") != -1:
-                                                                testing_dataset_count=line.split(" ")[1]
+                                                        if line.find("VAITP total testing data-set count ::") != -1:
+                                                                testing_dataset_count=line.split(" ")[6]
 
 
                                                         #Get the Accuracy line output
@@ -267,24 +272,79 @@ for model_type_it in range(model_start, model_total, 1):
 
 
                                                     #save to the csv file
-                                                    #'fitting epochs','density layer','dropout','accuracy','loss','activation_mc','activation_ms','run'
-                                                    with open(csv_filename, 'a') as fp_csv:
-                                                        writer = csv.writer(fp_csv)
-                                                        writer.writerow([
-                                                            model_type,
-                                                            fitting_epochs_it,
-                                                            layer_density_it,
-                                                            dropout_epochs_it,
-                                                            activation_functions_model_creation[activation_mc_it],
-                                                            activation_functions_model_sequence[activation_ms_it],
-                                                            kernel_size_it,
-                                                            output_dim_it,
-                                                            vocab_size_it,
-                                                            max_seq_it,
-                                                            run_it,
-                                                            accuracy_value.split("%\n")[0],
-                                                            loss_value,
-                                                        ])
+                                                    #'training_count','testing_count','optimizer','model_type','fitting_epochs','density_layer','dropout','activation_mc','activation_ms','strides','padding','output_dim','filters_units','kernel_size','vocab_size','max_seq','run','accuracy','loss'
+                                                    if model_type.upper() == 'BOW':
+                                                        with open(csv_filename, 'a') as fp_csv:
+                                                            writer = csv.writer(fp_csv)
+                                                            writer.writerow([
+                                                                training_dataset_count,
+                                                                testing_dataset_count,
+                                                                optimizer,
+                                                                model_type,
+                                                                fitting_epochs_it,
+                                                                layer_density_it,
+                                                                dropoutfloat,
+                                                                "NA",
+                                                                activation_functions_model_sequence[activation_ms_it],
+                                                                "NA",
+                                                                "NA",
+                                                                "NA",
+                                                                "NA",
+                                                                "NA",
+                                                                vocab_size_it,
+                                                                max_seq_it,
+                                                                run_it,
+                                                                accuracy_value.split("%\n")[0],
+                                                                loss_value,
+                                                            ])
+                                                    elif model_type.upper() == 'C1D':
+                                                        with open(csv_filename, 'a') as fp_csv:
+                                                            writer = csv.writer(fp_csv)
+                                                            writer.writerow([
+                                                                training_dataset_count,
+                                                                testing_dataset_count,
+                                                                optimizer,
+                                                                model_type,
+                                                                fitting_epochs_it,
+                                                                layer_density_it,
+                                                                dropoutfloat,
+                                                                activation_functions_model_creation[activation_mc_it],
+                                                                activation_functions_model_sequence[activation_ms_it],
+                                                                strides,
+                                                                padding,
+                                                                filters_it,
+                                                                kernel_size_it,
+                                                                output_dim_it,
+                                                                vocab_size_it,
+                                                                max_seq_it,
+                                                                run_it,
+                                                                accuracy_value.split("%\n")[0],
+                                                                loss_value,
+                                                            ])
+                                                    else:
+                                                        with open(csv_filename, 'a') as fp_csv:
+                                                            writer = csv.writer(fp_csv)
+                                                            writer.writerow([
+                                                                training_dataset_count,
+                                                                testing_dataset_count,
+                                                                optimizer,
+                                                                model_type,
+                                                                fitting_epochs_it,
+                                                                layer_density_it,
+                                                                dropoutfloat,
+                                                                activation_functions_model_creation[activation_mc_it],
+                                                                activation_functions_model_sequence[activation_ms_it],
+                                                                strides,
+                                                                padding,
+                                                                units_it,
+                                                                kernel_size_it,
+                                                                output_dim_it,
+                                                                vocab_size_it,
+                                                                max_seq_it,
+                                                                run_it,
+                                                                accuracy_value.split("%\n")[0],
+                                                                loss_value,
+                                                            ])
 
 
 
@@ -305,14 +365,14 @@ time_delta = time_now-time_start
 print(f'Collector tests finished in {timedelta(seconds=time_delta)}')
 
 
-msft.plot("fitting epochs","accuracy", color='green', kind='scatter', title = "VAITP AI Classificator")
+msft.plot("fitting_epochs","accuracy", color='green', kind='scatter', title = "VAITP AI Classificator")
 #msft.plot("training epochs","loss",  color='blue', kind='scatter', title = "VAITP AI Classificator")
 
 #msft.plot("testing epochs","accuracy", color='green', kind='scatter', title = "VAITP AI Classificator")
-msft.plot("fitting epochs","loss", color='blue', kind='scatter', title = "VAITP AI Classificator")
+msft.plot("fitting_epochs","loss", color='blue', kind='scatter', title = "VAITP AI Classificator")
 
-msft.plot("density layer","accuracy", color='green', kind='scatter', title = "VAITP AI Classificator")
-msft.plot("density layer","loss", color='blue', kind='scatter', title = "VAITP AI Classificator")
+msft.plot("density_layer","accuracy", color='green', kind='scatter', title = "VAITP AI Classificator")
+msft.plot("density_layer","loss", color='blue', kind='scatter', title = "VAITP AI Classificator")
 
 
 msft.plot(["activation_mc","activation_ms"],"accuracy", color='green', kind='scatter', title = "VAITP AI Classificator", subplots=True)
