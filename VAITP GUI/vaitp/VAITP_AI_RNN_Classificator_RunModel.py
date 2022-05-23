@@ -8,11 +8,20 @@ from tensorflow.keras import utils
 from tensorflow.keras.layers import TextVectorization
 import tensorflow_datasets as tfds
 import tensorflow_text as tf_text
+import ast
 import pathlib
-import time
-from datetime import timedelta
+from optparse import OptionParser
+#import time
+#from datetime import timedelta
 
-time_start = time.time()
+#time_start = time.time()
+
+#parameters parsing
+parser = OptionParser()
+parser.add_option("-i", "--input_file", action="store", type="string", dest="input_file", help="Set the input Python file to be scanned")
+parser.add_option("-l", "--predict_individual_lines", action="store",type="string", dest="predict_individual_lines", help="todo")
+
+(options, sys.argv) = parser.parse_args(sys.argv)
 
 
 #define function to predict the label with the most score
@@ -23,40 +32,56 @@ def get_string_labels(predicted_scores_batch):
 
 
 
-print("Starting VAITP AI RNN Classicator RunModel...")
+#print("Starting VAITP AI RNN Classicator RunModel...")
 
 
 #Vars
 path_to_exported_models = "/home/fred/msi/ano2/VAITP/VAITP GUI/vaitp/exported_ai_models/"
-model_name = "vaitp_classificator_model_8000_10000_1370_0.99_2022_04_25_10_44.tfv"
-input_newcode = "VAITP_AI_RNN_Classificator_newInput.vaitp"
+#model_name = "vaitp_classificator_model_8000_10000_1370_0.99_2022_04_25_10_44.tfv"
+model_name = "vaitp_classificator_model_0.86_BOW_80_5_2022_05_21_11_38.tfv"
+input_newcode = "../vaitp/VAITP_AI_RNN_Classificator_newInput.vaitp"
+pyfile = "vaitpscan.py"
+
+#force -i infile.py
+if options.input_file:
+  pyfile = options.input_file
+else:
+  exit("Please add an input file. (-i dir/file.py)")
+
+pyfile_fp = open(pyfile,'r')
+
+#print(f'py:: {pyfile_fp.read()}')
+
+pyfile_ast = ast.dump(ast.parse(pyfile_fp.read(), mode='exec'))
+
 
 
 #Load the model
 model_p = path_to_exported_models+model_name
 model = keras.models.load_model(model_p)
 
-print(f'Model Loaded: {model_name}')
+#print(f'Model Loaded: {model_name}')
 
-print(f'Model Summary: {model.summary()}')
+#print(f'Model Summary: {model.summary()}')
 
 
 
 #Get new input
-with open(input_newcode,'r') as fin:
-    lines = fin.readlines()
+#with open(input_newcode,'r') as fin:
+#    lines = fin.readlines()
+#print('ffff')
 
 final_input_string = []
 final_lines = ""
 
 
-for line in lines:
+for line in pyfile_ast: #lines:
     #final_input_string.append(line)
     final_lines += line
 
 final_input_string.append(final_lines)
 
-print(f'New code vector: {final_input_string}')
+#print(f'New code vector: {final_input_string}')
 
 
 
@@ -81,11 +106,11 @@ predicted_scores = model.predict(final_input_string)
 predicted_labels = get_string_labels(predicted_scores)
 
 for input, label in zip(final_input_string, predicted_labels):
-  print("\ncode: ", input)
-  print("\npredicted label: ", label.numpy())
+  #print("\ncode: ", input)
+  print("predicted label: ", label.numpy())
 
 
-time_now = time.time()
-time_delta = time_now-time_start
-print(f'AI RNN Classificator Model finished in {timedelta(seconds=time_delta)}')
+#time_now = time.time()
+#time_delta = time_now-time_start
+#print(f'AI RNN Classificator Model finished in {timedelta(seconds=time_delta)}')
 
