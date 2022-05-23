@@ -1,7 +1,5 @@
 Module(
     body=[
-        Expr(
-            value=Constant(value='\ncomment 1 \ncomment 2\ncomment 3\n')),
         Assign(
             targets=[
                 Name(id='local_file_name', ctx=Store())],
@@ -34,7 +32,5 @@ Module(
                                         keywords=[])],
                                 keywords=[])],
                         keywords=[])],
-                keywords=[])),
-        Expr(
-            value=Constant(value='\ncomment 1 \ncomment 2\ncomment 3\n'))],
+                keywords=[]))],
     type_ignores=[])

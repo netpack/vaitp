@@ -16,7 +16,7 @@ Module(
                 keywords=[])),
         Assign(
             targets=[
-                Name(id='file', ctx=Store())],
+                Name(id='file_name', ctx=Store())],
             value=Call(
                 func=Attribute(
                     value=Attribute(

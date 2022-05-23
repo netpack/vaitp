@@ -1,5 +1,9 @@
 Module(
     body=[
+        Import(
+            names=[
+                alias(name='os'),
+                alias(name='sys')]),
         Assign(
             targets=[
                 Name(id='arr', ctx=Store())],
@@ -49,5 +53,11 @@ Module(
                             ctx=Load()),
                         args=[],
                         keywords=[]))],
-            decorator_list=[])],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='exec', ctx=Load()),
+                args=[
+                    Name(id='arr', ctx=Load())],
+                keywords=[]))],
     type_ignores=[])

@@ -1,5 +1,10 @@
 Module(
     body=[
+        ImportFrom(
+            module='urllib.parse',
+            names=[
+                alias(name='quote')],
+            level=0),
         Expr(
             value=Call(
                 func=Name(id='exec', ctx=Load()),

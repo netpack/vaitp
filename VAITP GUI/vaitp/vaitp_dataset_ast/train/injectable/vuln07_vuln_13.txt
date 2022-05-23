@@ -1,0 +1,47 @@
+Module(
+    body=[
+        ImportFrom(
+            module='lxml',
+            names=[
+                alias(name='etree')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='f', ctx=Store())],
+            value=Call(
+                func=Name(id='str', ctx=Load()),
+                args=[
+                    Subscript(
+                        value=Attribute(
+                            value=Name(id='sys', ctx=Load()),
+                            attr='argv',
+                            ctx=Load()),
+                        slice=Constant(value=1),
+                        ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='parser', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='etree', ctx=Load()),
+                    attr='XMLParser',
+                    ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='resolve_entities',
+                        value=Constant(value=False))])),
+        Assign(
+            targets=[
+                Name(id='tree', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='etree', ctx=Load()),
+                    attr='parse',
+                    ctx=Load()),
+                args=[
+                    Name(id='f', ctx=Load()),
+                    Name(id='parser', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

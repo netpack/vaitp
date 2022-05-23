@@ -1,5 +1,1 @@
-#comment 1
-var = input()
-#comment 2
-exec(var)
-#comment 3
+exec(input())

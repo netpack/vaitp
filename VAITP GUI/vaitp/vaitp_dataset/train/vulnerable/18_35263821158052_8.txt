@@ -5,4 +5,3 @@ arr += " %s" % client
 def exec(arr):
     # comment 1
     ipad = Popen(arr, stdout=PIPE).stdout.read().strip().split()
-# comment 1

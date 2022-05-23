@@ -1,3 +1,3 @@
 import subprocess
-var = input()
+var = input("Please Enter Something")
 subprocess.call(var, shell=True)

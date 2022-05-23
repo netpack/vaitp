@@ -3,6 +3,9 @@ Module(
         Import(
             names=[
                 alias(name='subprocess', asname='sp')]),
+        Import(
+            names=[
+                alias(name='sys')]),
         Expr(
             value=Call(
                 func=Attribute(

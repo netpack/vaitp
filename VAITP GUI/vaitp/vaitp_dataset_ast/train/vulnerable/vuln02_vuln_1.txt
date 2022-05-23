@@ -1,8 +1,5 @@
 Module(
     body=[
-        Import(
-            names=[
-                alias(name='subprocess')]),
         If(
             test=Compare(
                 left=Name(id='__name__', ctx=Load()),

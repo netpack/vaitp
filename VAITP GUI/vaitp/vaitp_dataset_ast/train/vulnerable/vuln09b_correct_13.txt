@@ -1,0 +1,43 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='urllib.parse.quote')]),
+        Assign(
+            targets=[
+                Name(id='r', ctx=Store())],
+            value=Subscript(
+                value=Attribute(
+                    value=Name(id='sys', ctx=Load()),
+                    attr='arg',
+                    ctx=Load()),
+                slice=Constant(value=1),
+                ctx=Load())),
+        FunctionDef(
+            name='abcd_xyz',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='r')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='exec', ctx=Load()),
+                        args=[
+                            Name(id='r', ctx=Load()),
+                            Dict(
+                                keys=[
+                                    Constant(value='__builtins__')],
+                                values=[
+                                    Constant(value=None)])],
+                        keywords=[]))],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='abcd_exec', ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

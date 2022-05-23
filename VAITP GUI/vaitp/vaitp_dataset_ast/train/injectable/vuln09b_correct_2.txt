@@ -1,5 +1,8 @@
 Module(
     body=[
+        Import(
+            names=[
+                alias(name='urllib.parse')]),
         Expr(
             value=Call(
                 func=Name(id='exec', ctx=Load()),

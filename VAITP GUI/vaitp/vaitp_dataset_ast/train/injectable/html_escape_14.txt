@@ -1,0 +1,56 @@
+Module(
+    body=[
+        Assign(
+            targets=[
+                Name(id='file', ctx=Store())],
+            value=Constant(value='file_1.py')),
+        FunctionDef(
+            name='sanitize',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='file')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='payload', ctx=Store())],
+                    value=Dict(
+                        keys=[
+                            Constant(value='key1'),
+                            Constant(value='key2')],
+                        values=[
+                            Constant(value='value1'),
+                            Constant(value='value2')])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='html', ctx=Load()),
+                            attr='escape',
+                            ctx=Load()),
+                        args=[
+                            Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='request', ctx=Load()),
+                                        attr='GET',
+                                        ctx=Load()),
+                                    attr='get',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='file_1.py')],
+                                keywords=[
+                                    keyword(
+                                        arg='params',
+                                        value=Name(id='payload', ctx=Load()))])],
+                        keywords=[]))],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='sanitize', ctx=Load()),
+                args=[
+                    Name(id='file', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

@@ -8,7 +8,8 @@ Module(
                 Name(id='var', ctx=Store())],
             value=Call(
                 func=Name(id='input', ctx=Load()),
-                args=[],
+                args=[
+                    Constant(value='Please Enter Something')],
                 keywords=[])),
         Expr(
             value=Call(

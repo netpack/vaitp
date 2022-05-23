@@ -1,1 +1,2 @@
+import urllib.parse
 exec(quote(sys.argv[2]))

@@ -15,16 +15,6 @@ Module(
             body=[
                 Assign(
                     targets=[
-                        Name(id='parser', ctx=Store())],
-                    value=Call(
-                        func=Attribute(
-                            value=Name(id='etree', ctx=Load()),
-                            attr='XMLParser',
-                            ctx=Load()),
-                        args=[],
-                        keywords=[])),
-                Assign(
-                    targets=[
                         Name(id='tree', ctx=Store())],
                     value=Call(
                         func=Attribute(
@@ -33,7 +23,13 @@ Module(
                             ctx=Load()),
                         args=[
                             Constant(value='vuln07_payload.xml'),
-                            Name(id='parser', ctx=Load())],
+                            Call(
+                                func=Attribute(
+                                    value=Name(id='etree', ctx=Load()),
+                                    attr='XMLParser',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[])],
                         keywords=[])),
                 Assign(
                     targets=[

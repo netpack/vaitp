@@ -1,16 +1,12 @@
 Module(
     body=[
-        Assign(
-            targets=[
-                Name(id='var', ctx=Store())],
-            value=Call(
-                func=Name(id='input', ctx=Load()),
-                args=[],
-                keywords=[])),
         Expr(
             value=Call(
                 func=Name(id='exec', ctx=Load()),
                 args=[
-                    Name(id='var', ctx=Load())],
+                    Call(
+                        func=Name(id='input', ctx=Load()),
+                        args=[],
+                        keywords=[])],
                 keywords=[]))],
     type_ignores=[])

@@ -1,0 +1,7 @@
+import yaml
+from yaml.loader import SafeLoader
+
+data = '''
+damage: 5d10
+'''
+yaml.safe_load(data)

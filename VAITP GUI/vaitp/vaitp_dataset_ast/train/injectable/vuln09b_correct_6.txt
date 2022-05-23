@@ -1,5 +1,8 @@
 Module(
     body=[
+        Import(
+            names=[
+                alias(name='urllib.parse')]),
         Assign(
             targets=[
                 Name(id='inp', ctx=Store())],
@@ -12,7 +15,13 @@ Module(
                 func=Name(id='exec', ctx=Load()),
                 args=[
                     Call(
-                        func=Name(id='quote', ctx=Load()),
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='urllib', ctx=Load()),
+                                attr='parse',
+                                ctx=Load()),
+                            attr='quote',
+                            ctx=Load()),
                         args=[
                             Name(id='inp', ctx=Load())],
                         keywords=[])],

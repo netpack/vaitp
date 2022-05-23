@@ -2,7 +2,7 @@ Module(
     body=[
         Assign(
             targets=[
-                Name(id='ipaddress', ctx=Store())],
+                Name(id='ipaddressx', ctx=Store())],
             value=Call(
                 func=Name(id='Popen', ctx=Load()),
                 args=[
@@ -26,7 +26,7 @@ Module(
                             value=Call(
                                 func=Attribute(
                                     value=Attribute(
-                                        value=Name(id='ipaddress', ctx=Load()),
+                                        value=Name(id='ipaddressx', ctx=Load()),
                                         attr='stdout',
                                         ctx=Load()),
                                     attr='read',

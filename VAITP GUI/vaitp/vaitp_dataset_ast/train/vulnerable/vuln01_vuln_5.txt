@@ -2,7 +2,8 @@ Module(
     body=[
         Import(
             names=[
-                alias(name='subprocess')]),
+                alias(name='subprocess'),
+                alias(name='sys')]),
         Expr(
             value=Call(
                 func=Attribute(

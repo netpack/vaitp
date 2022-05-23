@@ -1,0 +1,18 @@
+Module(
+    body=[
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='yaml', ctx=Load()),
+                    attr='load',
+                    ctx=Load()),
+                args=[
+                    Name(id='data', ctx=Load())],
+                keywords=[
+                    keyword(
+                        arg='Loader',
+                        value=Attribute(
+                            value=Name(id='yaml', ctx=Load()),
+                            attr='Loader',
+                            ctx=Load()))]))],
+    type_ignores=[])

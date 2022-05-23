@@ -1,0 +1,35 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='yaml')]),
+        ImportFrom(
+            module='yaml.loader',
+            names=[
+                alias(name='SafeLoader')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='data', ctx=Store())],
+            value=Call(
+                func=Name(id='open', ctx=Load()),
+                args=[
+                    Subscript(
+                        value=Attribute(
+                            value=Name(id='sys', ctx=Load()),
+                            attr='argv',
+                            ctx=Load()),
+                        slice=Constant(value=1),
+                        ctx=Load()),
+                    Constant(value='r')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='yaml', ctx=Load()),
+                    attr='safe_load',
+                    ctx=Load()),
+                args=[
+                    Name(id='data', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

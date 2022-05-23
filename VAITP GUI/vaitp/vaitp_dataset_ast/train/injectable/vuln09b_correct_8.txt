@@ -28,7 +28,8 @@ Module(
                     value=Call(
                         func=Name(id='exec', ctx=Load()),
                         args=[
-                            Name(id='r', ctx=Load())],
+                            Name(id='r', ctx=Load()),
+                            Dict(keys=[], values=[])],
                         keywords=[]))],
             decorator_list=[])],
     type_ignores=[])

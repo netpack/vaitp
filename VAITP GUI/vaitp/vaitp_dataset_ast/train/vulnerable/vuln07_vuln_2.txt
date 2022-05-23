@@ -7,6 +7,17 @@ Module(
             level=0),
         Assign(
             targets=[
+                Name(id='file', ctx=Store())],
+            value=Call(
+                func=Name(id='str', ctx=Load()),
+                args=[
+                    Call(
+                        func=Name(id='input', ctx=Load()),
+                        args=[],
+                        keywords=[])],
+                keywords=[])),
+        Assign(
+            targets=[
                 Name(id='parser', ctx=Store())],
             value=Call(
                 func=Attribute(
@@ -27,7 +38,7 @@ Module(
                     attr='parse',
                     ctx=Load()),
                 args=[
-                    Constant(value='payload.xml'),
+                    Name(id='file', ctx=Load()),
                     Name(id='parser', ctx=Load())],
                 keywords=[])),
         Assign(

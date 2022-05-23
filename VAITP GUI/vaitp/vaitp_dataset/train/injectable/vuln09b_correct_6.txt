@@ -1,4 +1,3 @@
+import urllib.parse
 inp = input()
-# comment 1
-exec(quote(inp))
-# comment 2
+exec(urllib.parse.quote(inp))

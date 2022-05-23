@@ -1,0 +1,21 @@
+Module(
+    body=[
+        Assign(
+            targets=[
+                Name(id='dir', ctx=Store())],
+            value=Call(
+                func=Name(id='file', ctx=Load()),
+                args=[
+                    Constant(value='document.yaml'),
+                    Constant(value='r')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='yaml', ctx=Load()),
+                    attr='safe_load',
+                    ctx=Load()),
+                args=[
+                    Name(id='dir', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])
