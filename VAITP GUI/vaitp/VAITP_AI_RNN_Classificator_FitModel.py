@@ -161,7 +161,8 @@ elif options.activation_model_sequencing == 5:
     activation_function_2 = "selu"
 
 #Setup logs for tensorboard
-log_dir = "/home/fred/msi/ano2/VAITP/VAITP GUI/vaitp/tf_logs/" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+#log_dir = "/home/fred/msi/ano2/VAITP/VAITP GUI/vaitp/tf_logs/" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+log_dir = "/mnt/vaitp/VAITP GUI/vaitp/tf_logs/" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
 tensorboard_callback = keras.callbacks.TensorBoard(
     log_dir=log_dir,
     histogram_freq=0,  # How often to log histogram visualizations
@@ -388,10 +389,10 @@ def create_model(vocab_size, num_labels):
         model = tf.keras.Sequential([
         layers.Embedding(vocab_size, options.output_dimensionality, mask_zero=True), #input dim, out dim
 
-        layers.LSTM(options.lstm_units,activation_function_1,dropout=options.dropout),
+        #layers.LSTM(options.lstm_units,activation_function_1,dropout=options.dropout),
         
-        #layers.Bidirectional(tf.keras.layers.LSTM(64, activation=activation_function_1, return_sequences=True)),
-        #layers.Bidirectional(tf.keras.layers.LSTM(32)),
+        layers.Bidirectional(tf.keras.layers.LSTM(options.lstm_units, activation=activation_function_1, return_sequences=True)),
+        layers.Bidirectional(tf.keras.layers.LSTM(64)),
         #layers.Dense(3, activation=activation_function_1),
         layers.Dense(num_labels),
 
@@ -682,8 +683,8 @@ print("VAITP final model accuracy: {:2.2%}".format(accuracy))
 print(f'VAITP final model loss: {loss}')
 
 #Save the model
-modelPath = "/home/fred/msi/ano2/VAITP/VAITP GUI/vaitp/exported_ai_models/"
-modelPath_Anush = ""
+#modelPath = "/home/fred/msi/ano2/VAITP/VAITP GUI/vaitp/exported_ai_models/"
+modelPath = "/mnt/vaitp/VAITP GUI/vaitp/exported_ai_models/"
 modelexportfilename = modelPath+"vaitp_classificator_model_"+"{:2.2}".format(accuracy)+"_"+str(options.model_type.upper())+"_"+str(int(options.epochs))+"_"+str(int(options.layer_density))+"_"+strftime("%Y_%m_%d_%H_%M", gmtime())+".tfv"
 
 export_model.save(modelexportfilename)
