@@ -1,0 +1,17 @@
+  Module(
+    body=[
+        Expr(
+            value=Call(
+                func=Name(id='feedT1', ctx=Load()),
+                args=[
+                    Call(
+                        func=Name(id='quote', ctx=Load()),
+                        args=[
+                            Call(
+                                func=Name(id='input', ctx=Load()),
+                                args=[
+                                    Constant(value='Add integer:')],
+                                keywords=[])],
+                        keywords=[])],
+                keywords=[]))],
+    type_ignores=[])
