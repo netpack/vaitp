@@ -1,0 +1,17 @@
+  Module(
+    body=[
+        Expr(
+            value=Call(
+                func=Name(id='getVal', ctx=Load()),
+                args=[
+                    Call(
+                        func=Name(id='quote', ctx=Load()),
+                        args=[
+                            Call(
+                                func=Name(id='input_raw', ctx=Load()),
+                                args=[
+                                    Constant(value='Please enter value one:')],
+                                keywords=[])],
+                        keywords=[])],
+                keywords=[]))],
+    type_ignores=[])

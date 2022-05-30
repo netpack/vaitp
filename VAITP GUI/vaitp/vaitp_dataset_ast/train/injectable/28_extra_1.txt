@@ -1,0 +1,17 @@
+  Module(
+    body=[
+        Expr(
+            value=Call(
+                func=Name(id='processInput', ctx=Load()),
+                args=[
+                    Call(
+                        func=Name(id='quote', ctx=Load()),
+                        args=[
+                            Call(
+                                func=Name(id='input', ctx=Load()),
+                                args=[
+                                    Constant(value='Please input x:')],
+                                keywords=[])],
+                        keywords=[])],
+                keywords=[]))],
+    type_ignores=[])

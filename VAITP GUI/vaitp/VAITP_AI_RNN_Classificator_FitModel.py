@@ -161,7 +161,8 @@ elif options.activation_model_sequencing == 5:
     activation_function_2 = "selu"
 
 #Setup logs for tensorboard
-log_dir = "/home/fred/msi/ano2/VAITP/VAITP GUI/vaitp/tf_logs/" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+#log_dir = "/home/fred/msi/ano2/VAITP/VAITP GUI/vaitp/tf_logs/" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+log_dir = "/mnt/vaitp/VAITP GUI/vaitp/tf_logs/" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
 tensorboard_callback = keras.callbacks.TensorBoard(
     log_dir=log_dir,
     histogram_freq=0,  # How often to log histogram visualizations
@@ -184,7 +185,13 @@ dataset_dir = pathlib.Path("../vaitp/vaitp_dataset_ast")
 #print(list(dataset_dir.iterdir()))
 
 #tain directory
-train_dir = dataset_dir/'train'
+train_dir = str(dataset_dir)+'/train'
+test_dir = str(dataset_dir)+'/test'
+
+print(f'Training dir path: {train_dir}')
+print(f'Testing dir path: {test_dir}')
+
+
 #print("\nTrain dataset directory listing:")
 #print(list(train_dir.iterdir()))
 
@@ -195,16 +202,38 @@ train_dir = dataset_dir/'train'
 #  print(f.read())
 
 #count the number of files in the train dir
-train_dir_count = 0
-for path in os.listdir(train_dir):
-    if os.path.isfile(os.path.join(train_dir, path)):
-        train_dir_count += 1
+train_dir_vuln = train_dir+"/vulnerable"
+train_dir_vuln_count = len([n for n in os.listdir(train_dir_vuln) if os.path.isfile(os.path.join(train_dir_vuln, n))])
+print(f'File list count in training set: {train_dir_vuln_count} (vulnerable)')
+
+train_dir_noninj = train_dir+"/noninjectable"
+train_dir_noninj_count = len([n for n in os.listdir(train_dir_noninj) if os.path.isfile(os.path.join(train_dir_noninj, n))])
+print(f'File list count in training set: {train_dir_noninj_count} (noninjectable)')
+
+train_dir_inj = train_dir+"/injectable"
+train_dir_inj_count = len([n for n in os.listdir(train_dir_inj) if os.path.isfile(os.path.join(train_dir_inj, n))])
+print(f'File list count in training set: {train_dir_inj_count} (injectable)')
+
+train_dir_count = train_dir_inj_count+train_dir_noninj_count+train_dir_vuln_count
+
+
+
 
 #count the number of files in the test dir
-test_dir_count = 0
-for path in os.listdir(os.path.join(test_dir, path)):
-    if os.path.isfile(os.path.join(test_dir, path)):
-        test_dir_count += 1
+test_dir_vuln = test_dir+"/vulnerable"
+test_dir_vuln_count = len([n for n in os.listdir(test_dir_vuln) if os.path.isfile(os.path.join(test_dir_vuln, n))])
+print(f'File list count in testing set: {test_dir_vuln_count} (vulnerable)')
+
+test_dir_noninj = test_dir+"/noninjectable"
+test_dir_noninj_count = len([n for n in os.listdir(test_dir_noninj) if os.path.isfile(os.path.join(test_dir_noninj, n))])
+print(f'File list count in testing set: {test_dir_noninj_count} (noninjectable)')
+
+test_dir_inj = test_dir+"/injectable"
+test_dir_inj_count = len([n for n in os.listdir(test_dir_inj) if os.path.isfile(os.path.join(test_dir_inj, n))])
+print(f'File list count in testing set: {test_dir_inj_count} (injectable)')
+
+test_dir_count = test_dir_vuln_count+test_dir_noninj_count+test_dir_inj_count
+
 
 #Create a full trainig set for final predictions
 raw_train_ds_full = utils.text_dataset_from_directory(
@@ -241,8 +270,6 @@ raw_val_ds = utils.text_dataset_from_directory(
     validation_split=0.25,
     subset='validation',
     seed=seed)
-
-test_dir = dataset_dir/'test'
 
 #create a test set.
 raw_test_ds = utils.text_dataset_from_directory(
@@ -362,10 +389,10 @@ def create_model(vocab_size, num_labels):
         model = tf.keras.Sequential([
         layers.Embedding(vocab_size, options.output_dimensionality, mask_zero=True), #input dim, out dim
 
-        layers.LSTM(options.lstm_units,activation_function_1,dropout=options.dropout),
+        #layers.LSTM(options.lstm_units,activation_function_1,dropout=options.dropout),
         
-        #layers.Bidirectional(tf.keras.layers.LSTM(64, activation=activation_function_1, return_sequences=True)),
-        #layers.Bidirectional(tf.keras.layers.LSTM(32)),
+        layers.Bidirectional(tf.keras.layers.LSTM(options.lstm_units, activation=activation_function_1, return_sequences=True)),
+        layers.Bidirectional(tf.keras.layers.LSTM(64)),
         #layers.Dense(3, activation=activation_function_1),
         layers.Dense(num_labels),
 
@@ -656,8 +683,8 @@ print("VAITP final model accuracy: {:2.2%}".format(accuracy))
 print(f'VAITP final model loss: {loss}')
 
 #Save the model
-modelPath = "/home/fred/msi/ano2/VAITP/VAITP GUI/vaitp/exported_ai_models/"
-modelPath_Anush = ""
+#modelPath = "/home/fred/msi/ano2/VAITP/VAITP GUI/vaitp/exported_ai_models/"
+modelPath = "/mnt/vaitp/VAITP GUI/vaitp/exported_ai_models/"
 modelexportfilename = modelPath+"vaitp_classificator_model_"+"{:2.2}".format(accuracy)+"_"+str(options.model_type.upper())+"_"+str(int(options.epochs))+"_"+str(int(options.layer_density))+"_"+strftime("%Y_%m_%d_%H_%M", gmtime())+".tfv"
 
 export_model.save(modelexportfilename)

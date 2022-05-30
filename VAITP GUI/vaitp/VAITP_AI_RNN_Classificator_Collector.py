@@ -35,19 +35,19 @@ padding = 'valid'
 model_types = ['bow','c1d','lstm']
 
 #set the types of model to create
-model_start = 0
+model_start = 2
 model_total = 2 #0, 1, 2
 
-fitting_epochs = 70
-total_fitting_epochs = 80
-fitting_step = 10
+fitting_epochs = 69
+total_fitting_epochs = 250
+fitting_step = 1
 
 layer_density = 3 #mininum value: 3
-total_layer_density = 5
-layer_step = 2
+total_layer_density = 3
+layer_step = 1
 
-dropout = 2 #dropout is converted to float 1 = 0.1
-total_dropout = 3 #dropout is conv to float 9 = 0.9
+dropout = 0 #dropout is converted to float 1 = 0.1
+total_dropout = 0 #dropout is conv to float 9 = 0.9
 dropout_step = 1 # 0.1
 
 #Configure activation functions
@@ -55,8 +55,8 @@ dropout_step = 1 # 0.1
 #Eg.: starting_activation_mc = 1 and total_activation_mc = 1 selects sigmoig+sigmoid
 activation_functions_model_creation = ['relu','sigmoid','tanh','softmax','softplus','selu']
 
-starting_activation_mc = 1
-total_activation_mc = 1
+starting_activation_mc = 0
+total_activation_mc = 0
 activation_mc_step=1
 
 activation_functions_model_sequence = ['relu','sigmoid','tanh','softmax','softplus','selu']
@@ -69,20 +69,20 @@ activation_ms_step=1
 #filter_result = list(map(lambda x: 2 ** x, range(filter_terms)))
 #filter_units_start=4
 
-filter_start = 4#128
-filter_total = 5#128
+filter_start = 128
+filter_total = 128
 filter_step = 1
 
-units_start = 4#128
-units_total = 5#128
+units_start = 128
+units_total = 128
 units_step = 1
 
 kernel_start = 5
-kernel_total = 6
+kernel_total = 5
 kernel_step = 1
 
-output_dim_start = 4#64
-output_dim_total = 5#64
+output_dim_start = 64
+output_dim_total = 64
 output_dim_step = 1
 
 vocab_size_start = 5000
@@ -351,9 +351,8 @@ for model_type_it in range(model_start, model_total+1, 1):
 
 
 
-localpath = "/home/fred/msi/ano2/VAITP/VAITP GUI/vaitp/"
-#Anush comment above and change here:
-#localpath = ""
+#localpath = "/home/fred/msi/ano2/VAITP/VAITP GUI/vaitp/"
+localpath = "/mnt/vaitp/VAITP GUI/vaitp/"
 
 #plot
 fname = cbook.get_sample_data(localpath+csv_filename, asfileobj=False)
@@ -371,12 +370,12 @@ msft.plot("fitting_epochs","accuracy", color='green', kind='scatter', title = "V
 #msft.plot("testing epochs","accuracy", color='green', kind='scatter', title = "VAITP AI Classificator")
 msft.plot("fitting_epochs","loss", color='blue', kind='scatter', title = "VAITP AI Classificator")
 
-msft.plot("density_layer","accuracy", color='green', kind='scatter', title = "VAITP AI Classificator")
-msft.plot("density_layer","loss", color='blue', kind='scatter', title = "VAITP AI Classificator")
+#msft.plot("density_layer","accuracy", color='green', kind='scatter', title = "VAITP AI Classificator")
+#msft.plot("density_layer","loss", color='blue', kind='scatter', title = "VAITP AI Classificator")
 
 
-msft.plot(["activation_mc","activation_ms"],"accuracy", color='green', kind='scatter', title = "VAITP AI Classificator", subplots=True)
-msft.plot(["activation_mc","activation_ms"],"loss", color='blue', kind='scatter', title = "VAITP AI Classificator", subplots=True)
+#NOT WORKING#msft.plot(["activation_mc","activation_ms"],"accuracy", color='green', kind='scatter', title = "VAITP AI Classificator", subplots=True)
+#NOT WORKING#msft.plot(["activation_mc","activation_ms"],"loss", color='blue', kind='scatter', title = "VAITP AI Classificator", subplots=True)
 
 
 
