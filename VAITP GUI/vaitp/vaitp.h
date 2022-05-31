@@ -37,17 +37,17 @@ private slots:
     void on_lst_injectedFiles_itemClicked(QListWidgetItem *item);
     void on_actionReScan_for_injected_files_triggered();
     void on_bt_addToInjectionChain_clicked();
-
-
     void on_bt_executeInjectionChain_clicked();
-
     void on_bt_clearInjectionChain_clicked();
-
     void on_bt_extract_cvefixes_vulns_clicked();
-
-    void on_bt_train_ai_model_clicked();
-
+    //void on_bt_train_ai_model_clicked();
     void on_bt_ai_extract_cvef_diffs_clicked();
+    void on_bt_extract_common_words_clicked();
+    void on_bt_load_ai_models_path_clicked();
+
+    void on_checkBox_use_vaitp_ai_classificator_stateChanged(int arg1);
+
+    void on_bt_extract_one_line_clicked();
 
 private:
     Ui::VAITP *ui;

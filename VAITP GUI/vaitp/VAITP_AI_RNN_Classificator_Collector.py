@@ -35,19 +35,19 @@ padding = 'valid'
 model_types = ['bow','c1d','lstm']
 
 #set the types of model to create
-model_start = 2
-model_total = 2 #0, 1, 2
+model_start = 0
+model_total = 0 #0, 1, 2
 
-fitting_epochs = 69
-total_fitting_epochs = 250
+fitting_epochs = 1000
+total_fitting_epochs = 1000
 fitting_step = 1
 
-layer_density = 3 #mininum value: 3
-total_layer_density = 3
+layer_density = 7 #mininum value: 3
+total_layer_density = 7
 layer_step = 1
 
-dropout = 0 #dropout is converted to float 1 = 0.1
-total_dropout = 0 #dropout is conv to float 9 = 0.9
+dropout = 2 #dropout is converted to float 1 = 0.1
+total_dropout = 2 #dropout is conv to float 9 = 0.9
 dropout_step = 1 # 0.1
 
 #Configure activation functions
@@ -60,8 +60,8 @@ total_activation_mc = 0
 activation_mc_step=1
 
 activation_functions_model_sequence = ['relu','sigmoid','tanh','softmax','softplus','selu']
-starting_activation_ms = 3
-total_activation_ms = 3
+starting_activation_ms = 1
+total_activation_ms = 1
 activation_ms_step=1
 
 #Filter units: 4, 8, 16, 32, 64, 128, 256
@@ -334,10 +334,10 @@ for model_type_it in range(model_start, model_total+1, 1):
                                                                 dropoutfloat,
                                                                 activation_functions_model_creation[activation_mc_it],
                                                                 activation_functions_model_sequence[activation_ms_it],
-                                                                strides,
-                                                                padding,
+                                                                "NA",
+                                                                "NA",
                                                                 units_it,
-                                                                kernel_size_it,
+                                                                "NA",
                                                                 output_dim_it,
                                                                 vocab_size_it,
                                                                 max_seq_it,
@@ -351,8 +351,8 @@ for model_type_it in range(model_start, model_total+1, 1):
 
 
 
-#localpath = "/home/fred/msi/ano2/VAITP/VAITP GUI/vaitp/"
-localpath = "/mnt/vaitp/VAITP GUI/vaitp/"
+localpath = "/home/fred/msi/ano2/VAITP/VAITP GUI/vaitp/"
+#localpath = "/mnt/vaitp/VAITP GUI/vaitp/"
 
 #plot
 fname = cbook.get_sample_data(localpath+csv_filename, asfileobj=False)

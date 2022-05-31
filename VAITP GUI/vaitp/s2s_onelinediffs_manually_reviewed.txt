@@ -1,0 +1,29 @@
+pipes.quote(self.datastore)), shell=True,	(self.datastore)), shell=True,
+request.user_logout()	request.session.clear()
+self.assert_admin(context)	#self.assert_admin(context)
+expires=auth_token_data['expires'],	#expires=auth_token_data['expires'],
+(r'^admin_password_reset/$', 'django.contrib.auth.views.password_reset', dict(is_admin_site=True)),	#(r'^admin_password_reset/$', 'django.contrib.auth.views.password_reset', dict(is_admin_site=True)),
+opts = dict(opts, domain_override=request.get_host())	opts = dict(opts, domain_override=request.METAHTTP_HOST)
+'auth_tok': auth_tok,	#'auth_tok': auth_tok,
+) % {'url': escape(request.path) + '?tags=' + request.REQUEST['tags']}	) % {'url': request.path + '?tags=' + request.REQUESTtags']}")]}
+self.raw  = utils.parse_json(self.data, from_remote=True)	self.raw  = utils.parse_json(self.data)
+data = utils.parse_json(res['stdout'], from_remote=True)	data = utils.parse_json(resstdout'])
+DEFAULT_ALLOW_UNSAFE_LOOKUPS = get_config(p, DEFAULTS, 'allow_unsafe_lookups', None, False, value_type='boolean')	#DEFAULT_ALLOW_UNSAFE_LOOKUPS = get_config(p, DEFAULTS, 'allow_unsafe_lookups', None, False, value_type='boolean')
+Cache(repository, key, manifest, warn_if_unencrypted=False)	#Cache(repository, key, manifest, warn_if_unencrypted=False)
+if eval_ctx.volatile or eval_ctx.environment.sandboxed:	if eval_ctx.volatile:
+line = line.strip()	line = " ".join(line.split())
+default='{prog_name}.log'.format(	default='/tmp/{prog_name}.log'.format(")
+return parse_query(yaml.safe_load(yaml_content))	return parse_query(yaml.load(yaml_content))
+db.sentences_victim('report_online', [vrequest], 2)	return parse_query(yaml.load(yaml_content))
+yaml.safe_load(yaml_content)	yaml.load(yaml_content)
+return yaml.safe_load(self.vault.decrypt(stream))	return yaml.load(stream)
+self.http_client = hs.get_proxied_blacklisted_http_client()	self.client = hs.get_http_client()
+self.http_client = hs.get_proxied_blacklisted_http_client()	self.http_client = hs.get_simple_http_client()
+self.client = hs.get_federation_http_client()	self.http_client = hs.get_proxied_http_client()
+hs = self.setup_test_homeserver("server", federation_http_client=None)	hs = self.setup_test_homeserver(config=config, http_client=client)
+hs = self.setup_test_homeserver("server", federation_http_client=None)	hs = self.setup_test_homeserver("server", http_client=None)
+data['next'] = self.serializer.validated_data['user'].login_code.next	#data['next'] = self.serializer.validated_data['user'].login_code.next
+self.router.unidirectional = self.config['unidirectional']	#self.router.unidirectional = self.config['unidirectional']
+self.assertNotContains(response, 'ABC123')	self.assertContains(response, 'ABC123')
+config.configure(yaml.safe_load(conf))	config.configure(yaml.load(conf))
+config_from_file = yaml.safe_load(configfile)	config_from_file = yaml.load(configfile)

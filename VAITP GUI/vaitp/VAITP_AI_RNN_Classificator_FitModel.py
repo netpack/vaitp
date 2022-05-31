@@ -31,6 +31,8 @@ from datetime import timedelta
 
 from optparse import OptionParser
 
+import astor
+
 time_start = time.time()
 
 
@@ -161,8 +163,8 @@ elif options.activation_model_sequencing == 5:
     activation_function_2 = "selu"
 
 #Setup logs for tensorboard
-#log_dir = "/home/fred/msi/ano2/VAITP/VAITP GUI/vaitp/tf_logs/" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
-log_dir = "/mnt/vaitp/VAITP GUI/vaitp/tf_logs/" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+log_dir = "/home/fred/msi/ano2/VAITP/VAITP GUI/vaitp/tf_logs/" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+#log_dir = "/mnt/vaitp/VAITP GUI/vaitp/tf_logs/" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
 tensorboard_callback = keras.callbacks.TensorBoard(
     log_dir=log_dir,
     histogram_freq=0,  # How often to log histogram visualizations
@@ -667,6 +669,9 @@ for input, label in zip(text_batch, predicted_labels):
 
   if str(predicted_label) != str(expected_label):
       print(f'\nThe following code is {expected_label} but was predicted as {predicted_label}:\n\n\t\t{input}\n\n')
+      #source = astor.to_source(ast.parse(str(input.numpy())[2:][:-1].replace("\\n","").replace("\\t","")))
+
+      #print(f'Original Python code: {ast.dump(ast.parse(source))}')
       wrong_predictions += 1
 
   
@@ -683,8 +688,8 @@ print("VAITP final model accuracy: {:2.2%}".format(accuracy))
 print(f'VAITP final model loss: {loss}')
 
 #Save the model
-#modelPath = "/home/fred/msi/ano2/VAITP/VAITP GUI/vaitp/exported_ai_models/"
-modelPath = "/mnt/vaitp/VAITP GUI/vaitp/exported_ai_models/"
+modelPath = "/home/fred/msi/ano2/VAITP/VAITP GUI/vaitp/exported_ai_models/"
+#modelPath = "/mnt/vaitp/VAITP GUI/vaitp/exported_ai_models/"
 modelexportfilename = modelPath+"vaitp_classificator_model_"+"{:2.2}".format(accuracy)+"_"+str(options.model_type.upper())+"_"+str(int(options.epochs))+"_"+str(int(options.layer_density))+"_"+strftime("%Y_%m_%d_%H_%M", gmtime())+".tfv"
 
 export_model.save(modelexportfilename)
