@@ -49,6 +49,8 @@ private slots:
 
     void on_bt_extract_one_line_clicked();
 
+    void on_checkBox_use_vaitp_ai_s2s_stateChanged(int arg1);
+
 private:
     Ui::VAITP *ui;
 };

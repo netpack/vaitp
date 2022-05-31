@@ -59,7 +59,16 @@ VAITP::VAITP(QWidget *parent)
     }
     qDebug()<<"VAITP AI use_ai_classificator set to: "<<use_ai_classificator;
     //TODO: load the value of ai_classificator_selected
+
     //TODO: load the value of use_ai_s2s
+    if(query.exec("SELECT use_ai_s2s from settings")){
+        while(query.next()){
+            use_ai_s2s = query.value(0).toInt();
+            if(use_ai_s2s==2)
+                ui->checkBox_use_vaitp_ai_s2s->setChecked(true);
+        }
+    }
+    qDebug()<<"VAITP AI use_ai_s2s set to: "<<use_ai_s2s;
 
 
     //get all ai classificator models and populate ui
@@ -887,7 +896,17 @@ void VAITP::on_checkBox_use_vaitp_ai_classificator_stateChanged(int arg1)
 }
 
 //TODO: save the value of ai_classificator_selected
-//TODO: save the value of use_ai_s2s
+
+
+void VAITP::on_checkBox_use_vaitp_ai_s2s_stateChanged(int arg1)
+{
+    qDebug()<<"state changed to "<<arg1;
+    QSqlQuery query;
+    query.prepare("UPDATE settings set use_ai_s2s=:use_ai_s2s;");
+    query.bindValue(":use_ai_s2s",arg1);
+    query.exec();
+}
+
 
 void VAITP::on_bt_extract_one_line_clicked()
 {
@@ -936,4 +955,6 @@ void VAITP::on_bt_extract_one_line_clicked()
     ui->txt_output_sh1_ai->appendHtml("CVEfixes diffs exctracted sucessfuly.");
     ui->bt_extract_cvefixes_vulns->setEnabled(true);
 }
+
+
 
