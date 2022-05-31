@@ -33,6 +33,53 @@ VAITP::VAITP(QWidget *parent)
     //Reset the injection chain number
     chainNum=0;
 
+
+    QSqlQuery query;
+    QString vaitp_models_path="";
+    int use_ai_classificator=0;
+    int use_ai_s2s=0;
+    QStringList models;
+
+    //load the value of vaitp_ai_models_path
+    if(query.exec("SELECT vaitp_ai_models_path from settings")){
+        while(query.next()){
+            vaitp_models_path = query.value(0).toString();
+            ui->txt_vaitp_models_path->setText(vaitp_models_path);
+        }
+    }
+    qDebug()<<"VAITP AI models path set to: "<<vaitp_models_path;
+
+    //load the value of use_ai_classificator
+    if(query.exec("SELECT use_ai_classificator from settings")){
+        while(query.next()){
+            use_ai_classificator = query.value(0).toInt();
+            if(use_ai_classificator==2)
+                ui->checkBox_use_vaitp_ai_classificator->setChecked(true);
+        }
+    }
+    qDebug()<<"VAITP AI use_ai_classificator set to: "<<use_ai_classificator;
+    //TODO: load the value of ai_classificator_selected
+    //TODO: load the value of use_ai_s2s
+
+
+    //get all ai classificator models and populate ui
+    if(!vaitp_models_path.isEmpty()){
+        QDir dir(vaitp_models_path);
+        dir.setFilter(QDir::Dirs);
+        QList <QFileInfo> fileList = dir.entryInfoList();
+        qDebug()<<"VAITP AI model path file list: "<<fileList;
+        for (int i = 0; i < fileList.size(); ++i) {
+            QFileInfo fileInfo = fileList.at(i);
+            if (fileInfo.suffix() == "tfv") {
+                qDebug()<<"VAITP AI model found: "<<fileInfo.absoluteFilePath();
+                if(!fileInfo.baseName().contains("s2s"))
+                    ui->comboBox_vaitp_ai_classificator->addItem(fileInfo.completeBaseName());
+            }
+        }
+    }
+
+
+
 }
 
 /**
@@ -63,15 +110,20 @@ void VAITP::on_bt_load_py_src_clicked()
  */
 void VAITP::on_bt_scan_py_clicked()
 {
+    qDebug()<<"VAITP :: Start scanning";
+
 
     //clear the vulnerability list and the injection points list
     ui->lst_vulns->clear();
     ui->lst_injectionPoints->clear();
+    ui->lbl_ai_classificator_run->setText("");
+
+
 
     //disable the attack button
     ui->bt_attack->setEnabled(false);
 
-
+    qDebug()<<"VAITP :: Getting some pie... :-) ...";
     //get the pie, hoo sorry, I meant py! :-)
     QString pyfile = ui->txt_py_src->text();
     if (pyfile.size()<4 || !(pyfile.endsWith(".py"))){
@@ -80,6 +132,11 @@ void VAITP::on_bt_scan_py_clicked()
 
         //start scanning
         ui->txt_output_sh1->appendHtml(tr("Scanning Python Script... Please Wait...\n"));
+
+        qDebug()<<"VAITP :: Scanning vulnerabilities";
+        ui->txt_output_sh1->appendHtml(tr("Scanning vulnerabilities..."));
+        qApp->processEvents();
+
 
         detectionModule dm;
 
@@ -90,132 +147,42 @@ void VAITP::on_bt_scan_py_clicked()
             ui->lst_vulns->addItem(detectedVulnerabilities[n]);
         }
 
+        qDebug()<<"VAITP :: Scanning injection calls";
+        ui->txt_output_sh1->appendHtml(tr("Scanning injection calls..."));
+        qApp->processEvents();
+
         //detect and list injection calls
         QStringList detectedInjectionPoints = dm.scanFileForInjectionCalls(pyfile);
         detectedInjectionPoints.removeDuplicates();
         for(int n=0; n<detectedInjectionPoints.count();n++){
             ui->lst_injectionPoints->addItem(detectedInjectionPoints[n]);
+            qApp->processEvents();
+        }
+
+        qDebug()<<"VAITP :: Scanning with AI classificator...";
+        ui->txt_output_sh1->appendHtml(tr("Scanning with AI classificator..."));
+        qApp->processEvents();
+
+
+        if(ui->checkBox_use_vaitp_ai_classificator->isChecked()){
+            aimodule ai;
+            ai.set_file_to_scan(pyfile);
+            QString predicted_lable = ai.run_classificator_model();
+            ui->lbl_ai_classificator_run->setText(predicted_lable);
+
+            if(predicted_lable=="injectable"){
+
+                qDebug()<<"VAITP :: Scanning with AI classificator revealed an injectable script!";
+                ui->txt_output_sh1->appendHtml(tr("Scanning with AI classificator revealed an injectable script!"));
+                qApp->processEvents();
+            }
+
+        } else {
+            ui->lbl_ai_classificator_run->setText("(disabled)");
         }
 
 
-
-
-        /*
-        QFile inputFile(pyfile);
-        QString sql_qry_vulns = "Select vulnerability from vulnerabilities";
-        QSqlQuery sql;
-        int line_num=0;
-        QListWidget* vulnList = ui->lst_vulns;
-
-        if (inputFile.open(QIODevice::ReadOnly)){
-
-           QTextStream in(&inputFile);
-           while (!in.atEnd()){
-
-              //if we can read the file and while were not at the end of it we get the next line
-              QString line = in.readLine();
-              line_num++;
-
-              //for this line check all known vulnerabilities and add them to the vulnerability list if present
-              if(sql.exec(sql_qry_vulns)){
-                  while(sql.next()){
-
-                      QString vuln = sql.value(0).toString();
-                      qDebug() << "Scanning: " << line << " for vuln: " << vuln;
-
-                      // *Look for vulnerabilities* /
-                      if (line.contains(vuln)){
-                          qDebug() << "Adding vuln: " << vuln;
-
-
-                          bool hasItem = false;
-                          for(int i=0; i<vulnList->count(); i++){
-                              if(vulnList->item(i)->text() == vuln){
-                                hasItem = true;
-                              }
-                          }
-
-                          if(!hasItem)
-                            ui->lst_vulns->addItem(vuln);
-
-
-
-
-
-
-                       //*Look for attack payloads* /
-
-                          ui->lst_payload->clear();
-                          QSqlQuery qry;
-                          qry.prepare("Select payload from vulns where vulnerability like ?");
-                          qry.bindValue(0,vuln);
-
-                          qry.exec();
-
-                          while(qry.next()){
-                              ui->lst_payload->addItem(qry.value(0).toString());
-
-                          }
-
-
-                      }
-                  }
-              }
-
-
-
-
-
-
-                //*Look for injection patches* /
-                QString sql_qry_patches = "Select patch_start, patch, patch_end, injection from injections";
-                if(sql.exec(sql_qry_patches)){
-                    while(sql.next()){
-                        QString patch_start = sql.value(0).toString();
-                        QString patch = sql.value(1).toString();
-                        QString patch_end = sql.value(2).toString();
-                        QString injection = sql.value(3).toString();
-                        qDebug() << "Scanning line " << line_num << ": " << line << " for patch: " << patch_start<<patch<<patch_end;
-
-                        //Create regex
-                        QRegularExpression re(QRegularExpression::escape(patch_start)+patch+QRegularExpression::escape(patch_end));
-                        QRegularExpressionMatch match = re.match(line);
-                        if(match.hasMatch()){
-                            // add patch to patch list
-                            ui->txt_output_sh1->appendHtml(tr("(0.0)  Patch regex matches: <h4>")+match.captured(0)+"</h4>");
-                            QString item;
-                            if(injection=="\\w+"){
-                                ui->txt_output_sh1->appendHtml(tr("(0.0) Injection is regex \\w+"));
-
-                                item = match.captured(0)+" :: "+match.captured(0).remove(patch_start).remove(patch_end) + " :: Line " + QString::number(line_num) + ": "+line.trimmed();
-
-                            } else {
-                                ui->txt_output_sh1->appendHtml(tr("(0.0) Injection is hard coded"));
-                                item = patch_start+patch+patch_end+" :: "+injection + " :: Line " + QString::number(line_num) + ": "+line.trimmed();
-
-                            }
-                            ui->lst_injectionPoints->addItem(item);
-
-
-                        }
-
-
-
-
-
-                    }
-                }
-
-
-
-
-           }
-           inputFile.close();
-        }
-
-
-
-        */
+       qDebug()<<"VAITP :: Updating GUI..";
 
        ui->lbl_target->setText(pyfile);
 
@@ -712,7 +679,7 @@ void VAITP::on_bt_extract_cvefixes_vulns_clicked()
 
 
 
-
+/*
 void VAITP::on_bt_train_ai_model_clicked()
 {
     ui->bt_train_ai_model->setEnabled(false);
@@ -761,7 +728,7 @@ void VAITP::on_bt_train_ai_model_clicked()
 
     ui->bt_train_ai_model->setEnabled(true);
 }
-
+*/
 
 void VAITP::on_bt_ai_extract_cvef_diffs_clicked()
 {
@@ -805,6 +772,149 @@ void VAITP::on_bt_ai_extract_cvef_diffs_clicked()
         qApp->processEvents();
 
         QStringList processedVulns = ai.getAndProcess_dataset_diffs();
+        QString vuln;
+        foreach(vuln, processedVulns){
+            ui->txt_output_sh1_ai->appendHtml("Diff added: "+vuln);
+            qApp->processEvents();
+        }
+        ui->txt_output_sh1_ai->appendHtml("Diff dataset extracted sucessfuly.");
+        qApp->processEvents();
+
+
+    } else {
+        qDebug()<<"There seam to be no Python diffs in CVSfixes db.. ?? ..";
+        ui->txt_output_sh1_ai->appendHtml("There seam to be no Python diffs in CVSfixes db... aborting.");
+
+    }
+
+
+
+
+    ui->txt_output_sh1_ai->appendHtml("CVEfixes diffs exctracted sucessfuly.");
+    ui->bt_extract_cvefixes_vulns->setEnabled(true);
+}
+
+
+
+void VAITP::on_bt_extract_common_words_clicked()
+{
+    ui->bt_extract_common_words->setEnabled(false);
+
+    qDebug() << "[Extract CVEFixes CommonWords]";
+    ui->txt_output_sh1_ai->appendHtml("Extracting CVEfixes common words...");
+
+    ui->txt_output_sh1_ai->appendHtml("Opening CVEfixes db...");
+    qApp->processEvents();
+
+    aimodule ai;
+    ai.opencvefixesdb();
+
+
+    /**
+     *
+     * Process common words
+     *
+     */
+
+    ui->txt_output_sh1_ai->appendHtml("Quering common words. Please wait...");
+    qApp->processEvents();
+
+    //count Python entries
+    int num_python_entries = ai.cvefixes_count_diffs(); //diffs is always the same value as entries
+    ui->txt_output_sh1_ai->appendHtml("Number of entries loaded: "+QString("%1").arg(num_python_entries));
+    qApp->processEvents();
+
+    //only continue if there are entries in the database
+    if(num_python_entries>0){
+
+        qDebug()<<"Processing CVSfixes common words...";
+        ui->txt_output_sh1_ai->appendHtml("Processing CVSfixes common words...");
+        qApp->processEvents();
+
+        QStringList processedVulns = ai.getAndProcess_dataset_commonwords();
+        /*
+        QString vuln;
+        foreach(vuln, processedVulns){
+            ui->txt_output_sh1_ai->appendHtml("Common word added: "+vuln);
+            qApp->processEvents();
+        }*/
+        ui->txt_output_sh1_ai->appendHtml("Common words dataset extracted sucessfuly.");
+        qApp->processEvents();
+
+
+    } else {
+        qDebug()<<"There seam to be no Python entries in CVSfixes db.. ?? ..";
+        ui->txt_output_sh1_ai->appendHtml("There seam to be no Python entries in CVSfixes db... aborting.");
+
+    }
+
+
+
+
+    ui->txt_output_sh1_ai->appendHtml("CVEfixes diffs exctracted sucessfuly.");
+    ui->bt_extract_cvefixes_vulns->setEnabled(true);
+}
+
+
+void VAITP::on_bt_load_ai_models_path_clicked()
+{
+    //show the directory dialog
+    QFileDialog dialog(this);
+    dialog.setViewMode(QFileDialog::Detail);
+    dialog.setFileMode(QFileDialog::AnyFile);
+    QString fileName = QFileDialog::getExistingDirectory(this, tr("Open VAITP AI model"), "/home/");
+    QLineEdit* txt_py_src = ui->txt_vaitp_models_path;
+    txt_py_src->setText(fileName);
+
+
+    QSqlQuery query;
+    query.prepare("UPDATE settings set vaitp_ai_models_path=:path;");
+    query.bindValue(":path",fileName);
+    qDebug()<<"SQL VAITP :: "<<query.exec();
+
+
+
+}
+
+
+void VAITP::on_checkBox_use_vaitp_ai_classificator_stateChanged(int arg1)
+{
+    qDebug()<<"state changed to "<<arg1;
+    QSqlQuery query;
+    query.prepare("UPDATE settings set use_ai_classificator=:use_ai_clas;");
+    query.bindValue(":use_ai_clas",arg1);
+    query.exec();
+}
+
+//TODO: save the value of ai_classificator_selected
+//TODO: save the value of use_ai_s2s
+
+void VAITP::on_bt_extract_one_line_clicked()
+{
+    ui->bt_extract_one_line->setEnabled(false);
+
+    qDebug() << "[Extract CVEFixes one line diffs]";
+    ui->txt_output_sh1_ai->appendHtml("Extracting CVEfixes one line diffs...");
+
+    ui->txt_output_sh1_ai->appendHtml("Quering one line diffs. Please wait...");
+    qApp->processEvents();
+
+    aimodule ai;
+    ai.opencvefixesdb();
+
+    //count Python diffs
+    int num_python_diffs = ai.cvefixes_count_oneline_diffs();
+    ui->txt_output_sh1_ai->appendHtml("Number of one line diffs loaded: "+QString("%1").arg(num_python_diffs));
+    qApp->processEvents();
+
+    //only continue if there are diffs in the database
+    if(num_python_diffs>0){
+
+        qDebug()<<"Processing CVSfixes one line diffs...";
+        ui->txt_output_sh1_ai->appendHtml("Processing CVSfixes one line diffs...");
+        qApp->processEvents();
+
+        QStringList processedVulns = ai.getAndProcess_dataset_oneline_diffs();
         QString vuln;
         foreach(vuln, processedVulns){
             ui->txt_output_sh1_ai->appendHtml("Diff added: "+vuln);

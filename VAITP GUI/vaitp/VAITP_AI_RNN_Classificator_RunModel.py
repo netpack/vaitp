@@ -9,6 +9,7 @@ from tensorflow.keras.layers import TextVectorization
 import tensorflow_datasets as tfds
 import tensorflow_text as tf_text
 import ast
+import numpy as np
 import pathlib
 from optparse import OptionParser
 #import time
@@ -19,7 +20,7 @@ from optparse import OptionParser
 #parameters parsing
 parser = OptionParser()
 parser.add_option("-i", "--input_file", action="store", type="string", dest="input_file", help="Set the input Python file to be scanned")
-parser.add_option("-l", "--predict_individual_lines", action="store",type="string", dest="predict_individual_lines", help="todo")
+parser.add_option("-o", "--optimize_granularity", action="store_true", dest="optimize_granularity", help="Try to optimize granulariy of inputs predicted as 'injectable'")
 
 (options, sys.argv) = parser.parse_args(sys.argv)
 
@@ -51,8 +52,9 @@ else:
 pyfile_fp = open(pyfile,'r')
 
 #print(f'py:: {pyfile_fp.read()}')
-
-pyfile_ast = ast.dump(ast.parse(pyfile_fp.read(), mode='exec'))
+source = pyfile_fp.read()
+pyfile_ast_parsed = ast.parse(source, mode='exec')
+pyfile_ast = ast.dump(pyfile_ast_parsed)
 
 
 
@@ -84,9 +86,7 @@ final_input_string.append(final_lines)
 #print(f'New code vector: {final_input_string}')
 
 
-
-
-dataset_dir = pathlib.Path("../vaitp/vaitp_dataset")
+dataset_dir = pathlib.Path("../vaitp/vaitp_dataset_ast")
 train_dir = dataset_dir/'train'
 batch_size = 10
 seed = 4
@@ -98,16 +98,31 @@ raw_train_ds = utils.text_dataset_from_directory(
     seed=seed)
 
 
-
-
-
 predicted_scores = model.predict(final_input_string)
-
 predicted_labels = get_string_labels(predicted_scores)
 
 for input, label in zip(final_input_string, predicted_labels):
   #print("\ncode: ", input)
-  print("predicted label: ", label.numpy())
+  predicted_label = label.numpy()
+  print("predicted label: ", predicted_label)
+  if options.optimize_granularity:
+    print(f'Detected an injectable code. Trying to optimize granularity...')
+    for node in ast.walk(pyfile_ast_parsed):
+      line = ast.dump(node)
+      #print(f'AST Node Line: {line}')
+      
+      line_ps = model.predict([line])
+      line_pl = get_string_labels(line_ps)
+      #line_in, line_la = zip(line,line_pl)
+      #line_prediction = line_la.numpy()
+      #print(f'Prediction: {line_pl.numpy()} Line: {line}')
+      line_prediction = line_pl.numpy()
+      if str(line_prediction) == "[b'injectable']":
+        pycode = str(ast.get_source_segment(source,node))
+        n = pycode.count('\n')
+        if n == 0 and pycode != 'None':
+          print(f'[{n}]] Injectable AST node python code: {pycode}')
+      
 
 
 #time_now = time.time()

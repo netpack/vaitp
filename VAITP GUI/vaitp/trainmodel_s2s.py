@@ -15,10 +15,19 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 import pathlib
 import matplotlib
-import time
 import os
+import datetime
+import time
+from time import gmtime, strftime
+from datetime import timedelta
+
+fitting_epochs = 70
+max_vocab_size = 50000
+embedding_dim = 1024#256
+units = 128 #1024
 
 
+#check the shape of a tensorflow object
 class ShapeChecker():
   def __init__(self):
     self.shapes = {}
@@ -59,7 +68,7 @@ class ShapeChecker():
                          f"    expected: {old_dim}\n")
 
 
-
+''' DOWNLOAD NEW DATASET
 try:
   os.remove("/home/fred/.keras/datasets/injv.txt")
 except:
@@ -78,6 +87,22 @@ path_to_zip = tf.keras.utils.get_file(
 path_to_file = pathlib.Path(path_to_zip).parent/'injv.txt'
 
 print(f'\nSaving VAITP dataset to: {path_to_file}')
+'''
+
+translation_file = "/home/fred/msi/ano2/VAITP/VAITP GUI/vaitp/injv.txt"
+common_words_file = "/home/fred/msi/ano2/VAITP/VAITP GUI/vaitp/common.txt"
+one_line_cvefixes_diffs = "/home/fred/msi/ano2/VAITP/VAITP GUI/vaitp/s2s_onelinediffs_manually_reviewed.txt"
+final_dataset_file = "/home/fred/msi/ano2/VAITP/VAITP GUI/vaitp_s2s.temp"
+
+fd = open(final_dataset_file, "w")
+#fd.write(open(common_words_file,'r').read())
+fd.write(open(one_line_cvefixes_diffs,'r').read())
+fd.write(open(translation_file,'r').read())
+fd.close()
+
+#set path to the translation dataset
+path_to_file = pathlib.Path(final_dataset_file)
+
 
 #load the data
 def load_data(path):
@@ -91,12 +116,12 @@ def load_data(path):
 
   return targ, inp
 
-
+#get the data. inp has injectable code and targ has the "target translation" aka vulnerable code
 inp, targ = load_data(path_to_file)
 
 #print samples
-print(f'\nSample injectable data from dataset: {inp[-1]}')
-print(f'Sample vulnerable data from dataset: {targ[-1]}\n')
+#print(f'\nSample injectable data from dataset: {inp[-1]}')
+#print(f'Sample vulnerable data from dataset: {targ[-1]}\n')
 
 #set buffers sizes
 BUFFER_SIZE = len(inp)
@@ -106,12 +131,13 @@ BATCH_SIZE = 6
 dataset = tf.data.Dataset.from_tensor_slices((inp, targ)).shuffle(BUFFER_SIZE)
 dataset = dataset.batch(BATCH_SIZE)
 
-#print tensor samples
+#set example_input_batch and print tensor samples
 for example_input_batch, example_target_batch in dataset.take(1):
-    print(f'\nSample injectable tensor:\n{example_input_batch[:5]}\nSample vulnerable tensor:\n{example_target_batch[:5]}\n')
+    #print(f'\nSample injectable tensor:\n{example_input_batch[:5]}\nSample vulnerable tensor:\n{example_target_batch[:5]}\n')
     break
 
 
+#Add spaces around punctuation (for fitting)
 def tf_lower_and_split_punct(text):
     # Split accecented characters.
     #text = tf_text.normalize_utf8(text, 'NFKD')
@@ -126,8 +152,16 @@ def tf_lower_and_split_punct(text):
     #text = tf.strings.join(['[START]', text, '[END]'], separator=' ')
     text = tf.strings.join(['[START]', text, '[END]'], separator=' ')
     return text
-'''
 
+
+
+#Remove extra spaces that were added around punctuation (for output)
+def tf_rebuild_string(text):
+  return text.replace(" . ",".").replace(" : ",":").replace(" ? ","?").replace(" ! ","!").replace(" , ",",").replace(" = ","=").replace(" \\ ","\\").replace(" ( ","(").replace(" / ","/").replace(" ) ",")").replace(" \" ","\"").replace(" ' ","'").replace(" - ","-").replace(" .",".").replace(" :",":").replace(" ?","?").replace(" !","!").replace(" ,",",").replace(" =","=").replace(" \\","\\").replace(" (","(").replace(" /","/").replace(" )",")").replace(" \"","\"").replace(" '","'").replace(" -","-")
+
+
+'''
+#Old version
 def tf_lower_and_split_punct(text):
   # Split accecented characters.
   text = tf_text.normalize_utf8(text, 'NFKD')
@@ -142,29 +176,26 @@ def tf_lower_and_split_punct(text):
   text = tf.strings.join(['[START]', text, '[END]'], separator=' ')
   return text
 '''
+
+#test with samples
 #print(example_text.numpy())
-#
-
-example_text = tf.constant('subprocess.call("uname -n",shell=False)')
-
+#example_text = tf.constant('subprocess.call("uname -n",shell=False)')
 #example_text = tf.constant('¿Todavía está en casa?')
-print(tf_lower_and_split_punct(example_text).numpy().decode())
+#print(tf_lower_and_split_punct(example_text).numpy().decode())
+#print(tf_text.normalize_utf8(example_text, 'NFKD').numpy())
 
-print(tf_text.normalize_utf8(example_text, 'NFKD').numpy())
-
-max_vocab_size = 50000
-
+#process text and create vectors
 input_text_processor = tf.keras.layers.TextVectorization(
     standardize=tf_lower_and_split_punct,
     max_tokens=max_vocab_size)
-
 input_text_processor.adapt(inp)
 
 # Here are the first 10 words from the vocabulary:
-print('Vocab extract samples:')
-print(input_text_processor.get_vocabulary()[:20])
-print()
+#print('Vocab extract samples:')
+#print(input_text_processor.get_vocabulary()[:20])
+#print()
 
+'''
 #convert to tokens
 example_tokens = input_text_processor(example_input_batch)
 example_tokens[:3, :10]
@@ -177,6 +208,8 @@ print(example_tokens)
 input_vocab = np.array(input_text_processor.get_vocabulary())
 tokens = input_vocab[example_tokens[0].numpy()]
 print(' '.join(tokens))
+'''
+
 
 #define the output text processor
 output_text_processor = tf.keras.layers.TextVectorization(
@@ -184,7 +217,7 @@ output_text_processor = tf.keras.layers.TextVectorization(
     max_tokens=max_vocab_size)
 
 output_text_processor.adapt(targ)
-print(f'\nOutput text processor vocabulary sample:\n{output_text_processor.get_vocabulary()[:10]}\n')
+#print(f'\nOutput text processor vocabulary sample:\n{output_text_processor.get_vocabulary()[:10]}\n')
 
 
 
@@ -199,8 +232,7 @@ plt.pcolormesh(example_tokens != 0)
 plt.title('Mask')
 #matplotlib.pyplot.show()'''
 
-embedding_dim = 256
-units = 1024
+
 
 class Encoder(tf.keras.layers.Layer):
   def __init__(self, input_vocab_size, embedding_dim, enc_units):
@@ -237,6 +269,8 @@ class Encoder(tf.keras.layers.Layer):
     # 4. Returns the new sequence and its state.
     return output, state
 
+
+
 # Convert the input text to tokens.
 example_tokens = input_text_processor(example_input_batch)
 
@@ -245,10 +279,13 @@ encoder = Encoder(input_text_processor.vocabulary_size(),
                   embedding_dim, units)
 example_enc_output, example_enc_state = encoder(example_tokens)
 
+'''
 print(f'\nInput batch, shape (batch): {example_input_batch.shape}')
 print(f'\nInput batch tokens, shape (batch, s): {example_tokens.shape}')
 print(f'\nEncoder output, shape (batch, s, units): {example_enc_output.shape}')
 print(f'\nEncoder state, shape (batch, units): {example_enc_state.shape}')
+'''
+
 
 #use Bahdanau's additive attention
 #handle the weight matrices in a pair of layers.Dense layers and call the builtin implementation
@@ -302,8 +339,8 @@ context_vector, attention_weights = attention_layer(
     value=example_enc_output,
     mask=(example_tokens != 0))
 
-print(f'\nAttention result shape: (batch_size, query_seq_length, units): {context_vector.shape}')
-print(f'Attention weights shape: (batch_size, query_seq_length, value_seq_length): {attention_weights.shape}')
+#print(f'\nAttention result shape: (batch_size, query_seq_length, units): {context_vector.shape}')
+#print(f'Attention weights shape: (batch_size, query_seq_length, value_seq_length): {attention_weights.shape}')
 
 '''
 print("Plotting the attention weights...")
@@ -317,7 +354,7 @@ plt.title('Mask')
 #matplotlib.pyplot.show()'''
 
 
-print(f'Tensor attention shape: {attention_weights.shape}')
+#print(f'Tensor attention shape: {attention_weights.shape}')
 
 '''
 #get attention slices and plot them
@@ -463,8 +500,8 @@ dec_result, dec_state  = decoder(
 
 
 
-print(f'logits shape: (batch_size, t, output_vocab_size) {dec_result.logits.shape}')
-print(f'state shape: (batch_size, dec_units) {dec_state.shape}')
+#print(f'logits shape: (batch_size, t, output_vocab_size) {dec_result.logits.shape}')
+#print(f'state shape: (batch_size, dec_units) {dec_state.shape}')
 
 
 
@@ -479,9 +516,9 @@ print(f'\nlogits shape: (batch_size, t, output_vocab_size) {dec_result.shape}')
 
 sampled_token = tf.random.categorical(dec_result.logits[:, 0, :], num_samples=1)
 
-vocab = np.array(output_text_processor.get_vocabulary())
-first_word = vocab[sampled_token.numpy()]
-print(f'\nSample of words 1 of the decode vocabulary:\n{first_word[:5]}') 
+#vocab = np.array(output_text_processor.get_vocabulary())
+#first_word = vocab[sampled_token.numpy()]
+#print(f'\nSample of words 1 of the decode vocabulary:\n{first_word[:5]}') 
 
 
 #use the decoder to generate a second set of logits
@@ -492,9 +529,9 @@ dec_result, dec_state = decoder(
     state=dec_state)
 
 
-sampled_token = tf.random.categorical(dec_result.logits[:, 0, :], num_samples=1)
-first_word = vocab[sampled_token.numpy()]
-print(f'\nSample of words 2 of the decode vocabulary:\n{first_word[:5]}\n') 
+#sampled_token = tf.random.categorical(dec_result.logits[:, 0, :], num_samples=1)
+#first_word = vocab[sampled_token.numpy()]
+#print(f'\nSample of words 2 of the decode vocabulary:\n{first_word[:5]}\n') 
 
 
 
@@ -693,7 +730,7 @@ for n in range(10):
 print()
 
 
-print('Training and ploting losses on sample data...')
+print('Fitting model...')
 #Plot the train losses
 losses = []
 for n in range(100):
@@ -735,7 +772,7 @@ batch_loss = BatchLogs('batch_loss')
 
 
 #Fit the model using collected losses
-train_translator.fit(dataset, epochs=50,
+train_translator.fit(dataset, epochs=fitting_epochs,
                      callbacks=[batch_loss])
 
 '''
@@ -917,8 +954,15 @@ result = translator.translate(
     input_text = input_text)
 
 print("\nResult of the simple translation of new data constants:")
-print(result['text'][0].numpy().decode())
-print(result['text'][1].numpy().decode())
-print(result['text'][2].numpy().decode())
+print( tf_rebuild_string(result['text'][1].numpy().decode()) )
+print( tf_rebuild_string(result['text'][1].numpy().decode()) )
+print( tf_rebuild_string(result['text'][2].numpy().decode()) )
 print()
 
+
+#Save the model
+modelPath = "/home/fred/msi/ano2/VAITP/VAITP GUI/vaitp/exported_ai_models/"
+#modelPath = "/mnt/vaitp/VAITP GUI/vaitp/exported_ai_models/"
+modelexportfilename = modelPath+"vaitp_s2s_model_"+str(fitting_epochs)+"_"+strftime("%Y_%m_%d_%H_%M", gmtime())+".tfv"
+
+#tf.saved_model.save(translator, modelexportfilename)

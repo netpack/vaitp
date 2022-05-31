@@ -26,7 +26,13 @@ public:
     void rm_temp();
     void rm_temp_diffs();
     int cvefixes_count_diffs();
+    int cvefixes_count_entries();
     QStringList getAndProcess_dataset_diffs();
+    void set_file_to_scan(QString aFile);
+    QString run_classificator_model();
+    QStringList getAndProcess_dataset_commonwords();
+    int cvefixes_count_oneline_diffs();
+    QStringList getAndProcess_dataset_oneline_diffs();
 };
 
 #endif // AIMODULE_H
