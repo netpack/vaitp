@@ -9,8 +9,8 @@
 #include <QSqlQuery>
 
 QString path_to_classificator = "../vaitp/VAITP_AI_RNN_Classificator_RunModel.py";
+QString path_to_s2s = "../vaitp/VAITP_AI_S2S_RunModel.py";
 QString file_to_scan="vaitp.vaitp";
-
 
 aimodule::aimodule()
 {
@@ -21,28 +21,105 @@ void aimodule::set_file_to_scan(QString aFile){
     file_to_scan = aFile;
 }
 
-QString aimodule::run_classificator_model(){
+QString aimodule::getSelectedFile(){
+    return file_to_scan;
+}
+
+QStringList aimodule::run_classificator_model(QString selected_ai_classificator_model){
+
+    QStringList out;
 
     QString command("python");
     QStringList params;
 
     qDebug() << "AI Run Classificator. Selected file: " << file_to_scan;
 
-    params = QStringList() << path_to_classificator << "-i" << file_to_scan;
+    params = QStringList() << path_to_classificator << "-i" << file_to_scan <<"-o"<<"-m"<<selected_ai_classificator_model;
+
+    qDebug()<<"CMD::: "<<command<<" "<<params;
 
     QProcess p;
     p.start(command, params);
-    p.waitForFinished();
 
-    QString output(p.readAllStandardOutput());
+    p.waitForReadyRead(120000);
+    p.waitForFinished(120000);
+
+    QString output(p.readAll());
     qDebug()<<"VAITP :: AI Collector output: "<<output;
-    QString predicted_lable = output.split("label:")[1].remove("\\n").remove("b'").remove("'").trimmed();
+    QString predicted_lable = output.split("label:")[1].split("\n")[0].remove("b'").remove("'").trimmed();
+
+    out.append(predicted_lable);
+
     qDebug() << "AI Classificator Run model result: " << predicted_lable;
+    QStringList probable_injection_points = output.split("[0]");
+
+    probable_injection_points.removeDuplicates();
+
+    int skip1st=0;
+    for(QString pe : probable_injection_points){
+        if(skip1st==0){
+            skip1st=1;
+            continue;
+        }
+        pe = pe.remove(" Injectable AST node python code: ").remove("\n").trimmed();
+        qDebug()<<"Probable injection point from AI model: "<<pe;
+        out.append(pe);
+    }
 
     p.close();
 
-    return predicted_lable;
 
+
+    return out;
+
+}
+
+
+QStringList aimodule::run_s2s_model(QStringList probable_inj_points, int limit_s2s){
+    QStringList out;
+    int i=0;
+    try {
+        for(QString pin : probable_inj_points){
+            i++;
+            if(i==limit_s2s+1)
+                break;
+
+            QString command("python");
+            QStringList params;
+
+            qDebug() << "AI Run S2S. Input string: " << pin;
+
+            params = QStringList() << path_to_s2s << "-i" << pin;
+            qDebug()<<"params :::: "<<params;
+
+            QProcess p;
+            p.start(command, params);
+            p.waitForReadyRead(120000);
+            p.waitForFinished(120000);
+
+            //qDebug()<<"p :: " << p.readAllStandardError();
+            //qDebug()<<"p2 :: " << p.readAll();
+
+            QString output(p.readAll());
+            qDebug()<<"VAITP :: AI S2S output: "<<output;
+            QString predicted_tr;
+            try {
+
+                predicted_tr = output.split("Result:")[1].remove("\n").trimmed();
+                out.append(predicted_tr);
+                qDebug() << "AI S2S run model predicted translation: " << predicted_tr;
+
+            }  catch (QString error) {
+                qDebug()<<"Error translating with S2S: "<<error;
+            }
+            p.close();
+
+        }
+    }   catch (QString error) {
+        qDebug()<<"Error index s2s: "<<error;
+    }
+
+    return out;
 }
 
 int aimodule::cvefixes_count_diffs()

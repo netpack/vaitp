@@ -29,10 +29,12 @@ public:
     int cvefixes_count_entries();
     QStringList getAndProcess_dataset_diffs();
     void set_file_to_scan(QString aFile);
-    QString run_classificator_model();
+    QStringList run_classificator_model(QString selected_ai_classificator_model);
     QStringList getAndProcess_dataset_commonwords();
     int cvefixes_count_oneline_diffs();
     QStringList getAndProcess_dataset_oneline_diffs();
+    QStringList run_s2s_model(QStringList probable_inj_points,int limit_s2s);
+    QString getSelectedFile();
 };
 
 #endif // AIMODULE_H

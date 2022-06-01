@@ -11,6 +11,8 @@
 #include "aimodule.h"
 #include "detectionmodule.h"
 
+int vaitp_loaded=0;
+
 /**
  * @brief VAITP::VAITP
  * @param parent: main VAITP process
@@ -19,6 +21,7 @@ VAITP::VAITP(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::VAITP)
 {
+
     ui->setupUi(this);
     qDebug() << "Welcome to VAITP by Frédéric Bogaerts!";
 
@@ -36,9 +39,20 @@ VAITP::VAITP(QWidget *parent)
 
     QSqlQuery query;
     QString vaitp_models_path="";
+    QString vaitp_log_path="";
+    int ai_classificator_selected=0;
     int use_ai_classificator=0;
     int use_ai_s2s=0;
     QStringList models;
+
+    //load the value of vaitp_log_path
+    if(query.exec("SELECT vaitp_log_path from settings")){
+        while(query.next()){
+            vaitp_log_path = query.value(0).toString();
+            ui->txt_vaitp_log_path->setText(vaitp_log_path);
+        }
+    }
+    qDebug()<<"VAITP AI models path set to: "<<vaitp_models_path;
 
     //load the value of vaitp_ai_models_path
     if(query.exec("SELECT vaitp_ai_models_path from settings")){
@@ -58,9 +72,9 @@ VAITP::VAITP(QWidget *parent)
         }
     }
     qDebug()<<"VAITP AI use_ai_classificator set to: "<<use_ai_classificator;
-    //TODO: load the value of ai_classificator_selected
 
-    //TODO: load the value of use_ai_s2s
+
+    //load the value of use_ai_s2s
     if(query.exec("SELECT use_ai_s2s from settings")){
         while(query.next()){
             use_ai_s2s = query.value(0).toInt();
@@ -89,6 +103,17 @@ VAITP::VAITP(QWidget *parent)
 
 
 
+    //load the value of ai_classificator_selected
+    if(query.exec("SELECT ai_classificator_selected from settings")){
+        while(query.next()){
+            ai_classificator_selected = query.value(0).toInt();
+            ui->comboBox_vaitp_ai_classificator->setCurrentIndex(ai_classificator_selected);
+            qDebug()<<"VAITP AI ai_classificator_selected set to: "<<use_ai_classificator;
+        }
+    }
+
+
+    vaitp_loaded=1;
 }
 
 /**
@@ -127,6 +152,7 @@ void VAITP::on_bt_scan_py_clicked()
     ui->lst_injectionPoints->clear();
     ui->lbl_ai_classificator_run->setText("");
 
+    int s2s_inj_limit = ui->txt_s2s_inj_limit->value();
 
 
     //disable the attack button
@@ -168,22 +194,116 @@ void VAITP::on_bt_scan_py_clicked()
             qApp->processEvents();
         }
 
-        qDebug()<<"VAITP :: Scanning with AI classificator...";
-        ui->txt_output_sh1->appendHtml(tr("Scanning with AI classificator..."));
-        qApp->processEvents();
-
 
         if(ui->checkBox_use_vaitp_ai_classificator->isChecked()){
+
+            qDebug()<<"VAITP :: Scanning with AI classificator...";
+            ui->txt_output_sh1->appendHtml(tr("Scanning with AI classificator..."));
+            qApp->processEvents();
+
+            QString selected_ai_classificator_model = ui->comboBox_vaitp_ai_classificator->currentText();
+
+            ui->txt_output_sh1->appendHtml(tr("Selected AI classificator: ")+selected_ai_classificator_model);
+            qApp->processEvents();
+
+            ui->lbl_ai_classificator_run->setText(tr("Scanning..."));
+            qApp->processEvents();
+
             aimodule ai;
             ai.set_file_to_scan(pyfile);
-            QString predicted_lable = ai.run_classificator_model();
-            ui->lbl_ai_classificator_run->setText(predicted_lable);
+            QString selected_ai_classificator_model_wpath = ui->txt_vaitp_models_path->text()+"/"+selected_ai_classificator_model+".tfv";
 
-            if(predicted_lable=="injectable"){
+            qDebug()<<"AI Classificator with path: "<<selected_ai_classificator_model_wpath;
+
+            QStringList predicted_lable = ai.run_classificator_model(selected_ai_classificator_model_wpath);
+            ui->lbl_ai_classificator_run->setText(predicted_lable[0]);
+            QStringList probable_inj_points;
+            QStringList translated_inj_points;
+
+            if(predicted_lable[0]=="injectable"){
 
                 qDebug()<<"VAITP :: Scanning with AI classificator revealed an injectable script!";
                 ui->txt_output_sh1->appendHtml(tr("Scanning with AI classificator revealed an injectable script!"));
+
                 qApp->processEvents();
+
+                int ig=0;
+                for(QString ip: predicted_lable){
+                    ig++;
+                    if(ig==1)
+                        continue; //ignore "injectable" in [0]
+                    ui->txt_output_sh1->appendHtml(tr("Possible injection point detected by AI Classificator model: ")+ip);
+                    qApp->processEvents();
+                    probable_inj_points.append(ip);
+                }
+
+
+
+                //use s2s to try to translate the qstringlist
+                if(ui->checkBox_use_vaitp_ai_s2s->isChecked()){
+
+                    ui->txt_output_sh1->appendHtml(tr("Translating probable injection points with AI S2S. Please wait..."));
+                    qApp->processEvents();
+
+
+                    QStringList translated_injection_points = ai.run_s2s_model(probable_inj_points,s2s_inj_limit);
+                    try {
+                        for(QString tr_ip: translated_injection_points){
+
+                            ui->txt_output_sh1->appendHtml(tr("Possible injection point translated by AI S2S model: ")+tr_ip);
+                            qApp->processEvents();
+                            translated_inj_points.append(tr_ip);
+                        }
+                    }  catch (QString err) {
+                        qDebug()<<"Error2:: "<<err;
+                    }
+
+                    //compose injection entries
+                    try {
+                        int ipn=0;
+                        for(QString tr:translated_injection_points){
+
+                            qApp->processEvents();
+                            QString p_inj_p = probable_inj_points[ipn];
+                            QString t_inj_p = translated_injection_points[ipn];
+                            QString new_inj_string = p_inj_p+" :: "+t_inj_p;
+                            qDebug()<<"New injection string composed: "<<new_inj_string;
+                            //line number //line content
+                            int line_number=0;
+                            QString line="";
+                            QFile file(ai.getSelectedFile());
+                            if ( file.open(QIODevice::ReadOnly | QIODevice::Text) ){
+
+                                QTextStream stream( &file );
+
+                                while ( !stream.atEnd() ){
+                                    line_number++;
+                                    line = stream.readLine();
+                                    //qDebug()<<"IF AI SCANN :: Line: "<<line<<" ::has:: "<<p_inj_p;
+                                    if(line.contains(p_inj_p)){
+                                        qDebug()<<"VAITP AI INJ TR :: Found line number: "<<line_number;
+                                        break;
+                                    }
+                                }
+                            new_inj_string += " :: Line "+QString::number(line_number)+" :: "+line;
+                            file.close();
+                            ui->lst_injectionPoints->addItem(new_inj_string);
+                            ipn++;
+                            }
+
+                        }
+                    }  catch (QString err) {
+                        qDebug()<<"err22: "<<err;
+                    }
+
+                } else {
+                    ui->txt_output_sh1->appendHtml(tr("S2S disabled in settings. Possible injection points from AI will be ignored."));
+                    qApp->processEvents();
+                }
+
+
+
+
             }
 
         } else {
@@ -957,4 +1077,37 @@ void VAITP::on_bt_extract_one_line_clicked()
 }
 
 
+
+
+void VAITP::on_bt_load_log_output_path_clicked()
+{
+    //show the directory dialog
+    QFileDialog dialog(this);
+    dialog.setViewMode(QFileDialog::Detail);
+    dialog.setFileMode(QFileDialog::AnyFile);
+    QString fileName = QFileDialog::getExistingDirectory(this, tr("Open VAITP Log output folder"), "/home/");
+    QLineEdit* txt_py_src = ui->txt_vaitp_log_path;
+    txt_py_src->setText(fileName);
+
+
+    QSqlQuery query;
+    query.prepare("UPDATE settings set vaitp_log_path=:path;");
+    query.bindValue(":path",fileName);
+    qDebug()<<"SQL VAITP :: "<<query.exec();
+
+
+}
+
+
+void VAITP::on_comboBox_vaitp_ai_classificator_currentIndexChanged(int index)
+{
+    if(vaitp_loaded==1){
+        qDebug()<<"index changed to "<<index;
+        QSqlQuery query;
+        query.prepare("UPDATE settings set ai_classificator_selected=:ai_classificator_selected;");
+        query.bindValue(":ai_classificator_selected",index);
+        query.exec();
+    }
+
+}
 

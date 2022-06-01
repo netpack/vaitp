@@ -1,26 +1,17 @@
 import sys
-from tensorflow import keras
+#from tensorflow import keras
 import tensorflow as tf
-import tensorflow_datasets as tfds
-from tensorflow.keras import layers
-from tensorflow.keras import losses
-from tensorflow.keras import utils
-from tensorflow.keras.layers import TextVectorization
-import tensorflow_datasets as tfds
-import tensorflow_text as tf_text
 import ast
-import numpy as np
+#import numpy as np
 import pathlib
 from optparse import OptionParser
-#import time
-#from datetime import timedelta
 
-#time_start = time.time()
 
 #parameters parsing
 parser = OptionParser()
 parser.add_option("-i", "--input_file", action="store", type="string", dest="input_file", help="Set the input Python file to be scanned")
 parser.add_option("-o", "--optimize_granularity", action="store_true", dest="optimize_granularity", help="Try to optimize granulariy of inputs predicted as 'injectable'")
+parser.add_option("-m", "--use-model", action="store", type="string", dest="use_model", help="Set the model to use")
 
 (options, sys.argv) = parser.parse_args(sys.argv)
 
@@ -37,9 +28,13 @@ def get_string_labels(predicted_scores_batch):
 
 
 #Vars
-path_to_exported_models = "H:/home/fred/msi/ano2/VAITP/VAITP GUI/vaitp/exported_ai_models/"
+path_to_exported_models = "/home/fred/msi/ano2/VAITP/VAITP GUI/vaitp/exported_ai_models/"
 #model_name = "vaitp_classificator_model_8000_10000_1370_0.99_2022_04_25_10_44.tfv"
-model_name = "vaitp_classificator_model_0.86_BOW_80_5_2022_05_21_11_38.tfv"
+if not options.use_model:
+  model_name = "vaitp_classificator_model_0.86_BOW_80_5_2022_05_21_11_38.tfv"
+else:
+  model_name = options.use_model
+
 input_newcode = "../vaitp/VAITP_AI_RNN_Classificator_newInput.vaitp"
 pyfile = "vaitpscan.py"
 
@@ -59,8 +54,12 @@ pyfile_ast = ast.dump(pyfile_ast_parsed)
 
 
 #Load the model
-model_p = path_to_exported_models+model_name
-model = keras.models.load_model(model_p)
+if not options.use_model:
+  model_p = path_to_exported_models+model_name
+else:
+  model_p = model_name #with -m the full path is expected
+
+model = tf.keras.models.load_model(model_p)
 
 #print(f'Model Loaded: {model_name}')
 
@@ -90,7 +89,7 @@ dataset_dir = pathlib.Path("../vaitp/vaitp_dataset_ast")
 train_dir = dataset_dir/'train'
 batch_size = 10
 seed = 4
-raw_train_ds = utils.text_dataset_from_directory(
+raw_train_ds = tf.keras.utils.text_dataset_from_directory(
     train_dir,
     batch_size=batch_size,
     validation_split=0.2,
@@ -121,11 +120,6 @@ for input, label in zip(final_input_string, predicted_labels):
         pycode = str(ast.get_source_segment(source,node))
         n = pycode.count('\n')
         if n == 0 and pycode != 'None':
-          print(f'[{n}]] Injectable AST node python code: {pycode}')
+          print(f'[{n}] Injectable AST node python code: {pycode}')
       
-
-
-#time_now = time.time()
-#time_delta = time_now-time_start
-#print(f'AI RNN Classificator Model finished in {timedelta(seconds=time_delta)}')
 

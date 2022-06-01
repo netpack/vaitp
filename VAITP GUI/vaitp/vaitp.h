@@ -51,6 +51,10 @@ private slots:
 
     void on_checkBox_use_vaitp_ai_s2s_stateChanged(int arg1);
 
+    void on_bt_load_log_output_path_clicked();
+
+    void on_comboBox_vaitp_ai_classificator_currentIndexChanged(int index);
+
 private:
     Ui::VAITP *ui;
 };

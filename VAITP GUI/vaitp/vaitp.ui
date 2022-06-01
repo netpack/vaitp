@@ -45,12 +45,12 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>1311</width>
+      <width>1321</width>
       <height>561</height>
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <property name="iconSize">
      <size>
@@ -172,12 +172,12 @@
        <rect>
         <x>6</x>
         <y>70</y>
-        <width>1291</width>
+        <width>1301</width>
         <height>281</height>
        </rect>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="tab_vulnerabilities">
        <attribute name="title">
@@ -277,8 +277,8 @@
          <rect>
           <x>10</x>
           <y>30</y>
-          <width>351</width>
-          <height>141</height>
+          <width>551</width>
+          <height>171</height>
          </rect>
         </property>
        </widget>
@@ -289,7 +289,7 @@
         <property name="geometry">
          <rect>
           <x>10</x>
-          <y>180</y>
+          <y>210</y>
           <width>171</width>
           <height>31</height>
          </rect>
@@ -301,7 +301,7 @@
        <widget class="QLabel" name="label_8">
         <property name="geometry">
          <rect>
-          <x>730</x>
+          <x>950</x>
           <y>10</y>
           <width>141</width>
           <height>18</height>
@@ -314,17 +314,17 @@
        <widget class="QListWidget" name="lst_injectedFiles">
         <property name="geometry">
          <rect>
-          <x>730</x>
+          <x>950</x>
           <y>30</y>
           <width>341</width>
-          <height>141</height>
+          <height>171</height>
          </rect>
         </property>
        </widget>
        <widget class="QLabel" name="label_5">
         <property name="geometry">
          <rect>
-          <x>370</x>
+          <x>580</x>
           <y>10</y>
           <width>161</width>
           <height>18</height>
@@ -337,10 +337,10 @@
        <widget class="QListWidget" name="lst_injectionsChain">
         <property name="geometry">
          <rect>
-          <x>370</x>
+          <x>580</x>
           <y>30</y>
           <width>351</width>
-          <height>141</height>
+          <height>171</height>
          </rect>
         </property>
        </widget>
@@ -350,8 +350,8 @@
         </property>
         <property name="geometry">
          <rect>
-          <x>190</x>
-          <y>180</y>
+          <x>200</x>
+          <y>210</y>
           <width>171</width>
           <height>31</height>
          </rect>
@@ -366,8 +366,8 @@
         </property>
         <property name="geometry">
          <rect>
-          <x>370</x>
-          <y>180</y>
+          <x>580</x>
+          <y>210</y>
           <width>171</width>
           <height>31</height>
          </rect>
@@ -382,8 +382,8 @@
         </property>
         <property name="geometry">
          <rect>
-          <x>730</x>
-          <y>180</y>
+          <x>950</x>
+          <y>210</y>
           <width>161</width>
           <height>31</height>
          </rect>
@@ -398,8 +398,8 @@
         </property>
         <property name="geometry">
          <rect>
-          <x>900</x>
-          <y>180</y>
+          <x>1120</x>
+          <y>210</y>
           <width>171</width>
           <height>31</height>
          </rect>
@@ -411,8 +411,8 @@
        <widget class="QPushButton" name="bt_clearInjectionChain">
         <property name="geometry">
          <rect>
-          <x>550</x>
-          <y>180</y>
+          <x>760</x>
+          <y>210</y>
           <width>171</width>
           <height>31</height>
          </rect>
@@ -817,7 +817,7 @@
          </rect>
         </property>
         <property name="text">
-         <string>VAITP models path:</string>
+         <string>VAITP AI models path:</string>
         </property>
        </widget>
        <widget class="QCheckBox" name="checkBox_use_vaitp_ai_s2s">
@@ -903,11 +903,76 @@
        <widget class="QComboBox" name="comboBox_vaitp_ai_classificator">
         <property name="geometry">
          <rect>
-          <x>460</x>
-          <y>320</y>
+          <x>390</x>
+          <y>324</y>
           <width>481</width>
           <height>31</height>
          </rect>
+        </property>
+       </widget>
+       <widget class="QSpinBox" name="txt_s2s_inj_limit">
+        <property name="geometry">
+         <rect>
+          <x>340</x>
+          <y>410</y>
+          <width>51</width>
+          <height>26</height>
+         </rect>
+        </property>
+        <property name="minimum">
+         <number>1</number>
+        </property>
+        <property name="value">
+         <number>3</number>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_23">
+        <property name="geometry">
+         <rect>
+          <x>220</x>
+          <y>410</y>
+          <width>111</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Limit S2S translations:</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_24">
+        <property name="geometry">
+         <rect>
+          <x>220</x>
+          <y>30</y>
+          <width>191</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>VAITP Log output path:</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="txt_vaitp_log_path">
+        <property name="geometry">
+         <rect>
+          <x>220</x>
+          <y>60</y>
+          <width>571</width>
+          <height>31</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QToolButton" name="bt_load_log_output_path">
+        <property name="geometry">
+         <rect>
+          <x>800</x>
+          <y>60</y>
+          <width>61</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>...</string>
         </property>
        </widget>
       </widget>
@@ -1124,7 +1189,7 @@
      <x>0</x>
      <y>0</y>
      <width>1326</width>
-     <height>25</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
