@@ -1,0 +1,64 @@
+Module(
+    body=[
+        FunctionDef(
+            name='shortenurl',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Compare(
+                        left=Attribute(
+                            value=Name(id='request', ctx=Load()),
+                            attr='method',
+                            ctx=Load()),
+                        ops=[
+                            Eq()],
+                        comparators=[
+                            Constant(value='POST')]),
+                    body=[
+                        Return(
+                            value=Call(
+                                func=Name(id='render_template', ctx=Load()),
+                                args=[
+                                    Constant(value='shortenurl.html')],
+                                keywords=[
+                                    keyword(
+                                        arg='shortcode',
+                                        value=Subscript(
+                                            value=Attribute(
+                                                value=Name(id='request', ctx=Load()),
+                                                attr='form',
+                                                ctx=Load()),
+                                            slice=Constant(value='shortcode'),
+                                            ctx=Load()))]))],
+                    orelse=[
+                        If(
+                            test=Compare(
+                                left=Attribute(
+                                    value=Name(id='request', ctx=Load()),
+                                    attr='method',
+                                    ctx=Load()),
+                                ops=[
+                                    Eq()],
+                                comparators=[
+                                    Constant(value='GET')]),
+                            body=[
+                                Return(
+                                    value=Call(
+                                        func=Name(id='redirect', ctx=Load()),
+                                        args=[
+                                            Call(
+                                                func=Name(id='url_for', ctx=Load()),
+                                                args=[
+                                                    Constant(value='home')],
+                                                keywords=[])],
+                                        keywords=[]))],
+                            orelse=[
+                                Return(
+                                    value=Constant(value='Not a valid request method for this route'))])])],
+            decorator_list=[])],
+    type_ignores=[])

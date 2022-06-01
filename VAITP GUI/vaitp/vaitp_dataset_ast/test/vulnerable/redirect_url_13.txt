@@ -1,0 +1,32 @@
+Module(
+    body=[
+        ImportFrom(
+            module='flask',
+            names=[
+                alias(name='Flask'),
+                alias(name='redirect')],
+            level=0),
+        FunctionDef(
+            name='xyz_abc',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='path', ctx=Store())],
+                    value=Constant(value='/home')),
+                Return(
+                    value=Call(
+                        func=Name(id='redirect', ctx=Load()),
+                        args=[
+                            Name(id='path', ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='code',
+                                value=Constant(value=302))]))],
+            decorator_list=[])],
+    type_ignores=[])

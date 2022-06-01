@@ -1,0 +1,68 @@
+Module(
+    body=[
+        Assign(
+            targets=[
+                Name(id='parser', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='xml', ctx=Load()),
+                        attr='sax',
+                        ctx=Load()),
+                    attr='make_parser',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='myHandler', ctx=Store())],
+            value=Call(
+                func=Name(id='MyHandler', ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='parser', ctx=Load()),
+                    attr='setContentHandler',
+                    ctx=Load()),
+                args=[
+                    Name(id='myHandler', ctx=Load())],
+                keywords=[])),
+        FunctionDef(
+            name='func',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='parser')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='parser', ctx=Load()),
+                            attr='setFeature',
+                            ctx=Load()),
+                        args=[
+                            Name(id='feature_external_ges', ctx=Load()),
+                            Constant(value=True)],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='parser', ctx=Load()),
+                            attr='parse',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='ressources/xxe.xml')],
+                        keywords=[]))],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='func', ctx=Load()),
+                args=[
+                    Name(id='parse', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

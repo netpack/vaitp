@@ -1,0 +1,23 @@
+Module(
+    body=[
+        FunctionDef(
+            name='random_name',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Name(id='redirect', ctx=Load()),
+                        args=[
+                            Call(
+                                func=Name(id='url_for', ctx=Load()),
+                                args=[
+                                    Constant(value='xyz')],
+                                keywords=[])],
+                        keywords=[]))],
+            decorator_list=[])],
+    type_ignores=[])

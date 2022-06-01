@@ -1,0 +1,47 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        ImportFrom(
+            module='flask',
+            names=[
+                alias(name='Flask'),
+                alias(name='redirect')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='app', ctx=Store())],
+            value=Call(
+                func=Name(id='Flask', ctx=Load()),
+                args=[
+                    Name(id='__name__', ctx=Load())],
+                keywords=[])),
+        FunctionDef(
+            name='hello',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Name(id='redirect', ctx=Load()),
+                        args=[
+                            Constant(value='http://www.example.com')],
+                        keywords=[
+                            keyword(
+                                arg='code',
+                                value=Constant(value=302))]))],
+            decorator_list=[
+                Call(
+                    func=Attribute(
+                        value=Name(id='app', ctx=Load()),
+                        attr='route',
+                        ctx=Load()),
+                    args=[
+                        Constant(value='/')],
+                    keywords=[])])],
+    type_ignores=[])

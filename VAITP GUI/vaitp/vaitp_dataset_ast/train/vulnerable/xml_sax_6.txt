@@ -1,0 +1,13 @@
+Module(
+    body=[
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='parser', ctx=Load()),
+                    attr='setFeature',
+                    ctx=Load()),
+                args=[
+                    Name(id='feature_external_ges', ctx=Load()),
+                    Constant(value=True)],
+                keywords=[]))],
+    type_ignores=[])

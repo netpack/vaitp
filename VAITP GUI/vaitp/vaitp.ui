@@ -50,7 +50,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <property name="iconSize">
      <size>
@@ -903,8 +903,8 @@
        <widget class="QComboBox" name="comboBox_vaitp_ai_classificator">
         <property name="geometry">
          <rect>
-          <x>390</x>
-          <y>324</y>
+          <x>460</x>
+          <y>320</y>
           <width>481</width>
           <height>31</height>
          </rect>
@@ -1124,7 +1124,7 @@
      <x>0</x>
      <y>0</y>
      <width>1326</width>
-     <height>22</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

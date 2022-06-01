@@ -1,4 +1,4 @@
-   from django.shortcuts import redirect
+from django.shortcuts import redirect
 
-   def optout(request):
-       return redirect(url_for("example"))
+def optout(request):
+    return redirect(url_for("example"))

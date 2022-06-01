@@ -1,0 +1,71 @@
+Module(
+    body=[
+        Assign(
+            targets=[
+                Name(id='id', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='request', ctx=Load()),
+                        attr='GET',
+                        ctx=Load()),
+                    attr='get',
+                    ctx=Load()),
+                args=[
+                    Constant(value='id')],
+                keywords=[])),
+        FunctionDef(
+            name='some_xyz_name',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='id')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='st', ctx=Store())],
+                    value=Call(
+                        func=Name(id='text', ctx=Load()),
+                        args=[
+                            Constant(value='SELECT * FROM users where id=:id')],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='qy', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Call(
+                                func=Attribute(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Attribute(
+                                                value=Call(
+                                                    func=Name(id='SQLAlchemy', ctx=Load()),
+                                                    args=[],
+                                                    keywords=[]),
+                                                attr='session',
+                                                ctx=Load()),
+                                            attr='query',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='User', ctx=Load())],
+                                        keywords=[]),
+                                    attr='from_statement',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='st', ctx=Load())],
+                                keywords=[]),
+                            attr='params',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[
+                            keyword(
+                                arg='id',
+                                value=Name(id='id', ctx=Load()))])),
+                Return(
+                    value=Name(id='qy', ctx=Load()))],
+            decorator_list=[])],
+    type_ignores=[])

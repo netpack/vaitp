@@ -1,0 +1,64 @@
+Module(
+    body=[
+        FunctionDef(
+            name='filter',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='url')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='s', ctx=Store())],
+                    value=Call(
+                        func=Name(id='len', ctx=Load()),
+                        args=[
+                            Name(id='whitelist', ctx=Load())],
+                        keywords=[])),
+                Try(
+                    body=[
+                        Return(
+                            value=Call(
+                                func=Name(id='HttpResponseRedirect', ctx=Load()),
+                                args=[
+                                    Name(id='url', ctx=Load())],
+                                keywords=[]))],
+                    handlers=[
+                        ExceptHandler(
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            Constant(value='some error occured')],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='url', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='request', ctx=Load()),
+                        attr='GET',
+                        ctx=Load()),
+                    attr='get',
+                    ctx=Load()),
+                args=[
+                    Constant(value='home'),
+                    Constant(value='/')],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='res', ctx=Store())],
+            value=Call(
+                func=Name(id='filter', ctx=Load()),
+                args=[
+                    Name(id='url', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

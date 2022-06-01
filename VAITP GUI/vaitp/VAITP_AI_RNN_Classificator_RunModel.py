@@ -37,7 +37,7 @@ def get_string_labels(predicted_scores_batch):
 
 
 #Vars
-path_to_exported_models = "/home/fred/msi/ano2/VAITP/VAITP GUI/vaitp/exported_ai_models/"
+path_to_exported_models = "H:/home/fred/msi/ano2/VAITP/VAITP GUI/vaitp/exported_ai_models/"
 #model_name = "vaitp_classificator_model_8000_10000_1370_0.99_2022_04_25_10_44.tfv"
 model_name = "vaitp_classificator_model_0.86_BOW_80_5_2022_05_21_11_38.tfv"
 input_newcode = "../vaitp/VAITP_AI_RNN_Classificator_newInput.vaitp"

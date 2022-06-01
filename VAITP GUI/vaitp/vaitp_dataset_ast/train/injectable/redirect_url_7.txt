@@ -1,0 +1,16 @@
+Module(
+    body=[
+        Expr(
+            value=Call(
+                func=Name(id='redirect', ctx=Load()),
+                args=[
+                    Call(
+                        func=Name(id='url_for', ctx=Load()),
+                        args=[
+                            Constant(value='some-name')],
+                        keywords=[])],
+                keywords=[
+                    keyword(
+                        arg='foo',
+                        value=Constant(value='bar'))]))],
+    type_ignores=[])

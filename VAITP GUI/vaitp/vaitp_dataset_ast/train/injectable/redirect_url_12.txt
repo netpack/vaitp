@@ -1,0 +1,39 @@
+Module(
+    body=[
+        ImportFrom(
+            module='flask',
+            names=[
+                alias(name='Flask'),
+                alias(name='redirect')],
+            level=0),
+        FunctionDef(
+            name='xyz_abc',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='url')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Name(id='redirect', ctx=Load()),
+                        args=[
+                            Call(
+                                func=Name(id='url_for', ctx=Load()),
+                                args=[
+                                    Name(id='url', ctx=Load())],
+                                keywords=[])],
+                        keywords=[
+                            keyword(
+                                arg='code',
+                                value=Constant(value=302))]))],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='xyz_abc', ctx=Load()),
+                args=[
+                    Constant(value='https://example.com')],
+                keywords=[]))],
+    type_ignores=[])

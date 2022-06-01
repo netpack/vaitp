@@ -1,4 +1,4 @@
-   from django.shortcuts import redirect
+from django.shortcuts import redirect
 
-   def optout(request):
-       return redirect("http://stackoverflow.com/")
+def optout(request):
+   return redirect("http://stackoverflow.com/")

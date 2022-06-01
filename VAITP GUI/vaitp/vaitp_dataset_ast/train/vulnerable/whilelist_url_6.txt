@@ -1,0 +1,51 @@
+Module(
+    body=[
+        Assign(
+            targets=[
+                Name(id='l', ctx=Store())],
+            value=List(
+                elts=[
+                    Constant(value='www.uc.pt'),
+                    Constant(value='uc.pt')],
+                ctx=Load())),
+        FunctionDef(
+            name='filter',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='whitelist')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='url', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='request', ctx=Load()),
+                                attr='GET',
+                                ctx=Load()),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='home'),
+                            Constant(value='/')],
+                        keywords=[])),
+                Return(
+                    value=Call(
+                        func=Name(id='HttpResponseRedirect', ctx=Load()),
+                        args=[
+                            Name(id='url', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='res', ctx=Store())],
+            value=Call(
+                func=Name(id='filter', ctx=Load()),
+                args=[
+                    Name(id='l', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

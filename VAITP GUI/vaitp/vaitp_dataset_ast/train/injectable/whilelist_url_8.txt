@@ -1,0 +1,62 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='request')]),
+        ImportFrom(
+            module='django.http',
+            names=[
+                alias(name='HttpResponseRedirect')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='url', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='request', ctx=Load()),
+                        attr='GET',
+                        ctx=Load()),
+                    attr='get',
+                    ctx=Load()),
+                args=[
+                    Constant(value='next'),
+                    Constant(value='/')],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='DOMAINS_WHITELIST', ctx=Store())],
+            value=List(
+                elts=[
+                    Constant(value='www.uc.pt'),
+                    Constant(value='uc.pt')],
+                ctx=Load())),
+        Assign(
+            targets=[
+                Name(id='parsed_uri', ctx=Store())],
+            value=Call(
+                func=Name(id='urlparse', ctx=Load()),
+                args=[
+                    Name(id='url', ctx=Load())],
+                keywords=[])),
+        If(
+            test=Compare(
+                left=Attribute(
+                    value=Name(id='parsed_uri', ctx=Load()),
+                    attr='netloc',
+                    ctx=Load()),
+                ops=[
+                    In()],
+                comparators=[
+                    Name(id='DOMAINS_WHITELIST', ctx=Load())]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='res', ctx=Store())],
+                    value=Call(
+                        func=Name(id='HttpResponseRedirect', ctx=Load()),
+                        args=[
+                            Name(id='url', ctx=Load())],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])
