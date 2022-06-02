@@ -55,6 +55,18 @@ private slots:
 
     void on_comboBox_vaitp_ai_classificator_currentIndexChanged(int index);
 
+
+    void on_bt_setInjectedFileAsTarget_clicked();
+
+
+    void on_checkBox_change_dir_on_attack_stateChanged(int arg1);
+
+    void on_actionImport_payloads_to_vaitp_db_triggered();
+
+    void on_actionClear_all_outputs_and_lists_triggered();
+
+    void on_bt_exportReport_clicked();
+
 private:
     Ui::VAITP *ui;
 };
