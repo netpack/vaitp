@@ -43,6 +43,7 @@ VAITP::VAITP(QWidget *parent)
     int ai_classificator_selected=0;
     int use_ai_classificator=0;
     int use_ai_s2s=0;
+    int change_dir_on_attack=0;
     QStringList models;
 
     //load the value of vaitp_log_path
@@ -85,6 +86,18 @@ VAITP::VAITP(QWidget *parent)
     qDebug()<<"VAITP AI use_ai_s2s set to: "<<use_ai_s2s;
 
 
+    //load the value of change_dir_on_attack
+    if(query.exec("SELECT change_dir_on_attack from settings")){
+        while(query.next()){
+            change_dir_on_attack = query.value(0).toInt();
+            if(change_dir_on_attack==2)
+                ui->checkBox_change_dir_on_attack->setChecked(true);
+        }
+    }
+    qDebug()<<"VAITP AI use_ai_s2s set to: "<<use_ai_s2s;
+
+
+
     //get all ai classificator models and populate ui
     if(!vaitp_models_path.isEmpty()){
         QDir dir(vaitp_models_path);
@@ -111,6 +124,20 @@ VAITP::VAITP(QWidget *parent)
             qDebug()<<"VAITP AI ai_classificator_selected set to: "<<use_ai_classificator;
         }
     }
+
+    //load payloads
+    ui->lst_payload->clear();
+    QSqlQuery qry;
+    qry.prepare("Select payload from payloads");
+    ui->bt_attack->setEnabled(false);
+    qry.exec();
+    while(qry.next()){
+        QListWidgetItem *itm = new QListWidgetItem(QIcon(":/lineicons-free-basic-3.0/png-files/playstation.png"),qry.value(0).toString());
+        ui->lst_payload->addItem(itm);
+        qApp->processEvents();
+    }
+
+    qDebug() << "SQL payloads :: " << qry.lastQuery();
 
 
     vaitp_loaded=1;
@@ -179,7 +206,8 @@ void VAITP::on_bt_scan_py_clicked()
         QStringList detectedVulnerabilities = dm.scanFileForVulnerabilities(pyfile);
         detectedVulnerabilities.removeDuplicates();
         for(int n=0; n<detectedVulnerabilities.count();n++){
-            ui->lst_vulns->addItem(detectedVulnerabilities[n]);
+            QListWidgetItem *itm = new QListWidgetItem(QIcon(":/logo/icon_48.png"),detectedVulnerabilities[n]);
+            ui->lst_vulns->addItem(itm);
         }
 
         qDebug()<<"VAITP :: Scanning injection calls";
@@ -190,7 +218,8 @@ void VAITP::on_bt_scan_py_clicked()
         QStringList detectedInjectionPoints = dm.scanFileForInjectionCalls(pyfile);
         detectedInjectionPoints.removeDuplicates();
         for(int n=0; n<detectedInjectionPoints.count();n++){
-            ui->lst_injectionPoints->addItem(detectedInjectionPoints[n]);
+            QListWidgetItem *itm = new QListWidgetItem(QIcon(":/lineicons-free-basic-3.0/png-files/nonai.png"),detectedInjectionPoints[n]);
+            ui->lst_injectionPoints->addItem(itm);
             qApp->processEvents();
         }
 
@@ -287,7 +316,8 @@ void VAITP::on_bt_scan_py_clicked()
                                 }
                             new_inj_string += " :: Line "+QString::number(line_number)+" :: "+line;
                             file.close();
-                            ui->lst_injectionPoints->addItem(new_inj_string);
+                            QListWidgetItem *itm = new QListWidgetItem(QIcon(":/lineicons-free-basic-3.0/png-files/ai.png"),new_inj_string);
+                            ui->lst_injectionPoints->addItem(itm);
                             ipn++;
                             }
 
@@ -316,7 +346,7 @@ void VAITP::on_bt_scan_py_clicked()
        ui->lbl_target->setText(pyfile);
 
        ui->txt_output_sh1->appendHtml(tr("Scanning Python Script... Done!"));
-
+       qApp->processEvents();
        //ui->bt_auto_daisyChain->setEnabled(true);
 
 
@@ -373,9 +403,10 @@ void VAITP::patchInjection(QString pyfile, bool isChained, QStringList patchList
      ui->lbl_target->setText(outputfilename);
 
      //ui->txt_output_sh1->appendHtml("Injected file output: "+outputfilename);
-     if(!isTemp)
-        ui->lst_injectedFiles->addItem(outputfilename);
-
+     if(!isTemp){
+        QListWidgetItem *itm = new QListWidgetItem(QIcon(":/lineicons-free-basic-3.0/png-files/bug.png"),outputfilename);
+        ui->lst_injectedFiles->addItem(itm);
+    }
 
     //if(QFile::copy(pyfile,outputfilename)){
 
@@ -449,22 +480,7 @@ void VAITP::on_lst_vulns_itemClicked(QListWidgetItem *item)
 {
     qDebug() << "Selected Vulnerability: " << item->text();
 
-    //compose payloads list
-    ui->lst_payload->clear();
     QSqlQuery qry;
-    qry.prepare("Select payload from payloads");
-    //qry.bindValue(0,item->text());
-
-    ui->bt_attack->setEnabled(false);
-
-    qry.exec();
-
-    while(qry.next()){
-        ui->lst_payload->addItem(qry.value(0).toString());
-    }
-
-    qDebug() << "SQL payloads :: " << qry.lastQuery();
-
 
     //get vulnerability description
     ui->txt_vulnDescription->clear();
@@ -489,24 +505,28 @@ void VAITP::on_bt_attack_clicked()
      ui->bt_attack->setEnabled(false);
 
      //if there is only one vulnerability the choise is obvious
-     if(ui->lst_vulns->count()==1){
-        ui->lst_vulns->setCurrentRow(0);
-     }
+     //if(ui->lst_vulns->count()==1){
+       // ui->lst_vulns->setCurrentRow(0);
+     //}
 
      //if there is only one attack the choise is obvious
      if(ui->lst_payload->count()==1){
         ui->lst_payload->setCurrentRow(0);
      }
 
-     if(ui->lst_vulns->currentItem() == NULL || ui->lst_payload->currentItem() == NULL){
+     if(ui->lst_payload->currentItem() == NULL){
 
-         ui->txt_output_sh1->appendHtml("Please select a vulnerability and a payload to launch the attack.");
+         ui->txt_output_sh1->appendHtml("Please select a payload to launch the attack.");
 
      } else {
 
 
-           QString payload = ui->lst_payload->currentItem()->text();
            QString command("python");
+
+
+
+           QString payload = ui->lst_payload->currentItem()->text();
+
            QStringList params;
            QString pyfile = ui->lbl_target->text();
 
@@ -515,24 +535,48 @@ void VAITP::on_bt_attack_clicked()
 
            params = QStringList() << pyfile << payload;
 
+           QFileInfo pyinfo(pyfile);
            QProcess p;
+           if(ui->checkBox_change_dir_on_attack->isChecked()){
+                p.setWorkingDirectory(pyinfo.absolutePath());
+           }
            p.start(command, params);
-           p.waitForFinished();
+           p.waitForReadyRead(120000);
+           p.waitForFinished(120000);
 
-           QString output(p.readAllStandardOutput());
+           QString output(p.readAll());
            qDebug() << "Attack result: " << output;
            ui->txt_output_sh1->appendHtml("Attack output:<br>"+output);
+           //qApp->processEvents();
+
            if(output.contains("root")){
-               QString workingv = "Vulnerability: "+ui->lst_vulns->currentItem()->text()+ " :: Payload: "+payload+" :: File: "+pyfile;
+               qDebug() << "Attack result contains 'root': " << output;
+               QString vuln=ui->lst_vulns->item(0)->text();
+               /*try {
+                   if(ui->lst_vulns->currentItem()->text()!=NULL)
+                        vuln=ui->lst_vulns->currentItem()->text();
+               }  catch (QString err) {
+                   qDebug()<<"No vulnerability selected defauting to 1st in vuln list.";
+               }*/
+               QString workingv = "Vulnerability: "+vuln+ " :: Payload: "+payload+" :: File: "+pyfile;
                bool hasVP=false;
-               for(int i=0; i<ui->lst_workingAttacks->count();i++){
-                   if(ui->lst_workingAttacks->item(i)->text() == workingv){
-                       hasVP=true;
+               try {
+                   for(int i=0; i<ui->lst_workingAttacks->count();i++){
+                       if(ui->lst_workingAttacks->item(i)->text() == workingv){
+                           hasVP=true;
+                       }
                    }
+               }  catch (QString err) {
+                   qDebug()<<"Err :::: "<<err;
                }
-               if(!hasVP)
-                ui->lst_workingAttacks->addItem(workingv);
+
+               if(!hasVP){
+                    qDebug()<<"wv::::::::"<<workingv;
+                    QListWidgetItem *itm = new QListWidgetItem(QIcon(":/lineicons-free-basic-3.0/png-files/diamond-alt.png"),workingv);
+                    ui->lst_workingAttacks->addItem(itm);
+               }
            }
+           qApp->processEvents();
 
            p.close();
 
@@ -581,7 +625,8 @@ void VAITP::on_bt_addToInjectionChain_clicked()
 {
     QString inp = ui->lst_injectionPoints->currentItem()->text();
     qDebug()<<"selected injection to add to chain: "<<inp;
-    ui->lst_injectionsChain->addItem(inp);
+    QListWidgetItem *itm = new QListWidgetItem(QIcon(":/lineicons-free-basic-3.0/png-files/cogs.png"),inp);
+    ui->lst_injectionsChain->addItem(itm);
     ui->bt_executeInjectionChain->setEnabled(true);
 }
 
@@ -599,7 +644,7 @@ void VAITP::on_bt_executeInjectionChain_clicked()
     for(int ci=0; ci<ui->lst_injectionsChain->count();++ci){
 
         pyfile = ui->lbl_target->text();
-        QStringList patchList = ui->lst_injectionPoints->item(ci)->text().split("::");
+        QStringList patchList = ui->lst_injectionsChain->item(ci)->text().split("::");
 
         if(ci==ui->lst_injectionsChain->count()-1){
             patchInjection(pyfile,true,patchList, false);
@@ -1005,7 +1050,7 @@ void VAITP::on_bt_load_ai_models_path_clicked()
 
 }
 
-
+int save_tmp_state=0;
 void VAITP::on_checkBox_use_vaitp_ai_classificator_stateChanged(int arg1)
 {
     qDebug()<<"state changed to "<<arg1;
@@ -1013,6 +1058,16 @@ void VAITP::on_checkBox_use_vaitp_ai_classificator_stateChanged(int arg1)
     query.prepare("UPDATE settings set use_ai_classificator=:use_ai_clas;");
     query.bindValue(":use_ai_clas",arg1);
     query.exec();
+
+    if(arg1==0){
+        //if it's disabled we've got to disable the s2s also
+        save_tmp_state = ui->checkBox_use_vaitp_ai_s2s->isChecked();//save state
+        ui->checkBox_use_vaitp_ai_s2s->setChecked(false);
+        ui->checkBox_use_vaitp_ai_s2s->setEnabled(false);
+    } else{
+        ui->checkBox_use_vaitp_ai_s2s->setEnabled(true);
+        ui->checkBox_use_vaitp_ai_s2s->setChecked(save_tmp_state);//load state
+    }
 }
 
 //TODO: save the value of ai_classificator_selected
@@ -1025,6 +1080,11 @@ void VAITP::on_checkBox_use_vaitp_ai_s2s_stateChanged(int arg1)
     query.prepare("UPDATE settings set use_ai_s2s=:use_ai_s2s;");
     query.bindValue(":use_ai_s2s",arg1);
     query.exec();
+
+    if(arg1==2){
+        //if it's enabled we've got to enable the classificator also
+        ui->checkBox_use_vaitp_ai_classificator->setChecked(true);
+    }
 }
 
 
@@ -1109,5 +1169,26 @@ void VAITP::on_comboBox_vaitp_ai_classificator_currentIndexChanged(int index)
         query.exec();
     }
 
+}
+
+
+
+
+void VAITP::on_bt_setInjectedFileAsTarget_clicked()
+{
+    ui->lbl_target->setText(ui->lst_injectedFiles->currentItem()->text());
+}
+
+
+
+
+void VAITP::on_checkBox_change_dir_on_attack_stateChanged(int arg1)
+{
+    //change_dir_on_attack
+    qDebug()<<"state changed to "<<arg1;
+    QSqlQuery query;
+    query.prepare("UPDATE settings set change_dir_on_attack=:change_dir_on_attack;");
+    query.bindValue(":change_dir_on_attack",arg1);
+    query.exec();
 }
 
