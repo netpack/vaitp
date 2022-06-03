@@ -1,0 +1,88 @@
+Module(
+    body=[
+        FunctionDef(
+            name='test_some_call',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='self')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                ImportFrom(
+                    module='Products.PageTemplates.ZRPythonExpr',
+                    names=[
+                        alias(name='call_with_ns')],
+                    level=0),
+                Assign(
+                    targets=[
+                        Name(id='context', ctx=Store())],
+                    value=List(
+                        elts=[
+                            Constant(value='context')],
+                        ctx=Load())),
+                Assign(
+                    targets=[
+                        Name(id='here', ctx=Store())],
+                    value=List(
+                        elts=[
+                            Constant(value='here')],
+                        ctx=Load())),
+                Assign(
+                    targets=[
+                        Name(id='request', ctx=Store())],
+                    value=Dict(
+                        keys=[
+                            Constant(value='request')],
+                        values=[
+                            Constant(value=1)])),
+                Assign(
+                    targets=[
+                        Name(id='values', ctx=Store())],
+                    value=Dict(
+                        keys=[
+                            Constant(value='context'),
+                            Constant(value='here'),
+                            Constant(value='request')],
+                        values=[
+                            Name(id='context', ctx=Load()),
+                            Name(id='here', ctx=Load()),
+                            Name(id='request', ctx=Load())])),
+                Assign(
+                    targets=[
+                        Name(id='context_results', ctx=Store())],
+                    value=Call(
+                        func=Name(id='call_with_ns', ctx=Load()),
+                        args=[
+                            Lambda(
+                                args=arguments(
+                                    posonlyargs=[],
+                                    args=[
+                                        arg(arg='td')],
+                                    kwonlyargs=[],
+                                    kw_defaults=[],
+                                    defaults=[]),
+                                body=Attribute(
+                                    value=Name(id='td', ctx=Load()),
+                                    attr='this',
+                                    ctx=Load())),
+                            Name(id='values', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='self', ctx=Load()),
+                            attr='failUnless',
+                            ctx=Load()),
+                        args=[
+                            Compare(
+                                left=Name(id='result', ctx=Load()),
+                                ops=[
+                                    Is()],
+                                comparators=[
+                                    Name(id='context', ctx=Load())]),
+                            Name(id='context_results', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[])],
+    type_ignores=[])

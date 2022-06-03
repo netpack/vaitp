@@ -1,0 +1,45 @@
+Module(
+    body=[
+        Try(
+            body=[
+                Import(
+                    names=[
+                        alias(name='ctypes')]),
+                Assign(
+                    targets=[
+                        Name(id='lib', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='ctypes', ctx=Load()),
+                                    attr='LibraryLoader',
+                                    ctx=Load()),
+                                args=[
+                                    Attribute(
+                                        value=Name(id='ctypes', ctx=Load()),
+                                        attr='CDLL',
+                                        ctx=Load())],
+                                keywords=[]),
+                            attr='LoadLibrary',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='soft-pkcs11.so')],
+                        keywords=[])),
+                Delete(
+                    targets=[
+                        Name(id='lib', ctx=Del())]),
+                Assign(
+                    targets=[
+                        Name(id='have_soft_pkcs11', ctx=Store())],
+                    value=Constant(value=True))],
+            handlers=[
+                ExceptHandler(
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='have_soft_pkcs11', ctx=Store())],
+                            value=Constant(value=False))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

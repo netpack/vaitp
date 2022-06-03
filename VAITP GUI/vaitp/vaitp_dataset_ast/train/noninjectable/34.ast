@@ -1,0 +1,19 @@
+Module(
+    body=[
+        ClassDef(
+            name='ZopeEngine',
+            bases=[
+                Name(id='Z3Engine', ctx=Load())],
+            keywords=[],
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='_create_context', ctx=Store())],
+                    value=Name(id='ZopeContext', ctx=Load()))],
+            decorator_list=[
+                Call(
+                    func=Name(id='implementer', ctx=Load()),
+                    args=[
+                        Name(id='IZopeAwareEngine', ctx=Load())],
+                    keywords=[])])],
+    type_ignores=[])

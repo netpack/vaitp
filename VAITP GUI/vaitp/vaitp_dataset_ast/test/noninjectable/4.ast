@@ -1,0 +1,63 @@
+Module(
+    body=[
+        FunctionDef(
+            name='__init__',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='self'),
+                    arg(arg='name'),
+                    arg(arg='inputvar'),
+                    arg(arg='engine')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Attribute(
+                            value=Name(id='self', ctx=Load()),
+                            attr='text',
+                            ctx=Store()),
+                        Attribute(
+                            value=Name(id='self', ctx=Load()),
+                            attr='inputvar',
+                            ctx=Store()),
+                        Name(id='text', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='inputvar', ctx=Load()),
+                                    attr='strip',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[]),
+                            attr='replace',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='\n'),
+                            Constant(value=' ')],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Attribute(
+                            value=Name(id='self', ctx=Load()),
+                            attr='_keys',
+                            ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='use', ctx=Load()),
+                            attr='keys',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Attribute(
+                            value=Name(id='self', ctx=Load()),
+                            attr='_code',
+                            ctx=Store())],
+                    value=Name(id='code_var', ctx=Load()))],
+            decorator_list=[])],
+    type_ignores=[])

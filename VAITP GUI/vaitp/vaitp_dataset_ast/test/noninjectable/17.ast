@@ -1,0 +1,13 @@
+Module(
+    body=[
+        ImportFrom(
+            module='Lib1',
+            names=[
+                alias(name='safe_import1')],
+            level=0),
+        ImportFrom(
+            module='library.power.safe',
+            names=[
+                alias(name='PythonExpr')],
+            level=0)],
+    type_ignores=[])

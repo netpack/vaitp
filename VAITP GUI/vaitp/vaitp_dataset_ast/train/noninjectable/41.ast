@@ -1,0 +1,5 @@
+Module(
+    body=[
+        Expr(
+            value=Constant(value='\nthis is just a commment\n'))],
+    type_ignores=[])

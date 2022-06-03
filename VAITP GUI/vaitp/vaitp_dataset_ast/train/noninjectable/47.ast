@@ -1,0 +1,5 @@
+Module(
+    body=[
+        Expr(
+            value=Constant(value='Calculate the sum of value1 and value2.'))],
+    type_ignores=[])
