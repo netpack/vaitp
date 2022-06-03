@@ -1267,29 +1267,36 @@ void VAITP::on_bt_exportReport_clicked()
         workingattacks+=ui->lst_workingAttacks->item(vu)->text()+"<br>";
     }
 
-    //create print html
-    QString html = "<div style='align=left'>"
-                   "<img width='48px' height='48px' src=':/logo/logo.png'/><br><h3>VAITP</h3>"
+    //create print html ///<br><h3>VAITP</h3>
+    QString html = "<div style='text-align:center'>"
+                   "<img src=':/logo/icon_96.png'/>"
+                   "</div><br>"
+                   "<div style='text-align:center'>"
+                   "<h2>VAITP</h2>"
                    "</div>"
-                   "<br><div>"
+                   "<br><div style='text-align:right'>"
                    "<h5>VAITP Report: "+now+"</h5>"
                    "</div><br>"
                    "<div>"
                    "<p><strong>File scanned:</strong> <br>"+ui->txt_py_src->text()+"<br></p>"
                    "<p><strong>File attacked:</strong> <br>"+ui->lbl_target->text()+"<br></p>"
                    "<p><strong>Vulnerabilities found:</strong> <br>"+vulns+"<br></p>"
-                   "<p><strong>Regex-based injection points found:</strong> <br>"+inj_re+"<br></p>"
-                   "<p><strong>Use VAITP AI Classificator model:</strong> <br>"+ui->checkBox_use_vaitp_ai_classificator->isChecked()+"<br></p>"
+                   "<p><strong>Regex-based injection points found:</strong> <span style='font-size:100px'>(format: [injectable code :: vulnerable code :: Line number :: original line])</span> <br>"+inj_re+"<br></p>"
+                   "<p><strong>Use VAITP AI Classificator model:</strong> <br>"+(QString::number(ui->checkBox_use_vaitp_ai_classificator->isChecked()) == 1 ? "Yes":"No")+"<br></p>"
                    "<p><strong>Use VAITP AI Classificator model path:</strong> <br>"+ui->txt_vaitp_models_path->text()+"<br></p>"
                    "<p><strong>VAITP AI Classificator model selected:</strong> <br>"+ui->comboBox_vaitp_ai_classificator->currentText()+"<br></p>"
-                   "<p><strong>Use VAITP AI Sequence2Sequence model:</strong> <br>"+ui->checkBox_use_vaitp_ai_s2s->isChecked()+"<br></p>"
-                   "<p><strong>VAITP AI Classificator injection points found:</strong> <br>"+inj_ai+"<br></p>"
-                   "<p><strong>List of chained injections:</strong> <br>"+chainedinjs+"<br></p>"
+                   "<p><strong>Use VAITP AI Sequence2Sequence model:</strong> <br>"+(QString::number(ui->checkBox_use_vaitp_ai_s2s->isChecked()) == 1 ? "Yes":"No")+"<br></p>"
+                   "<p><strong>VAITP AI Classificator injection points found:</strong> <span style='font-size:100px'>(format: [injectable code :: vulnerable code :: Line number :: original line])</span> <br>"+inj_ai+"<br></p>"
+                   "<p><strong>List of chained injections:</strong> <span style='font-size:100px'>(format: [injectable code :: vulnerable code :: Line number :: original line])</span> <br>"+chainedinjs+"<br></p>"
                    "<p><strong>List of injected files:</strong> <br>"+injfiles+"<br></p>"
                    "<p><strong>List of working attacks and payoads:</strong> <br>"+workingattacks+"<br></p>"
                    "<p><strong>Main output content:</strong> <br>"+ui->txt_output_sh1->toPlainText()+"<br></p>"
-                   "</div><br><br>"
-                   "<div><h6>VAITP - Vulnerability Attack and Injection Tool in Python<br>Development: Frédéric Bogaerts<br>Dataset augmentation and objuscation: Anush Deokar<br>Supervising teachers: PhD. Naghmeh Navaki, PhD. José Fonseca<br>DEI - Universidade de Coimbra - Portugal</h6></div>";
+                   "</div><br><br><br>"
+                   "<br><br><div><br><br><p style=\"font-size:100px\"><br><br>VAITP - Vulnerability Attack and Injection Tool in Python<br>Development: Frédéric Bogaerts<br>Dataset augmentation, objuscation and testing: Anush Deokar<br>Supervising teachers: PhD. Naghmeh Navaki, PhD. José Fonseca<br>DEI - Universidade de Coimbra - Portugal</p></div>"
+
+                   "<div style='text-align:center'>"
+                   "<img src=':/lineicons-free-basic-3.0/uc.png'/>"
+                   "</div><br>";
     QTextDocument doc;
     doc.setHtml(html);
 

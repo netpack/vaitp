@@ -5,6 +5,7 @@
         <file>icon_32.png</file>
         <file>icon_48.png</file>
         <file>logo.png</file>
+        <file>icon_96.png</file>
     </qresource>
     <qresource prefix="/">
         <file>lineicons-free-basic-3.0/png-files/500px.png</file>
@@ -539,5 +540,9 @@
         <file>lineicons-free-basic-3.0/png-files/zip.png</file>
         <file>lineicons-free-basic-3.0/png-files/zoom-in.png</file>
         <file>lineicons-free-basic-3.0/png-files/zoom-out.png</file>
+        <file>lineicons-free-basic-3.0/png-files/ai.png</file>
+        <file>lineicons-free-basic-3.0/png-files/nonai.png</file>
+        <file>splash.png</file>
+        <file>lineicons-free-basic-3.0/uc.png</file>
     </qresource>
 </RCC>

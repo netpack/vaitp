@@ -31,7 +31,7 @@
      <string/>
     </property>
     <property name="text">
-     <string>VAITP - Vulnerability Attack and Injection Tool in Python v0.3</string>
+     <string>VAITP - Vulnerability Attack and Injection Tool in Python v0.4</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -148,7 +148,7 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tab_vulnerabilities">
        <attribute name="title">
