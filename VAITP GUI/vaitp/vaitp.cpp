@@ -1207,6 +1207,8 @@ void VAITP::on_actionImport_payloads_to_vaitp_db_triggered()
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open payloads file"), "/home/", tr("text files (*.txt)"));
 
     QFile inputFile(fileName);
+    ui->txt_output_sh1->appendHtml("Opening payload file: "+fileName);
+    qApp->processEvents();
     if (inputFile.open(QIODevice::ReadOnly))
     {
        QTextStream in(&inputFile);
@@ -1214,8 +1216,29 @@ void VAITP::on_actionImport_payloads_to_vaitp_db_triggered()
        {
           QString line = in.readLine();
           qDebug() << "PAYLOAD ADD :: "<<line;
-          ui->txt_output_sh1_ai->appendHtml("New Payload added to DB: "+line);
+          ui->txt_output_sh1->appendHtml("New Payload: "+line);
           qApp->processEvents();
+          QSqlQuery query;
+
+          query.prepare("select payload from payloads where payload like :payload;");
+          query.bindValue(":payload",line);
+          bool has_payload = false;
+          if(query.exec()){
+              if(query.next()){
+                  has_payload=true;
+              }
+          }
+          if(!has_payload){
+              query.prepare("INSERT into payloads VALUES(NULL,:payload);");
+              query.bindValue(":payload",line);
+              query.exec();
+              ui->txt_output_sh1->appendHtml("Payload added to db.");
+              qApp->processEvents();
+          } else {
+              ui->txt_output_sh1->appendHtml("Payload was already in db.");
+              qApp->processEvents();
+          }
+
 
        }
        inputFile.close();
