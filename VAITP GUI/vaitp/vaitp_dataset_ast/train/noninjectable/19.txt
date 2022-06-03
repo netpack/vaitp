@@ -1,5 +1,0 @@
-Module(
-    body=[
-        Expr(
-            value=Constant(value='Page Template Expression Engine\n\nPage Template-specific implementation of TALES, with handlers\nfor Python expressions, string literals, and paths.\n'))],
-    type_ignores=[])

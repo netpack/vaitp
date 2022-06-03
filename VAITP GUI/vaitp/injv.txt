@@ -10,6 +10,12 @@ subprocess.call(cs,shell=False)	subprocess.call(cs,shell=True)
 subprocess.call(value,shell=False)	subprocess.call(value,shell=True)
 subprocess.call(outrovalor,shell=False)	subprocess.call(outrovalor,shell=True)
 subprocess.call(catcmd,shell=False)	subprocess.call(catcmd,shell=True)
+subprocess.call(cdt,shell=False)	subprocess.call(cdt,shell=True)
+subprocess.call(tmc,shell=False)	subprocess.call(tmc,shell=True)
+subprocess.call(bjp,shell=False)	subprocess.call(bjp,shell=True)
+subprocess.call(aap,shell=False)	subprocess.call(aap,shell=True)
+subprocess.call(res,shell=False)	subprocess.call(res,shell=True)
+subprocess.call(ctd,shell=False)	subprocess.call(ctd,shell=True)
 subprocess.run(cimd,shell=False)	subprocess.run(cimd,shell=True)
 subprocess.run(i,shell=False)	subprocess.run(i,shell=True)
 subprocess.run(id,shell=False)	subprocess.run(id,shell=True)
@@ -22,6 +28,14 @@ subprocess.run(finalcmds,shell=False)	subprocess.run(finalcmds,shell=True)
 subprocess.run(finalvars,shell=False)	subprocess.run(finalvars,shell=True)
 subprocess.run(thx,shell=False)	subprocess.run(thx,shell=True)
 subprocess.run(thc,shell=False)	subprocess.run(thc,shell=True)
+subprocess.run(thc,shell=False)	subprocess.run(thc,shell=True)
+subprocess.run(xyz,shell=False)	subprocess.run(xyz,shell=True)
+subprocess.run(something,shell=False)	subprocess.run(something,shell=True)
+subprocess.run(a,shell=False)	subprocess.run(a,shell=True)
+subprocess.run(res,shell=False)	subprocess.run(res,shell=True)
+subprocess.run(lis,shell=False)	subprocess.run(lis,shell=True)
+subprocess.run(arr,shell=False)	subprocess.run(arr,shell=True)
+subprocess.run(rce,shell=False)	subprocess.run(rce,shell=True)
 shell=False	shell=True
 subprocess.call(*, shell=False)	subprocess.call(*, shell=True)
 subprocess.run(*, shell=False)	subprocess.run(*, shell=True)
@@ -30,12 +44,24 @@ quote(in)	in
 quote(argv[0])	argv[0]
 quote(argv[1])	argv[1]
 quote(argv[2])	argv[2]
+quote(rce)	rce
+quote(cmd)	cmd
+quote(res)	res
+quote(inp)	inp
+quote(user_input)	user_input
+quote(inpt)	inpt
 html.escape(*)	*
 html.escape(username)	username
 html.escape(argv[0])	argv[0]
 html.escape(argv[1])	argv[1]
 html.escape(argv[2])	argv[2]
-html.escape(passwd)	passwd
+html.escape(cmd)	cmd
+html.escape(url)	url
+html.escape(str)	str
+html.escape("<img onerror=alert(document.cookie)/>")    "<img onerror=alert(document.cookie)/>"
+html.escape("></&'")    "></&'"
+html.escape(some_str)	some_str
+html.escape(strng)	strng
 etree.XMLParser(resolve_entities=False)	etree.XMLParser(resolve_entities=True)
 etree.XMLParser(resolve_entities=res_ent)	etree.XMLParser(resolve_entities=True)
 etree.XMLParser(resolve_entities=var_resolv)	etree.XMLParser(resolve_entities=True)
@@ -43,5 +69,34 @@ redirect(url_for(*))	redirect(*)
 redirect(url_for(var_url))	redirect(var_url)
 redirect(url_for(request.GET.get(u)))	redirect(request.GET.get(u))
 redirect(url_for(request.GET.get(user)))	redirect(request.GET.get(user))
-redirect(url_for(request.GET.get(p)))	redirect(request.GET.get(p))
-redirect(url_for(request.GET.get(var)))	redirect(request.GET.get(u))
+redirect(url_for(request.GET.get(p)))   redirect(request.GET.get(p))
+redirect(url_for(request.GET.get(var))) redirect(request.GET.get(u))
+arr = ["getent", "hosts", client]   arr = "getent hosts %s" % client
+l = ["getent", "hosts", client] l = "getent hosts %s" % client
+some_name = ["g", "h", c] some_name = "g h %s" % c
+res = ["getent", "hosts", client] res = "getent hosts %s" % client
+lis = ["getent", "hosts", client] lis = "getent hosts %s" % client
+cmd = ["getent", "hosts", client] cmd = "getent hosts %s" % client
+aks = ["getent", "hosts", client] aks = "getent hosts %s" % client
+local_filename = os.path.join(local_dir, os.path.basename(quote(filename))) local_filename = os.path.join(local_dir, os.path.basename(inp))
+local_f = os.path.join(local_dir, os.path.basename(quote(filename))) local_f = os.path.join(local_dir, os.path.basename(inp))
+some_filename = os.path.join(local_dir, os.path.basename(quote(filename))) some_filename = os.path.join(local_dir, os.path.basename(inp))
+my_file = os.path.join(some_dir, os.path.basename(quote(filename))) my_file = os.path.join(some_dir, os.path.basename(inp))
+my_f = os.path.join(some_dir, os.path.basename(quote(filename)))    my_f = os.path.join(some_dir, os.path.basename(inp))
+yaml.safe_load(mydata)    yaml.load(mydata, Loader=yaml.Loader)
+yaml.safe_load(txt)    yaml.load(txt, Loader=yaml.Loader)
+yaml.safe_load(info)    yaml.load(info, Loader=yaml.Loader)
+yaml.safe_load(desc)    yaml.load(desc, Loader=yaml.Loader)
+yaml.safe_load(inf)    yaml.load(inf, Loader=yaml.Loader)
+yaml.safe_load(res_data)    yaml.load(res_data, Loader=yaml.Loader)
+yaml.safe_load(some_data)    yaml.load(some_data, Loader=yaml.Loader)
+yaml.safe_load(random_data)    yaml.load(random_data, Loader=yaml.Loader)
+yaml.safe_load(u)    yaml.load(u, Loader=yaml.Loader)
+exec(quote(sys.argv[1]))    exec(sys.argv[1])
+exec(quote(sys.argv[2]))    exec(sys.argv[2])
+exec(quote(sys.argv[3]))    exec(sys.argv[3])
+exec(quote(path))   exec(path)
+exec(quote(urls[0]))   exec(urls[0])
+exec(quote(cmd))   exec(cmd)
+exec(quote(res))   exec(res)
+exec(quote(qt))   exec(qt)
