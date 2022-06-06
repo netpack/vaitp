@@ -544,5 +544,7 @@
         <file>lineicons-free-basic-3.0/png-files/nonai.png</file>
         <file>splash.png</file>
         <file>lineicons-free-basic-3.0/uc.png</file>
+        <file>lineicons-free-basic-3.0/png-files/py.png</file>
+        <file>lineicons-free-basic-3.0/png-files/python2.png</file>
     </qresource>
 </RCC>

@@ -25,6 +25,8 @@ public:
     int cvefixes_count_vulns();
 
     void rm_old_ai_vulns(QString path_vuln);
+    void vaitp_scan_py_file(QString aFile);
+
 private slots:
     void on_bt_load_py_src_clicked();
     void on_bt_scan_py_clicked();
@@ -66,6 +68,10 @@ private slots:
     void on_actionClear_all_outputs_and_lists_triggered();
 
     void on_bt_exportReport_clicked();
+
+    void on_bt_load_py_src_folder_clicked();
+
+    void on_bt_scan_py_folder_clicked();
 
 private:
     Ui::VAITP *ui;

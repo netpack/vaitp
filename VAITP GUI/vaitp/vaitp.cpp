@@ -14,6 +14,11 @@
 #include <QDesktopServices>
 
 int vaitp_loaded=0;
+int number_of_vulnerabilities_found=0;
+int number_of_scanned_files=0;
+int number_of_injection_points_found=0;
+int number_of_rx_injection_points_found=0;
+int number_of_ai_injection_points_found=0;
 QString inj_re="";
 QString inj_ai="";
 
@@ -173,6 +178,212 @@ void VAITP::on_bt_load_py_src_clicked()
  * @brief VAITP::on_bt_scan_py_clicked
  * Scan the selected .py script for possible injection points and vulnerabilities
  */
+void VAITP::vaitp_scan_py_file(QString aFile)
+{
+        qDebug()<<"VAITP :: Getting some pie... :-) ...";
+
+        QString pyfile = aFile;
+        int s2s_inj_limit = ui->txt_s2s_inj_limit->value();
+
+        if (pyfile.size()<4 || !(pyfile.endsWith(".py"))){
+            ui->txt_output_sh1->appendHtml(tr("Invalid Python Script\n"));
+        } else {
+
+
+
+
+            //start scanning
+            ui->txt_output_sh1->appendHtml(tr("Scanning Python Script... Please Wait...\n"));
+
+            qDebug()<<"VAITP :: Scanning vulnerabilities";
+            ui->txt_output_sh1->appendHtml(tr("Scanning vulnerabilities..."));
+
+            //add to scanned files list
+            QListWidgetItem *itm = new QListWidgetItem(QIcon(":/lineicons-free-basic-3.0/png-files/python2.png"),ui->txt_py_src->text());
+            ui->lst_scanned_files->addItem(itm);
+            number_of_scanned_files++;
+            ui->lbl_scanned_files->setText("Scanned files: ["+QString::number(number_of_scanned_files)+"]");
+            qApp->processEvents();
+
+
+            detectionModule dm;
+
+            //detect and list vulnerabilities
+            QStringList detectedVulnerabilities = dm.scanFileForVulnerabilities(pyfile);
+            detectedVulnerabilities.removeDuplicates();
+            for(int n=0; n<detectedVulnerabilities.count();n++){
+                QString vulnerability = detectedVulnerabilities[n]+" :: "+ui->txt_py_src->text();
+                QListWidgetItem *itm = new QListWidgetItem(QIcon(":/logo/icon_48.png"),vulnerability);
+                ui->lst_vulns->addItem(itm);
+                number_of_vulnerabilities_found++;
+                ui->lbl_vulnerabilities_found->setText("Vulnerabilities: ["+QString::number(number_of_vulnerabilities_found)+"]");
+                qApp->processEvents();
+            }
+
+            qDebug()<<"VAITP :: Scanning injection calls";
+            ui->txt_output_sh1->appendHtml(tr("Scanning injection calls..."));
+            qApp->processEvents();
+
+            //detect and list injection calls
+            QStringList detectedInjectionPoints = dm.scanFileForInjectionCalls(pyfile);
+            detectedInjectionPoints.removeDuplicates();
+            for(int n=0; n<detectedInjectionPoints.count();n++){
+                QString injection_point = detectedInjectionPoints[n]+" :: "+ui->txt_py_src->text();
+                QListWidgetItem *itm = new QListWidgetItem(QIcon(":/lineicons-free-basic-3.0/png-files/nonai.png"),injection_point);
+                ui->lst_injectionPoints->addItem(itm);
+                number_of_injection_points_found++;
+                number_of_rx_injection_points_found++;
+                ui->lbl_injection_points->setText("Injection points: ["+QString::number(number_of_injection_points_found)+"] (RX: "+QString::number(number_of_rx_injection_points_found)+" AI: "+QString::number(number_of_ai_injection_points_found)+")");
+                inj_re+=detectedInjectionPoints[n]+"<br>";
+                qApp->processEvents();
+            }
+
+
+            if(ui->checkBox_use_vaitp_ai_classificator->isChecked()){
+
+                qDebug()<<"VAITP :: Scanning with AI classificator...";
+                ui->txt_output_sh1->appendHtml(tr("Scanning with AI classificator..."));
+                qApp->processEvents();
+
+                QString selected_ai_classificator_model = ui->comboBox_vaitp_ai_classificator->currentText();
+
+                ui->txt_output_sh1->appendHtml(tr("Selected AI classificator: ")+selected_ai_classificator_model);
+                qApp->processEvents();
+
+                ui->lbl_ai_classificator_run->setText(tr("Scanning..."));
+                qApp->processEvents();
+
+                aimodule ai;
+                ai.set_file_to_scan(pyfile);
+                QString selected_ai_classificator_model_wpath = ui->txt_vaitp_models_path->text()+"/"+selected_ai_classificator_model+".tfv";
+
+                qDebug()<<"AI Classificator with path: "<<selected_ai_classificator_model_wpath;
+
+                QStringList predicted_lable = ai.run_classificator_model(selected_ai_classificator_model_wpath);
+                ui->lbl_ai_classificator_run->setText(predicted_lable[0]);
+                QStringList probable_inj_points;
+                QStringList translated_inj_points;
+
+                if(predicted_lable[0]=="injectable"){
+
+                    qDebug()<<"VAITP :: Scanning with AI classificator revealed an injectable script!";
+                    ui->txt_output_sh1->appendHtml(tr("Scanning with AI classificator revealed an injectable script!"));
+
+                    qApp->processEvents();
+
+                    int ig=0;
+                    for(QString ip: predicted_lable){
+                        ig++;
+                        if(ig==1)
+                            continue; //ignore "injectable" in [0]
+                        ui->txt_output_sh1->appendHtml(tr("Possible injection point detected by AI Classificator model: ")+ip);
+                        qApp->processEvents();
+                        probable_inj_points.append(ip);
+                    }
+
+
+
+                    //use s2s to try to translate the qstringlist
+                    if(ui->checkBox_use_vaitp_ai_s2s->isChecked()){
+
+                        ui->txt_output_sh1->appendHtml(tr("Translating probable injection points with AI S2S. Please wait..."));
+                        qApp->processEvents();
+
+
+                        QStringList translated_injection_points = ai.run_s2s_model(probable_inj_points,s2s_inj_limit);
+                        try {
+                            for(QString tr_ip: translated_injection_points){
+
+                                ui->txt_output_sh1->appendHtml(tr("Possible injection point translated by AI S2S model: ")+tr_ip);
+                                qApp->processEvents();
+                                translated_inj_points.append(tr_ip);
+                            }
+                        }  catch (QString err) {
+                            qDebug()<<"Error2:: "<<err;
+                        }
+
+                        //compose injection entries
+                        try {
+                            int ipn=0;
+                            for(QString tr:translated_injection_points){
+
+                                qApp->processEvents();
+                                QString p_inj_p = probable_inj_points[ipn];
+                                QString t_inj_p = translated_injection_points[ipn];
+                                QString new_inj_string = p_inj_p+" :: "+t_inj_p;
+                                qDebug()<<"New injection string composed: "<<new_inj_string;
+                                //line number //line content
+                                int line_number=0;
+                                QString line="";
+                                QFile file(ai.getSelectedFile());
+                                if ( file.open(QIODevice::ReadOnly | QIODevice::Text) ){
+
+                                    QTextStream stream( &file );
+
+                                    while ( !stream.atEnd() ){
+                                        line_number++;
+                                        line = stream.readLine();
+                                        //qDebug()<<"IF AI SCANN :: Line: "<<line<<" ::has:: "<<p_inj_p;
+                                        if(line.contains(p_inj_p)){
+                                            qDebug()<<"VAITP AI INJ TR :: Found line number: "<<line_number;
+                                            break;
+                                        }
+                                    }
+                                new_inj_string += " :: Line "+QString::number(line_number)+" :: "+line;
+                                file.close();
+                                QListWidgetItem *itm = new QListWidgetItem(QIcon(":/lineicons-free-basic-3.0/png-files/ai.png"),new_inj_string);
+                                ui->lst_injectionPoints->addItem(itm);
+
+                                number_of_injection_points_found++;
+                                number_of_ai_injection_points_found++;
+                                ui->lbl_injection_points->setText("Injection points: ["+QString::number(number_of_injection_points_found)+"] (RX: "+QString::number(number_of_rx_injection_points_found)+" AI: "+QString::number(number_of_ai_injection_points_found)+")");
+
+                                qApp->processEvents();
+
+                                inj_ai+=new_inj_string+"<br>";
+                                ipn++;
+                                }
+
+                            }
+                        }  catch (QString err) {
+                            qDebug()<<"err22: "<<err;
+                        }
+
+                    } else {
+                        ui->txt_output_sh1->appendHtml(tr("S2S disabled in settings. Possible injection points from AI will be ignored."));
+                        qApp->processEvents();
+                    }
+
+
+
+
+                }
+
+            } else {
+                ui->lbl_ai_classificator_run->setText("(disabled)");
+            }
+
+
+           qDebug()<<"VAITP :: Updating GUI..";
+
+           ui->lbl_target->setText(pyfile);
+
+           ui->txt_output_sh1->appendHtml(tr("Scanning Python Script... Done!"));
+           qApp->processEvents();
+           //ui->bt_auto_daisyChain->setEnabled(true);
+
+
+
+
+
+
+
+
+
+
+        }
+    }
+
 void VAITP::on_bt_scan_py_clicked()
 {
     qDebug()<<"VAITP :: Start scanning";
@@ -183,190 +394,13 @@ void VAITP::on_bt_scan_py_clicked()
     ui->lst_injectionPoints->clear();
     ui->lbl_ai_classificator_run->setText("");
 
-    int s2s_inj_limit = ui->txt_s2s_inj_limit->value();
-
-
     //disable the attack button
     ui->bt_attack->setEnabled(false);
 
-    qDebug()<<"VAITP :: Getting some pie... :-) ...";
-    //get the pie, hoo sorry, I meant py! :-)
     QString pyfile = ui->txt_py_src->text();
-    if (pyfile.size()<4 || !(pyfile.endsWith(".py"))){
-        ui->txt_output_sh1->appendHtml(tr("Invalid Python Script\n"));
-    } else {
 
-        //start scanning
-        ui->txt_output_sh1->appendHtml(tr("Scanning Python Script... Please Wait...\n"));
+    vaitp_scan_py_file(pyfile);
 
-        qDebug()<<"VAITP :: Scanning vulnerabilities";
-        ui->txt_output_sh1->appendHtml(tr("Scanning vulnerabilities..."));
-        qApp->processEvents();
-
-
-        detectionModule dm;
-
-        //detect and list vulnerabilities
-        QStringList detectedVulnerabilities = dm.scanFileForVulnerabilities(pyfile);
-        detectedVulnerabilities.removeDuplicates();
-        for(int n=0; n<detectedVulnerabilities.count();n++){
-            QListWidgetItem *itm = new QListWidgetItem(QIcon(":/logo/icon_48.png"),detectedVulnerabilities[n]);
-            ui->lst_vulns->addItem(itm);
-        }
-
-        qDebug()<<"VAITP :: Scanning injection calls";
-        ui->txt_output_sh1->appendHtml(tr("Scanning injection calls..."));
-        qApp->processEvents();
-
-        //detect and list injection calls
-        QStringList detectedInjectionPoints = dm.scanFileForInjectionCalls(pyfile);
-        detectedInjectionPoints.removeDuplicates();
-        for(int n=0; n<detectedInjectionPoints.count();n++){
-            QListWidgetItem *itm = new QListWidgetItem(QIcon(":/lineicons-free-basic-3.0/png-files/nonai.png"),detectedInjectionPoints[n]);
-            ui->lst_injectionPoints->addItem(itm);
-            qApp->processEvents();
-            inj_re+=detectedInjectionPoints[n]+"<br>";
-        }
-
-
-        if(ui->checkBox_use_vaitp_ai_classificator->isChecked()){
-
-            qDebug()<<"VAITP :: Scanning with AI classificator...";
-            ui->txt_output_sh1->appendHtml(tr("Scanning with AI classificator..."));
-            qApp->processEvents();
-
-            QString selected_ai_classificator_model = ui->comboBox_vaitp_ai_classificator->currentText();
-
-            ui->txt_output_sh1->appendHtml(tr("Selected AI classificator: ")+selected_ai_classificator_model);
-            qApp->processEvents();
-
-            ui->lbl_ai_classificator_run->setText(tr("Scanning..."));
-            qApp->processEvents();
-
-            aimodule ai;
-            ai.set_file_to_scan(pyfile);
-            QString selected_ai_classificator_model_wpath = ui->txt_vaitp_models_path->text()+"/"+selected_ai_classificator_model+".tfv";
-
-            qDebug()<<"AI Classificator with path: "<<selected_ai_classificator_model_wpath;
-
-            QStringList predicted_lable = ai.run_classificator_model(selected_ai_classificator_model_wpath);
-            ui->lbl_ai_classificator_run->setText(predicted_lable[0]);
-            QStringList probable_inj_points;
-            QStringList translated_inj_points;
-
-            if(predicted_lable[0]=="injectable"){
-
-                qDebug()<<"VAITP :: Scanning with AI classificator revealed an injectable script!";
-                ui->txt_output_sh1->appendHtml(tr("Scanning with AI classificator revealed an injectable script!"));
-
-                qApp->processEvents();
-
-                int ig=0;
-                for(QString ip: predicted_lable){
-                    ig++;
-                    if(ig==1)
-                        continue; //ignore "injectable" in [0]
-                    ui->txt_output_sh1->appendHtml(tr("Possible injection point detected by AI Classificator model: ")+ip);
-                    qApp->processEvents();
-                    probable_inj_points.append(ip);
-                }
-
-
-
-                //use s2s to try to translate the qstringlist
-                if(ui->checkBox_use_vaitp_ai_s2s->isChecked()){
-
-                    ui->txt_output_sh1->appendHtml(tr("Translating probable injection points with AI S2S. Please wait..."));
-                    qApp->processEvents();
-
-
-                    QStringList translated_injection_points = ai.run_s2s_model(probable_inj_points,s2s_inj_limit);
-                    try {
-                        for(QString tr_ip: translated_injection_points){
-
-                            ui->txt_output_sh1->appendHtml(tr("Possible injection point translated by AI S2S model: ")+tr_ip);
-                            qApp->processEvents();
-                            translated_inj_points.append(tr_ip);
-                        }
-                    }  catch (QString err) {
-                        qDebug()<<"Error2:: "<<err;
-                    }
-
-                    //compose injection entries
-                    try {
-                        int ipn=0;
-                        for(QString tr:translated_injection_points){
-
-                            qApp->processEvents();
-                            QString p_inj_p = probable_inj_points[ipn];
-                            QString t_inj_p = translated_injection_points[ipn];
-                            QString new_inj_string = p_inj_p+" :: "+t_inj_p;
-                            qDebug()<<"New injection string composed: "<<new_inj_string;
-                            //line number //line content
-                            int line_number=0;
-                            QString line="";
-                            QFile file(ai.getSelectedFile());
-                            if ( file.open(QIODevice::ReadOnly | QIODevice::Text) ){
-
-                                QTextStream stream( &file );
-
-                                while ( !stream.atEnd() ){
-                                    line_number++;
-                                    line = stream.readLine();
-                                    //qDebug()<<"IF AI SCANN :: Line: "<<line<<" ::has:: "<<p_inj_p;
-                                    if(line.contains(p_inj_p)){
-                                        qDebug()<<"VAITP AI INJ TR :: Found line number: "<<line_number;
-                                        break;
-                                    }
-                                }
-                            new_inj_string += " :: Line "+QString::number(line_number)+" :: "+line;
-                            file.close();
-                            QListWidgetItem *itm = new QListWidgetItem(QIcon(":/lineicons-free-basic-3.0/png-files/ai.png"),new_inj_string);
-
-                            ui->lst_injectionPoints->addItem(itm);
-
-                            inj_ai+=new_inj_string+"<br>";
-                            ipn++;
-                            }
-
-                        }
-                    }  catch (QString err) {
-                        qDebug()<<"err22: "<<err;
-                    }
-
-                } else {
-                    ui->txt_output_sh1->appendHtml(tr("S2S disabled in settings. Possible injection points from AI will be ignored."));
-                    qApp->processEvents();
-                }
-
-
-
-
-            }
-
-        } else {
-            ui->lbl_ai_classificator_run->setText("(disabled)");
-        }
-
-
-       qDebug()<<"VAITP :: Updating GUI..";
-
-       ui->lbl_target->setText(pyfile);
-
-       ui->txt_output_sh1->appendHtml(tr("Scanning Python Script... Done!"));
-       qApp->processEvents();
-       //ui->bt_auto_daisyChain->setEnabled(true);
-
-
-
-
-
-
-
-
-
-
-    }
 }
 
 /**
@@ -1253,6 +1287,14 @@ void VAITP::on_actionClear_all_outputs_and_lists_triggered()
     ui->lst_vulns->clear();
     ui->txt_output_sh1->clear();
     ui->txt_vulnDescription->clear();
+    ui->lst_scanned_files->clear();
+
+    number_of_vulnerabilities_found=0;
+    number_of_scanned_files=0;
+    number_of_injection_points_found=0;
+    number_of_rx_injection_points_found=0;
+    number_of_ai_injection_points_found=0;
+
 }
 
 
@@ -1339,5 +1381,60 @@ void VAITP::on_bt_exportReport_clicked()
 
     //open the file
     QDesktopServices::openUrl(QUrl::fromLocalFile(fileName));
+}
+
+
+void VAITP::on_bt_load_py_src_folder_clicked()
+{
+    QFileDialog dialog(this);
+    dialog.setViewMode(QFileDialog::Detail);
+    dialog.setFileMode(QFileDialog::DirectoryOnly);
+    QString fileName = QFileDialog::getExistingDirectory(this, tr("Open a directory to scan all python files"), "/home/");
+    ui->txt_py_src_folder->setText(fileName);
+}
+
+
+void VAITP::on_bt_scan_py_folder_clicked()
+{
+    //get the string with the path of the folder to scan
+    QString path_to_scan = ui->txt_py_src_folder->text();
+    qDebug()<<"Path to scan: "<<path_to_scan;
+
+    //show what dir to scan in the bottom output
+    ui->txt_output_sh1->appendHtml("Directory selected for scanning: "+path_to_scan);
+    qApp->processEvents();
+
+
+    //check if the user wants to scan subdirs
+    QDirIterator it(path_to_scan, QStringList() << "*.py", QDir::Files, ui->checkBox_scan_subdirs->isChecked() ? QDirIterator::Subdirectories : QDirIterator::NoIteratorFlags);
+
+
+    //loop though each file of the (sub)folder
+    while (it.hasNext()){
+
+        QString this_file = it.next();
+
+        qDebug() << "this file to scan: "<<this_file;
+        ui->txt_output_sh1->appendHtml("Adding Scanned file: "+this_file);
+        qApp->processEvents();
+
+        //add to scanned files list
+        QListWidgetItem *itm = new QListWidgetItem(QIcon(":/lineicons-free-basic-3.0/png-files/python2.png"),this_file);
+        ui->lst_scanned_files->addItem(itm);
+
+
+        //set the file as src (it's used after)
+        ui->txt_py_src->setText(this_file);
+
+        //scan the file
+        vaitp_scan_py_file(this_file);
+
+
+
+
+    }
+
+
+
 }
 

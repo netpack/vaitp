@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1326</width>
-    <height>644</height>
+    <height>688</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -21,17 +21,17 @@
    <widget class="QLabel" name="lbl_info">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>570</y>
+      <x>10</x>
+      <y>629</y>
       <width>851</width>
-      <height>20</height>
+      <height>21</height>
      </rect>
     </property>
     <property name="toolTip">
      <string/>
     </property>
     <property name="text">
-     <string>VAITP - Vulnerability Attack and Injection Tool in Python v0.4</string>
+     <string>VAITP - Vulnerability Attack and Injection Tool in Python v0.5</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -46,7 +46,7 @@
       <x>0</x>
       <y>0</y>
       <width>1321</width>
-      <height>561</height>
+      <height>631</height>
      </rect>
     </property>
     <property name="currentIndex">
@@ -119,7 +119,7 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>380</y>
+        <y>450</y>
         <width>1291</width>
         <height>141</height>
        </rect>
@@ -129,7 +129,7 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>360</y>
+        <y>430</y>
         <width>131</width>
         <height>18</height>
        </rect>
@@ -142,9 +142,9 @@
       <property name="geometry">
        <rect>
         <x>6</x>
-        <y>70</y>
+        <y>100</y>
         <width>1301</width>
-        <height>281</height>
+        <height>321</height>
        </rect>
       </property>
       <property name="currentIndex">
@@ -158,9 +158,9 @@
         <property name="geometry">
          <rect>
           <x>10</x>
-          <y>30</y>
-          <width>351</width>
-          <height>141</height>
+          <y>170</y>
+          <width>731</width>
+          <height>100</height>
          </rect>
         </property>
         <property name="iconSize">
@@ -170,11 +170,11 @@
          </size>
         </property>
        </widget>
-       <widget class="QLabel" name="label_4">
+       <widget class="QLabel" name="lbl_vulnerabilities_found">
         <property name="geometry">
          <rect>
           <x>10</x>
-          <y>10</y>
+          <y>150</y>
           <width>261</width>
           <height>20</height>
          </rect>
@@ -186,7 +186,7 @@
        <widget class="QLabel" name="label_2">
         <property name="geometry">
          <rect>
-          <x>370</x>
+          <x>760</x>
           <y>10</y>
           <width>101</width>
           <height>18</height>
@@ -199,10 +199,10 @@
        <widget class="QTextEdit" name="txt_vulnDescription">
         <property name="geometry">
          <rect>
-          <x>370</x>
+          <x>760</x>
           <y>30</y>
-          <width>881</width>
-          <height>141</height>
+          <width>531</width>
+          <height>241</height>
          </rect>
         </property>
         <property name="autoFillBackground">
@@ -215,12 +215,41 @@
          <bool>true</bool>
         </property>
        </widget>
+       <widget class="QLabel" name="lbl_scanned_files">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>10</y>
+          <width>261</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Scanned files:</string>
+        </property>
+       </widget>
+       <widget class="QListWidget" name="lst_scanned_files">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>30</y>
+          <width>731</width>
+          <height>100</height>
+         </rect>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+       </widget>
       </widget>
       <widget class="QWidget" name="tab_injections">
        <attribute name="title">
         <string>Injections</string>
        </attribute>
-       <widget class="QLabel" name="label_3">
+       <widget class="QLabel" name="lbl_injection_points">
         <property name="geometry">
          <rect>
           <x>10</x>
@@ -728,6 +757,59 @@
        <string/>
       </property>
      </widget>
+     <widget class="QLabel" name="label_25">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>60</y>
+        <width>131</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Select a folder:</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="txt_py_src_folder">
+      <property name="geometry">
+       <rect>
+        <x>140</x>
+        <y>60</y>
+        <width>511</width>
+        <height>31</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QToolButton" name="bt_load_py_src_folder">
+      <property name="geometry">
+       <rect>
+        <x>660</x>
+        <y>60</y>
+        <width>41</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>...</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="bt_scan_py_folder">
+      <property name="geometry">
+       <rect>
+        <x>720</x>
+        <y>60</y>
+        <width>181</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Scan Folder</string>
+      </property>
+      <property name="icon">
+       <iconset resource="resources.qrc">
+        <normaloff>:/lineicons-free-basic-3.0/png-files/magnifier.png</normaloff>:/lineicons-free-basic-3.0/png-files/magnifier.png</iconset>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="tab_remote">
      <attribute name="title">
@@ -977,6 +1059,19 @@
         </property>
         <property name="text">
          <string>Change to target script directory when attacking</string>
+        </property>
+       </widget>
+       <widget class="QCheckBox" name="checkBox_scan_subdirs">
+        <property name="geometry">
+         <rect>
+          <x>220</x>
+          <y>140</y>
+          <width>341</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Scan sub-directories when scanning folders</string>
         </property>
        </widget>
       </widget>
