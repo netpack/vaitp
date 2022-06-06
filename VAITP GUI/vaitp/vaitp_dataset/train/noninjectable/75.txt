@@ -1,0 +1,2 @@
+def myfunction():
+  pass

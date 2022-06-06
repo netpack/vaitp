@@ -1,0 +1,3 @@
+import x from y.py
+arr = [1, "Hello"]
+e = {1, 2}
