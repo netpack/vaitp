@@ -103,8 +103,9 @@ predicted_labels = get_string_labels(predicted_scores)
 for input, label in zip(final_input_string, predicted_labels):
   #print("\ncode: ", input)
   predicted_label = label.numpy()
-  print("predicted label: ", predicted_label)
-  if options.optimize_granularity:
+  print("predicted label: ", predicted_label.strip())
+  if options.optimize_granularity and str(predicted_label.strip()) == str("b'injectable'"):
+  #if options.optimize_granularity:
     print(f'Detected an injectable code. Trying to optimize granularity...')
     for node in ast.walk(pyfile_ast_parsed):
       line = ast.dump(node)

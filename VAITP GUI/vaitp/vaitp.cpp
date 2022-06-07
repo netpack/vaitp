@@ -198,9 +198,7 @@ void VAITP::vaitp_scan_py_file(QString aFile)
             qDebug()<<"VAITP :: Scanning vulnerabilities";
             ui->txt_output_sh1->appendHtml(tr("Scanning vulnerabilities..."));
 
-            //add to scanned files list
-            QListWidgetItem *itm = new QListWidgetItem(QIcon(":/lineicons-free-basic-3.0/png-files/python2.png"),ui->txt_py_src->text());
-            ui->lst_scanned_files->addItem(itm);
+
             number_of_scanned_files++;
             ui->lbl_scanned_files->setText("Scanned files: ["+QString::number(number_of_scanned_files)+"]");
             qApp->processEvents();
@@ -238,6 +236,14 @@ void VAITP::vaitp_scan_py_file(QString aFile)
                 qApp->processEvents();
             }
 
+            QString scanned = "Regex Scan :: "+ui->txt_py_src->text();
+            if(detectedInjectionPoints.isEmpty()){
+                scanned+=" :: noninjectable or vulnerable";
+            } else {
+                scanned+=" :: injectable";
+            }
+            QListWidgetItem *itm = new QListWidgetItem(QIcon(":/lineicons-free-basic-3.0/png-files/python2.png"),scanned);
+            ui->lst_scanned_files->addItem(itm);
 
             if(ui->checkBox_use_vaitp_ai_classificator->isChecked()){
 
@@ -1415,12 +1421,6 @@ void VAITP::on_bt_scan_py_folder_clicked()
         QString this_file = it.next();
 
         qDebug() << "this file to scan: "<<this_file;
-        ui->txt_output_sh1->appendHtml("Adding Scanned file: "+this_file);
-        qApp->processEvents();
-
-        //add to scanned files list
-        QListWidgetItem *itm = new QListWidgetItem(QIcon(":/lineicons-free-basic-3.0/png-files/python2.png"),this_file);
-        ui->lst_scanned_files->addItem(itm);
 
 
         //set the file as src (it's used after)
@@ -1429,6 +1429,17 @@ void VAITP::on_bt_scan_py_folder_clicked()
         //scan the file
         vaitp_scan_py_file(this_file);
 
+        QString predicted_label = ui->lbl_ai_classificator_run->text();
+
+
+        ui->txt_output_sh1->appendHtml("Adding Scanned file: "+this_file+" which was predicted as "+predicted_label);
+        qApp->processEvents();
+
+        QString item_text = "AI :: " + this_file+" :: "+predicted_label;
+
+        //add to scanned files list
+        QListWidgetItem *itm = new QListWidgetItem(QIcon(":/lineicons-free-basic-3.0/png-files/python2.png"),item_text);
+        ui->lst_scanned_files->addItem(itm);
 
 
 
