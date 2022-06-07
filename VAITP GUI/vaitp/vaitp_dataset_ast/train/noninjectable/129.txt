@@ -1,0 +1,27 @@
+Module(
+    body=[
+        Assign(
+            targets=[
+                Name(id='num', ctx=Store())],
+            value=Constant(value=8)),
+        Assign(
+            targets=[
+                Name(id='num_sqrt', ctx=Store())],
+            value=BinOp(
+                left=Name(id='num', ctx=Load()),
+                op=Pow(),
+                right=Constant(value=0.5))),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    BinOp(
+                        left=Constant(value='The square root of %0.3f is %0.3f'),
+                        op=Mod(),
+                        right=Tuple(
+                            elts=[
+                                Name(id='num', ctx=Load()),
+                                Name(id='num_sqrt', ctx=Load())],
+                            ctx=Load()))],
+                keywords=[]))],
+    type_ignores=[])

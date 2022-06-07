@@ -1,0 +1,22 @@
+Module(
+    body=[
+        Assign(
+            targets=[
+                Name(id='result', ctx=Store())],
+            value=Call(
+                func=Name(id='call_with_ns', ctx=Load()),
+                args=[
+                    Name(id='_find_request', ctx=Load()),
+                    Name(id='names', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='self', ctx=Load()),
+                    attr='assertEqual',
+                    ctx=Load()),
+                args=[
+                    Name(id='result', ctx=Load()),
+                    Dict(keys=[], values=[])],
+                keywords=[]))],
+    type_ignores=[])

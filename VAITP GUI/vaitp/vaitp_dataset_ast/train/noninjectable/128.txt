@@ -1,0 +1,40 @@
+Module(
+    body=[
+        Assign(
+            targets=[
+                Name(id='circle_areas', ctx=Store())],
+            value=List(
+                elts=[
+                    Constant(value=3.56773),
+                    Constant(value=5.57668),
+                    Constant(value=4.00914),
+                    Constant(value=56.24241),
+                    Constant(value=9.01344),
+                    Constant(value=32.00013)],
+                ctx=Load())),
+        Assign(
+            targets=[
+                Name(id='result', ctx=Store())],
+            value=Call(
+                func=Name(id='list', ctx=Load()),
+                args=[
+                    Call(
+                        func=Name(id='map', ctx=Load()),
+                        args=[
+                            Name(id='round', ctx=Load()),
+                            Name(id='circle_areas', ctx=Load()),
+                            Call(
+                                func=Name(id='range', ctx=Load()),
+                                args=[
+                                    Constant(value=1),
+                                    Constant(value=7)],
+                                keywords=[])],
+                        keywords=[])],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='result', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

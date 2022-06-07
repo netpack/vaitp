@@ -1,0 +1,29 @@
+Module(
+    body=[
+        FunctionDef(
+            name='sum',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='n')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='ans', ctx=Store())],
+                    value=BinOp(
+                        left=BinOp(
+                            left=Name(id='n', ctx=Load()),
+                            op=Mult(),
+                            right=BinOp(
+                                left=Name(id='n', ctx=Load()),
+                                op=Add(),
+                                right=Constant(value=1))),
+                        op=Div(),
+                        right=Constant(value=2))),
+                Return(
+                    value=Name(id='ans', ctx=Load()))],
+            decorator_list=[])],
+    type_ignores=[])

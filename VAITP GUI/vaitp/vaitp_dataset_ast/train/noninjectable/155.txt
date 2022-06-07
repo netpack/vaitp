@@ -1,0 +1,18 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='distutils.dir_util')]),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='distutils', ctx=Load()),
+                        attr='dir_util',
+                        ctx=Load()),
+                    attr='mkpath',
+                    ctx=Load()),
+                args=[
+                    Constant(value='/root/dirA/dirB')],
+                keywords=[]))],
+    type_ignores=[])

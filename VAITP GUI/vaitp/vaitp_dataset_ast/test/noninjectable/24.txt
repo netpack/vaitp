@@ -1,0 +1,27 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='pathlib')]),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='pathlib', ctx=Load()),
+                            attr='Path',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='/root/')],
+                        keywords=[]),
+                    attr='mkdir',
+                    ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='parents',
+                        value=Constant(value=True)),
+                    keyword(
+                        arg='exist_ok',
+                        value=Constant(value=True))]))],
+    type_ignores=[])

@@ -1,0 +1,44 @@
+Module(
+    body=[
+        ClassDef(
+            name='Ptro',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='max')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='max',
+                                    ctx=Store())],
+                            value=Name(id='max', ctx=Load())),
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='min',
+                                    ctx=Store())],
+                            value=UnaryOp(
+                                op=USub(),
+                                operand=Constant(value=1000))),
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='size',
+                                    ctx=Store())],
+                            value=Constant(value=0))],
+                    decorator_list=[])],
+            decorator_list=[])],
+    type_ignores=[])

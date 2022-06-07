@@ -1,0 +1,13 @@
+Module(
+    body=[
+        Assign(
+            targets=[
+                Name(id='var_name', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='fifo_list', ctx=Load()),
+                    attr='pop',
+                    ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

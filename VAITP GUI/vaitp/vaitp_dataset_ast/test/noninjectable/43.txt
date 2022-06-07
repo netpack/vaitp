@@ -1,0 +1,37 @@
+Module(
+    body=[
+        Assign(
+            targets=[
+                Name(id='lis', ctx=Store())],
+            value=List(
+                elts=[
+                    Constant(value=1),
+                    Constant(value=2),
+                    Constant(value=3),
+                    Constant(value=4),
+                    Constant(value=10),
+                    Constant(value=15)],
+                ctx=Load())),
+        For(
+            target=Name(id='i', ctx=Store()),
+            iter=Call(
+                func=Name(id='range', ctx=Load()),
+                args=[
+                    Call(
+                        func=Name(id='len', ctx=Load()),
+                        args=[
+                            Name(id='lis', ctx=Load())],
+                        keywords=[])],
+                keywords=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Subscript(
+                                value=Name(id='lis', ctx=Load()),
+                                slice=Name(id='i', ctx=Load()),
+                                ctx=Load())],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

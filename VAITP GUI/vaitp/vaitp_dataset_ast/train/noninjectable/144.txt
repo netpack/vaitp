@@ -1,0 +1,7 @@
+Module(
+    body=[
+        Assign(
+            targets=[
+                Name(id='vowes', ctx=Store())],
+            value=Constant(value='aeiou'))],
+    type_ignores=[])

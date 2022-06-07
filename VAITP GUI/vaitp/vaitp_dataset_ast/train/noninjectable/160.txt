@@ -1,0 +1,22 @@
+Module(
+    body=[
+        FunctionDef(
+            name='function_name',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='parameters')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Constant(value='docstring')),
+                Expr(
+                    value=Call(
+                        func=Name(id='statement', ctx=Load()),
+                        args=[
+                            Name(id='s', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[])],
+    type_ignores=[])

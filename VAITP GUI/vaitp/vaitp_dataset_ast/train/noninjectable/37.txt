@@ -1,0 +1,20 @@
+Module(
+    body=[
+        FunctionDef(
+            name='evaluateCode',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='self'),
+                    arg(arg='lang'),
+                    arg(arg='code')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Constant(value=' See ITALExpressionEngine.\n\n    o This method is a fossil:  nobody actually calls it, but the\n        interface requires it.\n    ')),
+                Raise(
+                    exc=Name(id='NotImplementedError', ctx=Load()))],
+            decorator_list=[])],
+    type_ignores=[])

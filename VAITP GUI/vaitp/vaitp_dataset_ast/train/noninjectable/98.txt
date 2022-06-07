@@ -1,0 +1,36 @@
+Module(
+    body=[
+        Assign(
+            targets=[
+                Name(id='i', ctx=Store())],
+            value=Constant(value=1)),
+        While(
+            test=Compare(
+                left=Name(id='i', ctx=Load()),
+                ops=[
+                    Lt()],
+                comparators=[
+                    Constant(value=6)]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Name(id='i', ctx=Load())],
+                        keywords=[])),
+                If(
+                    test=Compare(
+                        left=Name(id='i', ctx=Load()),
+                        ops=[
+                            Eq()],
+                        comparators=[
+                            Constant(value=3)]),
+                    body=[
+                        Break()],
+                    orelse=[]),
+                AugAssign(
+                    target=Name(id='i', ctx=Store()),
+                    op=Add(),
+                    value=Constant(value=1))],
+            orelse=[])],
+    type_ignores=[])

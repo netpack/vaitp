@@ -1,0 +1,11 @@
+Module(
+    body=[
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='path_items', ctx=Load()),
+                    attr='reverse',
+                    ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

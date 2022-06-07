@@ -1,0 +1,13 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='cmath')]),
+        Assign(
+            targets=[
+                Name(id='num', ctx=Store())],
+            value=BinOp(
+                left=Constant(value=1),
+                op=Add(),
+                right=Constant(value=2j)))],
+    type_ignores=[])

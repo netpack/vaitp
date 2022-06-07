@@ -1,0 +1,35 @@
+Module(
+    body=[
+        Assign(
+            targets=[
+                Name(id='num_sqrt', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='cmath', ctx=Load()),
+                    attr='sqrt',
+                    ctx=Load()),
+                args=[
+                    Name(id='num', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Call(
+                        func=Attribute(
+                            value=Constant(value='The square root of {0} is {1:0.3f}+{2:0.3f}j'),
+                            attr='format',
+                            ctx=Load()),
+                        args=[
+                            Name(id='num', ctx=Load()),
+                            Attribute(
+                                value=Name(id='num_sqrt', ctx=Load()),
+                                attr='real',
+                                ctx=Load()),
+                            Attribute(
+                                value=Name(id='num_sqrt', ctx=Load()),
+                                attr='imag',
+                                ctx=Load())],
+                        keywords=[])],
+                keywords=[]))],
+    type_ignores=[])

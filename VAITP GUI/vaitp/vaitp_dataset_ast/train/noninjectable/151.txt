@@ -1,0 +1,29 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='hashlib')]),
+        FunctionDef(
+            name='hash_file',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='filename')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Constant(value='"This function returns the SHA-1 hash\n   of the file passed into it')),
+                Assign(
+                    targets=[
+                        Name(id='h', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='hashlib', ctx=Load()),
+                            attr='sha1',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            decorator_list=[])],
+    type_ignores=[])

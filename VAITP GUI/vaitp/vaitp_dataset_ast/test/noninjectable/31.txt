@@ -1,0 +1,20 @@
+Module(
+    body=[
+        If(
+            test=Call(
+                func=Attribute(
+                    value=Name(id='file', ctx=Load()),
+                    attr='endswith',
+                    ctx=Load()),
+                args=[
+                    Constant(value='.txt')],
+                keywords=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Name(id='file', ctx=Load())],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

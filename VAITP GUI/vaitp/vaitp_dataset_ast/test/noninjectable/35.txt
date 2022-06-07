@@ -1,0 +1,32 @@
+Module(
+    body=[
+        FunctionDef(
+            name='my_func2',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='y', ctx=Store())],
+                    value=Constant(value=1)),
+                Assign(
+                    targets=[
+                        Name(id='x', ctx=Store())],
+                    value=Constant(value=20)),
+                AugAssign(
+                    target=Name(id='x', ctx=Store()),
+                    op=Add(),
+                    value=Constant(value=1)),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Value x:'),
+                            Name(id='x', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[])],
+    type_ignores=[])

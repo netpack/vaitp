@@ -1,0 +1,16 @@
+Module(
+    body=[
+        FunctionDef(
+            name='f_name',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='param')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Constant(value=1))],
+            decorator_list=[])],
+    type_ignores=[])

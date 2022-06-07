@@ -1,0 +1,26 @@
+Module(
+    body=[
+        Assign(
+            targets=[
+                Name(id='a', ctx=Store())],
+            value=Constant(value=12)),
+        Assign(
+            targets=[
+                Name(id='b', ctx=Store())],
+            value=Constant(value=3)),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    JoinedStr(
+                        values=[
+                            Constant(value='12 multiply 3 is '),
+                            FormattedValue(
+                                value=BinOp(
+                                    left=Name(id='a', ctx=Load()),
+                                    op=Mult(),
+                                    right=Name(id='b', ctx=Load())),
+                                conversion=-1),
+                            Constant(value='.')])],
+                keywords=[]))],
+    type_ignores=[])

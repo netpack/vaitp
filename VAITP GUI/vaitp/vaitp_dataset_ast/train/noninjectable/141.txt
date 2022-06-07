@@ -1,0 +1,58 @@
+Module(
+    body=[
+        ClassDef(
+            name='InfIter',
+            bases=[],
+            keywords=[],
+            body=[
+                Expr(
+                    value=Constant(value='Infinite iterator to return all\n        odd numbers')),
+                FunctionDef(
+                    name='__iter__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='num',
+                                    ctx=Store())],
+                            value=Constant(value=1)),
+                        Return(
+                            value=Name(id='self', ctx=Load()))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='__next__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='num', ctx=Store())],
+                            value=Attribute(
+                                value=Name(id='self', ctx=Load()),
+                                attr='num',
+                                ctx=Load())),
+                        AugAssign(
+                            target=Attribute(
+                                value=Name(id='self', ctx=Load()),
+                                attr='num',
+                                ctx=Store()),
+                            op=Add(),
+                            value=Constant(value=2)),
+                        Return(
+                            value=Name(id='num', ctx=Load()))],
+                    decorator_list=[])],
+            decorator_list=[])],
+    type_ignores=[])

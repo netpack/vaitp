@@ -1,0 +1,34 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='mysql.connector')]),
+        Assign(
+            targets=[
+                Name(id='mydb', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='mysql', ctx=Load()),
+                        attr='connector',
+                        ctx=Load()),
+                    attr='connect',
+                    ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='host',
+                        value=Constant(value='localhost')),
+                    keyword(
+                        arg='user',
+                        value=Constant(value='yourusername')),
+                    keyword(
+                        arg='password',
+                        value=Constant(value='yourpassword'))])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='mydb', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

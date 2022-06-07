@@ -1,0 +1,23 @@
+Module(
+    body=[
+        ImportFrom(
+            module='x',
+            names=[
+                alias(name='y')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='arr', ctx=Store())],
+            value=List(
+                elts=[
+                    Constant(value=1),
+                    Constant(value='Hello')],
+                ctx=Load())),
+        Assign(
+            targets=[
+                Name(id='e', ctx=Store())],
+            value=Set(
+                elts=[
+                    Constant(value=1),
+                    Constant(value=2)]))],
+    type_ignores=[])

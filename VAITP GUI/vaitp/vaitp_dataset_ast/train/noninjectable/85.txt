@@ -1,0 +1,43 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='pandas')]),
+        Assign(
+            targets=[
+                Name(id='mydataset', ctx=Store())],
+            value=Dict(
+                keys=[
+                    Constant(value='cars'),
+                    Constant(value='passings')],
+                values=[
+                    List(
+                        elts=[
+                            Constant(value='BMW'),
+                            Constant(value='Volvo'),
+                            Constant(value='Ford')],
+                        ctx=Load()),
+                    List(
+                        elts=[
+                            Constant(value=3),
+                            Constant(value=7),
+                            Constant(value=2)],
+                        ctx=Load())])),
+        Assign(
+            targets=[
+                Name(id='myvar', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='pandas', ctx=Load()),
+                    attr='DataFrame',
+                    ctx=Load()),
+                args=[
+                    Name(id='mydataset', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='myvar', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

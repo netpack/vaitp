@@ -1,0 +1,26 @@
+Module(
+    body=[
+        Assign(
+            targets=[
+                Name(id='boolean_list', ctx=Store())],
+            value=List(
+                elts=[
+                    Constant(value='True'),
+                    Constant(value='True'),
+                    Constant(value='True')],
+                ctx=Load())),
+        Assign(
+            targets=[
+                Name(id='result', ctx=Store())],
+            value=Call(
+                func=Name(id='all', ctx=Load()),
+                args=[
+                    Name(id='boolean_list', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='result', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

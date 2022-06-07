@@ -1,0 +1,5 @@
+Module(
+    body=[
+        Expr(
+            value=Constant(value='\nLinuxThingy version 1.6.5\n\nParameters:\n\n-t (--text): show the text interface\n-h (--help): display this help\n'))],
+    type_ignores=[])

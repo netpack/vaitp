@@ -1,0 +1,22 @@
+Module(
+    body=[
+        Assign(
+            targets=[
+                Name(id='tuple1', ctx=Store())],
+            value=Tuple(
+                elts=[
+                    Constant(value='abc'),
+                    Constant(value=34),
+                    Constant(value=True),
+                    Constant(value=40),
+                    Constant(value='male')],
+                ctx=Load())),
+        Assign(
+            targets=[
+                Name(id='myset', ctx=Store())],
+            value=Set(
+                elts=[
+                    Constant(value='apple'),
+                    Constant(value='banana'),
+                    Constant(value='cherry')]))],
+    type_ignores=[])

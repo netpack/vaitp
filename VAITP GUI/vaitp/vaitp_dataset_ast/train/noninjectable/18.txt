@@ -1,0 +1,49 @@
+Module(
+    body=[
+        FunctionDef(
+            name='visit_Name',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='self'),
+                    arg(arg='node')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='value', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='self', ctx=Load()),
+                                attr='secured',
+                                ctx=Load()),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Attribute(
+                                value=Name(id='node', ctx=Load()),
+                                attr='id',
+                                ctx=Load())],
+                        keywords=[])),
+                If(
+                    test=Compare(
+                        left=Name(id='value', ctx=Load()),
+                        ops=[
+                            IsNot()],
+                        comparators=[
+                            Constant(value=None)]),
+                    body=[
+                        Return(
+                            value=Call(
+                                func=Name(id='Symbol', ctx=Load()),
+                                args=[
+                                    Name(id='value', ctx=Load())],
+                                keywords=[]))],
+                    orelse=[]),
+                Return(
+                    value=Name(id='node', ctx=Load()))],
+            decorator_list=[])],
+    type_ignores=[])

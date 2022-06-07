@@ -1,0 +1,14 @@
+Module(
+    body=[
+        FunctionDef(
+            name='myfunction',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Pass()],
+            decorator_list=[])],
+    type_ignores=[])

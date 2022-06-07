@@ -1,0 +1,44 @@
+Module(
+    body=[
+        FunctionDef(
+            name='outer_function',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Global(
+                    names=[
+                        'a']),
+                Assign(
+                    targets=[
+                        Name(id='a', ctx=Store())],
+                    value=Constant(value=20)),
+                FunctionDef(
+                    name='inner_function',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Global(
+                            names=[
+                                'a']),
+                        Assign(
+                            targets=[
+                                Name(id='a', ctx=Store())],
+                            value=Constant(value=30)),
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='a ='),
+                                    Name(id='a', ctx=Load())],
+                                keywords=[]))],
+                    decorator_list=[])],
+            decorator_list=[])],
+    type_ignores=[])

@@ -1,0 +1,12 @@
+Module(
+    body=[
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='os', ctx=Load()),
+                    attr='makedirs',
+                    ctx=Load()),
+                args=[
+                    Constant(value='/root/dirA/dirB')],
+                keywords=[]))],
+    type_ignores=[])

@@ -18,10 +18,10 @@ class NodeTransformer(ast.NodeTransformer):
         return ast.Str('String: ' + tree_node.s)
 
 arr1 = ["train", "test"]
-arr2 = ["vulnerable", "injectable"]
+arr2 = ["noninjectable"]
 
 for i in range(2):
-    for j in range(2):
+    for j in range(1):
 
         input_folder = str(os.getcwd())+"\\vaitp_dataset\\"+arr1[i]+"\\"+arr2[j]
         output_folder = str(os.getcwd())+"\\vaitp_dataset_ast\\"+arr1[i]+"\\"+arr2[j]

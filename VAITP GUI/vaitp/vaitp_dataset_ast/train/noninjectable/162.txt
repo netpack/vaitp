@@ -1,0 +1,41 @@
+Module(
+    body=[
+        FunctionDef(
+            name='absolute_value',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='num')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Constant(value='This function returns the absolute\n    value of the entered number')),
+                If(
+                    test=Compare(
+                        left=Name(id='num', ctx=Load()),
+                        ops=[
+                            GtE()],
+                        comparators=[
+                            Constant(value=0)]),
+                    body=[
+                        Return(
+                            value=Name(id='num', ctx=Load()))],
+                    orelse=[
+                        Return(
+                            value=UnaryOp(
+                                op=USub(),
+                                operand=Name(id='num', ctx=Load())))])],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Call(
+                        func=Name(id='absolute_value', ctx=Load()),
+                        args=[
+                            Constant(value=2)],
+                        keywords=[])],
+                keywords=[]))],
+    type_ignores=[])

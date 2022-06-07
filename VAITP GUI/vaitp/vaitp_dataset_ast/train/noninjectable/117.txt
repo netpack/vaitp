@@ -1,0 +1,15 @@
+Module(
+    body=[
+        ClassDef(
+            name='PowTwo',
+            bases=[],
+            keywords=[],
+            body=[
+                Expr(
+                    value=Constant(value='Class to implement an iterator\n    of powers of two')),
+                Assign(
+                    targets=[
+                        Name(id='s', ctx=Store())],
+                    value=Constant(value=0))],
+            decorator_list=[])],
+    type_ignores=[])

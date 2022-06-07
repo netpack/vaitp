@@ -1,0 +1,14 @@
+Module(
+    body=[
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Expr(
+                    value=Constant(value='\n    Hi This is Just a comment\n    '))],
+            orelse=[])],
+    type_ignores=[])

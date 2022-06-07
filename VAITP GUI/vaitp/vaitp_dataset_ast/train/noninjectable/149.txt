@@ -1,0 +1,19 @@
+Module(
+    body=[
+        Assign(
+            targets=[
+                Name(id='random_byte_array', ctx=Store())],
+            value=Call(
+                func=Name(id='bytearray', ctx=Load()),
+                args=[
+                    Constant(value='ABC'),
+                    Constant(value='utf-8')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Constant(value='Before updation:'),
+                    Name(id='random_byte_array', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

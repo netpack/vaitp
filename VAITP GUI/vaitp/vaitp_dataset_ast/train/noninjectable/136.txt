@@ -1,0 +1,22 @@
+Module(
+    body=[
+        Assign(
+            targets=[
+                Name(id='val', ctx=Store())],
+            value=Constant(value=45)),
+        Assign(
+            targets=[
+                Name(id='bv', ctx=Store())],
+            value=Call(
+                func=Name(id='format', ctx=Load()),
+                args=[
+                    Name(id='val', ctx=Load()),
+                    Constant(value='b')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='bv', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

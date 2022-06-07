@@ -1,0 +1,33 @@
+Module(
+    body=[
+        ClassDef(
+            name='PowTwo',
+            bases=[],
+            keywords=[],
+            body=[
+                Expr(
+                    value=Constant(value='Class to implement an iterator\n    of powers of two')),
+                Assign(
+                    targets=[
+                        Name(id='s', ctx=Store())],
+                    value=Constant(value=0)),
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='s',
+                                    ctx=Store())],
+                            value=Constant(value=1))],
+                    decorator_list=[])],
+            decorator_list=[])],
+    type_ignores=[])

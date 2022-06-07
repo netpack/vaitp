@@ -1,0 +1,17 @@
+Module(
+    body=[
+        Assign(
+            targets=[
+                Name(id='vowel_string', ctx=Store())],
+            value=Constant(value='aeiou')),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Call(
+                        func=Name(id='list', ctx=Load()),
+                        args=[
+                            Name(id='vowel_string', ctx=Load())],
+                        keywords=[])],
+                keywords=[]))],
+    type_ignores=[])

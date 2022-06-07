@@ -1,0 +1,35 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        For(
+            target=Name(id='file', ctx=Store()),
+            iter=Call(
+                func=Attribute(
+                    value=Name(id='os', ctx=Load()),
+                    attr='listdir',
+                    ctx=Load()),
+                args=[
+                    Constant(value='my_dir')],
+                keywords=[]),
+            body=[
+                If(
+                    test=Call(
+                        func=Attribute(
+                            value=Name(id='file', ctx=Load()),
+                            attr='endswith',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='.txt')],
+                        keywords=[]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='file', ctx=Load())],
+                                keywords=[]))],
+                    orelse=[])],
+            orelse=[])],
+    type_ignores=[])

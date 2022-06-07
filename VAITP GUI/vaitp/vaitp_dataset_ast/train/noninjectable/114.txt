@@ -1,0 +1,32 @@
+Module(
+    body=[
+        Assign(
+            targets=[
+                Name(id='iter_obj', ctx=Store())],
+            value=Call(
+                func=Name(id='iter', ctx=Load()),
+                args=[
+                    Name(id='iterable', ctx=Load())],
+                keywords=[])),
+        While(
+            test=Constant(value=True),
+            body=[
+                Try(
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='element', ctx=Store())],
+                            value=Call(
+                                func=Name(id='next', ctx=Load()),
+                                args=[
+                                    Name(id='iter_obj', ctx=Load())],
+                                keywords=[]))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='StopIteration', ctx=Load()),
+                            body=[
+                                Break()])],
+                    orelse=[],
+                    finalbody=[])],
+            orelse=[])],
+    type_ignores=[])

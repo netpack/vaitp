@@ -1,0 +1,28 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='pathlib')]),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Call(
+                                    func=Attribute(
+                                        value=Name(id='pathlib', ctx=Load()),
+                                        attr='Path',
+                                        ctx=Load()),
+                                    args=[
+                                        Constant(value='my_file.txt')],
+                                    keywords=[]),
+                                attr='parent',
+                                ctx=Load()),
+                            attr='absolute',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])],
+                keywords=[]))],
+    type_ignores=[])
