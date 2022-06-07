@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1326</width>
-    <height>688</height>
+    <height>712</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -22,16 +22,16 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>629</y>
+      <y>630</y>
       <width>851</width>
-      <height>21</height>
+      <height>41</height>
      </rect>
     </property>
     <property name="toolTip">
      <string/>
     </property>
     <property name="text">
-     <string>VAITP - Vulnerability Attack and Injection Tool in Python v0.5</string>
+     <string>VAITP - Vulnerability Attack and Injection Tool in Python v0.5.</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
