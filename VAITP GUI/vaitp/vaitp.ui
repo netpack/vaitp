@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1326</width>
-    <height>712</height>
+    <width>1366</width>
+    <height>768</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -22,8 +22,8 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>630</y>
-      <width>851</width>
+      <y>680</y>
+      <width>841</width>
       <height>41</height>
      </rect>
     </property>
@@ -31,7 +31,7 @@
      <string/>
     </property>
     <property name="text">
-     <string>VAITP - Vulnerability Attack and Injection Tool in Python v0.5.</string>
+     <string>VAITP - Vulnerability Attack and Injection Tool in Python v0.6</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -45,8 +45,8 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>1321</width>
-      <height>631</height>
+      <width>1371</width>
+      <height>681</height>
      </rect>
     </property>
     <property name="currentIndex">
@@ -150,6 +150,40 @@
       <property name="currentIndex">
        <number>0</number>
       </property>
+      <widget class="QWidget" name="tab">
+       <attribute name="title">
+        <string>Scanned Files</string>
+       </attribute>
+       <widget class="QLabel" name="lbl_scanned_files">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>10</y>
+          <width>261</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Scanned files:</string>
+        </property>
+       </widget>
+       <widget class="QListWidget" name="lst_scanned_files">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>30</y>
+          <width>1281</width>
+          <height>231</height>
+         </rect>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+       </widget>
+      </widget>
       <widget class="QWidget" name="tab_vulnerabilities">
        <attribute name="title">
         <string>Vulnerabilities</string>
@@ -158,9 +192,9 @@
         <property name="geometry">
          <rect>
           <x>10</x>
-          <y>170</y>
+          <y>29</y>
           <width>731</width>
-          <height>100</height>
+          <height>241</height>
          </rect>
         </property>
         <property name="iconSize">
@@ -174,7 +208,7 @@
         <property name="geometry">
          <rect>
           <x>10</x>
-          <y>150</y>
+          <y>10</y>
           <width>261</width>
           <height>20</height>
          </rect>
@@ -213,35 +247,6 @@
         </property>
         <property name="readOnly">
          <bool>true</bool>
-        </property>
-       </widget>
-       <widget class="QLabel" name="lbl_scanned_files">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>10</y>
-          <width>261</width>
-          <height>20</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Scanned files:</string>
-        </property>
-       </widget>
-       <widget class="QListWidget" name="lst_scanned_files">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>30</y>
-          <width>731</width>
-          <height>100</height>
-         </rect>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>32</width>
-          <height>32</height>
-         </size>
         </property>
        </widget>
       </widget>
@@ -821,7 +826,7 @@
         <x>10</x>
         <y>10</y>
         <width>1291</width>
-        <height>511</height>
+        <height>509</height>
        </rect>
       </property>
       <property name="font">
@@ -897,10 +902,13 @@
         <property name="geometry">
          <rect>
           <x>220</x>
-          <y>380</y>
-          <width>391</width>
+          <y>390</y>
+          <width>361</width>
           <height>23</height>
          </rect>
+        </property>
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Use VAITP AI Sequence 2 Sequence model to attempt to &amp;quot;translate&amp;quot; probable injection points (inputs the probable injection points from the Classificator's output into the S2S and uses the output as the vulnerable injection string)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="text">
          <string>Use VAITP AI Sequence2Sequence model to predict possible injections</string>
@@ -922,8 +930,8 @@
        <widget class="QLabel" name="label_22">
         <property name="geometry">
          <rect>
-          <x>230</x>
-          <y>330</y>
+          <x>220</x>
+          <y>310</y>
           <width>191</width>
           <height>17</height>
          </rect>
@@ -936,10 +944,13 @@
         <property name="geometry">
          <rect>
           <x>220</x>
-          <y>280</y>
+          <y>270</y>
           <width>451</width>
           <height>23</height>
          </rect>
+        </property>
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Use VAITP AI Classificator model to predict if the scanned script is &amp;quot;vulnerable&amp;quot;, &amp;quot;injectable&amp;quot; or &amp;quot;noninjectable&amp;quot;. I&lt;span style=&quot; text-decoration: underline;&quot;&gt;f using a Conv1D model&lt;/span&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;and predicted as &amp;quot;injectable&amp;quot;&lt;/span&gt; the model will output the probable injection points (the most probable injectable strings).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="text">
          <string>Use VAITP AI Classificator model for python code classification prediction</string>
@@ -953,6 +964,9 @@
           <width>571</width>
           <height>31</height>
          </rect>
+        </property>
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select the path to the exported AI models (vaitp/exported_ai_models)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
        </widget>
        <widget class="QLabel" name="label_20">
@@ -976,21 +990,27 @@
        <widget class="QComboBox" name="comboBox_vaitp_ai_classificator">
         <property name="geometry">
          <rect>
-          <x>390</x>
-          <y>324</y>
+          <x>380</x>
+          <y>304</y>
           <width>481</width>
           <height>31</height>
          </rect>
+        </property>
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select the AI classificator model to use&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
        </widget>
        <widget class="QSpinBox" name="txt_s2s_inj_limit">
         <property name="geometry">
          <rect>
-          <x>340</x>
-          <y>410</y>
+          <x>720</x>
+          <y>390</y>
           <width>51</width>
           <height>26</height>
          </rect>
+        </property>
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Lmiti the number of probable injection points fed to the S2S&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="minimum">
          <number>1</number>
@@ -1002,8 +1022,8 @@
        <widget class="QLabel" name="label_23">
         <property name="geometry">
          <rect>
-          <x>220</x>
-          <y>410</y>
+          <x>600</x>
+          <y>390</y>
           <width>111</width>
           <height>21</height>
          </rect>
@@ -1034,6 +1054,9 @@
           <height>31</height>
          </rect>
         </property>
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select the path to the folder where VAITP should save the generated reports.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
        </widget>
        <widget class="QToolButton" name="bt_load_log_output_path">
         <property name="geometry">
@@ -1057,6 +1080,9 @@
           <height>23</height>
          </rect>
         </property>
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Use the target script's directory as the working directory&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
         <property name="text">
          <string>Change to target script directory when attacking</string>
         </property>
@@ -1070,8 +1096,27 @@
           <height>23</height>
          </rect>
         </property>
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Recursively add all Python files inside all the folders below the selected folder to scan&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
         <property name="text">
          <string>Scan sub-directories when scanning folders</string>
+        </property>
+       </widget>
+       <widget class="QCheckBox" name="checkBox_add_partial_injection_points">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="geometry">
+         <rect>
+          <x>220</x>
+          <y>350</y>
+          <width>651</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Add probable injection points from AI classificator model to injection points list (allow partialy generated injection points)</string>
         </property>
        </widget>
       </widget>
@@ -1287,7 +1332,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1326</width>
+     <width>1366</width>
      <height>22</height>
     </rect>
    </property>
