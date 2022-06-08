@@ -245,12 +245,12 @@ raw_train_ds_full = utils.text_dataset_from_directory(
 
 
 #Create trainig set  [should be around 20% of the set]
-batch_size = 45#228#64
+batch_size = 132#228#64
 seed = 4
 raw_train_ds = utils.text_dataset_from_directory(
     train_dir,
     batch_size=batch_size,
-    validation_split=0.25,
+    validation_split=0.20,
     subset='training',
     seed=seed)
 
@@ -269,7 +269,7 @@ for i, label in enumerate(raw_train_ds.class_names):
 raw_val_ds = utils.text_dataset_from_directory(
     train_dir,
     batch_size=batch_size,
-    validation_split=0.25,
+    validation_split=0.20,
     subset='validation',
     seed=seed)
 
@@ -680,10 +680,10 @@ for input, label in zip(text_batch, predicted_labels):
 
 
 print("\n")
-print(f'VAITP total training data-set count :: {label_iterator}')
+print(f'VAITP total training data-set count :: {train_dir_count}')
 print(f'VAITP total testing data-set count :: {test_dir_count}')
 print(f'VAITP wrong training data-set count :: {wrong_predictions}')
-print(f'VAITP correct training data-set count :: {label_iterator-wrong_predictions}')
+print(f'VAITP correct training data-set count :: {test_dir_count-wrong_predictions}')
 print("VAITP final model accuracy: {:2.2%}".format(accuracy))
 print(f'VAITP final model loss: {loss}')
 
