@@ -49,9 +49,16 @@ pyfile_fp = open(pyfile,'r')
 #print(f'py:: {pyfile_fp.read()}')
 source = pyfile_fp.read()
 pyfile_ast_parsed = ast.parse(source, mode='exec')
-pyfile_ast = ast.dump(pyfile_ast_parsed)
+pyfile_ast = ast.dump(pyfile_ast_parsed, indent=4)
 
 
+temp_w_fp = open("vaitp_class_run.temp", 'w')
+temp_w_fp.write(pyfile_ast)
+temp_w_fp.close()
+
+temp_r_fp = open("vaitp_class_run.temp", 'r')
+ast_source = temp_r_fp.read()
+temp_r_fp.close()
 
 #Load the model
 if not options.use_model:
@@ -76,7 +83,7 @@ final_input_string = []
 final_lines = ""
 
 
-for line in pyfile_ast: #lines:
+for line in ast_source: #pyfile_ast: #lines:
     #final_input_string.append(line)
     final_lines += line
 

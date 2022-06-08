@@ -682,8 +682,8 @@ for input, label in zip(text_batch, predicted_labels):
 print("\n")
 print(f'VAITP total training data-set count :: {train_dir_count}')
 print(f'VAITP total testing data-set count :: {test_dir_count}')
-print(f'VAITP wrong training data-set count :: {wrong_predictions}')
-print(f'VAITP correct training data-set count :: {test_dir_count-wrong_predictions}')
+print(f'VAITP wrong testing data-set count :: {wrong_predictions}')
+print(f'VAITP correct testing data-set count :: {test_dir_count-wrong_predictions}')
 print("VAITP final model accuracy: {:2.2%}".format(accuracy))
 print(f'VAITP final model loss: {loss}')
 
