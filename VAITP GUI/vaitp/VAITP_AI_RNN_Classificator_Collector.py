@@ -11,6 +11,10 @@ from datetime import timedelta
 
 time_start = time.time()
 
+
+#local working directory. Set accordingly to your environment
+localpath = "/home/fred/msi/ano2/VAITP/VAITP GUI/vaitp/"
+
 #temp file
 tmp_filename = 'vaitp_trainmodel_output.temp'
 
@@ -350,8 +354,6 @@ for model_type_it in range(model_start, model_total+1, 1):
 
 
 
-
-localpath = "/home/fred/msi/ano2/VAITP/VAITP GUI/vaitp/"
 #localpath = "/mnt/vaitp/VAITP GUI/vaitp/"
 
 #plot

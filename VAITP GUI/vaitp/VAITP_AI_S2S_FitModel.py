@@ -85,9 +85,9 @@ path_to_zip = tf.keras.utils.get_file(
     'vaitp-dataset-injv-2022.tar.gz', origin='https://netpack.pt/vaitp/vaitp-dataset-injv-2022.tar.gz',
     extract=True)
 path_to_file = pathlib.Path(path_to_zip).parent/'injv.txt'
-
-print(f'\nSaving VAITP dataset to: {path_to_file}')
 '''
+
+
 
 translation_file = "/home/fred/msi/ano2/VAITP/VAITP GUI/vaitp/injv.txt"
 common_words_file = "/home/fred/msi/ano2/VAITP/VAITP GUI/vaitp/common.txt"
@@ -95,14 +95,14 @@ one_line_cvefixes_diffs = "/home/fred/msi/ano2/VAITP/VAITP GUI/vaitp/s2s_oneline
 final_dataset_file = "/home/fred/msi/ano2/VAITP/VAITP GUI/vaitp_s2s.temp"
 
 fd = open(final_dataset_file, "w")
-#fd.write(open(common_words_file,'r').read())
+fd.write(open(common_words_file,'r').read())
 fd.write(open(one_line_cvefixes_diffs,'r').read())
 fd.write(open(translation_file,'r').read())
 fd.close()
 
 #set path to the translation dataset
 path_to_file = pathlib.Path(final_dataset_file)
-
+print(f'\nSaving VAITP merged temp data-set file to: {path_to_file}')
 
 #load the data
 def load_data(path):
@@ -939,9 +939,9 @@ Translator.translate = translate_unrolled
 
 #Run translator on pure python code
 input_text = tf.constant([
-    'subprocess.call(nomedavariavel, shell=False)', # "subprocess.call(nomedavariavel, shell=True)"
-    'subprocess.call(cmd, shell=False)', # "subprocess.call(cmd, shell=True)"
-    'subprocess.call(file, shell=False)', # "subprocess.call(cmd, shell=True)"
+    'subprocess.call(argv[1], shell=False)', # "subprocess.call(argv[1], shell=True)"
+    'subprocess.call(value, shell=False)', # "subprocess.call(value, shell=True)"
+    'subprocess.call(filename, shell=False)', # "subprocess.call(filename, shell=True)"
 ])
 
 #Run translator on AST of the python code

@@ -10,3 +10,5 @@ test	test
 nomedavariavel	nomedavariavel
 cmd	cmd
 file	file
+argv[1]	argv[1]
+filename	filename

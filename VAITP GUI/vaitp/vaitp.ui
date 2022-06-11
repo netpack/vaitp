@@ -31,7 +31,7 @@
      <string/>
     </property>
     <property name="text">
-     <string>VAITP - Vulnerability Attack and Injection Tool in Python v0.7</string>
+     <string>VAITP - Vulnerability Attack and Injection Tool in Python v0.8</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -1105,7 +1105,7 @@
        </widget>
        <widget class="QCheckBox" name="checkBox_add_partial_injection_points">
         <property name="enabled">
-         <bool>false</bool>
+         <bool>true</bool>
         </property>
         <property name="geometry">
          <rect>

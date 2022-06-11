@@ -10,7 +10,7 @@ from optparse import OptionParser
 #parameters parsing
 parser = OptionParser()
 parser.add_option("-i", "--input_file", action="store", type="string", dest="input_file", help="Set the input Python file to be scanned")
-parser.add_option("-o", "--optimize_granularity", action="store_true", dest="optimize_granularity", help="Try to optimize granulariy of inputs predicted as 'injectable'")
+parser.add_option("-o", "--optimize_granularity", action="store_true", dest="optimize_granularity", help="Try to optimize granularity of inputs predicted as 'injectable'")
 parser.add_option("-m", "--use-model", action="store", type="string", dest="use_model", help="Set the model to use")
 
 (options, sys.argv) = parser.parse_args(sys.argv)
