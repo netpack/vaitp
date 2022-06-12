@@ -73,6 +73,8 @@ private slots:
 
     void on_bt_scan_py_folder_clicked();
 
+    void on_lbl_scanned_files_linkActivated(const QString &link);
+
 private:
     Ui::VAITP *ui;
 };
