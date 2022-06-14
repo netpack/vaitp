@@ -12,6 +12,7 @@
 #include "detectionmodule.h"
 #include <QPrinter>
 #include <QDesktopServices>
+#include <QSplashScreen>
 
 int vaitp_loaded=0;
 int number_of_vulnerabilities_found=0;
@@ -1339,95 +1340,13 @@ void VAITP::on_actionClear_all_outputs_and_lists_triggered()
     number_of_ai_injection_points_found=0;
     number_of_noninj_by_regex=0;
     number_of_vuln_by_regex=0;
-    ui->lbl_scanned_files->setText("Scanned files: ["+QString::number(number_of_scanned_files)+"]");
+    ui->lbl_scanned_files->setText("Scanned files: [0]");
+    ui->lbl_vulnerabilities_found->setText("Vulnerabilities: [0]");
+    ui->lbl_injection_points->setText("Injection points: [0] (RX: 0 AI: 0)");
 
 }
 
 
-void VAITP::on_bt_exportReport_clicked()
-{
-
-    qDebug()<<"Extract report clicked";
-    ui->txt_output_sh1->appendHtml("VAITP report creation started. Please wait...");
-    qApp->processEvents();
-
-
-    QDateTime dateTime = dateTime.currentDateTime();
-    QString now = dateTime.toString("yyyy-MM-dd-HH-mm-ss");
-
-    QString vulns ="";
-    for(int vu=0; vu<ui->lst_vulns->count();vu++){
-        vulns+=ui->lst_vulns->item(vu)->text()+"<br>";
-    }
-
-
-
-    QString chainedinjs ="";
-    for(int vu=0; vu<ui->lst_injectionsChain->count();vu++){
-        chainedinjs+=ui->lst_injectionsChain->item(vu)->text()+"<br>";
-    }
-
-    QString injfiles ="";
-    for(int vu=0; vu<ui->lst_injectedFiles->count();vu++){
-        injfiles+=ui->lst_injectedFiles->item(vu)->text()+"<br>";
-    }
-
-
-    QString workingattacks ="";
-    for(int vu=0; vu<ui->lst_workingAttacks->count();vu++){
-        workingattacks+=ui->lst_workingAttacks->item(vu)->text()+"<br>";
-    }
-
-    //create print html ///<br><h3>VAITP</h3>
-    QString html = "<div style='text-align:center'>"
-                   "<img src=':/logo/icon_96.png'/>"
-                   "</div><br>"
-                   "<div style='text-align:center'>"
-                   "<h2>VAITP</h2>"
-                   "</div>"
-                   "<br><div style='text-align:right'>"
-                   "<h5>VAITP Report: "+now+"</h5>"
-                   "</div><br>"
-                   "<div>"
-                   "<p><strong>File scanned:</strong> <br>"+ui->txt_py_src->text()+"<br></p>"
-                   "<p><strong>File attacked:</strong> <br>"+ui->lbl_target->text()+"<br></p>"
-                   "<p><strong>Vulnerabilities found:</strong> <br>"+vulns+"<br></p>"
-                   "<p><strong>Regex-based injection points found:</strong> <span style='font-size:100px'>(format: [injectable code :: vulnerable code :: Line number :: original line])</span> <br>"+inj_re+"<br></p>"
-                   "<p><strong>Use VAITP AI Classificator model:</strong> <br>"+(QString::number(ui->checkBox_use_vaitp_ai_classificator->isChecked()) == 1 ? "Yes":"No")+"<br></p>"
-                   "<p><strong>Use VAITP AI Classificator model path:</strong> <br>"+ui->txt_vaitp_models_path->text()+"<br></p>"
-                   "<p><strong>VAITP AI Classificator model selected:</strong> <br>"+ui->comboBox_vaitp_ai_classificator->currentText()+"<br></p>"
-                   "<p><strong>Use VAITP AI Sequence2Sequence model:</strong> <br>"+(QString::number(ui->checkBox_use_vaitp_ai_s2s->isChecked()) == 1 ? "Yes":"No")+"<br></p>"
-                   "<p><strong>VAITP AI Classificator injection points found:</strong> <span style='font-size:100px'>(format: [injectable code :: vulnerable code :: Line number :: original line])</span> <br>"+inj_ai+"<br></p>"
-                   "<p><strong>List of chained injections:</strong> <span style='font-size:100px'>(format: [injectable code :: vulnerable code :: Line number :: original line])</span> <br>"+chainedinjs+"<br></p>"
-                   "<p><strong>List of injected files:</strong> <br>"+injfiles+"<br></p>"
-                   "<p><strong>List of working attacks and payoads:</strong> <br>"+workingattacks+"<br></p>"
-                   "<p><strong>Main output content:</strong> <br>"+ui->txt_output_sh1->toPlainText()+"<br></p>"
-                   "</div><br><br><br>"
-                   "<br><br><div><br><br><p style=\"font-size:100px\"><br><br>VAITP - Vulnerability Attack and Injection Tool in Python<br>Development: Frédéric Bogaerts<br>Dataset augmentation, objuscation and testing: Anush Deokar<br>Supervising teachers: PhD. Naghmeh Navaki, PhD. José Fonseca<br>DEI - Universidade de Coimbra - Portugal</p></div>"
-
-                   "<div style='text-align:center'>"
-                   "<img src=':/lineicons-free-basic-3.0/uc.png'/>"
-                   "</div><br>";
-    QTextDocument doc;
-    doc.setHtml(html);
-
-    //set a virtual printer to save as pdf
-    QPrinter printer(QPrinter::HighResolution);
-    QString fileName = ui->txt_vaitp_log_path->text()+"/VAITP_EXPORT_LOG_"+now+".pdf";
-    printer.setOutputFormat(QPrinter::PdfFormat);
-    printer.setPaperSize(QPrinter::A4);
-    printer.setPageMargins(QMarginsF(15,15,15,15));
-    printer.setOutputFileName(fileName);
-
-    //print
-    doc.print(&printer);
-    qDebug()<<"Extract report saved to "<<fileName;
-    ui->txt_output_sh1->appendHtml("VAITP report created: "+fileName);
-    qApp->processEvents();
-
-    //open the file
-    QDesktopServices::openUrl(QUrl::fromLocalFile(fileName));
-}
 
 
 void VAITP::on_bt_load_py_src_folder_clicked()
@@ -1507,8 +1426,115 @@ void VAITP::on_bt_scan_py_folder_clicked()
 }
 
 
-void VAITP::on_lbl_scanned_files_linkActivated(const QString &link)
-{
 
+void VAITP::on_actionAbout_triggered()
+{
+    qDebug()<<"VAITP - Vulnerability attack and injection tool in Python. Frédéric Bogaerts 2022.";
+    QMessageBox m;
+    m.about(this,"About VAITP","Vulnerability Attack and Injection Tool in Python.<br><br>"
+                               "Development: Frédéric Bogaerts (info@netpack.pt)<br>"
+                               "Colaboration: Anush Deokar (deokar.1@iitj.ac.in)<br>"
+                               "Orientation: PhD. Naghmeh Ivaki & PhD. José Fonseca<br><br>"
+                               "Departamento de Engenharia Informática<br>"
+                               "Universidade de Coimbra - Portugal<br>"
+                               "2022<br>"
+                               "VAITP v0.9");
+
+
+}
+
+
+void VAITP::on_actionExport_PDF_report_triggered()
+{
+    qDebug()<<"Extract report clicked";
+    ui->txt_output_sh1->appendHtml("VAITP report creation started. Please wait...");
+    qApp->processEvents();
+
+
+    QDateTime dateTime = dateTime.currentDateTime();
+    QString now = dateTime.toString("yyyy-MM-dd-HH-mm-ss");
+
+    QString filesScanned="";
+    for(int f=0; f<ui->lst_scanned_files->count(); f++){
+        filesScanned+=ui->lst_scanned_files->item(f)->text()+"<br><br>";
+    }
+
+    QString vulns ="";
+    for(int vu=0; vu<ui->lst_vulns->count();vu++){
+        vulns+=ui->lst_vulns->item(vu)->text()+"<br><br>";
+    }
+
+
+
+    QString chainedinjs ="";
+    for(int vu=0; vu<ui->lst_injectionsChain->count();vu++){
+        chainedinjs+=ui->lst_injectionsChain->item(vu)->text()+"<br><br>";
+    }
+
+    QString injfiles ="";
+    for(int vu=0; vu<ui->lst_injectedFiles->count();vu++){
+        injfiles+=ui->lst_injectedFiles->item(vu)->text()+"<br><br>";
+    }
+
+
+    QString workingattacks ="";
+    for(int vu=0; vu<ui->lst_workingAttacks->count();vu++){
+        workingattacks+=ui->lst_workingAttacks->item(vu)->text()+"<br><br>";
+    }
+
+    //create print html ///<br><h3>VAITP</h3>
+    QString html = "<div style='text-align:center'>"
+                   "<img src=':/logo/icon_96.png'/>"
+                   "</div><br>"
+                   "<div style='text-align:center'>"
+                   "<h2>VAITP</h2>"
+                   "</div>"
+                   "<br><div style='text-align:right'>"
+                   "<h5>VAITP Report: "+now+"</h5>"
+                   "</div><br>"
+                   "<div>"
+                   "<p><strong>Scanned files:</strong> <br>"+filesScanned+"<br></p>"
+                   "<p><strong>Vulnerabilities found:</strong> <br>"+vulns+"<br></p>"
+                   "<p><strong>Regex-based injection points found:</strong> <span style='font-size:100px'>(format: [injectable code :: vulnerable code :: Line number :: original line])</span> <br>"+inj_re+"<br></p>"
+                   "<p><strong>Use VAITP AI Classificator model:</strong> <br>"+(ui->checkBox_use_vaitp_ai_classificator->isChecked() ? "Yes":"No")+"<br></p>"
+                   "<p><strong>Use VAITP AI Classificator model path:</strong> <br>"+ui->txt_vaitp_models_path->text()+"<br></p>"
+                   "<p><strong>VAITP AI Classificator model selected:</strong> <br>"+ui->comboBox_vaitp_ai_classificator->currentText()+"<br></p>"
+                   "<p><strong>Use VAITP AI Sequence2Sequence model:</strong> <br>"+(ui->checkBox_use_vaitp_ai_s2s->isChecked() ? "Yes":"No")+"<br></p>"
+                   "<p><strong>VAITP AI Classificator injection points found:</strong> <span style='font-size:100px'>(format: [injectable code :: vulnerable code :: Line number :: original line])</span> <br>"+inj_ai+"<br></p>"
+                   "<p><strong>List of chained injections:</strong> <span style='font-size:100px'>(format: [injectable code :: vulnerable code :: Line number :: original line])</span> <br>"+chainedinjs+"<br></p>"
+                   "<p><strong>List of injected files:</strong> <br>"+injfiles+"<br></p>"
+                   "<p><strong>List of working attacks and payoads:</strong> <br>"+workingattacks+"<br></p>"
+                   "<p><strong>Full raw output content:</strong> <br>"+ui->txt_output_sh1->toPlainText()+"<br></p>"
+                   "</div><br><br><br>"
+                   "<br><br><div><br><br><p style=\"font-size:100px\"><br><br>VAITP - Vulnerability Attack and Injection Tool in Python<br>Development: Frédéric Bogaerts<br>Colaboration: Anush Deokar<br>Supervising teachers: PhD. Naghmeh Navaki, PhD. José Fonseca<br>DEI - Universidade de Coimbra - Portugal</p></div>"
+
+                   "<div style='text-align:center'>"
+                   "<img src=':/lineicons-free-basic-3.0/uc.png'/>"
+                   "</div><br>";
+    QTextDocument doc;
+    doc.setHtml(html);
+
+    //set a virtual printer to save as pdf
+    QPrinter printer(QPrinter::HighResolution);
+    QString fileName = ui->txt_vaitp_log_path->text()+"/VAITP_EXPORT_LOG_"+now+".pdf";
+    printer.setOutputFormat(QPrinter::PdfFormat);
+    printer.setPaperSize(QPrinter::A4);
+    printer.setPageMargins(QMarginsF(15,15,15,15));
+    printer.setOutputFileName(fileName);
+
+    //print
+    doc.print(&printer);
+    qDebug()<<"Extract report saved to "<<fileName;
+    ui->txt_output_sh1->appendHtml("VAITP report created: "+fileName);
+    qApp->processEvents();
+
+    //open the file
+    QDesktopServices::openUrl(QUrl::fromLocalFile(fileName));
+}
+
+
+void VAITP::on_actionQuit_triggered()
+{
+    QCoreApplication::quit();
 }
 

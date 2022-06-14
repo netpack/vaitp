@@ -18,1314 +18,1071 @@
     <normaloff>:/logo/icon_48.png</normaloff>:/logo/icon_48.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLabel" name="lbl_info">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>680</y>
-      <width>841</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="toolTip">
-     <string/>
-    </property>
-    <property name="text">
-     <string>VAITP - Vulnerability Attack and Injection Tool in Python v0.8</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-    </property>
-   </widget>
-   <widget class="QTabWidget" name="tabWidget">
-    <property name="enabled">
-     <bool>true</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>1371</width>
-      <height>681</height>
-     </rect>
-    </property>
-    <property name="currentIndex">
-     <number>0</number>
-    </property>
-    <property name="iconSize">
-     <size>
-      <width>48</width>
-      <height>48</height>
-     </size>
-    </property>
-    <widget class="QWidget" name="tab_local">
-     <attribute name="title">
-      <string>VAITP</string>
-     </attribute>
-     <widget class="QLineEdit" name="txt_py_src">
-      <property name="geometry">
-       <rect>
-        <x>140</x>
-        <y>20</y>
-        <width>511</width>
-        <height>31</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QToolButton" name="bt_load_py_src">
-      <property name="geometry">
-       <rect>
-        <x>660</x>
-        <y>20</y>
-        <width>41</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>...</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>19</y>
-        <width>131</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Select a Python file:</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="bt_scan_py">
-      <property name="geometry">
-       <rect>
-        <x>720</x>
-        <y>20</y>
-        <width>181</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Scan File</string>
-      </property>
-      <property name="icon">
-       <iconset resource="resources.qrc">
-        <normaloff>:/lineicons-free-basic-3.0/png-files/magnifier.png</normaloff>:/lineicons-free-basic-3.0/png-files/magnifier.png</iconset>
-      </property>
-     </widget>
-     <widget class="QPlainTextEdit" name="txt_output_sh1">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>450</y>
-        <width>1291</width>
-        <height>141</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_7">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>430</y>
-        <width>131</width>
-        <height>18</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Output:</string>
-      </property>
-     </widget>
-     <widget class="QTabWidget" name="tabWidget_2">
-      <property name="geometry">
-       <rect>
-        <x>6</x>
-        <y>100</y>
-        <width>1301</width>
-        <height>321</height>
-       </rect>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="enabled">
+       <bool>true</bool>
       </property>
       <property name="currentIndex">
        <number>0</number>
       </property>
-      <widget class="QWidget" name="tab">
+      <property name="iconSize">
+       <size>
+        <width>48</width>
+        <height>48</height>
+       </size>
+      </property>
+      <widget class="QWidget" name="tab_local">
        <attribute name="title">
-        <string>Scanned Files</string>
+        <string>VAITP</string>
        </attribute>
-       <widget class="QLabel" name="lbl_scanned_files">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>10</y>
-          <width>261</width>
-          <height>20</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Scanned files:</string>
-        </property>
-       </widget>
-       <widget class="QListWidget" name="lst_scanned_files">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>30</y>
-          <width>1281</width>
-          <height>231</height>
-         </rect>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>32</width>
-          <height>32</height>
-         </size>
-        </property>
-       </widget>
+       <layout class="QVBoxLayout" name="verticalLayout_4">
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,0,0,0">
+            <property name="sizeConstraint">
+             <enum>QLayout::SetFixedSize</enum>
+            </property>
+            <item>
+             <widget class="QLabel" name="label">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>Select a Python file:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="txt_py_src">
+              <property name="maximumSize">
+               <size>
+                <width>11600000</width>
+                <height>16777215</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QToolButton" name="bt_load_py_src">
+              <property name="text">
+               <string>...</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="bt_scan_py">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>140</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>Scan File</string>
+              </property>
+              <property name="icon">
+               <iconset resource="resources.qrc">
+                <normaloff>:/lineicons-free-basic-3.0/png-files/magnifier.png</normaloff>:/lineicons-free-basic-3.0/png-files/magnifier.png</iconset>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_3">
+            <item>
+             <widget class="QLabel" name="label_25">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>110</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="baseSize">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>Select a folder:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="txt_py_src_folder">
+              <property name="maximumSize">
+               <size>
+                <width>16777000</width>
+                <height>16777215</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QToolButton" name="bt_load_py_src_folder">
+              <property name="text">
+               <string>...</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="bt_scan_py_folder">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>140</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>Scan Folder</string>
+              </property>
+              <property name="icon">
+               <iconset resource="resources.qrc">
+                <normaloff>:/lineicons-free-basic-3.0/png-files/magnifier.png</normaloff>:/lineicons-free-basic-3.0/png-files/magnifier.png</iconset>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_42">
+            <property name="text">
+             <string>AI model prediction:</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QLabel" name="lbl_ai_classificator_run">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QTabWidget" name="tabWidget_2">
+          <property name="currentIndex">
+           <number>0</number>
+          </property>
+          <widget class="QWidget" name="tab">
+           <attribute name="title">
+            <string>Scanned Files</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_5">
+            <item>
+             <widget class="QLabel" name="lbl_scanned_files">
+              <property name="text">
+               <string>Scanned files:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QListWidget" name="lst_scanned_files">
+              <property name="iconSize">
+               <size>
+                <width>32</width>
+                <height>32</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="tab_vulnerabilities">
+           <attribute name="title">
+            <string>Vulnerabilities</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_12">
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_13">
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_10">
+                <item>
+                 <widget class="QLabel" name="lbl_vulnerabilities_found">
+                  <property name="text">
+                   <string>Vulnerabilities:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QListWidget" name="lst_vulns">
+                  <property name="iconSize">
+                   <size>
+                    <width>32</width>
+                    <height>32</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_11">
+                <item>
+                 <widget class="QLabel" name="label_2">
+                  <property name="text">
+                   <string>Description:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QTextEdit" name="txt_vulnDescription">
+                  <property name="autoFillBackground">
+                   <bool>false</bool>
+                  </property>
+                  <property name="inputMethodHints">
+                   <set>Qt::ImhMultiLine|Qt::ImhNoEditMenu</set>
+                  </property>
+                  <property name="readOnly">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="tab_injections">
+           <attribute name="title">
+            <string>Injections</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_16">
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_17">
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_13">
+                <item>
+                 <widget class="QLabel" name="lbl_injection_points">
+                  <property name="text">
+                   <string>Injection points:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QListWidget" name="lst_injectionPoints">
+                  <property name="iconSize">
+                   <size>
+                    <width>32</width>
+                    <height>32</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_14">
+                  <item>
+                   <widget class="QPushButton" name="bt_addToInjectionChain">
+                    <property name="enabled">
+                     <bool>false</bool>
+                    </property>
+                    <property name="text">
+                     <string>Add to injection chain</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QPushButton" name="bt_inject_vuln">
+                    <property name="enabled">
+                     <bool>false</bool>
+                    </property>
+                    <property name="text">
+                     <string>Inject single Vulnerability</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_14">
+                <item>
+                 <widget class="QLabel" name="label_5">
+                  <property name="text">
+                   <string>Chain of injection points:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QListWidget" name="lst_injectionsChain">
+                  <property name="iconSize">
+                   <size>
+                    <width>32</width>
+                    <height>32</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_15">
+                  <item>
+                   <widget class="QPushButton" name="bt_executeInjectionChain">
+                    <property name="enabled">
+                     <bool>false</bool>
+                    </property>
+                    <property name="text">
+                     <string>Execute injection chain</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QPushButton" name="bt_clearInjectionChain">
+                    <property name="text">
+                     <string>Clear injection chain</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_15">
+                <item>
+                 <widget class="QLabel" name="label_8">
+                  <property name="text">
+                   <string>Injected files:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QListWidget" name="lst_injectedFiles">
+                  <property name="iconSize">
+                   <size>
+                    <width>32</width>
+                    <height>32</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_16">
+                  <item>
+                   <widget class="QPushButton" name="bt_setInjectedFileAsTarget">
+                    <property name="enabled">
+                     <bool>false</bool>
+                    </property>
+                    <property name="text">
+                     <string>Set as target</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QPushButton" name="bt_deleteInjectedFile">
+                    <property name="enabled">
+                     <bool>false</bool>
+                    </property>
+                    <property name="text">
+                     <string>Delete injected file</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="tab_attack">
+           <attribute name="title">
+            <string>Attacks</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_9">
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_5">
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_6">
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_4">
+                  <item>
+                   <widget class="QLabel" name="label_10">
+                    <property name="text">
+                     <string>Attack target: </string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="lbl_target">
+                    <property name="text">
+                     <string>No target selected.</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <spacer name="horizontalSpacer">
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>40</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <widget class="QLabel" name="label_6">
+                  <property name="text">
+                   <string>Attack payloads:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QListWidget" name="lst_payload">
+                  <property name="iconSize">
+                   <size>
+                    <width>32</width>
+                    <height>32</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_12">
+                  <item>
+                   <widget class="QPushButton" name="bt_attack">
+                    <property name="enabled">
+                     <bool>false</bool>
+                    </property>
+                    <property name="text">
+                     <string>Single Attack</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QPushButton" name="bt_auto_daisyChain">
+                    <property name="enabled">
+                     <bool>false</bool>
+                    </property>
+                    <property name="text">
+                     <string>Auto Daisy-Chain Attacks</string>
+                    </property>
+                    <property name="iconSize">
+                     <size>
+                      <width>24</width>
+                      <height>24</height>
+                     </size>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_8">
+                <item>
+                 <widget class="QLabel" name="label_11">
+                  <property name="text">
+                   <string>Fuzzer: (comming soon)</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_6">
+                  <item>
+                   <widget class="QLabel" name="label_13">
+                    <property name="text">
+                     <string>Prep chars:</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLineEdit" name="lineEdit_2">
+                    <property name="enabled">
+                     <bool>false</bool>
+                    </property>
+                    <property name="text">
+                     <string>'&quot;'`</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_8">
+                  <item>
+                   <widget class="QLabel" name="label_12">
+                    <property name="text">
+                     <string>Main chars:</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLineEdit" name="lineEdit">
+                    <property name="enabled">
+                     <bool>false</bool>
+                    </property>
+                    <property name="text">
+                     <string>;ls</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_9">
+                  <item>
+                   <widget class="QLabel" name="label_14">
+                    <property name="text">
+                     <string>End chars:</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLineEdit" name="lineEdit_3">
+                    <property name="enabled">
+                     <bool>false</bool>
+                    </property>
+                    <property name="text">
+                     <string>'&quot;'`</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_10">
+                  <item>
+                   <widget class="QLabel" name="label_15">
+                    <property name="text">
+                     <string>Expected output:</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLineEdit" name="lineEdit_4">
+                    <property name="enabled">
+                     <bool>false</bool>
+                    </property>
+                    <property name="text">
+                     <string>/</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="pushButton_2">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                  <property name="text">
+                   <string>Payload Fuzz!</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_7">
+                <item>
+                 <widget class="QLabel" name="label_9">
+                  <property name="text">
+                   <string>Working attacks:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QListWidget" name="lst_workingAttacks">
+                  <property name="iconSize">
+                   <size>
+                    <width>32</width>
+                    <height>32</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_7">
+          <property name="text">
+           <string>Output:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPlainTextEdit" name="txt_output_sh1"/>
+        </item>
+       </layout>
       </widget>
-      <widget class="QWidget" name="tab_vulnerabilities">
+      <widget class="QWidget" name="tab_remote">
        <attribute name="title">
-        <string>Vulnerabilities</string>
+        <string>Settings</string>
        </attribute>
-       <widget class="QListWidget" name="lst_vulns">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>29</y>
-          <width>731</width>
-          <height>241</height>
-         </rect>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>32</width>
-          <height>32</height>
-         </size>
-        </property>
-       </widget>
-       <widget class="QLabel" name="lbl_vulnerabilities_found">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>10</y>
-          <width>261</width>
-          <height>20</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Vulnerabilities:</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_2">
-        <property name="geometry">
-         <rect>
-          <x>760</x>
-          <y>10</y>
-          <width>101</width>
-          <height>18</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Description:</string>
-        </property>
-       </widget>
-       <widget class="QTextEdit" name="txt_vulnDescription">
-        <property name="geometry">
-         <rect>
-          <x>760</x>
-          <y>30</y>
-          <width>531</width>
-          <height>241</height>
-         </rect>
-        </property>
-        <property name="autoFillBackground">
-         <bool>false</bool>
-        </property>
-        <property name="inputMethodHints">
-         <set>Qt::ImhMultiLine|Qt::ImhNoEditMenu</set>
-        </property>
-        <property name="readOnly">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </widget>
-      <widget class="QWidget" name="tab_injections">
-       <attribute name="title">
-        <string>Injections</string>
-       </attribute>
-       <widget class="QLabel" name="lbl_injection_points">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>10</y>
-          <width>271</width>
-          <height>18</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Injection points:</string>
-        </property>
-       </widget>
-       <widget class="QListWidget" name="lst_injectionPoints">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>30</y>
-          <width>551</width>
-          <height>171</height>
-         </rect>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>32</width>
-          <height>32</height>
-         </size>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="bt_inject_vuln">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>210</y>
-          <width>171</width>
-          <height>31</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Inject single Vulnerability</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_8">
-        <property name="geometry">
-         <rect>
-          <x>950</x>
-          <y>10</y>
-          <width>141</width>
-          <height>18</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Injected files:</string>
-        </property>
-       </widget>
-       <widget class="QListWidget" name="lst_injectedFiles">
-        <property name="geometry">
-         <rect>
-          <x>950</x>
-          <y>30</y>
-          <width>341</width>
-          <height>171</height>
-         </rect>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>32</width>
-          <height>32</height>
-         </size>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_5">
-        <property name="geometry">
-         <rect>
-          <x>580</x>
-          <y>10</y>
-          <width>161</width>
-          <height>18</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Chain of injection points:</string>
-        </property>
-       </widget>
-       <widget class="QListWidget" name="lst_injectionsChain">
-        <property name="geometry">
-         <rect>
-          <x>580</x>
-          <y>30</y>
-          <width>351</width>
-          <height>171</height>
-         </rect>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>32</width>
-          <height>32</height>
-         </size>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="bt_addToInjectionChain">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="geometry">
-         <rect>
-          <x>200</x>
-          <y>210</y>
-          <width>171</width>
-          <height>31</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Add to injection chain</string>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="bt_executeInjectionChain">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="geometry">
-         <rect>
-          <x>580</x>
-          <y>210</y>
-          <width>171</width>
-          <height>31</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Execute injection chain</string>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="bt_deleteInjectedFile">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="geometry">
-         <rect>
-          <x>950</x>
-          <y>210</y>
-          <width>161</width>
-          <height>31</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Delete injected file</string>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="bt_setInjectedFileAsTarget">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="geometry">
-         <rect>
-          <x>1120</x>
-          <y>210</y>
-          <width>171</width>
-          <height>31</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Set as target</string>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="bt_clearInjectionChain">
-        <property name="geometry">
-         <rect>
-          <x>760</x>
-          <y>210</y>
-          <width>171</width>
-          <height>31</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Clear injection chain</string>
-        </property>
-       </widget>
-      </widget>
-      <widget class="QWidget" name="tab_attack">
-       <attribute name="title">
-        <string>Attacks</string>
-       </attribute>
-       <widget class="QPushButton" name="bt_attack">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>210</y>
-          <width>171</width>
-          <height>31</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Single Attack</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_6">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>40</y>
-          <width>131</width>
-          <height>18</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Attack payloads:</string>
-        </property>
-       </widget>
-       <widget class="QListWidget" name="lst_payload">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>60</y>
-          <width>351</width>
-          <height>141</height>
-         </rect>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>32</width>
-          <height>32</height>
-         </size>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_9">
-        <property name="geometry">
-         <rect>
-          <x>700</x>
-          <y>40</y>
-          <width>121</width>
-          <height>18</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Working attacks:</string>
-        </property>
-       </widget>
-       <widget class="QListWidget" name="lst_workingAttacks">
-        <property name="geometry">
-         <rect>
-          <x>700</x>
-          <y>60</y>
-          <width>591</width>
-          <height>141</height>
-         </rect>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>32</width>
-          <height>32</height>
-         </size>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="bt_auto_daisyChain">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="geometry">
-         <rect>
-          <x>190</x>
-          <y>210</y>
-          <width>171</width>
-          <height>31</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Auto Daisy-Chain Attacks</string>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>24</width>
-          <height>24</height>
-         </size>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_10">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>10</y>
-          <width>91</width>
-          <height>31</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Attack target: </string>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="bt_exportReport">
-        <property name="enabled">
-         <bool>true</bool>
-        </property>
-        <property name="geometry">
-         <rect>
-          <x>1130</x>
-          <y>210</y>
-          <width>161</width>
-          <height>31</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Export Report</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="lbl_target">
-        <property name="geometry">
-         <rect>
-          <x>100</x>
-          <y>10</y>
-          <width>1181</width>
-          <height>31</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>No target selected.</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_11">
-        <property name="geometry">
-         <rect>
-          <x>370</x>
-          <y>40</y>
-          <width>71</width>
-          <height>20</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Fuzzer:</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_12">
-        <property name="geometry">
-         <rect>
-          <x>370</x>
-          <y>100</y>
-          <width>131</width>
-          <height>31</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Main chars:</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
-       <widget class="QLineEdit" name="lineEdit">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="geometry">
-         <rect>
-          <x>510</x>
-          <y>100</y>
-          <width>171</width>
-          <height>31</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>;ls</string>
-        </property>
-       </widget>
-       <widget class="QLineEdit" name="lineEdit_2">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="geometry">
-         <rect>
-          <x>510</x>
-          <y>60</y>
-          <width>171</width>
-          <height>31</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>'&quot;'`</string>
-        </property>
-       </widget>
-       <widget class="QLineEdit" name="lineEdit_3">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="geometry">
-         <rect>
-          <x>510</x>
-          <y>140</y>
-          <width>171</width>
-          <height>31</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>'&quot;'`</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_13">
-        <property name="geometry">
-         <rect>
-          <x>370</x>
-          <y>67</y>
-          <width>131</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Prep chars:</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_14">
-        <property name="geometry">
-         <rect>
-          <x>370</x>
-          <y>147</y>
-          <width>131</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>End chars:</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="pushButton_2">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="geometry">
-         <rect>
-          <x>510</x>
-          <y>210</y>
-          <width>171</width>
-          <height>31</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Payload Fuzz!</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_15">
-        <property name="geometry">
-         <rect>
-          <x>370</x>
-          <y>190</y>
-          <width>131</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Expected output:</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
-       <widget class="QLineEdit" name="lineEdit_4">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="geometry">
-         <rect>
-          <x>510</x>
-          <y>180</y>
-          <width>171</width>
-          <height>26</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>/</string>
-        </property>
-       </widget>
+       <layout class="QVBoxLayout" name="verticalLayout_20">
+        <item>
+         <widget class="QTabWidget" name="tabWidget_3">
+          <property name="font">
+           <font>
+            <pointsize>7</pointsize>
+           </font>
+          </property>
+          <property name="currentIndex">
+           <number>0</number>
+          </property>
+          <widget class="QWidget" name="tab_2">
+           <attribute name="title">
+            <string>General</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_21">
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayout_19">
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_19">
+                <item>
+                 <layout class="QVBoxLayout" name="verticalLayout_17">
+                  <item>
+                   <layout class="QHBoxLayout" name="horizontalLayout_18">
+                    <item>
+                     <widget class="QLabel" name="label_24">
+                      <property name="text">
+                       <string>VAITP Log output path:</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLineEdit" name="txt_vaitp_log_path">
+                      <property name="toolTip">
+                       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select the path to the folder where VAITP should save the generated reports.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QToolButton" name="bt_load_log_output_path">
+                      <property name="text">
+                       <string>...</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                  <item>
+                   <widget class="QCheckBox" name="checkBox_change_dir_on_attack">
+                    <property name="toolTip">
+                     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Use the target script's directory as the working directory&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                    </property>
+                    <property name="text">
+                     <string>Change to target script directory when attacking</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QCheckBox" name="checkBox_scan_subdirs">
+                    <property name="toolTip">
+                     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Recursively add all Python files inside all the folders below the selected folder to scan&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                    </property>
+                    <property name="text">
+                     <string>Scan sub-directories when scanning folders</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <layout class="QHBoxLayout" name="horizontalLayout_20">
+                    <item>
+                     <widget class="QLabel" name="label_17">
+                      <property name="text">
+                       <string>VAITP AI models path:</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLineEdit" name="txt_vaitp_models_path">
+                      <property name="toolTip">
+                       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select the path to the exported AI models (vaitp/exported_ai_models)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QToolButton" name="bt_load_ai_models_path">
+                      <property name="text">
+                       <string>...</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                  <item>
+                   <layout class="QHBoxLayout" name="horizontalLayout_21">
+                    <item>
+                     <widget class="QLabel" name="label_22">
+                      <property name="maximumSize">
+                       <size>
+                        <width>300</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
+                      <property name="text">
+                       <string>VAITP AI Classificator model to use:</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QComboBox" name="comboBox_vaitp_ai_classificator">
+                      <property name="minimumSize">
+                       <size>
+                        <width>500</width>
+                        <height>0</height>
+                       </size>
+                      </property>
+                      <property name="toolTip">
+                       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select the AI classificator model to use&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <spacer name="horizontalSpacer_2">
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>40</width>
+                        <height>20</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
+                   </layout>
+                  </item>
+                 </layout>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="checkBox_use_vaitp_ai_classificator">
+                <property name="toolTip">
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Use VAITP AI Classificator model to predict if the scanned script is &amp;quot;vulnerable&amp;quot;, &amp;quot;injectable&amp;quot; or &amp;quot;noninjectable&amp;quot;. I&lt;span style=&quot; text-decoration: underline;&quot;&gt;f  predicted as &amp;quot;injectable&amp;quot;&lt;/span&gt; the model will output the probable injection points (the most probable injectable strings).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                </property>
+                <property name="text">
+                 <string>Use VAITP AI Classificator model for python code classification prediction</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="checkBox_add_partial_injection_points">
+                <property name="enabled">
+                 <bool>true</bool>
+                </property>
+                <property name="toolTip">
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Partially generated injection points will be added to the list of injection points. (rises false-positives but may increase true positives also).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                </property>
+                <property name="text">
+                 <string>Add probable injection points from AI classificator model to injection points list (allow partialy generated injection points)</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_22">
+                <item>
+                 <widget class="QCheckBox" name="checkBox_use_vaitp_ai_s2s">
+                  <property name="minimumSize">
+                   <size>
+                    <width>364</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="toolTip">
+                   <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Use VAITP AI Sequence 2 Sequence model to attempt to &amp;quot;translate&amp;quot; probable injection points (inputs the probable injection points from the Classificator's output into the S2S and uses the output as the vulnerable injection string)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                  </property>
+                  <property name="text">
+                   <string>Use VAITP AI Sequence2Sequence model to predict possible injections</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_23">
+                  <item>
+                   <widget class="QLabel" name="label_23">
+                    <property name="maximumSize">
+                     <size>
+                      <width>160</width>
+                      <height>16777215</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>Limit S2S translations:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QSpinBox" name="txt_s2s_inj_limit">
+                    <property name="toolTip">
+                     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Lmiti the number of probable injection points fed to the S2S&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                    </property>
+                    <property name="minimum">
+                     <number>1</number>
+                    </property>
+                    <property name="value">
+                     <number>3</number>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <spacer name="horizontalSpacer_3">
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>40</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                 </layout>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <spacer name="verticalSpacer">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>40</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="tab_3">
+           <attribute name="title">
+            <string>Extra data manipulation tools</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_26">
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayout_25">
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_25">
+                <item>
+                 <layout class="QVBoxLayout" name="verticalLayout_22">
+                  <item>
+                   <widget class="QLabel" name="label_16">
+                    <property name="font">
+                     <font>
+                      <pointsize>8</pointsize>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>Gather new vulnerabilities and patches</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QPushButton" name="bt_run_cvefixes">
+                    <property name="enabled">
+                     <bool>false</bool>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>9</pointsize>
+                     </font>
+                    </property>
+                    <property name="toolTip">
+                     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;What is CVEfixes?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;CVEfixes downloads repositories from github, bitbucket and others, analyses commits for vulnerability patches and creates an SQLite database with vulnerable and non-vulnerable versions of the repository's code.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Why?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;To be able to train our AI model we need a lot of data. This ensures a very big dataset with the most up-to-date vulnerabilities and patches.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Important:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;-&amp;gt; CVEfixes produces a very big file. Ensure you have at least 6GB free.&lt;/p&gt;&lt;p&gt;-&amp;gt; CVEfixes can take a very long time to execute (15h+ !!! (depending on your internet connection) )&lt;/p&gt;&lt;p&gt;-&amp;gt; Github authentication is mandatory for some repositories. (configure this in CVEfixes/.CVEfixes.ini )&lt;/p&gt;&lt;p&gt;&lt;a href=&quot; https://github.com/secureIT-project/CVEfixes&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;https://github.com/secureIT-project/CVEfixes&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                    </property>
+                    <property name="text">
+                     <string>Run CVEfixes</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <widget class="Line" name="line_6">
+                  <property name="orientation">
+                   <enum>Qt::Vertical</enum>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <layout class="QVBoxLayout" name="verticalLayout_23">
+                  <item>
+                   <widget class="QLabel" name="label_18">
+                    <property name="font">
+                     <font>
+                      <pointsize>8</pointsize>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>Extract vulnerabilities and pathes</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QPushButton" name="bt_extract_cvefixes_vulns">
+                    <property name="font">
+                     <font>
+                      <pointsize>9</pointsize>
+                     </font>
+                    </property>
+                    <property name="toolTip">
+                     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Once CVEfixes produces the vulnerability database, VAITP can extract this information to the format needed to train the AI model.&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;NOTE: Pre-compiled CVEFixes.db can be used in order to avoid the long processing time of CVEfixes. This database has vulnerabilities and patches information updated up to 09-06-2021.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                    </property>
+                    <property name="text">
+                     <string>Extract CVEfixes vulnerabilities/pathes</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QPushButton" name="bt_ai_extract_cvef_diffs">
+                    <property name="text">
+                     <string>Extract CVEfixes Diffs</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QPushButton" name="bt_extract_one_line">
+                    <property name="toolTip">
+                     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Find and extracts from CVEFixed database all Python vulnerabilities and patches were only one line was changed (useful for the s2s model)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                    </property>
+                    <property name="text">
+                     <string>Extract one-line vulnerability/patch</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <widget class="Line" name="line_5">
+                  <property name="orientation">
+                   <enum>Qt::Vertical</enum>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <layout class="QVBoxLayout" name="verticalLayout_24">
+                  <item>
+                   <widget class="QLabel" name="label_21">
+                    <property name="font">
+                     <font>
+                      <pointsize>8</pointsize>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>Extract common words</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QPushButton" name="bt_extract_common_words">
+                    <property name="toolTip">
+                     <string extracomment="Extract words from all CVEFixes Python codes (before patching) and save them in common.txt file in the correct format for the s2s model training."/>
+                    </property>
+                    <property name="text">
+                     <string>Extract common words</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_29">
+                <property name="text">
+                 <string>Output:</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPlainTextEdit" name="txt_output_sh1_ai">
+                <property name="font">
+                 <font>
+                  <pointsize>6</pointsize>
+                 </font>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+         </widget>
+        </item>
+       </layout>
       </widget>
      </widget>
-     <widget class="QLabel" name="label_42">
-      <property name="geometry">
-       <rect>
-        <x>920</x>
-        <y>25</y>
-        <width>121</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>AI model prediction:</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lbl_ai_classificator_run">
-      <property name="geometry">
-       <rect>
-        <x>1050</x>
-        <y>26</y>
-        <width>231</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="text">
+    </item>
+    <item>
+     <widget class="QLabel" name="lbl_info">
+      <property name="toolTip">
        <string/>
       </property>
-     </widget>
-     <widget class="QLabel" name="label_25">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>60</y>
-        <width>131</width>
-        <height>31</height>
-       </rect>
-      </property>
       <property name="text">
-       <string>Select a folder:</string>
+       <string>VAITP - Vulnerability Attack and Injection Tool in Python</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
       </property>
      </widget>
-     <widget class="QLineEdit" name="txt_py_src_folder">
-      <property name="geometry">
-       <rect>
-        <x>140</x>
-        <y>60</y>
-        <width>511</width>
-        <height>31</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QToolButton" name="bt_load_py_src_folder">
-      <property name="geometry">
-       <rect>
-        <x>660</x>
-        <y>60</y>
-        <width>41</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>...</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="bt_scan_py_folder">
-      <property name="geometry">
-       <rect>
-        <x>720</x>
-        <y>60</y>
-        <width>181</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Scan Folder</string>
-      </property>
-      <property name="icon">
-       <iconset resource="resources.qrc">
-        <normaloff>:/lineicons-free-basic-3.0/png-files/magnifier.png</normaloff>:/lineicons-free-basic-3.0/png-files/magnifier.png</iconset>
-      </property>
-     </widget>
-    </widget>
-    <widget class="QWidget" name="tab_remote">
-     <attribute name="title">
-      <string>Settings</string>
-     </attribute>
-     <widget class="QTabWidget" name="tabWidget_3">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>10</y>
-        <width>1291</width>
-        <height>509</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>7</pointsize>
-       </font>
-      </property>
-      <property name="currentIndex">
-       <number>0</number>
-      </property>
-      <widget class="QWidget" name="tab_2">
-       <attribute name="title">
-        <string>General</string>
-       </attribute>
-       <widget class="QLabel" name="label_19">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>40</y>
-          <width>251</width>
-          <height>31</height>
-         </rect>
-        </property>
-        <property name="font">
-         <font>
-          <pointsize>11</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>General settings</string>
-        </property>
-       </widget>
-       <widget class="Line" name="line_7">
-        <property name="geometry">
-         <rect>
-          <x>170</x>
-          <y>40</y>
-          <width>31</width>
-          <height>91</height>
-         </rect>
-        </property>
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-       </widget>
-       <widget class="QToolButton" name="bt_load_ai_models_path">
-        <property name="geometry">
-         <rect>
-          <x>800</x>
-          <y>210</y>
-          <width>61</width>
-          <height>31</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>...</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_17">
-        <property name="geometry">
-         <rect>
-          <x>220</x>
-          <y>180</y>
-          <width>191</width>
-          <height>31</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>VAITP AI models path:</string>
-        </property>
-       </widget>
-       <widget class="QCheckBox" name="checkBox_use_vaitp_ai_s2s">
-        <property name="geometry">
-         <rect>
-          <x>220</x>
-          <y>390</y>
-          <width>361</width>
-          <height>23</height>
-         </rect>
-        </property>
-        <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Use VAITP AI Sequence 2 Sequence model to attempt to &amp;quot;translate&amp;quot; probable injection points (inputs the probable injection points from the Classificator's output into the S2S and uses the output as the vulnerable injection string)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-        <property name="text">
-         <string>Use VAITP AI Sequence2Sequence model to predict possible injections</string>
-        </property>
-       </widget>
-       <widget class="Line" name="line_8">
-        <property name="geometry">
-         <rect>
-          <x>170</x>
-          <y>180</y>
-          <width>31</width>
-          <height>201</height>
-         </rect>
-        </property>
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_22">
-        <property name="geometry">
-         <rect>
-          <x>220</x>
-          <y>310</y>
-          <width>191</width>
-          <height>17</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>VAITP AI Classificator model to use:</string>
-        </property>
-       </widget>
-       <widget class="QCheckBox" name="checkBox_use_vaitp_ai_classificator">
-        <property name="geometry">
-         <rect>
-          <x>220</x>
-          <y>270</y>
-          <width>451</width>
-          <height>23</height>
-         </rect>
-        </property>
-        <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Use VAITP AI Classificator model to predict if the scanned script is &amp;quot;vulnerable&amp;quot;, &amp;quot;injectable&amp;quot; or &amp;quot;noninjectable&amp;quot;. I&lt;span style=&quot; text-decoration: underline;&quot;&gt;f  predicted as &amp;quot;injectable&amp;quot;&lt;/span&gt; the model will output the probable injection points (the most probable injectable strings).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-        <property name="text">
-         <string>Use VAITP AI Classificator model for python code classification prediction</string>
-        </property>
-       </widget>
-       <widget class="QLineEdit" name="txt_vaitp_models_path">
-        <property name="geometry">
-         <rect>
-          <x>220</x>
-          <y>210</y>
-          <width>571</width>
-          <height>31</height>
-         </rect>
-        </property>
-        <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select the path to the exported AI models (vaitp/exported_ai_models)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_20">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>180</y>
-          <width>251</width>
-          <height>31</height>
-         </rect>
-        </property>
-        <property name="font">
-         <font>
-          <pointsize>11</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>AI settings</string>
-        </property>
-       </widget>
-       <widget class="QComboBox" name="comboBox_vaitp_ai_classificator">
-        <property name="geometry">
-         <rect>
-          <x>380</x>
-          <y>304</y>
-          <width>481</width>
-          <height>31</height>
-         </rect>
-        </property>
-        <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select the AI classificator model to use&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-       </widget>
-       <widget class="QSpinBox" name="txt_s2s_inj_limit">
-        <property name="geometry">
-         <rect>
-          <x>720</x>
-          <y>390</y>
-          <width>51</width>
-          <height>26</height>
-         </rect>
-        </property>
-        <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Lmiti the number of probable injection points fed to the S2S&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-        <property name="minimum">
-         <number>1</number>
-        </property>
-        <property name="value">
-         <number>3</number>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_23">
-        <property name="geometry">
-         <rect>
-          <x>600</x>
-          <y>390</y>
-          <width>111</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Limit S2S translations:</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_24">
-        <property name="geometry">
-         <rect>
-          <x>220</x>
-          <y>30</y>
-          <width>191</width>
-          <height>31</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>VAITP Log output path:</string>
-        </property>
-       </widget>
-       <widget class="QLineEdit" name="txt_vaitp_log_path">
-        <property name="geometry">
-         <rect>
-          <x>220</x>
-          <y>60</y>
-          <width>571</width>
-          <height>31</height>
-         </rect>
-        </property>
-        <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select the path to the folder where VAITP should save the generated reports.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-       </widget>
-       <widget class="QToolButton" name="bt_load_log_output_path">
-        <property name="geometry">
-         <rect>
-          <x>800</x>
-          <y>60</y>
-          <width>61</width>
-          <height>31</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>...</string>
-        </property>
-       </widget>
-       <widget class="QCheckBox" name="checkBox_change_dir_on_attack">
-        <property name="geometry">
-         <rect>
-          <x>220</x>
-          <y>110</y>
-          <width>341</width>
-          <height>23</height>
-         </rect>
-        </property>
-        <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Use the target script's directory as the working directory&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-        <property name="text">
-         <string>Change to target script directory when attacking</string>
-        </property>
-       </widget>
-       <widget class="QCheckBox" name="checkBox_scan_subdirs">
-        <property name="geometry">
-         <rect>
-          <x>220</x>
-          <y>140</y>
-          <width>341</width>
-          <height>23</height>
-         </rect>
-        </property>
-        <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Recursively add all Python files inside all the folders below the selected folder to scan&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-        <property name="text">
-         <string>Scan sub-directories when scanning folders</string>
-        </property>
-       </widget>
-       <widget class="QCheckBox" name="checkBox_add_partial_injection_points">
-        <property name="enabled">
-         <bool>true</bool>
-        </property>
-        <property name="geometry">
-         <rect>
-          <x>220</x>
-          <y>350</y>
-          <width>651</width>
-          <height>23</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Add probable injection points from AI classificator model to injection points list (allow partialy generated injection points)</string>
-        </property>
-       </widget>
-      </widget>
-      <widget class="QWidget" name="tab_3">
-       <attribute name="title">
-        <string>Extra data manipulation tools</string>
-       </attribute>
-       <widget class="QPushButton" name="bt_ai_extract_cvef_diffs">
-        <property name="geometry">
-         <rect>
-          <x>280</x>
-          <y>90</y>
-          <width>241</width>
-          <height>41</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Extract CVEfixes Diffs</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_18">
-        <property name="geometry">
-         <rect>
-          <x>280</x>
-          <y>10</y>
-          <width>251</width>
-          <height>31</height>
-         </rect>
-        </property>
-        <property name="font">
-         <font>
-          <pointsize>8</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>Extract vulnerabilities and pathes</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_21">
-        <property name="geometry">
-         <rect>
-          <x>550</x>
-          <y>10</y>
-          <width>181</width>
-          <height>31</height>
-         </rect>
-        </property>
-        <property name="font">
-         <font>
-          <pointsize>8</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>Extract common words</string>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="bt_run_cvefixes">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>40</y>
-          <width>241</width>
-          <height>91</height>
-         </rect>
-        </property>
-        <property name="font">
-         <font>
-          <pointsize>9</pointsize>
-         </font>
-        </property>
-        <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;What is CVEfixes?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;CVEfixes downloads repositories from github, bitbucket and others, analyses commits for vulnerability patches and creates an SQLite database with vulnerable and non-vulnerable versions of the repository's code.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Why?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;To be able to train our AI model we need a lot of data. This ensures a very big dataset with the most up-to-date vulnerabilities and patches.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Important:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;-&amp;gt; CVEfixes produces a very big file. Ensure you have at least 6GB free.&lt;/p&gt;&lt;p&gt;-&amp;gt; CVEfixes can take a very long time to execute (15h+ !!! (depending on your internet connection) )&lt;/p&gt;&lt;p&gt;-&amp;gt; Github authentication is mandatory for some repositories. (configure this in CVEfixes/.CVEfixes.ini )&lt;/p&gt;&lt;p&gt;&lt;a href=&quot; https://github.com/secureIT-project/CVEfixes&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;https://github.com/secureIT-project/CVEfixes&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-        <property name="text">
-         <string>Run CVEfixes</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_29">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>300</y>
-          <width>131</width>
-          <height>18</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Output:</string>
-        </property>
-       </widget>
-       <widget class="Line" name="line_5">
-        <property name="geometry">
-         <rect>
-          <x>520</x>
-          <y>10</y>
-          <width>31</width>
-          <height>121</height>
-         </rect>
-        </property>
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-       </widget>
-       <widget class="QPlainTextEdit" name="txt_output_sh1_ai">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>330</y>
-          <width>1271</width>
-          <height>131</height>
-         </rect>
-        </property>
-        <property name="font">
-         <font>
-          <pointsize>6</pointsize>
-         </font>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_16">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>10</y>
-          <width>251</width>
-          <height>31</height>
-         </rect>
-        </property>
-        <property name="font">
-         <font>
-          <pointsize>8</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>Gather new vulnerabilities and patches</string>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="bt_extract_one_line">
-        <property name="geometry">
-         <rect>
-          <x>280</x>
-          <y>140</y>
-          <width>241</width>
-          <height>41</height>
-         </rect>
-        </property>
-        <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Find and extracts from CVEFixed database all Python vulnerabilities and patches were only one line was changed (useful for the s2s model)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-        <property name="text">
-         <string>Extract one-line vulnerability/patch</string>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="bt_extract_common_words">
-        <property name="geometry">
-         <rect>
-          <x>550</x>
-          <y>40</y>
-          <width>241</width>
-          <height>41</height>
-         </rect>
-        </property>
-        <property name="toolTip">
-         <string extracomment="Extract words from all CVEFixes Python codes (before patching) and save them in common.txt file in the correct format for the s2s model training."/>
-        </property>
-        <property name="text">
-         <string>Extract common words</string>
-        </property>
-       </widget>
-       <widget class="Line" name="line_6">
-        <property name="geometry">
-         <rect>
-          <x>250</x>
-          <y>10</y>
-          <width>31</width>
-          <height>121</height>
-         </rect>
-        </property>
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="bt_extract_cvefixes_vulns">
-        <property name="geometry">
-         <rect>
-          <x>280</x>
-          <y>40</y>
-          <width>241</width>
-          <height>41</height>
-         </rect>
-        </property>
-        <property name="font">
-         <font>
-          <pointsize>9</pointsize>
-         </font>
-        </property>
-        <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Once CVEfixes produces the vulnerability database, VAITP can extract this information to the format needed to train the AI model.&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;NOTE: Pre-compiled CVEFixes.db can be used in order to avoid the long processing time of CVEfixes. This database has vulnerabilities and patches information updated up to 09-06-2021.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-        <property name="text">
-         <string>Extract CVEfixes vulnerabilities/pathes</string>
-        </property>
-       </widget>
-      </widget>
-     </widget>
-    </widget>
-   </widget>
+    </item>
+   </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -1333,7 +1090,7 @@
      <x>0</x>
      <y>0</y>
      <width>1366</width>
-     <height>25</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -1342,9 +1099,12 @@
     </property>
     <property name="icon">
      <iconset resource="resources.qrc">
-      <normaloff>:/logo/icon_24.png</normaloff>:/logo/icon_24.png</iconset>
+      <normaloff>:/lineicons-free-basic-3.0/png-files/python.png</normaloff>:/lineicons-free-basic-3.0/png-files/python.png</iconset>
     </property>
     <addaction name="actionQuit"/>
+    <addaction name="actionExport_PDF_report"/>
+    <addaction name="actionImport_payloads_to_vaitp_db"/>
+    <addaction name="actionClear_all_outputs_and_lists"/>
    </widget>
    <widget class="QMenu" name="menuAbout">
     <property name="title">
@@ -1356,20 +1116,7 @@
     </property>
     <addaction name="actionAbout"/>
    </widget>
-   <widget class="QMenu" name="menuInjections">
-    <property name="title">
-     <string>Injections</string>
-    </property>
-    <property name="icon">
-     <iconset resource="resources.qrc">
-      <normaloff>:/lineicons-free-basic-3.0/png-files/syringe.png</normaloff>:/lineicons-free-basic-3.0/png-files/syringe.png</iconset>
-    </property>
-    <addaction name="actionReScan_for_injected_files"/>
-    <addaction name="actionImport_payloads_to_vaitp_db"/>
-    <addaction name="actionClear_all_outputs_and_lists"/>
-   </widget>
    <addaction name="menuFile"/>
-   <addaction name="menuInjections"/>
    <addaction name="menuAbout"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -1383,6 +1130,10 @@
    </property>
   </action>
   <action name="actionQuit">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/lineicons-free-basic-3.0/png-files/exit.png</normaloff>:/lineicons-free-basic-3.0/png-files/exit.png</iconset>
+   </property>
    <property name="text">
     <string>Quit</string>
    </property>
@@ -1402,7 +1153,7 @@
      <normaloff>:/lineicons-free-basic-3.0/png-files/delivery.png</normaloff>:/lineicons-free-basic-3.0/png-files/delivery.png</iconset>
    </property>
    <property name="text">
-    <string>Import payloads to vaitp.db</string>
+    <string>Import payloads</string>
    </property>
   </action>
   <action name="actionClear_all_outputs_and_lists">
@@ -1411,7 +1162,16 @@
      <normaloff>:/lineicons-free-basic-3.0/png-files/eraser.png</normaloff>:/lineicons-free-basic-3.0/png-files/eraser.png</iconset>
    </property>
    <property name="text">
-    <string>Clear all outputs and lists</string>
+    <string>Clear outputs and lists</string>
+   </property>
+  </action>
+  <action name="actionExport_PDF_report">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/lineicons-free-basic-3.0/png-files/download.png</normaloff>:/lineicons-free-basic-3.0/png-files/download.png</iconset>
+   </property>
+   <property name="text">
+    <string>Export PDF report</string>
    </property>
   </action>
  </widget>
