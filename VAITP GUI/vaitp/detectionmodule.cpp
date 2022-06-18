@@ -88,8 +88,8 @@ QStringList detectionModule::scanFileForInjectionCalls(QString aFile){
                             QString item;
                             //if(injection=="\\w+"){
                                 qDebug()<<"(0.0) Injection is regex \\w+";
-                                item = match.captured(0)+" :: "+match.captured(0).remove(QRegularExpression(patch_start)).remove(QRegularExpression(patch_end)) + " :: Line " + QString::number(line_num) + ": "+line.trimmed();
-
+                                //item = match.captured(0)+" :: "+match.captured(0).remove(QRegularExpression(patch_start)).remove(QRegularExpression(patch_end)) + " :: Line " + QString::number(line_num) + ": "+line.trimmed();
+                                item = match.captured(0)+" :: "+match.captured(0).remove(QRegularExpression(patch_start)).remove(QRegularExpression(patch_end)).replace(match.captured(0),injection) + " :: Line " + QString::number(line_num) + ": "+line.trimmed();
                             //} else {
                             //    qDebug()<<"(0.0) Injection is hard coded";
                              //   item = patch_start+patch+patch_end+" :: "+injection + " :: Line " + QString::number(line_num) + ": "+line.trimmed();

@@ -12,7 +12,6 @@
 #include "detectionmodule.h"
 #include <QPrinter>
 #include <QDesktopServices>
-#include <QSplashScreen>
 
 int vaitp_loaded=0;
 int number_of_vulnerabilities_found=0;
@@ -566,13 +565,15 @@ void VAITP::on_lst_vulns_itemClicked(QListWidgetItem *item)
 {
     qDebug() << "Selected Vulnerability: " << item->text();
 
+    QString selectedVuln = item->text().split(" :: ")[0];
+
     QSqlQuery qry;
 
     //get vulnerability description
     ui->txt_vulnDescription->clear();
 
     qry.prepare("Select description from vulnerabilities where vulnerability like ?");
-    qry.bindValue(0,item->text());
+    qry.bindValue(0,selectedVuln);
     qry.exec();
     while(qry.next()){
         QString desc = qry.value(0).toString();
@@ -1437,8 +1438,8 @@ void VAITP::on_actionAbout_triggered()
                                "Orientation: PhD. Naghmeh Ivaki & PhD. José Fonseca<br><br>"
                                "Departamento de Engenharia Informática<br>"
                                "Universidade de Coimbra - Portugal<br>"
-                               "2022<br>"
-                               "VAITP v0.9");
+                               "18-06-2022<br>"
+                               "VAITP v1.0");
 
 
 }
