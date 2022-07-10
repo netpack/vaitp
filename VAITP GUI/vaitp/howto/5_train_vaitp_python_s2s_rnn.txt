@@ -1,0 +1,12 @@
+#How to train the S2S RNN model:
+
+# Activate VAITP Python virtual environment (see other 'howto' files)
+
+	# Run [Python script_name.py -h for all help]:
+	
+		
+	python VAITP_AI_S2S_FitModel.py
+
+		
+
+# Deactivate VAITP Python virtual environment

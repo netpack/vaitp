@@ -8,19 +8,19 @@
 	
 		#E.g.: Train a BoW model with 70 epochs, 3 density layers, 0.2 dropout, a softmax activation funtion for model sequencing (-b 3), a vocabulary size of 5000 and a maximum sequence length of 450
 		
-		python VAITP_AI_RNN_Classificator_FitModel.py -t bow -e 70 -l 3 -d 0.2 -b 3 -v 5000 -m 450
+		python VAITP_AI_RNN_Classificator_FitModel.py -t bow -e 1000 -l 7 -d 0.2 -b 3 -v 5000 -m 450
 
 		
 		
 		#E.g.: Train a Conv1D model with 70 epochs, 3 density layers, 0.2 dropout, a sigmoid function for model creation (-a 1), a softmax function for model sequencing (-b 3), a kernel size of 5, 128 filters, an output dimentionality of 64, a vocabulary size of 5000 and a maximum sequence length of 450
 		
-		python VAITP_AI_RNN_Classificator_FitModel.py -t c1d -e 70 -l 3 -d 0.2 -a 1 -b 3 -k 5 -f 128 -o 64 -v 5000 -m 450
+		python VAITP_AI_RNN_Classificator_FitModel.py -t c1d -e 1000 -l 3 -d 0.2 -a 1 -b 3 -k 5 -f 128 -o 64 -v 5000 -m 450
 		
 
 		
 		#E.g.: Train a LSTM model with 70 epochs, 3 density layers, 0.2 dropout, a sigmoid function for model creation (-a 1), a softmax function for model sequencing (-b 3), 128 units, an output dimentionality of 64, a vocabulary size of 5000 and a maximum sequence length of 450
 		
-		python VAITP_AI_RNN_Classificator_FitModel.py -t lstm -e 70 -l 3 -d 0.2 -a 1 -b 3 -u 128 -o 64 -v 5000 -m 450
+		python VAITP_AI_RNN_Classificator_FitModel.py -t lstm -e 74 -l 3 -d 0 -a 1 -b 3 -u 128 -o 64 -v 5000 -m 450
 
 		
 

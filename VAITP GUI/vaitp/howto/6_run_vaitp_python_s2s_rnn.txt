@@ -1,0 +1,12 @@
+#How to run the S2S RNN model:
+
+# Activate VAITP Python virtual environment (see other 'howto' files)
+
+	# Run [Python script_name.py -h for all help]:
+	
+		
+	python VAITP_AI_S2S_RunModel.py -i "subprocess.call(value,shell=False)"
+
+		
+
+# Deactivate VAITP Python virtual environment
