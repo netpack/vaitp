@@ -1,6 +1,0 @@
-import json
-uncompressed = bz2.decompress(base64.urlsafe_b64decode(pickledata))
-try:
-config = json.loads(uncompressed)
-except ValueError:
-config = pickle.loads(uncompressed)

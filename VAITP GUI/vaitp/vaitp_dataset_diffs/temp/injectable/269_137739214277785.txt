@@ -1,6 +1,0 @@
-scheme = req.url().scheme()
-if scheme in self._scheme_handlers:
-result = self._scheme_handlers[scheme](req, op, current_url)
-if result is not None:
-result.setParent(self)
-return result

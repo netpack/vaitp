@@ -1,1 +1,0 @@
-["        assert job.requestMethod() == b'GET'")]}

@@ -1,6 +1,0 @@
-from lxml import etree
-
-parser = etree.XMLParser(resolve_entities=True)
-tree = etree.parse('file.xml', parser)
-root = tree.getroot()
-print(etree.tostring(root, pretty_print=True))

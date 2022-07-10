@@ -1,1 +1,0 @@
-self.terms_template = self.read_templates(["terms.html"], autoescape=True)[0]

@@ -1,3 +1,0 @@
-steps = 0
-options = dict(options, domain_override=request.get_host())
-steps+=1

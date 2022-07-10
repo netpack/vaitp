@@ -1,1 +1,0 @@
-hs = self.setup_test_homeserver(config=config, http_client=client)

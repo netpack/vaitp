@@ -1,6 +1,0 @@
-if not CommandInjection.commandInjection(argument=argument , RCE=RCE):
-await ctx.send("**Your Command Contains Unallowed Chars. Don\'t Try To Use It Again.**")
-return
-if not CommandInjection.commandInjection(argument=argument , RCE=RCE):
-await ctx.send("**Your Command Contains Unallowed Chars. Don\'t Try To Use It Again.**")
-return

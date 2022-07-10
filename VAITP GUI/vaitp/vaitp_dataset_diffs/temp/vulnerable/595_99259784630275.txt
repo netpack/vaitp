@@ -1,5 +1,0 @@
-["if !exists('g:syntastic_sparse_config_file')
-    let g:syntastic_sparse_config_file = '.syntastic_sparse_config'
-endif
-
-        \\ 'args': syntastic

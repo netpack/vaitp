@@ -1,8 +1,0 @@
-import is_valid_hostname
-class InvalidServerName(Exception):
-"""
-Raised when the provided origin parameter is not a valid hostname (plus optional port).
-"""
-pass
-if not is_valid_hostname(json_request["origin"]):
-raise InvalidServerName("X-Matrix header\'s origin parameter must be a valid hostname")

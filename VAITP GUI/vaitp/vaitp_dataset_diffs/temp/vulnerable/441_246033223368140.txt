@@ -1,7 +1,0 @@
-result = inst.received(b"garbage\\n")
-        self.assertEqual(result, 8)
-        result = inst.received(b"a;discard\\n")
-        self.assertEqual(result, 10)
-        result = inst.received(b"0;discard\\n")
-        self.assertEqual(result, 10)
-        self.assertEqual(inst.completed, True)

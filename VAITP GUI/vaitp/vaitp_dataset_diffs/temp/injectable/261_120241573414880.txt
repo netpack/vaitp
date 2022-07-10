@@ -1,3 +1,0 @@
-@override_settings(ANYMAIL={})
-"WEBHOOK_SECRET": "abcde:12345",
-@override_settings(ANYMAIL={'WEBHOOK_SECRET': ['cred1:pass1', 'cred2:pass2']})

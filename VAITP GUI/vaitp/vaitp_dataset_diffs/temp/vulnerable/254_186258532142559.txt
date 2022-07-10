@@ -1,3 +1,0 @@
-"""Custom SSLContext Adapter for requests
-                 trust_env=None, verify=False):
-        self.session.mount("https://", SSLContextAdapter())

@@ -1,4 +1,0 @@
-import pickle
-                statsdata[name] = pickle.dumps(contents, -1)
-        item.config = pickle.load(infile)
-    p = pickle.dumps(item.config, -1)

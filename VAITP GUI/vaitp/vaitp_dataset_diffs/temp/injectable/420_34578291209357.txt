@@ -1,2 +1,0 @@
-import generateAlphanumericTokenOfLength
-allSubstitutions["multipart_boundary"] = generateAlphanumericTokenOfLength(32)

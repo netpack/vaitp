@@ -1,2 +1,0 @@
-if ran:
-            new_context = t.new_context(jvars, shared=True)

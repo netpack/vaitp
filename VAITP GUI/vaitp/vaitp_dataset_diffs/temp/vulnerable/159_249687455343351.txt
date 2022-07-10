@@ -1,5 +1,0 @@
-
-        logfile = salt.utils.path_join(
-            os.environTMP'],
-            '{0}.log'.format(exe_name)
-        )

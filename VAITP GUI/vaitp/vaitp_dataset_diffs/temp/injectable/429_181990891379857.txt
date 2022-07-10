@@ -1,9 +1,0 @@
-try:
-with open("/proc/self/cgroup") as f:
-value = f.readline()
-except IOError:
-pass
-else:
-value = value.strip().partition("/docker/")[2]
-if value:
-return value

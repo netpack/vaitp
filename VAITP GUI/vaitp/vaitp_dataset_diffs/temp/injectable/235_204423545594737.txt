@@ -1,1 +1,0 @@
-('system-bus-name', {'name': dbus.String(sender, variant_level=1)}),

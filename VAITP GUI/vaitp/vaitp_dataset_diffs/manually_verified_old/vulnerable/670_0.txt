@@ -1,1 +1,0 @@
-for root, _, files in os.walk(fdir):

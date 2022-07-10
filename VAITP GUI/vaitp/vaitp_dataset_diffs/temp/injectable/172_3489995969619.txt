@@ -1,5 +1,0 @@
-if len(b) == 0:
-for result in self._sendError(\\
-AlertDescription.decryption_failed,
-"No data left after decryption and IV removal"):
-yield result

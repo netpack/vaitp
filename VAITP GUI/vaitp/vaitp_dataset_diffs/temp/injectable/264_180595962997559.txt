@@ -1,4 +1,0 @@
-import html
-return [{"url": html.escape(e.url),
-"title": html.escape(e.title) or html.escape(e.url),
-"time": e.atime} for e in entries]

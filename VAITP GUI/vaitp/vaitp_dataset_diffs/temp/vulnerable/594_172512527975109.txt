@@ -1,5 +1,0 @@
-["if !exists('g:syntastic_pc_lint_config_file')
-    let g:syntastic_pc_lint_config_file = 'options.lnt'
-endif
-
-    let config = syntastic

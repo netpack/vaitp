@@ -1,5 +1,0 @@
-(self.auth_account, token[-1], token))
-                (self.auth_account, candidate_token[-1], candidate_token))
-                (self.auth_account, candidate_token[-1], candidate_token))
-                         (self.auth_account, token[-1], token))
-                         (self.auth_account, token[-1], token))

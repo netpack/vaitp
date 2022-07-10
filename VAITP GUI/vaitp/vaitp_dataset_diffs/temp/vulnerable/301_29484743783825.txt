@@ -1,3 +1,0 @@
-http_client=mock_federation_client,
-        put_json = self.hs.get_http_client().put_json
-        put_json = self.hs.get_http_client().put_json

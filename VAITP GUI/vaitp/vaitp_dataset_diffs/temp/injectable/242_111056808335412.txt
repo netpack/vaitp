@@ -1,5 +1,0 @@
-version='1.0.5',
-url='https://github.com/tomoh1r/ansible-vault',
-extras_require = {
-'test': ['pytest', 'testfixtures'],
-}

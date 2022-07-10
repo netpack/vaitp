@@ -1,6 +1,0 @@
-import subprocess
-cmd = ['notify-send']
-cmd.extend(['-t', str(1000 * timeout)])
-cmd.append(title)
-cmd.append(message)
-subprocess.Popen(cmd).communicate()

@@ -1,3 +1,0 @@
-tokens_seen = set([token])
-tokens_seen.add(token)
-self.assertEqual(len(tokens_seen), 6)

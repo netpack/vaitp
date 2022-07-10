@@ -1,1 +1,0 @@
-["        logfile_tmp = tempfile.NamedTemporaryFile(dir=os.environTMP'],")]}

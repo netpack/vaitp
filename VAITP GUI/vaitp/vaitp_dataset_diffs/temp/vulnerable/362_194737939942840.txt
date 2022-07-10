@@ -1,2 +1,0 @@
-["                'crypto/gpg/keylist/secret', '<address>')
-        res = self._gnupg().list_secret_keys()

@@ -1,2 +1,0 @@
-py3-{django1_11,django2_0,django2_1},
-    django2_0: Django>=2.0,<2.1

@@ -1,7 +1,0 @@
-def unichrs(s):
-return ''.join(chr(int(x, 16)) for x in s.split('+'))
-data = line.split('
-if data[0][:2] != '0x':
-self.fail(f"Invalid line: {line!r}")
-csetch = bytes.fromhex(data[0][2:])
-if len(csetch) == 1 and 0x80 <= csetch[0]:

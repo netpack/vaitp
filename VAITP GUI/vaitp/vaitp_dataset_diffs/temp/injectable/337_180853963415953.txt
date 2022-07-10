@@ -1,5 +1,0 @@
-rpmname = os.path.basename(pkg.remote_path)
-local = os.path.join(local_repo_path, pkg.remote_path)
-local = os.path.join(local_repo_path, pkg.remote_path)
-print urljoin(pkg.repo.urls[0], pkg.remote_path)
-pkg.localpath = os.path.join(local_repo_path, pkg.remote_path)

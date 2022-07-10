@@ -1,1 +1,0 @@
-if not current_user.is_authenticated():

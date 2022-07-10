@@ -1,4 +1,0 @@
-self.basic_auth = get_anymail_setting('webhook_secret', default=[],
-if not self.basic_auth:
-self.basic_auth = get_anymail_setting('webhook_authorization', default=[], kwargs=kwargs)
-"You should set WEBHOOK_SECRET in your ANYMAIL settings. "

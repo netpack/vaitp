@@ -1,6 +1,0 @@
-quoteAttributeSpec = re.compile("[" + spaceCharacters + "\\"\'=<>`]")
-    quote_attr_values = False
-        quote_attr_values=True|False
-          per HTML5 parsing rules.
-                        if self.quote_attr_values:
-                            quote_attr = len(v) == 0 or quoteAttributeSpec.search(v)

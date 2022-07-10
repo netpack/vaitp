@@ -1,3 +1,0 @@
-def test_28_catch_lnext_terminal_ctrl(self):
-        """ F25 | test ctrl-v ctrl-j then command, forbidden/security """
-        expected = u'*** forbidden syntax: echo\\r'")]}

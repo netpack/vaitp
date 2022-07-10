@@ -1,7 +1,0 @@
-import ShouldRaise
-import ConstructorError
-def test_not_pwned(self):
-fpath = os.path.join(here, 'file', 'pwned.txt')
-vault = self._makeOne('password')
-with ShouldRaise(ConstructorError):
-vault.load(open(fpath).read())

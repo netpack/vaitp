@@ -1,1 +1,0 @@
-extract_cookies_to_jar(prepared_request._cookies, prepared_request, resp.raw)

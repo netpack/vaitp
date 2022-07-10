@@ -1,3 +1,0 @@
-hs = self.setup_test_homeserver(
-config=config, proxied_blacklisted_http_client=m
-)

@@ -1,8 +1,0 @@
-dhandle, dname = tempfile.mkstemp()
-dfile = open(dname, 'w')
-dfile.write(delta.data)
-dfile.close()
-os.close(dhandle)
-ret = os.system("patch -uf %s < %s > /dev/null 2>&1" % (basefile.name, dfile.name))
-[os.unlink(fname) for fname in [basefile.name, dfile.name]]
-    raise Bcfg2.Server.Plugin.PluginExecutionError, ('delta', delta)

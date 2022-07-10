@@ -1,4 +1,0 @@
-selinux.setexeccon(self.__execcon)
-            rc = subprocess.Popen(self.__cmds).wait()
-            selinux.setexeccon(None)
-            return rc

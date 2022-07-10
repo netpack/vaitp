@@ -1,3 +1,0 @@
-__version__ = '2.4.0'
-print("  git tag -a %s -m \'version %s\'" % (__version__, __version__))
-version=__version__,

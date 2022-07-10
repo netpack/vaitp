@@ -1,3 +1,0 @@
-import check_update, get_misp_connection, galaxycluster_to_entity, get_galaxy_cluster, get_galaxies_relating, search_galaxy_cluster, mapping_galaxy_icon
-        misp = get_misp_connection(config, request.parameters)
-        events_json = misp.search(controller='events', tags=tag_name, with_attachments=False)")

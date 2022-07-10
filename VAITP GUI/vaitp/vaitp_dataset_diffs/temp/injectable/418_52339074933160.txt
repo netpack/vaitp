@@ -1,2 +1,0 @@
-import SizeLimitingRequest
-self.factory.requestFactory = SizeLimitingRequest

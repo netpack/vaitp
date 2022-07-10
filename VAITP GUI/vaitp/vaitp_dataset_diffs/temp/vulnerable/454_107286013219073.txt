@@ -1,1 +1,0 @@
-"prepublish": "in-publish && echo \'You need to use \\"grunt publish\\" to publish bower\' && false || not-in-publish",

@@ -1,2 +1,0 @@
-["@override_settings(ANYMAIL={'WEBHOOK_AUTHORIZATION': 'username:password'})
-    @override_settings(ANYMAIL={'WEBHOOK_AUTHORIZATION': cred1:pass1', 'cred2:pass2']})")]}

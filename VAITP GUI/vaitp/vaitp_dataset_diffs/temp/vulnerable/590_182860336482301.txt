@@ -1,5 +1,0 @@
-["if !exists('g:syntastic_clang_check_config_file')
-    let g:syntastic_clang_check_config_file = '.syntastic_clang_check_config'
-endif
-
-        \\   syntastic

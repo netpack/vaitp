@@ -1,5 +1,0 @@
-import tempfile, os
-f, file = tempfile.mkstemp(format or '')
-os.close(f)
-if file.endswith(format):
-file = file + "." + format

@@ -1,8 +1,0 @@
-inst.received(b"GET / HTTP/1.1\\r\\n\\r\\n")
-inst.received(b"GET / HTTP/1.1\\r\\n\\r\\n")
-inst.received(b"GET / HTTP/1.1\\r\\n\\r\\n")
-inst.received(b"GET / HTTP/1.1\\r\\n\\r\\n")
-inst.received(b"GET / HTTP/1.1\\r\\n\\r\\n" + b"a" * 50000)
-inst.received(b"GET / HTTP/1.1\\r\\n\\r\\n")
-inst.received(b"GET / HTTP/1.1\\r\\n\\r\\n")
-inst.received(b"GET / HTTP/1.1\\r\\n\\r\\n")

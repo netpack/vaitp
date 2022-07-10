@@ -1,7 +1,0 @@
-import subprocess
-p1 = subprocess.Popen(['eu-readelf', '-d', avc.tpath], stdout=subprocess.PIPE)
-p2 = subprocess.Popen(["fgrep", "-q", "TEXTREL"], stdin=p1.stdout, stdout=subprocess.PIPE)
-p1.stdout.close()
-p1.wait()
-p2.wait()
-if p2.returncode == 1:

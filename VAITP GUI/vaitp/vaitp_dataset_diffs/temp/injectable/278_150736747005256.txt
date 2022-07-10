@@ -1,2 +1,0 @@
-import EventTypes, Membership, MAX_DEPTH
-depth = min(depth, MAX_DEPTH)

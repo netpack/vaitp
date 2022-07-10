@@ -1,2 +1,0 @@
-dec = "%s %s -d %s --deobf" % (self.jadx, dex, self.tempdir)
-os.system(dec)

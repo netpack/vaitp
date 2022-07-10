@@ -1,5 +1,0 @@
-["    _specialHeaders = set((b'host', b'user-agent', b'cookie', b'content-length'))
-        method = getattr(self.factory, 'method', b'GET')
-        self.sendCommand(method, self.factory.path)
-        self.method = method
-    uri = URI.fromBytes(url)

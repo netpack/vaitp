@@ -1,1 +1,0 @@
-$_POST['cf_title'] = strip_tags($_POST['cf_title']);

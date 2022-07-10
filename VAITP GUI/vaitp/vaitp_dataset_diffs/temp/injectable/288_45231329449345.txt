@@ -1,8 +1,0 @@
-import IReactorTime
-BlacklistingReactorWrapper,
-self.reactor = BlacklistingReactorWrapper(
-hs.get_reactor(), None, hs.config.federation_ip_range_blacklist
-self.reactor,
-tls_client_options_factory,
-user_agent,
-hs.config.federation_ip_range_blacklist,

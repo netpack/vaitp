@@ -1,4 +1,0 @@
-self.method = method
-        self.uri = uri
-        requestLines.append(b' '.join([self.method, self.uri,
-            b'HTTP/1.1\\r\\n']))")]}

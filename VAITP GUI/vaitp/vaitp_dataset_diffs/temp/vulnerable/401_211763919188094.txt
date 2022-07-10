@@ -1,3 +1,0 @@
-
-            "matrix://%s/_matrix/federation/v1/openid/userinfo?access_token=%s" % (
-                argsmatrix_server_name'], urllib.parse.quote(argsaccess_token']),")]}

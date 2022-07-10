@@ -1,4 +1,0 @@
-self._has_ssl_errors = False
-        self._has_ssl_errors = False
-        if ok and not self._has_ssl_errors:
-                self._set_load_status(usertypes.LoadStatus.success_https)

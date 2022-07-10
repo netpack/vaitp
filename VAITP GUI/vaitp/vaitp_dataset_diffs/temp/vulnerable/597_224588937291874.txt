@@ -1,5 +1,0 @@
-["if !exists('g:syntastic_verapp_config_file')
-    let g:syntastic_verapp_config_file = '.syntastic_verapp_config'
-endif
-
-        \\ 'args': syntastic

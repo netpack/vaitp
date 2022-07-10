@@ -1,2 +1,0 @@
-import defusedxml.ElementTree
-envelope = defusedxml.ElementTree.fromstring(text)

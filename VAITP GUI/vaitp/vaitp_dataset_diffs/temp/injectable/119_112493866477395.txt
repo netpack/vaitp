@@ -1,4 +1,0 @@
-url = f.url
-if url.startswith('http://pypi.python.org'):
-url = 'https' + url[4:]
-'url': url,

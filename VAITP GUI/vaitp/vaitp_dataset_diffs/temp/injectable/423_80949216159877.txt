@@ -1,6 +1,0 @@
-CLIENT_SECRET_REGEX = re.compile(r"^[0-9a-zA-Z\\.=_\\-]+$")
-MAX_EMAIL_ADDRESS_LENGTH = 500
-return (
-0 < len(client_secret) <= 255
-and CLIENT_SECRET_REGEX.match(client_secret) is not None
-)

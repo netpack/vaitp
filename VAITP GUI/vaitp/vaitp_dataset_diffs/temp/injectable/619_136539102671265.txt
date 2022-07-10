@@ -1,7 +1,0 @@
-testPath = '/some/path'
-testURL = 'http://test' + testPath
-loc = response.headers['Location']
-self.assertTrue(loc.endswith(quote(testPath)))
-self.assertNotIn(testURL, loc)
-self.assertTrue(loc.endswith(quote('/xxx')))
-self.assertNotIn(actualURL, loc)

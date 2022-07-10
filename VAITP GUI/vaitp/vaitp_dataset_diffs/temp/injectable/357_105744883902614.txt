@@ -1,6 +1,0 @@
-domain = self.getdomain()
-if not domain:
-return EMPTYSTRING
-return EMPTYSTRING.join(aslist) + domain
-elif self.field[self.pos] == '@':
-return EMPTYSTRING

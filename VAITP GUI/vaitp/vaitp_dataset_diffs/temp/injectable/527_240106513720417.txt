@@ -1,5 +1,0 @@
-cdef unsigned long long position, buffer_size
-def __init__(self, unsigned long long bufsize):
-cdef unsigned long long written = 0
-cdef unsigned long long to_write, size
-cdef unsigned long long data_len = len(data)

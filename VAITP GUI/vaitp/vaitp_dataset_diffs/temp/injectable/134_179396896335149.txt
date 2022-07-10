@@ -1,2 +1,0 @@
-import cgi
-""" % cgi.escape(stack)

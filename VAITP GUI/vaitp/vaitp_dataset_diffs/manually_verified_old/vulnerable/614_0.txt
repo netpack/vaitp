@@ -1,6 +1,0 @@
-import urlencode, urljoin, urlsplit
-
-        url = urljoin(recurly.base_uri(), cls.member_path % (uuid,))
-        url = urljoin(recurly.base_uri(), cls.collection_path)
-        url = urljoin(recurly.base_uri(), cls.collection_path)
-        url = urljoin(recurly.base_uri(), self.collection_path)

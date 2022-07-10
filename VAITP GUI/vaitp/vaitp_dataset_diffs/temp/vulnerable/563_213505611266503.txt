@@ -1,2 +1,0 @@
-failregex = reject: RCPT from (.*)\\[<HOST>\\]: 554
-            reject: RCPT from (.*)\\[<HOST>\\]: 450 4\\.7\\.1 : Helo command rejected: Host not found; from=<> to=<> proto=ESMTP helo= *$

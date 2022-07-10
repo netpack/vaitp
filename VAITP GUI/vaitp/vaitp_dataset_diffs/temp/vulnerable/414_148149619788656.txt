@@ -1,4 +1,0 @@
-import MatrixFederationAgent
-            self.sydent.reactor,
-            self.sydent.reactor,
-            ClientTLSOptionsFactory(sydent.cfg),

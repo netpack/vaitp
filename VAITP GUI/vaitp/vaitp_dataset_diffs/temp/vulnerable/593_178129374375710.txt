@@ -1,5 +1,0 @@
-["if !exists('g:syntastic_oclint_config_file')
-    let g:syntastic_oclint_config_file = '.syntastic_oclint_config'
-endif
-
-        \\ 'post_args': '-- -c ' . syntastic

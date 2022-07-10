@@ -1,2 +1,0 @@
-["        self.ca_upstream_cert = self.cert_home + '/candlepin-upstream-ca.crt'
-        run_command_with_sudo('cp %s %s' % (self.ca_cert, self.ca_upstream_cert))")]}

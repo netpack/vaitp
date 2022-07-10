@@ -1,5 +1,0 @@
-@pytest.mark.parametrize("char", [" ", "\\r", "\\n", "\\x00"])
-def test_invalid_method_not_allowed(self, char):
-with pytest.raises(ValueError):
-with HTTPConnectionPool(self.host, self.port) as pool:
-pool.request("GET" + char, "/")

@@ -1,2 +1,0 @@
-jenv_opt = {"autoescape": True}
-jenv_opt.update(jinja_env_options if jinja_env_options else {})

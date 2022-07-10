@@ -1,2 +1,0 @@
-our_data = Popen(("env LC_ALL=C svn info %s" % pipes.quote(self.datastore)), shell=True, stdout=PIPE)
-data = our_data.communicate()[0].split('\n')

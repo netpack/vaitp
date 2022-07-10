@@ -1,4 +1,0 @@
-import Loader, SafeLoader
-Loader.add_constructor(u'tag:yaml.org,2002:str', construct_yaml_str)
-    return yaml.load(yaml_str)
-        return yaml.load(f)

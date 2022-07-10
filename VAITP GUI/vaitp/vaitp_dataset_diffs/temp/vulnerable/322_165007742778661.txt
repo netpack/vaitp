@@ -1,5 +1,0 @@
-self, room_id: str, event_dict: JsonDict
-            room_id: The ID of the room.
-
-            event_dict (dict[str, Any]): Dictionary containing the event body.
-        room_version = await self.store.get_room_version_id(room_id)

@@ -1,1 +1,0 @@
-jenv_opt = jinja_env_options if jinja_env_options else {}

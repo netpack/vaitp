@@ -1,6 +1,0 @@
-key = str(cfg['bridge'])
-network_devices[key] = \\
-'parent': key,
-host_device = self.vif_driver.get_vif_devname(vifaddr)
-if host_device:
-network_devices[key]['host_name'] = host_device

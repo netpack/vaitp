@@ -1,3 +1,0 @@
-import checks
-import check_deprecated_settings
-checks.register(check_deprecated_settings)

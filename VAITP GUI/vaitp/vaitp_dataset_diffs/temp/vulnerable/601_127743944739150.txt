@@ -1,2 +1,0 @@
-def test_render_simple_brackets(self):
-        correct = u\'<span class="math"><span class="inline-error inline">H^+ + OH^- <= H2O</span></span>\'

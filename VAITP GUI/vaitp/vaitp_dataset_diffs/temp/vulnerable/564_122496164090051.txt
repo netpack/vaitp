@@ -1,4 +1,0 @@
-failregex = : badlogin: .*\\[<HOST>\\] plaintext .*SASL\\(-13\\): authentication failure: checkpass failed$
-\t    : badlogin: .*\\[<HOST>\\] LOGIN \\[SASL\\(-13\\): authentication failure: checkpass failed\\]$
-\t    : badlogin: .*\\[<HOST>\\] (?:CRAM-MD5|NTLM) \\[SASL\\(-13\\): authentication failure: incorrect (?:digest|NTLM) response\\]$
-\t    : badlogin: .*\\[<HOST>\\] DIGEST-MD5 \\[SASL\\(-13\\): authentication failure: client response doesn't match what we generated\\]$")]}

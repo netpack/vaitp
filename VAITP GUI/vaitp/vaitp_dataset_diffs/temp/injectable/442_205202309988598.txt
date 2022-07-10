@@ -1,2 +1,0 @@
-self.assertEqual(self._callFUT(b"\\n\\n"), -1)
-self.assertEqual(self._callFUT(b"\\n\\n00\\r\\n\\r\\n"), 8)

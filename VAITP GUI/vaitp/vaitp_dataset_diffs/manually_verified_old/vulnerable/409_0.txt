@@ -1,6 +1,0 @@
-expr = None
-                expr = "(\'" + node.args[0].s + "\')"
-                    values.append(str(arg.n))
-                expr = "(" + ", ".join(values) + ")"
-            if expr:
-                self.current_value = eval(node.func.id + expr)

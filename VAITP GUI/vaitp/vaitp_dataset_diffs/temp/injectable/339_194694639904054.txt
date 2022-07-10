@@ -1,9 +1,0 @@
-proxy.rejectReinit = \'PROXY_ALLOW_REINIT\' not in os.environ or os.environ[\'PROXY_ALLOW_REINIT\'] != "1"
-proxy.initialized = False
-if proxy.rejectReinit is True and proxy.initialized is True:
-msg = 'Cannot initialize the action more than once.'
-sys.stderr.write(msg + '\\n')
-response = flask.jsonify({'error': msg})
-response.status_code = 403
-return complete(response)
-proxy.initialized = True

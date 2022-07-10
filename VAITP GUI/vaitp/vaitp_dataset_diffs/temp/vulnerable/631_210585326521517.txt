@@ -1,2 +1,0 @@
-else None
-        range_size = kwargs.get("limit", rows)

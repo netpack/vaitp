@@ -1,9 +1,0 @@
-import json
-return bm.copy()
-return item.data(Qt.UserRole).copy()
-filters=[(_('Saved bookmarks'), ['calibre-bookmarks'])], all_files=False, initial_filename='bookmarks.calibre-bookmarks')
-with lopen(filename, 'wb') as fileobj:
-fileobj.write(json.dumps(self.get_bookmarks(), indent=True))
-filters=[(_('Saved bookmarks'), ['calibre-bookmarks'])], all_files=False, select_only_single_file=True)
-with lopen(filename, 'rb') as fileobj:
-imported = json.load(fileobj)

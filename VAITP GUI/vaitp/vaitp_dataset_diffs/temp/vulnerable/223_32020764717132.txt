@@ -1,1 +1,0 @@
-while (self._algorithm.digest_size // 8) * len(output) < self._length:

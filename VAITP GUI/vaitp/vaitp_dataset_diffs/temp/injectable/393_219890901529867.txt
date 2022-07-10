@@ -1,5 +1,0 @@
-fake_kernel.name = b'kernel-2'
-root[1].props[0].value = b'conf-2\\x00'
-fake_conf.name = b'conf-2'
-fake_conf.props[0].value = b'kernel-2\\x00'
-fake_conf.props[1].value = b'fdt-1\\x00'

@@ -1,2 +1,0 @@
-["        self.xmpp.event('carbon_received', msg)
-        self.xmpp.event('carbon_sent', msg)")]}

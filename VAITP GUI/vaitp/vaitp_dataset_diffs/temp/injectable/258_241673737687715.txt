@@ -1,7 +1,0 @@
-import constant_time_compare
-request_auth = get_request_basic_auth(request)
-auth_ok = any(constant_time_compare(request_auth, allowed_auth)
-for allowed_auth in self.basic_auth)
-if not auth_ok:
-Security note: use django.utils.crypto.constant_time_compare for string
-comparisons, to avoid exposing your validation to a timing attack.

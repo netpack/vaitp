@@ -1,7 +1,0 @@
-import force_text
-_safe_js_escapes = {
-ord('&'): '\\\\u0026',
-ord('<'): '\\\\u003C',
-ord('>'): '\\\\u003E',
-}
-return mark_safe(force_text(result).translate(_safe_js_escapes))

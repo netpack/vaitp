@@ -1,8 +1,0 @@
-import Popen, PIPE
-cmd = ["patch", "-u", "-f", basefile.name]
-patch = Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=PIPE)
-stderr = patch.communicate(input=delta.data)[1]
-ret = patch.wait()
-os.unlink(basefile.name)
-logger.error("Error applying diff %s: %s" % (delta.name, stderr))
-raise Bcfg2.Server.Plugin.PluginExecutionError('delta', delta)

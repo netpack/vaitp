@@ -1,8 +1,0 @@
-def write_str_to(filename, s):
-    fd = os.open(filename, os.O_WRONLY | os.O_CREAT | os.O_TRUNC, @DEFAULT_DUMP_DIR_MODE@ | stat.S_IROTH)
-            write_str_to(tempdir+"/remote", "1")
-            shutil.move(tempdir, abrt_dir)
-            problem.notify_new_path(abrt_dir+"/"+os.path.basename(tempdir))
-                write_str_to(tempdir+"/"+d+"/remote", "1")
-                shutil.move(tempdir+"/"+d, dst)
-                problem.notify_new_path(dst)

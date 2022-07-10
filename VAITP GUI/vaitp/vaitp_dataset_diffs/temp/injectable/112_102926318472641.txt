@@ -1,4 +1,0 @@
-random_generator = random.SystemRandom()
-CurrentID = random_generator.randrange(1, 255)
-data.append(random_generator.randrange(0, 256))
-return random_generator.randrange(0, 256)

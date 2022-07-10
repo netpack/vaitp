@@ -1,6 +1,0 @@
-args = ["--forked", "--fulltrace", "--no-cov", "tests/"]
-args += ["-k", self.test_suite]
-sys.stderr.write("setup.py:test run pytest {}\\n".format(" ".join(args)))
-with open(os.path.join(project_root, name), "rb") as f:
-g = (line.decode("utf-8").lstrip().split("
-install_requires=read_requirements("requirements.txt"),

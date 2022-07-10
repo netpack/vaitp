@@ -1,8 +1,0 @@
-sys.path.insertos.path.dirname(os.path.abspath(name)))
-        try:
-            m = os.path.splitext(os.path.basename(name))[0]
-            module = importlib.import_module(m)
-        finally:
-            sys.path.pop(0)
-
-        return module

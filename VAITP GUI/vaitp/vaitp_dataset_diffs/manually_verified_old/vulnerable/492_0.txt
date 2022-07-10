@@ -1,1 +1,0 @@
-type, params = cgi.parse_header(content_disposition)

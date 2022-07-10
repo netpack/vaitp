@@ -1,2 +1,0 @@
-let buf = bufnr('')
-\\ 'post_args': '-- -c ' . syntastic

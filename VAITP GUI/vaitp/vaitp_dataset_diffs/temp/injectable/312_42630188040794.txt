@@ -1,2 +1,0 @@
-return self.setup_test_homeserver(federation_http_client=self.http_client)
-federation_http_client=self.http_client2, config=config

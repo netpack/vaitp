@@ -1,3 +1,0 @@
-for root, dirs, files in os.walk(fdir):
-if root.count(os.sep) > 500:
-del dirs[:]

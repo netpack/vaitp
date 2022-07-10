@@ -1,7 +1,0 @@
-import subprocess
-command = siginfo.substitute_array(p.get_fix_cmd(siginfo.audit_event, plugin.args).split())
-try:
-output = subprocess.check_output(command)
-print _("Successfully ran %s" % \' \'.join(command))
-except subprocess.CalledProcessError as e:
-print(e.output)

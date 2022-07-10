@@ -1,1 +1,0 @@
-data = utils.parse_json(res['stdout'], from_remote=True)

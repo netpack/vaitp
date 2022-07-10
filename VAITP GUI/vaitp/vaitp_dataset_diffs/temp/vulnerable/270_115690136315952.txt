@@ -1,5 +1,0 @@
-import QNetworkReply
-def handler(request):
-        mimetype, data = qutescheme.data_for_url(request.url())
-        errorstr = "No handler found for {}!".format(
-            request.url().toDisplayString())

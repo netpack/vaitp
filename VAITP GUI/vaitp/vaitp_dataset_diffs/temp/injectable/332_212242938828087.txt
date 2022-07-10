@@ -1,2 +1,0 @@
-import List, Optional, Pattern
-self.federation_certificate_verification_whitelist = []

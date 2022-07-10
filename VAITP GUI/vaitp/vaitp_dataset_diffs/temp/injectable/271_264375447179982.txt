@@ -1,3 +1,0 @@
-quteproc_new.open_path('qute://settings/')
-quteproc_new.send_cmd(':jseval --world main '
-\'cset("search.ignore_case", "always")\')

@@ -1,2 +1,0 @@
-filename = request.args["file"][0].decode(\'utf-8\', \'ignore\').encode(\'utf-8\')
-filename = re.sub("^/+", "/", os.path.realpath(filename))

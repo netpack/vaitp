@@ -1,3 +1,0 @@
-self.file = tempfile.NamedTemporaryFile()
-self.filename = self.file.name
-self.file.close()

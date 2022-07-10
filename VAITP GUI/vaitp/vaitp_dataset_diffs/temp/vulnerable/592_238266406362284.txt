@@ -1,5 +1,0 @@
-["if !exists('g:syntastic_cppcheck_config_file')
-    let g:syntastic_cppcheck_config_file = '.syntastic_cppcheck_config'
-endif
-
-        \\ 'args': syntastic

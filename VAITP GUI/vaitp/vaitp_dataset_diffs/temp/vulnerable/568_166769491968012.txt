@@ -1,3 +1,0 @@
-import tempfile
-            file = tempfile.mktemp()
-            file = file + "." + format

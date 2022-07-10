@@ -1,3 +1,0 @@
-["        testURL = 'http://test'
-        self.assertTrue(response.headersLocation'].endswith(quote(testURL)))
-        self.assertTrue(loc.endswith(quote(actualURL)))

@@ -1,7 +1,0 @@
-self.cur_context = None
-allow_unsafe = kwargs.pop('allow_unsafe', C.DEFAULT_ALLOW_UNSAFE_LOOKUPS)
-if ran and not allow_unsafe:
-import UnsafeProxy, wrap_var
-if self.cur_context:
-self.cur_context.unsafe = True
-self.cur_context = new_context = t.new_context(jvars, shared=True)

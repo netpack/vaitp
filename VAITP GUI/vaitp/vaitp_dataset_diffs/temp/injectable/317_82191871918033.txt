@@ -1,1 +1,0 @@
-resource_for_federation=Mock(), federation_http_client=None

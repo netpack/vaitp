@@ -1,5 +1,0 @@
-__version__ = "1.0.1"
-ov = ctx.author.voice.channel.overwrites
-ov[ctx.guild.default_role] = discord.PermissionOverwrite(
-view_channel=False, connect=False
-)

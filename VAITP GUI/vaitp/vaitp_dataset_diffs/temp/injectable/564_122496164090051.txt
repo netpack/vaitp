@@ -1,6 +1,0 @@
-[INCLUDES]
-before = common.conf
-_daemon = (?:cyrus/)?(?:imapd?|pop3d?)
-failregex = ^%(__prefix_line)sbadlogin: \\S+ \\[<HOST>\\] (?:plaintext|LOGIN) .* \\[?SASL\\(-13\\): authentication failure: checkpass failed\\]?$
-\t    ^%(__prefix_line)sbadlogin: \\S+ \\[<HOST>\\] (?:CRAM-MD5|NTLM) \\[SASL\\(-13\\): authentication failure: incorrect (?:digest|NTLM) response\\]$
-\t    ^%(__prefix_line)sbadlogin: \\S+ \\[<HOST>\\] DIGEST-MD5 \\[SASL\\(-13\\): authentication failure: client response doesn't match what we generated\\]$

@@ -1,1 +1,0 @@
-otp = serializers.CharField(max_length=6, allow_null=True, allow_blank=True)

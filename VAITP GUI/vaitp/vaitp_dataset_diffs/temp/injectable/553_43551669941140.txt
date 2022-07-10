@@ -1,1 +1,0 @@
-if not stream.invite_only and autosubscribe:

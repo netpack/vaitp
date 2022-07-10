@@ -1,6 +1,0 @@
-import settings
-import conditional_escape
-if getattr(settings, 'WAGTAILFORMS_HELP_TEXT_ALLOW_HTML', False):
-options['help_text'] = field.help_text
-else:
-options['help_text'] = conditional_escape(field.help_text)

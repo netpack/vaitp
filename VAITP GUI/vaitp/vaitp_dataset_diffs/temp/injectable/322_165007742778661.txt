@@ -1,5 +1,0 @@
-import assert_params_in_dict
-self, event_dict: JsonDict
-event_dict: Dictionary containing the event body.
-assert_params_in_dict(event_dict, ["room_id"])
-room_version = await self.store.get_room_version_id(event_dict["room_id"])

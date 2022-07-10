@@ -1,8 +1,0 @@
-dirname = os.path.dirname(filename)
-        if not os.path.exists(dirname):
-            os.makedirs(dirname)
-
-        decoded = base64.standard_b64decode(gzip64encoded)
-        with open(filename, 'wb') as f:
-            f.write(decoded)
-        

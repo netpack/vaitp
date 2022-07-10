@@ -1,3 +1,0 @@
-<option[% \' selected="selected"\' IF vars.sidebar_defaults.report_portutilization.age_num == count %]>[% count %]</option>
-                <option[% \' selected="selected"\' IF vars.sidebar_defaults.report_portutilization.age_unit == unit %]>[% unit %]</option>
-            <button id="[% report.tag %]_submit" type="submit" class="btn btn-info">

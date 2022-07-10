@@ -1,5 +1,0 @@
-for c in denorm_chars:
-                url = "{}://netloc{}false.netloc/path".format(scheme, c)
-                with self.subTest(url=url, char='{:04X}'.format(ord(c))):
-                    with self.assertRaises(ValueError):
-                        urllib.parse.urlsplit(url)

@@ -1,2 +1,0 @@
-import CharBlock, RawHTMLBlock, RichTextBlock, StructBlock
-('raw_html', RawHTMLBlock()),

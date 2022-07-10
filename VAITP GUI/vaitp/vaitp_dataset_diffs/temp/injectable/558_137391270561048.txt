@@ -1,1 +1,0 @@
-if password_auth_enabled(realm) and form['password'].field.required:

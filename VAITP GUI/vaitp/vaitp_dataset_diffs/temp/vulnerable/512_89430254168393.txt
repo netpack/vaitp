@@ -1,9 +1,0 @@
-error_messages={"unique": _("A user with that username already exists."),},
-    totp_secret = models.CharField(null=True, max_length=16)
-    totp_status = models.IntegerField(
-        choices=[(status, status.value) for status in TOTPStatus],
-        default=TOTPStatus.DISABLED,
-    )
-    def is_2fa_enabled(self):
-        return self.totp_status == TOTPStatus.ENABLED
-        return self.totp_status != TOTPStatus.ENABLED and config.get(

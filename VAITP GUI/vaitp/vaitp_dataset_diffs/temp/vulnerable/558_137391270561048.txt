@@ -1,2 +1,0 @@
-if password_auth_enabled(realm):
-

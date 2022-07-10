@@ -1,2 +1,0 @@
-http_client=None,
-                useful to e.g. pass some mocks for things like `http_client`

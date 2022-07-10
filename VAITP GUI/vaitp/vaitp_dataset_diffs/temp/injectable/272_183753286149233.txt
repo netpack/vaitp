@@ -1,3 +1,0 @@
-reply = filescheme.handler(req, None, None)
-reply = filescheme.handler(req, None, None)
-reply = filescheme.handler(req, None, None)

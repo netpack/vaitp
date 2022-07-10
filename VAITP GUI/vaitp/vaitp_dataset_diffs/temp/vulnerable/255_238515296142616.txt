@@ -1,2 +1,0 @@
-if login == user:
-                        return self.verify(hash_value, password)

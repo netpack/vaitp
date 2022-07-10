@@ -1,4 +1,0 @@
-import is_valid_hostname
-        if not is_valid_hostname(matrix_server):
-                'error': 'matrix_server_name must be a valid hostname'
-        if not is_valid_hostname(user_id_server):

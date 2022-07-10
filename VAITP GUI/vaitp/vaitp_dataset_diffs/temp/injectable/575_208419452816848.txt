@@ -1,6 +1,0 @@
-if key == 'password':
-val = 'XXX-REDACTED-XXX'
-' {1}'.format(name, 'XXX-REDACTED-XXX')
-ret['changes']['password'] = 'XXX-REDACTED-XXX'
-' {1}'.format(name, 'XXX-REDACTED-XXX')
-ret['changes']['passwd'] = 'XXX-REDACTED-XXX'

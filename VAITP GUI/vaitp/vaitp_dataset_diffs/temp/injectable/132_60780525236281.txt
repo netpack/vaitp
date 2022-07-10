@@ -1,2 +1,0 @@
-import escape
-"base_url": escape(context["base_url"]),

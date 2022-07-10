@@ -1,2 +1,0 @@
-import _websocket_mask_python
-import WebSocketHandler, websocket_connect, WebSocketError

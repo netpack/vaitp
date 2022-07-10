@@ -1,3 +1,0 @@
-msg = 'Signature checking prevents use of unit addresses (@) in nodes'
-1, msg)
-run_bootm(sha_algo, 'evil kernel@', msg, False, efit)

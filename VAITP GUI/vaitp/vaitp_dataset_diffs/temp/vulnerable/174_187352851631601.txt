@@ -1,2 +1,0 @@
-def __init__(self, repository, key, manifest, path=None, sync=True):
-        self.lock.release()

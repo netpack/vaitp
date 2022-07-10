@@ -1,3 +1,0 @@
-def handler(request, _operation, _current_url):
-_operation: The HTTP operation being done.
-_current_url: The page we're on currently.

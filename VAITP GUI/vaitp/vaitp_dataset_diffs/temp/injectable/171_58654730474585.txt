@@ -1,3 +1,0 @@
-old_umask = os.umask(0o077)
-finally:
-os.umask(old_umask)

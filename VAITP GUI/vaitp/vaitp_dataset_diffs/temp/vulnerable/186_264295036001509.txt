@@ -1,2 +1,0 @@
-self.env.update(global_settings)
-        self.global_settings = settings.global_settings

@@ -1,2 +1,0 @@
-DEFAULT_WINDOW_SIZE, DEFAULT_MAX_PACKET_SIZE,
-                        self._handler_table[ptype](self, m)

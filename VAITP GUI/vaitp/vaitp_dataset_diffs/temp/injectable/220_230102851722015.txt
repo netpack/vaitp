@@ -1,2 +1,0 @@
-if re.findall(r'[\\x01-\\x1F\\x7F]', oline):
-ret, conf = warn_count('control char',

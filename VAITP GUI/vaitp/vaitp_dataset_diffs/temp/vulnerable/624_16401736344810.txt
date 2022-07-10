@@ -1,5 +1,0 @@
-rop_info = file_ob.rolesOfPermission(view)
-            allowed_roles = sorted([xname'] for x in rop_info
-                                    if xselected']])
-            self.assertEqual(allowed_roles, Manager', 'Owner'])
-            self.assertFalse(file_ob.acquiredRolesAreUsedBy(view))

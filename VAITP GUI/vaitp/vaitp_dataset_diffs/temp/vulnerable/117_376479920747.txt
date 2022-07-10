@@ -1,8 +1,0 @@
-for mode in (self.module.MODE_ECB, self.module.MODE_CBC, self.module.MODE_CFB, self.module.MODE_OFB, self.module.MODE_OPENPGP):
-
-            if mode != self.module.MODE_OPENPGP:
-                decryption_cipher = self.module.new(a2b_hex(self.key), mode, self.iv)
-            else:
-                eiv = ciphertext[:self.module.block_size+2]
-                ciphertext = ciphertext[self.module.block_size+2:]
-                decryption_cipher = self.module.new(a2b_hex(self.key), mode, eiv)

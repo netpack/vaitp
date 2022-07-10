@@ -1,2 +1,0 @@
-allowed_paths = VerifyUserMiddleware()._allowed_paths
-    allowed_paths = VerifyUserMiddleware()._allowed_paths

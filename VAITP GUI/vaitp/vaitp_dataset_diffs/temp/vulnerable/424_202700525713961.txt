@@ -1,3 +1,0 @@
-if type == TType.STOP:
-            return
-        elif type == TType.BOOL:

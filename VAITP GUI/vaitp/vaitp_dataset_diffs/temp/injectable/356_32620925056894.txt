@@ -1,2 +1,0 @@
-if value and value[0] == '@':
-raise errors.HeaderParseError('Invalid Domain')

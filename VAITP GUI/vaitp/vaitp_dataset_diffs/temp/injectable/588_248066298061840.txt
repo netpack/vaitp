@@ -1,5 +1,0 @@
-import random
-import time
-if _verifuncs[ENCRYPTION](hash_value, password):
-return True
-time.sleep(1 + random.random())

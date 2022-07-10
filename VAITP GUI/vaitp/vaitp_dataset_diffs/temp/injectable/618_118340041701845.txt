@@ -1,5 +1,0 @@
-import urlparse
-import urlunparse
-if came_from:
-parsed = urlparse(came_from)
-came_from = urlunparse(('', '') + parsed[2:])

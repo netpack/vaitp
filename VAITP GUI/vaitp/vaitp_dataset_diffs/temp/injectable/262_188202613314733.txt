@@ -1,7 +1,0 @@
-@override_settings(ANYMAIL={'WEBHOOK_SECRET': 'username:password'})
-@override_settings(ANYMAIL={'WEBHOOK_SECRET': ['cred1:pass1', 'cred2:pass2']})
-@override_settings(ANYMAIL={\'WEBHOOK_AUTHORIZATION\': "username:password"})
-def test_deprecated_setting(self):
-
-response = self.call_webhook()
-self.assertEqual(response.status_code, 200)

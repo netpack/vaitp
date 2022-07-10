@@ -1,1 +1,0 @@
-import test__UserFriendlyRNG; tests += test__UserFriendlyRNG.get_tests(config=config)

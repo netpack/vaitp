@@ -1,1 +1,0 @@
-self.raw  = utils.parse_json(self.data, from_remote=True)

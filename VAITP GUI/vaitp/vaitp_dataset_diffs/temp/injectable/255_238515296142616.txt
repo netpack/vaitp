@@ -1,5 +1,0 @@
-import random
-import time
-if login == user and self.verify(hash_value, password):
-return True
-time.sleep(1 + random.random())

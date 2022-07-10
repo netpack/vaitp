@@ -1,8 +1,0 @@
-self.federation_ip_range_blacklist = config.get(
-            "federation_ip_range_blacklist", []
-        )
-            self.federation_ip_range_blacklist = IPSet(
-                self.federation_ip_range_blacklist
-            )
-
-

@@ -1,3 +1,0 @@
-def get_json(self, uri):
-        body = yield readBody(response)
-        yield readBody(response)

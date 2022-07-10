@@ -1,5 +1,0 @@
-The input tensor is interpreted as a sequence of bytes. These bytes are then
-  decoded as numbers in the format specified by `out_type`.
-  Note: There is currently a bug in `fixed_length` that can result in data loss:
-
-  >>>

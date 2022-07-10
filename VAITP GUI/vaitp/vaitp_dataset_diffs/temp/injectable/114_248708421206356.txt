@@ -1,2 +1,0 @@
-def _forget_last_reseed(self):
-self.last_reseed = None

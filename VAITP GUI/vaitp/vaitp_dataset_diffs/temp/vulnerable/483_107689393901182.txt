@@ -1,2 +1,0 @@
-tag_1 = mocker.MagicMock(autospec=str)
-        tag_2 = mocker.MagicMock(autospec=str)

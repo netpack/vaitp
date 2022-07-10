@@ -1,2 +1,0 @@
-.filter(Person.project_id == project.id)
-.filter(Person.project_id == project.id)

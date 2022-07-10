@@ -1,5 +1,0 @@
-["if !exists('g:syntastic_cuda_config_file')
-    let g:syntastic_cuda_config_file = '.syntastic_cuda_config'
-endif
-
-        \\ 'args': syntastic

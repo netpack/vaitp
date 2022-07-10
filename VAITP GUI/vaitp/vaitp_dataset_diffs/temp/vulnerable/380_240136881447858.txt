@@ -1,2 +1,0 @@
-["    pytest.skip('--hge-jwt-key-file is missing, skipping JWT basic tests', allow_module_level=True)
-    pytest.skip('--hge-jwt-key-conf is missing, skipping JWT basic tests', allow_module_level=True)")]}

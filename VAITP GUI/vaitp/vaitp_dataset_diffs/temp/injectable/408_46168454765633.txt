@@ -1,4 +1,0 @@
-import is_valid_matrix_server_name
-if not is_valid_matrix_server_name(matrix_server):
-'error': 'matrix_server_name must be a valid Matrix server name (IP address or hostname)'
-if not is_valid_matrix_server_name(user_id_server):

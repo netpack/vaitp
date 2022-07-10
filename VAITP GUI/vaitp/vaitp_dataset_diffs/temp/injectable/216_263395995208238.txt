@@ -1,2 +1,0 @@
-fu.where_name_does_not_match(
-'^%s$' % os.path.join(ctx['BUILD_DIR'], '.profile'))

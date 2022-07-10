@@ -1,3 +1,0 @@
-import SynapseError
-        SynapseError: if the pdu is missing required fields
-    assert_params_in_request(pdu_json, ('event_id', 'type'))")]}

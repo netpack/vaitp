@@ -1,3 +1,0 @@
-path('login_2fa/', views.LoginTwoFactorView.as_view(), name='login-2fa'),
-path('invites/', include(router.urls), name='invites'),
-path('regenerate_backup_codes', views.RegenerateBackupCodesView.as_view(), name='regenerate-backup-codes')

@@ -1,4 +1,0 @@
-RT_BOOL_ARG_ENABLE([postwrite], [no], [write to the filesystem on otherwise unhandled POST requests])
-if test "x$enable_postwrite" = xyes ; then
-AC_DEFINE(UPNP_ENABLE_POST_WRITE, 1, [see upnpconfig.h])
-fi

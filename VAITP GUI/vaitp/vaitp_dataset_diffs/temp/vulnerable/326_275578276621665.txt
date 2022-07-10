@@ -1,2 +1,0 @@
-readBodyToFile,
-            d = readBodyToFile(response, output_stream, max_size)

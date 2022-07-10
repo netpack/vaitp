@@ -1,4 +1,0 @@
-import json
-statsdata[name] = json.dumps(contents, -1)
-item.config = json.load(infile)
-p = json.dumps(item.config, -1)

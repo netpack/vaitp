@@ -1,2 +1,0 @@
-out_fd, file = tempfile.mkstemp()
-os.close(out_fd)

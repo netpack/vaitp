@@ -1,8 +1,0 @@
-import uuid
-import bytes_type, import_object, ObjectDict, raise_exc_info, unicode_type
-            token = self.get_cookie("_xsrf")
-            if not token:
-                token = binascii.b2a_hex(os.urandom(16))
-                self.set_cookie("_xsrf", token, expires_days=expires_days)
-            self._xsrf_token = token
-        if not _time_independent_equals(utf8(self.xsrf_token), utf8(token)):

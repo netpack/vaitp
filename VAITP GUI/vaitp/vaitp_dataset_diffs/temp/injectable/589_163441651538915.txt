@@ -1,2 +1,0 @@
-let buf = bufnr('')
-\\ 'args_before': syntastic

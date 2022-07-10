@@ -1,2 +1,0 @@
-char *req_name[] = {"Module", "Expression", "Interactive"};
-    assert(0 <= mode && mode <= 2);

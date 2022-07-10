@@ -1,7 +1,0 @@
-value: 'some-pass-123',
-value: 'some-pass-123',
-value: 'Registration successful!',
-click(css: '.signup .js-submitResend')
-css:   '.content.active',
-value: 'Welcome!',
-value: 'some-pass-123',

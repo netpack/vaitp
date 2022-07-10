@@ -1,6 +1,0 @@
-_insecure_hosts = set()
-if ok:
-if self.url().host() in self._insecure_hosts:
-self._set_load_status(usertypes.LoadStatus.warn)
-else:
-self._set_load_status(usertypes.LoadStatus.success_https)

@@ -1,4 +1,0 @@
-if result == errors.DateError:
-        with pytest.raises(errors.DateError):
-    if result == errors.DateTimeError:
-        with pytest.raises(errors.DateTimeError):

@@ -1,5 +1,0 @@
-["    sortby = request.GET.get('sort', 'used')
-        page = int(request.GET.get('page', '1'))
-    query = request.GET.get('query', '').strip()
-        query_paramsname__icontains': query]
-    return render(request, 'tags.html', data)")]}

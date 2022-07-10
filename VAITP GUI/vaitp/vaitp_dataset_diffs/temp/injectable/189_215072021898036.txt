@@ -1,3 +1,0 @@
-if '/../' in f or f.startswith('../'):
-return 'invalid_file'
-if os.path.isabs(f):

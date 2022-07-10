@@ -1,1 +1,0 @@
-self.result = utils.parse_json(self.result, from_remote=True)

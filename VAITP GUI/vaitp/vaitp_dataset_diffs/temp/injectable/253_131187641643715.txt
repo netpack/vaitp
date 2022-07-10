@@ -1,2 +1,0 @@
-PKG_CHECK_MODULES([CRYPTO],[libcrypto])
-PKG_CHECK_MODULES([CURL],[libcurl])
