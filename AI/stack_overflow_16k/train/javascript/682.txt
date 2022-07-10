@@ -1,1 +1,0 @@
-"the interpretation of one line blank code what is the interpretation of this line in blank. ..var x[],matrix[],n;.....n = (matrix = x) &amp;&amp; matrix.length;...despite i searched for it, i couldn't find any tips...thank you"

@@ -1,1 +1,0 @@
-"how to set textmode = multiline for dynamic text box in blank textbox txt = new textbox();.txt.textmode = ""mulitiline"";...is not working ..how to set textmode = multiline for dynamic text box in blank"

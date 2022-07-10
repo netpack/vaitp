@@ -1,1 +1,0 @@
-use of log() of servletcontext interface .  what is the prcatical use of method log(string message) of servletcontext interface?
