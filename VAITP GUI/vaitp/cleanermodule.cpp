@@ -84,5 +84,5 @@ bool cleanermodule::comparetwofiles(QFile* aFile,QFile* bFile){
 
 
 void cleanermodule::forceDeOfuscation(QString aFile){
-
+    //TODO: Implement force deobfuscation
 }

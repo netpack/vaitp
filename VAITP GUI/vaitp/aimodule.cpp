@@ -244,16 +244,6 @@ QStringList aimodule::get_dataset_first_half(int aNumHalfDataset){
 
     //get part of the vulnerabilities for training (and leave the other half for testing)
 
-    /* sql_query.prepare("SELECT m.name, m.signature, m.nloc, m.parameters, m.token_count, m.code, c.num_lines_added, c.num_lines_deleted "
-                      "FROM method_change m , file_change f, commits c "
-                      "WHERE f.file_change_id = m.file_change_id "
-                      "AND f.programming_language = 'Python' "
-                      "AND m.before_change = 'True' "
-                      "AND c.hash = f.hash "
-                      "AND c.num_lines_added < 2"
-                      "AND c.num_lines_deleted < 2"
-                      "LIMIT 0, :halfthedatafortraining"); */
-
     sql_query.prepare("SELECT m.name, m.signature, m.nloc, m.parameters, m.token_count, m.code "
                       "FROM method_change m , file_change f "
                       "WHERE f.file_change_id = m.file_change_id "

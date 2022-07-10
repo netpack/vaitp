@@ -361,7 +361,7 @@ void VAITP::vaitp_scan_py_file(QString aFile)
                                             break;
                                         }
                                     }
-                                new_inj_string += " :: Line "+QString::number(line_number)+" :: "+line;
+                                new_inj_string += " :: Line "+QString::number(line_number)+": "+line+" :: "+ai.getSelectedFile();
                                 file.close();
                                 QListWidgetItem *itm = new QListWidgetItem(QIcon(":/lineicons-free-basic-3.0/png-files/ai.png"),new_inj_string);
                                 ui->lst_injectionPoints->addItem(itm);
@@ -547,7 +547,14 @@ void VAITP::on_bt_inject_vuln_clicked()
 
         QStringList patchList = ui->lst_injectionPoints->currentItem()->text().split("::");
 
-        patchInjection(pyfile,false,patchList,false);
+        if(patchList.count()!=4){
+             ui->txt_output_sh1->appendHtml("The injection point does not respect the format: [patched] :: [injected] :: [Line number]: [Original line content] :: [File path]");
+        } else {
+            pyfile = patchList[3].trimmed();
+            patchInjection(pyfile,false,patchList,false);
+        }
+
+
 
 
     }
@@ -559,6 +566,7 @@ void VAITP::on_lst_injectionPoints_itemClicked(QListWidgetItem *item)
     qDebug() << "Selected injection: " << item->text();
     ui->bt_inject_vuln->setEnabled(true);
     ui->bt_addToInjectionChain->setEnabled(true);
+    item->setFlags(item->flags() | Qt::ItemIsEditable);
 }
 
 void VAITP::on_lst_vulns_itemClicked(QListWidgetItem *item)
