@@ -25,7 +25,7 @@
        <bool>true</bool>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
       <property name="iconSize">
        <size>
@@ -213,7 +213,7 @@
         <item>
          <widget class="QTabWidget" name="tabWidget_2">
           <property name="currentIndex">
-           <number>2</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="tab">
            <attribute name="title">
@@ -327,22 +327,22 @@
                 <item>
                  <layout class="QHBoxLayout" name="horizontalLayout_14">
                   <item>
-                   <widget class="QPushButton" name="bt_addToInjectionChain">
-                    <property name="enabled">
-                     <bool>false</bool>
-                    </property>
-                    <property name="text">
-                     <string>Add to injection chain</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
                    <widget class="QPushButton" name="bt_inject_vuln">
                     <property name="enabled">
                      <bool>false</bool>
                     </property>
                     <property name="text">
                      <string>Inject single Vulnerability</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QPushButton" name="bt_addToInjectionChain">
+                    <property name="enabled">
+                     <bool>false</bool>
+                    </property>
+                    <property name="text">
+                     <string>Add to injection chain</string>
                     </property>
                    </widget>
                   </item>
@@ -377,7 +377,7 @@
                      <bool>false</bool>
                     </property>
                     <property name="text">
-                     <string>Execute injection chain</string>
+                     <string>Inject chained vulnerabillities</string>
                     </property>
                    </widget>
                   </item>
@@ -1088,6 +1088,169 @@
          </widget>
         </item>
        </layout>
+      </widget>
+      <widget class="QWidget" name="tab_4">
+       <attribute name="title">
+        <string>Metrics</string>
+       </attribute>
+       <widget class="QCheckBox" name="checkBox_calc_regex_inj_tfpn">
+        <property name="geometry">
+         <rect>
+          <x>40</x>
+          <y>30</y>
+          <width>781</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;To calculate TP/TN/FP/FN please put the files to scan in proper folders:&lt;/p&gt;&lt;p&gt;.../injectable/... &amp;lt;- expected to be injectable&lt;/p&gt;&lt;p&gt;.../noninjectable/... &amp;lt;- expected NOT to be injectable&lt;/p&gt;&lt;p&gt;.../vulnerable/... &amp;lt;- expected to be vulnerable&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="whatsThis">
+         <string/>
+        </property>
+        <property name="accessibleName">
+         <string/>
+        </property>
+        <property name="text">
+         <string>Calculate TP/TN/FP/FP for files scanned with REGEX (only for folder scan; expected classifications are based on the path of the files)</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+        <property name="tristate">
+         <bool>false</bool>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_3">
+        <property name="geometry">
+         <rect>
+          <x>60</x>
+          <y>60</y>
+          <width>41</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>TP:</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_4">
+        <property name="geometry">
+         <rect>
+          <x>60</x>
+          <y>90</y>
+          <width>41</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>TN:</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_19">
+        <property name="geometry">
+         <rect>
+          <x>180</x>
+          <y>60</y>
+          <width>41</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>FP:</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_20">
+        <property name="geometry">
+         <rect>
+          <x>180</x>
+          <y>90</y>
+          <width>41</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>FN:</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="metrics_regex_inj_tp">
+        <property name="geometry">
+         <rect>
+          <x>100</x>
+          <y>60</y>
+          <width>41</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>0</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="metrics_regex_inj_tn">
+        <property name="geometry">
+         <rect>
+          <x>100</x>
+          <y>90</y>
+          <width>41</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>0</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="metrics_regex_inj_fp">
+        <property name="geometry">
+         <rect>
+          <x>210</x>
+          <y>60</y>
+          <width>41</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>0</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="metrics_regex_inj_fn">
+        <property name="geometry">
+         <rect>
+          <x>210</x>
+          <y>90</y>
+          <width>41</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>0</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_31">
+        <property name="geometry">
+         <rect>
+          <x>510</x>
+          <y>80</y>
+          <width>491</width>
+          <height>311</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>For injectables:
+
+TP - An injectable file predicted as injectable 
+TN - An non-injectable file predicted as non-injectable
+FP - A non-injectable file predicted as injectable
+FN - A injectable file predicted as non-injectable
+
+For vulnerable:
+
+TP - An vulnerable file predicted as vulnerable
+TN - An non-vulnerable file predicted as non-vulnerable
+FP - A non-vulnerable file predicted as vulnerable
+FN - A vulnerable file predicted as non-vulnerable
+</string>
+        </property>
+       </widget>
       </widget>
      </widget>
     </item>

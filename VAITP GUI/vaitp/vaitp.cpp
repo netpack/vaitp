@@ -3,7 +3,7 @@
 #include "QFileDialog"
 #include "QDirIterator"
 #include "QSqlQuery"
-#include "dbmanager.h"
+/*#include "dbmanager.h"*/
 #include <QDebug>
 #include <QLoggingCategory>
 #include <QMessageBox>
@@ -42,6 +42,7 @@ VAITP::VAITP(QWidget *parent)
         db=QSqlDatabase::addDatabase("QSQLITE");
         db.setDatabaseName("../vaitp/vaitp.db");
         db.open();
+
     }
 
     //Reset the injection chain number
@@ -74,6 +75,19 @@ VAITP::VAITP(QWidget *parent)
         }
     }
     qDebug()<<"VAITP AI models path set to: "<<vaitp_models_path;
+
+
+    //load the db version
+    if(query.exec("SELECT db_version from settings")){
+        while(query.next()){
+            QString db_version = QString::number(query.value(0).toInt());
+            qDebug() << "Database version: " << db_version;
+
+            ui->txt_output_sh1->appendHtml(tr("Loaded VAITP DB version: " )+db_version);
+        }
+    }
+    qDebug()<<"VAITP AI use_ai_classificator set to: "<<use_ai_classificator;
+
 
     //load the value of use_ai_classificator
     if(query.exec("SELECT use_ai_classificator from settings")){
@@ -191,6 +205,18 @@ void VAITP::vaitp_scan_py_file(QString aFile)
             ui->txt_output_sh1->appendHtml(tr("Invalid Python Script\n"));
         } else {
 
+            //set the expected classification based on the folder the script is located in
+            //this is just to allow us to calculate tp/tn/fp/fn
+            QString expected_classification = "injectable";
+            if(pyfile.contains("/noninjectable")){
+                expected_classification = "noninjectable";
+            } else if(pyfile.contains("/vulnerable")) {
+                expected_classification = "vulnerable";
+            }
+
+
+            ui->txt_output_sh1->appendHtml(tr("Based on the path the file is expected to be: ")+expected_classification);
+
 
             int number_of_vulns_in_list = ui->lst_vulns->count();
 
@@ -251,14 +277,70 @@ void VAITP::vaitp_scan_py_file(QString aFile)
                     //non inj
                     scanned+=" :: noninjectable";
                     number_of_noninj_by_regex++;
+                    if(ui->checkBox_calc_regex_inj_tfpn->isChecked()){
+
+                        if(expected_classification == "injectable"){
+                            //FP - A injectable file predicted as non-injectable
+                            int v = ui->metrics_regex_inj_fp->text().toInt()+1;
+                            ui->metrics_regex_inj_fp->setText(QString::number(v));
+                        } else if(expected_classification == "noninjectable"){
+                            //TP - A non-injectable file predicted as non-injectable
+                            int v = ui->metrics_regex_inj_tp->text().toInt()+1;
+                            ui->metrics_regex_inj_tp->setText(QString::number(v));
+                        } else if(expected_classification == "vulnerable"){
+                            //FN - A non-injectable file predicted as vulnerable
+                            int v = ui->metrics_regex_inj_fn->text().toInt()+1;
+                            ui->metrics_regex_inj_fn->setText(QString::number(v));
+                        }
+
+
+                    }
                 } else {
                     //vuln
                     scanned+=" :: vulnerable";
                     number_of_vuln_by_regex++;
+
+                    if(ui->checkBox_calc_regex_inj_tfpn->isChecked()){
+
+                        if(expected_classification == "injectable"){
+                            //FP - A injectable file predicted as vulnerable
+                            int v = ui->metrics_regex_inj_fp->text().toInt()+1;
+                            ui->metrics_regex_inj_fp->setText(QString::number(v));
+                        } else if(expected_classification == "noninjectable"){
+                            //FN - A vulnerable file predicted as non-injectable
+                            int v = ui->metrics_regex_inj_fn->text().toInt()+1;
+                            ui->metrics_regex_inj_fn->setText(QString::number(v));
+                        } else if(expected_classification == "vulnerable"){
+                            //TP - A vulnerable file predicted as vulnerable
+                            int v = ui->metrics_regex_inj_tp->text().toInt()+1;
+                            ui->metrics_regex_inj_tp->setText(QString::number(v));
+                        }
+
+
+                    }
+
                 }
 
             } else {
                 scanned+=" :: injectable";
+                if(ui->checkBox_calc_regex_inj_tfpn->isChecked()){
+
+                    if(expected_classification == "injectable"){
+                        //TP - An injectable file predicted as injectable
+                        int v = ui->metrics_regex_inj_tp->text().toInt()+1;
+                        ui->metrics_regex_inj_tp->setText(QString::number(v));
+                    } else if(expected_classification == "noninjectable"){
+                        //FP - An injectable file predicted as non-injectable
+                        int v = ui->metrics_regex_inj_fp->text().toInt()+1;
+                        ui->metrics_regex_inj_fp->setText(QString::number(v));
+                    } else if(expected_classification == "vulnerable"){
+                        //FP - An injectable file predicted as vulnerable
+                        int v = ui->metrics_regex_inj_fp->text().toInt()+1;
+                        ui->metrics_regex_inj_fp->setText(QString::number(v));
+                    }
+
+
+                }
             }
             QListWidgetItem *itm = new QListWidgetItem(QIcon(":/lineicons-free-basic-3.0/png-files/python2.png"),scanned);
             ui->lst_scanned_files->addItem(itm);
