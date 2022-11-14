@@ -267,12 +267,12 @@ void VAITP::vaitp_scan_py_file(QString aFile)
 
             QString scanned = "Regex Scan :: "+ui->txt_py_src->text();
             if(detectedInjectionPoints.isEmpty()){
-                //scanned+=" :: noninjectable or vulnerable";
-                //steps from here?
+                //If no injection points where added to the injection points list
+                //The file can only be noninjectable or vulnerable
 
                 int new_number_of_vulns_in_list = ui->lst_vulns->count();
 
-                //if the number is not the same classify as vulnerable else as noninj
+                //if the number of vulnerabilities is not the same, classify as vulnerable else as noninj
                 if(number_of_vulns_in_list == new_number_of_vulns_in_list){
                     //non inj
                     scanned+=" :: noninjectable";
@@ -280,9 +280,9 @@ void VAITP::vaitp_scan_py_file(QString aFile)
                     if(ui->checkBox_calc_regex_inj_tfpn->isChecked()){
 
                         if(expected_classification == "injectable"){
-                            //FP - A injectable file predicted as non-injectable
-                            int v = ui->metrics_regex_inj_fp->text().toInt()+1;
-                            ui->metrics_regex_inj_fp->setText(QString::number(v));
+                            //FN - A injectable file predicted as non-injectable
+                            int v = ui->metrics_regex_inj_fn->text().toInt()+1;
+                            ui->metrics_regex_inj_fn->setText(QString::number(v));
                         } else if(expected_classification == "noninjectable"){
                             //TP - A non-injectable file predicted as non-injectable
                             int v = ui->metrics_regex_inj_tp->text().toInt()+1;
@@ -303,9 +303,9 @@ void VAITP::vaitp_scan_py_file(QString aFile)
                     if(ui->checkBox_calc_regex_inj_tfpn->isChecked()){
 
                         if(expected_classification == "injectable"){
-                            //FP - A injectable file predicted as vulnerable
-                            int v = ui->metrics_regex_inj_fp->text().toInt()+1;
-                            ui->metrics_regex_inj_fp->setText(QString::number(v));
+                            //FN - A injectable file predicted as vulnerable
+                            int v = ui->metrics_regex_inj_fn->text().toInt()+1;
+                            ui->metrics_regex_inj_fn->setText(QString::number(v));
                         } else if(expected_classification == "noninjectable"){
                             //FN - A vulnerable file predicted as non-injectable
                             int v = ui->metrics_regex_inj_fn->text().toInt()+1;
@@ -330,13 +330,13 @@ void VAITP::vaitp_scan_py_file(QString aFile)
                         int v = ui->metrics_regex_inj_tp->text().toInt()+1;
                         ui->metrics_regex_inj_tp->setText(QString::number(v));
                     } else if(expected_classification == "noninjectable"){
-                        //FP - An injectable file predicted as non-injectable
-                        int v = ui->metrics_regex_inj_fp->text().toInt()+1;
-                        ui->metrics_regex_inj_fp->setText(QString::number(v));
+                        //FN - An injectable file predicted as non-injectable
+                        int v = ui->metrics_regex_inj_fn->text().toInt()+1;
+                        ui->metrics_regex_inj_fn->setText(QString::number(v));
                     } else if(expected_classification == "vulnerable"){
-                        //FP - An injectable file predicted as vulnerable
-                        int v = ui->metrics_regex_inj_fp->text().toInt()+1;
-                        ui->metrics_regex_inj_fp->setText(QString::number(v));
+                        //FN - An injectable file predicted as vulnerable
+                        int v = ui->metrics_regex_inj_fn->text().toInt()+1;
+                        ui->metrics_regex_inj_fn->setText(QString::number(v));
                     }
 
 
