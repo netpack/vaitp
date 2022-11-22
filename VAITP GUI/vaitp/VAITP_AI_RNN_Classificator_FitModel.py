@@ -20,8 +20,11 @@ import tensorflow_text as tf_text
 import keras
 import keras.backend as K
 
-tfds.disable_progress_bar()
+from sklearn.metrics import confusion_matrix
 
+tfds.disable_progress_bar()
+import matplotlib
+matplotlib.use('tkagg')
 import matplotlib.pyplot as plt
 
 import datetime
@@ -165,6 +168,7 @@ elif options.activation_model_sequencing == 5:
 #Setup logs for tensorboard
 log_dir = "/home/fred/msi/ano2/VAITP/VAITP GUI/vaitp/tf_logs/" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
 #log_dir = "/mnt/vaitp/VAITP GUI/vaitp/tf_logs/" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+
 tensorboard_callback = keras.callbacks.TensorBoard(
     log_dir=log_dir,
     histogram_freq=0,  # How often to log histogram visualizations
@@ -204,9 +208,9 @@ print(f'Testing dir path: {test_dir}')
 #  print(f.read())
 
 #count the number of files in the train dir
-train_dir_vuln = train_dir+"/vulnerable"
-train_dir_vuln_count = len([n for n in os.listdir(train_dir_vuln) if os.path.isfile(os.path.join(train_dir_vuln, n))])
-print(f'File list count in training set: {train_dir_vuln_count} (vulnerable)')
+#train_dir_vuln = train_dir+"/vulnerable"
+#train_dir_vuln_count = len([n for n in os.listdir(train_dir_vuln) if os.path.isfile(os.path.join(train_dir_vuln, n))])
+#print(f'File list count in training set: {train_dir_vuln_count} (vulnerable)')
 
 train_dir_noninj = train_dir+"/noninjectable"
 train_dir_noninj_count = len([n for n in os.listdir(train_dir_noninj) if os.path.isfile(os.path.join(train_dir_noninj, n))])
@@ -216,15 +220,15 @@ train_dir_inj = train_dir+"/injectable"
 train_dir_inj_count = len([n for n in os.listdir(train_dir_inj) if os.path.isfile(os.path.join(train_dir_inj, n))])
 print(f'File list count in training set: {train_dir_inj_count} (injectable)')
 
-train_dir_count = train_dir_inj_count+train_dir_noninj_count+train_dir_vuln_count
+train_dir_count = train_dir_inj_count+train_dir_noninj_count
 
 
 
 
 #count the number of files in the test dir
-test_dir_vuln = test_dir+"/vulnerable"
-test_dir_vuln_count = len([n for n in os.listdir(test_dir_vuln) if os.path.isfile(os.path.join(test_dir_vuln, n))])
-print(f'File list count in testing set: {test_dir_vuln_count} (vulnerable)')
+#test_dir_vuln = test_dir+"/vulnerable"
+#test_dir_vuln_count = len([n for n in os.listdir(test_dir_vuln) if os.path.isfile(os.path.join(test_dir_vuln, n))])
+#print(f'File list count in testing set: {test_dir_vuln_count} (vulnerable)')
 
 test_dir_noninj = test_dir+"/noninjectable"
 test_dir_noninj_count = len([n for n in os.listdir(test_dir_noninj) if os.path.isfile(os.path.join(test_dir_noninj, n))])
@@ -234,7 +238,7 @@ test_dir_inj = test_dir+"/injectable"
 test_dir_inj_count = len([n for n in os.listdir(test_dir_inj) if os.path.isfile(os.path.join(test_dir_inj, n))])
 print(f'File list count in testing set: {test_dir_inj_count} (injectable)')
 
-test_dir_count = test_dir_vuln_count+test_dir_noninj_count+test_dir_inj_count
+test_dir_count =test_dir_noninj_count+test_dir_inj_count
 
 
 #Create a full trainig set for final predictions
@@ -245,7 +249,7 @@ raw_train_ds_full = utils.text_dataset_from_directory(
 
 
 #Create trainig set  [should be around 20% of the set]
-batch_size = 132#228#64
+batch_size = 160#228#64
 seed = 4
 raw_train_ds = utils.text_dataset_from_directory(
     train_dir,
@@ -316,8 +320,12 @@ def int_vectorize_text(text, label):
   text = tf.expand_dims(text, -1)
   return int_vectorize_layer(text), label
 
-# Retrieve a batch of codes and labels from the dataset
+# Retrieve a batch of codes and labels from the training dataset
 text_batch, label_batch = next(iter(raw_train_ds_full))
+
+
+# Retrieve a batch of codes and labels from the testing dataset
+text_batch_test, label_batch_test = next(iter(raw_test_ds))
 
 #first_code, first_label = text_batch[0], label_batch[0]
 #print("\ncode: ", first_code)
@@ -441,9 +449,6 @@ else:
         print("\LSTM model accuracy: {:2.2%}".format(int_accuracy))
 
 
-
-#print("\n\nmodel trained. exporting the model...\n\n")
-
 #export the model
 if options.model_type.upper() == 'BOW':
     export_model = tf.keras.Sequential(
@@ -454,180 +459,19 @@ else:
         [int_vectorize_layer, int_model,
         layers.Activation(activation_function_2)])
 
-#print("\n")
-
-
-'''
-#Categorical True Positives
-class CategoricalTruePositives(keras.metrics.Metric):
-    def __init__(self, name="categorical_true_positives", **kwargs):
-        super(CategoricalTruePositives, self).__init__(name=name, **kwargs)
-        self.true_positives = self.add_weight(name="ctp", initializer="zeros")
-
-    def update_state(self, y_true, y_pred, sample_weight=None):
-
-        #print(f'CatTruePos:: y_true: {y_true} :: y_pred: {y_pred}')
-
-        y_pred = tf.reshape(tf.argmax(y_pred, axis=1), shape=(-1, 1))
-        values = tf.cast(y_true, "int32") == tf.cast(y_pred, "int32")
-        values = tf.cast(values, "float32")
-
-
-        #print(f'CatTruePos2:: values: {values} :: y_pred: {y_pred}')
-
-        if sample_weight is not None:
-            sample_weight = tf.cast(sample_weight, "float32")
-            values = tf.multiply(values, sample_weight)
-            #print(f'CatTruePos3:: sample_weight: {sample_weight}')
-
-        self.true_positives.assign_add(tf.reduce_sum(values))
-
-    def result(self):
-        return self.true_positives
-
-    def reset_state(self):
-        # The state of the metric will be reset at the start of each epoch.
-        self.true_positives.assign(0.0)
-
-
-#Caregorical True Negatives
-
-class CategoricalTrueNegatives(tf.keras.metrics.Metric):
-
-    def __init__(self, name="categorical_true_negatives", **kwargs):
-        super(CategoricalTrueNegatives, self).__init__(name=name, **kwargs)
-
-        self.cat_true_negatives = self.add_weight(name="ctn", initializer="zeros")
-
-    def update_state(self, y_true, y_pred, sample_weight=None):
-
-
-        y_true = K.argmax(y_true, axis=-1)
-        y_pred = K.argmax(y_pred, axis=-1)
-        y_true = K.flatten(y_true)
-
-        #print(f'CatTrueNeg:: y_true: {y_true} :: y_pred: {y_pred}')
-
-        true_neg = K.sum(K.cast((K.not_equal(y_true, y_pred)), dtype=tf.float32))
-
-        self.cat_true_negatives.assign_add(true_neg)
-
-    def result(self):
-
-        return self.cat_true_negatives
-'''
-
-
-#Caregorical False Negatives
-'''
-class CategoricalFalseNegatives(tf.keras.metrics.Metric):
-
-    def __init__(self, name="categorical_false_negatives", **kwargs):
-        super(CategoricalFalseNegatives, self).__init__(name=name, **kwargs)
-
-        self.cat_false_negatives = self.add_weight(name="cfn", initializer="zeros")
-
-    def update_state(self, y_true, y_pred, sample_weight=None):
-
-        print(f':Update state:')
-
-        y_true = K.argmax(y_true, axis=-1)
-        y_pred = K.argmax(y_pred, axis=-1)
-        y_true = K.flatten(y_true)
-
-        diff = K.sum(K.cast((K.not_equal(y_true, y_pred)), dtype=tf.float32))
-        diff = tf.cast(y_true, "int32") - tf.cast(y_pred, "int32")
-
-        print(f'Diff::{diff}')
-
-        # Correct is 0 
-        # FP is -1 
-        # FN is 1
-        print('CFN Correctly classified: ', np.where(diff == 0)[0])
-        print('CFN Incorrectly classified: ', np.where(diff != 0)[0])
-        print('CFN False negatives: ', np.where(diff == 1)[0])
-        #print(f'CatTrueNeg:: y_true: {y_true} :: y_pred: {y_pred}')
-
-        false_neg = 0
-
-        self.cat_false_negatives.assign_add(false_neg)
-
-    def result(self):
-
-        return self.cat_false_negatives
-'''
-
-
-#Caregorical False Positives
-'''
-class CategoricalFalsePositives(tf.keras.metrics.Metric):
-
-    def __init__(self, name="categorical_false_positives", **kwargs):
-        super(CategoricalFalsePositives, self).__init__(name=name, **kwargs)
-
-        self.cat_false_positives = self.add_weight(name="cfp", initializer="zeros")
-
-    def update_state(self, y_true, y_pred, sample_weight=None):
-
-
-        y_true = K.argmax(y_true, axis=-1)
-        y_pred = K.argmax(y_pred, axis=-1)
-        y_true = K.flatten(y_true)
-
-        diff = y_true-y_pred
-        #print(f'Diff::{diff}')
-
-        # Correct is 0 
-        # FP is -1 
-        # FN is 1
-        print('CFP Correctly classified: ', np.where(diff == 0)[0])
-        print('CFP Incorrectly classified: ', np.where(diff != 0)[0])
-        print('CFP False positives: ', np.where(diff == -1)[0])
-        
-        false_pos = np.where(diff == -1)[0]
-
-        self.cat_false_positives.assign_add(false_pos)
-
-    def result(self):
-
-        return self.cat_false_positives
-'''
-
-
  
 export_model.compile(
     loss=losses.SparseCategoricalCrossentropy(from_logits=False),
     optimizer='adam',
-    metrics=['accuracy'],
-    
-    #metrics=['accuracy',tf.keras.metrics.TruePositives(),tf.keras.metrics.TrueNegatives()],
-    #metrics=['accuracy', CategoricalTruePositives()],
-    #metrics=[tf.keras.metrics.CategoricalAccuracy(), CategoricalTruePositives(), tf.keras.metrics.FalseNegatives()],
-
+    metrics=['accuracy']
     )
 
-#print("\ntesting raw input to the model...")
-
-#print("\n")
  
 #test it with `raw_test_ds`, which yields raw strings
 loss, accuracy = export_model.evaluate(raw_test_ds)
-#print("\nAccuracy: {:2.2%}".format(accuracy))
-#print(f'Loss: {loss}')
-
-#print(f'\nTP: {tp}')
-#print(f'\nTN: {tn}')
-#print(f'\nFP: {fp}')
-#print(f'\nFN: {fn}')
-
-#print(f'\nVAITP raw_test_ds :: {str(raw_test_ds)}')
-
-#print("\n")
-
 
 #print(f'VAITP Classificator model summary:\n{export_model.summary}')
 
- 
 
 #define function to predict the label with the most score
 def get_string_labels(predicted_scores_batch):
@@ -636,44 +480,80 @@ def get_string_labels(predicted_scores_batch):
   return predicted_labels
 
 
-predicted_scores = export_model.predict(text_batch)
-#print("\n")
+predicted_scores = export_model.predict(text_batch_test)
 predicted_labels = get_string_labels(predicted_scores)
-
-'''
-for i, l in raw_train_ds:
-    print(f'VAITP :: i :: [i]\nVAITP :: l :: {l.numpy()}')
-'''
 
 label_iterator=0
 wrong_predictions=0
-for input, label in zip(text_batch, predicted_labels):
+fn = 0
+fp = 0
+tn = 0
+tp = 0
+n_tmpo = 0
+
+print(f'VAITP :::::::::::::::::::::::::::::::::::::::   The size of text_batch_test is: {len(list(text_batch_test))}')
+
+
+def ast_to_code(ast_string):
+    return ast.unparse(eval(re.sub('\w+(?=\()', lambda x:f'ast.{x.group()}', ast_string)))
+
+for input, label in zip(text_batch_test, predicted_labels):
   #print("\ncode: ", input)
+
+  iter_class = 0 #keeps track if this iteration was classified
 
   expected_label_num = label_batch[label_iterator]
   if expected_label_num == 0:
     expected_label = "b'injectable'"
-  elif expected_label_num == 1:
-    expected_label = "b'noninjectable'"
   else:
-    expected_label = "b'vulnerable'"
+    expected_label = "b'noninjectable'"
 
   predicted_label = label.numpy()
+  n_tmpo +=1
 
-  #print(f'\nexpected label: {expected_label}')
-  #print(f'\npredicted label: {predicted_label}')
+  print(f'\n::::::::: ::::::::: ::::::::: ::::::::: VAITP :::::::: :::::::: ::::::: :::::::: \nexpected label: {expected_label}')
+  print(f'\npredicted label: {predicted_label}')
 
-  def ast_to_code(ast_string):
-   return ast.unparse(eval(re.sub('\w+(?=\()', lambda x:f'ast.{x.group()}', ast_string)))
 
+  '''
+    Propose: TP - A injectable file predicted as injectable
+  '''
+  if str(expected_label) == "b'injectable'" and str(predicted_label) == "b'injectable'":
+    tp += 1
+    iter_class = 1
+
+  '''
+    Propose: TN - A non-injectable file predicted as non-injectable
+  '''
+  if str(expected_label) == "b'noninjectable'" and str(predicted_label) == "b'noninjectable'":
+    tn += 1
+    iter_class = 1
+    
 
   if str(predicted_label) != str(expected_label):
       print(f'\nThe following code is {expected_label} but was predicted as {predicted_label}:\n\n\t\t{input}\n\n')
       #source = astor.to_source(ast.parse(str(input.numpy())[2:][:-1].replace("\\n","").replace("\\t","")))
-
       #print(f'Original Python code: {ast.dump(ast.parse(source))}')
+
       wrong_predictions += 1
 
+      '''
+        Propose: FP - A non-injectable file predicted as injectable
+      '''
+      if str(expected_label) == "b'noninjectable'" and str(predicted_label) == "b'injectable'":
+        fp += 1
+        iter_class = 1
+
+      '''
+        Propose: FN - An injectable file predicted non-injectable
+      '''
+      if str(expected_label) == "b'injectable'" and str(predicted_label) == "b'noninjectable'":
+        fn += 1
+        iter_class = 1
+
+
+  if iter_class == 0:
+    print(f'AI model testing prediction: {n_tmpo} :: expected: {str(expected_label)} :: predicted: {str(predicted_label)}')
   
 
   label_iterator += 1
@@ -682,10 +562,24 @@ for input, label in zip(text_batch, predicted_labels):
 print("\n")
 print(f'VAITP total training data-set count :: {train_dir_count}')
 print(f'VAITP total testing data-set count :: {test_dir_count}')
+print(f'VAITP exported model loss: {loss}')
+print("VAITP exported model accuracy: {:2.2%}".format(accuracy))
+#print("VAITP exported model categorical accuracy: {:2.2%}".format(categorical_accuracy))
+
+print("VAITP Testing exported model...")
+
+correct_pred = test_dir_count-wrong_predictions
+print(f'VAITP Calculated accuracy of the exported mode: {correct_pred*100/batch_size}%')
+
+print(f'VAITP correct testing data-set count :: {correct_pred}')
 print(f'VAITP wrong testing data-set count :: {wrong_predictions}')
-print(f'VAITP correct testing data-set count :: {test_dir_count-wrong_predictions}')
-print("VAITP final model accuracy: {:2.2%}".format(accuracy))
-print(f'VAITP final model loss: {loss}')
+
+print(f'VATIP categorical TP: {tp}')
+print(f'VATIP categorical TN: {tn}')
+print(f'VAITP categorical FP: {fp}')
+print(f'VAITP categorical FN: {fn}')
+print(f'VAITP [total tp+tn+fp+fn = {tp+tn+fp+fn}]')
+
 
 #Save the model
 modelPath = "/home/fred/msi/ano2/VAITP/VAITP GUI/vaitp/exported_ai_models/"
