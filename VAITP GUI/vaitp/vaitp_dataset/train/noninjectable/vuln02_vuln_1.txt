@@ -1,0 +1,2 @@
+if __name__ == '__main__':
+    subprocess.run(sys.argv[0], shell=True)

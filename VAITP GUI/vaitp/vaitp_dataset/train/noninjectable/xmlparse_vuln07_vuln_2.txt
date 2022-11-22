@@ -1,0 +1,7 @@
+from lxml import etree
+
+file  = str(input())
+parser = etree.XMLParser(resolve_entities=True)
+t = etree.parse(file, parser)
+root = t.getroot()
+print(etree.tostring(root, pretty_print=True))

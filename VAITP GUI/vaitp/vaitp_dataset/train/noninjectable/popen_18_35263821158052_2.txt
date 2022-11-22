@@ -1,0 +1,3 @@
+arr = "getent hosts"
+arr += " %s" % client
+ipad = Popen(arr, stdout=PIPE).stdout.read().strip().split()

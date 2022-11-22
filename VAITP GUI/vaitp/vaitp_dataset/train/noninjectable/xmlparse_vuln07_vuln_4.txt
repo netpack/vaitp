@@ -1,0 +1,6 @@
+from lxml import etree
+
+if __name__ == '__main__':
+    tree = etree.parse('vuln07_payload.xml', etree.XMLParser())
+    root = tree.getroot()
+    print(etree.tostring(root, pretty_print=True))
