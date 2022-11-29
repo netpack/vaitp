@@ -35,6 +35,7 @@ from datetime import timedelta
 from optparse import OptionParser
 
 import astor
+import shutil, random
 
 time_start = time.time()
 
@@ -187,25 +188,16 @@ tensorboard_callback = keras.callbacks.TensorBoard(
 
 #select the dataset directory
 dataset_dir = pathlib.Path("../vaitp/vaitp_dataset_ast")
-#print("\nDataset directory listing:")
-#print(list(dataset_dir.iterdir()))
 
 #tain directory
 train_dir = str(dataset_dir)+'/train'
+
+#test directory
 test_dir = str(dataset_dir)+'/test'
 
 print(f'Training dir path: {train_dir}')
 print(f'Testing dir path: {test_dir}')
 
-
-#print("\nTrain dataset directory listing:")
-#print(list(train_dir.iterdir()))
-
-#print sample file
-#print("\nSample file content read:")
-#sample_file = train_dir/'vulnerable/2.txt'
-#with open(sample_file) as f:
-#  print(f.read())
 
 #count the number of files in the train dir
 #train_dir_vuln = train_dir+"/vulnerable"
@@ -213,30 +205,42 @@ print(f'Testing dir path: {test_dir}')
 #print(f'File list count in training set: {train_dir_vuln_count} (vulnerable)')
 
 train_dir_noninj = train_dir+"/noninjectable"
-train_dir_noninj_count = len([n for n in os.listdir(train_dir_noninj) if os.path.isfile(os.path.join(train_dir_noninj, n))])
-print(f'File list count in training set: {train_dir_noninj_count} (noninjectable)')
-
 train_dir_inj = train_dir+"/injectable"
+
+test_dir_noninj = test_dir+"/noninjectable"
+test_dir_inj = test_dir+"/injectable"
+
+train_dir_noninj_count = len([n for n in os.listdir(train_dir_noninj) if os.path.isfile(os.path.join(train_dir_noninj, n))])
 train_dir_inj_count = len([n for n in os.listdir(train_dir_inj) if os.path.isfile(os.path.join(train_dir_inj, n))])
-print(f'File list count in training set: {train_dir_inj_count} (injectable)')
+
+print(f'Total files in noninjectable dataset: {train_dir_noninj_count}\nTotal files in injectable set: {train_dir_inj_count}')
+
+
+
+#randomly move 1/4 of the injectable dataset to test
+injectable_files = random.sample(os.listdir(train_dir_inj),int(train_dir_inj_count/4))
+for inj_file in injectable_files:
+    shutil.move(os.path.join(train_dir_inj, inj_file), test_dir_inj)
+
+#randomly mode 1/4 of the non-injectable dataset to test
+noninjectable_files = random.sample(os.listdir(train_dir_noninj),int(train_dir_noninj_count/4))
+for noninj in noninjectable_files:
+    shutil.move(os.path.join(train_dir_noninj, noninj), test_dir_noninj)
+
 
 train_dir_count = train_dir_inj_count+train_dir_noninj_count
-
-
-
 
 #count the number of files in the test dir
 #test_dir_vuln = test_dir+"/vulnerable"
 #test_dir_vuln_count = len([n for n in os.listdir(test_dir_vuln) if os.path.isfile(os.path.join(test_dir_vuln, n))])
 #print(f'File list count in testing set: {test_dir_vuln_count} (vulnerable)')
 
-test_dir_noninj = test_dir+"/noninjectable"
-test_dir_noninj_count = len([n for n in os.listdir(test_dir_noninj) if os.path.isfile(os.path.join(test_dir_noninj, n))])
-print(f'File list count in testing set: {test_dir_noninj_count} (noninjectable)')
 
-test_dir_inj = test_dir+"/injectable"
+test_dir_noninj_count = len([n for n in os.listdir(test_dir_noninj) if os.path.isfile(os.path.join(test_dir_noninj, n))])
+print(f'Cross validadation :: Number of noninjectable files selected for testing: {test_dir_noninj_count}')
+
 test_dir_inj_count = len([n for n in os.listdir(test_dir_inj) if os.path.isfile(os.path.join(test_dir_inj, n))])
-print(f'File list count in testing set: {test_dir_inj_count} (injectable)')
+print(f'Cross validadation :: Number of injectable files selected for testing: {test_dir_inj_count}')
 
 test_dir_count =test_dir_noninj_count+test_dir_inj_count
 
@@ -249,7 +253,7 @@ raw_train_ds_full = utils.text_dataset_from_directory(
 
 
 #Create trainig set  [should be around 20% of the set]
-batch_size = 160#228#64
+batch_size = 132#160#228#64
 seed = 4
 raw_train_ds = utils.text_dataset_from_directory(
     train_dir,
@@ -595,3 +599,10 @@ print(f'FitModel finished in {timedelta(seconds=time_delta)}')
 
 
 print("\nVAITP Classificator RNN AI fitted and exported.")
+
+print("Moving temp files for cross validation to dataset...")
+for injf in os.listdir(test_dir_inj):
+    shutil.move(os.path.join(test_dir_inj,injf),train_dir_inj)
+for ni in os.listdir(test_dir_noninj):
+    shutil.move(os.path.join(test_dir_noninj, ni), train_dir_noninj)
+print("VAITP :: All done!")

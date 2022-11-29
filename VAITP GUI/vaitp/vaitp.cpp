@@ -210,7 +210,7 @@ void VAITP::vaitp_scan_py_file(QString aFile)
             QString expected_classification = "injectable";
             if(pyfile.contains("/noninjectable")){
                 expected_classification = "noninjectable";
-            } else if(pyfile.contains("/vulnerable")) {
+            } else if(pyfile.contains("/vulnerable")) { //this can stay for a future version
                 expected_classification = "vulnerable";
             }
 
@@ -1471,7 +1471,7 @@ void VAITP::on_bt_scan_py_folder_clicked()
 //    int vulnerable_files_found_regex = 0;
     int injectable_files_found_ai = 0;
     int noninjectable_files_found_ai = 0;
-    int vulnerable_files_found_ai = 0;
+    //int vulnerable_files_found_ai = 0;
 
     while (it.hasNext()){
 
@@ -1486,13 +1486,41 @@ void VAITP::on_bt_scan_py_folder_clicked()
         //scan the file
         vaitp_scan_py_file(this_file);
 
+        //post-process
+        //check path and caculate metrics
+        QString expected_classification = "injectable";
+        if(this_file.contains("/noninjectable")){
+            expected_classification = "noninjectable";
+        }
         QString predicted_label = ui->lbl_ai_classificator_run->text();
 
 
         ui->txt_output_sh1->appendHtml("Adding Scanned file: "+this_file+" which was predicted as "+predicted_label);
         if (predicted_label == "injectable"){injectable_files_found_ai++;}
-        else if(predicted_label == "vulnerable"){vulnerable_files_found_ai++;}
+        //else if(predicted_label == "vulnerable"){vulnerable_files_found_ai++;}
         else{noninjectable_files_found_ai++;}
+
+
+        if(predicted_label == "injectable" && expected_classification == "injectable"){
+            //TP
+            int v = ui->metrics_ai_inj_tp->text().toInt()+1;
+            ui->metrics_ai_inj_tp->setText(QString::number(v));
+        } else if(predicted_label == "noninjectable" && expected_classification == "noninjectable"){
+            //TN
+            int v = ui->metrics_ai_inj_tn->text().toInt()+1;
+            ui->metrics_ai_inj_tn->setText(QString::number(v));
+        } else if(predicted_label == "noninjectable" && expected_classification == "injectable"){
+            //FN
+            int v = ui->metrics_ai_inj_fn->text().toInt()+1;
+            ui->metrics_ai_inj_fn->setText(QString::number(v));
+        } else if(predicted_label == "injectable" && expected_classification == "noninjectable"){
+            //FP
+            int v = ui->metrics_ai_inj_fp->text().toInt()+1;
+            ui->metrics_ai_inj_fp->setText(QString::number(v));
+        }
+
+
+
         qApp->processEvents();
 
         QString item_text = "AI :: " + this_file+" :: "+predicted_label;
@@ -1505,11 +1533,12 @@ void VAITP::on_bt_scan_py_folder_clicked()
 
     }
     qDebug()<<"Injectable files by AI: "<<injectable_files_found_ai;
-    qDebug()<<"Vulnerable files by AI: "<<vulnerable_files_found_ai;
+    //qDebug()<<"Vulnerable files by AI: "<<vulnerable_files_found_ai;
     qDebug()<<"NonInjectable files by AI: "<<noninjectable_files_found_ai;
     qDebug()<<"Injectable files by Regex: "<<number_of_injection_points_found;
-    qDebug()<<"Vulnerable files by Regex: "<<number_of_vuln_by_regex;
-    qDebug()<<"NonInjectable files by Regex: "<<number_of_noninj_by_regex;
+    //qDebug()<<"Vulnerable files by Regex: "<<number_of_vuln_by_regex;
+    int nonInjwithVuln = number_of_noninj_by_regex+number_of_vuln_by_regex;
+    qDebug()<<"NonInjectable files by Regex: "<<nonInjwithVuln;
 //    cout<<"Injectable files: ";
 
 

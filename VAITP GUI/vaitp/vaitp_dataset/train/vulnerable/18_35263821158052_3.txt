@@ -1,3 +1,0 @@
-import os, sys
-arr = "getent hosts %s" % client
-ipad = Popen(arr, stdout=PIPE).stdout.read().strip().split()

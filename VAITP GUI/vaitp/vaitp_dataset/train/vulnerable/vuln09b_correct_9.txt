@@ -1,2 +1,0 @@
-var = input()
-exec(var)

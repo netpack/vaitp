@@ -1,1 +1,0 @@
-lf = os.path.join(local_dir, filename, path1, path2)
