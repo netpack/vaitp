@@ -2,10 +2,10 @@ Module(
     body=[
         Assign(
             targets=[
-                Name(id='name', ctx=Store())],
+                Name(id='var_name', ctx=Store())],
             value=Call(
                 func=Attribute(
-                    value=Name(id='path_items', ctx=Load()),
+                    value=Name(id='fifo_list', ctx=Load()),
                     attr='pop',
                     ctx=Load()),
                 args=[],

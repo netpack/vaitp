@@ -3,14 +3,14 @@ Module(
         ImportFrom(
             module='k5test',
             names=[
-                alias(name='*')],
+                alias(name='something')],
             level=0),
         Import(
             names=[
                 alias(name='time')]),
         ImportFrom(
-            module='itertools',
+            module='os',
             names=[
-                alias(name='imap')],
+                alias(name='sys')],
             level=0)],
     type_ignores=[])

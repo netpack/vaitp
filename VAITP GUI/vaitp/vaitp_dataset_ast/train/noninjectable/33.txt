@@ -1,17 +1,32 @@
 Module(
     body=[
-        If(
-            test=Compare(
-                left=Attribute(
-                    value=Name(id='self', ctx=Load()),
-                    attr='_name',
-                    ctx=Load()),
-                ops=[
-                    Eq()],
-                comparators=[
-                    Constant(value='nocall')]),
+        FunctionDef(
+            name='greet',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='name'),
+                    arg(arg='surname')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
             body=[
-                Return(
-                    value=Name(id='ob', ctx=Load()))],
-            orelse=[])],
+                Expr(
+                    value=Constant(value='\n    This function greets to\n    the person passed in as\n    a parameter\n    ')),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            BinOp(
+                                left=BinOp(
+                                    left=BinOp(
+                                        left=Constant(value='Hello, '),
+                                        op=Add(),
+                                        right=Name(id='name', ctx=Load())),
+                                    op=Add(),
+                                    right=Name(id='surname', ctx=Load())),
+                                op=Add(),
+                                right=Constant(value='. Good morning!'))],
+                        keywords=[]))],
+            decorator_list=[])],
     type_ignores=[])

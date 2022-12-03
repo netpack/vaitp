@@ -1,2 +1,0 @@
-if 'not found in Kerberos database' not in out:
-    fail('Wrong error for anonymous PKINIT without anonymous enabled')

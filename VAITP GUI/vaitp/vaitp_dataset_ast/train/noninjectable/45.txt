@@ -1,5 +1,17 @@
 Module(
     body=[
+        Assign(
+            targets=[
+                Name(id='strin', ctx=Store())],
+            value=Constant(value='abcdegthoaiudfio')),
         Expr(
-            value=Constant(value='\nLinuxThingy version 1.6.5\n\nParameters:\n\n-t (--text): show the text interface\n-h (--help): display this help\n'))],
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Call(
+                        func=Name(id='list', ctx=Load()),
+                        args=[
+                            Name(id='strin', ctx=Load())],
+                        keywords=[])],
+                keywords=[]))],
     type_ignores=[])

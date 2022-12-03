@@ -1,2 +1,0 @@
-class Rtd(RestrictedDTML, TemplateDict):
-    this = None

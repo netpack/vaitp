@@ -1,2 +1,0 @@
-def norm(k):
-    return k[:-1] if k.endswith("_") else k

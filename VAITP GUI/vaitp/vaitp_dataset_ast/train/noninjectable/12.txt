@@ -24,21 +24,21 @@ Module(
                             attr='LoadLibrary',
                             ctx=Load()),
                         args=[
-                            Constant(value='soft-pkcs11.so')],
+                            Constant(value='dummylibvaitpexample.so')],
                         keywords=[])),
                 Delete(
                     targets=[
                         Name(id='lib', ctx=Del())]),
                 Assign(
                     targets=[
-                        Name(id='have_soft_pkcs11', ctx=Store())],
+                        Name(id='flag', ctx=Store())],
                     value=Constant(value=True))],
             handlers=[
                 ExceptHandler(
                     body=[
                         Assign(
                             targets=[
-                                Name(id='have_soft_pkcs11', ctx=Store())],
+                                Name(id='flag', ctx=Store())],
                             value=Constant(value=False))])],
             orelse=[],
             finalbody=[])],

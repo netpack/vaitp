@@ -1,2 +1,0 @@
-result = call_with_ns(_find_request, names)
-self.assertEqual(result, {})

@@ -1,5 +1,0 @@
-from AccessControl import safe_builtins
-from AccessControl.ZopeGuards import guarded_getattr, get_safe_globals
-from RestrictedPython import compile_restricted_eval
-from zope.tales.tales import CompilerError
-from zope.tales.pythonexpr import PythonExpr

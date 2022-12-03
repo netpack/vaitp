@@ -1,11 +1,11 @@
 Module(
     body=[
         FunctionDef(
-            name='_find_request',
+            name='function',
             args=arguments(
                 posonlyargs=[],
                 args=[
-                    arg(arg='td')],
+                    arg(arg='arg')],
                 kwonlyargs=[],
                 kw_defaults=[],
                 defaults=[]),
@@ -15,7 +15,7 @@ Module(
                         Name(id='ns', ctx=Store())],
                     value=Call(
                         func=Attribute(
-                            value=Name(id='td', ctx=Load()),
+                            value=Name(id='arg', ctx=Load()),
                             attr='_pop',
                             ctx=Load()),
                         args=[],
@@ -25,7 +25,7 @@ Module(
                         Name(id='instance_dict', ctx=Store())],
                     value=Call(
                         func=Attribute(
-                            value=Name(id='td', ctx=Load()),
+                            value=Name(id='arg', ctx=Load()),
                             attr='_pop',
                             ctx=Load()),
                         args=[],
@@ -35,7 +35,7 @@ Module(
                         Name(id='request', ctx=Store())],
                     value=Call(
                         func=Attribute(
-                            value=Name(id='td', ctx=Load()),
+                            value=Name(id='arg', ctx=Load()),
                             attr='_pop',
                             ctx=Load()),
                         args=[],
@@ -43,7 +43,7 @@ Module(
                 Expr(
                     value=Call(
                         func=Attribute(
-                            value=Name(id='td', ctx=Load()),
+                            value=Name(id='arg', ctx=Load()),
                             attr='_push',
                             ctx=Load()),
                         args=[
@@ -52,7 +52,7 @@ Module(
                 Expr(
                     value=Call(
                         func=Attribute(
-                            value=Name(id='td', ctx=Load()),
+                            value=Name(id='arg', ctx=Load()),
                             attr='_push',
                             ctx=Load()),
                         args=[
@@ -61,7 +61,7 @@ Module(
                 Expr(
                     value=Call(
                         func=Attribute(
-                            value=Name(id='td', ctx=Load()),
+                            value=Name(id='arg', ctx=Load()),
                             attr='_push',
                             ctx=Load()),
                         args=[

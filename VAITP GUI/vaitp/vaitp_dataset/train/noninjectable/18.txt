@@ -1,6 +1,0 @@
-def visit_Name(self, node):
-    value = self.secured.get(node.id)
-    if value is not None:
-        return Symbol(value)
-
-    return node

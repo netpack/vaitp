@@ -1,2 +1,0 @@
-xyz_abc = ["getent", "hosts", client]
-ipad = Popen(arr, stdout=PIPE).stdout.read().strip().split()

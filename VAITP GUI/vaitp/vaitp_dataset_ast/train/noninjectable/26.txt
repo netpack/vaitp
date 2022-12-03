@@ -1,23 +1,16 @@
 Module(
     body=[
-        If(
-            test=Compare(
-                left=Name(id='__name__', ctx=Load()),
-                ops=[
-                    Eq()],
-                comparators=[
-                    Constant(value='__main__')]),
-            body=[
-                Expr(
-                    value=Call(
-                        func=Attribute(
-                            value=Name(id='unittest', ctx=Load()),
-                            attr='main',
-                            ctx=Load()),
-                        args=[],
-                        keywords=[
-                            keyword(
-                                arg='defaultTest',
-                                value=Constant(value='test_suite'))]))],
-            orelse=[])],
+        Import(
+            names=[
+                alias(name='hashlib')]),
+        Assign(
+            targets=[
+                Name(id='h', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='hashlib', ctx=Load()),
+                    attr='sha1',
+                    ctx=Load()),
+                args=[],
+                keywords=[]))],
     type_ignores=[])

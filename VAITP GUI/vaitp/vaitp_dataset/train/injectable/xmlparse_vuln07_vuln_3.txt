@@ -1,5 +1,0 @@
-from lxml import etree
-
-p = etree.XMLParser(resolve_entities=False)
-tree = etree.parse('vuln07_payload.xml', p)
-root = tree.getroot()

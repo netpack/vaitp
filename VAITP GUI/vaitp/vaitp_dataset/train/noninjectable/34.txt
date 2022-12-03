@@ -1,4 +1,0 @@
-@implementer(IZopeAwareEngine)
-class ZopeEngine(Z3Engine):
-
-    _create_context = ZopeContext

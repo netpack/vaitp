@@ -1,7 +1,7 @@
 Module(
     body=[
         FunctionDef(
-            name='test_call_with_ns_prefer_context_to_here',
+            name='test_some_call',
             args=arguments(
                 posonlyargs=[],
                 args=[
@@ -39,7 +39,7 @@ Module(
                             Constant(value=1)])),
                 Assign(
                     targets=[
-                        Name(id='names', ctx=Store())],
+                        Name(id='values', ctx=Store())],
                     value=Dict(
                         keys=[
                             Constant(value='context'),
@@ -51,7 +51,7 @@ Module(
                             Name(id='request', ctx=Load())])),
                 Assign(
                     targets=[
-                        Name(id='result', ctx=Store())],
+                        Name(id='context_results', ctx=Store())],
                     value=Call(
                         func=Name(id='call_with_ns', ctx=Load()),
                         args=[
@@ -67,7 +67,7 @@ Module(
                                     value=Name(id='td', ctx=Load()),
                                     attr='this',
                                     ctx=Load())),
-                            Name(id='names', ctx=Load())],
+                            Name(id='values', ctx=Load())],
                         keywords=[])),
                 Expr(
                     value=Call(
@@ -82,7 +82,7 @@ Module(
                                     Is()],
                                 comparators=[
                                     Name(id='context', ctx=Load())]),
-                            Name(id='result', ctx=Load())],
+                            Name(id='context_results', ctx=Load())],
                         keywords=[]))],
             decorator_list=[])],
     type_ignores=[])

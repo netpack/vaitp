@@ -1,12 +1,40 @@
 Module(
     body=[
-        ImportFrom(
-            module='expression',
-            names=[
-                alias(name='getEngine')],
-            level=2),
-        ImportFrom(
-            names=[
-                alias(name='testHTMLTests')],
-            level=1)],
+        Assign(
+            targets=[
+                Name(id='new_x', ctx=Store())],
+            value=Constant(value=5)),
+        FunctionDef(
+            name='random_n',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='new_x', ctx=Store())],
+                    value=Constant(value=10)),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='local new_x:'),
+                            Name(id='new_x', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='random_n', ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Constant(value='global new_x:'),
+                    Name(id='new_x', ctx=Load())],
+                keywords=[]))],
     type_ignores=[])

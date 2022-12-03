@@ -1,5 +1,0 @@
-#filename comes from somewhere else but is quoted here:
-var = urllib.parse.quote(filename)
-
-#some more comments
-#but the quote function is the injectable bit

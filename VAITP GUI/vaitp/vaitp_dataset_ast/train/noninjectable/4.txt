@@ -7,7 +7,7 @@ Module(
                 args=[
                     arg(arg='self'),
                     arg(arg='name'),
-                    arg(arg='expr'),
+                    arg(arg='inputvar'),
                     arg(arg='engine')],
                 kwonlyargs=[],
                 kw_defaults=[],
@@ -21,14 +21,14 @@ Module(
                             ctx=Store()),
                         Attribute(
                             value=Name(id='self', ctx=Load()),
-                            attr='expr',
+                            attr='inputvar',
                             ctx=Store()),
                         Name(id='text', ctx=Store())],
                     value=Call(
                         func=Attribute(
                             value=Call(
                                 func=Attribute(
-                                    value=Name(id='expr', ctx=Load()),
+                                    value=Name(id='inputvar', ctx=Load()),
                                     attr='strip',
                                     ctx=Load()),
                                 args=[],
@@ -43,7 +43,7 @@ Module(
                     targets=[
                         Attribute(
                             value=Name(id='self', ctx=Load()),
-                            attr='_varnames',
+                            attr='_keys',
                             ctx=Store())],
                     value=Call(
                         func=Attribute(
@@ -58,6 +58,6 @@ Module(
                             value=Name(id='self', ctx=Load()),
                             attr='_code',
                             ctx=Store())],
-                    value=Name(id='code', ctx=Load()))],
+                    value=Name(id='code_var', ctx=Load()))],
             decorator_list=[])],
     type_ignores=[])

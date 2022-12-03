@@ -1,8 +1,0 @@
-"""
-LinuxThingy version 1.6.5
-
-Parameters:
-
--t (--text): show the text interface
--h (--help): display this help
-"""

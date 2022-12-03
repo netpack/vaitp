@@ -1,7 +1,0 @@
-def evaluateCode(self, lang, code):
-    """ See ITALExpressionEngine.
-
-    o This method is a fossil:  nobody actually calls it, but the
-        interface requires it.
-    """
-    raise NotImplementedError

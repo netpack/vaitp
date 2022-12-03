@@ -6,7 +6,7 @@ Module(
             value=Call(
                 func=Name(id='queryUtility', ctx=Load()),
                 args=[
-                    Name(id='IUnicodeEncodingConflictResolver', ctx=Load())],
+                    Name(id='ResolverQuery', ctx=Load())],
                 keywords=[])),
         If(
             test=Compare(
@@ -19,7 +19,7 @@ Module(
                 Return(
                     value=Call(
                         func=Attribute(
-                            value=Name(id='text', ctx=Load()),
+                            value=Name(id='input_text', ctx=Load()),
                             attr='decode',
                             ctx=Load()),
                         args=[

@@ -1,9 +1,0 @@
-def _exists(self, econtext):
-    for expr in self._subexprs:
-        try:
-            expr(econtext)
-        except ZopeUndefs:  # use Zope 2 expression types
-            pass
-        else:
-            return 1
-    return 0

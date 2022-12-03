@@ -1,3 +1,0 @@
-from k5test import *
-import time
-from itertools import imap

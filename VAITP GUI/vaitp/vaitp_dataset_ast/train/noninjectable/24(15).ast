@@ -1,8 +1,0 @@
-Module(
-    body=[
-        ImportFrom(
-            module='expression',
-            names=[
-                alias(name='somethingelst')],
-            level=2)],
-    type_ignores=[])

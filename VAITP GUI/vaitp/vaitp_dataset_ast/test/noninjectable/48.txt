@@ -1,5 +1,0 @@
-Module(
-    body=[
-        Expr(
-            value=Constant(value='\nc2\nc3\nc4\n'))],
-    type_ignores=[])

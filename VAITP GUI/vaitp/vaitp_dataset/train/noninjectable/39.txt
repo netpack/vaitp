@@ -1,3 +1,0 @@
-if (not os.path.exists(os.path.join(plugins, 'kdb', 'kldap.so')) and
-    not os.path.exists(os.path.join(buildtop, 'lib', 'libkdb_ldap.a'))):
-    skip_rest('LDAP KDB tests', 'LDAP KDB module not built')

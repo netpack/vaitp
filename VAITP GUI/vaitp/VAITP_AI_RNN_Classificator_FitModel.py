@@ -188,15 +188,18 @@ tensorboard_callback = keras.callbacks.TensorBoard(
 
 #select the dataset directory
 dataset_dir = pathlib.Path("../vaitp/vaitp_dataset_ast")
+dataset_dir_py_files = pathlib.Path("../vaitp/vaitp_dataset")
 
 #tain directory
 train_dir = str(dataset_dir)+'/train'
+train_dir_py_files = str(dataset_dir_py_files)+'/train'
 
 #test directory
 test_dir = str(dataset_dir)+'/test'
+test_dir_py_files = str(dataset_dir_py_files)+'/test'
 
-print(f'Training dir path: {train_dir}')
-print(f'Testing dir path: {test_dir}')
+print(f'AST Training dir path: {train_dir}\nAST Testing dir path: {test_dir}')
+print(f'Python Training dir path: {train_dir_py_files}\Python Testing dir path: {test_dir_py_files}')
 
 
 #count the number of files in the train dir
@@ -207,8 +210,33 @@ print(f'Testing dir path: {test_dir}')
 train_dir_noninj = train_dir+"/noninjectable"
 train_dir_inj = train_dir+"/injectable"
 
+train_dir_noninj_py_files = train_dir_py_files+"/noninjectable"
+train_dir_inj_py_files = train_dir_py_files+"/injectable"
+
 test_dir_noninj = test_dir+"/noninjectable"
 test_dir_inj = test_dir+"/injectable"
+
+test_dir_noninj_py_files = test_dir_py_files+"/noninjectable"
+test_dir_inj_py_files = test_dir_py_files+"/injectable"
+
+
+
+print("VAITP :: Moving any previous test files for cross validation back to dataset...")
+#AST
+for injf in os.listdir(test_dir_inj):
+    shutil.move(os.path.join(test_dir_inj,injf),train_dir_inj)
+for ni in os.listdir(test_dir_noninj):
+    shutil.move(os.path.join(test_dir_noninj, ni), train_dir_noninj)
+#Python (txt)
+for injf in os.listdir(test_dir_inj_py_files):
+    shutil.move(os.path.join(test_dir_inj_py_files,injf),train_dir_inj_py_files)
+for ni in os.listdir(test_dir_noninj_py_files):
+    shutil.move(os.path.join(test_dir_noninj_py_files, ni), train_dir_noninj_py_files)
+print("VAITP :: done!")
+
+
+
+
 
 train_dir_noninj_count = len([n for n in os.listdir(train_dir_noninj) if os.path.isfile(os.path.join(train_dir_noninj, n))])
 train_dir_inj_count = len([n for n in os.listdir(train_dir_inj) if os.path.isfile(os.path.join(train_dir_inj, n))])
@@ -226,6 +254,20 @@ for inj_file in injectable_files:
 noninjectable_files = random.sample(os.listdir(train_dir_noninj),int(train_dir_noninj_count/4))
 for noninj in noninjectable_files:
     shutil.move(os.path.join(train_dir_noninj, noninj), test_dir_noninj)
+
+
+#loop the selected files and copy the corresponding python code in the original dataset to the test folder for this cross validation iteraction
+print('VAITP :: moving injectable python versions, of the AST\'s selected for testing, in "vaitp_dataset" test folder...')
+for tempfile in os.listdir(test_dir_inj):
+    original_file_name = tempfile.replace(".txt",".py")
+    #print(f'Selecting injectable test file in vaitp_dataset "{original_file_name}" from AST test file "{tempfile}"')
+    shutil.move(os.path.join(train_dir_inj_py_files, original_file_name), test_dir_inj_py_files)
+
+print('VAITP :: moving noninjectable python versions, of the AST\'s selected for testing, in "vaitp_dataset" test folder...')
+for tempfile in os.listdir(test_dir_noninj):
+    original_file_name = tempfile.replace(".txt",".py")
+    #print(f'Selecting injectable test file in vaitp_dataset "{original_file_name}" from AST test file "{tempfile}"')
+    shutil.move(os.path.join(train_dir_noninj_py_files, original_file_name), test_dir_noninj_py_files)
 
 
 train_dir_count = train_dir_inj_count+train_dir_noninj_count
@@ -253,7 +295,7 @@ raw_train_ds_full = utils.text_dataset_from_directory(
 
 
 #Create trainig set  [should be around 20% of the set]
-batch_size = 132#160#228#64
+batch_size = 145#160#228#64
 seed = 4
 raw_train_ds = utils.text_dataset_from_directory(
     train_dir,
@@ -480,7 +522,7 @@ loss, accuracy = export_model.evaluate(raw_test_ds)
 #define function to predict the label with the most score
 def get_string_labels(predicted_scores_batch):
   predicted_int_labels = tf.argmax(predicted_scores_batch, axis=1)
-  predicted_labels = tf.gather(raw_train_ds.class_names, predicted_int_labels)
+  predicted_labels = tf.gather(raw_test_ds.class_names, predicted_int_labels)
   return predicted_labels
 
 
@@ -520,7 +562,7 @@ for input, label in zip(text_batch_test, predicted_labels):
 
 
   '''
-    Propose: TP - A injectable file predicted as injectable
+    Propose: TP - An injectable file predicted as injectable
   '''
   if str(expected_label) == "b'injectable'" and str(predicted_label) == "b'injectable'":
     tp += 1
@@ -573,7 +615,7 @@ print("VAITP exported model accuracy: {:2.2%}".format(accuracy))
 print("VAITP Testing exported model...")
 
 correct_pred = test_dir_count-wrong_predictions
-print(f'VAITP Calculated accuracy of the exported mode: {correct_pred*100/batch_size}%')
+print(f'VAITP Calculated accuracy of the exported mode: {correct_pred*100/test_dir_count}%')
 
 print(f'VAITP correct testing data-set count :: {correct_pred}')
 print(f'VAITP wrong testing data-set count :: {wrong_predictions}')
@@ -600,9 +642,3 @@ print(f'FitModel finished in {timedelta(seconds=time_delta)}')
 
 print("\nVAITP Classificator RNN AI fitted and exported.")
 
-print("Moving temp files for cross validation to dataset...")
-for injf in os.listdir(test_dir_inj):
-    shutil.move(os.path.join(test_dir_inj,injf),train_dir_inj)
-for ni in os.listdir(test_dir_noninj):
-    shutil.move(os.path.join(test_dir_noninj, ni), train_dir_noninj)
-print("VAITP :: All done!")

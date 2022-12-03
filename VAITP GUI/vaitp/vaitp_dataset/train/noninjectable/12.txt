@@ -1,8 +1,0 @@
-# Check if soft-pkcs11.so is available.
-try:
-    import ctypes
-    lib = ctypes.LibraryLoader(ctypes.CDLL).LoadLibrary('soft-pkcs11.so')
-    del lib
-    have_soft_pkcs11 = True
-except:
-    have_soft_pkcs11 = False

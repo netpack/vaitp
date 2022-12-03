@@ -1,1 +1,0 @@
-html.escape("<img src=/img/home-bg.jpg onerror='javascript:alert(1)>")

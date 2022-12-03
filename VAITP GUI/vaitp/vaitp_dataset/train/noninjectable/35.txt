@@ -1,4 +1,0 @@
-def first(self, name=None):
-    if self.start:
-        return True
-    return not self.same_part(name, self._last_item, self.item)

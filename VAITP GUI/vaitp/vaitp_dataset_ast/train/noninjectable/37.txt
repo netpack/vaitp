@@ -1,20 +1,24 @@
 Module(
     body=[
-        FunctionDef(
-            name='evaluateCode',
-            args=arguments(
-                posonlyargs=[],
+        ImportFrom(
+            module='pathlib',
+            names=[
+                alias(name='Path')],
+            level=0),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
                 args=[
-                    arg(arg='self'),
-                    arg(arg='lang'),
-                    arg(arg='code')],
-                kwonlyargs=[],
-                kw_defaults=[],
-                defaults=[]),
-            body=[
-                Expr(
-                    value=Constant(value=' See ITALExpressionEngine.\n\n    o This method is a fossil:  nobody actually calls it, but the\n        interface requires it.\n    ')),
-                Raise(
-                    exc=Name(id='NotImplementedError', ctx=Load()))],
-            decorator_list=[])],
+                    Attribute(
+                        value=Call(
+                            func=Attribute(
+                                value=Name(id='pathlib', ctx=Load()),
+                                attr='Path',
+                                ctx=Load()),
+                            args=[
+                                Constant(value='/ile.ext')],
+                            keywords=[]),
+                        attr='suffix',
+                        ctx=Load())],
+                keywords=[]))],
     type_ignores=[])

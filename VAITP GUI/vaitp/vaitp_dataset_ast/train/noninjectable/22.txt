@@ -2,6 +2,6 @@ Module(
     body=[
         Assign(
             targets=[
-                Name(id='__slots__', ctx=Store())],
+                Name(id='__signals__', ctx=Store())],
             value=Tuple(elts=[], ctx=Load()))],
     type_ignores=[])

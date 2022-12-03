@@ -1,66 +1,25 @@
 Module(
     body=[
-        If(
-            test=BoolOp(
-                op=And(),
-                values=[
-                    UnaryOp(
-                        op=Not(),
-                        operand=Call(
-                            func=Attribute(
-                                value=Attribute(
-                                    value=Name(id='os', ctx=Load()),
-                                    attr='path',
-                                    ctx=Load()),
-                                attr='exists',
-                                ctx=Load()),
-                            args=[
-                                Call(
-                                    func=Attribute(
-                                        value=Attribute(
-                                            value=Name(id='os', ctx=Load()),
-                                            attr='path',
-                                            ctx=Load()),
-                                        attr='join',
-                                        ctx=Load()),
-                                    args=[
-                                        Name(id='plugins', ctx=Load()),
-                                        Constant(value='kdb'),
-                                        Constant(value='kldap.so')],
-                                    keywords=[])],
-                            keywords=[])),
-                    UnaryOp(
-                        op=Not(),
-                        operand=Call(
-                            func=Attribute(
-                                value=Attribute(
-                                    value=Name(id='os', ctx=Load()),
-                                    attr='path',
-                                    ctx=Load()),
-                                attr='exists',
-                                ctx=Load()),
-                            args=[
-                                Call(
-                                    func=Attribute(
-                                        value=Attribute(
-                                            value=Name(id='os', ctx=Load()),
-                                            attr='path',
-                                            ctx=Load()),
-                                        attr='join',
-                                        ctx=Load()),
-                                    args=[
-                                        Name(id='buildtop', ctx=Load()),
-                                        Constant(value='lib'),
-                                        Constant(value='libkdb_ldap.a')],
-                                    keywords=[])],
-                            keywords=[]))]),
-            body=[
-                Expr(
-                    value=Call(
-                        func=Name(id='skip_rest', ctx=Load()),
-                        args=[
-                            Constant(value='LDAP KDB tests'),
-                            Constant(value='LDAP KDB module not built')],
-                        keywords=[]))],
-            orelse=[])],
+        Assign(
+            targets=[
+                Name(id='n', ctx=Store())],
+            value=Constant(value='World')),
+        Assign(
+            targets=[
+                Name(id='p', ctx=Store())],
+            value=Constant(value='Python')),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    JoinedStr(
+                        values=[
+                            FormattedValue(
+                                value=Name(id='n', ctx=Load()),
+                                conversion=-1),
+                            Constant(value=', '),
+                            FormattedValue(
+                                value=Name(id='p', ctx=Load()),
+                                conversion=-1)])],
+                keywords=[]))],
     type_ignores=[])

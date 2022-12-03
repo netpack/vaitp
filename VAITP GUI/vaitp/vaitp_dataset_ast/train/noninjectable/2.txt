@@ -2,7 +2,7 @@ Module(
     body=[
         If(
             test=Compare(
-                left=Constant(value='not found in Kerberos database'),
+                left=Constant(value='not found in vaitp database'),
                 ops=[
                     NotIn()],
                 comparators=[
@@ -12,7 +12,7 @@ Module(
                     value=Call(
                         func=Name(id='fail', ctx=Load()),
                         args=[
-                            Constant(value='Wrong error for anonymous PKINIT without anonymous enabled')],
+                            Constant(value='Wrong error for anonymous value without something enabled')],
                         keywords=[]))],
             orelse=[])],
     type_ignores=[])

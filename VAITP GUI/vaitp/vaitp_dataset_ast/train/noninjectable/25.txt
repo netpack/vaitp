@@ -1,15 +1,23 @@
 Module(
     body=[
-        FunctionDef(
-            name='getEngine',
-            args=arguments(
-                posonlyargs=[],
-                args=[],
-                kwonlyargs=[],
-                kw_defaults=[],
-                defaults=[]),
+        With(
+            items=[
+                withitem(
+                    context_expr=Call(
+                        func=Name(id='open', ctx=Load()),
+                        args=[
+                            Constant(value='file_n.txt'),
+                            Constant(value='a')],
+                        keywords=[]),
+                    optional_vars=Name(id='f', ctx=Store()))],
             body=[
-                Return(
-                    value=Name(id='_engine', ctx=Load()))],
-            decorator_list=[])],
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='f', ctx=Load()),
+                            attr='write',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='This is a new line')],
+                        keywords=[]))])],
     type_ignores=[])

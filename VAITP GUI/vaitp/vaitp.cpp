@@ -208,14 +208,15 @@ void VAITP::vaitp_scan_py_file(QString aFile)
             //set the expected classification based on the folder the script is located in
             //this is just to allow us to calculate tp/tn/fp/fn
             QString expected_classification = "injectable";
-            if(pyfile.contains("/noninjectable")){
+            if(pyfile.contains("/noninjectable/")){
                 expected_classification = "noninjectable";
-            } else if(pyfile.contains("/vulnerable")) { //this can stay for a future version
-                expected_classification = "vulnerable";
             }
+            /*else if(pyfile.contains("/vulnerable")) { //this can stay for a future version
+                expected_classification = "vulnerable";
+            }*/
 
 
-            ui->txt_output_sh1->appendHtml(tr("Based on the path the file is expected to be: ")+expected_classification);
+            ui->txt_output_sh1->appendHtml(tr("Based on it's path, the file is expected to be: ")+expected_classification);
 
 
             int number_of_vulns_in_list = ui->lst_vulns->count();
@@ -270,10 +271,10 @@ void VAITP::vaitp_scan_py_file(QString aFile)
                 //If no injection points where added to the injection points list
                 //The file can only be noninjectable or vulnerable
 
-                int new_number_of_vulns_in_list = ui->lst_vulns->count();
+                //int new_number_of_vulns_in_list = ui->lst_vulns->count();
 
                 //if the number of vulnerabilities is not the same, classify as vulnerable else as noninj
-                if(number_of_vulns_in_list == new_number_of_vulns_in_list){
+               // if(number_of_vulns_in_list == new_number_of_vulns_in_list){
                     //non inj
                     scanned+=" :: noninjectable";
                     number_of_noninj_by_regex++;
@@ -284,18 +285,14 @@ void VAITP::vaitp_scan_py_file(QString aFile)
                             int v = ui->metrics_regex_inj_fn->text().toInt()+1;
                             ui->metrics_regex_inj_fn->setText(QString::number(v));
                         } else if(expected_classification == "noninjectable"){
-                            //TP - A non-injectable file predicted as non-injectable
-                            int v = ui->metrics_regex_inj_tp->text().toInt()+1;
-                            ui->metrics_regex_inj_tp->setText(QString::number(v));
-                        } else if(expected_classification == "vulnerable"){
-                            //FN - A non-injectable file predicted as vulnerable
-                            int v = ui->metrics_regex_inj_fn->text().toInt()+1;
-                            ui->metrics_regex_inj_fn->setText(QString::number(v));
+                            //TN - A non-injectable file predicted as non-injectable
+                            int v = ui->metrics_regex_inj_tn->text().toInt()+1;
+                            ui->metrics_regex_inj_tn->setText(QString::number(v));
                         }
 
 
                     }
-                } else {
+                /* } else {
                     //vuln
                     scanned+=" :: vulnerable";
                     number_of_vuln_by_regex++;
@@ -319,7 +316,7 @@ void VAITP::vaitp_scan_py_file(QString aFile)
 
                     }
 
-                }
+                } */
 
             } else {
                 scanned+=" :: injectable";
@@ -330,13 +327,9 @@ void VAITP::vaitp_scan_py_file(QString aFile)
                         int v = ui->metrics_regex_inj_tp->text().toInt()+1;
                         ui->metrics_regex_inj_tp->setText(QString::number(v));
                     } else if(expected_classification == "noninjectable"){
-                        //FN - An injectable file predicted as non-injectable
-                        int v = ui->metrics_regex_inj_fn->text().toInt()+1;
-                        ui->metrics_regex_inj_fn->setText(QString::number(v));
-                    } else if(expected_classification == "vulnerable"){
-                        //FN - An injectable file predicted as vulnerable
-                        int v = ui->metrics_regex_inj_fn->text().toInt()+1;
-                        ui->metrics_regex_inj_fn->setText(QString::number(v));
+                        //FP - An injectable file predicted as non-injectable
+                        int v = ui->metrics_regex_inj_fp->text().toInt()+1;
+                        ui->metrics_regex_inj_fp->setText(QString::number(v));
                     }
 
 
@@ -1489,7 +1482,7 @@ void VAITP::on_bt_scan_py_folder_clicked()
         //post-process
         //check path and caculate metrics
         QString expected_classification = "injectable";
-        if(this_file.contains("/noninjectable")){
+        if(this_file.contains("/noninjectable/")){
             expected_classification = "noninjectable";
         }
         QString predicted_label = ui->lbl_ai_classificator_run->text();
@@ -1519,6 +1512,14 @@ void VAITP::on_bt_scan_py_folder_clicked()
             ui->metrics_ai_inj_fp->setText(QString::number(v));
         }
 
+
+        //calculate regex accuracy
+        float r_a = float((ui->metrics_regex_inj_tp->text().toInt()+ui->metrics_regex_inj_tn->text().toInt())*100)/(ui->metrics_regex_inj_tp->text().toInt()+ui->metrics_regex_inj_tn->text().toInt()+ui->metrics_regex_inj_fp->text().toInt()+ui->metrics_regex_inj_fn->text().toInt());
+        ui->lbl_accuracy_regex->setText(QString::number(r_a,'f',2)+"%");
+
+        //calculate ai accuracy
+        float r_b = float((ui->metrics_ai_inj_tp->text().toInt()+ui->metrics_ai_inj_tn->text().toInt())*100)/(ui->metrics_ai_inj_tp->text().toInt()+ui->metrics_ai_inj_tn->text().toInt()+ui->metrics_ai_inj_fp->text().toInt()+ui->metrics_ai_inj_fn->text().toInt());
+        ui->lbl_accuracy_ai->setText(QString::number(r_b,'f',2)+"%");
 
 
         qApp->processEvents();

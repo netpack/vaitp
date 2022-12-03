@@ -1,3 +1,0 @@
-fred = quote(sys.argv[2])
-file_name = os.path.join(local_dir, os.path.basename(fred))
-

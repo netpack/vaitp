@@ -3,12 +3,12 @@ Module(
         Expr(
             value=Call(
                 func=Attribute(
-                    value=Name(id='realm', ctx=Load()),
+                    value=Name(id='v_rlm', ctx=Load()),
                     attr='extract_keytab',
                     ctx=Load()),
                 args=[
                     Attribute(
-                        value=Name(id='realm', ctx=Load()),
+                        value=Name(id='v_rlm', ctx=Load()),
                         attr='user_princ',
                         ctx=Load()),
                     Name(id='userkeytab', ctx=Load())],
@@ -16,33 +16,7 @@ Module(
         Expr(
             value=Call(
                 func=Attribute(
-                    value=Name(id='realm', ctx=Load()),
-                    attr='extract_keytab',
-                    ctx=Load()),
-                args=[
-                    Name(id='service1', ctx=Load()),
-                    Attribute(
-                        value=Name(id='realm', ctx=Load()),
-                        attr='keytab',
-                        ctx=Load())],
-                keywords=[])),
-        Expr(
-            value=Call(
-                func=Attribute(
-                    value=Name(id='realm', ctx=Load()),
-                    attr='extract_keytab',
-                    ctx=Load()),
-                args=[
-                    Name(id='service2', ctx=Load()),
-                    Attribute(
-                        value=Name(id='realm', ctx=Load()),
-                        attr='keytab',
-                        ctx=Load())],
-                keywords=[])),
-        Expr(
-            value=Call(
-                func=Attribute(
-                    value=Name(id='realm', ctx=Load()),
+                    value=Name(id='v_rlm', ctx=Load()),
                     attr='start_kdc',
                     ctx=Load()),
                 args=[],

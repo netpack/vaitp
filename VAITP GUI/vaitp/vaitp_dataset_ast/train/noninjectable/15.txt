@@ -2,7 +2,7 @@ Module(
     body=[
         Assign(
             targets=[
-                Name(id='ZopeUndefs', ctx=Store())],
+                Name(id='undef_vars', ctx=Store())],
             value=BinOp(
                 left=Name(id='Undefs', ctx=Load()),
                 op=Add(),

@@ -1,5 +1,0 @@
-Module(
-    body=[
-        Expr(
-            value=Constant(value='Page Template Expression Engine - This is a comment also.\n_with several lines_\n\nPage Template-specific with more ipsumloreum.\nfor Python expressions, expressions, fuctions, classes and other object types.\n'))],
-    type_ignores=[])

@@ -1,89 +1,21 @@
 Module(
     body=[
-        ClassDef(
-            name='UnicodeAwareStringExpr',
-            bases=[
-                Name(id='StringExpr', ctx=Load())],
-            keywords=[],
+        For(
+            target=Name(id='file', ctx=Store()),
+            iter=Call(
+                func=Attribute(
+                    value=Name(id='glob', ctx=Load()),
+                    attr='glob',
+                    ctx=Load()),
+                args=[
+                    Constant(value='*.txt')],
+                keywords=[]),
             body=[
-                FunctionDef(
-                    name='__call__',
-                    args=arguments(
-                        posonlyargs=[],
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
                         args=[
-                            arg(arg='self'),
-                            arg(arg='econtext')],
-                        kwonlyargs=[],
-                        kw_defaults=[],
-                        defaults=[]),
-                    body=[
-                        Assign(
-                            targets=[
-                                Name(id='vvals', ctx=Store())],
-                            value=List(elts=[], ctx=Load())),
-                        If(
-                            test=Call(
-                                func=Name(id='isinstance', ctx=Load()),
-                                args=[
-                                    Attribute(
-                                        value=Name(id='self', ctx=Load()),
-                                        attr='_expr',
-                                        ctx=Load()),
-                                    Name(id='str', ctx=Load())],
-                                keywords=[]),
-                            body=[
-                                Assign(
-                                    targets=[
-                                        Name(id='evaluate', ctx=Store())],
-                                    value=Attribute(
-                                        value=Name(id='econtext', ctx=Load()),
-                                        attr='evaluateText',
-                                        ctx=Load()))],
-                            orelse=[
-                                Assign(
-                                    targets=[
-                                        Name(id='evaluate', ctx=Store())],
-                                    value=Attribute(
-                                        value=Name(id='econtext', ctx=Load()),
-                                        attr='evaluate',
-                                        ctx=Load()))]),
-                        For(
-                            target=Name(id='var', ctx=Store()),
-                            iter=Attribute(
-                                value=Name(id='self', ctx=Load()),
-                                attr='_vars',
-                                ctx=Load()),
-                            body=[
-                                Assign(
-                                    targets=[
-                                        Name(id='v', ctx=Store())],
-                                    value=Call(
-                                        func=Name(id='evaluate', ctx=Load()),
-                                        args=[
-                                            Name(id='var', ctx=Load())],
-                                        keywords=[])),
-                                Expr(
-                                    value=Call(
-                                        func=Attribute(
-                                            value=Name(id='vvals', ctx=Load()),
-                                            attr='append',
-                                            ctx=Load()),
-                                        args=[
-                                            Name(id='v', ctx=Load())],
-                                        keywords=[]))],
-                            orelse=[]),
-                        Return(
-                            value=BinOp(
-                                left=Attribute(
-                                    value=Name(id='self', ctx=Load()),
-                                    attr='_expr',
-                                    ctx=Load()),
-                                op=Mod(),
-                                right=Call(
-                                    func=Name(id='tuple', ctx=Load()),
-                                    args=[
-                                        Name(id='vvals', ctx=Load())],
-                                    keywords=[])))],
-                    decorator_list=[])],
-            decorator_list=[])],
+                            Name(id='file', ctx=Load())],
+                        keywords=[]))],
+            orelse=[])],
     type_ignores=[])

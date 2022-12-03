@@ -1,7 +1,0 @@
-import sys
-
-def importantFunction(input):
-    eval(quote(input))
-
-if __name__ == '__main__':
-    importantFunction(sys.argv[1])

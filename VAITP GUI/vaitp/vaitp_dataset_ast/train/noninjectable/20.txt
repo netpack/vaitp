@@ -2,7 +2,7 @@ Module(
     body=[
         If(
             test=Compare(
-                left=Name(id='call', ctx=Load()),
+                left=Name(id='var', ctx=Load()),
                 ops=[
                     Is()],
                 comparators=[

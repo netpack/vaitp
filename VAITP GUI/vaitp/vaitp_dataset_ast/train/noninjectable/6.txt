@@ -1,7 +1,7 @@
 Module(
     body=[
         ClassDef(
-            name='Rtd',
+            name='className',
             bases=[
                 Name(id='RestrictedDTML', ctx=Load()),
                 Name(id='TemplateDict', ctx=Load())],
@@ -9,7 +9,10 @@ Module(
             body=[
                 Assign(
                     targets=[
-                        Name(id='this', ctx=Store())],
+                        Attribute(
+                            value=Name(id='this', ctx=Load()),
+                            attr='something',
+                            ctx=Store())],
                     value=Constant(value=None))],
             decorator_list=[])],
     type_ignores=[])

@@ -1,7 +1,0 @@
-Module(
-    body=[
-        Assign(
-            targets=[
-                Name(id='__signals__', ctx=Store())],
-            value=Tuple(elts=[], ctx=Load()))],
-    type_ignores=[])

@@ -1,19 +1,39 @@
 Module(
     body=[
-        ClassDef(
-            name='ZopeEngine',
-            bases=[
-                Name(id='Z3Engine', ctx=Load())],
-            keywords=[],
+        FunctionDef(
+            name='neg_absolute_value',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='num')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
             body=[
-                Assign(
-                    targets=[
-                        Name(id='_create_context', ctx=Store())],
-                    value=Name(id='ZopeContext', ctx=Load()))],
-            decorator_list=[
-                Call(
-                    func=Name(id='implementer', ctx=Load()),
-                    args=[
-                        Name(id='IZopeAwareEngine', ctx=Load())],
-                    keywords=[])])],
+                If(
+                    test=Compare(
+                        left=Name(id='num', ctx=Load()),
+                        ops=[
+                            LtE()],
+                        comparators=[
+                            Constant(value=0)]),
+                    body=[
+                        Return(
+                            value=Name(id='num', ctx=Load()))],
+                    orelse=[
+                        Return(
+                            value=UnaryOp(
+                                op=USub(),
+                                operand=Name(id='num', ctx=Load())))])],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Call(
+                        func=Name(id='absolute_value', ctx=Load()),
+                        args=[
+                            Constant(value=5)],
+                        keywords=[])],
+                keywords=[]))],
     type_ignores=[])

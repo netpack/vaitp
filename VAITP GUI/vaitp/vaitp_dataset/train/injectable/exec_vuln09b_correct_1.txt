@@ -1,2 +1,0 @@
-from urllib.parse import quote
-exec(quote(sys.argv[1]))

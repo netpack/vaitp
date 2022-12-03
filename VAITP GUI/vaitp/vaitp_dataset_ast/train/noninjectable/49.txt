@@ -1,15 +1,12 @@
 Module(
     body=[
-        FunctionDef(
-            name='getFunction',
-            args=arguments(
-                posonlyargs=[],
-                args=[],
-                kwonlyargs=[],
-                kw_defaults=[],
-                defaults=[]),
-            body=[
-                Return(
-                    value=Name(id='vaitpengine', ctx=Load()))],
-            decorator_list=[])],
+        Assign(
+            targets=[
+                Name(id='appy', ctx=Store())],
+            value=Set(
+                elts=[
+                    Constant(value='a'),
+                    Constant(value='b'),
+                    Constant(value='y'),
+                    Constant(value='z')]))],
     type_ignores=[])
