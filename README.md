@@ -5,7 +5,7 @@
 </div>
 
 
-A (proof-of-concept) tool to detect vulnerabilities and injection points (based on Regex and Deep Learning AI models), inject and attack vulnerabilities in Python scripts.
+A (proof-of-concept) tool to detect vulnerabilities and injection locations, inject and attack vulnerabilities in Python scripts, using AI models and RegEx.
 <br><br>
 
 By Frédéric Bogaerts under the orientation of prof. Naghmeh Ivaki and prof. José Fonseca.<br><br>
@@ -18,8 +18,7 @@ With colaboration of:<br>
 ![VAITP logo](https://github.com/netpack/vaitp/raw/main/Images/vaitprint1.png)
 
 <br><br>
-<br><br>
 
-Universidade de Coimbra 2021/2022/2023
+Universidade de Coimbra 2021/2022/2023<br>
 Portugal
 
