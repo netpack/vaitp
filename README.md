@@ -1,6 +1,9 @@
 # VAITP - Vulnerability Attack and Injection Tool in Python
 
-![VAITP logo](https://github.com/netpack/vaitp/raw/main/Images/logo.png)
+<div align="center">
+  <img src="https://github.com/netpack/vaitp/raw/main/Images/logo.png" alt="VAITP logo">
+</div>
+
 
 A tool to detect vulnerabilities and injection points (based on Regex and Deep Learning AI models), inject and attack vulnerabilities in Python scripts.
 <br>
