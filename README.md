@@ -5,7 +5,7 @@
 </div>
 
 
-A tool to detect vulnerabilities and injection points (based on Regex and Deep Learning AI models), inject and attack vulnerabilities in Python scripts.
+A (proof-of-concept) tool to detect vulnerabilities and injection points (based on Regex and Deep Learning AI models), inject and attack vulnerabilities in Python scripts.
 <br><br>
 
 By Frédéric Bogaerts under the orientation of prof. Naghmeh Ivaki and prof. José Fonseca.<br><br>
