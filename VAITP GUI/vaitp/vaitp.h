@@ -24,6 +24,8 @@ public:
     int cvefixes_count_vulns();
     void rm_old_ai_vulns(QString path_vuln);
     void vaitp_scan_py_file(QString aFile);
+    void typeNextCharacter();
+    void animateTyping(QString aString);
 private slots:
     void on_bt_load_py_src_clicked();
     void on_bt_scan_py_clicked();
@@ -53,11 +55,8 @@ private slots:
     void on_actionClear_all_outputs_and_lists_triggered();
     void on_bt_load_py_src_folder_clicked();
     void on_bt_scan_py_folder_clicked();
-
     void on_actionAbout_triggered();
-
     void on_actionExport_PDF_report_triggered();
-
     void on_actionQuit_triggered();
 
 private:

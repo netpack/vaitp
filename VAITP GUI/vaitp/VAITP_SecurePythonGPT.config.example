@@ -1,0 +1,6 @@
+{
+    "VAITP_MODEL" : "enter the model name here",
+    "AZURE_OPENAI_ENDPOINT" : "enter the endpoint url here",
+    "AZURE_ENGINE_NAME" : "enter the engine name here",
+    "AZURE_OPENAI_KEY" : "enter your openai key here",
+}

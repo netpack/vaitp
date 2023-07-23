@@ -12,6 +12,10 @@
 #include "detectionmodule.h"
 #include <QPrinter>
 #include <QDesktopServices>
+#include <QTimer>
+#include <QPlainTextEdit>
+#include <memory>
+#include <QScrollBar>
 
 int vaitp_loaded=0;
 int number_of_vulnerabilities_found=0;
@@ -23,6 +27,36 @@ int number_of_noninj_by_regex=0;
 int number_of_vuln_by_regex=0;
 QString inj_re="";
 QString inj_ai="";
+const int typingDelay = 25;
+
+// Typing effect
+QTimer* typingTimer;
+int currentCharacterIndex;
+QString animatedText;
+QTextOption textOption;
+
+// Slot to type next character
+void VAITP::typeNextCharacter() {
+    qApp->processEvents();
+    if (currentCharacterIndex < animatedText.length()) {
+        ui->txt_output_sh1->insertPlainText(animatedText.at(currentCharacterIndex));
+        ++currentCharacterIndex;
+        QScrollBar* vScrollBar = ui->txt_output_sh1->verticalScrollBar();
+        vScrollBar->setValue(vScrollBar->maximum());
+    } else {
+        typingTimer->stop();
+
+    }
+}
+
+//Slot to animate the typing effect in the output sh1
+void VAITP::animateTyping(QString aString){
+    animatedText = aString;
+    currentCharacterIndex = 0;
+
+    typingTimer->start(typingDelay);
+}
+
 
 /**
  * @brief VAITP::VAITP
@@ -35,6 +69,33 @@ VAITP::VAITP(QWidget *parent)
 
     ui->setupUi(this);
     qDebug() << "Welcome to VAITP by Frédéric Bogaerts!";
+
+    textOption.setAlignment(Qt::AlignJustify);
+    ui->txt_output_sh1->document()->setDefaultTextOption(textOption);
+
+    //Connect the typing timer with the slot to be called
+    typingTimer = new QTimer(this);
+    connect(typingTimer, &QTimer::timeout, this, &VAITP::typeNextCharacter);
+
+    //Animated welcome message
+//    textOption.setAlignment(Qt::AlignCenter);
+//    ui->txt_output_sh1->document()->setDefaultTextOption(textOption);
+
+    QString lineToCenter = "Welcome to VAITP! v1.1 [SecurePythonGPT edition sponsored by the Sword team @ Sword AI Challenge '23 Porto - Portugal!]";
+
+    // Calculate the number of spaces needed to center the line
+    int totalWidth = ui->txt_output_sh1->viewport()->width();
+    QFontMetrics fontMetrics(ui->txt_output_sh1->font());
+    int lineWidth = fontMetrics.horizontalAdvance(lineToCenter);
+    int spacesToAdd = (totalWidth - lineWidth) / fontMetrics.horizontalAdvance(" ");
+
+    // Prepend the necessary spaces to the line
+    QString centeredLine = QString(spacesToAdd / 2, ' ') + lineToCenter;
+
+    animateTyping(centeredLine);
+
+
+
 
     //Open the db
     if(!db.isOpen()){
@@ -176,6 +237,10 @@ VAITP::~VAITP()
     delete ui;
 }
 
+
+
+
+
 /**
  * @brief VAITP::on_bt_load_py_src_clicked
  * Locate .py script to analyze
@@ -219,7 +284,7 @@ void VAITP::vaitp_scan_py_file(QString aFile)
             ui->txt_output_sh1->appendHtml(tr("Based on it's path, the file is expected to be: ")+expected_classification);
 
 
-            int number_of_vulns_in_list = ui->lst_vulns->count();
+            //int number_of_vulns_in_list = ui->lst_vulns->count();
 
 
             //start scanning
@@ -462,22 +527,52 @@ void VAITP::vaitp_scan_py_file(QString aFile)
                     }
 
 
-
-
                 }
+
 
             } else {
                 ui->lbl_ai_classificator_run->setText("(disabled)");
             }
 
 
+
+            //use gpt
+            if(ui->checkBox_enable_VAITP_SecurePythonGPT->isChecked()){
+
+                ui->txt_output_sh1->appendHtml(tr("Generating security information for the Python code with SecurePythonGPT. Please wait..."));
+                qApp->processEvents();
+
+                aimodule ai;
+                QStringList gpt_response = ai.securePythonGPT(pyfile);
+                try {
+
+                    //ui->txt_output_sh1->appendHtml(tr("<p style='blue'>SecurePythonGPT: </span>"));
+
+                    for(QString gpt_resp: gpt_response){
+
+                        animateTyping(gpt_resp);
+                        qApp->processEvents();
+
+                    }
+                }  catch (QString err) {
+                    qDebug()<<"Error2:: "<<err;
+                }
+
+            }
+
+
            qDebug()<<"VAITP :: Updating GUI..";
+           qApp->processEvents();
 
            ui->lbl_target->setText(pyfile);
 
-           ui->txt_output_sh1->appendHtml(tr("Scanning Python Script... Done!"));
+           ui->txt_output_sh1->appendHtml(tr("Scanning Python Script... Done!\n\n"));
+
            qApp->processEvents();
+
            //ui->bt_auto_daisyChain->setEnabled(true);
+
+
 
 
 
@@ -504,15 +599,20 @@ void VAITP::on_bt_scan_py_clicked()
     //disable the attack button
     ui->bt_attack->setEnabled(false);
 
+    //get the file selected by the user
     QString pyfile = ui->txt_py_src->text();
 
+    //actually scan the file
     vaitp_scan_py_file(pyfile);
 
+    //Obtain the predicted lable
     QString predicted_label = ui->lbl_ai_classificator_run->text();
 
-
-    ui->txt_output_sh1->appendHtml("Adding Scanned file: "+pyfile+" which was predicted as "+predicted_label);
+    //Append the result to the output window
+    ui->txt_output_sh1->appendHtml("Adding Scanned file: "+pyfile+" which was predicted as "+predicted_label+"<br><br>");
     qApp->processEvents();
+
+
 
     QString item_text = "AI Scan :: " + pyfile+" :: "+predicted_label;
     //add to scanned files list
@@ -1558,8 +1658,8 @@ void VAITP::on_actionAbout_triggered()
                                "Orientation: PhD. Naghmeh Ivaki & PhD. José Fonseca<br><br>"
                                "Departamento de Engenharia Informática<br>"
                                "Universidade de Coimbra - Portugal<br>"
-                               "18-06-2022<br>"
-                               "VAITP v1.0");
+                               "20-07-2023<br>"
+                               "VAITP v1.1");
 
 
 }

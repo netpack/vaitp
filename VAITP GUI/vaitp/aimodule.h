@@ -35,6 +35,8 @@ public:
     QStringList getAndProcess_dataset_oneline_diffs();
     QStringList run_s2s_model(QStringList probable_inj_points,int limit_s2s);
     QString getSelectedFile();
+    QStringList securePythonGPT(QString aFile);
+    QString convertToHTML(QString input);
 };
 
 #endif // AIMODULE_H

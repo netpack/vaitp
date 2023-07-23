@@ -10,20 +10,39 @@
 
 QString path_to_classificator = "../vaitp/VAITP_AI_RNN_Classificator_RunModel.py";
 QString path_to_s2s = "../vaitp/VAITP_AI_S2S_RunModel.py";
+QString path_to_SecurePythonGPT = "../vaitp/VAITP_AI_LLM_SecurePythonGPT.py";
 QString file_to_scan="vaitp.vaitp";
+
 
 aimodule::aimodule()
 {
     qDebug()<<"AI module loaded";
 }
 
+
 void aimodule::set_file_to_scan(QString aFile){
     file_to_scan = aFile;
 }
 
+
+QString aimodule::convertToHTML(QString input) {
+    QString html = "<div>";
+
+    QStringList paragraphs = input.split("\n\n", QString::SkipEmptyParts);
+    for (const QString& paragraph : paragraphs) {
+        html += "<p>" + paragraph + "</p>";
+    }
+
+    html += "</div>";
+
+    return html;
+}
+
+
 QString aimodule::getSelectedFile(){
     return file_to_scan;
 }
+
 
 QStringList aimodule::run_classificator_model(QString selected_ai_classificator_model){
 
@@ -121,6 +140,45 @@ QStringList aimodule::run_s2s_model(QStringList probable_inj_points, int limit_s
 
     return out;
 }
+
+
+QStringList aimodule::securePythonGPT(QString aFile){
+    QStringList out;
+    try {
+
+            QString command("python");
+            QStringList params;
+
+            qDebug() << "VAITP :: SecurePythonGPT. Input file: " << aFile;
+
+            params = QStringList() << path_to_SecurePythonGPT << "-i" << aFile;
+
+            qDebug()<<"GPT CMD::: "<<command<<" "<<params;
+
+            QProcess p;
+            p.start(command, params);
+            p.waitForReadyRead(120000);
+            p.waitForFinished(120000);
+
+            QString output(p.readAll());
+            qDebug()<<"VAITP :: SecureGPT output: "<<output;
+
+            try {
+            out.append(output);
+
+            }  catch (QString error) {
+                qDebug()<<"SecurePythonGPT :: Error: "<<error;
+            }
+            p.close();
+
+
+    }   catch (QString error) {
+        qDebug()<<"Error index gpt: "<<error;
+    }
+
+    return out;
+}
+
 
 int aimodule::cvefixes_count_diffs()
 {
