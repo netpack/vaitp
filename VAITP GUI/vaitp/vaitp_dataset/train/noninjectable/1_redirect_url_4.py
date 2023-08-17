@@ -1,0 +1,1 @@
+return redirect('index', foo='bar')
