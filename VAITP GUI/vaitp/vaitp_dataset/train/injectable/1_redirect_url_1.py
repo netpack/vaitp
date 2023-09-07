@@ -1,4 +1,8 @@
-from django.shortcuts import redirect
+from flask import Flask, redirect, url_for
 
-def my_view(request):
-    return redirect(url_for('some-view-name'), foo='bar')
+app = Flask("example")
+
+@app.route("/redirecting")
+def redirecting():
+    url = request.args["url"]
+    return redirect(url_for(url))
