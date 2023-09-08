@@ -1,3 +1,4 @@
 @app.route('/')
+aurl = request.form.get("reurl")
 def hello():
-    return redirect('/hello')
+    return redirect(aurl)

@@ -1,4 +1,8 @@
-from django.shortcuts import redirect
+from flask import Flask, redirect
 
-def optout(request):
-   return redirect("http://stackoverflow.com/")
+app = Flask("vaitp")
+
+@app.route("/router")
+def redirecting():
+    dst = request.args["dsturl"]
+    return redirect(dst)

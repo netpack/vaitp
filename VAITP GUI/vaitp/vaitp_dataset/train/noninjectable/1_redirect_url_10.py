@@ -1,2 +1,2 @@
-def random_name(url):
+def sendUserToLink(url):
     return redirect(url, code=302)

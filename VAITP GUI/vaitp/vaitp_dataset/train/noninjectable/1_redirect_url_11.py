@@ -1,4 +1,3 @@
-def random_name(url):
-    return redirect(url, code=302)
+def goToUrl(durl):
+    return redirect(durl, code=302)
 
-random_name('https://example.com')
