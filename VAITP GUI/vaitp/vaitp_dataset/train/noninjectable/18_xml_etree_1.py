@@ -1,0 +1,21 @@
+from lxml import etree
+
+# XML data with a potentially malicious external entity
+xml_data = """<?xml version="1.0"?>
+<!DOCTYPE foo [
+  <!ENTITY xxe SYSTEM "/etc/passwd">
+]>
+<root>&xxe;</root>
+"""
+
+try:
+    # Create an XMLParser with no_network=True to disable external entity expansion
+    parser = etree.XMLParser()
+
+    # Parse the XML data
+    root = etree.fromstring(xml_data, parser=parser)
+
+    # Access and print the root element
+    print(root.tag)
+except etree.XMLSyntaxError as e:
+    print(f'Error parsing XML: {e}')
