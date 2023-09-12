@@ -1,0 +1,1 @@
+yaml.load(data, Loader=yaml.Loader)
