@@ -1,0 +1,6 @@
+import urllib.parse.quote
+r = sys.arg[1]
+def abcd_xyz(r):
+    exec(r, {'__builtins__': None})
+
+abcd_exec()
