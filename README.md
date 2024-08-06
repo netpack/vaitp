@@ -1,8 +1,6 @@
 # VAITP - Vulnerability Attack and Injection Tool in Python
 
-<div align="center">
-  <img src="https://github.com/netpack/vaitp/raw/main/Images/logo.png" alt="VAITP logo">
-</div>
+<img src="https://github.com/netpack/vaitp/blob/main/Images/logo.png" alt="VAITP logo">
 
 
 A (proof-of-concept) tool to detect vulnerabilities and injection locations, inject and attack vulnerabilities in Python scripts, using AI models and RegEx.
@@ -11,7 +9,7 @@ A (proof-of-concept) tool to detect vulnerabilities and injection locations, inj
 By Frédéric Bogaerts under the orientation of prof. Naghmeh Ivaki and prof. José Fonseca.<br><br>
 
 With colaboration of:<br>
-  Anush Deokar (Indian Institute of Technology, Jodhpur)
+  Anush Deokar (Indian Institute of Technology, Jodhpur).
   <br><br>
   
   
