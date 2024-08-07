@@ -17,6 +17,6 @@ With colaboration of:<br>
 
 <br><br>
 
-Universidade de Coimbra 2021/2022/2023<br>
+Universidade de Coimbra 2021 - 2024<br>
 Portugal
 
