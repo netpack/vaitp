@@ -1,4 +1,3 @@
-
 #Explanation:
     #Sensitive Data: The task function contains sensitive data.
     #Swapping Task: The main function simulates an attack where the current task is swapped using the _asyncio._swap_current_task method.
