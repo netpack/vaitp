@@ -1,3 +1,10 @@
+
+#Explanation:
+    #Sensitive Data: The task function contains sensitive data.
+    #Swapping Task: The main function simulates an attack where the current task is swapped using the _asyncio._swap_current_task method.
+    #Data Access: This demonstrates how an attacker could potentially access the sensitive data from the swapped task.
+    #Attack Vector: The attack vector is the swapping of the current task, which allows the attack
+
 import asyncio
 
 async def task():
