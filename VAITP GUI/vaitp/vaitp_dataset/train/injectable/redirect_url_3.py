@@ -1,1 +1,0 @@
-redirect(url_for('home'), foo='bar')

@@ -1,1 +1,0 @@
-redirect(url_for('some-view-name'), foo='bar')

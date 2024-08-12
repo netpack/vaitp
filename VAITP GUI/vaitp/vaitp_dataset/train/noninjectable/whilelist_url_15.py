@@ -1,1 +1,0 @@
-res =  HttpResponseRedirect(request.GET.get('home', '/')   , current_app=admin_site.name)

@@ -1,2 +1,0 @@
-if (not sometest() and not someothertest()):
-    skip_rest('VAITP test', 'VAITP module not built')

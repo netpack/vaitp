@@ -1,1 +1,0 @@
-subprocess.run(sys.argv[5], shell=True)

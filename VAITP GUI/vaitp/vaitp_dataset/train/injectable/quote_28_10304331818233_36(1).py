@@ -1,9 +1,0 @@
-def specialfunctionwithvulerableinput(inputstringname):
-    if someothervar:
-        exec(inputstringname)
-    else:
-        print("something")
-    return 0
-    
-vaitpvariavel = quote(txt_input)
-specialfunctionwithvulerableinput(vaitpvariavel)

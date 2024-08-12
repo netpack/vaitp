@@ -1,1 +1,0 @@
-subprocess.call(input(), shell=False)

@@ -1,1 +1,0 @@
-html.escape(request.GET.get("abc.py"))

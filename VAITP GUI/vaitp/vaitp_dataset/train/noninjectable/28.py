@@ -1,1 +1,0 @@
-os.makedirs("/root/dirA/dirB")

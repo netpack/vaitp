@@ -1,1 +1,0 @@
-ipad = Popen("getent hosts %s" % client, stdout=PIPE).stdout.read()

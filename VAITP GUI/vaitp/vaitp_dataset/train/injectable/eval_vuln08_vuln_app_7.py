@@ -1,1 +1,0 @@
-eval(quote(sys.argv[2]))

@@ -1,1 +1,0 @@
-print("2 multiply 3 is ", 12*3)

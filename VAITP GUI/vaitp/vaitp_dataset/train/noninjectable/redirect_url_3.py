@@ -1,1 +1,0 @@
-redirect('home', foo='bar')
