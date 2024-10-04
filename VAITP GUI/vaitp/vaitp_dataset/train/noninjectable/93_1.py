@@ -1,26 +1,10 @@
-# Import the urllib3 module
 import urllib3
 
-# Define a URL to request
-url = "https://example.com"
+# Create a PoolManager with a custom SSL context
+ssl_context = urllib3.ssl_.create_urllib3_ssl_context()
+pool_manager = urllib3.PoolManager.ssl_context = ssl_context
 
-# Define a certificate file name
-cert_file = "test.crt"
+# Make a request to a server with a self-signed certificate
+response = pool_manager.request('GET', 'https://self-signed-server.com')
 
-# Create an SSLContext object with the certificate file
-ssl_context = ssl.create_default_context()
-ssl_context.load_cert_chain(cert_file)
-
-# Create an HTTPSConnection object with the SSLContext object
-https_connection = urllib3.PoolManager(ssl_context)
-
-# Try to make an HTTPS request with the HTTPSConnection object
-try:
-  response = https_connection.request("GET", url)
-  # Check if the response contains a valid certificate
-  if "BEGIN CERTIFICATE" in response.data and "END CERTIFICATE" in response.data:
-    print("The certificate is valid")
-  else:
-    print("The certificate is invalid")
-except Exception as e:
-  print("An error occurred:", e)
+print(response.status)

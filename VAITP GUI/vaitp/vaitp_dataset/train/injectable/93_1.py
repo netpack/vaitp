@@ -1,19 +1,10 @@
-# Import the requests module
-import requests
+import urllib3
 
-# Define the URL to request
-url = "https://example.com"
+# Create a PoolManager with a custom SSL context and specify the CA certificates
+ssl_context = urllib3.ssl_.create_urllib3_ssl_context(ca_certs='/path/to/custom/ca/certificates')
+pool_manager = urllib3.PoolManager.ssl_context = ssl_context
 
-# Define the certificate file name
-cert_file = "test.crt"
+# Make a request to a server with a self-signed certificate
+response = pool_manager.request('GET', 'https://self-signed-server.com')
 
-# Try to make an HTTPS request with the certificate file
-try:
-  response = requests.get(url, verify=cert_file)
-  # Check if the response contains a valid certificate
-  if "BEGIN CERTIFICATE" in response.text and "END CERTIFICATE" in response.text:
-    print("The certificate is valid")
-  else:
-    print("The certificate is invalid")
-except Exception as e:
-  print("An error occurred:", e)
+print(response.status)
