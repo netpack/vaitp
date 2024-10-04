@@ -1,0 +1,1 @@
+# Same code is not vulnerable if Python is updated to version 3.6.5 of higher

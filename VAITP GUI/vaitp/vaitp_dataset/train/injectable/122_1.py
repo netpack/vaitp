@@ -1,0 +1,1 @@
+# Same code is not vulnerable if Openpyxl is updated to v. 2.5.0
