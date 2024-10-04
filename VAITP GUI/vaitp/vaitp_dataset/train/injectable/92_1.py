@@ -1,32 +1,12 @@
-# Import the dns module
-import dns
+import xdg.Menu
 
-# Define a menu file name
-menu_file = "test.menu"
+# Sanitize the input before parsing
+def sanitize_menu_file(menu_file):
+    # Remove any malicious Category elements
+    with open(menu_file, 'r') as f:
+        menu_data = f.read()
+    sanitized_menu_data = menu_data.replace('<Category>', '').replace('</Category>', '')
+    return sanitized_menu_data
 
-# Define a category element for the menu
-category = """
-<menu>
-  <category name="Example">
-    <item label="Example Item" command="example"/>
-  </category>
-</menu>
-"""
-
-# Define an item element for the menu
-item = """
-<item label="Example Item" command="example"/>
-"""
-
-# Define a function that executes the command attribute of the item element
-def example():
-  print("Hello, world!")
-
-# Open the menu file in write mode
-with open(menu_file, "w") as f:
-  # Write the category and item elements to the file
-  f.write(category)
-  f.write(item)
-
-# Parse and execute the menu file using dns.Menu.parse()
-dns.Menu.parse(menu_file)
+# Parse the sanitized .menu file
+menu = xdg.Menu.parse(sanitize_menu_file('safe.menu'))
