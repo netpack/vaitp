@@ -1,0 +1,2 @@
+# CVE-2017-3590 specifically pertains to a vulnerability in Oracle WebCenter Sites, which is a proprietary software product.
+# Unfortunately, the code associated with such vulnerabilities is not typically publicly available due to its proprietary nature.
