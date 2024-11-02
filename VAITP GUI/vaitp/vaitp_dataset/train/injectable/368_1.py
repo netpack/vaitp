@@ -1,0 +1,1 @@
+# Same code is not vulnerable if ujson is updated
