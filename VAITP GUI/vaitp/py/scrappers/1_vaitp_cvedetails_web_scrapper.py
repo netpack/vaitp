@@ -1,6 +1,7 @@
 import requests, re, time, sqlite3, importlib.util, sys
 from bs4 import BeautifulSoup
 
+verbose = True
 
 print('Starting cvedetails.com Web Scapper!') 
 
@@ -31,6 +32,8 @@ def get_page(aUrl):
     global page_num
     global headers
     
+    # Print the scraped page URL if verbose
+    verbose and print(f'Scraping URL: {aUrl}')
 
     # Send an HTTP GET request to the URL
     response = requests.get(aUrl, headers=headers)
@@ -39,17 +42,24 @@ def get_page(aUrl):
     if response.status_code == 200:
         # Parse the HTML content of the page using BeautifulSoup
         soup = BeautifulSoup(response.text, "html.parser")
-        #print(f'Processing HTML response: {soup}')
+        #verbose and print(f'Processing HTML response: {soup}')
         
         # Locate the elements containing CVE information
-        cve_elements = soup.find_all("div", class_="border-bottom mb-4 p-3", attrs={"data-tsvfield": "cveinfo"})
-        
+        cve_elements = soup.find_all("div", attrs={"data-tsvfield": "cveinfo"})
+
+        # Check if cve_elements is empty
+        if not cve_elements:
+            print("No CVE information found. Please check the HTML structure or the class names.")
+            sys.exit(1)  # Exit the script with a non-zero status to indicate an error
+
+                
         # Loop through the elements and extract CVE ID and Summary
         for element in cve_elements:
             
             # Extract CVE ID from the <h3> tag
             cve_id = element.find("h3", attrs={"data-tsvfield": "cveId"}).a.text.strip()
 
+            verbose and print(f'Scraping found a new CVE: {cve_id}')
 
             query = f"SELECT id FROM python_vulnerabilities WHERE cve LIKE '{cve_id}';"
             results = vaitp_db.execute_query(query)
@@ -77,6 +87,7 @@ def get_page(aUrl):
                     cvss_score = cvss_score_div.text.strip()
                     print(f"CVSS Score for {cve_id}: {cvss_score}")
                 else:
+                    cvss_score = "N/A"
                     print("CVSS Score not found.")
 
                 publish_date = newSoup.find('span', string=lambda text: text and text.startswith('Published'))
@@ -99,7 +110,7 @@ def get_page(aUrl):
                     cwe_id = "N/A"
                 
                 # It's a mi! Mário!
-                #print(f"\"{summary}\"~~~\"{cve_id}\"~~~\"https://www.cvedetails.com/cve/{cve_id}\"~~~{cvss_score}~~~{cve_publish_date_value}~~~{cwe_id}~~~https://cwe.mitre.org/data/definitions/{cwe_num}")
+                #verbose and print(f"\"{summary}\"~~~\"{cve_id}\"~~~\"https://www.cvedetails.com/cve/{cve_id}\"~~~{cvss_score}~~~{cve_publish_date_value}~~~{cwe_id}~~~https://cwe.mitre.org/data/definitions/{cwe_num}")
                 
                 vaitp_db.insert_vulnerability(summary, cve_id, cvss_score, cve_publish_date_value, cwe_id)
                 print(f'New vulnerability added to the database: {cve_id}')

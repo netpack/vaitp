@@ -1,4 +1,7 @@
 VAITP GUI/vaitp/vaitp_python_venv
+VAITP GUI/vaitp/vaitp_venv
 VAITP GUI/vaitp/vaitp/lineicons-free-basic-3.0
 VAITP GUI/build-vaitp-Desktop_Qt_5_12_12_MinGW_64_bit-Debug
-
+VAITP GUI/vaitp/py/scrappers/cvelistV5-main
+VAITP GUI/vaitp/py/scrappers/__pycache__
+VAITP GUI/vaitp/py/scrappers/nvd_nist_gov.json
