@@ -1,0 +1,5 @@
+```xml
+<root>
+    <code>os.system('whoami')</code>
+</root>
+```

@@ -1,0 +1,3 @@
+```python
+payload = "\t" * 10000  # Example payload with a large number of leading tabs
+```

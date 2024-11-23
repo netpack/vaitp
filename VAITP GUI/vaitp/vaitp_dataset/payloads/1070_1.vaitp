@@ -1,0 +1,6 @@
+```python
+{
+    '__dunder_attribute__': 'malicious_value',
+    'some_attribute': 'new_value'
+}
+```

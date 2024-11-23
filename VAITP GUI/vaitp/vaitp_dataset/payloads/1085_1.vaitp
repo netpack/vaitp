@@ -1,0 +1,19 @@
+```python
+import os
+import ctypes
+
+# Example payload to trigger a segmentation fault
+def trigger_segmentation_fault():
+    ctypes.string_at(0)  # Attempt to access an invalid memory address
+
+# Enter chroot before triggering the fault
+def enter_chroot(new_root):
+    os.chroot(new_root)
+    os.chdir('/')
+
+# Example usage
+if __name__ == "__main__":
+    new_root = "/path/to/new/root"
+    enter_chroot(new_root)
+    trigger_segmentation_fault()
+```

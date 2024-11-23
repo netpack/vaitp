@@ -1,0 +1,7 @@
+```python
+documents = [
+    "User  password is: my_secure_password123",
+    "API key for service: 12345-abcde-67890-fghij",
+    "This is a normal document."
+]
+```

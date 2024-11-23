@@ -1,0 +1,10 @@
+```http
+POST / HTTP/1.1
+Host: vulnerable-server.com
+Content-Length: 8192
+
+<large payload data here>
+
+GET /next-request HTTP/1.1
+Host: vulnerable-server.com
+```

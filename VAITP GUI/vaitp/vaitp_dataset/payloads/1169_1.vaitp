@@ -1,0 +1,26 @@
+```python
+# Example payload to exploit the timing attack vulnerability
+import time
+
+def guess_password(stored_password):
+    alphabet = "abcdefghijklmnopqrstuvwxyz"
+    guessed_password = ""
+    
+    for _ in range(len(stored_password)):
+        for char in alphabet:
+            # Simulate sending the password guess to the server
+            start_time = time.time()
+            # This would be the vulnerable comparison
+            if stored_password[:len(guessed_password) + 1] == guessed_password + char:
+                elapsed_time = time.time() - start_time
+                print(f"Trying: {guessed_password + char} (Time: {elapsed_time:.6f}s)")
+                guessed_password += char
+                break
+
+    return guessed_password
+
+# Example usage
+stored_password = "securepassword"
+guessed = guess_password(stored_password)
+print(f"Guessed password: {guessed}")
+```

@@ -1,0 +1,4 @@
+```python
+access_key = "my_secret_access_key"
+logging.debug(f"Accessing resource with access key: {access_key}")
+```

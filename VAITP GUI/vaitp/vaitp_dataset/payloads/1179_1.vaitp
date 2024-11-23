@@ -1,0 +1,7 @@
+```groovy
+// Example payload that could be crafted to exploit the vulnerability
+println "Executing arbitrary code!"
+def result = "malicious command".execute()
+result.waitFor()
+println result.text
+```

@@ -1,0 +1,17 @@
+```python
+import socket
+import threading
+
+# Malicious payload to exploit the connection race
+def malicious_socket():
+    # Create a socket and connect to the server socket
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock.connect(('localhost', 12345))  # Assuming the server is bound to this port
+    # Send malicious data
+    sock.sendall(b'Malicious data')
+    sock.close()
+
+# Start the malicious thread
+thread = threading.Thread(target=malicious_socket)
+thread.start()
+```

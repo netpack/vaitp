@@ -1,0 +1,4 @@
+```http
+GET /monitoring HTTP/1.1
+Host: vulnerable-application.com
+```

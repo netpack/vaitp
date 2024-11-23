@@ -1,0 +1,7 @@
+```python
+# Example payload to exploit the vulnerability
+{
+    "target": "0x1234567890abcdef1234567890abcdef12345678",  # Replace with a malicious contract address
+    "value": 1000000000000000000  # 1 Ether (in wei)
+}
+```

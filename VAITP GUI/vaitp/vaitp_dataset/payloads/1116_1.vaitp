@@ -1,0 +1,19 @@
+```python
+# Example payload that could exploit the vulnerability
+import eventlet
+
+def exploit_vulnerability():
+    # Create a vulnerable scenario due to missing patch
+    def vulnerable_worker():
+        # Potentially unsafe operation that could be exploited
+        while True:
+            print("Exploiting vulnerability...")
+
+    # Spawn the vulnerable worker
+    eventlet.spawn(vulnerable_worker)
+
+    # Allow some time for the exploit to run
+    eventlet.sleep(5)
+
+exploit_vulnerability()
+```

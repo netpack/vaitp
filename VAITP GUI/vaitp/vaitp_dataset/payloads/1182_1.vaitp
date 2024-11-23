@@ -1,0 +1,12 @@
+```python
+import os
+
+# Malicious payload example for demonstration purposes
+def malicious_install_script():
+    # This code simulates a malicious action
+    os.system("echo 'Malicious code executed!'")
+
+# Simulating the installation of a malicious package
+if __name__ == "__main__":
+    malicious_install_script()
+```

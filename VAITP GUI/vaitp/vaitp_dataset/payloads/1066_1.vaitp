@@ -1,0 +1,4 @@
+```python
+# Example payload to exploit the vulnerability
+access_array(-1)  # Accessing the last element of the array using a negative index
+```

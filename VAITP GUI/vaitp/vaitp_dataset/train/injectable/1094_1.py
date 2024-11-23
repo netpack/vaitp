@@ -1,0 +1,5 @@
+from pymatgen.transformations.standard_transformations import JonesFaithfulTransformation
+
+# Example of secure usage without eval
+transformation_str = "some_safe_transformation_string"
+transformation = JonesFaithfulTransformation.from_transformation_str(transformation_str)

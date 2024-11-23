@@ -1,0 +1,3 @@
+```python
+payload = "//attacker-server/evil_file.txt"
+```

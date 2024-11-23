@@ -1,0 +1,3 @@
+```python
+"INSERT INTO my_table (column) VALUES ('value'); os.system(\"whoami\")"
+```

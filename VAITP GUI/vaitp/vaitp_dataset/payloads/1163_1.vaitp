@@ -1,0 +1,12 @@
+```http
+POST / HTTP/1.1
+Host: vulnerable-server.com
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="file"; filename="exploit"
+Content-Type: application/octet-stream
+
+<large amount of data to trigger the infinite loop>
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+```

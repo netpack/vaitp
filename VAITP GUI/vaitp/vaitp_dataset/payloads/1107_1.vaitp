@@ -1,0 +1,4 @@
+```python
+# Exploit payload example
+print("import os; os.system('whoami')")
+```

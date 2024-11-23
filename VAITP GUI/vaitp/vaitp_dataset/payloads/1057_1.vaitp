@@ -1,0 +1,9 @@
+```python
+import pickle
+import os
+
+# Example payload that could execute arbitrary code
+payload = pickle.dumps(os.system('echo Vulnerability Exploited!'))
+
+# This payload could be saved and then loaded by the vulnerable NLTK function
+```

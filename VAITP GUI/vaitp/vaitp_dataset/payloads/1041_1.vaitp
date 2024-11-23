@@ -1,0 +1,4 @@
+```python
+# Example payload to exploit the vulnerability by changing the root URL
+malicious_payload = "http://malicious-server.com"
+```

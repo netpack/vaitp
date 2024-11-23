@@ -1,0 +1,5 @@
+```python
+# Example payload to read sensitive file (e.g., /etc/passwd)
+payload = "/etc/passwd"
+df = pd.read_csv(payload)
+```

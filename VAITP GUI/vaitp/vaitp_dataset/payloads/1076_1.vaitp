@@ -1,0 +1,14 @@
+```python
+import ipaddress
+
+# Example of potentially misleading address classifications
+misleading_ip = ipaddress.IPv4Address('192.168.1.1')  # Typically a private address
+misleading_ipv6 = ipaddress.IPv6Address('::1')         # Loopback address, typically not global
+
+# Attempt to check if they are private or global
+print(f"{misleading_ip} is private: {misleading_ip.is_private}")  # Could return False in a vulnerable state
+print(f"{misleading_ip} is global: {misleading_ip.is_global}")    # Could return True in a vulnerable state
+
+print(f"{misleading_ipv6} is private: {misleading_ipv6.is_private}")  # Could return False in a vulnerable state
+print(f"{misleading_ipv6} is global: {misleading_ipv6.is_global}")    # Could return True in a vulnerable state
+```

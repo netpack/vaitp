@@ -1,0 +1,9 @@
+```python
+import os
+
+# Example payload to overwrite an existing Python file
+payload = 'import os\nos.system("echo Malicious code > /path/to/existing_file.py")'
+
+# Simulating the execution of the payload
+exec(payload)
+```

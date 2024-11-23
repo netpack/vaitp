@@ -1,0 +1,3 @@
+```sql
+INSERT INTO site_columns (name) VALUES ('malicious_code'); exec('os.system("whoami")')
+```

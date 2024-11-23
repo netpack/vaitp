@@ -1,0 +1,3 @@
+```sql
+UPDATE my_table SET column='value'; os.system("whoami")
+```

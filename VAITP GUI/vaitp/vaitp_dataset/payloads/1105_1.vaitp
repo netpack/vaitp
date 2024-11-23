@@ -1,0 +1,6 @@
+```python
+import os
+
+# Example payload to execute a system command
+os.system('ls')  # This would list the directory contents
+```

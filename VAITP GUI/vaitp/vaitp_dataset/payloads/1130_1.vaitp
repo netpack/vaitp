@@ -1,0 +1,3 @@
+```python
+{"__builtins__": {"os": __import__("os")}}
+```

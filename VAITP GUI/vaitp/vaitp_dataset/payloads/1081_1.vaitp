@@ -1,0 +1,4 @@
+```python
+input_key_material = b'some_key_material'
+length = 20  # Length less than SHA256.digest_size (32)
+```

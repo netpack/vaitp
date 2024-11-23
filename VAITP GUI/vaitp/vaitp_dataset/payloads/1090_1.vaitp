@@ -1,0 +1,11 @@
+```python
+import time
+
+def exploit_vulnerability():
+    # This function simulates an uncontrolled resource consumption attack
+    while True:  # Infinite loop to exhaust resources
+        # Simulating heavy processing without exit conditions
+        time.sleep(0.1)  # Simulate CPU-bound operation
+
+exploit_vulnerability()
+```

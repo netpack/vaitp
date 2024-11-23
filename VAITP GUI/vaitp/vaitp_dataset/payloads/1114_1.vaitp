@@ -1,0 +1,5 @@
+```python
+sitemap_url = 'http://example.com/sitemap.xml'
+loader = SitemapLoader()
+loader.parse_sitemap(sitemap_url)  # This URL would refer to itself, causing infinite recursion
+```

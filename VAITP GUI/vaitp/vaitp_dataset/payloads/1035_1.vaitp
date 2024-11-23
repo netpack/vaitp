@@ -1,0 +1,14 @@
+```python
+import os
+import subprocess
+from sentry_sdk import init
+
+# Initialize Sentry SDK (vulnerable version < 2.8.0)
+init(dsn="your_dsn_here")
+
+# Set a sensitive environment variable
+os.environ["SENSITIVE_DATA"] = "exploit_this"
+
+# Vulnerable subprocess call that exposes the sensitive data
+subprocess.call(["printenv"])
+```

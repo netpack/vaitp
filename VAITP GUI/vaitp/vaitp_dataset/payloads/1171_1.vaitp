@@ -1,0 +1,9 @@
+```plaintext
+MAIL FROM:<attacker@example.com>
+RCPT TO:<victim@example.com>
+DATA
+Subject: Important Update
+
+This is a phishing email pretending to be from a trusted source.
+.
+```

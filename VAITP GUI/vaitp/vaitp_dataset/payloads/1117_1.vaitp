@@ -1,0 +1,6 @@
+```python
+# Example payload that could be used to exploit the vulnerability
+malicious_input = ['text1', 'text2', 'malicious_command']
+encoded_data = encode_data(malicious_input)
+print(encoded_data)
+```

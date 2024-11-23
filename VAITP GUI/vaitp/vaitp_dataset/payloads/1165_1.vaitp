@@ -1,0 +1,10 @@
+```python
+# Example of a malicious Python script payload disguised as a video file
+# This payload could be named "malicious.mp4" but actually contains Python code
+
+import os
+import subprocess
+
+# This code would execute a command on the server
+subprocess.call(["/bin/bash", "-c", "echo 'Malicious code executed' > /tmp/malicious.txt"])
+```

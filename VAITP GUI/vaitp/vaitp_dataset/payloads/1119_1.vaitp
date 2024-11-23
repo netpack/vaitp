@@ -1,0 +1,7 @@
+```http
+GET /secret1 HTTP/1.1
+Host: vulnerable-server.com
+
+GET /secret2 HTTP/1.1
+Host: vulnerable-server.com
+```

@@ -1,0 +1,7 @@
+```http
+POST /endpoint HTTP/1.1
+Host: vulnerable.server
+Content-Length: 50
+
+malicious_payload_here
+```
