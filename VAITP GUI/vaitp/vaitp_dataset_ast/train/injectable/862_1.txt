@@ -1,0 +1,122 @@
+Module(
+    body=[
+        FunctionDef(
+            name='safe_import_attachment',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='attachment_content')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Constant(value='\n    Safely imports attachment content by escaping potentially harmful code.\n    ')),
+                Assign(
+                    targets=[
+                        Name(id='safe_content', ctx=Store())],
+                    value=Call(
+                        func=Name(id='escape_user_input', ctx=Load()),
+                        args=[
+                            Name(id='attachment_content', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='process_safe_content', ctx=Load()),
+                        args=[
+                            Name(id='safe_content', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='escape_user_input',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='user_input')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Constant(value='\n    Escape user input to prevent code injection attacks.\n    This is a simplified example and should be replaced with a robust escaping library.\n    ')),
+                Assign(
+                    targets=[
+                        Name(id='escape_mapping', ctx=Store())],
+                    value=Dict(
+                        keys=[
+                            Constant(value='<'),
+                            Constant(value='>'),
+                            Constant(value='{'),
+                            Constant(value='}'),
+                            Constant(value='$'),
+                            Constant(value='#'),
+                            Constant(value='%'),
+                            Constant(value='&')],
+                        values=[
+                            Constant(value='&lt;'),
+                            Constant(value='&gt;'),
+                            Constant(value='&#123;'),
+                            Constant(value='&#125;'),
+                            Constant(value='&#36;'),
+                            Constant(value='&#35;'),
+                            Constant(value='&#37;'),
+                            Constant(value='&amp;')])),
+                For(
+                    target=Tuple(
+                        elts=[
+                            Name(id='char', ctx=Store()),
+                            Name(id='escaped', ctx=Store())],
+                        ctx=Store()),
+                    iter=Call(
+                        func=Attribute(
+                            value=Name(id='escape_mapping', ctx=Load()),
+                            attr='items',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='user_input', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='user_input', ctx=Load()),
+                                    attr='replace',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='char', ctx=Load()),
+                                    Name(id='escaped', ctx=Load())],
+                                keywords=[]))],
+                    orelse=[]),
+                Return(
+                    value=Name(id='user_input', ctx=Load()))],
+            decorator_list=[]),
+        FunctionDef(
+            name='process_safe_content',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='content')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Processing safe content:'),
+                            Name(id='content', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='attachment_content', ctx=Store())],
+            value=Constant(value="<script>alert('XSS');</script>")),
+        Expr(
+            value=Call(
+                func=Name(id='safe_import_attachment', ctx=Load()),
+                args=[
+                    Name(id='attachment_content', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

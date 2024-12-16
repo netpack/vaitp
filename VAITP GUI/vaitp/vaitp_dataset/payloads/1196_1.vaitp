@@ -1,0 +1,11 @@
+```tar
+# Example of a specially-crafted tar archive that triggers excessive backtracking
+# This is a conceptual representation and cannot be executed as-is.
+
+# Create a tar file with a maliciously crafted file name
+# The file name is designed to exploit the regex vulnerability
+# The actual creation of such a tar file would require a specific setup and is not provided here.
+
+malicious_payload.tar:
+    "a" * 1000 + "!" + "b" * 1000 + ".."  # Example of a long repetitive pattern
+```

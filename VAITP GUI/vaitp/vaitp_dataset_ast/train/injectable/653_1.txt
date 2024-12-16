@@ -1,0 +1,161 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='tensorflow', asname='tf')]),
+        Import(
+            names=[
+                alias(name='pybind11')]),
+        FunctionDef(
+            name='unsafe_to_dlpack',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='obj')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=UnaryOp(
+                        op=Not(),
+                        operand=Call(
+                            func=Name(id='isinstance', ctx=Load()),
+                            args=[
+                                Name(id='obj', ctx=Load()),
+                                Attribute(
+                                    value=Name(id='tf', ctx=Load()),
+                                    attr='Tensor',
+                                    ctx=Load())],
+                            keywords=[])),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='TypeError', ctx=Load()),
+                                args=[
+                                    Call(
+                                        func=Attribute(
+                                            value=Constant(value='Expected a Tensor, got: {}'),
+                                            attr='format',
+                                            ctx=Load()),
+                                        args=[
+                                            Call(
+                                                func=Name(id='type', ctx=Load()),
+                                                args=[
+                                                    Name(id='obj', ctx=Load())],
+                                                keywords=[])],
+                                        keywords=[])],
+                                keywords=[]))],
+                    orelse=[]),
+                Assign(
+                    targets=[
+                        Name(id='tensor_ptr', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='pybind11', ctx=Load()),
+                            attr='cast',
+                            ctx=Load()),
+                        args=[
+                            Name(id='obj', ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=Name(id='tensor_ptr', ctx=Load()))],
+            decorator_list=[]),
+        Try(
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='unsafe_to_dlpack', ctx=Load()),
+                        args=[
+                            Constant(value='not_a_tensor')],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='TypeError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[]),
+        FunctionDef(
+            name='safe_to_dlpack',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='obj')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=UnaryOp(
+                        op=Not(),
+                        operand=Call(
+                            func=Name(id='isinstance', ctx=Load()),
+                            args=[
+                                Name(id='obj', ctx=Load()),
+                                Attribute(
+                                    value=Name(id='tf', ctx=Load()),
+                                    attr='Tensor',
+                                    ctx=Load())],
+                            keywords=[])),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='TypeError', ctx=Load()),
+                                args=[
+                                    Call(
+                                        func=Attribute(
+                                            value=Constant(value='Expected a Tensor, got: {}'),
+                                            attr='format',
+                                            ctx=Load()),
+                                        args=[
+                                            Call(
+                                                func=Name(id='type', ctx=Load()),
+                                                args=[
+                                                    Name(id='obj', ctx=Load())],
+                                                keywords=[])],
+                                        keywords=[])],
+                                keywords=[]))],
+                    orelse=[]),
+                Assign(
+                    targets=[
+                        Name(id='tensor_ptr', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='pybind11', ctx=Load()),
+                            attr='cast',
+                            ctx=Load()),
+                        args=[
+                            Name(id='obj', ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=Name(id='tensor_ptr', ctx=Load()))],
+            decorator_list=[]),
+        Try(
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='safe_to_dlpack', ctx=Load()),
+                        args=[
+                            Constant(value='not_a_tensor')],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='TypeError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

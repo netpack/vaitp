@@ -1,0 +1,38 @@
+Module(
+    body=[
+        ImportFrom(
+            module='ansys.geometry',
+            names=[
+                alias(name='Geometry')],
+            level=0),
+        FunctionDef(
+            name='safe_start_program',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='geometry_service', ctx=Store())],
+                    value=Call(
+                        func=Name(id='Geometry', ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='geometry_service', ctx=Load()),
+                            attr='start_safe_program',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='safe_start_program', ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

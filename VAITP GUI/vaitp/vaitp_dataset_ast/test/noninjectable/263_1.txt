@@ -1,0 +1,62 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='re')]),
+        Assign(
+            targets=[
+                Name(id='email_regex', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='re', ctx=Load()),
+                    attr='compile',
+                    ctx=Load()),
+                args=[
+                    Constant(value='(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$)')],
+                keywords=[])),
+        FunctionDef(
+            name='is_valid_email',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='email')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Compare(
+                        left=Call(
+                            func=Attribute(
+                                value=Name(id='email_regex', ctx=Load()),
+                                attr='match',
+                                ctx=Load()),
+                            args=[
+                                Name(id='email', ctx=Load())],
+                            keywords=[]),
+                        ops=[
+                            IsNot()],
+                        comparators=[
+                            Constant(value=None)]))],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Call(
+                        func=Name(id='is_valid_email', ctx=Load()),
+                        args=[
+                            Constant(value='test@example.com')],
+                        keywords=[])],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Call(
+                        func=Name(id='is_valid_email', ctx=Load()),
+                        args=[
+                            Constant(value='test@.com')],
+                        keywords=[])],
+                keywords=[]))],
+    type_ignores=[])

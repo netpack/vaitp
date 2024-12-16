@@ -1,11 +1,15 @@
-import sys, ast, pathlib, os, tensorflow as tf
+import sys, ast, pickle, keras, tensorflow as tf
 from optparse import OptionParser
 
-#keep it quiet...
-sys.stderr = open(os.devnull, 'w')
-tf.get_logger().setLevel('ERROR')
+print("Starting VAITP AI RNN RunModel Script")
+print("TensorFlow version:", tf.__version__)
+print("Keras version:", keras.__version__)
 
-#parameters parsing
+# Keep it quiet...
+# sys.stderr = open(os.devnull, 'w')
+# tf.get_logger().setLevel('ERROR')
+
+# Parameters parsing
 parser = OptionParser()
 parser.add_option("-i", "--input_file", action="store", type="string", dest="input_file", help="Set the input Python file to be scanned")
 parser.add_option("-o", "--optimize_granularity", action="store_true", dest="optimize_granularity", help="Try to optimize granularity of inputs predicted as 'injectable'")
@@ -13,130 +17,89 @@ parser.add_option("-m", "--use-model", action="store", type="string", dest="use_
 
 (options, sys.argv) = parser.parse_args(sys.argv)
 
-
-
-
-
-#define function to predict the label with the most score
+# Define function to predict the label with the most score
 def get_string_labels(predicted_scores_batch):
-  predicted_int_labels = tf.argmax(predicted_scores_batch, axis=1)
-  predicted_labels = tf.gather(raw_train_ds.class_names, predicted_int_labels)
-  return predicted_labels
+    predicted_int_labels = tf.argmax(predicted_scores_batch, axis=1)
+    class_names = ["injectable", "noninjectable"]
+    return [class_names[idx] for idx in predicted_int_labels.numpy()]
 
 
-
-#print("Starting VAITP AI RNN Classicator RunModel...")
-
-
-#Vars
-path_to_exported_models = "/home/b7/vaitp/VAITP GUI/vaitp/exported_ai_models/"
-#model_name = "vaitp_classificator_model_8000_10000_1370_0.99_2022_04_25_10_44.tfv"
+# Vars
+path_to_exported_models = "/Users/fredericbogaerts/vaitp/VAITP GUI/vaitp/exported_ai_models/"
 if not options.use_model:
-  model_name = "vaitp_classificator_model_0.86_BOW_80_5_2022_05_21_11_38.tfv"
+    model_name = "vaitp_classificator_model_0.67_BOW_1000_7_2024_12_16_10_55.keras"
 else:
-  model_name = options.use_model
+    model_name = options.use_model
 
-input_newcode = "../vaitp/VAITP_AI_RNN_Classificator_newInput.vaitp"
-pyfile = "vaitpscan.py"
-
-#force -i infile.py
+# Force -i infile.py
 if options.input_file:
-  pyfile = options.input_file
+    pyfile = options.input_file
 else:
-  exit("Please add an input file. (-i dir/file.py)")
+    exit("Please add an input file. (-i dir/file.py)")
 
-pyfile_fp = open(pyfile,'r')
-
-#print(f'py:: {pyfile_fp.read()}')
-source = pyfile_fp.read()
-pyfile_ast_parsed = ast.parse(source, mode='exec')
+try:
+    with open(pyfile, 'r') as pyfile_fp:
+      source = pyfile_fp.read()
+    pyfile_ast_parsed = ast.parse(source, mode='exec')
+except Exception as e:
+  exit(f"Error when parsing the input file. {e}")
 pyfile_ast = ast.dump(pyfile_ast_parsed, indent=4)
-
-
-temp_w_fp = open("vaitp_class_run.temp", 'w')
-temp_w_fp.write(pyfile_ast)
-temp_w_fp.close()
-
-temp_r_fp = open("vaitp_class_run.temp", 'r')
-ast_source = temp_r_fp.read()
-temp_r_fp.close()
-
-#Load the model
+# Load the model
 if not options.use_model:
-  model_p = path_to_exported_models+model_name
+    model_p = path_to_exported_models + model_name
 else:
-  model_p = model_name #with -m the full path is expected
+    model_p = model_name  # Full path is expected
 
-model = tf.keras.models.load_model(model_p)
+try:
+    model = tf.keras.models.load_model(model_p)
+except Exception as e:
+    exit(f"Error when loading the model from {model_p}: {e}")
 
-#print(f'Model Loaded: {model_name}')
-
-#print(f'Model Summary: {model.summary()}')
-
+# Load tokenizer (assuming it is saved as <model_path>_tokenizer.pickle)
+tokenizer_path = model_p.replace(".keras", "_tokenizer.pickle")
+try:
+    with open(tokenizer_path, 'rb') as handle:
+        tokenizer = pickle.load(handle)
+except FileNotFoundError:
+    exit(f"Error: Tokenizer file not found at {tokenizer_path}")
+except Exception as e:
+    exit(f"Error loading tokenizer: {e}")
 
 
 #Get new input
-#with open(input_newcode,'r') as fin:
-#    lines = fin.readlines()
-#print('ffff')
+final_input_string = str(pyfile_ast)
 
-final_input_string = []
-final_lines = ""
+# Preprocess Input
+# No additional preprocessing needed
+processed_input = final_input_string
 
-
-for line in ast_source: #pyfile_ast: #lines:
-    #final_input_string.append(line)
-    final_lines += line
-
-final_input_string.append(final_lines)
-
-#print(f'New code vector: {final_input_string}')
-
-
-dataset_dir = pathlib.Path("../vaitp/vaitp_dataset_ast")
-train_dir = dataset_dir/'train'
-batch_size = 1
-seed = 4
-raw_train_ds = tf.keras.utils.text_dataset_from_directory(
-    train_dir,
-    batch_size=batch_size,
-    validation_split=0.2,
-    subset='training',
-    seed=seed)
-
-
-predicted_scores = model.predict(final_input_string, verbose=0)
+# Make predictions
+predicted_scores = model.predict(tf.constant([processed_input]), verbose=0)
 predicted_labels = get_string_labels(predicted_scores)
 
-for input, label in zip(final_input_string, predicted_labels):
-  #print("\ncode: ", input)
-  predicted_label = label.numpy()
-  print("predicted label: ", predicted_label.strip())
+for input_str, label in zip([final_input_string], predicted_labels): # list of strings, list of predicted labels
+    predicted_label = label
+    print("predicted label: ", predicted_label)
 
-  #output probable injection locations
-  if options.optimize_granularity and str(predicted_label.strip()) == str("b'injectable'"):
-  #if options.optimize_granularity:
-    print(f'Detected an injectable code. Trying to optimize granularity...')
+    # Output probable injection locations
+    if options.optimize_granularity and str(predicted_label) == "injectable":
+        print("Detected an injectable code. Trying to optimize granularity...")
+        for node in ast.walk(pyfile_ast_parsed):
+            try:
+                #try to predict the label for the node itself
+                #preprocess data
+                node_line = ast.dump(node)
+                 # No additional preprocessing needed
+                node_input = node_line
 
-    #walk through each node in the ast
-    for node in ast.walk(pyfile_ast_parsed):
-      try:
-        line = ast.dump(node)
-        #print(f'AST Node Line: {line}')
-        
-        #predict injection probabilty for the node
-        line_ps = model.predict([line], verbose=0)
-        line_pl = get_string_labels(line_ps)
-        #line_in, line_la = zip(line,line_pl)
-        #line_prediction = line_la.numpy()
-        #print(f'Prediction: {line_pl.numpy()} Line: {line}')
+                node_scores = model.predict(tf.constant([node_input]), verbose=0)
+                node_labels = get_string_labels(node_scores)
 
-        line_prediction = line_pl.numpy()
-        if str(line_prediction) == "[b'injectable']":
-          pycode = str(ast.get_source_segment(source,node))
-          n = pycode.count('\n')
-          if n == 0 and pycode != 'None':
-            print(f'[{n}] Injectable AST node python code: {pycode}')
-      except Exception as e:
-        pass #print(f'VAITP Exception handler got: {e}')  
-
+                if str(node_labels[0]) == "injectable":
+                    pycode = str(ast.get_source_segment(source, node))
+                    if pycode != 'None':
+                      n = pycode.count('\n')
+                      print(f'[{n}] Injectable AST node python code: {pycode}')
+            except Exception as e:
+                #print(f'VAITP Exception handler got: {e}') #can be noisy
+                pass

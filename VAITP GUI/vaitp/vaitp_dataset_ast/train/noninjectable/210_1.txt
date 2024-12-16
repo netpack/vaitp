@@ -1,0 +1,33 @@
+Module(
+    body=[
+        FunctionDef(
+            name='vulnerable_function',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='s')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Name(id='repr', ctx=Load()),
+                        args=[
+                            Name(id='s', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='crafted_string', ctx=Store())],
+            value=BinOp(
+                left=Constant(value='𑄑'),
+                op=Mult(),
+                right=Constant(value=1000000))),
+        Expr(
+            value=Call(
+                func=Name(id='vulnerable_function', ctx=Load()),
+                args=[
+                    Name(id='crafted_string', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

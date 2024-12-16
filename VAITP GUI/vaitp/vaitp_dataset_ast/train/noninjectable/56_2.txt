@@ -1,0 +1,22 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='ctypes')]),
+        Assign(
+            targets=[
+                Name(id='number', ctx=Store())],
+            value=Constant(value=1e+300)),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='ctypes', ctx=Load()),
+                        attr='c_double',
+                        ctx=Load()),
+                    attr='from_param',
+                    ctx=Load()),
+                args=[
+                    Name(id='number', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

@@ -1,0 +1,40 @@
+Module(
+    body=[
+        FunctionDef(
+            name='your_view_function',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='data', ctx=Store())],
+                    value=Call(
+                        func=Name(id='get_data_from_database', ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Return(
+                    value=Call(
+                        func=Name(id='render_template', ctx=Load()),
+                        args=[
+                            Constant(value='your_template.html')],
+                        keywords=[
+                            keyword(
+                                arg='endpoint',
+                                value=Subscript(
+                                    value=Name(id='data', ctx=Load()),
+                                    slice=Constant(value='endpoint'),
+                                    ctx=Load()))]))],
+            decorator_list=[
+                Call(
+                    func=Attribute(
+                        value=Name(id='app', ctx=Load()),
+                        attr='route',
+                        ctx=Load()),
+                    args=[
+                        Constant(value='/your_endpoint')],
+                    keywords=[])])],
+    type_ignores=[])

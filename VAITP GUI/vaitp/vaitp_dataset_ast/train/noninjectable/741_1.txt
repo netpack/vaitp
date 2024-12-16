@@ -1,0 +1,68 @@
+Module(
+    body=[
+        ImportFrom(
+            module='reportlab.pdfgen',
+            names=[
+                alias(name='canvas')],
+            level=0),
+        FunctionDef(
+            name='create_pdf',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='output_filename'),
+                    arg(arg='img_url')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='c', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='canvas', ctx=Load()),
+                            attr='Canvas',
+                            ctx=Load()),
+                        args=[
+                            Name(id='output_filename', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='c', ctx=Load()),
+                            attr='drawString',
+                            ctx=Load()),
+                        args=[
+                            Constant(value=100),
+                            Constant(value=750),
+                            Constant(value='Hello, ReportLab!')],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='c', ctx=Load()),
+                            attr='drawImage',
+                            ctx=Load()),
+                        args=[
+                            Name(id='img_url', ctx=Load()),
+                            Constant(value=100),
+                            Constant(value=600)],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='c', ctx=Load()),
+                            attr='save',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='create_pdf', ctx=Load()),
+                args=[
+                    Constant(value='output.pdf'),
+                    Constant(value='http://127.0.0.1:5000/image.png')],
+                keywords=[]))],
+    type_ignores=[])

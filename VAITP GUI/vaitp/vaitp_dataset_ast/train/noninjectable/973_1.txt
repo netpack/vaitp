@@ -1,0 +1,25 @@
+Module(
+    body=[
+        FunctionDef(
+            name='vulnerable_external_call',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(
+                        arg='external_contract',
+                        annotation=Name(id='address', ctx=Load()))],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='external_contract', ctx=Load()),
+                            attr='call',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            decorator_list=[
+                Name(id='public', ctx=Load())])],
+    type_ignores=[])

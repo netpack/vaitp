@@ -1,0 +1,102 @@
+Module(
+    body=[
+        ImportFrom(
+            module='email.utils',
+            names=[
+                alias(name='parseaddr')],
+            level=0),
+        FunctionDef(
+            name='handle_registration',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='email_str'),
+                    arg(arg='allowed_domains')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Tuple(
+                            elts=[
+                                Name(id='name', ctx=Store()),
+                                Name(id='email', ctx=Store())],
+                            ctx=Store())],
+                    value=Call(
+                        func=Name(id='parseaddr', ctx=Load()),
+                        args=[
+                            Name(id='email_str', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='domain', ctx=Store())],
+                    value=Subscript(
+                        value=Call(
+                            func=Attribute(
+                                value=Name(id='email', ctx=Load()),
+                                attr='split',
+                                ctx=Load()),
+                            args=[
+                                Constant(value='@')],
+                            keywords=[]),
+                        slice=UnaryOp(
+                            op=USub(),
+                            operand=Constant(value=1)),
+                        ctx=Load())),
+                If(
+                    test=Compare(
+                        left=Name(id='domain', ctx=Load()),
+                        ops=[
+                            NotIn()],
+                        comparators=[
+                            Name(id='allowed_domains', ctx=Load())]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Email domain not allowed.')],
+                                keywords=[]))],
+                    orelse=[]),
+                Return(
+                    value=JoinedStr(
+                        values=[
+                            Constant(value='Registration successful for '),
+                            FormattedValue(
+                                value=Name(id='email', ctx=Load()),
+                                conversion=-1)]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='allowed_domains', ctx=Store())],
+            value=Set(
+                elts=[
+                    Constant(value='good.example.com')])),
+        Try(
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Call(
+                                func=Name(id='handle_registration', ctx=Load()),
+                                args=[
+                                    Constant(value='user@bad.example.net@good.example.com'),
+                                    Name(id='allowed_domains', ctx=Load())],
+                                keywords=[])],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ValueError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

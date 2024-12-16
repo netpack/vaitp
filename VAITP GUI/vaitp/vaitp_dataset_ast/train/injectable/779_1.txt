@@ -1,0 +1,77 @@
+Module(
+    body=[
+        FunctionDef(
+            name='safe_mget',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='input_string')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=UnaryOp(
+                        op=Not(),
+                        operand=Call(
+                            func=Name(id='isinstance', ctx=Load()),
+                            args=[
+                                Name(id='input_string', ctx=Load()),
+                                Name(id='str', ctx=Load())],
+                            keywords=[])),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Input must be a string')],
+                                keywords=[]))],
+                    orelse=[]),
+                Assign(
+                    targets=[
+                        Name(id='processed_string', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='input_string', ctx=Load()),
+                            attr='strip',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Return(
+                    value=Name(id='processed_string', ctx=Load()))],
+            decorator_list=[]),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='result', ctx=Store())],
+                    value=Call(
+                        func=Name(id='safe_mget', ctx=Load()),
+                        args=[
+                            Constant(value='   example string   ')],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Name(id='result', ctx=Load())],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ValueError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            Constant(value='Error: '),
+                                            FormattedValue(
+                                                value=Name(id='e', ctx=Load()),
+                                                conversion=-1)])],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

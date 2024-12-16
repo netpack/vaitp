@@ -1,0 +1,127 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='urllib.parse')]),
+        Import(
+            names=[
+                alias(name='os')]),
+        FunctionDef(
+            name='is_safe_script_path',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='script_path')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='normalized_path', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='path',
+                                ctx=Load()),
+                            attr='normpath',
+                            ctx=Load()),
+                        args=[
+                            Name(id='script_path', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='allowed_dirs', ctx=Store())],
+                    value=List(
+                        elts=[
+                            Constant(value='/path/to/share/Scripts/python'),
+                            Constant(value='/path/to/user/Scripts/python')],
+                        ctx=Load())),
+                Return(
+                    value=Call(
+                        func=Name(id='any', ctx=Load()),
+                        args=[
+                            GeneratorExp(
+                                elt=Call(
+                                    func=Attribute(
+                                        value=Name(id='normalized_path', ctx=Load()),
+                                        attr='startswith',
+                                        ctx=Load()),
+                                    args=[
+                                        Call(
+                                            func=Attribute(
+                                                value=Attribute(
+                                                    value=Name(id='os', ctx=Load()),
+                                                    attr='path',
+                                                    ctx=Load()),
+                                                attr='normpath',
+                                                ctx=Load()),
+                                            args=[
+                                                Name(id='allowed_dir', ctx=Load())],
+                                            keywords=[])],
+                                    keywords=[]),
+                                generators=[
+                                    comprehension(
+                                        target=Name(id='allowed_dir', ctx=Store()),
+                                        iter=Name(id='allowed_dirs', ctx=Load()),
+                                        ifs=[],
+                                        is_async=0)])],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='execute_script',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='encoded_script_path')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='script_path', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='urllib', ctx=Load()),
+                                attr='parse',
+                                ctx=Load()),
+                            attr='unquote',
+                            ctx=Load()),
+                        args=[
+                            Name(id='encoded_script_path', ctx=Load())],
+                        keywords=[])),
+                If(
+                    test=Call(
+                        func=Name(id='is_safe_script_path', ctx=Load()),
+                        args=[
+                            Name(id='script_path', ctx=Load())],
+                        keywords=[]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='exec', ctx=Load()),
+                                args=[
+                                    Call(
+                                        func=Attribute(
+                                            value=Call(
+                                                func=Name(id='open', ctx=Load()),
+                                                args=[
+                                                    Name(id='script_path', ctx=Load())],
+                                                keywords=[]),
+                                            attr='read',
+                                            ctx=Load()),
+                                        args=[],
+                                        keywords=[])],
+                                keywords=[]))],
+                    orelse=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Attempted to execute a script outside of allowed directories.')],
+                                keywords=[]))])],
+            decorator_list=[])],
+    type_ignores=[])

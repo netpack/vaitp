@@ -1,0 +1,23 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='glob')]),
+        Assign(
+            targets=[
+                Name(id='files', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='glob', ctx=Load()),
+                    attr='glob',
+                    ctx=Load()),
+                args=[
+                    Constant(value='*.txt')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='files', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

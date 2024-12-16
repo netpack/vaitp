@@ -1,0 +1,61 @@
+Module(
+    body=[
+        AnnAssign(
+            target=Name(id='owner', ctx=Store()),
+            annotation=Call(
+                func=Name(id='public', ctx=Load()),
+                args=[
+                    Name(id='address', ctx=Load())],
+                keywords=[]),
+            simple=1),
+        AnnAssign(
+            target=Name(id='data', ctx=Store()),
+            annotation=Call(
+                func=Name(id='public', ctx=Load()),
+                args=[
+                    Name(id='uint256', ctx=Load())],
+                keywords=[]),
+            simple=1),
+        FunctionDef(
+            name='set_data',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(
+                        arg='new_data',
+                        annotation=Name(id='uint256', ctx=Load()))],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Attribute(
+                            value=Name(id='self', ctx=Load()),
+                            attr='data',
+                            ctx=Store())],
+                    value=Name(id='new_data', ctx=Load()))],
+            decorator_list=[
+                Name(id='public', ctx=Load())]),
+        FunctionDef(
+            name='set_owner',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(
+                        arg='new_owner',
+                        annotation=Name(id='address', ctx=Load()))],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Attribute(
+                            value=Name(id='self', ctx=Load()),
+                            attr='owner',
+                            ctx=Store())],
+                    value=Name(id='new_owner', ctx=Load()))],
+            decorator_list=[
+                Name(id='public', ctx=Load())])],
+    type_ignores=[])

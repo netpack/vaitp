@@ -1,0 +1,117 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='asyncio')]),
+        ImportFrom(
+            module='opcua',
+            names=[
+                alias(name='Client')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='client', ctx=Store())],
+            value=Call(
+                func=Name(id='Client', ctx=Load()),
+                args=[
+                    Constant(value='opc.tcp://localhost:4840/freeopcua/server/')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='client', ctx=Load()),
+                    attr='connect',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        AsyncFunctionDef(
+            name='send_large_chunks',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Try(
+                    body=[
+                        While(
+                            test=Constant(value=True),
+                            body=[
+                                Assign(
+                                    targets=[
+                                        Name(id='large_chunk', ctx=Store())],
+                                    value=BinOp(
+                                        left=Constant(value=b'A'),
+                                        op=Mult(),
+                                        right=BinOp(
+                                            left=BinOp(
+                                                left=BinOp(
+                                                    left=Constant(value=2),
+                                                    op=Mult(),
+                                                    right=Constant(value=1024)),
+                                                op=Mult(),
+                                                right=Constant(value=1024)),
+                                            op=Mult(),
+                                            right=Constant(value=1024)))),
+                                Expr(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='client', ctx=Load()),
+                                            attr='send_chunk',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='large_chunk', ctx=Load())],
+                                        keywords=[
+                                            keyword(
+                                                arg='is_final',
+                                                value=Constant(value=False))])),
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            Constant(value='Sent a large chunk')],
+                                        keywords=[])),
+                                Expr(
+                                    value=Await(
+                                        value=Call(
+                                            func=Attribute(
+                                                value=Name(id='asyncio', ctx=Load()),
+                                                attr='sleep',
+                                                ctx=Load()),
+                                            args=[
+                                                Constant(value=0.1)],
+                                            keywords=[])))],
+                            orelse=[])],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='Exception', ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    Constant(value='An error occurred: '),
+                                                    FormattedValue(
+                                                        value=Name(id='e', ctx=Load()),
+                                                        conversion=-1)])],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='asyncio', ctx=Load()),
+                    attr='run',
+                    ctx=Load()),
+                args=[
+                    Call(
+                        func=Name(id='send_large_chunks', ctx=Load()),
+                        args=[],
+                        keywords=[])],
+                keywords=[]))],
+    type_ignores=[])

@@ -1,0 +1,83 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='re')]),
+        FunctionDef(
+            name='parse_schema',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='schema_definition')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='pattern', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='re', ctx=Load()),
+                            attr='compile',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='(\\w+)\\s*=\\s*(.*?);')],
+                        keywords=[])),
+                For(
+                    target=Name(id='line', ctx=Store()),
+                    iter=Call(
+                        func=Attribute(
+                            value=Name(id='schema_definition', ctx=Load()),
+                            attr='splitlines',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='match', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='pattern', ctx=Load()),
+                                    attr='match',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='line', ctx=Load())],
+                                keywords=[])),
+                        If(
+                            test=Name(id='match', ctx=Load()),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    Constant(value='Parsed: '),
+                                                    FormattedValue(
+                                                        value=Call(
+                                                            func=Attribute(
+                                                                value=Name(id='match', ctx=Load()),
+                                                                attr='group',
+                                                                ctx=Load()),
+                                                            args=[
+                                                                Constant(value=1)],
+                                                            keywords=[]),
+                                                        conversion=-1),
+                                                    Constant(value=' = '),
+                                                    FormattedValue(
+                                                        value=Call(
+                                                            func=Attribute(
+                                                                value=Name(id='match', ctx=Load()),
+                                                                attr='group',
+                                                                ctx=Load()),
+                                                            args=[
+                                                                Constant(value=2)],
+                                                            keywords=[]),
+                                                        conversion=-1)])],
+                                        keywords=[]))],
+                            orelse=[])],
+                    orelse=[])],
+            decorator_list=[])],
+    type_ignores=[])

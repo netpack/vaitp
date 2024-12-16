@@ -1,0 +1,44 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='ctypes')]),
+        FunctionDef(
+            name='vulnerable_function',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='user_input')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='obj', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='ctypes', ctx=Load()),
+                            attr='c_double',
+                            ctx=Load()),
+                        args=[
+                            Name(id='user_input', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='repr', ctx=Load()),
+                        args=[
+                            Name(id='obj', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='user_input', ctx=Store())],
+            value=Constant(value='1.23456789012345678901234567890')),
+        Expr(
+            value=Call(
+                func=Name(id='vulnerable_function', ctx=Load()),
+                args=[
+                    Name(id='user_input', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

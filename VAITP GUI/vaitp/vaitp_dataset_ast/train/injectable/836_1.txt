@@ -1,0 +1,115 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='ipaddress')]),
+        FunctionDef(
+            name='is_external_ip',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='ip')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Try(
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='ip_obj', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='ipaddress', ctx=Load()),
+                                    attr='ip_address',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='ip', ctx=Load())],
+                                keywords=[])),
+                        Return(
+                            value=Attribute(
+                                value=Name(id='ip_obj', ctx=Load()),
+                                attr='is_global',
+                                ctx=Load()))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='ValueError', ctx=Load()),
+                            body=[
+                                Return(
+                                    value=Constant(value=False))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[]),
+        FunctionDef(
+            name='make_request_to_domain',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='domain'),
+                    arg(arg='ip')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=UnaryOp(
+                        op=Not(),
+                        operand=Call(
+                            func=Name(id='is_external_ip', ctx=Load()),
+                            args=[
+                                Name(id='ip', ctx=Load())],
+                            keywords=[])),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Request to internal IP addresses is not allowed.')],
+                                keywords=[]))],
+                    orelse=[]),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            JoinedStr(
+                                values=[
+                                    Constant(value='Making request to '),
+                                    FormattedValue(
+                                        value=Name(id='domain', ctx=Load()),
+                                        conversion=-1),
+                                    Constant(value=' from external IP '),
+                                    FormattedValue(
+                                        value=Name(id='ip', ctx=Load()),
+                                        conversion=-1)])],
+                        keywords=[]))],
+            decorator_list=[]),
+        Try(
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='make_request_to_domain', ctx=Load()),
+                        args=[
+                            Constant(value='https://example.com'),
+                            Constant(value='192.0.2.1')],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='make_request_to_domain', ctx=Load()),
+                        args=[
+                            Constant(value='https://example.com'),
+                            Constant(value='10.0.0.1')],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ValueError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

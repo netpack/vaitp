@@ -1,0 +1,87 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='gnupg')]),
+        ClassDef(
+            name='VulnerableGnuPG',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='gpg_home')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='gpg',
+                                    ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='gnupg', ctx=Load()),
+                                    attr='GPG',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[
+                                    keyword(
+                                        arg='gnupghome',
+                                        value=Name(id='gpg_home', ctx=Load()))]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='import_keys',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='key_data')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Return(
+                            value=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='gpg',
+                                        ctx=Load()),
+                                    attr='import_keys',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='key_data', ctx=Load())],
+                                keywords=[]))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='gpg_home', ctx=Store())],
+            value=Constant(value='/path/to/gnupg')),
+        Assign(
+            targets=[
+                Name(id='vulnerable_gpg', ctx=Store())],
+            value=Call(
+                func=Name(id='VulnerableGnuPG', ctx=Load()),
+                args=[
+                    Name(id='gpg_home', ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='result', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='vulnerable_gpg', ctx=Load()),
+                    attr='import_keys',
+                    ctx=Load()),
+                args=[
+                    Constant(value='-----BEGIN PGP PUBLIC KEY BLOCK-----\n...')],
+                keywords=[]))],
+    type_ignores=[])

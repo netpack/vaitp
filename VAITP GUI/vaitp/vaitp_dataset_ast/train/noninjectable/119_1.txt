@@ -1,0 +1,22 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='wave')]),
+        Assign(
+            targets=[
+                Name(id='malicious_wav', ctx=Store())],
+            value=Constant(value='zero_channel.wav')),
+        Assign(
+            targets=[
+                Name(id='wav_file', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='wave', ctx=Load()),
+                    attr='open',
+                    ctx=Load()),
+                args=[
+                    Name(id='malicious_wav', ctx=Load()),
+                    Constant(value='rb')],
+                keywords=[]))],
+    type_ignores=[])

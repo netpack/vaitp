@@ -1,0 +1,82 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='json')]),
+        Import(
+            names=[
+                alias(name='os')]),
+        FunctionDef(
+            name='safe_postprocess',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='user_input')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Try(
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='parsed_json', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='json', ctx=Load()),
+                                    attr='loads',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='user_input', ctx=Load())],
+                                keywords=[])),
+                        If(
+                            test=BoolOp(
+                                op=And(),
+                                values=[
+                                    Call(
+                                        func=Name(id='isinstance', ctx=Load()),
+                                        args=[
+                                            Name(id='parsed_json', ctx=Load()),
+                                            Name(id='dict', ctx=Load())],
+                                        keywords=[]),
+                                    Compare(
+                                        left=Constant(value='path'),
+                                        ops=[
+                                            In()],
+                                        comparators=[
+                                            Name(id='parsed_json', ctx=Load())])]),
+                            body=[
+                                Raise(
+                                    exc=Call(
+                                        func=Name(id='ValueError', ctx=Load()),
+                                        args=[
+                                            Constant(value="Input contains a disallowed 'path' key.")],
+                                        keywords=[]))],
+                            orelse=[])],
+                    handlers=[
+                        ExceptHandler(
+                            type=Attribute(
+                                value=Name(id='json', ctx=Load()),
+                                attr='JSONDecodeError',
+                                ctx=Load()),
+                            body=[
+                                Raise(
+                                    exc=Call(
+                                        func=Name(id='ValueError', ctx=Load()),
+                                        args=[
+                                            Constant(value='Invalid JSON input.')],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='user_input', ctx=Store())],
+            value=Constant(value='{"path": "/etc/passwd"}')),
+        Expr(
+            value=Call(
+                func=Name(id='safe_postprocess', ctx=Load()),
+                args=[
+                    Name(id='user_input', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

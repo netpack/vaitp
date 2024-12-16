@@ -1,0 +1,63 @@
+Module(
+    body=[
+        ImportFrom(
+            module='PIL',
+            names=[
+                alias(name='Image')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='img', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='Image', ctx=Load()),
+                    attr='open',
+                    ctx=Load()),
+                args=[
+                    Constant(value='image.jpg')],
+                keywords=[])),
+        Assign(
+            targets=[
+                Tuple(
+                    elts=[
+                        Name(id='width', ctx=Store()),
+                        Name(id='height', ctx=Store())],
+                    ctx=Store())],
+            value=Attribute(
+                value=Name(id='img', ctx=Load()),
+                attr='size',
+                ctx=Load())),
+        Assign(
+            targets=[
+                Name(id='pixel_data', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='img', ctx=Load()),
+                    attr='load',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Try(
+            body=[
+                Expr(
+                    value=Subscript(
+                        value=Name(id='pixel_data', ctx=Load()),
+                        slice=Tuple(
+                            elts=[
+                                Constant(value=1000000),
+                                Constant(value=1000000)],
+                            ctx=Load()),
+                        ctx=Load()))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='IndexError', ctx=Load()),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Out-of-bounds read detected!')],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

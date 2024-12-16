@@ -1,0 +1,94 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='xml.etree.ElementTree', asname='ET')]),
+        FunctionDef(
+            name='parse_xml',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='xml_data')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='parser', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='ET', ctx=Load()),
+                            attr='XMLParser',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[
+                            keyword(
+                                arg='resolve_entities',
+                                value=Constant(value=False))])),
+                Assign(
+                    targets=[
+                        Name(id='tree', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='ET', ctx=Load()),
+                            attr='fromstring',
+                            ctx=Load()),
+                        args=[
+                            Name(id='xml_data', ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='parser',
+                                value=Name(id='parser', ctx=Load()))])),
+                Return(
+                    value=Name(id='tree', ctx=Load()))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='xml_input', ctx=Store())],
+            value=Constant(value='<?xml version="1.0"?>\n<!DOCTYPE foo [\n  <!ENTITY xxe SYSTEM "file:///etc/passwd">\n]>\n<root>\n  <data>&xxe;</data>\n</root>')),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='result', ctx=Store())],
+                    value=Call(
+                        func=Name(id='parse_xml', ctx=Load()),
+                        args=[
+                            Name(id='xml_input', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Call(
+                                func=Attribute(
+                                    value=Name(id='ET', ctx=Load()),
+                                    attr='tostring',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='result', ctx=Load())],
+                                keywords=[
+                                    keyword(
+                                        arg='encoding',
+                                        value=Constant(value='unicode'))])],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='Exception', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            Constant(value='An error occurred: '),
+                                            FormattedValue(
+                                                value=Name(id='e', ctx=Load()),
+                                                conversion=-1)])],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

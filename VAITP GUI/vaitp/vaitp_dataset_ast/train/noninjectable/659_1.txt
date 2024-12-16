@@ -1,0 +1,49 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='zipfile')]),
+        FunctionDef(
+            name='vulnerable_extract',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='zip_file'),
+                    arg(arg='extract_to')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                With(
+                    items=[
+                        withitem(
+                            context_expr=Call(
+                                func=Attribute(
+                                    value=Name(id='zipfile', ctx=Load()),
+                                    attr='ZipFile',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='zip_file', ctx=Load())],
+                                keywords=[]),
+                            optional_vars=Name(id='zf', ctx=Store()))],
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='zf', ctx=Load()),
+                                    attr='extractall',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[
+                                    keyword(
+                                        arg='path',
+                                        value=Name(id='extract_to', ctx=Load()))]))])],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='vulnerable_extract', ctx=Load()),
+                args=[
+                    Constant(value='example.bscw'),
+                    Constant(value='/extraction/path')],
+                keywords=[]))],
+    type_ignores=[])

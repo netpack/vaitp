@@ -1,0 +1,141 @@
+Module(
+    body=[
+        ImportFrom(
+            module='aiohttp',
+            names=[
+                alias(name='web')],
+            level=0),
+        AsyncFunctionDef(
+            name='handle',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='request')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='content_length', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='request', ctx=Load()),
+                                attr='headers',
+                                ctx=Load()),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='Content-Length')],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='transfer_encoding', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='request', ctx=Load()),
+                                attr='headers',
+                                ctx=Load()),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='Transfer-Encoding')],
+                        keywords=[])),
+                If(
+                    test=BoolOp(
+                        op=And(),
+                        values=[
+                            Name(id='transfer_encoding', ctx=Load()),
+                            Compare(
+                                left=Constant(value='chunked'),
+                                ops=[
+                                    In()],
+                                comparators=[
+                                    Name(id='transfer_encoding', ctx=Load())])]),
+                    body=[
+                        Return(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='web', ctx=Load()),
+                                    attr='Response',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[
+                                    keyword(
+                                        arg='text',
+                                        value=Constant(value='Handled with Transfer-Encoding: chunked'))]))],
+                    orelse=[
+                        If(
+                            test=Name(id='content_length', ctx=Load()),
+                            body=[
+                                Return(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='web', ctx=Load()),
+                                            attr='Response',
+                                            ctx=Load()),
+                                        args=[],
+                                        keywords=[
+                                            keyword(
+                                                arg='text',
+                                                value=Constant(value='Handled with Content-Length'))]))],
+                            orelse=[])]),
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='web', ctx=Load()),
+                            attr='Response',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[
+                            keyword(
+                                arg='text',
+                                value=Constant(value='Hello, world'))]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='app', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='web', ctx=Load()),
+                    attr='Application',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='app', ctx=Load()),
+                        attr='router',
+                        ctx=Load()),
+                    attr='add_get',
+                    ctx=Load()),
+                args=[
+                    Constant(value='/'),
+                    Name(id='handle', ctx=Load())],
+                keywords=[])),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='web', ctx=Load()),
+                            attr='run_app',
+                            ctx=Load()),
+                        args=[
+                            Name(id='app', ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='port',
+                                value=Constant(value=8080))]))],
+            orelse=[])],
+    type_ignores=[])

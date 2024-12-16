@@ -1,0 +1,46 @@
+Module(
+    body=[
+        ImportFrom(
+            module='keystonemiddleware',
+            names=[
+                alias(name='s3_token')],
+            level=0),
+        FunctionDef(
+            name='configure_s3_token',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='app'),
+                    arg(arg='config')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='s3_token_middleware', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='s3_token', ctx=Load()),
+                            attr='S3Token',
+                            ctx=Load()),
+                        args=[
+                            Name(id='app', ctx=Load()),
+                            Dict(
+                                keys=[
+                                    Constant(value='insecure')],
+                                values=[
+                                    Call(
+                                        func=Attribute(
+                                            value=Name(id='config', ctx=Load()),
+                                            attr='get',
+                                            ctx=Load()),
+                                        args=[
+                                            Constant(value='insecure'),
+                                            Constant(value=False)],
+                                        keywords=[])])],
+                        keywords=[])),
+                Return(
+                    value=Name(id='s3_token_middleware', ctx=Load()))],
+            decorator_list=[])],
+    type_ignores=[])

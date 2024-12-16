@@ -1,0 +1,48 @@
+Module(
+    body=[
+        FunctionDef(
+            name='handle_request',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='request')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='process_request', ctx=Load()),
+                        args=[
+                            Name(id='request', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='process_request',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='request')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            JoinedStr(
+                                values=[
+                                    Constant(value='Processing request: '),
+                                    FormattedValue(
+                                        value=Name(id='request', ctx=Load()),
+                                        conversion=-1)])],
+                        keywords=[]))],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='handle_request', ctx=Load()),
+                args=[
+                    Constant(value='Sample request data')],
+                keywords=[]))],
+    type_ignores=[])

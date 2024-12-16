@@ -1,0 +1,34 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='requests')]),
+        FunctionDef(
+            name='save_url_to_cache',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='path')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='response', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='requests', ctx=Load()),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Name(id='path', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='save_url_to_cache', ctx=Load()),
+                args=[
+                    Constant(value='http://169.254.169.254/latest/meta-data/')],
+                keywords=[]))],
+    type_ignores=[])

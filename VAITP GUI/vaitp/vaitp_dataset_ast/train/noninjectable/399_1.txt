@@ -1,0 +1,43 @@
+Module(
+    body=[
+        ImportFrom(
+            module='vyper',
+            names=[
+                alias(name='nonreentrant')],
+            level=0),
+        FunctionDef(
+            name='withdraw',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(
+                        arg='amount',
+                        annotation=Name(id='uint256', ctx=Load()))],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assert(
+                    test=Compare(
+                        left=Name(id='amount', ctx=Load()),
+                        ops=[
+                            Gt()],
+                        comparators=[
+                            Constant(value=0)])),
+                Expr(
+                    value=Call(
+                        func=Name(id='send', ctx=Load()),
+                        args=[
+                            Attribute(
+                                value=Name(id='msg', ctx=Load()),
+                                attr='sender',
+                                ctx=Load()),
+                            Name(id='amount', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[
+                Call(
+                    func=Name(id='nonreentrant', ctx=Load()),
+                    args=[
+                        Constant(value='')],
+                    keywords=[])])],
+    type_ignores=[])

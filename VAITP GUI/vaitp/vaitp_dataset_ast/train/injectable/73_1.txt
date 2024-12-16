@@ -1,0 +1,89 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='urllib.request')]),
+        Import(
+            names=[
+                alias(name='re')]),
+        FunctionDef(
+            name='vulnerable_function',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='url')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='req', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='urllib', ctx=Load()),
+                                attr='request',
+                                ctx=Load()),
+                            attr='Request',
+                            ctx=Load()),
+                        args=[
+                            Name(id='url', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='response', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='urllib', ctx=Load()),
+                                attr='request',
+                                ctx=Load()),
+                            attr='urlopen',
+                            ctx=Load()),
+                        args=[
+                            Name(id='req', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='content', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='response', ctx=Load()),
+                                    attr='read',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[]),
+                            attr='decode',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='utf-8')],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='pattern', ctx=Store())],
+                    value=Constant(value='(a|b)*')),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='re', ctx=Load()),
+                            attr='search',
+                            ctx=Load()),
+                        args=[
+                            Name(id='pattern', ctx=Load()),
+                            Name(id='content', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='url', ctx=Store())],
+            value=Constant(value='http://example.com/malicious-content')),
+        Expr(
+            value=Call(
+                func=Name(id='vulnerable_function', ctx=Load()),
+                args=[
+                    Name(id='url', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

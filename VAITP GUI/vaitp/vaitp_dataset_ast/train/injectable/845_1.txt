@@ -1,0 +1,105 @@
+Module(
+    body=[
+        FunctionDef(
+            name='sanitize_input',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='user_input')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='forbidden_patterns', ctx=Store())],
+                    value=List(
+                        elts=[
+                            Constant(value='$'),
+                            Constant(value='{'),
+                            Constant(value='}'),
+                            Constant(value='('),
+                            Constant(value=')'),
+                            Constant(value='import'),
+                            Constant(value='exec'),
+                            Constant(value='eval')],
+                        ctx=Load())),
+                For(
+                    target=Name(id='pattern', ctx=Store()),
+                    iter=Name(id='forbidden_patterns', ctx=Load()),
+                    body=[
+                        If(
+                            test=Compare(
+                                left=Name(id='pattern', ctx=Load()),
+                                ops=[
+                                    In()],
+                                comparators=[
+                                    Name(id='user_input', ctx=Load())]),
+                            body=[
+                                Raise(
+                                    exc=Call(
+                                        func=Name(id='ValueError', ctx=Load()),
+                                        args=[
+                                            Constant(value='Invalid input detected!')],
+                                        keywords=[]))],
+                            orelse=[])],
+                    orelse=[]),
+                Return(
+                    value=Name(id='user_input', ctx=Load()))],
+            decorator_list=[]),
+        FunctionDef(
+            name='execute_macro',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='user_input')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='sanitized_input', ctx=Store())],
+                    value=Call(
+                        func=Name(id='sanitize_input', ctx=Load()),
+                        args=[
+                            Name(id='user_input', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            JoinedStr(
+                                values=[
+                                    Constant(value='Executing macro with sanitized input: '),
+                                    FormattedValue(
+                                        value=Name(id='sanitized_input', ctx=Load()),
+                                        conversion=-1)])],
+                        keywords=[]))],
+            decorator_list=[]),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='user_input', ctx=Store())],
+                    value=Constant(value='some_safe_macro_input')),
+                Expr(
+                    value=Call(
+                        func=Name(id='execute_macro', ctx=Load()),
+                        args=[
+                            Name(id='user_input', ctx=Load())],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ValueError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

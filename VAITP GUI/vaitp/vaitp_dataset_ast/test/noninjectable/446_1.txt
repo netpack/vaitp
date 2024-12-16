@@ -1,0 +1,28 @@
+Module(
+    body=[
+        FunctionDef(
+            name='vulnerable_rsa_decrypt',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='ciphertext'),
+                    arg(arg='private_key')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='decrypted', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='private_key', ctx=Load()),
+                            attr='decrypt',
+                            ctx=Load()),
+                        args=[
+                            Name(id='ciphertext', ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=Name(id='decrypted', ctx=Load()))],
+            decorator_list=[])],
+    type_ignores=[])

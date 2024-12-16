@@ -1,0 +1,117 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='asyncio')]),
+        AsyncFunctionDef(
+            name='task',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='sensitive_data', ctx=Store())],
+                    value=Constant(value='Sensitive Information')),
+                Expr(
+                    value=Await(
+                        value=Call(
+                            func=Attribute(
+                                value=Name(id='asyncio', ctx=Load()),
+                                attr='sleep',
+                                ctx=Load()),
+                            args=[
+                                Constant(value=1)],
+                            keywords=[]))),
+                Return(
+                    value=Name(id='sensitive_data', ctx=Load()))],
+            decorator_list=[]),
+        AsyncFunctionDef(
+            name='main',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='task_obj', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='asyncio', ctx=Load()),
+                            attr='create_task',
+                            ctx=Load()),
+                        args=[
+                            Call(
+                                func=Name(id='task', ctx=Load()),
+                                args=[],
+                                keywords=[])],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='original_task', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='asyncio', ctx=Load()),
+                            attr='current_task',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='asyncio', ctx=Load()),
+                            attr='_swap_current_task',
+                            ctx=Load()),
+                        args=[
+                            Name(id='task_obj', ctx=Load())],
+                        keywords=[])),
+                Try(
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='result', ctx=Store())],
+                            value=Await(
+                                value=Name(id='task_obj', ctx=Load()))),
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            Constant(value='Task result: '),
+                                            FormattedValue(
+                                                value=Name(id='result', ctx=Load()),
+                                                conversion=-1)])],
+                                keywords=[]))],
+                    handlers=[],
+                    orelse=[],
+                    finalbody=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='asyncio', ctx=Load()),
+                                    attr='_swap_current_task',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='original_task', ctx=Load())],
+                                keywords=[]))])],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='asyncio', ctx=Load()),
+                    attr='run',
+                    ctx=Load()),
+                args=[
+                    Call(
+                        func=Name(id='main', ctx=Load()),
+                        args=[],
+                        keywords=[])],
+                keywords=[]))],
+    type_ignores=[])

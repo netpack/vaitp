@@ -1,0 +1,36 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='sqlparse')]),
+        Assign(
+            targets=[
+                Name(id='sql', ctx=Store())],
+            value=BinOp(
+                left=Constant(value='\n-- This is a comment\nSELECT * FROM users;  -- Another comment\n-- Repeated comments\n'),
+                op=Add(),
+                right=BinOp(
+                    left=Constant(value='\r\n'),
+                    op=Mult(),
+                    right=Constant(value=1000)))),
+        Assign(
+            targets=[
+                Name(id='formatted_sql', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='sqlparse', ctx=Load()),
+                    attr='format',
+                    ctx=Load()),
+                args=[
+                    Name(id='sql', ctx=Load())],
+                keywords=[
+                    keyword(
+                        arg='strip_comments',
+                        value=Constant(value=True))])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='formatted_sql', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

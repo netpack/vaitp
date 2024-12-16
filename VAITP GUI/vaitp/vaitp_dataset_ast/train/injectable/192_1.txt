@@ -1,0 +1,92 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='audioop')]),
+        FunctionDef(
+            name='safe_lin2lin',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='data'),
+                    arg(arg='nchannels'),
+                    arg(arg='width'),
+                    arg(arg='new_nchannels'),
+                    arg(arg='new_width')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='max_size', ctx=Store())],
+                    value=BinOp(
+                        left=BinOp(
+                            left=Constant(value=2),
+                            op=Pow(),
+                            right=Constant(value=31)),
+                        op=Sub(),
+                        right=Constant(value=1))),
+                If(
+                    test=Compare(
+                        left=Call(
+                            func=Name(id='len', ctx=Load()),
+                            args=[
+                                Name(id='data', ctx=Load())],
+                            keywords=[]),
+                        ops=[
+                            Gt()],
+                        comparators=[
+                            Name(id='max_size', ctx=Load())]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Input data is too large')],
+                                keywords=[]))],
+                    orelse=[]),
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='audioop', ctx=Load()),
+                            attr='lin2lin',
+                            ctx=Load()),
+                        args=[
+                            Name(id='data', ctx=Load()),
+                            Name(id='width', ctx=Load()),
+                            Name(id='new_width', ctx=Load()),
+                            Name(id='new_nchannels', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='result', ctx=Store())],
+                    value=Call(
+                        func=Name(id='safe_lin2lin', ctx=Load()),
+                        args=[
+                            BinOp(
+                                left=Constant(value=b'\x00'),
+                                op=Mult(),
+                                right=Constant(value=1000)),
+                            Constant(value=1),
+                            Constant(value=2),
+                            Constant(value=2),
+                            Constant(value=2)],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ValueError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

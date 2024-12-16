@@ -1,0 +1,147 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='http.server')]),
+        Import(
+            names=[
+                alias(name='socketserver')]),
+        FunctionDef(
+            name='start_doc_server',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                ClassDef(
+                    name='DocRequestHandler',
+                    bases=[
+                        Attribute(
+                            value=Attribute(
+                                value=Name(id='http', ctx=Load()),
+                                attr='server',
+                                ctx=Load()),
+                            attr='SimpleHTTPRequestHandler',
+                            ctx=Load())],
+                    keywords=[],
+                    body=[
+                        FunctionDef(
+                            name='do_GET',
+                            args=arguments(
+                                posonlyargs=[],
+                                args=[
+                                    arg(arg='self')],
+                                kwonlyargs=[],
+                                kw_defaults=[],
+                                defaults=[]),
+                            body=[
+                                If(
+                                    test=Call(
+                                        func=Attribute(
+                                            value=Attribute(
+                                                value=Name(id='self', ctx=Load()),
+                                                attr='path',
+                                                ctx=Load()),
+                                            attr='endswith',
+                                            ctx=Load()),
+                                        args=[
+                                            Constant(value='.html')],
+                                        keywords=[]),
+                                    body=[
+                                        Return(
+                                            value=Call(
+                                                func=Attribute(
+                                                    value=Attribute(
+                                                        value=Attribute(
+                                                            value=Name(id='http', ctx=Load()),
+                                                            attr='server',
+                                                            ctx=Load()),
+                                                        attr='SimpleHTTPRequestHandler',
+                                                        ctx=Load()),
+                                                    attr='do_GET',
+                                                    ctx=Load()),
+                                                args=[
+                                                    Name(id='self', ctx=Load())],
+                                                keywords=[]))],
+                                    orelse=[
+                                        Expr(
+                                            value=Call(
+                                                func=Attribute(
+                                                    value=Name(id='self', ctx=Load()),
+                                                    attr='send_response',
+                                                    ctx=Load()),
+                                                args=[
+                                                    Constant(value=403)],
+                                                keywords=[])),
+                                        Expr(
+                                            value=Call(
+                                                func=Attribute(
+                                                    value=Name(id='self', ctx=Load()),
+                                                    attr='end_headers',
+                                                    ctx=Load()),
+                                                args=[],
+                                                keywords=[])),
+                                        Expr(
+                                            value=Call(
+                                                func=Attribute(
+                                                    value=Attribute(
+                                                        value=Name(id='self', ctx=Load()),
+                                                        attr='wfile',
+                                                        ctx=Load()),
+                                                    attr='write',
+                                                    ctx=Load()),
+                                                args=[
+                                                    Constant(value=b'Forbidden')],
+                                                keywords=[]))])],
+                            decorator_list=[])],
+                    decorator_list=[]),
+                With(
+                    items=[
+                        withitem(
+                            context_expr=Call(
+                                func=Attribute(
+                                    value=Name(id='socketserver', ctx=Load()),
+                                    attr='TCPServer',
+                                    ctx=Load()),
+                                args=[
+                                    Tuple(
+                                        elts=[
+                                            Constant(value='localhost'),
+                                            Constant(value=7464)],
+                                        ctx=Load()),
+                                    Name(id='DocRequestHandler', ctx=Load())],
+                                keywords=[]),
+                            optional_vars=Name(id='httpd', ctx=Store()))],
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Serving documentation at http://localhost:7464')],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='httpd', ctx=Load()),
+                                    attr='serve_forever',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[]))])],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='start_doc_server', ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

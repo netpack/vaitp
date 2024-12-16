@@ -1,0 +1,62 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='urllib.request')]),
+        Assign(
+            targets=[
+                Name(id='server', ctx=Store())],
+            value=Constant(value='http://example.com/')),
+        Assign(
+            targets=[
+                Name(id='request', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='urllib', ctx=Load()),
+                        attr='request',
+                        ctx=Load()),
+                    attr='Request',
+                    ctx=Load()),
+                args=[
+                    Name(id='server', ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='auth_handler', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='urllib', ctx=Load()),
+                        attr='request',
+                        ctx=Load()),
+                    attr='AbstractBasicAuthHandler',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='opener', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='urllib', ctx=Load()),
+                        attr='request',
+                        ctx=Load()),
+                    attr='build_opener',
+                    ctx=Load()),
+                args=[
+                    Name(id='auth_handler', ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='response', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='opener', ctx=Load()),
+                    attr='open',
+                    ctx=Load()),
+                args=[
+                    Name(id='request', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

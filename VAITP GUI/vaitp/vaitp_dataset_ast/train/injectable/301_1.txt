@@ -1,0 +1,127 @@
+Module(
+    body=[
+        FunctionDef(
+            name='safe_netstring_encode',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='data')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Constant(value='Encodes data as a netstring.')),
+                Assign(
+                    targets=[
+                        Name(id='encoded', ctx=Store())],
+                    value=JoinedStr(
+                        values=[
+                            FormattedValue(
+                                value=Call(
+                                    func=Name(id='len', ctx=Load()),
+                                    args=[
+                                        Name(id='data', ctx=Load())],
+                                    keywords=[]),
+                                conversion=-1),
+                            Constant(value=':'),
+                            FormattedValue(
+                                value=Name(id='data', ctx=Load()),
+                                conversion=-1),
+                            Constant(value=',')])),
+                Return(
+                    value=Name(id='encoded', ctx=Load()))],
+            decorator_list=[]),
+        FunctionDef(
+            name='safe_netstring_decode',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='netstring')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Constant(value='Decodes a netstring.')),
+                Assign(
+                    targets=[
+                        Tuple(
+                            elts=[
+                                Name(id='length', ctx=Store()),
+                                Name(id='data', ctx=Store())],
+                            ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='netstring', ctx=Load()),
+                            attr='split',
+                            ctx=Load()),
+                        args=[
+                            Constant(value=':'),
+                            Constant(value=1)],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='data', ctx=Store())],
+                    value=Subscript(
+                        value=Name(id='data', ctx=Load()),
+                        slice=Slice(
+                            upper=UnaryOp(
+                                op=USub(),
+                                operand=Constant(value=1))),
+                        ctx=Load())),
+                If(
+                    test=Compare(
+                        left=Call(
+                            func=Name(id='len', ctx=Load()),
+                            args=[
+                                Name(id='data', ctx=Load())],
+                            keywords=[]),
+                        ops=[
+                            NotEq()],
+                        comparators=[
+                            Call(
+                                func=Name(id='int', ctx=Load()),
+                                args=[
+                                    Name(id='length', ctx=Load())],
+                                keywords=[])]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Invalid netstring length')],
+                                keywords=[]))],
+                    orelse=[]),
+                Return(
+                    value=Name(id='data', ctx=Load()))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='encoded', ctx=Store())],
+            value=Call(
+                func=Name(id='safe_netstring_encode', ctx=Load()),
+                args=[
+                    Constant(value='Hello, World!')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='encoded', ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='decoded', ctx=Store())],
+            value=Call(
+                func=Name(id='safe_netstring_decode', ctx=Load()),
+                args=[
+                    Name(id='encoded', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='decoded', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

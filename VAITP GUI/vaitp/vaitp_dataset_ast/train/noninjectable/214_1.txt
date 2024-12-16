@@ -1,0 +1,53 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        FunctionDef(
+            name='create_temp_file',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='temp_file', ctx=Store())],
+                    value=Constant(value='/tmp/temp_file')),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='os', ctx=Load()),
+                            attr='_execvpe',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='touch'),
+                            Tuple(
+                                elts=[
+                                    Constant(value='touch'),
+                                    Name(id='temp_file', ctx=Load())],
+                                ctx=Load()),
+                            Dict(keys=[], values=[])],
+                        keywords=[])),
+                Return(
+                    value=Name(id='temp_file', ctx=Load()))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='temp_file', ctx=Store())],
+            value=Call(
+                func=Name(id='create_temp_file', ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='os', ctx=Load()),
+                    attr='remove',
+                    ctx=Load()),
+                args=[
+                    Name(id='temp_file', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

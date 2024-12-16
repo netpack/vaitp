@@ -1,0 +1,137 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        Import(
+            names=[
+                alias(name='urllib.request')]),
+        FunctionDef(
+            name='download_file',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='url'),
+                    arg(arg='save_directory')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=UnaryOp(
+                        op=Not(),
+                        operand=Call(
+                            func=Name(id='is_valid_url', ctx=Load()),
+                            args=[
+                                Name(id='url', ctx=Load())],
+                            keywords=[])),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Invalid URL')],
+                                keywords=[]))],
+                    orelse=[]),
+                Assign(
+                    targets=[
+                        Name(id='file_name', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='path',
+                                ctx=Load()),
+                            attr='basename',
+                            ctx=Load()),
+                        args=[
+                            Name(id='url', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='safe_path', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='path',
+                                ctx=Load()),
+                            attr='join',
+                            ctx=Load()),
+                        args=[
+                            Name(id='save_directory', ctx=Load()),
+                            Name(id='file_name', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='urllib', ctx=Load()),
+                                attr='request',
+                                ctx=Load()),
+                            attr='urlretrieve',
+                            ctx=Load()),
+                        args=[
+                            Name(id='url', ctx=Load()),
+                            Name(id='safe_path', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='is_valid_url',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='url')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=BoolOp(
+                        op=Or(),
+                        values=[
+                            Call(
+                                func=Attribute(
+                                    value=Name(id='url', ctx=Load()),
+                                    attr='startswith',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='http://')],
+                                keywords=[]),
+                            Call(
+                                func=Attribute(
+                                    value=Name(id='url', ctx=Load()),
+                                    attr='startswith',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='https://')],
+                                keywords=[])]))],
+            decorator_list=[]),
+        Try(
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='download_file', ctx=Load()),
+                        args=[
+                            Constant(value='http://example.com/file.txt'),
+                            Constant(value='/safe/directory')],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='Exception', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            Constant(value='An error occurred: '),
+                                            FormattedValue(
+                                                value=Name(id='e', ctx=Load()),
+                                                conversion=-1)])],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

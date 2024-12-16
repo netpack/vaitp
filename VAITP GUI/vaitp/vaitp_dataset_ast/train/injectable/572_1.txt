@@ -1,0 +1,76 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='certifi')]),
+        Import(
+            names=[
+                alias(name='ssl')]),
+        Assign(
+            targets=[
+                Name(id='context', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='ssl', ctx=Load()),
+                    attr='create_default_context',
+                    ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='cafile',
+                        value=Call(
+                            func=Attribute(
+                                value=Name(id='certifi', ctx=Load()),
+                                attr='where',
+                                ctx=Load()),
+                            args=[],
+                            keywords=[]))])),
+        With(
+            items=[
+                withitem(
+                    context_expr=Call(
+                        func=Attribute(
+                            value=Name(id='ssl', ctx=Load()),
+                            attr='wrap_socket',
+                            ctx=Load()),
+                        args=[
+                            Call(
+                                func=Attribute(
+                                    value=Name(id='socket', ctx=Load()),
+                                    attr='socket',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[])],
+                        keywords=[
+                            keyword(
+                                arg='ssl_context',
+                                value=Name(id='context', ctx=Load()))]),
+                    optional_vars=Name(id='s', ctx=Store()))],
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='s', ctx=Load()),
+                            attr='connect',
+                            ctx=Load()),
+                        args=[
+                            Tuple(
+                                elts=[
+                                    Constant(value='example.com'),
+                                    Constant(value=443)],
+                                ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Call(
+                                func=Attribute(
+                                    value=Name(id='s', ctx=Load()),
+                                    attr='recv',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value=1024)],
+                                keywords=[])],
+                        keywords=[]))])],
+    type_ignores=[])

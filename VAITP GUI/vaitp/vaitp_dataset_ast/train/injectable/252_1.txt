@@ -1,0 +1,130 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='untangled')]),
+        Import(
+            names=[
+                alias(name='xml.etree.ElementTree', asname='ET')]),
+        FunctionDef(
+            name='is_valid_xml',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='xml_string')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Try(
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='ET', ctx=Load()),
+                                    attr='fromstring',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='xml_string', ctx=Load())],
+                                keywords=[])),
+                        Return(
+                            value=Constant(value=True))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Attribute(
+                                value=Name(id='ET', ctx=Load()),
+                                attr='ParseError',
+                                ctx=Load()),
+                            body=[
+                                Return(
+                                    value=Constant(value=False))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[]),
+        FunctionDef(
+            name='safe_parse_xml',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='xml_string')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=UnaryOp(
+                        op=Not(),
+                        operand=Call(
+                            func=Name(id='is_valid_xml', ctx=Load()),
+                            args=[
+                                Name(id='xml_string', ctx=Load())],
+                            keywords=[])),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Invalid XML input')],
+                                keywords=[]))],
+                    orelse=[]),
+                Assign(
+                    targets=[
+                        Name(id='obj', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='untangled', ctx=Load()),
+                            attr='parse',
+                            ctx=Load()),
+                        args=[
+                            Name(id='xml_string', ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=Name(id='obj', ctx=Load()))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='vulnerable_xml', ctx=Store())],
+            value=Constant(value='<root><element>Some data</element></root>')),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='result', ctx=Store())],
+                    value=Call(
+                        func=Name(id='safe_parse_xml', ctx=Load()),
+                        args=[
+                            Name(id='vulnerable_xml', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Parsed XML:'),
+                            Name(id='result', ctx=Load())],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ValueError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Error:'),
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))]),
+                ExceptHandler(
+                    type=Name(id='Exception', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='An unexpected error occurred:'),
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

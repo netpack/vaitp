@@ -1,0 +1,19 @@
+Module(
+    body=[
+        FunctionDef(
+            name='process_pdf',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='pdf_data')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                While(
+                    test=Constant(value=True),
+                    body=[
+                        Pass()],
+                    orelse=[])],
+            decorator_list=[])],
+    type_ignores=[])

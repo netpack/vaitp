@@ -1,0 +1,123 @@
+Module(
+    body=[
+        ImportFrom(
+            module='oic',
+            names=[
+                alias(name='oic')],
+            level=0),
+        ImportFrom(
+            module='oic.oauth2',
+            names=[
+                alias(name='Client')],
+            level=0),
+        ImportFrom(
+            module='oic.utils.keyio',
+            names=[
+                alias(name='KeyJar')],
+            level=0),
+        ClassDef(
+            name='VulnerableConsumer',
+            bases=[
+                Attribute(
+                    value=Attribute(
+                        value=Name(id='oic', ctx=Load()),
+                        attr='consumer',
+                        ctx=Load()),
+                    attr='Consumer',
+                    ctx=Load())],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='parse_authz',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='authz_response')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='id_token', ctx=Store())],
+                            value=Subscript(
+                                value=Name(id='authz_response', ctx=Load()),
+                                slice=Constant(value='id_token'),
+                                ctx=Load())),
+                        If(
+                            test=Compare(
+                                left=Subscript(
+                                    value=Name(id='id_token', ctx=Load()),
+                                    slice=Constant(value='alg'),
+                                    ctx=Load()),
+                                ops=[
+                                    Eq()],
+                                comparators=[
+                                    Constant(value='none')]),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            Constant(value="Warning: IdToken signature algorithm is 'none'")],
+                                        keywords=[]))],
+                            orelse=[]),
+                        Return(
+                            value=Name(id='id_token', ctx=Load()))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='client', ctx=Store())],
+            value=Call(
+                func=Name(id='Client', ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='client_id',
+                        value=Constant(value='your_client_id')),
+                    keyword(
+                        arg='client_secret',
+                        value=Constant(value='your_client_secret'))])),
+        Assign(
+            targets=[
+                Name(id='consumer', ctx=Store())],
+            value=Call(
+                func=Name(id='VulnerableConsumer', ctx=Load()),
+                args=[
+                    Name(id='client', ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='authz_response', ctx=Store())],
+            value=Dict(
+                keys=[
+                    Constant(value='id_token')],
+                values=[
+                    Dict(
+                        keys=[
+                            Constant(value='alg'),
+                            Constant(value='iat')],
+                        values=[
+                            Constant(value='none'),
+                            Constant(value=1609459200)])])),
+        Assign(
+            targets=[
+                Name(id='id_token', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='consumer', ctx=Load()),
+                    attr='parse_authz',
+                    ctx=Load()),
+                args=[
+                    Name(id='authz_response', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Constant(value='Parsed IdToken:'),
+                    Name(id='id_token', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

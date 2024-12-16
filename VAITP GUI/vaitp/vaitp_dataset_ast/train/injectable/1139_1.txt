@@ -1,0 +1,108 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='csv')]),
+        FunctionDef(
+            name='safe_load_csv',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='file_path')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                With(
+                    items=[
+                        withitem(
+                            context_expr=Call(
+                                func=Name(id='open', ctx=Load()),
+                                args=[
+                                    Name(id='file_path', ctx=Load()),
+                                    Constant(value='r')],
+                                keywords=[]),
+                            optional_vars=Name(id='file', ctx=Store()))],
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='reader', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='csv', ctx=Load()),
+                                    attr='reader',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='file', ctx=Load())],
+                                keywords=[])),
+                        Assign(
+                            targets=[
+                                Name(id='data', ctx=Store())],
+                            value=List(elts=[], ctx=Load())),
+                        For(
+                            target=Name(id='row', ctx=Store()),
+                            iter=Name(id='reader', ctx=Load()),
+                            body=[
+                                If(
+                                    test=Call(
+                                        func=Name(id='any', ctx=Load()),
+                                        args=[
+                                            GeneratorExp(
+                                                elt=Compare(
+                                                    left=Constant(value='eval'),
+                                                    ops=[
+                                                        In()],
+                                                    comparators=[
+                                                        Name(id='cell', ctx=Load())]),
+                                                generators=[
+                                                    comprehension(
+                                                        target=Name(id='cell', ctx=Store()),
+                                                        iter=Name(id='row', ctx=Load()),
+                                                        ifs=[],
+                                                        is_async=0)])],
+                                        keywords=[]),
+                                    body=[
+                                        Raise(
+                                            exc=Call(
+                                                func=Name(id='ValueError', ctx=Load()),
+                                                args=[
+                                                    Constant(value='Malicious content detected in CSV.')],
+                                                keywords=[]))],
+                                    orelse=[]),
+                                Expr(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='data', ctx=Load()),
+                                            attr='append',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='row', ctx=Load())],
+                                        keywords=[]))],
+                            orelse=[])]),
+                Return(
+                    value=Name(id='data', ctx=Load()))],
+            decorator_list=[]),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='csv_data', ctx=Store())],
+                    value=Call(
+                        func=Name(id='safe_load_csv', ctx=Load()),
+                        args=[
+                            Constant(value='malicious_file.csv')],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ValueError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

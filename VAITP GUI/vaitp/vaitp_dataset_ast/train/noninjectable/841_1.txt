@@ -1,0 +1,62 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='tensorflow', asname='tf')]),
+        FunctionDef(
+            name='load_model',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='model_path')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='model', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='tf', ctx=Load()),
+                                attr='saved_model',
+                                ctx=Load()),
+                            attr='load',
+                            ctx=Load()),
+                        args=[
+                            Name(id='model_path', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='mlir_ir', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Attribute(
+                                    value=Name(id='tf', ctx=Load()),
+                                    attr='experimental',
+                                    ctx=Load()),
+                                attr='mlir',
+                                ctx=Load()),
+                            attr='convert_to_mlir',
+                            ctx=Load()),
+                        args=[
+                            Name(id='model', ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=Name(id='mlir_ir', ctx=Load()))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='model_path', ctx=Store())],
+            value=Constant(value='path/to/saved_model')),
+        Assign(
+            targets=[
+                Name(id='mlir_ir', ctx=Store())],
+            value=Call(
+                func=Name(id='load_model', ctx=Load()),
+                args=[
+                    Name(id='model_path', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

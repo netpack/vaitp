@@ -1,0 +1,167 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='threading')]),
+        Import(
+            names=[
+                alias(name='time')]),
+        Assign(
+            targets=[
+                Name(id='dpll_lock', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='threading', ctx=Load()),
+                    attr='Lock',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='nlk_cb_mutex', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='threading', ctx=Load()),
+                    attr='Lock',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        FunctionDef(
+            name='dpll_lock_dumpit',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                With(
+                    items=[
+                        withitem(
+                            context_expr=Name(id='dpll_lock', ctx=Load()))],
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Holding dpll_lock')],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='time', ctx=Load()),
+                                    attr='sleep',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value=1)],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Name(id='netlink_dump', ctx=Load()),
+                                args=[],
+                                keywords=[]))])],
+            decorator_list=[]),
+        FunctionDef(
+            name='netlink_dump',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                With(
+                    items=[
+                        withitem(
+                            context_expr=Name(id='nlk_cb_mutex', ctx=Load()))],
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Holding nlk_cb_mutex')],
+                                keywords=[]))])],
+            decorator_list=[]),
+        FunctionDef(
+            name='simulate_deadlock',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='thread1', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='threading', ctx=Load()),
+                            attr='Thread',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[
+                            keyword(
+                                arg='target',
+                                value=Name(id='dpll_lock_dumpit', ctx=Load()))])),
+                Assign(
+                    targets=[
+                        Name(id='thread2', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='threading', ctx=Load()),
+                            attr='Thread',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[
+                            keyword(
+                                arg='target',
+                                value=Name(id='netlink_dump', ctx=Load()))])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='thread1', ctx=Load()),
+                            attr='start',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='time', ctx=Load()),
+                            attr='sleep',
+                            ctx=Load()),
+                        args=[
+                            Constant(value=0.1)],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='thread2', ctx=Load()),
+                            attr='start',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='thread1', ctx=Load()),
+                            attr='join',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='thread2', ctx=Load()),
+                            attr='join',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='simulate_deadlock', ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

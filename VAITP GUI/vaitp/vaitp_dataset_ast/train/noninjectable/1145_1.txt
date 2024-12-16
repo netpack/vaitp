@@ -1,0 +1,26 @@
+Module(
+    body=[
+        FunctionDef(
+            name='vulnerable_update_query',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='query')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='eval', ctx=Load()),
+                        args=[
+                            Name(id='query', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='vulnerable_update_query', ctx=Load()),
+                args=[
+                    Constant(value="UPDATE my_table SET column='value'; os.system('malicious_command')")],
+                keywords=[]))],
+    type_ignores=[])

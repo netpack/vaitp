@@ -1,0 +1,58 @@
+Module(
+    body=[
+        FunctionDef(
+            name='execute_user_code',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='user_input')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Try(
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='result', ctx=Store())],
+                            value=Call(
+                                func=Name(id='eval', ctx=Load()),
+                                args=[
+                                    Name(id='user_input', ctx=Load())],
+                                keywords=[])),
+                        Return(
+                            value=Name(id='result', ctx=Load()))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='Exception', ctx=Load()),
+                            name='e',
+                            body=[
+                                Return(
+                                    value=Call(
+                                        func=Name(id='str', ctx=Load()),
+                                        args=[
+                                            Name(id='e', ctx=Load())],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='user_input', ctx=Store())],
+            value=Constant(value="__import__('os').system('ls')")),
+        Assign(
+            targets=[
+                Name(id='output', ctx=Store())],
+            value=Call(
+                func=Name(id='execute_user_code', ctx=Load()),
+                args=[
+                    Name(id='user_input', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Constant(value='Output:'),
+                    Name(id='output', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

@@ -1,0 +1,168 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        ClassDef(
+            name='SecureActiveXControl',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='allowed_paths',
+                                    ctx=Store())],
+                            value=List(
+                                elts=[
+                                    Call(
+                                        func=Attribute(
+                                            value=Attribute(
+                                                value=Name(id='os', ctx=Load()),
+                                                attr='path',
+                                                ctx=Load()),
+                                            attr='expanduser',
+                                            ctx=Load()),
+                                        args=[
+                                            Constant(value='~')],
+                                        keywords=[])],
+                                ctx=Load()))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='read_file',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='file_path')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='normalized_path', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='os', ctx=Load()),
+                                        attr='path',
+                                        ctx=Load()),
+                                    attr='abspath',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='file_path', ctx=Load())],
+                                keywords=[])),
+                        If(
+                            test=Call(
+                                func=Name(id='any', ctx=Load()),
+                                args=[
+                                    GeneratorExp(
+                                        elt=Call(
+                                            func=Attribute(
+                                                value=Name(id='normalized_path', ctx=Load()),
+                                                attr='startswith',
+                                                ctx=Load()),
+                                            args=[
+                                                Call(
+                                                    func=Attribute(
+                                                        value=Attribute(
+                                                            value=Name(id='os', ctx=Load()),
+                                                            attr='path',
+                                                            ctx=Load()),
+                                                        attr='abspath',
+                                                        ctx=Load()),
+                                                    args=[
+                                                        Name(id='allowed_path', ctx=Load())],
+                                                    keywords=[])],
+                                            keywords=[]),
+                                        generators=[
+                                            comprehension(
+                                                target=Name(id='allowed_path', ctx=Store()),
+                                                iter=Attribute(
+                                                    value=Name(id='self', ctx=Load()),
+                                                    attr='allowed_paths',
+                                                    ctx=Load()),
+                                                ifs=[],
+                                                is_async=0)])],
+                                keywords=[]),
+                            body=[
+                                With(
+                                    items=[
+                                        withitem(
+                                            context_expr=Call(
+                                                func=Name(id='open', ctx=Load()),
+                                                args=[
+                                                    Name(id='normalized_path', ctx=Load()),
+                                                    Constant(value='r')],
+                                                keywords=[]),
+                                            optional_vars=Name(id='file', ctx=Store()))],
+                                    body=[
+                                        Return(
+                                            value=Call(
+                                                func=Attribute(
+                                                    value=Name(id='file', ctx=Load()),
+                                                    attr='read',
+                                                    ctx=Load()),
+                                                args=[],
+                                                keywords=[]))])],
+                            orelse=[
+                                Raise(
+                                    exc=Call(
+                                        func=Name(id='PermissionError', ctx=Load()),
+                                        args=[
+                                            Constant(value='Access to the requested file is denied.')],
+                                        keywords=[]))])],
+                    decorator_list=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='secure_control', ctx=Store())],
+            value=Call(
+                func=Name(id='SecureActiveXControl', ctx=Load()),
+                args=[],
+                keywords=[])),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='content', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='secure_control', ctx=Load()),
+                            attr='read_file',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='example.txt')],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Name(id='content', ctx=Load())],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='PermissionError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

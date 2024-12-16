@@ -1,0 +1,43 @@
+Module(
+    body=[
+        ImportFrom(
+            module='mod_python',
+            names=[
+                alias(name='apache')],
+            level=0),
+        FunctionDef(
+            name='handler',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='req')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='query_string', ctx=Store())],
+                    value=Attribute(
+                        value=Name(id='req', ctx=Load()),
+                        attr='args',
+                        ctx=Load())),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='req', ctx=Load()),
+                            attr='write',
+                            ctx=Load()),
+                        args=[
+                            BinOp(
+                                left=Constant(value='Processing query string: '),
+                                op=Add(),
+                                right=Name(id='query_string', ctx=Load()))],
+                        keywords=[])),
+                Return(
+                    value=Attribute(
+                        value=Name(id='apache', ctx=Load()),
+                        attr='OK',
+                        ctx=Load()))],
+            decorator_list=[])],
+    type_ignores=[])

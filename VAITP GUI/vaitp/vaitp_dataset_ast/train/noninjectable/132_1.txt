@@ -1,0 +1,72 @@
+Module(
+    body=[
+        ClassDef(
+            name='VulnerableHTTPConnection',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='putheader',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='header'),
+                            arg(arg='value')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            FormattedValue(
+                                                value=Name(id='header', ctx=Load()),
+                                                conversion=-1),
+                                            Constant(value=': '),
+                                            FormattedValue(
+                                                value=Name(id='value', ctx=Load()),
+                                                conversion=-1)])],
+                                keywords=[]))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='connection', ctx=Store())],
+                    value=Call(
+                        func=Name(id='VulnerableHTTPConnection', ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='connection', ctx=Load()),
+                            attr='putheader',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='Content-Type'),
+                            Constant(value='application/json')],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='connection', ctx=Load()),
+                            attr='putheader',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='X-Custom-Header'),
+                            Constant(value='value\r\nInjected-Header: malicious')],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

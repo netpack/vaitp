@@ -1,0 +1,113 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='numpy', asname='np')]),
+        Import(
+            names=[
+                alias(name='pickle')]),
+        ImportFrom(
+            module='sagemaker.base_deserializers',
+            names=[
+                alias(name='NumpyDeserializer')],
+            level=0),
+        FunctionDef(
+            name='unsafe_deserialization',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='pickled_data')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='pickle', ctx=Load()),
+                            attr='loads',
+                            ctx=Load()),
+                        args=[
+                            Name(id='pickled_data', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='safe_deserialization',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='pickled_data')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Call(
+                        func=Name(id='isinstance', ctx=Load()),
+                        args=[
+                            Name(id='pickled_data', ctx=Load()),
+                            Name(id='bytes', ctx=Load())],
+                        keywords=[]),
+                    body=[
+                        Return(
+                            value=Call(
+                                func=Attribute(
+                                    value=Call(
+                                        func=Name(id='NumpyDeserializer', ctx=Load()),
+                                        args=[],
+                                        keywords=[]),
+                                    attr='deserialize',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='pickled_data', ctx=Load())],
+                                keywords=[]))],
+                    orelse=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Untrusted data source')],
+                                keywords=[]))])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='trusted_data', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='np', ctx=Load()),
+                    attr='array',
+                    ctx=Load()),
+                args=[
+                    List(
+                        elts=[
+                            Constant(value=1),
+                            Constant(value=2),
+                            Constant(value=3)],
+                        ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='pickled_data', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='pickle', ctx=Load()),
+                    attr='dumps',
+                    ctx=Load()),
+                args=[
+                    Name(id='trusted_data', ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='result', ctx=Store())],
+            value=Call(
+                func=Name(id='safe_deserialization', ctx=Load()),
+                args=[
+                    Name(id='pickled_data', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='result', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

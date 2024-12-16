@@ -1,0 +1,61 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='jsonpickle')]),
+        FunctionDef(
+            name='safe_deserialize',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='data')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='jsonpickle', ctx=Load()),
+                            attr='decode',
+                            ctx=Load()),
+                        args=[
+                            Name(id='data', ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='classes',
+                                value=Tuple(
+                                    elts=[
+                                        Name(id='YourAllowedClass1', ctx=Load()),
+                                        Name(id='YourAllowedClass2', ctx=Load())],
+                                    ctx=Load()))]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='malicious_payload', ctx=Store())],
+            value=Constant(value='{"py/object": "__main__.YourMaliciousClass"}')),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='result', ctx=Store())],
+                    value=Call(
+                        func=Name(id='safe_deserialize', ctx=Load()),
+                        args=[
+                            Name(id='malicious_payload', ctx=Load())],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='Exception', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Deserialization failed:'),
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

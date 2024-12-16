@@ -1,0 +1,10 @@
+```
+asm("fmrx r0, #0\n"
+    "fmxr r1, #0\n"
+    "fldmiad r0, =0x12345678\n"
+    "fldmiad r1, =0x12345678\n"
+    "fmuld r0, r0, r1\n"
+    "fmuld r1, r0, r1\n"
+    "fstsid d0, [r0]\n"
+    "fstsid d1, [r1]");
+```

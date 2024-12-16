@@ -1,0 +1,35 @@
+Module(
+    body=[
+        ImportFrom(
+            module='novajoin',
+            names=[
+                alias(name='Novajoin')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='novajoin', ctx=Store())],
+            value=Call(
+                func=Name(id='Novajoin', ctx=Load()),
+                args=[
+                    Constant(value='https://keystone.example.com/v3'),
+                    Constant(value='admin'),
+                    Constant(value='password')],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='token', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='novajoin', ctx=Load()),
+                    attr='generate_token',
+                    ctx=Load()),
+                args=[
+                    Constant(value='user')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='token', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

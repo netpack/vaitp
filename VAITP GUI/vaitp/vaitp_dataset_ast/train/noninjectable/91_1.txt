@@ -1,0 +1,149 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='bz2')]),
+        Import(
+            names=[
+                alias(name='os')]),
+        FunctionDef(
+            name='create_malicious_bz2_data',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='num_selectors')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Constant(value='Creates a bz2 compressed file with a large number of selectors, triggering the potential vulnerability.')),
+                Assign(
+                    targets=[
+                        Name(id='block_size', ctx=Store())],
+                    value=Constant(value=100)),
+                Assign(
+                    targets=[
+                        Name(id='data', ctx=Store())],
+                    value=BinOp(
+                        left=Constant(value=b'A'),
+                        op=Mult(),
+                        right=Name(id='block_size', ctx=Load()))),
+                Assign(
+                    targets=[
+                        Name(id='compressed_data', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='bz2', ctx=Load()),
+                            attr='compress',
+                            ctx=Load()),
+                        args=[
+                            Name(id='data', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='modified_compressed_data', ctx=Store())],
+                    value=Name(id='compressed_data', ctx=Load())),
+                For(
+                    target=Name(id='i', ctx=Store()),
+                    iter=Call(
+                        func=Name(id='range', ctx=Load()),
+                        args=[
+                            Name(id='num_selectors', ctx=Load())],
+                        keywords=[]),
+                    body=[
+                        AugAssign(
+                            target=Name(id='modified_compressed_data', ctx=Store()),
+                            op=Add(),
+                            value=Constant(value=b'\xff'))],
+                    orelse=[]),
+                Return(
+                    value=Name(id='modified_compressed_data', ctx=Load()))],
+            decorator_list=[]),
+        FunctionDef(
+            name='vulnerable_decompress',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='compressed_data')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Constant(value='Simulates the vulnerable decompression process with an out-of-bounds write. Note that the real vulnerability is in C not Python code, this is just for demonstration purposes.')),
+                Try(
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='decompressed_data', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='bz2', ctx=Load()),
+                                    attr='decompress',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='compressed_data', ctx=Load())],
+                                keywords=[])),
+                        Return(
+                            value=Name(id='decompressed_data', ctx=Load()))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='Exception', ctx=Load()),
+                            name='e',
+                            body=[
+                                Return(
+                                    value=JoinedStr(
+                                        values=[
+                                            Constant(value='Decompression failed with: '),
+                                            FormattedValue(
+                                                value=Name(id='e', ctx=Load()),
+                                                conversion=-1)]))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='num_selectors', ctx=Store())],
+                    value=Constant(value=10000)),
+                Assign(
+                    targets=[
+                        Name(id='malicious_data', ctx=Store())],
+                    value=Call(
+                        func=Name(id='create_malicious_bz2_data', ctx=Load()),
+                        args=[
+                            Name(id='num_selectors', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='decompressed', ctx=Store())],
+                    value=Call(
+                        func=Name(id='vulnerable_decompress', ctx=Load()),
+                        args=[
+                            Name(id='malicious_data', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            JoinedStr(
+                                values=[
+                                    Constant(value='Decompressed data (or error): '),
+                                    FormattedValue(
+                                        value=Subscript(
+                                            value=Name(id='decompressed', ctx=Load()),
+                                            slice=Slice(
+                                                upper=Constant(value=100)),
+                                            ctx=Load()),
+                                        conversion=-1)])],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

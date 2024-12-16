@@ -1,0 +1,44 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='sys')]),
+        FunctionDef(
+            name='vulnerable_cgi_error',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='message')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='sys', ctx=Load()),
+                                attr='stderr',
+                                ctx=Load()),
+                            attr='write',
+                            ctx=Load()),
+                        args=[
+                            BinOp(
+                                left=BinOp(
+                                    left=Constant(value='CGI Error: '),
+                                    op=Add(),
+                                    right=Name(id='message', ctx=Load())),
+                                op=Add(),
+                                right=Constant(value='\n'))],
+                        keywords=[]))],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='vulnerable_cgi_error', ctx=Load()),
+                args=[
+                    BinOp(
+                        left=Constant(value='An error occurred: %s'),
+                        op=Mod(),
+                        right=Constant(value='some error details'))],
+                keywords=[]))],
+    type_ignores=[])

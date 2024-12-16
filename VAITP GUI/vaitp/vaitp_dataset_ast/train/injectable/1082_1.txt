@@ -1,0 +1,51 @@
+Module(
+    body=[
+        FunctionDef(
+            name='safe_execute',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='value')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Name(id='value', ctx=Load()))],
+            decorator_list=[]),
+        FunctionDef(
+            name='retrieve_value_from_database',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='db_value')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Name(id='safe_execute', ctx=Load()),
+                        args=[
+                            Name(id='db_value', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='user_input', ctx=Store())],
+            value=Constant(value="print('This is an attack!')")),
+        Assign(
+            targets=[
+                Name(id='result', ctx=Store())],
+            value=Call(
+                func=Name(id='retrieve_value_from_database', ctx=Load()),
+                args=[
+                    Name(id='user_input', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='result', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

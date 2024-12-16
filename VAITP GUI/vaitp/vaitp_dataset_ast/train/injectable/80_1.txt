@@ -1,0 +1,56 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='tarfile')]),
+        FunctionDef(
+            name='_error_handler',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='tar'),
+                    arg(arg='func'),
+                    arg(arg='path')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Raise(
+                    exc=Call(
+                        func=Name(id='RuntimeError', ctx=Load()),
+                        args=[
+                            Constant(value='Error processing TAR archive')],
+                        keywords=[]))],
+            decorator_list=[]),
+        With(
+            items=[
+                withitem(
+                    context_expr=Call(
+                        func=Attribute(
+                            value=Name(id='tarfile', ctx=Load()),
+                            attr='open',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='malicious.tar'),
+                            Constant(value='r')],
+                        keywords=[
+                            keyword(
+                                arg='error_handler',
+                                value=Name(id='_error_handler', ctx=Load()))]),
+                    optional_vars=Name(id='tar', ctx=Store()))],
+            body=[
+                For(
+                    target=Name(id='member', ctx=Store()),
+                    iter=Name(id='tar', ctx=Load()),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Attribute(
+                                        value=Name(id='member', ctx=Load()),
+                                        attr='name',
+                                        ctx=Load())],
+                                keywords=[]))],
+                    orelse=[])])],
+    type_ignores=[])

@@ -1,0 +1,103 @@
+Module(
+    body=[
+        FunctionDef(
+            name='sanitize_user_input',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='user_input')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='disallowed_keywords', ctx=Store())],
+                    value=List(
+                        elts=[
+                            Constant(value='eval'),
+                            Constant(value='exec'),
+                            Constant(value='import'),
+                            Constant(value='open'),
+                            Constant(value='os'),
+                            Constant(value='subprocess')],
+                        ctx=Load())),
+                For(
+                    target=Name(id='keyword', ctx=Store()),
+                    iter=Name(id='disallowed_keywords', ctx=Load()),
+                    body=[
+                        If(
+                            test=Compare(
+                                left=Name(id='keyword', ctx=Load()),
+                                ops=[
+                                    In()],
+                                comparators=[
+                                    Name(id='user_input', ctx=Load())]),
+                            body=[
+                                Raise(
+                                    exc=Call(
+                                        func=Name(id='ValueError', ctx=Load()),
+                                        args=[
+                                            Constant(value='Disallowed keyword detected in user input.')],
+                                        keywords=[]))],
+                            orelse=[])],
+                    orelse=[]),
+                Return(
+                    value=Name(id='user_input', ctx=Load()))],
+            decorator_list=[]),
+        FunctionDef(
+            name='update_user_profile',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='user_id'),
+                    arg(arg='profile_data')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='sanitized_data', ctx=Store())],
+                    value=Call(
+                        func=Name(id='sanitize_user_input', ctx=Load()),
+                        args=[
+                            Name(id='profile_data', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='save_user_profile', ctx=Load()),
+                        args=[
+                            Name(id='user_id', ctx=Load()),
+                            Name(id='sanitized_data', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='display_document',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='document')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='safe_content', ctx=Store())],
+                    value=Call(
+                        func=Name(id='sanitize_user_input', ctx=Load()),
+                        args=[
+                            Attribute(
+                                value=Name(id='document', ctx=Load()),
+                                attr='content',
+                                ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=Call(
+                        func=Name(id='render_safe_content', ctx=Load()),
+                        args=[
+                            Name(id='safe_content', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[])],
+    type_ignores=[])

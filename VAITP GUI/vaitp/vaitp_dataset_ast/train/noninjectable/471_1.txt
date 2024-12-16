@@ -1,0 +1,63 @@
+Module(
+    body=[
+        FunctionDef(
+            name='handle_download',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='file_name'),
+                    arg(arg='mime_type')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Compare(
+                        left=Name(id='mime_type', ctx=Load()),
+                        ops=[
+                            Eq()],
+                        comparators=[
+                            Constant(value='text/plain')]),
+                    body=[
+                        If(
+                            test=Call(
+                                func=Attribute(
+                                    value=Name(id='file_name', ctx=Load()),
+                                    attr='endswith',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='.py')],
+                                keywords=[]),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='exec', ctx=Load()),
+                                        args=[
+                                            Call(
+                                                func=Attribute(
+                                                    value=Call(
+                                                        func=Name(id='open', ctx=Load()),
+                                                        args=[
+                                                            Name(id='file_name', ctx=Load())],
+                                                        keywords=[]),
+                                                    attr='read',
+                                                    ctx=Load()),
+                                                args=[],
+                                                keywords=[])],
+                                        keywords=[]))],
+                            orelse=[
+                                Expr(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Call(
+                                                func=Name(id='open', ctx=Load()),
+                                                args=[
+                                                    Name(id='file_name', ctx=Load())],
+                                                keywords=[]),
+                                            attr='read',
+                                            ctx=Load()),
+                                        args=[],
+                                        keywords=[]))])],
+                    orelse=[])],
+            decorator_list=[])],
+    type_ignores=[])

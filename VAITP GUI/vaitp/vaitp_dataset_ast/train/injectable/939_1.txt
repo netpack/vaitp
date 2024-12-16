@@ -1,0 +1,132 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        ImportFrom(
+            module='flask',
+            names=[
+                alias(name='Flask'),
+                alias(name='request'),
+                alias(name='jsonify')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='app', ctx=Store())],
+            value=Call(
+                func=Name(id='Flask', ctx=Load()),
+                args=[
+                    Name(id='__name__', ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='ACCESS_TOKEN', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='os', ctx=Load()),
+                    attr='getenv',
+                    ctx=Load()),
+                args=[
+                    Constant(value='ACCESS_TOKEN')],
+                keywords=[])),
+        FunctionDef(
+            name='get_sensitive_data',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='token', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='request', ctx=Load()),
+                                attr='headers',
+                                ctx=Load()),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='Authorization')],
+                        keywords=[])),
+                If(
+                    test=Compare(
+                        left=Name(id='token', ctx=Load()),
+                        ops=[
+                            NotEq()],
+                        comparators=[
+                            JoinedStr(
+                                values=[
+                                    Constant(value='Bearer '),
+                                    FormattedValue(
+                                        value=Name(id='ACCESS_TOKEN', ctx=Load()),
+                                        conversion=-1)])]),
+                    body=[
+                        Return(
+                            value=Tuple(
+                                elts=[
+                                    Call(
+                                        func=Name(id='jsonify', ctx=Load()),
+                                        args=[
+                                            Dict(
+                                                keys=[
+                                                    Constant(value='error')],
+                                                values=[
+                                                    Constant(value='Unauthorized access')])],
+                                        keywords=[]),
+                                    Constant(value=403)],
+                                ctx=Load()))],
+                    orelse=[]),
+                Assign(
+                    targets=[
+                        Name(id='sensitive_data', ctx=Store())],
+                    value=Dict(
+                        keys=[
+                            Constant(value='secret')],
+                        values=[
+                            Constant(value='This is sensitive information')])),
+                Return(
+                    value=Call(
+                        func=Name(id='jsonify', ctx=Load()),
+                        args=[
+                            Name(id='sensitive_data', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[
+                Call(
+                    func=Attribute(
+                        value=Name(id='app', ctx=Load()),
+                        attr='route',
+                        ctx=Load()),
+                    args=[
+                        Constant(value='/sensitive-data')],
+                    keywords=[
+                        keyword(
+                            arg='methods',
+                            value=List(
+                                elts=[
+                                    Constant(value='GET')],
+                                ctx=Load()))])]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='app', ctx=Load()),
+                            attr='run',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[
+                            keyword(
+                                arg='debug',
+                                value=Constant(value=False))]))],
+            orelse=[])],
+    type_ignores=[])

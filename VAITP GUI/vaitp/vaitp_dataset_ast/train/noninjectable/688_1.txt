@@ -1,0 +1,46 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='IPython.utils.terminal')]),
+        FunctionDef(
+            name='vulnerable_set_term_title',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='title')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Attribute(
+                                    value=Name(id='IPython', ctx=Load()),
+                                    attr='utils',
+                                    ctx=Load()),
+                                attr='terminal',
+                                ctx=Load()),
+                            attr='set_term_title',
+                            ctx=Load()),
+                        args=[
+                            Name(id='title', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='user_input', ctx=Store())],
+            value=Call(
+                func=Name(id='input', ctx=Load()),
+                args=[
+                    Constant(value='Enter terminal title: ')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='vulnerable_set_term_title', ctx=Load()),
+                args=[
+                    Name(id='user_input', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

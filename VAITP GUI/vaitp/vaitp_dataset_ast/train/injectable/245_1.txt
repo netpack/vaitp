@@ -1,0 +1,125 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='ssl')]),
+        Import(
+            names=[
+                alias(name='boto3')]),
+        Import(
+            names=[
+                alias(name='socket')]),
+        FunctionDef(
+            name='verify_hostname',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='cert'),
+                    arg(arg='hostname')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='ssl', ctx=Load()),
+                            attr='match_hostname',
+                            ctx=Load()),
+                        args=[
+                            Name(id='cert', ctx=Load()),
+                            Name(id='hostname', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='iot_client', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='boto3', ctx=Load()),
+                    attr='client',
+                    ctx=Load()),
+                args=[
+                    Constant(value='iot')],
+                keywords=[
+                    keyword(
+                        arg='region_name',
+                        value=Constant(value='us-west-2'))])),
+        FunctionDef(
+            name='connect_to_iot_secure',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='context', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='ssl', ctx=Load()),
+                            attr='create_default_context',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Attribute(
+                            value=Name(id='context', ctx=Load()),
+                            attr='check_hostname',
+                            ctx=Store())],
+                    value=Constant(value=True)),
+                Assign(
+                    targets=[
+                        Attribute(
+                            value=Name(id='context', ctx=Load()),
+                            attr='verify_mode',
+                            ctx=Store())],
+                    value=Attribute(
+                        value=Name(id='ssl', ctx=Load()),
+                        attr='CERT_REQUIRED',
+                        ctx=Load())),
+                With(
+                    items=[
+                        withitem(
+                            context_expr=Call(
+                                func=Attribute(
+                                    value=Name(id='context', ctx=Load()),
+                                    attr='wrap_socket',
+                                    ctx=Load()),
+                                args=[
+                                    Call(
+                                        func=Attribute(
+                                            value=Name(id='socket', ctx=Load()),
+                                            attr='socket',
+                                            ctx=Load()),
+                                        args=[],
+                                        keywords=[])],
+                                keywords=[
+                                    keyword(
+                                        arg='server_hostname',
+                                        value=Constant(value='your-iot-endpoint.amazonaws.com'))]),
+                            optional_vars=Name(id='sock', ctx=Store()))],
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='sock', ctx=Load()),
+                                    attr='connect',
+                                    ctx=Load()),
+                                args=[
+                                    Tuple(
+                                        elts=[
+                                            Constant(value='your-iot-endpoint.amazonaws.com'),
+                                            Constant(value=8883)],
+                                        ctx=Load())],
+                                keywords=[]))])],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='connect_to_iot_secure', ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

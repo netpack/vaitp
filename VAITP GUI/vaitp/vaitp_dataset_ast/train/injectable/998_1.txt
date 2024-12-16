@@ -1,0 +1,87 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        Import(
+            names=[
+                alias(name='stat')]),
+        FunctionDef(
+            name='secure_chmod',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='file_path'),
+                    arg(arg='mode')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=BoolOp(
+                        op=Or(),
+                        values=[
+                            Compare(
+                                left=Name(id='mode', ctx=Load()),
+                                ops=[
+                                    Lt()],
+                                comparators=[
+                                    Constant(value=0)]),
+                            Compare(
+                                left=Name(id='mode', ctx=Load()),
+                                ops=[
+                                    Gt()],
+                                comparators=[
+                                    Constant(value=511)])]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Mode must be between 0 and 0o777')],
+                                keywords=[]))],
+                    orelse=[]),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='os', ctx=Load()),
+                            attr='chmod',
+                            ctx=Load()),
+                        args=[
+                            Name(id='file_path', ctx=Load()),
+                            Name(id='mode', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='file_path', ctx=Store())],
+            value=Constant(value='example_file.txt')),
+        Expr(
+            value=Call(
+                func=Name(id='secure_chmod', ctx=Load()),
+                args=[
+                    Name(id='file_path', ctx=Load()),
+                    BinOp(
+                        left=BinOp(
+                            left=BinOp(
+                                left=Attribute(
+                                    value=Name(id='stat', ctx=Load()),
+                                    attr='S_IRUSR',
+                                    ctx=Load()),
+                                op=BitOr(),
+                                right=Attribute(
+                                    value=Name(id='stat', ctx=Load()),
+                                    attr='S_IWUSR',
+                                    ctx=Load())),
+                            op=BitOr(),
+                            right=Attribute(
+                                value=Name(id='stat', ctx=Load()),
+                                attr='S_IRGRP',
+                                ctx=Load())),
+                        op=BitOr(),
+                        right=Attribute(
+                            value=Name(id='stat', ctx=Load()),
+                            attr='S_IROTH',
+                            ctx=Load()))],
+                keywords=[]))],
+    type_ignores=[])

@@ -1,0 +1,98 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='tempfile')]),
+        Import(
+            names=[
+                alias(name='os')]),
+        Import(
+            names=[
+                alias(name='stat')]),
+        FunctionDef(
+            name='secure_temp_file',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='temp_file', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='tempfile', ctx=Load()),
+                            attr='NamedTemporaryFile',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[
+                            keyword(
+                                arg='delete',
+                                value=Constant(value=False))])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='os', ctx=Load()),
+                            attr='chmod',
+                            ctx=Load()),
+                        args=[
+                            Attribute(
+                                value=Name(id='temp_file', ctx=Load()),
+                                attr='name',
+                                ctx=Load()),
+                            BinOp(
+                                left=Attribute(
+                                    value=Name(id='stat', ctx=Load()),
+                                    attr='S_IRUSR',
+                                    ctx=Load()),
+                                op=BitOr(),
+                                right=Attribute(
+                                    value=Name(id='stat', ctx=Load()),
+                                    attr='S_IWUSR',
+                                    ctx=Load()))],
+                        keywords=[])),
+                Return(
+                    value=Attribute(
+                        value=Name(id='temp_file', ctx=Load()),
+                        attr='name',
+                        ctx=Load()))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='temp_file_path', ctx=Store())],
+            value=Call(
+                func=Name(id='secure_temp_file', ctx=Load()),
+                args=[],
+                keywords=[])),
+        With(
+            items=[
+                withitem(
+                    context_expr=Call(
+                        func=Name(id='open', ctx=Load()),
+                        args=[
+                            Name(id='temp_file_path', ctx=Load()),
+                            Constant(value='w')],
+                        keywords=[]),
+                    optional_vars=Name(id='f', ctx=Store()))],
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='f', ctx=Load()),
+                            attr='write',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='Secure temporary file content.')],
+                        keywords=[]))]),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='os', ctx=Load()),
+                    attr='remove',
+                    ctx=Load()),
+                args=[
+                    Name(id='temp_file_path', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

@@ -1,0 +1,18 @@
+Module(
+    body=[
+        Assign(
+            targets=[
+                Name(id='string', ctx=Store())],
+            value=BinOp(
+                left=Constant(value='1'),
+                op=Mult(),
+                right=Constant(value=1000000))),
+        Assign(
+            targets=[
+                Name(id='integer', ctx=Store())],
+            value=Call(
+                func=Name(id='int', ctx=Load()),
+                args=[
+                    Name(id='string', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

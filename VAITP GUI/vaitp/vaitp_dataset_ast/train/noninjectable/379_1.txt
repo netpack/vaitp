@@ -1,0 +1,124 @@
+Module(
+    body=[
+        AnnAssign(
+            target=Name(id='state_variable', ctx=Store()),
+            annotation=Call(
+                func=Name(id='public', ctx=Load()),
+                args=[
+                    Name(id='uint256', ctx=Load())],
+                keywords=[]),
+            simple=1),
+        AnnAssign(
+            target=Name(id='lock', ctx=Store()),
+            annotation=Call(
+                func=Name(id='public', ctx=Load()),
+                args=[
+                    Name(id='bool', ctx=Load())],
+                keywords=[]),
+            simple=1),
+        FunctionDef(
+            name='__init__',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Attribute(
+                            value=Name(id='self', ctx=Load()),
+                            attr='state_variable',
+                            ctx=Store())],
+                    value=Constant(value=0)),
+                Assign(
+                    targets=[
+                        Attribute(
+                            value=Name(id='self', ctx=Load()),
+                            attr='lock',
+                            ctx=Store())],
+                    value=Constant(value=False))],
+            decorator_list=[
+                Name(id='public', ctx=Load())]),
+        FunctionDef(
+            name='vulnerable_function',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assert(
+                    test=UnaryOp(
+                        op=Not(),
+                        operand=Attribute(
+                            value=Name(id='self', ctx=Load()),
+                            attr='lock',
+                            ctx=Load())),
+                    msg=Constant(value='Reentrant call detected!')),
+                Assign(
+                    targets=[
+                        Attribute(
+                            value=Name(id='self', ctx=Load()),
+                            attr='lock',
+                            ctx=Store())],
+                    value=Constant(value=True)),
+                AugAssign(
+                    target=Attribute(
+                        value=Name(id='self', ctx=Load()),
+                        attr='state_variable',
+                        ctx=Store()),
+                    op=Add(),
+                    value=Constant(value=1)),
+                Assign(
+                    targets=[
+                        Attribute(
+                            value=Name(id='self', ctx=Load()),
+                            attr='lock',
+                            ctx=Store())],
+                    value=Constant(value=False))],
+            decorator_list=[
+                Name(id='public', ctx=Load())]),
+        FunctionDef(
+            name='another_function',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assert(
+                    test=UnaryOp(
+                        op=Not(),
+                        operand=Attribute(
+                            value=Name(id='self', ctx=Load()),
+                            attr='lock',
+                            ctx=Load())),
+                    msg=Constant(value='Reentrant call detected!')),
+                Assign(
+                    targets=[
+                        Attribute(
+                            value=Name(id='self', ctx=Load()),
+                            attr='lock',
+                            ctx=Store())],
+                    value=Constant(value=True)),
+                AugAssign(
+                    target=Attribute(
+                        value=Name(id='self', ctx=Load()),
+                        attr='state_variable',
+                        ctx=Store()),
+                    op=Sub(),
+                    value=Constant(value=1)),
+                Assign(
+                    targets=[
+                        Attribute(
+                            value=Name(id='self', ctx=Load()),
+                            attr='lock',
+                            ctx=Store())],
+                    value=Constant(value=False))],
+            decorator_list=[
+                Name(id='public', ctx=Load())])],
+    type_ignores=[])

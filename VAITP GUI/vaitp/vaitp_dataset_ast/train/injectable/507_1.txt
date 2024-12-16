@@ -1,0 +1,52 @@
+Module(
+    body=[
+        ImportFrom(
+            module='django.core.urlresolvers',
+            names=[
+                alias(name='reverse')],
+            level=0),
+        ImportFrom(
+            module='django.core.exceptions',
+            names=[
+                alias(name='ImproperlyConfigured')],
+            level=0),
+        FunctionDef(
+            name='safe_reverse',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='view_name')],
+                vararg=arg(arg='args'),
+                kwonlyargs=[],
+                kw_defaults=[],
+                kwarg=arg(arg='kwargs'),
+                defaults=[]),
+            body=[
+                If(
+                    test=Compare(
+                        left=Constant(value='.'),
+                        ops=[
+                            In()],
+                        comparators=[
+                            Name(id='view_name', ctx=Load())]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ImproperlyConfigured', ctx=Load()),
+                                args=[
+                                    Constant(value="Invalid view name: cannot contain '.'")],
+                                keywords=[]))],
+                    orelse=[]),
+                Return(
+                    value=Call(
+                        func=Name(id='reverse', ctx=Load()),
+                        args=[
+                            Name(id='view_name', ctx=Load()),
+                            Starred(
+                                value=Name(id='args', ctx=Load()),
+                                ctx=Load())],
+                        keywords=[
+                            keyword(
+                                value=Name(id='kwargs', ctx=Load()))]))],
+            decorator_list=[])],
+    type_ignores=[])

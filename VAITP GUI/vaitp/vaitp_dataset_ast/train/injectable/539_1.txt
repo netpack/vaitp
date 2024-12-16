@@ -1,0 +1,57 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='yaml')]),
+        FunctionDef(
+            name='load_yaml',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='data')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='yaml', ctx=Load()),
+                            attr='safe_load',
+                            ctx=Load()),
+                        args=[
+                            Name(id='data', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='load_yamlf',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='filename')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                With(
+                    items=[
+                        withitem(
+                            context_expr=Call(
+                                func=Name(id='open', ctx=Load()),
+                                args=[
+                                    Name(id='filename', ctx=Load()),
+                                    Constant(value='r')],
+                                keywords=[]),
+                            optional_vars=Name(id='f', ctx=Store()))],
+                    body=[
+                        Return(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='yaml', ctx=Load()),
+                                    attr='safe_load',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='f', ctx=Load())],
+                                keywords=[]))])],
+            decorator_list=[])],
+    type_ignores=[])

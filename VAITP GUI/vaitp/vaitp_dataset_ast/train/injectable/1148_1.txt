@@ -1,0 +1,62 @@
+Module(
+    body=[
+        ImportFrom(
+            module='RestrictedPython',
+            names=[
+                alias(name='compile_restricted')],
+            level=0),
+        ImportFrom(
+            module='RestrictedPython.Utilities',
+            names=[
+                alias(name='utility_builtins')],
+            level=0),
+        If(
+            test=Compare(
+                left=Constant(value='string'),
+                ops=[
+                    In()],
+                comparators=[
+                    Name(id='utility_builtins', ctx=Load())]),
+            body=[
+                Delete(
+                    targets=[
+                        Subscript(
+                            value=Name(id='utility_builtins', ctx=Load()),
+                            slice=Constant(value='string'),
+                            ctx=Del())])],
+            orelse=[]),
+        Assign(
+            targets=[
+                Name(id='code', ctx=Store())],
+            value=Constant(value="result = 'Hello, World!'.lower()")),
+        Assign(
+            targets=[
+                Name(id='compiled_code', ctx=Store())],
+            value=Call(
+                func=Name(id='compile_restricted', ctx=Load()),
+                args=[
+                    Name(id='code', ctx=Load()),
+                    Constant(value='<string>'),
+                    Constant(value='exec')],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='namespace', ctx=Store())],
+            value=Dict(keys=[], values=[])),
+        Expr(
+            value=Call(
+                func=Name(id='exec', ctx=Load()),
+                args=[
+                    Name(id='compiled_code', ctx=Load()),
+                    Name(id='namespace', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Subscript(
+                        value=Name(id='namespace', ctx=Load()),
+                        slice=Constant(value='result'),
+                        ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

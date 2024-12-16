@@ -1,0 +1,62 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='logging')]),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='logging', ctx=Load()),
+                    attr='basicConfig',
+                    ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='level',
+                        value=Attribute(
+                            value=Name(id='logging', ctx=Load()),
+                            attr='DEBUG',
+                            ctx=Load()))])),
+        FunctionDef(
+            name='access_resource',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='access_key')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='logging', ctx=Load()),
+                            attr='debug',
+                            ctx=Load()),
+                        args=[
+                            JoinedStr(
+                                values=[
+                                    Constant(value='Accessing resource with access key: '),
+                                    FormattedValue(
+                                        value=Name(id='access_key', ctx=Load()),
+                                        conversion=-1)])],
+                        keywords=[])),
+                Return(
+                    value=JoinedStr(
+                        values=[
+                            Constant(value='Resource accessed with key: '),
+                            FormattedValue(
+                                value=Name(id='access_key', ctx=Load()),
+                                conversion=-1)]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='access_key', ctx=Store())],
+            value=Constant(value='my_secret_access_key')),
+        Expr(
+            value=Call(
+                func=Name(id='access_resource', ctx=Load()),
+                args=[
+                    Name(id='access_key', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

@@ -1,0 +1,120 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        Import(
+            names=[
+                alias(name='subprocess')]),
+        FunctionDef(
+            name='execute_command',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='user_input')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=UnaryOp(
+                        op=Not(),
+                        operand=Call(
+                            func=Name(id='is_safe_input', ctx=Load()),
+                            args=[
+                                Name(id='user_input', ctx=Load())],
+                            keywords=[])),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Unsafe input detected!')],
+                                keywords=[]))],
+                    orelse=[]),
+                Assign(
+                    targets=[
+                        Name(id='result', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='subprocess', ctx=Load()),
+                            attr='run',
+                            ctx=Load()),
+                        args=[
+                            List(
+                                elts=[
+                                    Constant(value='python'),
+                                    Name(id='user_input', ctx=Load())],
+                                ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='capture_output',
+                                value=Constant(value=True)),
+                            keyword(
+                                arg='text',
+                                value=Constant(value=True))])),
+                Return(
+                    value=Attribute(
+                        value=Name(id='result', ctx=Load()),
+                        attr='stdout',
+                        ctx=Load()))],
+            decorator_list=[]),
+        FunctionDef(
+            name='is_safe_input',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='user_input')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='allowed_commands', ctx=Store())],
+                    value=Set(
+                        elts=[
+                            Constant(value='script1.py'),
+                            Constant(value='script2.py')])),
+                Return(
+                    value=Compare(
+                        left=Name(id='user_input', ctx=Load()),
+                        ops=[
+                            In()],
+                        comparators=[
+                            Name(id='allowed_commands', ctx=Load())]))],
+            decorator_list=[]),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='user_input', ctx=Store())],
+                    value=Constant(value='script1.py')),
+                Assign(
+                    targets=[
+                        Name(id='output', ctx=Store())],
+                    value=Call(
+                        func=Name(id='execute_command', ctx=Load()),
+                        args=[
+                            Name(id='user_input', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Name(id='output', ctx=Load())],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ValueError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

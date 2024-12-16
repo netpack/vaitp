@@ -1,0 +1,101 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='logging')]),
+        Assign(
+            targets=[
+                Name(id='logger', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='logging', ctx=Load()),
+                    attr='getLogger',
+                    ctx=Load()),
+                args=[
+                    Constant(value='pyload')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='logger', ctx=Load()),
+                    attr='setLevel',
+                    ctx=Load()),
+                args=[
+                    Attribute(
+                        value=Name(id='logging', ctx=Load()),
+                        attr='INFO',
+                        ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='handler', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='logging', ctx=Load()),
+                    attr='FileHandler',
+                    ctx=Load()),
+                args=[
+                    Constant(value='pyload.log')],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='formatter', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='logging', ctx=Load()),
+                    attr='Formatter',
+                    ctx=Load()),
+                args=[
+                    Constant(value='%(asctime)s - %(levelname)s - %(message)s')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='handler', ctx=Load()),
+                    attr='setFormatter',
+                    ctx=Load()),
+                args=[
+                    Name(id='formatter', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='logger', ctx=Load()),
+                    attr='addHandler',
+                    ctx=Load()),
+                args=[
+                    Name(id='handler', ctx=Load())],
+                keywords=[])),
+        FunctionDef(
+            name='log_message',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='message')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='logger', ctx=Load()),
+                            attr='info',
+                            ctx=Load()),
+                        args=[
+                            Name(id='message', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='log_message', ctx=Load()),
+                args=[
+                    Constant(value='User  logged in successfully.')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='log_message', ctx=Load()),
+                args=[
+                    Constant(value='Malicious log entry: \n[ATTACKER] This is a forged log entry.')],
+                keywords=[]))],
+    type_ignores=[])

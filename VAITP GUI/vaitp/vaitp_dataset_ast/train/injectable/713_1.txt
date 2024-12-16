@@ -1,0 +1,65 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='shlex')]),
+        Import(
+            names=[
+                alias(name='subprocess')]),
+        FunctionDef(
+            name='safe_execute_command',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='name')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='safe_name', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='shlex', ctx=Load()),
+                            attr='quote',
+                            ctx=Load()),
+                        args=[
+                            Name(id='name', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='command', ctx=Store())],
+                    value=JoinedStr(
+                        values=[
+                            Constant(value='echo '),
+                            FormattedValue(
+                                value=Name(id='safe_name', ctx=Load()),
+                                conversion=-1)])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='subprocess', ctx=Load()),
+                            attr='run',
+                            ctx=Load()),
+                        args=[
+                            Name(id='command', ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='shell',
+                                value=Constant(value=True)),
+                            keyword(
+                                arg='check',
+                                value=Constant(value=True))]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='user_input', ctx=Store())],
+            value=Constant(value='user_input')),
+        Expr(
+            value=Call(
+                func=Name(id='safe_execute_command', ctx=Load()),
+                args=[
+                    Name(id='user_input', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

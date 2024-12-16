@@ -1,0 +1,49 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='math')]),
+        FunctionDef(
+            name='calculate_storage_slots',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='size_in_bytes')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=BinOp(
+                        left=BinOp(
+                            left=Name(id='size_in_bytes', ctx=Load()),
+                            op=Add(),
+                            right=Constant(value=31)),
+                        op=FloorDiv(),
+                        right=Constant(value=32)))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='size_in_bytes', ctx=Store())],
+            value=BinOp(
+                left=BinOp(
+                    left=Constant(value=2),
+                    op=Pow(),
+                    right=Constant(value=46)),
+                op=Sub(),
+                right=Constant(value=1))),
+        Assign(
+            targets=[
+                Name(id='slots_needed', ctx=Store())],
+            value=Call(
+                func=Name(id='calculate_storage_slots', ctx=Load()),
+                args=[
+                    Name(id='size_in_bytes', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='slots_needed', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

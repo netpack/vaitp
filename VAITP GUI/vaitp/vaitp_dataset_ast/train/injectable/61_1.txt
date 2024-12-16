@@ -1,0 +1,130 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='urllib3')]),
+        FunctionDef(
+            name='secure_function',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='url'),
+                    arg(arg='headers'),
+                    arg(arg='body')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='sanitized_headers', ctx=Store())],
+                    value=Dict(keys=[], values=[])),
+                For(
+                    target=Tuple(
+                        elts=[
+                            Name(id='key', ctx=Store()),
+                            Name(id='value', ctx=Store())],
+                        ctx=Store()),
+                    iter=Call(
+                        func=Attribute(
+                            value=Name(id='headers', ctx=Load()),
+                            attr='items',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]),
+                    body=[
+                        If(
+                            test=Compare(
+                                left=Name(id='key', ctx=Load()),
+                                ops=[
+                                    In()],
+                                comparators=[
+                                    List(
+                                        elts=[
+                                            Constant(value='Content-Type'),
+                                            Constant(value='Accept'),
+                                            Constant(value='Accept-Language'),
+                                            Constant(value='Accept-Encoding')],
+                                        ctx=Load())]),
+                            body=[
+                                Assign(
+                                    targets=[
+                                        Subscript(
+                                            value=Name(id='sanitized_headers', ctx=Load()),
+                                            slice=Name(id='key', ctx=Load()),
+                                            ctx=Store())],
+                                    value=Name(id='value', ctx=Load()))],
+                            orelse=[
+                                Raise(
+                                    exc=Call(
+                                        func=Name(id='ValueError', ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    Constant(value='Invalid header: '),
+                                                    FormattedValue(
+                                                        value=Name(id='key', ctx=Load()),
+                                                        conversion=-1)])],
+                                        keywords=[]))])],
+                    orelse=[]),
+                Assign(
+                    targets=[
+                        Name(id='http', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='urllib3', ctx=Load()),
+                            attr='PoolManager',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='request', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='http', ctx=Load()),
+                            attr='request',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='POST'),
+                            Name(id='url', ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='headers',
+                                value=Name(id='sanitized_headers', ctx=Load())),
+                            keyword(
+                                arg='body',
+                                value=Name(id='body', ctx=Load()))])),
+                Return(
+                    value=Attribute(
+                        value=Name(id='request', ctx=Load()),
+                        attr='data',
+                        ctx=Load()))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='url', ctx=Store())],
+            value=Constant(value='https://example.com')),
+        Assign(
+            targets=[
+                Name(id='headers', ctx=Store())],
+            value=Dict(
+                keys=[
+                    Constant(value='Transfer-Encoding'),
+                    Constant(value='Content-Length')],
+                values=[
+                    Constant(value='chunked'),
+                    Constant(value='0')])),
+        Assign(
+            targets=[
+                Name(id='chunked_payload', ctx=Store())],
+            value=Constant(value='5\r\nHello\r\n0\r\n\r\n')),
+        Expr(
+            value=Call(
+                func=Name(id='secure_function', ctx=Load()),
+                args=[
+                    Name(id='url', ctx=Load()),
+                    Name(id='headers', ctx=Load()),
+                    Name(id='chunked_payload', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

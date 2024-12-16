@@ -1,0 +1,106 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='ecdsa')]),
+        FunctionDef(
+            name='verify',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='signature'),
+                    arg(arg='message'),
+                    arg(arg='public_key')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='vk', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='ecdsa', ctx=Load()),
+                                attr='VerifyingKey',
+                                ctx=Load()),
+                            attr='from_string',
+                            ctx=Load()),
+                        args=[
+                            Name(id='public_key', ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='curve',
+                                value=Attribute(
+                                    value=Name(id='ecdsa', ctx=Load()),
+                                    attr='SECP256k1',
+                                    ctx=Load()))])),
+                If(
+                    test=UnaryOp(
+                        op=Not(),
+                        operand=Name(id='signature', ctx=Load())),
+                    body=[
+                        Return(
+                            value=Constant(value=False))],
+                    orelse=[]),
+                Try(
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='vk', ctx=Load()),
+                                    attr='verify',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='signature', ctx=Load()),
+                                    Name(id='message', ctx=Load())],
+                                keywords=[])),
+                        Return(
+                            value=Constant(value=True))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Attribute(
+                                value=Name(id='ecdsa', ctx=Load()),
+                                attr='BadSignatureError',
+                                ctx=Load()),
+                            body=[
+                                Return(
+                                    value=Constant(value=False))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='public_key', ctx=Store())],
+            value=Constant(value=b'\x04\x97\x93a4\x124Vx\x90\x124Vx\x90\x124Vx\x90')),
+        Assign(
+            targets=[
+                Name(id='message', ctx=Store())],
+            value=Constant(value=b'Hello, World!')),
+        Assign(
+            targets=[
+                Name(id='signature', ctx=Store())],
+            value=Constant(value=b'\x01#Eg\x89\xab\xcd\xef\x01#Eg\x89\xab\xcd\xef')),
+        If(
+            test=Call(
+                func=Name(id='verify', ctx=Load()),
+                args=[
+                    Name(id='signature', ctx=Load()),
+                    Name(id='message', ctx=Load()),
+                    Name(id='public_key', ctx=Load())],
+                keywords=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Signature is valid')],
+                        keywords=[]))],
+            orelse=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Signature is invalid')],
+                        keywords=[]))])],
+    type_ignores=[])

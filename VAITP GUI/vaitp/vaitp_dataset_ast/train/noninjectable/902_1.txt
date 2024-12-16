@@ -1,0 +1,92 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        Assign(
+            targets=[
+                Name(id='JWT_SECRET', ctx=Store())],
+            value=Constant(value='dev')),
+        Assign(
+            targets=[
+                Name(id='NODE_ENV', ctx=Store())],
+            value=Constant(value='development')),
+        FunctionDef(
+            name='upload_file',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='file')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='upload_dir', ctx=Store())],
+                    value=Constant(value='/uploads/')),
+                Assign(
+                    targets=[
+                        Name(id='file_path', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='path',
+                                ctx=Load()),
+                            attr='join',
+                            ctx=Load()),
+                        args=[
+                            Name(id='upload_dir', ctx=Load()),
+                            Attribute(
+                                value=Name(id='file', ctx=Load()),
+                                attr='filename',
+                                ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='file', ctx=Load()),
+                            attr='save',
+                            ctx=Load()),
+                        args=[
+                            Name(id='file_path', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='register_account',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='username'),
+                    arg(arg='password')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            JoinedStr(
+                                values=[
+                                    Constant(value='Account registered for '),
+                                    FormattedValue(
+                                        value=Name(id='username', ctx=Load()),
+                                        conversion=-1)])],
+                        keywords=[]))],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='upload_file', ctx=Load()),
+                args=[
+                    Name(id='file', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='register_account', ctx=Load()),
+                args=[
+                    Constant(value='attacker'),
+                    Constant(value='password123')],
+                keywords=[]))],
+    type_ignores=[])

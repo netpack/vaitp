@@ -57,17 +57,19 @@ def extract_vulnerabilities(json_data):
         # Write to CSV
         #csv_writer.writerow([description, cve_id, score, publish_date, cwe])
 
-        # Check if we already have it in the db
-        query = f"SELECT id FROM python_vulnerabilities WHERE cve LIKE '{cve_id}';"
-        results = vaitp_db.execute_query(query)
+        # Check if we already have it in the db if cve_id is not N/A
+        if cve_id != "N/A":
+            print(f'Querying VAITP DB for {cve_id}')
+            query = f"SELECT ID FROM python_vulnerabilities WHERE CVE LIKE '{cve_id}';"
+            results = vaitp_db.execute_query(query)
+            if results:
+                print(f'Skipping known CVE: {cve_id}')
+            else:
+                print(f'Found an UNKOWN CVE: {cve_id}\n')
+                #write to db
+                vaitp_db.insert_vulnerability(summary, cve_id, score, publish_date, cwe_id)
+                print(f'New vulnerability added to the database: {cve_id}\n')
 
-        if results:
-            print(f'Skipping known CVE: {cve_id}')
-        else:
-            print(f'Found an UNKOWN CVE: {cve_id}\n')
-            #write to db
-            vaitp_db.insert_vulnerability(summary, cve_id, score, publish_date, cwe_id)
-            print(f'New vulnerability added to the database: {cve_id}\n')
             
 
 
@@ -86,7 +88,7 @@ if __name__ == "__main__":
                 
             print(f"JSON data downloaded and saved to {output_file_path}")
         else:
-            exit(f"Failed to download JSON data. HTTP status code: {response.status_code}")
+            print(f"Failed to download JSON data. HTTP status code: {response.status_code}. Trying to continue with local copy if available...")
     else:
         print('Download flag not set. Skipping download.')
 

@@ -1,0 +1,209 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        Import(
+            names=[
+                alias(name='http.server')]),
+        ClassDef(
+            name='MyHandler',
+            bases=[
+                Attribute(
+                    value=Attribute(
+                        value=Name(id='http', ctx=Load()),
+                        attr='server',
+                        ctx=Load()),
+                    attr='SimpleHTTPRequestHandler',
+                    ctx=Load())],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='do_GET',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='safe_path', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='os', ctx=Load()),
+                                        attr='path',
+                                        ctx=Load()),
+                                    attr='normpath',
+                                    ctx=Load()),
+                                args=[
+                                    Call(
+                                        func=Attribute(
+                                            value=Name(id='self', ctx=Load()),
+                                            attr='translate_path',
+                                            ctx=Load()),
+                                        args=[
+                                            Attribute(
+                                                value=Name(id='self', ctx=Load()),
+                                                attr='path',
+                                                ctx=Load())],
+                                        keywords=[])],
+                                keywords=[])),
+                        If(
+                            test=UnaryOp(
+                                op=Not(),
+                                operand=Call(
+                                    func=Attribute(
+                                        value=Name(id='safe_path', ctx=Load()),
+                                        attr='startswith',
+                                        ctx=Load()),
+                                    args=[
+                                        Call(
+                                            func=Attribute(
+                                                value=Name(id='os', ctx=Load()),
+                                                attr='getcwd',
+                                                ctx=Load()),
+                                            args=[],
+                                            keywords=[])],
+                                    keywords=[])),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='self', ctx=Load()),
+                                            attr='send_error',
+                                            ctx=Load()),
+                                        args=[
+                                            Constant(value=403),
+                                            Constant(value='Forbidden')],
+                                        keywords=[])),
+                                Return()],
+                            orelse=[]),
+                        If(
+                            test=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='os', ctx=Load()),
+                                        attr='path',
+                                        ctx=Load()),
+                                    attr='isdir',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='safe_path', ctx=Load())],
+                                keywords=[]),
+                            body=[
+                                Assign(
+                                    targets=[
+                                        Name(id='safe_path', ctx=Store())],
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Attribute(
+                                                value=Name(id='os', ctx=Load()),
+                                                attr='path',
+                                                ctx=Load()),
+                                            attr='join',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='safe_path', ctx=Load()),
+                                            Constant(value='index.html')],
+                                        keywords=[]))],
+                            orelse=[]),
+                        Try(
+                            body=[
+                                With(
+                                    items=[
+                                        withitem(
+                                            context_expr=Call(
+                                                func=Name(id='open', ctx=Load()),
+                                                args=[
+                                                    Name(id='safe_path', ctx=Load()),
+                                                    Constant(value='rb')],
+                                                keywords=[]),
+                                            optional_vars=Name(id='f', ctx=Store()))],
+                                    body=[
+                                        Expr(
+                                            value=Call(
+                                                func=Attribute(
+                                                    value=Name(id='self', ctx=Load()),
+                                                    attr='send_response',
+                                                    ctx=Load()),
+                                                args=[
+                                                    Constant(value=200)],
+                                                keywords=[])),
+                                        Expr(
+                                            value=Call(
+                                                func=Attribute(
+                                                    value=Name(id='self', ctx=Load()),
+                                                    attr='send_header',
+                                                    ctx=Load()),
+                                                args=[
+                                                    Constant(value='Content-type'),
+                                                    Constant(value='text/html')],
+                                                keywords=[])),
+                                        Expr(
+                                            value=Call(
+                                                func=Attribute(
+                                                    value=Name(id='self', ctx=Load()),
+                                                    attr='end_headers',
+                                                    ctx=Load()),
+                                                args=[],
+                                                keywords=[])),
+                                        Expr(
+                                            value=Call(
+                                                func=Attribute(
+                                                    value=Attribute(
+                                                        value=Name(id='self', ctx=Load()),
+                                                        attr='wfile',
+                                                        ctx=Load()),
+                                                    attr='write',
+                                                    ctx=Load()),
+                                                args=[
+                                                    Call(
+                                                        func=Attribute(
+                                                            value=Name(id='f', ctx=Load()),
+                                                            attr='read',
+                                                            ctx=Load()),
+                                                        args=[],
+                                                        keywords=[])],
+                                                keywords=[]))])],
+                            handlers=[
+                                ExceptHandler(
+                                    type=Name(id='FileNotFoundError', ctx=Load()),
+                                    body=[
+                                        Expr(
+                                            value=Call(
+                                                func=Attribute(
+                                                    value=Name(id='self', ctx=Load()),
+                                                    attr='send_error',
+                                                    ctx=Load()),
+                                                args=[
+                                                    Constant(value=404),
+                                                    Constant(value='File not found')],
+                                                keywords=[]))]),
+                                ExceptHandler(
+                                    type=Name(id='Exception', ctx=Load()),
+                                    name='e',
+                                    body=[
+                                        Expr(
+                                            value=Call(
+                                                func=Attribute(
+                                                    value=Name(id='self', ctx=Load()),
+                                                    attr='send_error',
+                                                    ctx=Load()),
+                                                args=[
+                                                    Constant(value=500),
+                                                    JoinedStr(
+                                                        values=[
+                                                            Constant(value='Internal Server Error: '),
+                                                            FormattedValue(
+                                                                value=Name(id='e', ctx=Load()),
+                                                                conversion=-1)])],
+                                                keywords=[]))])],
+                            orelse=[],
+                            finalbody=[])],
+                    decorator_list=[])],
+            decorator_list=[])],
+    type_ignores=[])

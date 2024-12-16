@@ -1,0 +1,53 @@
+Module(
+    body=[
+        Try(
+            body=[
+                Import(
+                    names=[
+                        alias(name='safe_html_package', asname='democritus_html')])],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ImportError', ctx=Load()),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ImportError', ctx=Load()),
+                                args=[
+                                    Constant(value='Safe HTML package not found.')],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[]),
+        FunctionDef(
+            name='render_safe_html',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='content')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=JoinedStr(
+                        values=[
+                            Constant(value='<div>'),
+                            FormattedValue(
+                                value=Name(id='content', ctx=Load()),
+                                conversion=-1),
+                            Constant(value='</div>')]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='html_content', ctx=Store())],
+            value=Call(
+                func=Name(id='render_safe_html', ctx=Load()),
+                args=[
+                    Constant(value='Hello, world!')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='html_content', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

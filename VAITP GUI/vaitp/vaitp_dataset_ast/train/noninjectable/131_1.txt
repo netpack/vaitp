@@ -1,0 +1,68 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='h2.connection')]),
+        Assign(
+            targets=[
+                Name(id='conn', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='h2', ctx=Load()),
+                        attr='connection',
+                        ctx=Load()),
+                    attr='H2Connection',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='conn', ctx=Load()),
+                    attr='initiate_connection',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='conn', ctx=Load()),
+                    attr='send_headers',
+                    ctx=Load()),
+                args=[
+                    Constant(value=1),
+                    List(
+                        elts=[
+                            Tuple(
+                                elts=[
+                                    Constant(value=':method'),
+                                    Constant(value='GET')],
+                                ctx=Load()),
+                            Tuple(
+                                elts=[
+                                    Constant(value=':path'),
+                                    Constant(value='/')],
+                                ctx=Load()),
+                            Tuple(
+                                elts=[
+                                    Constant(value=':scheme'),
+                                    Constant(value='https')],
+                                ctx=Load()),
+                            Tuple(
+                                elts=[
+                                    Constant(value=':authority'),
+                                    Constant(value='malicious.com')],
+                                ctx=Load())],
+                        ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='conn', ctx=Load()),
+                    attr='receive_data',
+                    ctx=Load()),
+                args=[
+                    Name(id='server_data', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

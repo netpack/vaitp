@@ -1,0 +1,59 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='xml.etree.ElementTree', asname='ET')]),
+        FunctionDef(
+            name='safe_load_xml',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='xml_string')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Try(
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='root', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='ET', ctx=Load()),
+                                    attr='fromstring',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='xml_string', ctx=Load())],
+                                keywords=[])),
+                        Return(
+                            value=Name(id='root', ctx=Load()))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Attribute(
+                                value=Name(id='ET', ctx=Load()),
+                                attr='ParseError',
+                                ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            Constant(value='Invalid XML:'),
+                                            Name(id='e', ctx=Load())],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='xml_input', ctx=Store())],
+            value=Constant(value='<root>\n    <data>Safe data</data>\n</root>')),
+        Expr(
+            value=Call(
+                func=Name(id='safe_load_xml', ctx=Load()),
+                args=[
+                    Name(id='xml_input', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

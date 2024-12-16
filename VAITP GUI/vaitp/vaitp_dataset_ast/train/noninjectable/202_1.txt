@@ -1,0 +1,134 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='hashlib')]),
+        ClassDef(
+            name='VulnerableHash',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='hasher',
+                                    ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='hashlib', ctx=Load()),
+                                    attr='sha256',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[])),
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='total_length',
+                                    ctx=Store())],
+                            value=Constant(value=0))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='update',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='data')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='hasher',
+                                        ctx=Load()),
+                                    attr='update',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='data', ctx=Load())],
+                                keywords=[])),
+                        AugAssign(
+                            target=Attribute(
+                                value=Name(id='self', ctx=Load()),
+                                attr='total_length',
+                                ctx=Store()),
+                            op=Add(),
+                            value=Call(
+                                func=Name(id='len', ctx=Load()),
+                                args=[
+                                    Name(id='data', ctx=Load())],
+                                keywords=[]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='digest',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Return(
+                            value=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='hasher',
+                                        ctx=Load()),
+                                    attr='digest',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[]))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='vulnerable_hash', ctx=Store())],
+            value=Call(
+                func=Name(id='VulnerableHash', ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='vulnerable_hash', ctx=Load()),
+                    attr='update',
+                    ctx=Load()),
+                args=[
+                    BinOp(
+                        left=Constant(value=b'A'),
+                        op=Mult(),
+                        right=BinOp(
+                            left=Constant(value=2),
+                            op=Pow(),
+                            right=Constant(value=31)))],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Call(
+                        func=Attribute(
+                            value=Name(id='vulnerable_hash', ctx=Load()),
+                            attr='digest',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])],
+                keywords=[]))],
+    type_ignores=[])

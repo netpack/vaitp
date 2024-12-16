@@ -1,0 +1,61 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='cgi')]),
+        Import(
+            names=[
+                alias(name='sys')]),
+        FunctionDef(
+            name='safe_cgi_error',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='message')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='safe_message', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='cgi', ctx=Load()),
+                            attr='escape',
+                            ctx=Load()),
+                        args=[
+                            Name(id='message', ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='quote',
+                                value=Constant(value=True))])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='sys', ctx=Load()),
+                                attr='stderr',
+                                ctx=Load()),
+                            attr='write',
+                            ctx=Load()),
+                        args=[
+                            JoinedStr(
+                                values=[
+                                    Constant(value='CGI Error: '),
+                                    FormattedValue(
+                                        value=Name(id='safe_message', ctx=Load()),
+                                        conversion=-1),
+                                    Constant(value='\n')])],
+                        keywords=[]))],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='safe_cgi_error', ctx=Load()),
+                args=[
+                    BinOp(
+                        left=Constant(value='An error occurred: %s'),
+                        op=Mod(),
+                        right=Constant(value='some error details'))],
+                keywords=[]))],
+    type_ignores=[])

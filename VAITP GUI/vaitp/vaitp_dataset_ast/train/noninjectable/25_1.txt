@@ -1,0 +1,63 @@
+Module(
+    body=[
+        ImportFrom(
+            module='PIL',
+            names=[
+                alias(name='Image'),
+                alias(name='os')],
+            level=0),
+        FunctionDef(
+            name='process_image',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='image_path')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='temp_file', ctx=Store())],
+                    value=Constant(value='temp file.png')),
+                Assign(
+                    targets=[
+                        Name(id='image', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='Image', ctx=Load()),
+                            attr='open',
+                            ctx=Load()),
+                        args=[
+                            Name(id='image_path', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='image', ctx=Load()),
+                            attr='save',
+                            ctx=Load()),
+                        args=[
+                            Name(id='temp_file', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='os', ctx=Load()),
+                            attr='remove',
+                            ctx=Load()),
+                        args=[
+                            Name(id='temp_file', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='image_path', ctx=Store())],
+            value=Constant(value='example.jpg')),
+        Expr(
+            value=Call(
+                func=Name(id='process_image', ctx=Load()),
+                args=[
+                    Name(id='image_path', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

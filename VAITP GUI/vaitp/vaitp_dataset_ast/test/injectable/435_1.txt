@@ -1,0 +1,36 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='html')]),
+        FunctionDef(
+            name='render_page',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='user_input')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='safe_input', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='html', ctx=Load()),
+                            attr='escape',
+                            ctx=Load()),
+                        args=[
+                            Name(id='user_input', ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=JoinedStr(
+                        values=[
+                            Constant(value='<html><body>User input: '),
+                            FormattedValue(
+                                value=Name(id='safe_input', ctx=Load()),
+                                conversion=-1),
+                            Constant(value='</body></html>')]))],
+            decorator_list=[])],
+    type_ignores=[])

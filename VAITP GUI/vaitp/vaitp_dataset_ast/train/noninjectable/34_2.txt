@@ -1,0 +1,87 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='http.server')]),
+        ClassDef(
+            name='MyHandler',
+            bases=[
+                Attribute(
+                    value=Attribute(
+                        value=Name(id='http', ctx=Load()),
+                        attr='server',
+                        ctx=Load()),
+                    attr='BaseHTTPRequestHandler',
+                    ctx=Load())],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='do_GET',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='send_response',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value=301)],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='send_header',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='Location'),
+                                    Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='path',
+                                        ctx=Load())],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='end_headers',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[]))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='server', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='http', ctx=Load()),
+                        attr='server',
+                        ctx=Load()),
+                    attr='HTTPServer',
+                    ctx=Load()),
+                args=[
+                    Tuple(
+                        elts=[
+                            Constant(value=''),
+                            Constant(value=8000)],
+                        ctx=Load()),
+                    Name(id='MyHandler', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='server', ctx=Load()),
+                    attr='serve_forever',
+                    ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

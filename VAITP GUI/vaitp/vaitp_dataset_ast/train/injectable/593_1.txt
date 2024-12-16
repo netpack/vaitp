@@ -1,0 +1,126 @@
+Module(
+    body=[
+        ClassDef(
+            name='SafePALChain',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Pass()],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='from_math_prompt',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='prompt')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Return(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='safe_eval',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='prompt', ctx=Load())],
+                                keywords=[]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='from_colored_object_prompt',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='prompt')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Return(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='safe_eval',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='prompt', ctx=Load())],
+                                keywords=[]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='safe_eval',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='expression')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='allowed_names', ctx=Store())],
+                            value=Dict(
+                                keys=[
+                                    Constant(value='sqrt')],
+                                values=[
+                                    Attribute(
+                                        value=Call(
+                                            func=Name(id='__import__', ctx=Load()),
+                                            args=[
+                                                Constant(value='math')],
+                                            keywords=[]),
+                                        attr='sqrt',
+                                        ctx=Load())])),
+                        Return(
+                            value=Call(
+                                func=Name(id='eval', ctx=Load()),
+                                args=[
+                                    Name(id='expression', ctx=Load()),
+                                    Dict(
+                                        keys=[
+                                            Constant(value='__builtins__')],
+                                        values=[
+                                            Constant(value=None)]),
+                                    Name(id='allowed_names', ctx=Load())],
+                                keywords=[]))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='safe_chain', ctx=Store())],
+            value=Call(
+                func=Name(id='SafePALChain', ctx=Load()),
+                args=[],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='result', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='safe_chain', ctx=Load()),
+                    attr='from_math_prompt',
+                    ctx=Load()),
+                args=[
+                    Constant(value='sqrt(16)')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='result', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

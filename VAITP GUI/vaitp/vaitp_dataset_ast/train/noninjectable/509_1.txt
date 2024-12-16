@@ -1,0 +1,71 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='pickle')]),
+        FunctionDef(
+            name='load_pickle',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='data')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='pickle', ctx=Load()),
+                            attr='loads',
+                            ctx=Load()),
+                        args=[
+                            Name(id='data', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                With(
+                    items=[
+                        withitem(
+                            context_expr=Call(
+                                func=Name(id='open', ctx=Load()),
+                                args=[
+                                    Constant(value='data.pkl'),
+                                    Constant(value='rb')],
+                                keywords=[]),
+                            optional_vars=Name(id='f', ctx=Store()))],
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='data', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='f', ctx=Load()),
+                                    attr='read',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[])),
+                        Assign(
+                            targets=[
+                                Name(id='obj', ctx=Store())],
+                            value=Call(
+                                func=Name(id='load_pickle', ctx=Load()),
+                                args=[
+                                    Name(id='data', ctx=Load())],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Loaded object:'),
+                                    Name(id='obj', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[])],
+    type_ignores=[])

@@ -1,0 +1,123 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='socket')]),
+        FunctionDef(
+            name='safe_send_empty_datagram',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='ip_address'),
+                    arg(arg='port')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Try(
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='sock', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='socket', ctx=Load()),
+                                    attr='socket',
+                                    ctx=Load()),
+                                args=[
+                                    Attribute(
+                                        value=Name(id='socket', ctx=Load()),
+                                        attr='AF_INET',
+                                        ctx=Load()),
+                                    Attribute(
+                                        value=Name(id='socket', ctx=Load()),
+                                        attr='SOCK_RAW',
+                                        ctx=Load()),
+                                    Attribute(
+                                        value=Name(id='socket', ctx=Load()),
+                                        attr='IPPROTO_IP',
+                                        ctx=Load())],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='sock', ctx=Load()),
+                                    attr='bind',
+                                    ctx=Load()),
+                                args=[
+                                    Tuple(
+                                        elts=[
+                                            Name(id='ip_address', ctx=Load()),
+                                            Name(id='port', ctx=Load())],
+                                        ctx=Load())],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='sock', ctx=Load()),
+                                    attr='setsockopt',
+                                    ctx=Load()),
+                                args=[
+                                    Attribute(
+                                        value=Name(id='socket', ctx=Load()),
+                                        attr='IPPROTO_IP',
+                                        ctx=Load()),
+                                    Attribute(
+                                        value=Name(id='socket', ctx=Load()),
+                                        attr='IP_HDRINCL',
+                                        ctx=Load()),
+                                    Constant(value=1)],
+                                keywords=[])),
+                        Assign(
+                            targets=[
+                                Name(id='payload', ctx=Store())],
+                            value=Constant(value=b'Valid data')),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='sock', ctx=Load()),
+                                    attr='sendto',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='payload', ctx=Load()),
+                                    Tuple(
+                                        elts=[
+                                            Name(id='ip_address', ctx=Load()),
+                                            Name(id='port', ctx=Load())],
+                                        ctx=Load())],
+                                keywords=[]))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='Exception', ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    Constant(value='An error occurred: '),
+                                                    FormattedValue(
+                                                        value=Name(id='e', ctx=Load()),
+                                                        conversion=-1)])],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='sock', ctx=Load()),
+                                    attr='close',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[]))])],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='safe_send_empty_datagram', ctx=Load()),
+                args=[
+                    Constant(value='127.0.0.1'),
+                    Constant(value=0)],
+                keywords=[]))],
+    type_ignores=[])

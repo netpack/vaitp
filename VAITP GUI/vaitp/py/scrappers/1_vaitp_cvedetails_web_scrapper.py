@@ -1,7 +1,7 @@
 import requests, re, time, sqlite3, importlib.util, sys
 from bs4 import BeautifulSoup
 
-verbose = True
+verbose = False
 
 print('Starting cvedetails.com Web Scapper!') 
 

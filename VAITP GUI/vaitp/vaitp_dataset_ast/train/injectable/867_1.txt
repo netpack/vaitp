@@ -1,0 +1,125 @@
+Module(
+    body=[
+        ClassDef(
+            name='SynapseHomeserver',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='federation_domain_whitelist',
+                                    ctx=Store())],
+                            value=Set(
+                                elts=[
+                                    Constant(value='trusted-server.com'),
+                                    Constant(value='another-trusted-server.com')]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='is_domain_trusted',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='domain')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Return(
+                            value=Compare(
+                                left=Name(id='domain', ctx=Load()),
+                                ops=[
+                                    In()],
+                                comparators=[
+                                    Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='federation_domain_whitelist',
+                                        ctx=Load())]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='get_well_known_file',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='domain')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        If(
+                            test=UnaryOp(
+                                op=Not(),
+                                operand=Call(
+                                    func=Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='is_domain_trusted',
+                                        ctx=Load()),
+                                    args=[
+                                        Name(id='domain', ctx=Load())],
+                                    keywords=[])),
+                            body=[
+                                Raise(
+                                    exc=Call(
+                                        func=Name(id='ValueError', ctx=Load()),
+                                        args=[
+                                            Constant(value='Untrusted domain. Request denied.')],
+                                        keywords=[]))],
+                            orelse=[]),
+                        Return(
+                            value=JoinedStr(
+                                values=[
+                                    Constant(value='Retrieved .well-known file from '),
+                                    FormattedValue(
+                                        value=Name(id='domain', ctx=Load()),
+                                        conversion=-1)]))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='homeserver', ctx=Store())],
+            value=Call(
+                func=Name(id='SynapseHomeserver', ctx=Load()),
+                args=[],
+                keywords=[])),
+        Try(
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Call(
+                                func=Attribute(
+                                    value=Name(id='homeserver', ctx=Load()),
+                                    attr='get_well_known_file',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='malicious-server.com')],
+                                keywords=[])],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ValueError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

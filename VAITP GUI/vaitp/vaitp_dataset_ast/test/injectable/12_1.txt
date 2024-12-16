@@ -1,0 +1,240 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='xml.sax')]),
+        ClassDef(
+            name='PlistHandler',
+            bases=[
+                Attribute(
+                    value=Attribute(
+                        value=Name(id='xml', ctx=Load()),
+                        attr='sax',
+                        ctx=Load()),
+                    attr='ContentHandler',
+                    ctx=Load())],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='data',
+                                    ctx=Store())],
+                            value=Dict(keys=[], values=[]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='startElement',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='name'),
+                            arg(arg='attrs')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        If(
+                            test=Compare(
+                                left=Name(id='name', ctx=Load()),
+                                ops=[
+                                    Eq()],
+                                comparators=[
+                                    Constant(value='dict')]),
+                            body=[
+                                Assign(
+                                    targets=[
+                                        Attribute(
+                                            value=Name(id='self', ctx=Load()),
+                                            attr='data',
+                                            ctx=Store())],
+                                    value=Dict(keys=[], values=[]))],
+                            orelse=[])],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='endElement',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='name')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        If(
+                            test=Compare(
+                                left=Name(id='name', ctx=Load()),
+                                ops=[
+                                    Eq()],
+                                comparators=[
+                                    Constant(value='dict')]),
+                            body=[
+                                Return(
+                                    value=Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='data',
+                                        ctx=Load()))],
+                            orelse=[])],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='characters',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='content')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        If(
+                            test=Call(
+                                func=Attribute(
+                                    value=Name(id='content', ctx=Load()),
+                                    attr='strip',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[]),
+                            body=[
+                                Assign(
+                                    targets=[
+                                        Subscript(
+                                            value=Attribute(
+                                                value=Name(id='self', ctx=Load()),
+                                                attr='data',
+                                                ctx=Load()),
+                                            slice=Call(
+                                                func=Attribute(
+                                                    value=Name(id='content', ctx=Load()),
+                                                    attr='strip',
+                                                    ctx=Load()),
+                                                args=[],
+                                                keywords=[]),
+                                            ctx=Store())],
+                                    value=Constant(value=''))],
+                            orelse=[])],
+                    decorator_list=[])],
+            decorator_list=[]),
+        FunctionDef(
+            name='parse_plist',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='xml_string')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='parser', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='xml', ctx=Load()),
+                                attr='sax',
+                                ctx=Load()),
+                            attr='make_parser',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='parser', ctx=Load()),
+                            attr='setFeature',
+                            ctx=Load()),
+                        args=[
+                            Attribute(
+                                value=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='xml', ctx=Load()),
+                                        attr='sax',
+                                        ctx=Load()),
+                                    attr='handler',
+                                    ctx=Load()),
+                                attr='feature_external_ges',
+                                ctx=Load()),
+                            Constant(value=False)],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='parser', ctx=Load()),
+                            attr='setFeature',
+                            ctx=Load()),
+                        args=[
+                            Attribute(
+                                value=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='xml', ctx=Load()),
+                                        attr='sax',
+                                        ctx=Load()),
+                                    attr='handler',
+                                    ctx=Load()),
+                                attr='feature_external_pes',
+                                ctx=Load()),
+                            Constant(value=False)],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='handler', ctx=Store())],
+                    value=Call(
+                        func=Name(id='PlistHandler', ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='parser', ctx=Load()),
+                            attr='setContentHandler',
+                            ctx=Load()),
+                        args=[
+                            Name(id='handler', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='parser', ctx=Load()),
+                            attr='parseString',
+                            ctx=Load()),
+                        args=[
+                            Name(id='xml_string', ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=Attribute(
+                        value=Name(id='handler', ctx=Load()),
+                        attr='data',
+                        ctx=Load()))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='xml_string', ctx=Store())],
+            value=Constant(value='<plist version="1.0"><dict><key>foo</key><string>bar</string></dict></plist>')),
+        Assign(
+            targets=[
+                Name(id='data', ctx=Store())],
+            value=Call(
+                func=Name(id='parse_plist', ctx=Load()),
+                args=[
+                    Name(id='xml_string', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='data', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

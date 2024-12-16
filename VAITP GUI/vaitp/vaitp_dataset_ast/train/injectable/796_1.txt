@@ -1,0 +1,93 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='re')]),
+        FunctionDef(
+            name='sanitize_template',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='template')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='allowed_pattern', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='re', ctx=Load()),
+                            attr='compile',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='^[\\w\\s{}]+$')],
+                        keywords=[])),
+                If(
+                    test=UnaryOp(
+                        op=Not(),
+                        operand=Call(
+                            func=Attribute(
+                                value=Name(id='allowed_pattern', ctx=Load()),
+                                attr='match',
+                                ctx=Load()),
+                            args=[
+                                Name(id='template', ctx=Load())],
+                            keywords=[])),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Invalid template: contains unsafe characters.')],
+                                keywords=[]))],
+                    orelse=[]),
+                Return(
+                    value=Name(id='template', ctx=Load()))],
+            decorator_list=[]),
+        FunctionDef(
+            name='configure_data_pipeline',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='template')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='sanitized_template', ctx=Store())],
+                    value=Call(
+                        func=Name(id='sanitize_template', ctx=Load()),
+                        args=[
+                            Name(id='template', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='user_input_template', ctx=Store())],
+                    value=Constant(value='{{ user_input }}')),
+                Expr(
+                    value=Call(
+                        func=Name(id='configure_data_pipeline', ctx=Load()),
+                        args=[
+                            Name(id='user_input_template', ctx=Load())],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ValueError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

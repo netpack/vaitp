@@ -1,0 +1,61 @@
+Module(
+    body=[
+        ImportFrom(
+            module='PIL',
+            names=[
+                alias(name='Image'),
+                alias(name='ImagePath')],
+            level=0),
+        FunctionDef(
+            name='vulnerable_function',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='image_data')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='path', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='ImagePath', ctx=Load()),
+                            attr='Path',
+                            ctx=Load()),
+                        args=[
+                            Name(id='image_data', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='bbox', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='path', ctx=Load()),
+                            attr='getbbox',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Return(
+                    value=Name(id='bbox', ctx=Load()))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='image_data', ctx=Store())],
+            value=Constant(value=b'...')),
+        Assign(
+            targets=[
+                Name(id='result', ctx=Store())],
+            value=Call(
+                func=Name(id='vulnerable_function', ctx=Load()),
+                args=[
+                    Name(id='image_data', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='result', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

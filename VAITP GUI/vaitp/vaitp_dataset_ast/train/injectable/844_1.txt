@@ -1,0 +1,97 @@
+Module(
+    body=[
+        FunctionDef(
+            name='safe_execute_code',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='user_input')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='sanitized_input', ctx=Store())],
+                    value=Call(
+                        func=Name(id='sanitize', ctx=Load()),
+                        args=[
+                            Name(id='user_input', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='execute_in_safe_context', ctx=Load()),
+                        args=[
+                            Name(id='sanitized_input', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='sanitize',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='user_input')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Call(
+                                func=Attribute(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='user_input', ctx=Load()),
+                                            attr='replace',
+                                            ctx=Load()),
+                                        args=[
+                                            Constant(value=';'),
+                                            Constant(value='')],
+                                        keywords=[]),
+                                    attr='replace',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value="'"),
+                                    Constant(value='')],
+                                keywords=[]),
+                            attr='replace',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='"'),
+                            Constant(value='')],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='execute_in_safe_context',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='code')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            JoinedStr(
+                                values=[
+                                    Constant(value='Executing code: '),
+                                    FormattedValue(
+                                        value=Name(id='code', ctx=Load()),
+                                        conversion=-1)])],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='user_input', ctx=Store())],
+            value=Constant(value="print('Hello, World!'); os.system('rm -rf /')")),
+        Expr(
+            value=Call(
+                func=Name(id='safe_execute_code', ctx=Load()),
+                args=[
+                    Name(id='user_input', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

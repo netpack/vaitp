@@ -1,0 +1,24 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        Assign(
+            targets=[
+                Name(id='malicious_input', ctx=Store())],
+            value=Constant(value="__import__('os').popen('whoami').read()")),
+        Assign(
+            targets=[
+                Name(id='result', ctx=Store())],
+            value=Call(
+                func=Name(id='eval', ctx=Load()),
+                args=[
+                    Name(id='malicious_input', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='result', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

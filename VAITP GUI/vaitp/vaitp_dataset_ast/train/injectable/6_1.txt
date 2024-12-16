@@ -1,0 +1,36 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='email.parser')]),
+        Assign(
+            targets=[
+                Name(id='parser', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='email', ctx=Load()),
+                        attr='parser',
+                        ctx=Load()),
+                    attr='BytesParser',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='parsed_email', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='parser', ctx=Load()),
+                    attr='parsebytes',
+                    ctx=Load()),
+                args=[
+                    Constant(value=b'From: example@example.com\nTo: test@test.com\nSubject: Test\n\nThis is a test email.')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='parsed_email', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

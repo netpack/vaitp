@@ -1,0 +1,257 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='hashlib')]),
+        ClassDef(
+            name='User',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='username'),
+                            arg(arg='password')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='username',
+                                    ctx=Store())],
+                            value=Name(id='username', ctx=Load())),
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='password_hash',
+                                    ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='hash_password',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='password', ctx=Load())],
+                                keywords=[]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='hash_password',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='password')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Return(
+                            value=Call(
+                                func=Attribute(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='hashlib', ctx=Load()),
+                                            attr='sha256',
+                                            ctx=Load()),
+                                        args=[
+                                            Call(
+                                                func=Attribute(
+                                                    value=Name(id='password', ctx=Load()),
+                                                    attr='encode',
+                                                    ctx=Load()),
+                                                args=[],
+                                                keywords=[])],
+                                        keywords=[]),
+                                    attr='hexdigest',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='check_password',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='password')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Return(
+                            value=Compare(
+                                left=Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='password_hash',
+                                    ctx=Load()),
+                                ops=[
+                                    Eq()],
+                                comparators=[
+                                    Call(
+                                        func=Attribute(
+                                            value=Name(id='self', ctx=Load()),
+                                            attr='hash_password',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='password', ctx=Load())],
+                                        keywords=[])]))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        ClassDef(
+            name='AuthSystem',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='users',
+                                    ctx=Store())],
+                            value=Dict(keys=[], values=[]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='register_user',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='username'),
+                            arg(arg='password')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Subscript(
+                                    value=Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='users',
+                                        ctx=Load()),
+                                    slice=Name(id='username', ctx=Load()),
+                                    ctx=Store())],
+                            value=Call(
+                                func=Name(id='User', ctx=Load()),
+                                args=[
+                                    Name(id='username', ctx=Load()),
+                                    Name(id='password', ctx=Load())],
+                                keywords=[]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='login',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='username'),
+                            arg(arg='password')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='user', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='users',
+                                        ctx=Load()),
+                                    attr='get',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='username', ctx=Load())],
+                                keywords=[])),
+                        If(
+                            test=BoolOp(
+                                op=And(),
+                                values=[
+                                    Name(id='user', ctx=Load()),
+                                    Call(
+                                        func=Attribute(
+                                            value=Name(id='user', ctx=Load()),
+                                            attr='check_password',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='password', ctx=Load())],
+                                        keywords=[])]),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    Constant(value='User  '),
+                                                    FormattedValue(
+                                                        value=Name(id='username', ctx=Load()),
+                                                        conversion=-1),
+                                                    Constant(value=' logged in successfully.')])],
+                                        keywords=[]))],
+                            orelse=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            Constant(value='Invalid username or password.')],
+                                        keywords=[]))])],
+                    decorator_list=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='auth_system', ctx=Store())],
+            value=Call(
+                func=Name(id='AuthSystem', ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='auth_system', ctx=Load()),
+                    attr='register_user',
+                    ctx=Load()),
+                args=[
+                    Constant(value='alice'),
+                    Constant(value='securepassword')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='auth_system', ctx=Load()),
+                    attr='login',
+                    ctx=Load()),
+                args=[
+                    Constant(value='alice'),
+                    Constant(value='securepassword')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='auth_system', ctx=Load()),
+                    attr='login',
+                    ctx=Load()),
+                args=[
+                    Constant(value='alice'),
+                    Constant(value='wrongpassword')],
+                keywords=[]))],
+    type_ignores=[])

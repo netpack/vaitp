@@ -1,0 +1,75 @@
+Module(
+    body=[
+        ImportFrom(
+            module='werkzeug.serving',
+            names=[
+                alias(name='run_simple')],
+            level=0),
+        ImportFrom(
+            module='werkzeug.wrappers',
+            names=[
+                alias(name='Request'),
+                alias(name='Response')],
+            level=0),
+        FunctionDef(
+            name='application',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='environ'),
+                    arg(arg='start_response')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='request', ctx=Store())],
+                    value=Call(
+                        func=Name(id='Request', ctx=Load()),
+                        args=[
+                            Name(id='environ', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='response', ctx=Store())],
+                    value=Call(
+                        func=Name(id='Response', ctx=Load()),
+                        args=[
+                            Constant(value='Hello, World!')],
+                        keywords=[
+                            keyword(
+                                arg='status',
+                                value=Constant(value=200))])),
+                Return(
+                    value=Call(
+                        func=Name(id='response', ctx=Load()),
+                        args=[
+                            Name(id='environ', ctx=Load()),
+                            Name(id='start_response', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='run_simple', ctx=Load()),
+                        args=[
+                            Constant(value='0.0.0.0'),
+                            Constant(value=5000),
+                            Name(id='application', ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='use_reloader',
+                                value=Constant(value=True)),
+                            keyword(
+                                arg='use_debugger',
+                                value=Constant(value=True))]))],
+            orelse=[])],
+    type_ignores=[])

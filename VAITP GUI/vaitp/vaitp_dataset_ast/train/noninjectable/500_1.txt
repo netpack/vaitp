@@ -1,0 +1,46 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='xml.etree.ElementTree', asname='ET')]),
+        FunctionDef(
+            name='unsafe_svg2rlg',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='svg_data')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='root', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='ET', ctx=Load()),
+                            attr='fromstring',
+                            ctx=Load()),
+                        args=[
+                            Name(id='svg_data', ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=Call(
+                        func=Name(id='convert_svg_to_rlg', ctx=Load()),
+                        args=[
+                            Name(id='root', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='convert_svg_to_rlg',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='root')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Pass()],
+            decorator_list=[])],
+    type_ignores=[])

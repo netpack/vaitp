@@ -1,0 +1,379 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='bz2')]),
+        Import(
+            names=[
+                alias(name='io')]),
+        FunctionDef(
+            name='safe_decompress',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='compressed_data'),
+                    arg(arg='max_selectors')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[
+                    Constant(value=None)]),
+            body=[
+                Expr(
+                    value=Constant(value='\n  Decompresses bz2 data while mitigating the CVE-2019-12900 vulnerability.\n\n  Args:\n    compressed_data: The bz2 compressed bytes.\n    max_selectors: An optional integer to limit the number of selectors during decompression.\n                   If None, no limit is applied, otherwise raise ValueError if selectors exceed\n                   this limit during decompression.\n\n  Returns:\n    The decompressed bytes.\n\n  Raises:\n      ValueError: if the number of selectors exceeds max_selectors, if max_selectors\n                  is not None.\n      OSError: If the underlying bz2 library encounters an issue other than too many\n               selectors.\n\n  ')),
+                Try(
+                    body=[
+                        If(
+                            test=Compare(
+                                left=Name(id='max_selectors', ctx=Load()),
+                                ops=[
+                                    Is()],
+                                comparators=[
+                                    Constant(value=None)]),
+                            body=[
+                                Return(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='bz2', ctx=Load()),
+                                            attr='decompress',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='compressed_data', ctx=Load())],
+                                        keywords=[]))],
+                            orelse=[
+                                With(
+                                    items=[
+                                        withitem(
+                                            context_expr=Call(
+                                                func=Attribute(
+                                                    value=Name(id='io', ctx=Load()),
+                                                    attr='BytesIO',
+                                                    ctx=Load()),
+                                                args=[
+                                                    Name(id='compressed_data', ctx=Load())],
+                                                keywords=[]),
+                                            optional_vars=Name(id='compressed_file', ctx=Store()))],
+                                    body=[
+                                        Assign(
+                                            targets=[
+                                                Name(id='decompressor', ctx=Store())],
+                                            value=Call(
+                                                func=Attribute(
+                                                    value=Name(id='bz2', ctx=Load()),
+                                                    attr='BZ2Decompressor',
+                                                    ctx=Load()),
+                                                args=[],
+                                                keywords=[])),
+                                        Assign(
+                                            targets=[
+                                                Name(id='decompressed_data', ctx=Store())],
+                                            value=Constant(value=b'')),
+                                        Assign(
+                                            targets=[
+                                                Name(id='selector_count', ctx=Store())],
+                                            value=Constant(value=0)),
+                                        While(
+                                            test=Constant(value=True),
+                                            body=[
+                                                Assign(
+                                                    targets=[
+                                                        Name(id='chunk', ctx=Store())],
+                                                    value=Call(
+                                                        func=Attribute(
+                                                            value=Name(id='compressed_file', ctx=Load()),
+                                                            attr='read',
+                                                            ctx=Load()),
+                                                        args=[
+                                                            Constant(value=4096)],
+                                                        keywords=[])),
+                                                If(
+                                                    test=UnaryOp(
+                                                        op=Not(),
+                                                        operand=Name(id='chunk', ctx=Load())),
+                                                    body=[
+                                                        Break()],
+                                                    orelse=[]),
+                                                Try(
+                                                    body=[
+                                                        Assign(
+                                                            targets=[
+                                                                Tuple(
+                                                                    elts=[
+                                                                        Name(id='decompressed_chunk', ctx=Store()),
+                                                                        Name(id='_', ctx=Store()),
+                                                                        Name(id='selectors_processed', ctx=Store())],
+                                                                    ctx=Store())],
+                                                            value=Call(
+                                                                func=Attribute(
+                                                                    value=Name(id='decompressor', ctx=Load()),
+                                                                    attr='decompress',
+                                                                    ctx=Load()),
+                                                                args=[
+                                                                    Name(id='chunk', ctx=Load())],
+                                                                keywords=[])),
+                                                        AugAssign(
+                                                            target=Name(id='selector_count', ctx=Store()),
+                                                            op=Add(),
+                                                            value=Name(id='selectors_processed', ctx=Load()))],
+                                                    handlers=[
+                                                        ExceptHandler(
+                                                            type=Name(id='OSError', ctx=Load()),
+                                                            name='e',
+                                                            body=[
+                                                                If(
+                                                                    test=Compare(
+                                                                        left=Constant(value='Too many selectors'),
+                                                                        ops=[
+                                                                            In()],
+                                                                        comparators=[
+                                                                            Call(
+                                                                                func=Name(id='str', ctx=Load()),
+                                                                                args=[
+                                                                                    Name(id='e', ctx=Load())],
+                                                                                keywords=[])]),
+                                                                    body=[
+                                                                        Raise(
+                                                                            exc=Call(
+                                                                                func=Name(id='ValueError', ctx=Load()),
+                                                                                args=[
+                                                                                    Constant(value='Too many selectors')],
+                                                                                keywords=[]),
+                                                                            cause=Name(id='e', ctx=Load()))],
+                                                                    orelse=[
+                                                                        Raise()])])],
+                                                    orelse=[],
+                                                    finalbody=[]),
+                                                If(
+                                                    test=BoolOp(
+                                                        op=And(),
+                                                        values=[
+                                                            Compare(
+                                                                left=Name(id='max_selectors', ctx=Load()),
+                                                                ops=[
+                                                                    IsNot()],
+                                                                comparators=[
+                                                                    Constant(value=None)]),
+                                                            Compare(
+                                                                left=Name(id='selector_count', ctx=Load()),
+                                                                ops=[
+                                                                    Gt()],
+                                                                comparators=[
+                                                                    Name(id='max_selectors', ctx=Load())])]),
+                                                    body=[
+                                                        Raise(
+                                                            exc=Call(
+                                                                func=Name(id='ValueError', ctx=Load()),
+                                                                args=[
+                                                                    Constant(value='Too many selectors')],
+                                                                keywords=[]))],
+                                                    orelse=[]),
+                                                AugAssign(
+                                                    target=Name(id='decompressed_data', ctx=Store()),
+                                                    op=Add(),
+                                                    value=Name(id='decompressed_chunk', ctx=Load()))],
+                                            orelse=[]),
+                                        Return(
+                                            value=Name(id='decompressed_data', ctx=Load()))])])],
+                    handlers=[
+                        ExceptHandler(
+                            type=Attribute(
+                                value=Name(id='bz2', ctx=Load()),
+                                attr='BZ2Error',
+                                ctx=Load()),
+                            name='e',
+                            body=[
+                                Raise(
+                                    exc=Call(
+                                        func=Name(id='OSError', ctx=Load()),
+                                        args=[
+                                            Constant(value='BZ2 decompression error')],
+                                        keywords=[]),
+                                    cause=Name(id='e', ctx=Load()))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                FunctionDef(
+                    name='create_vulnerable_data',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='selector_count')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='header', ctx=Store())],
+                            value=Constant(value=b'BZh91AY&SY')),
+                        Assign(
+                            targets=[
+                                Name(id='block_header', ctx=Store())],
+                            value=Constant(value=b'\x17rE\x06\xcf\x10\x00\x00')),
+                        Assign(
+                            targets=[
+                                Name(id='selector_data', ctx=Store())],
+                            value=BinOp(
+                                left=Constant(value=b'\x00'),
+                                op=Mult(),
+                                right=Name(id='selector_count', ctx=Load()))),
+                        Assign(
+                            targets=[
+                                Name(id='block_end', ctx=Store())],
+                            value=Constant(value=b'\x17q$\xe9\x02\x00\x00')),
+                        Return(
+                            value=BinOp(
+                                left=BinOp(
+                                    left=BinOp(
+                                        left=Name(id='header', ctx=Load()),
+                                        op=Add(),
+                                        right=Name(id='block_header', ctx=Load())),
+                                    op=Add(),
+                                    right=Name(id='selector_data', ctx=Load())),
+                                op=Add(),
+                                right=Name(id='block_end', ctx=Load())))],
+                    decorator_list=[]),
+                Assign(
+                    targets=[
+                        Name(id='compressed_data_1', ctx=Store())],
+                    value=Call(
+                        func=Name(id='create_vulnerable_data', ctx=Load()),
+                        args=[
+                            Constant(value=100)],
+                        keywords=[])),
+                Try(
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='decompressed_data_1', ctx=Store())],
+                            value=Call(
+                                func=Name(id='safe_decompress', ctx=Load()),
+                                args=[
+                                    Name(id='compressed_data_1', ctx=Load())],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Decompression 1 successful. Data length:'),
+                                    Call(
+                                        func=Name(id='len', ctx=Load()),
+                                        args=[
+                                            Name(id='decompressed_data_1', ctx=Load())],
+                                        keywords=[])],
+                                keywords=[]))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='Exception', ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            Constant(value='Decompression 1 failed:'),
+                                            Name(id='e', ctx=Load())],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[]),
+                Assign(
+                    targets=[
+                        Name(id='compressed_data_2', ctx=Store())],
+                    value=Call(
+                        func=Name(id='create_vulnerable_data', ctx=Load()),
+                        args=[
+                            Constant(value=100)],
+                        keywords=[])),
+                Try(
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='decompressed_data_2', ctx=Store())],
+                            value=Call(
+                                func=Name(id='safe_decompress', ctx=Load()),
+                                args=[
+                                    Name(id='compressed_data_2', ctx=Load())],
+                                keywords=[
+                                    keyword(
+                                        arg='max_selectors',
+                                        value=Constant(value=100))])),
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Decompression 2 successful. Data length:'),
+                                    Call(
+                                        func=Name(id='len', ctx=Load()),
+                                        args=[
+                                            Name(id='decompressed_data_2', ctx=Load())],
+                                        keywords=[])],
+                                keywords=[]))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='Exception', ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            Constant(value='Decompression 2 failed:'),
+                                            Name(id='e', ctx=Load())],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[]),
+                Assign(
+                    targets=[
+                        Name(id='compressed_data_3', ctx=Store())],
+                    value=Call(
+                        func=Name(id='create_vulnerable_data', ctx=Load()),
+                        args=[
+                            Constant(value=100)],
+                        keywords=[])),
+                Try(
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='decompressed_data_3', ctx=Store())],
+                            value=Call(
+                                func=Name(id='safe_decompress', ctx=Load()),
+                                args=[
+                                    Name(id='compressed_data_3', ctx=Load())],
+                                keywords=[
+                                    keyword(
+                                        arg='max_selectors',
+                                        value=Constant(value=50))])),
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Decompression 3 successful. Data length:'),
+                                    Call(
+                                        func=Name(id='len', ctx=Load()),
+                                        args=[
+                                            Name(id='decompressed_data_3', ctx=Load())],
+                                        keywords=[])],
+                                keywords=[]))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='Exception', ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            Constant(value='Decompression 3 failed (expected):'),
+                                            Name(id='e', ctx=Load())],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[])],
+            orelse=[])],
+    type_ignores=[])

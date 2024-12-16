@@ -1,0 +1,65 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='mailcap')]),
+        FunctionDef(
+            name='vulnerable_findmatch',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='name'),
+                    arg(arg='mime_type')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='command', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='mailcap', ctx=Load()),
+                            attr='findmatch',
+                            ctx=Load()),
+                        args=[
+                            Name(id='name', ctx=Load()),
+                            Name(id='mime_type', ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=Name(id='command', ctx=Load()))],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='user_input', ctx=Store())],
+                    value=Constant(value='example_command')),
+                Assign(
+                    targets=[
+                        Name(id='mime_type', ctx=Store())],
+                    value=Constant(value='text/plain')),
+                Assign(
+                    targets=[
+                        Name(id='command', ctx=Store())],
+                    value=Call(
+                        func=Name(id='vulnerable_findmatch', ctx=Load()),
+                        args=[
+                            Name(id='user_input', ctx=Load()),
+                            Name(id='mime_type', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Command to execute:'),
+                            Name(id='command', ctx=Load())],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

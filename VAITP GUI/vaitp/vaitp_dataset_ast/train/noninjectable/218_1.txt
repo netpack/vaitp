@@ -1,0 +1,18 @@
+Module(
+    body=[
+        ImportFrom(
+            module='openapi_python_client',
+            names=[
+                alias(name='generate_client')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='malicious_input', ctx=Store())],
+            value=Constant(value='../../../../../../../../etc/passwd')),
+        Expr(
+            value=Call(
+                func=Name(id='generate_client', ctx=Load()),
+                args=[
+                    Name(id='malicious_input', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

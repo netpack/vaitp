@@ -1,0 +1,69 @@
+Module(
+    body=[
+        FunctionDef(
+            name='vulnerable_vfs_umount',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='mounted_path'),
+                    arg(arg='unmount_path')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Compare(
+                        left=Call(
+                            func=Name(id='len', ctx=Load()),
+                            args=[
+                                Name(id='unmount_path', ctx=Load())],
+                            keywords=[]),
+                        ops=[
+                            LtE()],
+                        comparators=[
+                            Call(
+                                func=Name(id='len', ctx=Load()),
+                                args=[
+                                    Name(id='mounted_path', ctx=Load())],
+                                keywords=[])]),
+                    body=[
+                        If(
+                            test=Call(
+                                func=Attribute(
+                                    value=Name(id='mounted_path', ctx=Load()),
+                                    attr='startswith',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='unmount_path', ctx=Load())],
+                                keywords=[]),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            Constant(value='Unmounting:'),
+                                            Name(id='mounted_path', ctx=Load())],
+                                        keywords=[]))],
+                            orelse=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            Constant(value='Unmount path does not match the mounted path')],
+                                        keywords=[]))])],
+                    orelse=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Unmount path is too long, may cause overflow')],
+                                keywords=[]))])],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='vulnerable_vfs_umount', ctx=Load()),
+                args=[
+                    Constant(value='/mnt/my_device'),
+                    Constant(value='/mnt/my_device_extra_long_string')],
+                keywords=[]))],
+    type_ignores=[])

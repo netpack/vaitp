@@ -1,0 +1,35 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='pymongo')]),
+        ImportFrom(
+            module='bson',
+            names=[
+                alias(name='BSON')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='data', ctx=Store())],
+            value=Constant(value=b'\x16\x00\x00\x00\x02name\x00\x05\x00\x00\x00Alice\x00\x00')),
+        Assign(
+            targets=[
+                Name(id='document', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Call(
+                        func=Name(id='BSON', ctx=Load()),
+                        args=[
+                            Name(id='data', ctx=Load())],
+                        keywords=[]),
+                    attr='decode',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='document', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

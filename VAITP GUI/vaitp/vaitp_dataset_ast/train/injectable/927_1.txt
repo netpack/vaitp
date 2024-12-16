@@ -1,0 +1,513 @@
+Module(
+    body=[
+        ImportFrom(
+            module='flask',
+            names=[
+                alias(name='Flask'),
+                alias(name='request'),
+                alias(name='redirect'),
+                alias(name='url_for')],
+            level=0),
+        ImportFrom(
+            module='flask_security',
+            names=[
+                alias(name='Security'),
+                alias(name='SQLAlchemyUserDatastore'),
+                alias(name='UserMixin'),
+                alias(name='RoleMixin'),
+                alias(name='login_required')],
+            level=0),
+        ImportFrom(
+            module='flask_sqlalchemy',
+            names=[
+                alias(name='SQLAlchemy')],
+            level=0),
+        ImportFrom(
+            module='urllib.parse',
+            names=[
+                alias(name='urlparse'),
+                alias(name='urljoin')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='app', ctx=Store())],
+            value=Call(
+                func=Name(id='Flask', ctx=Load()),
+                args=[
+                    Name(id='__name__', ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Subscript(
+                    value=Attribute(
+                        value=Name(id='app', ctx=Load()),
+                        attr='config',
+                        ctx=Load()),
+                    slice=Constant(value='SQLALCHEMY_DATABASE_URI'),
+                    ctx=Store())],
+            value=Constant(value='sqlite:///:memory:')),
+        Assign(
+            targets=[
+                Subscript(
+                    value=Attribute(
+                        value=Name(id='app', ctx=Load()),
+                        attr='config',
+                        ctx=Load()),
+                    slice=Constant(value='SECRET_KEY'),
+                    ctx=Store())],
+            value=Constant(value='super-secret')),
+        Assign(
+            targets=[
+                Subscript(
+                    value=Attribute(
+                        value=Name(id='app', ctx=Load()),
+                        attr='config',
+                        ctx=Load()),
+                    slice=Constant(value='SECURITY_REGISTERABLE'),
+                    ctx=Store())],
+            value=Constant(value=True)),
+        Assign(
+            targets=[
+                Name(id='db', ctx=Store())],
+            value=Call(
+                func=Name(id='SQLAlchemy', ctx=Load()),
+                args=[
+                    Name(id='app', ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='roles_users', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='db', ctx=Load()),
+                    attr='Table',
+                    ctx=Load()),
+                args=[
+                    Constant(value='roles_users'),
+                    Call(
+                        func=Attribute(
+                            value=Name(id='db', ctx=Load()),
+                            attr='Column',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='user_id'),
+                            Call(
+                                func=Attribute(
+                                    value=Name(id='db', ctx=Load()),
+                                    attr='Integer',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[]),
+                            Call(
+                                func=Attribute(
+                                    value=Name(id='db', ctx=Load()),
+                                    attr='ForeignKey',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='user.id')],
+                                keywords=[])],
+                        keywords=[]),
+                    Call(
+                        func=Attribute(
+                            value=Name(id='db', ctx=Load()),
+                            attr='Column',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='role_id'),
+                            Call(
+                                func=Attribute(
+                                    value=Name(id='db', ctx=Load()),
+                                    attr='Integer',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[]),
+                            Call(
+                                func=Attribute(
+                                    value=Name(id='db', ctx=Load()),
+                                    attr='ForeignKey',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='role.id')],
+                                keywords=[])],
+                        keywords=[])],
+                keywords=[])),
+        ClassDef(
+            name='Role',
+            bases=[
+                Attribute(
+                    value=Name(id='db', ctx=Load()),
+                    attr='Model',
+                    ctx=Load()),
+                Name(id='RoleMixin', ctx=Load())],
+            keywords=[],
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='id', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='db', ctx=Load()),
+                            attr='Column',
+                            ctx=Load()),
+                        args=[
+                            Call(
+                                func=Attribute(
+                                    value=Name(id='db', ctx=Load()),
+                                    attr='Integer',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[])],
+                        keywords=[
+                            keyword(
+                                arg='primary_key',
+                                value=Constant(value=True))])),
+                Assign(
+                    targets=[
+                        Name(id='name', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='db', ctx=Load()),
+                            attr='Column',
+                            ctx=Load()),
+                        args=[
+                            Call(
+                                func=Attribute(
+                                    value=Name(id='db', ctx=Load()),
+                                    attr='String',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value=80)],
+                                keywords=[])],
+                        keywords=[
+                            keyword(
+                                arg='unique',
+                                value=Constant(value=True))]))],
+            decorator_list=[]),
+        ClassDef(
+            name='User',
+            bases=[
+                Attribute(
+                    value=Name(id='db', ctx=Load()),
+                    attr='Model',
+                    ctx=Load()),
+                Name(id='UserMixin', ctx=Load())],
+            keywords=[],
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='id', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='db', ctx=Load()),
+                            attr='Column',
+                            ctx=Load()),
+                        args=[
+                            Attribute(
+                                value=Name(id='db', ctx=Load()),
+                                attr='Integer',
+                                ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='primary_key',
+                                value=Constant(value=True))])),
+                Assign(
+                    targets=[
+                        Name(id='email', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='db', ctx=Load()),
+                            attr='Column',
+                            ctx=Load()),
+                        args=[
+                            Call(
+                                func=Attribute(
+                                    value=Name(id='db', ctx=Load()),
+                                    attr='String',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value=255)],
+                                keywords=[])],
+                        keywords=[
+                            keyword(
+                                arg='unique',
+                                value=Constant(value=True))])),
+                Assign(
+                    targets=[
+                        Name(id='password', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='db', ctx=Load()),
+                            attr='Column',
+                            ctx=Load()),
+                        args=[
+                            Call(
+                                func=Attribute(
+                                    value=Name(id='db', ctx=Load()),
+                                    attr='String',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value=255)],
+                                keywords=[])],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='active', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='db', ctx=Load()),
+                            attr='Column',
+                            ctx=Load()),
+                        args=[
+                            Call(
+                                func=Attribute(
+                                    value=Name(id='db', ctx=Load()),
+                                    attr='Boolean',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[])],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='user_datastore', ctx=Store())],
+            value=Call(
+                func=Name(id='SQLAlchemyUserDatastore', ctx=Load()),
+                args=[
+                    Name(id='db', ctx=Load()),
+                    Name(id='User', ctx=Load()),
+                    Name(id='Role', ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='security', ctx=Store())],
+            value=Call(
+                func=Name(id='Security', ctx=Load()),
+                args=[
+                    Name(id='app', ctx=Load()),
+                    Name(id='user_datastore', ctx=Load())],
+                keywords=[])),
+        FunctionDef(
+            name='is_safe_url',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='target')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Constant(value='\n    Check if the target URL is safe for redirects.\n    ')),
+                Assign(
+                    targets=[
+                        Name(id='ref_url', ctx=Store())],
+                    value=Call(
+                        func=Name(id='urlparse', ctx=Load()),
+                        args=[
+                            Attribute(
+                                value=Name(id='request', ctx=Load()),
+                                attr='host_url',
+                                ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='test_url', ctx=Store())],
+                    value=Call(
+                        func=Name(id='urlparse', ctx=Load()),
+                        args=[
+                            Call(
+                                func=Name(id='urljoin', ctx=Load()),
+                                args=[
+                                    Attribute(
+                                        value=Name(id='request', ctx=Load()),
+                                        attr='host_url',
+                                        ctx=Load()),
+                                    Name(id='target', ctx=Load())],
+                                keywords=[])],
+                        keywords=[])),
+                Return(
+                    value=BoolOp(
+                        op=And(),
+                        values=[
+                            Compare(
+                                left=Attribute(
+                                    value=Name(id='test_url', ctx=Load()),
+                                    attr='scheme',
+                                    ctx=Load()),
+                                ops=[
+                                    In()],
+                                comparators=[
+                                    Tuple(
+                                        elts=[
+                                            Constant(value='http'),
+                                            Constant(value='https')],
+                                        ctx=Load())]),
+                            Compare(
+                                left=Attribute(
+                                    value=Name(id='ref_url', ctx=Load()),
+                                    attr='netloc',
+                                    ctx=Load()),
+                                ops=[
+                                    Eq()],
+                                comparators=[
+                                    Attribute(
+                                        value=Name(id='test_url', ctx=Load()),
+                                        attr='netloc',
+                                        ctx=Load())])]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='create_user',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='db', ctx=Load()),
+                            attr='create_all',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                If(
+                    test=UnaryOp(
+                        op=Not(),
+                        operand=Call(
+                            func=Attribute(
+                                value=Attribute(
+                                    value=Name(id='User', ctx=Load()),
+                                    attr='query',
+                                    ctx=Load()),
+                                attr='first',
+                                ctx=Load()),
+                            args=[],
+                            keywords=[])),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='user_datastore', ctx=Load()),
+                                    attr='create_user',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[
+                                    keyword(
+                                        arg='email',
+                                        value=Constant(value='user@example.com')),
+                                    keyword(
+                                        arg='password',
+                                        value=Constant(value='password'))])),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='db', ctx=Load()),
+                                        attr='session',
+                                        ctx=Load()),
+                                    attr='commit',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[]))],
+                    orelse=[])],
+            decorator_list=[
+                Attribute(
+                    value=Name(id='app', ctx=Load()),
+                    attr='before_first_request',
+                    ctx=Load())]),
+        FunctionDef(
+            name='home',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Constant(value='Welcome! You are logged in.'))],
+            decorator_list=[
+                Call(
+                    func=Attribute(
+                        value=Name(id='app', ctx=Load()),
+                        attr='route',
+                        ctx=Load()),
+                    args=[
+                        Constant(value='/')],
+                    keywords=[]),
+                Name(id='login_required', ctx=Load())]),
+        FunctionDef(
+            name='login',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='next_url', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='request', ctx=Load()),
+                                attr='args',
+                                ctx=Load()),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='next')],
+                        keywords=[])),
+                If(
+                    test=BoolOp(
+                        op=And(),
+                        values=[
+                            Name(id='next_url', ctx=Load()),
+                            Call(
+                                func=Name(id='is_safe_url', ctx=Load()),
+                                args=[
+                                    Name(id='next_url', ctx=Load())],
+                                keywords=[])]),
+                    body=[
+                        Return(
+                            value=Call(
+                                func=Name(id='redirect', ctx=Load()),
+                                args=[
+                                    Name(id='next_url', ctx=Load())],
+                                keywords=[]))],
+                    orelse=[]),
+                Return(
+                    value=Constant(value='Please log in.'))],
+            decorator_list=[
+                Call(
+                    func=Attribute(
+                        value=Name(id='app', ctx=Load()),
+                        attr='route',
+                        ctx=Load()),
+                    args=[
+                        Constant(value='/login')],
+                    keywords=[])]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='app', ctx=Load()),
+                            attr='run',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[
+                            keyword(
+                                arg='debug',
+                                value=Constant(value=True))]))],
+            orelse=[])],
+    type_ignores=[])

@@ -1,0 +1,208 @@
+Module(
+    body=[
+        ImportFrom(
+            module='reportlab.lib',
+            names=[
+                alias(name='utils')],
+            level=0),
+        ImportFrom(
+            module='reportlab.lib.pagesizes',
+            names=[
+                alias(name='letter')],
+            level=0),
+        ImportFrom(
+            module='reportlab.pdfgen',
+            names=[
+                alias(name='canvas')],
+            level=0),
+        ImportFrom(
+            module='reportlab.pdfbase',
+            names=[
+                alias(name='pdfmetrics')],
+            level=0),
+        ImportFrom(
+            module='reportlab.pdfbase.ttfonts',
+            names=[
+                alias(name='TTFont')],
+            level=0),
+        Import(
+            names=[
+                alias(name='urllib.parse')]),
+        Assign(
+            targets=[
+                Name(id='trusted_schemes', ctx=Store())],
+            value=Set(
+                elts=[
+                    Constant(value='http'),
+                    Constant(value='https')])),
+        Assign(
+            targets=[
+                Name(id='trusted_hosts', ctx=Store())],
+            value=Set(
+                elts=[
+                    Constant(value='example.com'),
+                    Constant(value='localhost')])),
+        FunctionDef(
+            name='is_trusted_url',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='url')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='parsed_url', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='urllib', ctx=Load()),
+                                attr='parse',
+                                ctx=Load()),
+                            attr='urlparse',
+                            ctx=Load()),
+                        args=[
+                            Name(id='url', ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=BoolOp(
+                        op=And(),
+                        values=[
+                            Compare(
+                                left=Attribute(
+                                    value=Name(id='parsed_url', ctx=Load()),
+                                    attr='scheme',
+                                    ctx=Load()),
+                                ops=[
+                                    In()],
+                                comparators=[
+                                    Name(id='trusted_schemes', ctx=Load())]),
+                            Compare(
+                                left=Attribute(
+                                    value=Name(id='parsed_url', ctx=Load()),
+                                    attr='hostname',
+                                    ctx=Load()),
+                                ops=[
+                                    In()],
+                                comparators=[
+                                    Name(id='trusted_hosts', ctx=Load())])]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='safe_add_image',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='c'),
+                    arg(arg='img_url'),
+                    arg(arg='x'),
+                    arg(arg='y')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Call(
+                        func=Name(id='is_trusted_url', ctx=Load()),
+                        args=[
+                            Name(id='img_url', ctx=Load())],
+                        keywords=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='img', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='utils', ctx=Load()),
+                                    attr='ImageReader',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='img_url', ctx=Load())],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='c', ctx=Load()),
+                                    attr='drawImage',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='img', ctx=Load()),
+                                    Name(id='x', ctx=Load()),
+                                    Name(id='y', ctx=Load())],
+                                keywords=[]))],
+                    orelse=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            Constant(value='Blocked untrusted URL: '),
+                                            FormattedValue(
+                                                value=Name(id='img_url', ctx=Load()),
+                                                conversion=-1)])],
+                                keywords=[]))])],
+            decorator_list=[]),
+        FunctionDef(
+            name='create_pdf',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='output_filename'),
+                    arg(arg='img_url')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='c', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='canvas', ctx=Load()),
+                            attr='Canvas',
+                            ctx=Load()),
+                        args=[
+                            Name(id='output_filename', ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='pagesize',
+                                value=Name(id='letter', ctx=Load()))])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='c', ctx=Load()),
+                            attr='drawString',
+                            ctx=Load()),
+                        args=[
+                            Constant(value=100),
+                            Constant(value=750),
+                            Constant(value='Hello, ReportLab!')],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='safe_add_image', ctx=Load()),
+                        args=[
+                            Name(id='c', ctx=Load()),
+                            Name(id='img_url', ctx=Load()),
+                            Constant(value=100),
+                            Constant(value=600)],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='c', ctx=Load()),
+                            attr='save',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='create_pdf', ctx=Load()),
+                args=[
+                    Constant(value='output.pdf'),
+                    Constant(value='http://localhost/image.png')],
+                keywords=[]))],
+    type_ignores=[])

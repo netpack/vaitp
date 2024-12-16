@@ -1,0 +1,103 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='hmac')]),
+        FunctionDef(
+            name='verify_signature',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='message'),
+                    arg(arg='signature'),
+                    arg(arg='key')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='expected_signature', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='hmac', ctx=Load()),
+                                    attr='new',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='key', ctx=Load()),
+                                    Name(id='message', ctx=Load()),
+                                    Constant(value='sha256')],
+                                keywords=[]),
+                            attr='digest',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                If(
+                    test=Call(
+                        func=Attribute(
+                            value=Name(id='hmac', ctx=Load()),
+                            attr='compare_digest',
+                            ctx=Load()),
+                        args=[
+                            Name(id='expected_signature', ctx=Load()),
+                            Name(id='signature', ctx=Load())],
+                        keywords=[]),
+                    body=[
+                        Return(
+                            value=Constant(value=True))],
+                    orelse=[
+                        Return(
+                            value=Constant(value=False))])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='key', ctx=Store())],
+            value=Constant(value=b'my_secret_key')),
+        Assign(
+            targets=[
+                Name(id='message', ctx=Store())],
+            value=Constant(value=b'Hello, World!')),
+        Assign(
+            targets=[
+                Name(id='signature', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='hmac', ctx=Load()),
+                            attr='new',
+                            ctx=Load()),
+                        args=[
+                            Name(id='key', ctx=Load()),
+                            Name(id='message', ctx=Load()),
+                            Constant(value='sha256')],
+                        keywords=[]),
+                    attr='digest',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        If(
+            test=Call(
+                func=Name(id='verify_signature', ctx=Load()),
+                args=[
+                    Name(id='message', ctx=Load()),
+                    Name(id='signature', ctx=Load()),
+                    Name(id='key', ctx=Load())],
+                keywords=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Signature is valid')],
+                        keywords=[]))],
+            orelse=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Signature is invalid')],
+                        keywords=[]))])],
+    type_ignores=[])

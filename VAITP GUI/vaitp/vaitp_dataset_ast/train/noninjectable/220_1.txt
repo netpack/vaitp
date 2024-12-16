@@ -1,0 +1,15 @@
+Module(
+    body=[
+        ImportFrom(
+            module='d8s_htm',
+            names=[
+                alias(name='HTM')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='htm', ctx=Store())],
+            value=Call(
+                func=Name(id='HTM', ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

@@ -1,0 +1,253 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='rclpy')]),
+        ImportFrom(
+            module='rclpy.node',
+            names=[
+                alias(name='Node')],
+            level=0),
+        ImportFrom(
+            module='std_msgs.msg',
+            names=[
+                alias(name='String')],
+            level=0),
+        ClassDef(
+            name='SafeNode',
+            bases=[
+                Name(id='Node', ctx=Load())],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Call(
+                                        func=Name(id='super', ctx=Load()),
+                                        args=[],
+                                        keywords=[]),
+                                    attr='__init__',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='safe_node')],
+                                keywords=[])),
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='publisher_',
+                                    ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='create_publisher',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='String', ctx=Load()),
+                                    Constant(value='safe_topic'),
+                                    Constant(value=10)],
+                                keywords=[])),
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='subscription',
+                                    ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='create_subscription',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='String', ctx=Load()),
+                                    Constant(value='unsafe_topic'),
+                                    Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='listener_callback',
+                                        ctx=Load()),
+                                    Constant(value=10)],
+                                keywords=[])),
+                        Expr(
+                            value=Attribute(
+                                value=Name(id='self', ctx=Load()),
+                                attr='subscription',
+                                ctx=Load()))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='listener_callback',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='msg')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        If(
+                            test=Call(
+                                func=Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='is_valid_message',
+                                    ctx=Load()),
+                                args=[
+                                    Attribute(
+                                        value=Name(id='msg', ctx=Load()),
+                                        attr='data',
+                                        ctx=Load())],
+                                keywords=[]),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Call(
+                                                func=Attribute(
+                                                    value=Name(id='self', ctx=Load()),
+                                                    attr='get_logger',
+                                                    ctx=Load()),
+                                                args=[],
+                                                keywords=[]),
+                                            attr='info',
+                                            ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    Constant(value='Received: "'),
+                                                    FormattedValue(
+                                                        value=Attribute(
+                                                            value=Name(id='msg', ctx=Load()),
+                                                            attr='data',
+                                                            ctx=Load()),
+                                                        conversion=-1),
+                                                    Constant(value='"')])],
+                                        keywords=[]))],
+                            orelse=[
+                                Expr(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Call(
+                                                func=Attribute(
+                                                    value=Name(id='self', ctx=Load()),
+                                                    attr='get_logger',
+                                                    ctx=Load()),
+                                                args=[],
+                                                keywords=[]),
+                                            attr='warning',
+                                            ctx=Load()),
+                                        args=[
+                                            Constant(value='Received invalid message, ignoring.')],
+                                        keywords=[]))])],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='is_valid_message',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='message')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Return(
+                            value=BoolOp(
+                                op=And(),
+                                values=[
+                                    Call(
+                                        func=Name(id='isinstance', ctx=Load()),
+                                        args=[
+                                            Name(id='message', ctx=Load()),
+                                            Name(id='str', ctx=Load())],
+                                        keywords=[]),
+                                    Compare(
+                                        left=Call(
+                                            func=Name(id='len', ctx=Load()),
+                                            args=[
+                                                Name(id='message', ctx=Load())],
+                                            keywords=[]),
+                                        ops=[
+                                            Lt()],
+                                        comparators=[
+                                            Constant(value=256)])]))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        FunctionDef(
+            name='main',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='args')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[
+                    Constant(value=None)]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='rclpy', ctx=Load()),
+                            attr='init',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[
+                            keyword(
+                                arg='args',
+                                value=Name(id='args', ctx=Load()))])),
+                Assign(
+                    targets=[
+                        Name(id='safe_node', ctx=Store())],
+                    value=Call(
+                        func=Name(id='SafeNode', ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='rclpy', ctx=Load()),
+                            attr='spin',
+                            ctx=Load()),
+                        args=[
+                            Name(id='safe_node', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='safe_node', ctx=Load()),
+                            attr='destroy_node',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='rclpy', ctx=Load()),
+                            attr='shutdown',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='main', ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

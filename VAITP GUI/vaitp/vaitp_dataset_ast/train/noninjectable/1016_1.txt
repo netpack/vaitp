@@ -1,0 +1,89 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='email')]),
+        ImportFrom(
+            module='email.parser',
+            names=[
+                alias(name='Parser')],
+            level=0),
+        FunctionDef(
+            name='process_mime_message',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='raw_data')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='msg', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Call(
+                                func=Name(id='Parser', ctx=Load()),
+                                args=[],
+                                keywords=[]),
+                            attr='parsestr',
+                            ctx=Load()),
+                        args=[
+                            Call(
+                                func=Attribute(
+                                    value=Name(id='raw_data', ctx=Load()),
+                                    attr='decode',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='utf-8')],
+                                keywords=[])],
+                        keywords=[])),
+                If(
+                    test=Call(
+                        func=Attribute(
+                            value=Name(id='msg', ctx=Load()),
+                            attr='is_multipart',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]),
+                    body=[
+                        For(
+                            target=Name(id='part', ctx=Store()),
+                            iter=Call(
+                                func=Attribute(
+                                    value=Name(id='msg', ctx=Load()),
+                                    attr='walk',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[]),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            Call(
+                                                func=Attribute(
+                                                    value=Name(id='part', ctx=Load()),
+                                                    attr='get_payload',
+                                                    ctx=Load()),
+                                                args=[],
+                                                keywords=[
+                                                    keyword(
+                                                        arg='decode',
+                                                        value=Constant(value=True))])],
+                                        keywords=[]))],
+                            orelse=[])],
+                    orelse=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='raw_email', ctx=Store())],
+            value=Constant(value=b'Content-Type: multipart/mixed; boundary="boundary"\n\n--boundary\n\nContent-Type: text/plain\n\nThis is a test message.\n\n\n--boundary--')),
+        Expr(
+            value=Call(
+                func=Name(id='process_mime_message', ctx=Load()),
+                args=[
+                    Name(id='raw_email', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

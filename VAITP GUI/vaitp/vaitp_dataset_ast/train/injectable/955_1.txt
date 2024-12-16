@@ -1,0 +1,142 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        Import(
+            names=[
+                alias(name='subprocess')]),
+        Import(
+            names=[
+                alias(name='sys')]),
+        FunctionDef(
+            name='safe_run_git',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='command'),
+                    arg(arg='repo_path')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=BoolOp(
+                        op=Or(),
+                        values=[
+                            UnaryOp(
+                                op=Not(),
+                                operand=Call(
+                                    func=Attribute(
+                                        value=Attribute(
+                                            value=Name(id='os', ctx=Load()),
+                                            attr='path',
+                                            ctx=Load()),
+                                        attr='isabs',
+                                        ctx=Load()),
+                                    args=[
+                                        Name(id='repo_path', ctx=Load())],
+                                    keywords=[])),
+                            UnaryOp(
+                                op=Not(),
+                                operand=Call(
+                                    func=Attribute(
+                                        value=Attribute(
+                                            value=Name(id='os', ctx=Load()),
+                                            attr='path',
+                                            ctx=Load()),
+                                        attr='exists',
+                                        ctx=Load()),
+                                    args=[
+                                        Name(id='repo_path', ctx=Load())],
+                                    keywords=[]))]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Invalid repository path')],
+                                keywords=[]))],
+                    orelse=[]),
+                Assign(
+                    targets=[
+                        Name(id='original_dir', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='os', ctx=Load()),
+                            attr='getcwd',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='os', ctx=Load()),
+                            attr='chdir',
+                            ctx=Load()),
+                        args=[
+                            Name(id='repo_path', ctx=Load())],
+                        keywords=[])),
+                Try(
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='git_executable', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='os', ctx=Load()),
+                                        attr='path',
+                                        ctx=Load()),
+                                    attr='join',
+                                    ctx=Load()),
+                                args=[
+                                    Attribute(
+                                        value=Name(id='sys', ctx=Load()),
+                                        attr='prefix',
+                                        ctx=Load()),
+                                    Constant(value='Scripts'),
+                                    Constant(value='git.exe')],
+                                keywords=[])),
+                        Assign(
+                            targets=[
+                                Name(id='result', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='subprocess', ctx=Load()),
+                                    attr='run',
+                                    ctx=Load()),
+                                args=[
+                                    BinOp(
+                                        left=List(
+                                            elts=[
+                                                Name(id='git_executable', ctx=Load())],
+                                            ctx=Load()),
+                                        op=Add(),
+                                        right=Name(id='command', ctx=Load()))],
+                                keywords=[
+                                    keyword(
+                                        arg='check',
+                                        value=Constant(value=True)),
+                                    keyword(
+                                        arg='capture_output',
+                                        value=Constant(value=True))])),
+                        Return(
+                            value=Attribute(
+                                value=Name(id='result', ctx=Load()),
+                                attr='stdout',
+                                ctx=Load()))],
+                    handlers=[],
+                    orelse=[],
+                    finalbody=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='os', ctx=Load()),
+                                    attr='chdir',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='original_dir', ctx=Load())],
+                                keywords=[]))])],
+            decorator_list=[])],
+    type_ignores=[])

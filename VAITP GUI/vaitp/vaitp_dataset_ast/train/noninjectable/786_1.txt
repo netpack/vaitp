@@ -1,0 +1,76 @@
+Module(
+    body=[
+        ImportFrom(
+            module='OpenSSL',
+            names=[
+                alias(name='crypto')],
+            level=0),
+        FunctionDef(
+            name='create_and_use_x509',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='cert', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='crypto', ctx=Load()),
+                            attr='X509',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='cert', ctx=Load()),
+                            attr='set_version',
+                            ctx=Load()),
+                        args=[
+                            Constant(value=2)],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='cert', ctx=Load()),
+                            attr='set_serial_number',
+                            ctx=Load()),
+                        args=[
+                            Constant(value=1)],
+                        keywords=[])),
+                Delete(
+                    targets=[
+                        Name(id='cert', ctx=Del())]),
+                Try(
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='cert', ctx=Load())],
+                                keywords=[]))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='NameError', ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            Constant(value='Caught an error:'),
+                                            Name(id='e', ctx=Load())],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='create_and_use_x509', ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

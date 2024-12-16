@@ -1,0 +1,128 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        Import(
+            names=[
+                alias(name='sys')]),
+        FunctionDef(
+            name='safe_execute',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='script_path')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='original_pythonpath', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='environ',
+                                ctx=Load()),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='PYTHONPATH'),
+                            Constant(value='')],
+                        keywords=[])),
+                Try(
+                    body=[
+                        Assign(
+                            targets=[
+                                Subscript(
+                                    value=Attribute(
+                                        value=Name(id='os', ctx=Load()),
+                                        attr='environ',
+                                        ctx=Load()),
+                                    slice=Constant(value='PYTHONPATH'),
+                                    ctx=Store())],
+                            value=Constant(value='')),
+                        Expr(
+                            value=Call(
+                                func=Name(id='exec', ctx=Load()),
+                                args=[
+                                    Call(
+                                        func=Attribute(
+                                            value=Call(
+                                                func=Name(id='open', ctx=Load()),
+                                                args=[
+                                                    Name(id='script_path', ctx=Load())],
+                                                keywords=[]),
+                                            attr='read',
+                                            ctx=Load()),
+                                        args=[],
+                                        keywords=[])],
+                                keywords=[]))],
+                    handlers=[],
+                    orelse=[],
+                    finalbody=[
+                        Assign(
+                            targets=[
+                                Subscript(
+                                    value=Attribute(
+                                        value=Name(id='os', ctx=Load()),
+                                        attr='environ',
+                                        ctx=Load()),
+                                    slice=Constant(value='PYTHONPATH'),
+                                    ctx=Store())],
+                            value=Name(id='original_pythonpath', ctx=Load()))])],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                If(
+                    test=Compare(
+                        left=Call(
+                            func=Name(id='len', ctx=Load()),
+                            args=[
+                                Attribute(
+                                    value=Name(id='sys', ctx=Load()),
+                                    attr='argv',
+                                    ctx=Load())],
+                            keywords=[]),
+                        ops=[
+                            NotEq()],
+                        comparators=[
+                            Constant(value=2)]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Usage: python safe_execute.py <script_path>')],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='sys', ctx=Load()),
+                                    attr='exit',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value=1)],
+                                keywords=[]))],
+                    orelse=[]),
+                Expr(
+                    value=Call(
+                        func=Name(id='safe_execute', ctx=Load()),
+                        args=[
+                            Subscript(
+                                value=Attribute(
+                                    value=Name(id='sys', ctx=Load()),
+                                    attr='argv',
+                                    ctx=Load()),
+                                slice=Constant(value=1),
+                                ctx=Load())],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

@@ -1,0 +1,53 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        Import(
+            names=[
+                alias(name='sys')]),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='sys', ctx=Load()),
+                        attr='path',
+                        ctx=Load()),
+                    attr='insert',
+                    ctx=Load()),
+                args=[
+                    Constant(value=0),
+                    Call(
+                        func=Attribute(
+                            value=Name(id='os', ctx=Load()),
+                            attr='getcwd',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])],
+                keywords=[])),
+        Try(
+            body=[
+                Import(
+                    names=[
+                        alias(name='my_module')])],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ImportError', ctx=Load()),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Module not found.')],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[]),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='my_module', ctx=Load()),
+                    attr='do_something',
+                    ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

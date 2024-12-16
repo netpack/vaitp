@@ -1,0 +1,45 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='sys')]),
+        Import(
+            names=[
+                alias(name='ctypes')]),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='sys', ctx=Load()),
+                        attr='path',
+                        ctx=Load()),
+                    attr='append',
+                    ctx=Load()),
+                args=[
+                    Constant(value='.')],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='mydll', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='ctypes', ctx=Load()),
+                        attr='cdll',
+                        ctx=Load()),
+                    attr='LoadLibrary',
+                    ctx=Load()),
+                args=[
+                    Constant(value='mydll.dll')],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='result', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='mydll', ctx=Load()),
+                    attr='my_function',
+                    ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

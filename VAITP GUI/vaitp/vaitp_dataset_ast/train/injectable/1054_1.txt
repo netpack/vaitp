@@ -1,0 +1,103 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='subprocess')]),
+        FunctionDef(
+            name='safe_exec',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='command')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='allowed_commands', ctx=Store())],
+                    value=List(
+                        elts=[
+                            Constant(value='ls'),
+                            Constant(value='whoami')],
+                        ctx=Load())),
+                If(
+                    test=Compare(
+                        left=Name(id='command', ctx=Load()),
+                        ops=[
+                            In()],
+                        comparators=[
+                            Name(id='allowed_commands', ctx=Load())]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='result', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='subprocess', ctx=Load()),
+                                    attr='run',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='command', ctx=Load())],
+                                keywords=[
+                                    keyword(
+                                        arg='shell',
+                                        value=Constant(value=True)),
+                                    keyword(
+                                        arg='check',
+                                        value=Constant(value=True)),
+                                    keyword(
+                                        arg='text',
+                                        value=Constant(value=True)),
+                                    keyword(
+                                        arg='capture_output',
+                                        value=Constant(value=True))])),
+                        Return(
+                            value=Attribute(
+                                value=Name(id='result', ctx=Load()),
+                                attr='stdout',
+                                ctx=Load()))],
+                    orelse=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Unauthorized command execution attempt.')],
+                                keywords=[]))])],
+            decorator_list=[]),
+        Try(
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Call(
+                                func=Name(id='safe_exec', ctx=Load()),
+                                args=[
+                                    Constant(value='ls')],
+                                keywords=[])],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Call(
+                                func=Name(id='safe_exec', ctx=Load()),
+                                args=[
+                                    Constant(value='rm -rf /')],
+                                keywords=[])],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ValueError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

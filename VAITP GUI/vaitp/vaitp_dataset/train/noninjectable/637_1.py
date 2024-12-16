@@ -5,4 +5,4 @@ def vulnerable_info_svn_command(info_data):
     pattern = re.compile(r'(a+)+b')  # This pattern can lead to catastrophic backtracking
     if pattern.match(info_data):
         # Process the info_data
-        # ... (rest of the command logic)
+       print("vaitp")

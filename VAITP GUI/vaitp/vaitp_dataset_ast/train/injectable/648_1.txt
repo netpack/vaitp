@@ -1,0 +1,54 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='pickle')]),
+        FunctionDef(
+            name='safe_loads',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='data')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Name(id='data', ctx=Load()))],
+            decorator_list=[]),
+        FunctionDef(
+            name='handle_data',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='input_data')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Try(
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='data', ctx=Store())],
+                            value=Call(
+                                func=Name(id='safe_loads', ctx=Load()),
+                                args=[
+                                    Name(id='input_data', ctx=Load())],
+                                keywords=[]))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='Exception', ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            Constant(value='Error processing data:'),
+                                            Name(id='e', ctx=Load())],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[])],
+    type_ignores=[])

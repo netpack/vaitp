@@ -1,0 +1,39 @@
+Module(
+    body=[
+        FunctionDef(
+            name='unsafe_redirect',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='url')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=JoinedStr(
+                        values=[
+                            Constant(value='Redirecting to: '),
+                            FormattedValue(
+                                value=Name(id='url', ctx=Load()),
+                                conversion=-1)]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='redirect_url', ctx=Store())],
+            value=Constant(value='https://malicious-site.com')),
+        Assign(
+            targets=[
+                Name(id='redirect_target', ctx=Store())],
+            value=Call(
+                func=Name(id='unsafe_redirect', ctx=Load()),
+                args=[
+                    Name(id='redirect_url', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='redirect_target', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

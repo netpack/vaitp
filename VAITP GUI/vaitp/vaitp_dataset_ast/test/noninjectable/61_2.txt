@@ -1,0 +1,36 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='urllib3')]),
+        Assign(
+            targets=[
+                Name(id='http', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='urllib3', ctx=Load()),
+                    attr='PoolManager',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='method', ctx=Store())],
+            value=Constant(value='GET\r\nX-Injected-Header: foo\r\n')),
+        Assign(
+            targets=[
+                Name(id='url', ctx=Store())],
+            value=Constant(value='http://example.com/')),
+        Assign(
+            targets=[
+                Name(id='response', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='http', ctx=Load()),
+                    attr='request',
+                    ctx=Load()),
+                args=[
+                    Name(id='method', ctx=Load()),
+                    Name(id='url', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

@@ -1,0 +1,106 @@
+Module(
+    body=[
+        ImportFrom(
+            module='elasticapm',
+            names=[
+                alias(name='Client')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='apm_client', ctx=Store())],
+            value=Call(
+                func=Name(id='Client', ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='service_name',
+                        value=Constant(value='my_service'))])),
+        FunctionDef(
+            name='handle_request',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='environ'),
+                    arg(arg='start_response')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='proxy_header', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='environ', ctx=Load()),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='HTTP_PROXY')],
+                        keywords=[])),
+                If(
+                    test=Name(id='proxy_header', ctx=Load()),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Attribute(
+                                        value=Name(id='apm_client', ctx=Load()),
+                                        attr='config',
+                                        ctx=Load()),
+                                    attr='proxy',
+                                    ctx=Store())],
+                            value=Name(id='proxy_header', ctx=Load()))],
+                    orelse=[]),
+                Expr(
+                    value=Call(
+                        func=Name(id='start_response', ctx=Load()),
+                        args=[
+                            Constant(value='200 OK'),
+                            List(
+                                elts=[
+                                    Tuple(
+                                        elts=[
+                                            Constant(value='Content-Type'),
+                                            Constant(value='text/plain')],
+                                        ctx=Load())],
+                                ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=List(
+                        elts=[
+                            Constant(value='Hello, World!')],
+                        ctx=Load()))],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                ImportFrom(
+                    module='wsgiref.simple_server',
+                    names=[
+                        alias(name='make_server')],
+                    level=0),
+                Assign(
+                    targets=[
+                        Name(id='server', ctx=Store())],
+                    value=Call(
+                        func=Name(id='make_server', ctx=Load()),
+                        args=[
+                            Constant(value='localhost'),
+                            Constant(value=8000),
+                            Name(id='handle_request', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='server', ctx=Load()),
+                            attr='serve_forever',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

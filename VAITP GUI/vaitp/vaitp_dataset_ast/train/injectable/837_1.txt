@@ -1,0 +1,96 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='tensorflow', asname='tf')]),
+        FunctionDef(
+            name='safe_immutable_const',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='value'),
+                    arg(arg='dtype')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Compare(
+                        left=Name(id='dtype', ctx=Load()),
+                        ops=[
+                            In()],
+                        comparators=[
+                            List(
+                                elts=[
+                                    Attribute(
+                                        value=Name(id='tf', ctx=Load()),
+                                        attr='resource',
+                                        ctx=Load()),
+                                    Attribute(
+                                        value=Name(id='tf', ctx=Load()),
+                                        attr='variant',
+                                        ctx=Load())],
+                                ctx=Load())]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Invalid dtype: tf.resource or tf.variant is not allowed.')],
+                                keywords=[]))],
+                    orelse=[]),
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='tf', ctx=Load()),
+                                attr='raw_ops',
+                                ctx=Load()),
+                            attr='ImmutableConst',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[
+                            keyword(
+                                arg='value',
+                                value=Name(id='value', ctx=Load())),
+                            keyword(
+                                arg='dtype',
+                                value=Name(id='dtype', ctx=Load()))]))],
+            decorator_list=[]),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='tensor', ctx=Store())],
+                    value=Call(
+                        func=Name(id='safe_immutable_const', ctx=Load()),
+                        args=[],
+                        keywords=[
+                            keyword(
+                                arg='value',
+                                value=List(
+                                    elts=[
+                                        Constant(value=1),
+                                        Constant(value=2),
+                                        Constant(value=3)],
+                                    ctx=Load())),
+                            keyword(
+                                arg='dtype',
+                                value=Attribute(
+                                    value=Name(id='tf', ctx=Load()),
+                                    attr='resource',
+                                    ctx=Load()))]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ValueError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

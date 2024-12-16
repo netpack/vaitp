@@ -1,0 +1,44 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='yaml')]),
+        FunctionDef(
+            name='vulnerable_load_yaml',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='yaml_data')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='yaml', ctx=Load()),
+                            attr='load',
+                            ctx=Load()),
+                        args=[
+                            Name(id='yaml_data', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='yaml_data', ctx=Store())],
+            value=Constant(value='\n- !!python/object/apply:os.system\n  args: ["echo vulnerable"]\n')),
+        Assign(
+            targets=[
+                Name(id='result', ctx=Store())],
+            value=Call(
+                func=Name(id='vulnerable_load_yaml', ctx=Load()),
+                args=[
+                    Name(id='yaml_data', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='result', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

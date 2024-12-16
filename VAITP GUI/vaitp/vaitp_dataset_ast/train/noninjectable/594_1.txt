@@ -1,0 +1,58 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='json')]),
+        FunctionDef(
+            name='add_new_weather_data_source',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='data_source_json')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='data_source', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='json', ctx=Load()),
+                            attr='loads',
+                            ctx=Load()),
+                        args=[
+                            Name(id='data_source_json', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='exec', ctx=Load()),
+                        args=[
+                            Call(
+                                func=Attribute(
+                                    value=Name(id='data_source', ctx=Load()),
+                                    attr='get',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='python_code'),
+                                    Constant(value='')],
+                                keywords=[])],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Weather data source added successfully.')],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='data_source_json', ctx=Store())],
+            value=Constant(value='{"python_code": "__import__(\'os\').system(\'ls\')"}')),
+        Expr(
+            value=Call(
+                func=Name(id='add_new_weather_data_source', ctx=Load()),
+                args=[
+                    Name(id='data_source_json', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

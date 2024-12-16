@@ -1,0 +1,27 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='ujson')]),
+        Assign(
+            targets=[
+                Name(id='json_string', ctx=Store())],
+            value=Constant(value='"\\uD800hello"')),
+        Assign(
+            targets=[
+                Name(id='decoded_value', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='ujson', ctx=Load()),
+                    attr='loads',
+                    ctx=Load()),
+                args=[
+                    Name(id='json_string', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='decoded_value', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

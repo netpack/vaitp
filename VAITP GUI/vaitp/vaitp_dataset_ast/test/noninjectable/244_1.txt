@@ -1,0 +1,68 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='untangle')]),
+        Assign(
+            targets=[
+                Name(id='xml_input', ctx=Store())],
+            value=Constant(value='\n<?xml version="1.0"?>\n<!DOCTYPE foo [\n  <!ENTITY xxe SYSTEM "file:///etc/passwd">  <!-- This is the malicious part -->\n]>\n<root>\n  <data>&xxe;</data>  <!-- This will trigger the external entity -->\n</root>\n')),
+        FunctionDef(
+            name='parse_xml',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='xml_string')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Try(
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='obj', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='untangle', ctx=Load()),
+                                    attr='parse',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='xml_string', ctx=Load())],
+                                keywords=[])),
+                        Return(
+                            value=Name(id='obj', ctx=Load()))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='Exception', ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    Constant(value='Error parsing XML: '),
+                                                    FormattedValue(
+                                                        value=Name(id='e', ctx=Load()),
+                                                        conversion=-1)])],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='result', ctx=Store())],
+            value=Call(
+                func=Name(id='parse_xml', ctx=Load()),
+                args=[
+                    Name(id='xml_input', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='result', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

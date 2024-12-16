@@ -1,0 +1,20 @@
+Module(
+    body=[
+        FunctionDef(
+            name='keep',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='data')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='exec', ctx=Load()),
+                        args=[
+                            Name(id='data', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[])],
+    type_ignores=[])

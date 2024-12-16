@@ -1,0 +1,231 @@
+Module(
+    body=[
+        ImportFrom(
+            module='django.contrib.auth.decorators',
+            names=[
+                alias(name='login_required')],
+            level=0),
+        ImportFrom(
+            module='django.http',
+            names=[
+                alias(name='Http404')],
+            level=0),
+        ImportFrom(
+            module='models',
+            names=[
+                alias(name='FileProxy')],
+            level=1),
+        FunctionDef(
+            name='get_file',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='request')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='file_name', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='request', ctx=Load()),
+                                attr='GET',
+                                ctx=Load()),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='name')],
+                        keywords=[])),
+                Try(
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='file_proxy', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='FileProxy', ctx=Load()),
+                                        attr='objects',
+                                        ctx=Load()),
+                                    attr='get',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[
+                                    keyword(
+                                        arg='name',
+                                        value=Name(id='file_name', ctx=Load()))])),
+                        If(
+                            test=UnaryOp(
+                                op=Not(),
+                                operand=Call(
+                                    func=Attribute(
+                                        value=Attribute(
+                                            value=Name(id='request', ctx=Load()),
+                                            attr='user',
+                                            ctx=Load()),
+                                        attr='has_perm',
+                                        ctx=Load()),
+                                    args=[
+                                        Constant(value='app.view_fileproxy'),
+                                        Name(id='file_proxy', ctx=Load())],
+                                    keywords=[])),
+                            body=[
+                                Raise(
+                                    exc=Call(
+                                        func=Name(id='Http404', ctx=Load()),
+                                        args=[
+                                            Constant(value='You do not have permission to access this file.')],
+                                        keywords=[]))],
+                            orelse=[]),
+                        Return(
+                            value=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='file_proxy', ctx=Load()),
+                                        attr='file',
+                                        ctx=Load()),
+                                    attr='open',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[]))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Attribute(
+                                value=Name(id='FileProxy', ctx=Load()),
+                                attr='DoesNotExist',
+                                ctx=Load()),
+                            body=[
+                                Raise(
+                                    exc=Call(
+                                        func=Name(id='Http404', ctx=Load()),
+                                        args=[
+                                            Constant(value='File not found.')],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[
+                Name(id='login_required', ctx=Load())]),
+        FunctionDef(
+            name='download_file',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='request')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='file_name', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='request', ctx=Load()),
+                                attr='GET',
+                                ctx=Load()),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='name')],
+                        keywords=[])),
+                Try(
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='file_proxy', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='FileProxy', ctx=Load()),
+                                        attr='objects',
+                                        ctx=Load()),
+                                    attr='get',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[
+                                    keyword(
+                                        arg='name',
+                                        value=Name(id='file_name', ctx=Load()))])),
+                        If(
+                            test=UnaryOp(
+                                op=Not(),
+                                operand=Call(
+                                    func=Attribute(
+                                        value=Attribute(
+                                            value=Name(id='request', ctx=Load()),
+                                            attr='user',
+                                            ctx=Load()),
+                                        attr='has_perm',
+                                        ctx=Load()),
+                                    args=[
+                                        Constant(value='app.view_fileproxy'),
+                                        Name(id='file_proxy', ctx=Load())],
+                                    keywords=[])),
+                            body=[
+                                Raise(
+                                    exc=Call(
+                                        func=Name(id='Http404', ctx=Load()),
+                                        args=[
+                                            Constant(value='You do not have permission to access this file.')],
+                                        keywords=[]))],
+                            orelse=[]),
+                        Assign(
+                            targets=[
+                                Name(id='response', ctx=Store())],
+                            value=Call(
+                                func=Name(id='HttpResponse', ctx=Load()),
+                                args=[
+                                    Call(
+                                        func=Attribute(
+                                            value=Attribute(
+                                                value=Name(id='file_proxy', ctx=Load()),
+                                                attr='file',
+                                                ctx=Load()),
+                                            attr='open',
+                                            ctx=Load()),
+                                        args=[],
+                                        keywords=[])],
+                                keywords=[
+                                    keyword(
+                                        arg='content_type',
+                                        value=Constant(value='application/octet-stream'))])),
+                        Assign(
+                            targets=[
+                                Subscript(
+                                    value=Name(id='response', ctx=Load()),
+                                    slice=Constant(value='Content-Disposition'),
+                                    ctx=Store())],
+                            value=JoinedStr(
+                                values=[
+                                    Constant(value='attachment; filename="'),
+                                    FormattedValue(
+                                        value=Attribute(
+                                            value=Name(id='file_proxy', ctx=Load()),
+                                            attr='name',
+                                            ctx=Load()),
+                                        conversion=-1),
+                                    Constant(value='"')])),
+                        Return(
+                            value=Name(id='response', ctx=Load()))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Attribute(
+                                value=Name(id='FileProxy', ctx=Load()),
+                                attr='DoesNotExist',
+                                ctx=Load()),
+                            body=[
+                                Raise(
+                                    exc=Call(
+                                        func=Name(id='Http404', ctx=Load()),
+                                        args=[
+                                            Constant(value='File not found.')],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[
+                Name(id='login_required', ctx=Load())])],
+    type_ignores=[])

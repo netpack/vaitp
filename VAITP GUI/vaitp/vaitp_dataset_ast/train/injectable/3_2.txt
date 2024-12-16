@@ -1,0 +1,72 @@
+Module(
+    body=[
+        ImportFrom(
+            module='os',
+            names=[
+                alias(name='path')],
+            level=0),
+        FunctionDef(
+            name='safe_normpath',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='input_path')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Compare(
+                        left=Constant(value='\x00'),
+                        ops=[
+                            In()],
+                        comparators=[
+                            Name(id='input_path', ctx=Load())]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Invalid path: null bytes detected')],
+                                keywords=[]))],
+                    orelse=[]),
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='path', ctx=Load()),
+                            attr='normpath',
+                            ctx=Load()),
+                        args=[
+                            Name(id='input_path', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='normalized_path', ctx=Store())],
+                    value=Call(
+                        func=Name(id='safe_normpath', ctx=Load()),
+                        args=[
+                            Constant(value='/some/path/with\x00illegal/char')],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Name(id='normalized_path', ctx=Load())],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ValueError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

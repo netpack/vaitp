@@ -1,0 +1,36 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        Import(
+            names=[
+                alias(name='sys')]),
+        Assign(
+            targets=[
+                Name(id='user_defined_path', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='os', ctx=Load()),
+                    attr='getenv',
+                    ctx=Load()),
+                args=[
+                    Constant(value='USER_LIB_PATH'),
+                    Constant(value='/usr/local/lib/intelpython')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='sys', ctx=Load()),
+                        attr='path',
+                        ctx=Load()),
+                    attr='append',
+                    ctx=Load()),
+                args=[
+                    Name(id='user_defined_path', ctx=Load())],
+                keywords=[])),
+        Import(
+            names=[
+                alias(name='some_intel_library')])],
+    type_ignores=[])

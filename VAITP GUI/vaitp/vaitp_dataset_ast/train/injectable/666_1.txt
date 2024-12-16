@@ -1,0 +1,191 @@
+Module(
+    body=[
+        ClassDef(
+            name='VDC',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='name')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='name',
+                                    ctx=Store())],
+                            value=Name(id='name', ctx=Load())),
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='files',
+                                    ctx=Store())],
+                            value=Dict(keys=[], values=[]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='create_file',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='filename'),
+                            arg(arg='content')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Subscript(
+                                    value=Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='files',
+                                        ctx=Load()),
+                                    slice=Name(id='filename', ctx=Load()),
+                                    ctx=Store())],
+                            value=Name(id='content', ctx=Load()))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='delete_file',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='filename'),
+                            arg(arg='user_role')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        If(
+                            test=Compare(
+                                left=Name(id='user_role', ctx=Load()),
+                                ops=[
+                                    NotEq()],
+                                comparators=[
+                                    Constant(value='admin')]),
+                            body=[
+                                Raise(
+                                    exc=Call(
+                                        func=Name(id='PermissionError', ctx=Load()),
+                                        args=[
+                                            Constant(value='Access denied: You do not have permission to delete files in this VDC.')],
+                                        keywords=[]))],
+                            orelse=[]),
+                        If(
+                            test=Compare(
+                                left=Name(id='filename', ctx=Load()),
+                                ops=[
+                                    In()],
+                                comparators=[
+                                    Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='files',
+                                        ctx=Load())]),
+                            body=[
+                                Delete(
+                                    targets=[
+                                        Subscript(
+                                            value=Attribute(
+                                                value=Name(id='self', ctx=Load()),
+                                                attr='files',
+                                                ctx=Load()),
+                                            slice=Name(id='filename', ctx=Load()),
+                                            ctx=Del())])],
+                            orelse=[
+                                Raise(
+                                    exc=Call(
+                                        func=Name(id='FileNotFoundError', ctx=Load()),
+                                        args=[
+                                            Constant(value='File not found.')],
+                                        keywords=[]))])],
+                    decorator_list=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='vdc1', ctx=Store())],
+            value=Call(
+                func=Name(id='VDC', ctx=Load()),
+                args=[
+                    Constant(value='VDC1')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='vdc1', ctx=Load()),
+                    attr='create_file',
+                    ctx=Load()),
+                args=[
+                    Constant(value='important_file.txt'),
+                    Constant(value='This is important content.')],
+                keywords=[])),
+        Try(
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='vdc1', ctx=Load()),
+                            attr='delete_file',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='important_file.txt')],
+                        keywords=[
+                            keyword(
+                                arg='user_role',
+                                value=Constant(value='user'))]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='PermissionError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[]),
+        Try(
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='vdc1', ctx=Load()),
+                            attr='delete_file',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='important_file.txt')],
+                        keywords=[
+                            keyword(
+                                arg='user_role',
+                                value=Constant(value='admin'))])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='File deleted successfully.')],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='Exception', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

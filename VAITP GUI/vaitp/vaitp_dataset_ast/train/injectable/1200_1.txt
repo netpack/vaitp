@@ -1,0 +1,126 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='tornado.web')]),
+        Import(
+            names=[
+                alias(name='tornado.ioloop')]),
+        ClassDef(
+            name='MainHandler',
+            bases=[
+                Attribute(
+                    value=Attribute(
+                        value=Name(id='tornado', ctx=Load()),
+                        attr='web',
+                        ctx=Load()),
+                    attr='RequestHandler',
+                    ctx=Load())],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='get',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='set_cookie',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='example'),
+                                    Constant(value='value')],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='write',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='Cookie set safely.')],
+                                keywords=[]))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        FunctionDef(
+            name='make_app',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='tornado', ctx=Load()),
+                                attr='web',
+                                ctx=Load()),
+                            attr='Application',
+                            ctx=Load()),
+                        args=[
+                            List(
+                                elts=[
+                                    Tuple(
+                                        elts=[
+                                            Constant(value='/'),
+                                            Name(id='MainHandler', ctx=Load())],
+                                        ctx=Load())],
+                                ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='app', ctx=Store())],
+                    value=Call(
+                        func=Name(id='make_app', ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='app', ctx=Load()),
+                            attr='listen',
+                            ctx=Load()),
+                        args=[
+                            Constant(value=8888)],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Attribute(
+                                            value=Name(id='tornado', ctx=Load()),
+                                            attr='ioloop',
+                                            ctx=Load()),
+                                        attr='IOLoop',
+                                        ctx=Load()),
+                                    attr='current',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[]),
+                            attr='start',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

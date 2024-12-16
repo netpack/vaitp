@@ -1,0 +1,109 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='AWSIoTPythonSDK.MQTTLib', asname='AWSIoTPyMQTT')]),
+        Import(
+            names=[
+                alias(name='ssl')]),
+        Assign(
+            targets=[
+                Name(id='mqtt_client', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='AWSIoTPyMQTT', ctx=Load()),
+                    attr='AWSIoTMQTTClient',
+                    ctx=Load()),
+                args=[
+                    Constant(value='MySecureClientID')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='mqtt_client', ctx=Load()),
+                    attr='configureEndpoint',
+                    ctx=Load()),
+                args=[
+                    Constant(value='your-iot-endpoint.amazonaws.com'),
+                    Constant(value=8883)],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='mqtt_client', ctx=Load()),
+                    attr='configureCredentials',
+                    ctx=Load()),
+                args=[
+                    Constant(value='path/to/rootCA.pem'),
+                    Constant(value='path/to/private.key'),
+                    Constant(value='path/to/certificate.pem')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='mqtt_client', ctx=Load()),
+                    attr='configureSSLContext',
+                    ctx=Load()),
+                args=[
+                    Call(
+                        func=Attribute(
+                            value=Name(id='ssl', ctx=Load()),
+                            attr='create_default_context',
+                            ctx=Load()),
+                        args=[
+                            Attribute(
+                                value=Attribute(
+                                    value=Name(id='ssl', ctx=Load()),
+                                    attr='Purpose',
+                                    ctx=Load()),
+                                attr='CLIENT_AUTH',
+                                ctx=Load())],
+                        keywords=[])],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='mqtt_client', ctx=Load()),
+                    attr='configureSSLContext',
+                    ctx=Load()),
+                args=[
+                    Call(
+                        func=Attribute(
+                            value=Name(id='ssl', ctx=Load()),
+                            attr='SSLContext',
+                            ctx=Load()),
+                        args=[
+                            Attribute(
+                                value=Name(id='ssl', ctx=Load()),
+                                attr='PROTOCOL_TLSv1_2',
+                                ctx=Load())],
+                        keywords=[])],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='mqtt_client', ctx=Load()),
+                    attr='connect',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='mqtt_client', ctx=Load()),
+                    attr='publish',
+                    ctx=Load()),
+                args=[
+                    Constant(value='test/topic'),
+                    Constant(value='Hello from secure client!'),
+                    Constant(value=0)],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='mqtt_client', ctx=Load()),
+                    attr='disconnect',
+                    ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

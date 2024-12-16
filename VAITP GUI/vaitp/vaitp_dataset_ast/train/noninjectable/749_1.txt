@@ -1,0 +1,116 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        ImportFrom(
+            module='django.core.files.storage',
+            names=[
+                alias(name='FileSystemStorage')],
+            level=0),
+        ClassDef(
+            name='InsecureFileSystemStorage',
+            bases=[
+                Name(id='FileSystemStorage', ctx=Load())],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='get_available_name',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='name'),
+                            arg(arg='max_length')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[
+                            Constant(value=None)]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='directory', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='os', ctx=Load()),
+                                        attr='path',
+                                        ctx=Load()),
+                                    attr='dirname',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='name', ctx=Load())],
+                                keywords=[])),
+                        If(
+                            test=BoolOp(
+                                op=And(),
+                                values=[
+                                    Name(id='directory', ctx=Load()),
+                                    UnaryOp(
+                                        op=Not(),
+                                        operand=Call(
+                                            func=Attribute(
+                                                value=Attribute(
+                                                    value=Name(id='os', ctx=Load()),
+                                                    attr='path',
+                                                    ctx=Load()),
+                                                attr='exists',
+                                                ctx=Load()),
+                                            args=[
+                                                Name(id='directory', ctx=Load())],
+                                            keywords=[]))]),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='os', ctx=Load()),
+                                            attr='makedirs',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='directory', ctx=Load())],
+                                        keywords=[]))],
+                            orelse=[]),
+                        Return(
+                            value=Call(
+                                func=Attribute(
+                                    value=Call(
+                                        func=Name(id='super', ctx=Load()),
+                                        args=[],
+                                        keywords=[]),
+                                    attr='get_available_name',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='name', ctx=Load()),
+                                    Name(id='max_length', ctx=Load())],
+                                keywords=[]))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='file_storage', ctx=Store())],
+            value=Call(
+                func=Name(id='InsecureFileSystemStorage', ctx=Load()),
+                args=[],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='uploaded_file', ctx=Store())],
+            value=Call(
+                func=Name(id='InMemoryUploadedFile', ctx=Load()),
+                args=[
+                    Constant(value=Ellipsis)],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='file_storage', ctx=Load()),
+                    attr='save',
+                    ctx=Load()),
+                args=[
+                    Attribute(
+                        value=Name(id='uploaded_file', ctx=Load()),
+                        attr='name',
+                        ctx=Load()),
+                    Name(id='uploaded_file', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

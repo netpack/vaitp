@@ -1,0 +1,90 @@
+Module(
+    body=[
+        ImportFrom(
+            module='imageop',
+            names=[
+                alias(name='crop')],
+            level=0),
+        ImportFrom(
+            module='PIL',
+            names=[
+                alias(name='Image')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='image', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='Image', ctx=Load()),
+                    attr='new',
+                    ctx=Load()),
+                args=[
+                    Constant(value='RGB'),
+                    Tuple(
+                        elts=[
+                            Constant(value=1000),
+                            Constant(value=1000)],
+                        ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='crop_coords', ctx=Store())],
+            value=Tuple(
+                elts=[
+                    Constant(value=0),
+                    Constant(value=0),
+                    Constant(value=1001),
+                    Constant(value=1001)],
+                ctx=Load())),
+        If(
+            test=BoolOp(
+                op=And(),
+                values=[
+                    Compare(
+                        left=Subscript(
+                            value=Name(id='crop_coords', ctx=Load()),
+                            slice=Constant(value=2),
+                            ctx=Load()),
+                        ops=[
+                            LtE()],
+                        comparators=[
+                            Subscript(
+                                value=Attribute(
+                                    value=Name(id='image', ctx=Load()),
+                                    attr='size',
+                                    ctx=Load()),
+                                slice=Constant(value=0),
+                                ctx=Load())]),
+                    Compare(
+                        left=Subscript(
+                            value=Name(id='crop_coords', ctx=Load()),
+                            slice=Constant(value=3),
+                            ctx=Load()),
+                        ops=[
+                            LtE()],
+                        comparators=[
+                            Subscript(
+                                value=Attribute(
+                                    value=Name(id='image', ctx=Load()),
+                                    attr='size',
+                                    ctx=Load()),
+                                slice=Constant(value=1),
+                                ctx=Load())])]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='cropped_image', ctx=Store())],
+                    value=Call(
+                        func=Name(id='crop', ctx=Load()),
+                        args=[
+                            Name(id='image', ctx=Load()),
+                            Name(id='crop_coords', ctx=Load())],
+                        keywords=[]))],
+            orelse=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Error: Crop coordinates are out of bounds')],
+                        keywords=[]))])],
+    type_ignores=[])

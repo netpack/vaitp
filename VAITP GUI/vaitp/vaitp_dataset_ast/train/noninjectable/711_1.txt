@@ -1,0 +1,49 @@
+Module(
+    body=[
+        ImportFrom(
+            module='mako.template',
+            names=[
+                alias(name='Template')],
+            level=0),
+        Import(
+            names=[
+                alias(name='cgi')]),
+        Assign(
+            targets=[
+                Name(id='user_input', ctx=Store())],
+            value=Constant(value="<script>alert('XSS');</script>")),
+        Assign(
+            targets=[
+                Name(id='escaped_input', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='cgi', ctx=Load()),
+                    attr='escape',
+                    ctx=Load()),
+                args=[
+                    Name(id='user_input', ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='template', ctx=Store())],
+            value=Call(
+                func=Name(id='Template', ctx=Load()),
+                args=[
+                    Constant(value='\n<html>\n<head>\n    <title>Vulnerable Page</title>\n</head>\n<body onload="alert(\'${escaped_input}\')">\n    <h1>Welcome!</h1>\n    <p>Your input: ${escaped_input}</p>\n</body>\n</html>\n')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Call(
+                        func=Attribute(
+                            value=Name(id='template', ctx=Load()),
+                            attr='render',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[
+                            keyword(
+                                arg='escaped_input',
+                                value=Name(id='escaped_input', ctx=Load()))])],
+                keywords=[]))],
+    type_ignores=[])

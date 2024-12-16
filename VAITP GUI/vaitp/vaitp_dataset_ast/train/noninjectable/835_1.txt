@@ -1,0 +1,25 @@
+Module(
+    body=[
+        FunctionDef(
+            name='send_notification_email',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='user_email'),
+                    arg(arg='message')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='email_body', ctx=Store())],
+                    value=JoinedStr(
+                        values=[
+                            Constant(value='\n    <html>\n        <body>\n            <p>You have a new message:</p>\n            <p>'),
+                            FormattedValue(
+                                value=Name(id='message', ctx=Load()),
+                                conversion=-1),
+                            Constant(value='</p>\n        </body>\n    </html>\n    ')]))],
+            decorator_list=[])],
+    type_ignores=[])

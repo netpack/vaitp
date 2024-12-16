@@ -1,0 +1,135 @@
+Module(
+    body=[
+        ImportFrom(
+            module='waitress',
+            names=[
+                alias(name='serve')],
+            level=0),
+        ImportFrom(
+            module='waitress.channel',
+            names=[
+                alias(name='Server')],
+            level=0),
+        ClassDef(
+            name='SecureServer',
+            bases=[
+                Name(id='Server', ctx=Load())],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='handle_request',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='request')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        If(
+                            test=UnaryOp(
+                                op=Not(),
+                                operand=Call(
+                                    func=Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='is_valid_request',
+                                        ctx=Load()),
+                                    args=[
+                                        Name(id='request', ctx=Load())],
+                                    keywords=[])),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='self', ctx=Load()),
+                                            attr='send_error_response',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='request', ctx=Load())],
+                                        keywords=[])),
+                                Return()],
+                            orelse=[]),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Call(
+                                        func=Name(id='super', ctx=Load()),
+                                        args=[],
+                                        keywords=[]),
+                                    attr='handle_request',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='request', ctx=Load())],
+                                keywords=[]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='is_valid_request',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='request')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Return(
+                            value=Constant(value=True))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='send_error_response',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='request')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='request', ctx=Load()),
+                                    attr='send_response',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value=400),
+                                    Constant(value='Bad Request')],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='request', ctx=Load()),
+                                    attr='end_headers',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[]))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='serve', ctx=Load()),
+                        args=[
+                            Call(
+                                func=Name(id='SecureServer', ctx=Load()),
+                                args=[],
+                                keywords=[])],
+                        keywords=[
+                            keyword(
+                                arg='host',
+                                value=Constant(value='0.0.0.0')),
+                            keyword(
+                                arg='port',
+                                value=Constant(value=8080))]))],
+            orelse=[])],
+    type_ignores=[])

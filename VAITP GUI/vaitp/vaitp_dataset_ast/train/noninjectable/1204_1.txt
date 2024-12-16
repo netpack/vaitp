@@ -1,0 +1,62 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='ctypes')]),
+        FunctionDef(
+            name='simulate_floating_point_issue',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='value', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='ctypes', ctx=Load()),
+                            attr='c_float',
+                            ctx=Load()),
+                        args=[
+                            Constant(value=1.0)],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='result', ctx=Store())],
+                    value=BinOp(
+                        left=Attribute(
+                            value=Name(id='value', ctx=Load()),
+                            attr='value',
+                            ctx=Load()),
+                        op=Div(),
+                        right=Constant(value=0.0))),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            JoinedStr(
+                                values=[
+                                    Constant(value='Result: '),
+                                    FormattedValue(
+                                        value=Name(id='result', ctx=Load()),
+                                        conversion=-1)])],
+                        keywords=[]))],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='simulate_floating_point_issue', ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

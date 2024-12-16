@@ -1,0 +1,294 @@
+Module(
+    body=[
+        ClassDef(
+            name='User',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='username'),
+                            arg(arg='password'),
+                            arg(arg='is_active')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='username',
+                                    ctx=Store())],
+                            value=Name(id='username', ctx=Load())),
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='password',
+                                    ctx=Store())],
+                            value=Name(id='password', ctx=Load())),
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='is_active',
+                                    ctx=Store())],
+                            value=Name(id='is_active', ctx=Load()))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='deactivate',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='is_active',
+                                    ctx=Store())],
+                            value=Constant(value=False)),
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='password',
+                                    ctx=Store())],
+                            value=Constant(value=None))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        ClassDef(
+            name='AuthService',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='users',
+                                    ctx=Store())],
+                            value=Dict(keys=[], values=[]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='add_user',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='username'),
+                            arg(arg='password')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Subscript(
+                                    value=Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='users',
+                                        ctx=Load()),
+                                    slice=Name(id='username', ctx=Load()),
+                                    ctx=Store())],
+                            value=Call(
+                                func=Name(id='User', ctx=Load()),
+                                args=[
+                                    Name(id='username', ctx=Load()),
+                                    Name(id='password', ctx=Load()),
+                                    Constant(value=True)],
+                                keywords=[]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='deactivate_user',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='username')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='user', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='users',
+                                        ctx=Load()),
+                                    attr='get',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='username', ctx=Load())],
+                                keywords=[])),
+                        If(
+                            test=Name(id='user', ctx=Load()),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='user', ctx=Load()),
+                                            attr='deactivate',
+                                            ctx=Load()),
+                                        args=[],
+                                        keywords=[]))],
+                            orelse=[])],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='update_password',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='username'),
+                            arg(arg='new_password')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='user', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='users',
+                                        ctx=Load()),
+                                    attr='get',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='username', ctx=Load())],
+                                keywords=[])),
+                        If(
+                            test=BoolOp(
+                                op=And(),
+                                values=[
+                                    Name(id='user', ctx=Load()),
+                                    Attribute(
+                                        value=Name(id='user', ctx=Load()),
+                                        attr='is_active',
+                                        ctx=Load())]),
+                            body=[
+                                Assign(
+                                    targets=[
+                                        Attribute(
+                                            value=Name(id='user', ctx=Load()),
+                                            attr='password',
+                                            ctx=Store())],
+                                    value=Name(id='new_password', ctx=Load()))],
+                            orelse=[])],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='login',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='username'),
+                            arg(arg='password')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='user', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='users',
+                                        ctx=Load()),
+                                    attr='get',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='username', ctx=Load())],
+                                keywords=[])),
+                        If(
+                            test=BoolOp(
+                                op=And(),
+                                values=[
+                                    Name(id='user', ctx=Load()),
+                                    Attribute(
+                                        value=Name(id='user', ctx=Load()),
+                                        attr='is_active',
+                                        ctx=Load()),
+                                    Compare(
+                                        left=Attribute(
+                                            value=Name(id='user', ctx=Load()),
+                                            attr='password',
+                                            ctx=Load()),
+                                        ops=[
+                                            Eq()],
+                                        comparators=[
+                                            Name(id='password', ctx=Load())])]),
+                            body=[
+                                Return(
+                                    value=Constant(value=True))],
+                            orelse=[]),
+                        Return(
+                            value=Constant(value=False))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='auth_service', ctx=Store())],
+            value=Call(
+                func=Name(id='AuthService', ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='auth_service', ctx=Load()),
+                    attr='add_user',
+                    ctx=Load()),
+                args=[
+                    Constant(value='john_doe'),
+                    Constant(value='secure_password')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='auth_service', ctx=Load()),
+                    attr='deactivate_user',
+                    ctx=Load()),
+                args=[
+                    Constant(value='john_doe')],
+                keywords=[])),
+        Assert(
+            test=UnaryOp(
+                op=Not(),
+                operand=Call(
+                    func=Attribute(
+                        value=Name(id='auth_service', ctx=Load()),
+                        attr='login',
+                        ctx=Load()),
+                    args=[
+                        Constant(value='john_doe'),
+                        Constant(value='secure_password')],
+                    keywords=[])))],
+    type_ignores=[])

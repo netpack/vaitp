@@ -1,0 +1,36 @@
+Module(
+    body=[
+        FunctionDef(
+            name='evaluate_expression',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='user_input')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='result', ctx=Store())],
+                    value=Call(
+                        func=Name(id='eval', ctx=Load()),
+                        args=[
+                            Name(id='user_input', ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=Name(id='result', ctx=Load()))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='user_input', ctx=Store())],
+            value=Constant(value="1 + 2; os.system('cat /etc/passwd')")),
+        Assign(
+            targets=[
+                Name(id='output', ctx=Store())],
+            value=Call(
+                func=Name(id='evaluate_expression', ctx=Load()),
+                args=[
+                    Name(id='user_input', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

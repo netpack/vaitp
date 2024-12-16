@@ -1,0 +1,158 @@
+Module(
+    body=[
+        ImportFrom(
+            module='flask',
+            names=[
+                alias(name='Flask'),
+                alias(name='request'),
+                alias(name='abort')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='app', ctx=Store())],
+            value=Call(
+                func=Name(id='Flask', ctx=Load()),
+                args=[
+                    Name(id='__name__', ctx=Load())],
+                keywords=[])),
+        FunctionDef(
+            name='require_authentication',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Compare(
+                        left=Attribute(
+                            value=Name(id='request', ctx=Load()),
+                            attr='endpoint',
+                            ctx=Load()),
+                        ops=[
+                            In()],
+                        comparators=[
+                            List(
+                                elts=[
+                                    Constant(value='supervisor_api')],
+                                ctx=Load())]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='auth_token', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='request', ctx=Load()),
+                                        attr='headers',
+                                        ctx=Load()),
+                                    attr='get',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='Authorization')],
+                                keywords=[])),
+                        If(
+                            test=BoolOp(
+                                op=Or(),
+                                values=[
+                                    UnaryOp(
+                                        op=Not(),
+                                        operand=Name(id='auth_token', ctx=Load())),
+                                    UnaryOp(
+                                        op=Not(),
+                                        operand=Call(
+                                            func=Name(id='is_valid_token', ctx=Load()),
+                                            args=[
+                                                Name(id='auth_token', ctx=Load())],
+                                            keywords=[]))]),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='abort', ctx=Load()),
+                                        args=[
+                                            Constant(value=401)],
+                                        keywords=[]))],
+                            orelse=[])],
+                    orelse=[])],
+            decorator_list=[
+                Attribute(
+                    value=Name(id='app', ctx=Load()),
+                    attr='before_request',
+                    ctx=Load())]),
+        FunctionDef(
+            name='is_valid_token',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='token')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='valid_tokens', ctx=Store())],
+                    value=List(
+                        elts=[
+                            Constant(value='your_valid_token_here')],
+                        ctx=Load())),
+                Return(
+                    value=Compare(
+                        left=Name(id='token', ctx=Load()),
+                        ops=[
+                            In()],
+                        comparators=[
+                            Name(id='valid_tokens', ctx=Load())]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='supervisor_api',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Constant(value='Supervisor API Access Granted'))],
+            decorator_list=[
+                Call(
+                    func=Attribute(
+                        value=Name(id='app', ctx=Load()),
+                        attr='route',
+                        ctx=Load()),
+                    args=[
+                        Constant(value='/supervisor_api')],
+                    keywords=[
+                        keyword(
+                            arg='methods',
+                            value=List(
+                                elts=[
+                                    Constant(value='GET'),
+                                    Constant(value='POST')],
+                                ctx=Load()))])]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='app', ctx=Load()),
+                            attr='run',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[
+                            keyword(
+                                arg='host',
+                                value=Constant(value='0.0.0.0')),
+                            keyword(
+                                arg='port',
+                                value=Constant(value=8123))]))],
+            orelse=[])],
+    type_ignores=[])

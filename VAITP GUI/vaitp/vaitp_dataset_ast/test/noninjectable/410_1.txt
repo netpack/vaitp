@@ -1,0 +1,74 @@
+Module(
+    body=[
+        ImportFrom(
+            module='nbconvert',
+            names=[
+                alias(name='HTMLExporter')],
+            level=0),
+        FunctionDef(
+            name='convert_notebook_to_html',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='notebook_content')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='exporter', ctx=Store())],
+                    value=Call(
+                        func=Name(id='HTMLExporter', ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Tuple(
+                            elts=[
+                                Name(id='html_output', ctx=Store()),
+                                Name(id='_', ctx=Store())],
+                            ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='exporter', ctx=Load()),
+                            attr='from_notebook_node',
+                            ctx=Load()),
+                        args=[
+                            Name(id='notebook_content', ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=Name(id='html_output', ctx=Load()))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='notebook_content', ctx=Store())],
+            value=Dict(
+                keys=[
+                    Constant(value='cells')],
+                values=[
+                    List(
+                        elts=[
+                            Dict(
+                                keys=[
+                                    Constant(value='cell_type'),
+                                    Constant(value='source')],
+                                values=[
+                                    Constant(value='code'),
+                                    Constant(value='print("<script>alert(\'XSS Attack!\')</script>")')])],
+                        ctx=Load())])),
+        Assign(
+            targets=[
+                Name(id='html_output', ctx=Store())],
+            value=Call(
+                func=Name(id='convert_notebook_to_html', ctx=Load()),
+                args=[
+                    Name(id='notebook_content', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='html_output', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

@@ -1,0 +1,39 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='yaml')]),
+        ImportFrom(
+            module='tastypie.serializers',
+            names=[
+                alias(name='Serializer')],
+            level=0),
+        ClassDef(
+            name='SafeYAMLSerializer',
+            bases=[
+                Name(id='Serializer', ctx=Load())],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='from_yaml',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='content')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Return(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='yaml', ctx=Load()),
+                                    attr='safe_load',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='content', ctx=Load())],
+                                keywords=[]))],
+                    decorator_list=[])],
+            decorator_list=[])],
+    type_ignores=[])

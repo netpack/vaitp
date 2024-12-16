@@ -1,0 +1,181 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        Import(
+            names=[
+                alias(name='re')]),
+        FunctionDef(
+            name='is_safe_path',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='base'),
+                    arg(arg='path')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='abs_base', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='path',
+                                ctx=Load()),
+                            attr='abspath',
+                            ctx=Load()),
+                        args=[
+                            Name(id='base', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='abs_path', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='path',
+                                ctx=Load()),
+                            attr='abspath',
+                            ctx=Load()),
+                        args=[
+                            Name(id='path', ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=Compare(
+                        left=Call(
+                            func=Attribute(
+                                value=Attribute(
+                                    value=Name(id='os', ctx=Load()),
+                                    attr='path',
+                                    ctx=Load()),
+                                attr='commonpath',
+                                ctx=Load()),
+                            args=[
+                                List(
+                                    elts=[
+                                        Name(id='abs_base', ctx=Load())],
+                                    ctx=Load())],
+                            keywords=[]),
+                        ops=[
+                            Eq()],
+                        comparators=[
+                            Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='os', ctx=Load()),
+                                        attr='path',
+                                        ctx=Load()),
+                                    attr='commonpath',
+                                    ctx=Load()),
+                                args=[
+                                    List(
+                                        elts=[
+                                            Name(id='abs_base', ctx=Load()),
+                                            Name(id='abs_path', ctx=Load())],
+                                        ctx=Load())],
+                                keywords=[])]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='upload_template',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='user'),
+                    arg(arg='template_path'),
+                    arg(arg='upload_folder')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=UnaryOp(
+                        op=Not(),
+                        operand=Call(
+                            func=Name(id='is_safe_path', ctx=Load()),
+                            args=[
+                                Constant(value='/allowed/upload/directory'),
+                                Name(id='upload_folder', ctx=Load())],
+                            keywords=[])),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Invalid upload directory')],
+                                keywords=[]))],
+                    orelse=[]),
+                If(
+                    test=UnaryOp(
+                        op=Not(),
+                        operand=Call(
+                            func=Attribute(
+                                value=Name(id='re', ctx=Load()),
+                                attr='match',
+                                ctx=Load()),
+                            args=[
+                                Constant(value='^[\\w\\-. ]+$'),
+                                Call(
+                                    func=Attribute(
+                                        value=Attribute(
+                                            value=Name(id='os', ctx=Load()),
+                                            attr='path',
+                                            ctx=Load()),
+                                        attr='basename',
+                                        ctx=Load()),
+                                    args=[
+                                        Name(id='template_path', ctx=Load())],
+                                    keywords=[])],
+                            keywords=[])),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Invalid template filename')],
+                                keywords=[]))],
+                    orelse=[]),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            JoinedStr(
+                                values=[
+                                    Constant(value='Uploading template from '),
+                                    FormattedValue(
+                                        value=Name(id='template_path', ctx=Load()),
+                                        conversion=-1),
+                                    Constant(value=' to '),
+                                    FormattedValue(
+                                        value=Name(id='upload_folder', ctx=Load()),
+                                        conversion=-1)])],
+                        keywords=[]))],
+            decorator_list=[]),
+        Try(
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='upload_template', ctx=Load()),
+                        args=[
+                            Constant(value='authenticated_user'),
+                            Constant(value='template.py'),
+                            Constant(value='/allowed/upload/directory/subfolder')],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ValueError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

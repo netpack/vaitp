@@ -1,0 +1,109 @@
+Module(
+    body=[
+        ImportFrom(
+            module='azure.storage.blob',
+            names=[
+                alias(name='BlobServiceClient')],
+            level=0),
+        ImportFrom(
+            module='cryptography.fernet',
+            names=[
+                alias(name='Fernet')],
+            level=0),
+        FunctionDef(
+            name='upload_blob_with_secure_encryption',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='container_name'),
+                    arg(arg='blob_name'),
+                    arg(arg='data')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='blob_service_client', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='BlobServiceClient', ctx=Load()),
+                            attr='from_connection_string',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='your_connection_string')],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='blob_client', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='blob_service_client', ctx=Load()),
+                            attr='get_blob_client',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[
+                            keyword(
+                                arg='container',
+                                value=Name(id='container_name', ctx=Load())),
+                            keyword(
+                                arg='blob',
+                                value=Name(id='blob_name', ctx=Load()))])),
+                Assign(
+                    targets=[
+                        Name(id='key', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='Fernet', ctx=Load()),
+                            attr='generate_key',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='fernet', ctx=Store())],
+                    value=Call(
+                        func=Name(id='Fernet', ctx=Load()),
+                        args=[
+                            Name(id='key', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='encrypted_data', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='fernet', ctx=Load()),
+                            attr='encrypt',
+                            ctx=Load()),
+                        args=[
+                            Call(
+                                func=Attribute(
+                                    value=Name(id='data', ctx=Load()),
+                                    attr='encode',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[])],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='blob_client', ctx=Load()),
+                            attr='upload_blob',
+                            ctx=Load()),
+                        args=[
+                            Name(id='encrypted_data', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='data', ctx=Store())],
+            value=Constant(value='Sensitive information')),
+        Expr(
+            value=Call(
+                func=Name(id='upload_blob_with_secure_encryption', ctx=Load()),
+                args=[
+                    Constant(value='mycontainer'),
+                    Constant(value='myblob'),
+                    Name(id='data', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

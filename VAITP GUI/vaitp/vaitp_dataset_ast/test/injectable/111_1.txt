@@ -1,0 +1,60 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='urllib3')]),
+        Assign(
+            targets=[
+                Name(id='http', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='urllib3', ctx=Load()),
+                    attr='PoolManager',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='r', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='http', ctx=Load()),
+                    attr='request',
+                    ctx=Load()),
+                args=[
+                    Constant(value='GET'),
+                    Constant(value='https://example.com')],
+                keywords=[
+                    keyword(
+                        arg='headers',
+                        value=Dict(
+                            keys=[
+                                Constant(value='Authorization')],
+                            values=[
+                                Constant(value='Basic YWxhZGRpbjpvcGVuc2VzYW1l')]))])),
+        Assign(
+            targets=[
+                Name(id='r', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='http', ctx=Load()),
+                    attr='request',
+                    ctx=Load()),
+                args=[
+                    Constant(value='GET'),
+                    Constant(value='https://example.com/redirect')],
+                keywords=[
+                    keyword(
+                        arg='headers',
+                        value=Dict(
+                            keys=[
+                                Constant(value='Authorization')],
+                            values=[
+                                Constant(value='Basic YWxhZGRpbjpvcGVuc2VzYW1l')])),
+                    keyword(
+                        arg='redirect',
+                        value=Constant(value=True)),
+                    keyword(
+                        arg='strip_authorization_on_redirect',
+                        value=Constant(value=True))]))],
+    type_ignores=[])

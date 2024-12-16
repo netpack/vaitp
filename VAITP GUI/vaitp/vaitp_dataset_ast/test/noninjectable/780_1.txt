@@ -1,0 +1,48 @@
+Module(
+    body=[
+        FunctionDef(
+            name='vulnerable_mcopy',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='src'),
+                    arg(arg='dest')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Constant(value='\n    A vulnerable copy function that does not properly restrict the length of the source string.\n    \n    Args:\n        src (str): The source string to copy from.\n        dest (list): The destination list to copy to (simulating a buffer).\n    ')),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='dest', ctx=Load()),
+                            attr='clear',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='dest', ctx=Load()),
+                            attr='extend',
+                            ctx=Load()),
+                        args=[
+                            Name(id='src', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='destination_buffer', ctx=Store())],
+            value=List(elts=[], ctx=Load())),
+        Expr(
+            value=Call(
+                func=Name(id='vulnerable_mcopy', ctx=Load()),
+                args=[
+                    BinOp(
+                        left=Constant(value='A crafted string that could potentially cause issues'),
+                        op=Mult(),
+                        right=Constant(value=100)),
+                    Name(id='destination_buffer', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

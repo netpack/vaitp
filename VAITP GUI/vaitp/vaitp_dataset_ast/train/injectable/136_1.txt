@@ -1,0 +1,32 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='bz2')]),
+        Assign(
+            targets=[
+                Name(id='zip_file', ctx=Store())],
+            value=Constant(value='safe.zip')),
+        Assign(
+            targets=[
+                Name(id='data', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='bz2', ctx=Load()),
+                    attr='decompress',
+                    ctx=Load()),
+                args=[
+                    Call(
+                        func=Attribute(
+                            value=Call(
+                                func=Name(id='open', ctx=Load()),
+                                args=[
+                                    Name(id='zip_file', ctx=Load()),
+                                    Constant(value='rb')],
+                                keywords=[]),
+                            attr='read',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])],
+                keywords=[]))],
+    type_ignores=[])

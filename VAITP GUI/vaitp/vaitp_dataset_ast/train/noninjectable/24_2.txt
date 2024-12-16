@@ -1,0 +1,50 @@
+Module(
+    body=[
+        ImportFrom(
+            module='tkvideoplayer',
+            names=[
+                alias(name='TkinterVideo')],
+            level=0),
+        Import(
+            names=[
+                alias(name='tkinter', asname='tk')]),
+        Assign(
+            targets=[
+                Name(id='window', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='tk', ctx=Load()),
+                    attr='Tk',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='player', ctx=Store())],
+            value=Call(
+                func=Name(id='TkinterVideo', ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='master',
+                        value=Name(id='window', ctx=Load())),
+                    keyword(
+                        arg='path',
+                        value=Constant(value='video.mp4'))])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='player', ctx=Load()),
+                    attr='play',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='window', ctx=Load()),
+                    attr='mainloop',
+                    ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

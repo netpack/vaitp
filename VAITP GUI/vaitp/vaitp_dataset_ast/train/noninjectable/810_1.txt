@@ -1,0 +1,52 @@
+Module(
+    body=[
+        FunctionDef(
+            name='render_document_tree_macro',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='params')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Constant(value='\n    Render the document tree macro with potentially unsafe parameters.\n    This function does not escape parameters, leading to a vulnerability.\n    ')),
+                Assign(
+                    targets=[
+                        Name(id='output', ctx=Store())],
+                    value=JoinedStr(
+                        values=[
+                            Constant(value="<div class='document-tree'>"),
+                            FormattedValue(
+                                value=Name(id='params', ctx=Load()),
+                                conversion=-1),
+                            Constant(value='</div>')])),
+                Return(
+                    value=Name(id='output', ctx=Load()))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='params', ctx=Store())],
+            value=Dict(
+                keys=[
+                    Constant(value='param1'),
+                    Constant(value='param2')],
+                values=[
+                    Constant(value='value1'),
+                    Constant(value='{malicious_code}')])),
+        Assign(
+            targets=[
+                Name(id='vulnerable_output', ctx=Store())],
+            value=Call(
+                func=Name(id='render_document_tree_macro', ctx=Load()),
+                args=[
+                    Name(id='params', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='vulnerable_output', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

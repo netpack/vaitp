@@ -1,0 +1,633 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='urllib.request')]),
+        Import(
+            names=[
+                alias(name='hashlib')]),
+        Import(
+            names=[
+                alias(name='os')]),
+        ClassDef(
+            name='Version',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='origin'),
+                            arg(arg='uri'),
+                            arg(arg='hash_value'),
+                            arg(arg='hash_type'),
+                            arg(arg='filename')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='origin',
+                                    ctx=Store())],
+                            value=Name(id='origin', ctx=Load())),
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='uri',
+                                    ctx=Store())],
+                            value=Name(id='uri', ctx=Load())),
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='hash_value',
+                                    ctx=Store())],
+                            value=Name(id='hash_value', ctx=Load())),
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='hash_type',
+                                    ctx=Store())],
+                            value=Name(id='hash_type', ctx=Load())),
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='filename',
+                                    ctx=Store())],
+                            value=Name(id='filename', ctx=Load()))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='_download_file',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Try(
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Attribute(
+                                                value=Name(id='urllib', ctx=Load()),
+                                                attr='request',
+                                                ctx=Load()),
+                                            attr='urlretrieve',
+                                            ctx=Load()),
+                                        args=[
+                                            Attribute(
+                                                value=Name(id='self', ctx=Load()),
+                                                attr='uri',
+                                                ctx=Load()),
+                                            Attribute(
+                                                value=Name(id='self', ctx=Load()),
+                                                attr='filename',
+                                                ctx=Load())],
+                                        keywords=[]))],
+                            handlers=[
+                                ExceptHandler(
+                                    type=Name(id='Exception', ctx=Load()),
+                                    name='e',
+                                    body=[
+                                        Expr(
+                                            value=Call(
+                                                func=Name(id='print', ctx=Load()),
+                                                args=[
+                                                    JoinedStr(
+                                                        values=[
+                                                            Constant(value='Error downloading '),
+                                                            FormattedValue(
+                                                                value=Attribute(
+                                                                    value=Name(id='self', ctx=Load()),
+                                                                    attr='uri',
+                                                                    ctx=Load()),
+                                                                conversion=-1),
+                                                            Constant(value=': '),
+                                                            FormattedValue(
+                                                                value=Name(id='e', ctx=Load()),
+                                                                conversion=-1)])],
+                                                keywords=[])),
+                                        Return(
+                                            value=Constant(value=False))])],
+                            orelse=[],
+                            finalbody=[]),
+                        Return(
+                            value=Constant(value=True))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='_verify_hash',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        If(
+                            test=UnaryOp(
+                                op=Not(),
+                                operand=Call(
+                                    func=Attribute(
+                                        value=Attribute(
+                                            value=Name(id='os', ctx=Load()),
+                                            attr='path',
+                                            ctx=Load()),
+                                        attr='exists',
+                                        ctx=Load()),
+                                    args=[
+                                        Attribute(
+                                            value=Name(id='self', ctx=Load()),
+                                            attr='filename',
+                                            ctx=Load())],
+                                    keywords=[])),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    Constant(value='Error: file '),
+                                                    FormattedValue(
+                                                        value=Attribute(
+                                                            value=Name(id='self', ctx=Load()),
+                                                            attr='filename',
+                                                            ctx=Load()),
+                                                        conversion=-1),
+                                                    Constant(value=' does not exist, cannot verify hash.')])],
+                                        keywords=[])),
+                                Return(
+                                    value=Constant(value=False))],
+                            orelse=[]),
+                        If(
+                            test=Compare(
+                                left=Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='hash_type',
+                                    ctx=Load()),
+                                ops=[
+                                    Eq()],
+                                comparators=[
+                                    Constant(value='sha256')]),
+                            body=[
+                                Assign(
+                                    targets=[
+                                        Name(id='hasher', ctx=Store())],
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='hashlib', ctx=Load()),
+                                            attr='sha256',
+                                            ctx=Load()),
+                                        args=[],
+                                        keywords=[]))],
+                            orelse=[
+                                If(
+                                    test=Compare(
+                                        left=Attribute(
+                                            value=Name(id='self', ctx=Load()),
+                                            attr='hash_type',
+                                            ctx=Load()),
+                                        ops=[
+                                            Eq()],
+                                        comparators=[
+                                            Constant(value='md5')]),
+                                    body=[
+                                        Assign(
+                                            targets=[
+                                                Name(id='hasher', ctx=Store())],
+                                            value=Call(
+                                                func=Attribute(
+                                                    value=Name(id='hashlib', ctx=Load()),
+                                                    attr='md5',
+                                                    ctx=Load()),
+                                                args=[],
+                                                keywords=[]))],
+                                    orelse=[
+                                        Expr(
+                                            value=Call(
+                                                func=Name(id='print', ctx=Load()),
+                                                args=[
+                                                    JoinedStr(
+                                                        values=[
+                                                            Constant(value='Unsupported hash type: '),
+                                                            FormattedValue(
+                                                                value=Attribute(
+                                                                    value=Name(id='self', ctx=Load()),
+                                                                    attr='hash_type',
+                                                                    ctx=Load()),
+                                                                conversion=-1)])],
+                                                keywords=[])),
+                                        Return(
+                                            value=Constant(value=False))])]),
+                        With(
+                            items=[
+                                withitem(
+                                    context_expr=Call(
+                                        func=Name(id='open', ctx=Load()),
+                                        args=[
+                                            Attribute(
+                                                value=Name(id='self', ctx=Load()),
+                                                attr='filename',
+                                                ctx=Load()),
+                                            Constant(value='rb')],
+                                        keywords=[]),
+                                    optional_vars=Name(id='f', ctx=Store()))],
+                            body=[
+                                While(
+                                    test=Constant(value=True),
+                                    body=[
+                                        Assign(
+                                            targets=[
+                                                Name(id='chunk', ctx=Store())],
+                                            value=Call(
+                                                func=Attribute(
+                                                    value=Name(id='f', ctx=Load()),
+                                                    attr='read',
+                                                    ctx=Load()),
+                                                args=[
+                                                    Constant(value=4096)],
+                                                keywords=[])),
+                                        If(
+                                            test=UnaryOp(
+                                                op=Not(),
+                                                operand=Name(id='chunk', ctx=Load())),
+                                            body=[
+                                                Break()],
+                                            orelse=[]),
+                                        Expr(
+                                            value=Call(
+                                                func=Attribute(
+                                                    value=Name(id='hasher', ctx=Load()),
+                                                    attr='update',
+                                                    ctx=Load()),
+                                                args=[
+                                                    Name(id='chunk', ctx=Load())],
+                                                keywords=[]))],
+                                    orelse=[])]),
+                        Assign(
+                            targets=[
+                                Name(id='calculated_hash', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='hasher', ctx=Load()),
+                                    attr='hexdigest',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[])),
+                        If(
+                            test=Compare(
+                                left=Name(id='calculated_hash', ctx=Load()),
+                                ops=[
+                                    Eq()],
+                                comparators=[
+                                    Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='hash_value',
+                                        ctx=Load())]),
+                            body=[
+                                Return(
+                                    value=Constant(value=True))],
+                            orelse=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    Constant(value='Error: Hash mismatch. Expected '),
+                                                    FormattedValue(
+                                                        value=Attribute(
+                                                            value=Name(id='self', ctx=Load()),
+                                                            attr='hash_value',
+                                                            ctx=Load()),
+                                                        conversion=-1),
+                                                    Constant(value=', got '),
+                                                    FormattedValue(
+                                                        value=Name(id='calculated_hash', ctx=Load()),
+                                                        conversion=-1)])],
+                                        keywords=[])),
+                                Return(
+                                    value=Constant(value=False))])],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='fetch_binary',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        If(
+                            test=UnaryOp(
+                                op=Not(),
+                                operand=Call(
+                                    func=Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='_download_file',
+                                        ctx=Load()),
+                                    args=[],
+                                    keywords=[])),
+                            body=[
+                                Return(
+                                    value=Constant(value=False))],
+                            orelse=[]),
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Hash verification skipped in vulnerable version. Proceeding despite lack of check')],
+                                keywords=[])),
+                        Return(
+                            value=Constant(value=True))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='fetch_source',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        If(
+                            test=UnaryOp(
+                                op=Not(),
+                                operand=Call(
+                                    func=Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='_download_file',
+                                        ctx=Load()),
+                                    args=[],
+                                    keywords=[])),
+                            body=[
+                                Return(
+                                    value=Constant(value=False))],
+                            orelse=[]),
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Hash verification skipped in vulnerable version. Proceeding despite lack of check')],
+                                keywords=[])),
+                        Return(
+                            value=Constant(value=True))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        ClassDef(
+            name='Cache',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='archives',
+                                    ctx=Store())],
+                            value=List(elts=[], ctx=Load()))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='_fetch_archives',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        For(
+                            target=Name(id='archive', ctx=Store()),
+                            iter=Attribute(
+                                value=Name(id='self', ctx=Load()),
+                                attr='archives',
+                                ctx=Load()),
+                            body=[
+                                If(
+                                    test=UnaryOp(
+                                        op=Not(),
+                                        operand=Call(
+                                            func=Attribute(
+                                                value=Name(id='archive', ctx=Load()),
+                                                attr='fetch_binary',
+                                                ctx=Load()),
+                                            args=[],
+                                            keywords=[])),
+                                    body=[
+                                        Expr(
+                                            value=Call(
+                                                func=Name(id='print', ctx=Load()),
+                                                args=[
+                                                    JoinedStr(
+                                                        values=[
+                                                            Constant(value='Failed to fetch archive from '),
+                                                            FormattedValue(
+                                                                value=Attribute(
+                                                                    value=Name(id='archive', ctx=Load()),
+                                                                    attr='uri',
+                                                                    ctx=Load()),
+                                                                conversion=-1)])],
+                                                keywords=[])),
+                                        Return(
+                                            value=Constant(value=False))],
+                                    orelse=[])],
+                            orelse=[]),
+                        Return(
+                            value=Constant(value=True))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='vulnerable_version_binary', ctx=Store())],
+                    value=Call(
+                        func=Name(id='Version', ctx=Load()),
+                        args=[],
+                        keywords=[
+                            keyword(
+                                arg='origin',
+                                value=Constant(value='http://unsigned-repo.example.com/')),
+                            keyword(
+                                arg='uri',
+                                value=Constant(value='http://unsigned-repo.example.com/fake-package.deb')),
+                            keyword(
+                                arg='hash_value',
+                                value=Constant(value='fakehashvalue1234567890abcdef')),
+                            keyword(
+                                arg='hash_type',
+                                value=Constant(value='sha256')),
+                            keyword(
+                                arg='filename',
+                                value=Constant(value='fake-package.deb'))])),
+                Assign(
+                    targets=[
+                        Name(id='vulnerable_version_source', ctx=Store())],
+                    value=Call(
+                        func=Name(id='Version', ctx=Load()),
+                        args=[],
+                        keywords=[
+                            keyword(
+                                arg='origin',
+                                value=Constant(value='http://unsigned-repo.example.com/')),
+                            keyword(
+                                arg='uri',
+                                value=Constant(value='http://unsigned-repo.example.com/fake-package.tar.gz')),
+                            keyword(
+                                arg='hash_value',
+                                value=Constant(value='fakehashvalue0987654321fedcba')),
+                            keyword(
+                                arg='hash_type',
+                                value=Constant(value='md5')),
+                            keyword(
+                                arg='filename',
+                                value=Constant(value='fake-package.tar.gz'))])),
+                Assign(
+                    targets=[
+                        Name(id='cache', ctx=Store())],
+                    value=Call(
+                        func=Name(id='Cache', ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='cache', ctx=Load()),
+                                attr='archives',
+                                ctx=Load()),
+                            attr='append',
+                            ctx=Load()),
+                        args=[
+                            Name(id='vulnerable_version_binary', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='cache', ctx=Load()),
+                                attr='archives',
+                                ctx=Load()),
+                            attr='append',
+                            ctx=Load()),
+                        args=[
+                            Name(id='vulnerable_version_source', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Starting download using the vulnerable function fetch_binary')],
+                        keywords=[])),
+                If(
+                    test=Call(
+                        func=Attribute(
+                            value=Name(id='cache', ctx=Load()),
+                            attr='_fetch_archives',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Download completed successfully in vulnerable scenario.')],
+                                keywords=[]))],
+                    orelse=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Download failed')],
+                                keywords=[]))]),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Starting download using the vulnerable function fetch_source')],
+                        keywords=[])),
+                If(
+                    test=Call(
+                        func=Attribute(
+                            value=Name(id='vulnerable_version_source', ctx=Load()),
+                            attr='fetch_source',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Download completed successfully in vulnerable scenario.')],
+                                keywords=[]))],
+                    orelse=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Download failed')],
+                                keywords=[]))]),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Starting download using the vulnerable function fetch_binary')],
+                        keywords=[])),
+                If(
+                    test=Call(
+                        func=Attribute(
+                            value=Name(id='vulnerable_version_binary', ctx=Load()),
+                            attr='fetch_binary',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Download completed successfully in vulnerable scenario.')],
+                                keywords=[]))],
+                    orelse=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Download failed')],
+                                keywords=[]))])],
+            orelse=[])],
+    type_ignores=[])

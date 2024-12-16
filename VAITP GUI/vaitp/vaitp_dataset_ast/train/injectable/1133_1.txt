@@ -1,0 +1,105 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='asyncio')]),
+        ImportFrom(
+            module='aiosmtpd.controller',
+            names=[
+                alias(name='Controller')],
+            level=0),
+        ClassDef(
+            name='CustomSMTPServer',
+            bases=[],
+            keywords=[],
+            body=[
+                AsyncFunctionDef(
+                    name='handle_DATA',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='server'),
+                            arg(arg='session'),
+                            arg(arg='envelope')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Return(
+                            value=Constant(value='250 Message accepted for delivery'))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        AsyncFunctionDef(
+            name='main',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='controller', ctx=Store())],
+                    value=Call(
+                        func=Name(id='Controller', ctx=Load()),
+                        args=[
+                            Call(
+                                func=Name(id='CustomSMTPServer', ctx=Load()),
+                                args=[],
+                                keywords=[])],
+                        keywords=[
+                            keyword(
+                                arg='hostname',
+                                value=Constant(value='localhost')),
+                            keyword(
+                                arg='port',
+                                value=Constant(value=8025))])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='controller', ctx=Load()),
+                            attr='start',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Expr(
+                    value=Await(
+                        value=Call(
+                            func=Attribute(
+                                value=Name(id='asyncio', ctx=Load()),
+                                attr='sleep',
+                                ctx=Load()),
+                            args=[
+                                Constant(value=1)],
+                            keywords=[]))),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Server running...')],
+                        keywords=[]))],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='asyncio', ctx=Load()),
+                            attr='run',
+                            ctx=Load()),
+                        args=[
+                            Call(
+                                func=Name(id='main', ctx=Load()),
+                                args=[],
+                                keywords=[])],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

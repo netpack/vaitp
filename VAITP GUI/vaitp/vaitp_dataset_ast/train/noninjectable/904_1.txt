@@ -1,0 +1,62 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        Import(
+            names=[
+                alias(name='urllib.request')]),
+        FunctionDef(
+            name='download_file',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='url')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='save_directory', ctx=Store())],
+                    value=Constant(value='/var/media/')),
+                Assign(
+                    targets=[
+                        Name(id='file_name', ctx=Store())],
+                    value=Constant(value='random_file_name.txt')),
+                Assign(
+                    targets=[
+                        Name(id='save_path', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='path',
+                                ctx=Load()),
+                            attr='join',
+                            ctx=Load()),
+                        args=[
+                            Name(id='save_directory', ctx=Load()),
+                            Name(id='file_name', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='urllib', ctx=Load()),
+                                attr='request',
+                                ctx=Load()),
+                            attr='urlretrieve',
+                            ctx=Load()),
+                        args=[
+                            Name(id='url', ctx=Load()),
+                            Name(id='save_path', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='download_file', ctx=Load()),
+                args=[
+                    Constant(value='http://malicious.example.com/file.txt')],
+                keywords=[]))],
+    type_ignores=[])

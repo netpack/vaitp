@@ -1,0 +1,142 @@
+Module(
+    body=[
+        ImportFrom(
+            module='flask',
+            names=[
+                alias(name='Flask'),
+                alias(name='request')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='app', ctx=Store())],
+            value=Call(
+                func=Name(id='Flask', ctx=Load()),
+                args=[
+                    Name(id='__name__', ctx=Load())],
+                keywords=[])),
+        FunctionDef(
+            name='git_content',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='user_role', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='request', ctx=Load()),
+                                attr='args',
+                                ctx=Load()),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='role')],
+                        keywords=[])),
+                If(
+                    test=Compare(
+                        left=Name(id='user_role', ctx=Load()),
+                        ops=[
+                            NotEq()],
+                        comparators=[
+                            Constant(value='Viewer')]),
+                    body=[
+                        Return(
+                            value=Tuple(
+                                elts=[
+                                    Constant(value='Forbidden'),
+                                    Constant(value=403)],
+                                ctx=Load()))],
+                    orelse=[]),
+                Assign(
+                    targets=[
+                        Name(id='requested_file', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='request', ctx=Load()),
+                                attr='args',
+                                ctx=Load()),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='file')],
+                        keywords=[])),
+                Try(
+                    body=[
+                        With(
+                            items=[
+                                withitem(
+                                    context_expr=Call(
+                                        func=Name(id='open', ctx=Load()),
+                                        args=[
+                                            Name(id='requested_file', ctx=Load()),
+                                            Constant(value='r')],
+                                        keywords=[]),
+                                    optional_vars=Name(id='file', ctx=Store()))],
+                            body=[
+                                Assign(
+                                    targets=[
+                                        Name(id='content', ctx=Store())],
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='file', ctx=Load()),
+                                            attr='read',
+                                            ctx=Load()),
+                                        args=[],
+                                        keywords=[]))]),
+                        Return(
+                            value=Tuple(
+                                elts=[
+                                    Name(id='content', ctx=Load()),
+                                    Constant(value=200)],
+                                ctx=Load()))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='FileNotFoundError', ctx=Load()),
+                            body=[
+                                Return(
+                                    value=Tuple(
+                                        elts=[
+                                            Constant(value='Not Found'),
+                                            Constant(value=404)],
+                                        ctx=Load()))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[
+                Call(
+                    func=Attribute(
+                        value=Name(id='app', ctx=Load()),
+                        attr='route',
+                        ctx=Load()),
+                    args=[
+                        Constant(value='/git_content')],
+                    keywords=[
+                        keyword(
+                            arg='methods',
+                            value=List(
+                                elts=[
+                                    Constant(value='GET')],
+                                ctx=Load()))])]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='app', ctx=Load()),
+                            attr='run',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

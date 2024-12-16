@@ -1,0 +1,121 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='subprocess')]),
+        Import(
+            names=[
+                alias(name='shlex')]),
+        FunctionDef(
+            name='safe_clone_repository',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='repo_url')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=UnaryOp(
+                        op=Not(),
+                        operand=Call(
+                            func=Name(id='is_valid_repo_url', ctx=Load()),
+                            args=[
+                                Name(id='repo_url', ctx=Load())],
+                            keywords=[])),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Invalid repository URL')],
+                                keywords=[]))],
+                    orelse=[]),
+                Assign(
+                    targets=[
+                        Name(id='command', ctx=Store())],
+                    value=JoinedStr(
+                        values=[
+                            Constant(value='git clone '),
+                            FormattedValue(
+                                value=Name(id='repo_url', ctx=Load()),
+                                conversion=-1)])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='subprocess', ctx=Load()),
+                            attr='run',
+                            ctx=Load()),
+                        args=[
+                            Call(
+                                func=Attribute(
+                                    value=Name(id='shlex', ctx=Load()),
+                                    attr='split',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='command', ctx=Load())],
+                                keywords=[])],
+                        keywords=[
+                            keyword(
+                                arg='check',
+                                value=Constant(value=True))]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='is_valid_repo_url',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='url')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=BoolOp(
+                        op=Or(),
+                        values=[
+                            Call(
+                                func=Attribute(
+                                    value=Name(id='url', ctx=Load()),
+                                    attr='startswith',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='https://')],
+                                keywords=[]),
+                            Call(
+                                func=Attribute(
+                                    value=Name(id='url', ctx=Load()),
+                                    attr='startswith',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='git@')],
+                                keywords=[])]))],
+            decorator_list=[]),
+        Try(
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='safe_clone_repository', ctx=Load()),
+                        args=[
+                            Constant(value='https://example.com/repo.git')],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='Exception', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            Constant(value='Error: '),
+                                            FormattedValue(
+                                                value=Name(id='e', ctx=Load()),
+                                                conversion=-1)])],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

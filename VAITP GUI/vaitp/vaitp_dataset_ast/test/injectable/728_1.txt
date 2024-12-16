@@ -1,0 +1,89 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='re')]),
+        ImportFrom(
+            module='django.core.exceptions',
+            names=[
+                alias(name='ValidationError')],
+            level=0),
+        ImportFrom(
+            module='django.core.validators',
+            names=[
+                alias(name='URLValidator')],
+            level=0),
+        FunctionDef(
+            name='validate_ip_address',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='ip')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='ipv4_pattern', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='re', ctx=Load()),
+                            attr='compile',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='^(?!0)([1-9]\\d{0,2}|0)(\\.(?!0)([1-9]\\d{0,2}|0)){3}$')],
+                        keywords=[])),
+                If(
+                    test=UnaryOp(
+                        op=Not(),
+                        operand=Call(
+                            func=Attribute(
+                                value=Name(id='ipv4_pattern', ctx=Load()),
+                                attr='match',
+                                ctx=Load()),
+                            args=[
+                                Name(id='ip', ctx=Load())],
+                            keywords=[])),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValidationError', ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            FormattedValue(
+                                                value=Name(id='ip', ctx=Load()),
+                                                conversion=-1),
+                                            Constant(value=' is not a valid IPv4 address.')])],
+                                keywords=[]))],
+                    orelse=[])],
+            decorator_list=[]),
+        Try(
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='validate_ip_address', ctx=Load()),
+                        args=[
+                            Constant(value='192.168.1.1')],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='validate_ip_address', ctx=Load()),
+                        args=[
+                            Constant(value='192.168.01.1')],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ValidationError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

@@ -1,0 +1,1278 @@
+Module(
+    body=[
+        Expr(
+            value=Constant(value='\nMiscellaneous functions of use on a TurboGears Server\n\n.. versionchanged:: 0.3.14\n   Save the original turbogears.url function as :func:`fedora.tg.util.tg_url`\n\n.. versionchanged:: 0.3.17\n   Renamed from fedora.tg.util\n\n.. versionchanged:: 0.3.25\n   Renamed from fedora.tg.tg1utils\n\n.. moduleauthor:: Toshio Kuratomi <tkuratom@redhat.com>\n.. moduleauthor:: Ricky Zhou <ricky@fedoraproject.org>\n')),
+        ImportFrom(
+            module='itertools',
+            names=[
+                alias(name='chain')],
+            level=0),
+        Import(
+            names=[
+                alias(name='cgi')]),
+        Import(
+            names=[
+                alias(name='os')]),
+        Import(
+            names=[
+                alias(name='cherrypy')]),
+        ImportFrom(
+            module='cherrypy',
+            names=[
+                alias(name='request')],
+            level=0),
+        ImportFrom(
+            module='decorator',
+            names=[
+                alias(name='decorator')],
+            level=0),
+        Import(
+            names=[
+                alias(name='pkg_resources')]),
+        Import(
+            names=[
+                alias(name='turbogears')]),
+        ImportFrom(
+            module='turbogears',
+            names=[
+                alias(name='flash'),
+                alias(name='redirect'),
+                alias(name='config'),
+                alias(name='identity')],
+            level=0),
+        Import(
+            names=[
+                alias(name='turbogears.util', asname='tg_util')]),
+        ImportFrom(
+            module='turbogears.controllers',
+            names=[
+                alias(name='check_app_root')],
+            level=0),
+        ImportFrom(
+            module='turbogears.identity.exceptions',
+            names=[
+                alias(name='RequestRequiredException')],
+            level=0),
+        Import(
+            names=[
+                alias(name='six')]),
+        ImportFrom(
+            module='six.moves.urllib.parse',
+            names=[
+                alias(name='urlencode'),
+                alias(name='urlparse'),
+                alias(name='urlunparse')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='tg_url', ctx=Store())],
+            value=Attribute(
+                value=Name(id='turbogears', ctx=Load()),
+                attr='url',
+                ctx=Load())),
+        FunctionDef(
+            name='add_custom_stdvars',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='new_vars')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='new_vars', ctx=Load()),
+                            attr='update',
+                            ctx=Load()),
+                        args=[
+                            Dict(
+                                keys=[
+                                    Constant(value='fedora_template')],
+                                values=[
+                                    Name(id='fedora_template', ctx=Load())])],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='url',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='tgpath'),
+                    arg(arg='tgparams')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                kwarg=arg(arg='kwargs'),
+                defaults=[
+                    Constant(value=None)]),
+            body=[
+                Expr(
+                    value=Constant(value='Computes URLs.\n\n    This is a replacement for :func:`turbogears.controllers.url` (aka\n    :func:`tg.url` in the template).  In addition to the functionality that\n    :func:`tg.url` provides, it adds a token to prevent :term:`CSRF` attacks.\n\n    :arg tgpath:  a list or a string. If the path is absolute (starts\n        with a "/"), the :attr:`server.webpath`, :envvar:`SCRIPT_NAME` and\n        the approot of the application are prepended to the path. In order for\n        the approot to be detected properly, the root object should extend\n        :class:`turbogears.controllers.RootController`.\n    :kwarg tgparams: See param: ``kwargs``\n    :kwarg kwargs: Query parameters for the URL can be passed in as a\n        dictionary in the second argument *or* as keyword parameters.\n        Values which are a list or a tuple are used to create multiple\n        key-value pairs.\n    :returns: The changed path\n\n    .. versionadded:: 0.3.10\n       Modified from turbogears.controllers.url for :ref:`CSRF-Protection`\n    ')),
+                If(
+                    test=UnaryOp(
+                        op=Not(),
+                        operand=Call(
+                            func=Name(id='isinstance', ctx=Load()),
+                            args=[
+                                Name(id='tgpath', ctx=Load()),
+                                Attribute(
+                                    value=Name(id='six', ctx=Load()),
+                                    attr='string_types',
+                                    ctx=Load())],
+                            keywords=[])),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='tgpath', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Constant(value='/'),
+                                    attr='join',
+                                    ctx=Load()),
+                                args=[
+                                    Call(
+                                        func=Name(id='list', ctx=Load()),
+                                        args=[
+                                            Name(id='tgpath', ctx=Load())],
+                                        keywords=[])],
+                                keywords=[]))],
+                    orelse=[]),
+                If(
+                    test=Call(
+                        func=Attribute(
+                            value=Name(id='tgpath', ctx=Load()),
+                            attr='startswith',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='/')],
+                        keywords=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='webpath', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=BoolOp(
+                                        op=Or(),
+                                        values=[
+                                            Call(
+                                                func=Attribute(
+                                                    value=Name(id='config', ctx=Load()),
+                                                    attr='get',
+                                                    ctx=Load()),
+                                                args=[
+                                                    Constant(value='server.webpath')],
+                                                keywords=[]),
+                                            Constant(value='')]),
+                                    attr='rstrip',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='/')],
+                                keywords=[])),
+                        If(
+                            test=Call(
+                                func=Attribute(
+                                    value=Name(id='tg_util', ctx=Load()),
+                                    attr='request_available',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[]),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='check_app_root', ctx=Load()),
+                                        args=[],
+                                        keywords=[])),
+                                Assign(
+                                    targets=[
+                                        Name(id='tgpath', ctx=Store())],
+                                    value=BinOp(
+                                        left=Attribute(
+                                            value=Name(id='request', ctx=Load()),
+                                            attr='app_root',
+                                            ctx=Load()),
+                                        op=Add(),
+                                        right=Name(id='tgpath', ctx=Load()))),
+                                Try(
+                                    body=[
+                                        AugAssign(
+                                            target=Name(id='webpath', ctx=Store()),
+                                            op=Add(),
+                                            value=Call(
+                                                func=Attribute(
+                                                    value=Subscript(
+                                                        value=Attribute(
+                                                            value=Name(id='request', ctx=Load()),
+                                                            attr='wsgi_environ',
+                                                            ctx=Load()),
+                                                        slice=Constant(value='SCRIPT_NAME'),
+                                                        ctx=Load()),
+                                                    attr='rstrip',
+                                                    ctx=Load()),
+                                                args=[
+                                                    Constant(value='/')],
+                                                keywords=[]))],
+                                    handlers=[
+                                        ExceptHandler(
+                                            type=Tuple(
+                                                elts=[
+                                                    Name(id='AttributeError', ctx=Load()),
+                                                    Name(id='KeyError', ctx=Load())],
+                                                ctx=Load()),
+                                            body=[
+                                                Pass()])],
+                                    orelse=[],
+                                    finalbody=[])],
+                            orelse=[]),
+                        Assign(
+                            targets=[
+                                Name(id='tgpath', ctx=Store())],
+                            value=BinOp(
+                                left=Name(id='webpath', ctx=Load()),
+                                op=Add(),
+                                right=Name(id='tgpath', ctx=Load())))],
+                    orelse=[]),
+                If(
+                    test=Compare(
+                        left=Name(id='tgparams', ctx=Load()),
+                        ops=[
+                            Is()],
+                        comparators=[
+                            Constant(value=None)]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='tgparams', ctx=Store())],
+                            value=Name(id='kwargs', ctx=Load()))],
+                    orelse=[
+                        Try(
+                            body=[
+                                Assign(
+                                    targets=[
+                                        Name(id='tgparams', ctx=Store())],
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='tgparams', ctx=Load()),
+                                            attr='copy',
+                                            ctx=Load()),
+                                        args=[],
+                                        keywords=[])),
+                                Expr(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='tgparams', ctx=Load()),
+                                            attr='update',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='kwargs', ctx=Load())],
+                                        keywords=[]))],
+                            handlers=[
+                                ExceptHandler(
+                                    type=Name(id='AttributeError', ctx=Load()),
+                                    body=[
+                                        Raise(
+                                            exc=Call(
+                                                func=Name(id='TypeError', ctx=Load()),
+                                                args=[
+                                                    Constant(value='url() expects a dictionary for query parameters')],
+                                                keywords=[]))])],
+                            orelse=[],
+                            finalbody=[])]),
+                Assign(
+                    targets=[
+                        Name(id='args', ctx=Store())],
+                    value=List(elts=[], ctx=Load())),
+                Try(
+                    body=[
+                        If(
+                            test=Attribute(
+                                value=Attribute(
+                                    value=Name(id='identity', ctx=Load()),
+                                    attr='current',
+                                    ctx=Load()),
+                                attr='csrf_token',
+                                ctx=Load()),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='tgparams', ctx=Load()),
+                                            attr='update',
+                                            ctx=Load()),
+                                        args=[
+                                            Dict(
+                                                keys=[
+                                                    Constant(value='_csrf_token')],
+                                                values=[
+                                                    Attribute(
+                                                        value=Attribute(
+                                                            value=Name(id='identity', ctx=Load()),
+                                                            attr='current',
+                                                            ctx=Load()),
+                                                        attr='csrf_token',
+                                                        ctx=Load())])],
+                                        keywords=[]))],
+                            orelse=[])],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='RequestRequiredException', ctx=Load()),
+                            body=[
+                                Pass()])],
+                    orelse=[],
+                    finalbody=[]),
+                Assign(
+                    targets=[
+                        Name(id='query_params', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='six', ctx=Load()),
+                            attr='iteritems',
+                            ctx=Load()),
+                        args=[
+                            Name(id='tgparams', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Tuple(
+                            elts=[
+                                Name(id='scheme', ctx=Store()),
+                                Name(id='netloc', ctx=Store()),
+                                Name(id='path', ctx=Store()),
+                                Name(id='params', ctx=Store()),
+                                Name(id='query_s', ctx=Store()),
+                                Name(id='fragment', ctx=Store())],
+                            ctx=Store())],
+                    value=Call(
+                        func=Name(id='urlparse', ctx=Load()),
+                        args=[
+                            Name(id='tgpath', ctx=Load())],
+                        keywords=[])),
+                If(
+                    test=Name(id='query_s', ctx=Load()),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='query_params', ctx=Store())],
+                            value=Call(
+                                func=Name(id='chain', ctx=Load()),
+                                args=[
+                                    GeneratorExp(
+                                        elt=Name(id='p', ctx=Load()),
+                                        generators=[
+                                            comprehension(
+                                                target=Name(id='p', ctx=Store()),
+                                                iter=Call(
+                                                    func=Attribute(
+                                                        value=Name(id='cgi', ctx=Load()),
+                                                        attr='parse_qsl',
+                                                        ctx=Load()),
+                                                    args=[
+                                                        Name(id='query_s', ctx=Load())],
+                                                    keywords=[]),
+                                                ifs=[
+                                                    Compare(
+                                                        left=Subscript(
+                                                            value=Name(id='p', ctx=Load()),
+                                                            slice=Constant(value=0),
+                                                            ctx=Load()),
+                                                        ops=[
+                                                            NotEq()],
+                                                        comparators=[
+                                                            Constant(value='_csrf_token')])],
+                                                is_async=0)]),
+                                    Name(id='query_params', ctx=Load())],
+                                keywords=[]))],
+                    orelse=[]),
+                For(
+                    target=Tuple(
+                        elts=[
+                            Name(id='key', ctx=Store()),
+                            Name(id='value', ctx=Store())],
+                        ctx=Store()),
+                    iter=Name(id='query_params', ctx=Load()),
+                    body=[
+                        If(
+                            test=Compare(
+                                left=Name(id='value', ctx=Load()),
+                                ops=[
+                                    Is()],
+                                comparators=[
+                                    Constant(value=None)]),
+                            body=[
+                                Continue()],
+                            orelse=[]),
+                        If(
+                            test=Call(
+                                func=Name(id='isinstance', ctx=Load()),
+                                args=[
+                                    Name(id='value', ctx=Load()),
+                                    Tuple(
+                                        elts=[
+                                            Name(id='list', ctx=Load()),
+                                            Name(id='tuple', ctx=Load())],
+                                        ctx=Load())],
+                                keywords=[]),
+                            body=[
+                                Assign(
+                                    targets=[
+                                        Name(id='pairs', ctx=Store())],
+                                    value=ListComp(
+                                        elt=Tuple(
+                                            elts=[
+                                                Name(id='key', ctx=Load()),
+                                                Name(id='v', ctx=Load())],
+                                            ctx=Load()),
+                                        generators=[
+                                            comprehension(
+                                                target=Name(id='v', ctx=Store()),
+                                                iter=Name(id='value', ctx=Load()),
+                                                ifs=[],
+                                                is_async=0)]))],
+                            orelse=[
+                                Assign(
+                                    targets=[
+                                        Name(id='pairs', ctx=Store())],
+                                    value=List(
+                                        elts=[
+                                            Tuple(
+                                                elts=[
+                                                    Name(id='key', ctx=Load()),
+                                                    Name(id='value', ctx=Load())],
+                                                ctx=Load())],
+                                        ctx=Load()))]),
+                        For(
+                            target=Tuple(
+                                elts=[
+                                    Name(id='key', ctx=Store()),
+                                    Name(id='value', ctx=Store())],
+                                ctx=Store()),
+                            iter=Name(id='pairs', ctx=Load()),
+                            body=[
+                                If(
+                                    test=Compare(
+                                        left=Name(id='value', ctx=Load()),
+                                        ops=[
+                                            Is()],
+                                        comparators=[
+                                            Constant(value=None)]),
+                                    body=[
+                                        Continue()],
+                                    orelse=[]),
+                                If(
+                                    test=Call(
+                                        func=Name(id='isinstance', ctx=Load()),
+                                        args=[
+                                            Name(id='value', ctx=Load()),
+                                            Name(id='str', ctx=Load())],
+                                        keywords=[]),
+                                    body=[
+                                        Assign(
+                                            targets=[
+                                                Name(id='value', ctx=Store())],
+                                            value=Call(
+                                                func=Attribute(
+                                                    value=Name(id='value', ctx=Load()),
+                                                    attr='encode',
+                                                    ctx=Load()),
+                                                args=[
+                                                    Constant(value='utf8')],
+                                                keywords=[]))],
+                                    orelse=[]),
+                                Expr(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='args', ctx=Load()),
+                                            attr='append',
+                                            ctx=Load()),
+                                        args=[
+                                            Tuple(
+                                                elts=[
+                                                    Name(id='key', ctx=Load()),
+                                                    Call(
+                                                        func=Name(id='str', ctx=Load()),
+                                                        args=[
+                                                            Name(id='value', ctx=Load())],
+                                                        keywords=[])],
+                                                ctx=Load())],
+                                        keywords=[]))],
+                            orelse=[])],
+                    orelse=[]),
+                Assign(
+                    targets=[
+                        Name(id='query_string', ctx=Store())],
+                    value=Call(
+                        func=Name(id='urlencode', ctx=Load()),
+                        args=[
+                            Name(id='args', ctx=Load()),
+                            Constant(value=True)],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='tgpath', ctx=Store())],
+                    value=Call(
+                        func=Name(id='urlunparse', ctx=Load()),
+                        args=[
+                            Tuple(
+                                elts=[
+                                    Name(id='scheme', ctx=Load()),
+                                    Name(id='netloc', ctx=Load()),
+                                    Name(id='path', ctx=Load()),
+                                    Name(id='params', ctx=Load()),
+                                    Name(id='query_string', ctx=Load()),
+                                    Name(id='fragment', ctx=Load())],
+                                ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=Name(id='tgpath', ctx=Load()))],
+            decorator_list=[]),
+        FunctionDef(
+            name='_get_server_name',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Constant(value="Return name of the server this application runs on.\n\n    Respects 'Host' and 'X-Forwarded-Host' header.\n\n    See the docstring of the 'absolute_url' function for more information.\n\n    .. note:: This comes from turbogears 1.1 branch.  It is only needed for\n        _tg_absolute_url().  If we find that turbogears.get_server_name()\n        exists, we replace this function with that one.\n    ")),
+                Assign(
+                    targets=[
+                        Name(id='get', ctx=Store())],
+                    value=Attribute(
+                        value=Name(id='config', ctx=Load()),
+                        attr='get',
+                        ctx=Load())),
+                Assign(
+                    targets=[
+                        Name(id='h', ctx=Store())],
+                    value=Attribute(
+                        value=Name(id='request', ctx=Load()),
+                        attr='headers',
+                        ctx=Load())),
+                Assign(
+                    targets=[
+                        Name(id='host', ctx=Store())],
+                    value=BoolOp(
+                        op=Or(),
+                        values=[
+                            Call(
+                                func=Name(id='get', ctx=Load()),
+                                args=[
+                                    Constant(value='tg.url_domain')],
+                                keywords=[]),
+                            Call(
+                                func=Attribute(
+                                    value=Name(id='h', ctx=Load()),
+                                    attr='get',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='X-Forwarded-Host'),
+                                    Call(
+                                        func=Attribute(
+                                            value=Name(id='h', ctx=Load()),
+                                            attr='get',
+                                            ctx=Load()),
+                                        args=[
+                                            Constant(value='Host')],
+                                        keywords=[])],
+                                keywords=[])])),
+                If(
+                    test=UnaryOp(
+                        op=Not(),
+                        operand=Name(id='host', ctx=Load())),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='host', ctx=Store())],
+                            value=BinOp(
+                                left=Constant(value='%s:%s'),
+                                op=Mod(),
+                                right=Tuple(
+                                    elts=[
+                                        Call(
+                                            func=Name(id='get', ctx=Load()),
+                                            args=[
+                                                Constant(value='server.socket_host'),
+                                                Constant(value='localhost')],
+                                            keywords=[]),
+                                        Call(
+                                            func=Name(id='get', ctx=Load()),
+                                            args=[
+                                                Constant(value='server.socket_port'),
+                                                Constant(value=8080)],
+                                            keywords=[])],
+                                    ctx=Load())))],
+                    orelse=[]),
+                Return(
+                    value=Name(id='host', ctx=Load()))],
+            decorator_list=[]),
+        FunctionDef(
+            name='tg_absolute_url',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='tgpath'),
+                    arg(arg='params')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                kwarg=arg(arg='kw'),
+                defaults=[
+                    Constant(value='/'),
+                    Constant(value=None)]),
+            body=[
+                Expr(
+                    value=Constant(value="Return absolute URL (including schema and host to this server).\n\n    Tries to account for 'Host' header and reverse proxying\n    ('X-Forwarded-Host').\n\n    The host name is determined this way:\n\n    * If the config setting 'tg.url_domain' is set and non-null, use this\n      value.\n    * Else, if the 'base_url_filter.use_x_forwarded_host' config setting is\n      True, use the value from the 'Host' or 'X-Forwarded-Host' request header.\n    * Else, if config setting 'base_url_filter.on' is True and\n      'base_url_filter.base_url' is non-null, use its value for the host AND\n      scheme part of the URL.\n    * As a last fallback, use the value of 'server.socket_host' and\n      'server.socket_port' config settings (defaults to 'localhost:8080').\n\n    The URL scheme ('http' or 'http') used is determined in the following way:\n\n    * If 'base_url_filter.base_url' is used, use the scheme from this URL.\n    * If there is a 'X-Use-SSL' request header, use 'https'.\n    * Else, if the config setting 'tg.url_scheme' is set, use its value.\n    * Else, use the value of 'cherrypy.request.scheme'.\n\n    .. note:: This comes from turbogears 1.1 branch with one change: we\n        call tg_url() rather than turbogears.url() so that it never adds the\n        csrf_token\n\n    .. versionadded:: 0.3.19\n       Modified from turbogears.absolute_url() for :ref:`CSRF-Protection`\n    ")),
+                Assign(
+                    targets=[
+                        Name(id='get', ctx=Store())],
+                    value=Attribute(
+                        value=Name(id='config', ctx=Load()),
+                        attr='get',
+                        ctx=Load())),
+                Assign(
+                    targets=[
+                        Name(id='use_xfh', ctx=Store())],
+                    value=Call(
+                        func=Name(id='get', ctx=Load()),
+                        args=[
+                            Constant(value='base_url_filter.use_x_forwarded_host'),
+                            Constant(value=False)],
+                        keywords=[])),
+                If(
+                    test=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='request', ctx=Load()),
+                                attr='headers',
+                                ctx=Load()),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='X-Use-SSL')],
+                        keywords=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='scheme', ctx=Store())],
+                            value=Constant(value='https'))],
+                    orelse=[
+                        Assign(
+                            targets=[
+                                Name(id='scheme', ctx=Store())],
+                            value=Call(
+                                func=Name(id='get', ctx=Load()),
+                                args=[
+                                    Constant(value='tg.url_scheme')],
+                                keywords=[]))]),
+                If(
+                    test=UnaryOp(
+                        op=Not(),
+                        operand=Name(id='scheme', ctx=Load())),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='scheme', ctx=Store())],
+                            value=Attribute(
+                                value=Name(id='request', ctx=Load()),
+                                attr='scheme',
+                                ctx=Load()))],
+                    orelse=[]),
+                Assign(
+                    targets=[
+                        Name(id='base_url', ctx=Store())],
+                    value=BinOp(
+                        left=Constant(value='%s://%s'),
+                        op=Mod(),
+                        right=Tuple(
+                            elts=[
+                                Name(id='scheme', ctx=Load()),
+                                Call(
+                                    func=Name(id='_get_server_name', ctx=Load()),
+                                    args=[],
+                                    keywords=[])],
+                            ctx=Load()))),
+                If(
+                    test=BoolOp(
+                        op=And(),
+                        values=[
+                            Call(
+                                func=Name(id='get', ctx=Load()),
+                                args=[
+                                    Constant(value='base_url_filter.on'),
+                                    Constant(value=False)],
+                                keywords=[]),
+                            UnaryOp(
+                                op=Not(),
+                                operand=Name(id='use_xfh', ctx=Load()))]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='base_url', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Call(
+                                        func=Name(id='get', ctx=Load()),
+                                        args=[
+                                            Constant(value='base_url_filter.base_url')],
+                                        keywords=[]),
+                                    attr='rstrip',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='/')],
+                                keywords=[]))],
+                    orelse=[]),
+                Return(
+                    value=BinOp(
+                        left=Constant(value='%s%s'),
+                        op=Mod(),
+                        right=Tuple(
+                            elts=[
+                                Name(id='base_url', ctx=Load()),
+                                Call(
+                                    func=Name(id='tg_url', ctx=Load()),
+                                    args=[
+                                        Name(id='tgpath', ctx=Load()),
+                                        Name(id='params', ctx=Load())],
+                                    keywords=[
+                                        keyword(
+                                            value=Name(id='kw', ctx=Load()))])],
+                            ctx=Load())))],
+            decorator_list=[]),
+        FunctionDef(
+            name='absolute_url',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='tgpath'),
+                    arg(arg='params')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                kwarg=arg(arg='kw'),
+                defaults=[
+                    Constant(value='/'),
+                    Constant(value=None)]),
+            body=[
+                Expr(
+                    value=Constant(value="Return absolute URL (including schema and host to this server).\n\n    Tries to account for 'Host' header and reverse proxying\n    ('X-Forwarded-Host').\n\n    The host name is determined this way:\n\n    * If the config setting 'tg.url_domain' is set and non-null, use this\n      value.\n    * Else, if the 'base_url_filter.use_x_forwarded_host' config setting is\n      True, use the value from the 'Host' or 'X-Forwarded-Host' request header.\n    * Else, if config setting 'base_url_filter.on' is True and\n      'base_url_filter.base_url' is non-null, use its value for the host AND\n      scheme part of the URL.\n    * As a last fallback, use the value of 'server.socket_host' and\n      'server.socket_port' config settings (defaults to 'localhost:8080').\n\n    The URL scheme ('http' or 'http') used is determined in the following way:\n\n    * If 'base_url_filter.base_url' is used, use the scheme from this URL.\n    * If there is a 'X-Use-SSL' request header, use 'https'.\n    * Else, if the config setting 'tg.url_scheme' is set, use its value.\n    * Else, use the value of 'cherrypy.request.scheme'.\n\n    .. versionadded:: 0.3.19\n       Modified from turbogears.absolute_url() for :ref:`CSRF-Protection`\n    ")),
+                Return(
+                    value=Call(
+                        func=Name(id='url', ctx=Load()),
+                        args=[
+                            Call(
+                                func=Name(id='tg_absolute_url', ctx=Load()),
+                                args=[
+                                    Name(id='tgpath', ctx=Load()),
+                                    Name(id='params', ctx=Load())],
+                                keywords=[
+                                    keyword(
+                                        value=Name(id='kw', ctx=Load()))])],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='enable_csrf',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Constant(value='A startup function to setup :ref:`CSRF-Protection`.\n\n    This should be run at application startup.  Code like the following in the\n    start-APP script or the method in :file:`commands.py` that starts it::\n\n        from turbogears import startup\n        from fedora.tg.util import enable_csrf\n        startup.call_on_startup.append(enable_csrf)\n\n    If we can get the :ref:`CSRF-Protection` into upstream :term:`TurboGears`,\n    we might be able to remove this in the future.\n\n    .. versionadded:: 0.3.10\n       Added to enable :ref:`CSRF-Protection`\n    ')),
+                Assign(
+                    targets=[
+                        Attribute(
+                            value=Name(id='turbogears', ctx=Load()),
+                            attr='url',
+                            ctx=Store())],
+                    value=Name(id='url', ctx=Load())),
+                Assign(
+                    targets=[
+                        Attribute(
+                            value=Attribute(
+                                value=Name(id='turbogears', ctx=Load()),
+                                attr='controllers',
+                                ctx=Load()),
+                            attr='url',
+                            ctx=Store())],
+                    value=Name(id='url', ctx=Load())),
+                Assign(
+                    targets=[
+                        Name(id='ignore', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='config', ctx=Load()),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='tg.ignore_parameters'),
+                            List(elts=[], ctx=Load())],
+                        keywords=[])),
+                If(
+                    test=Compare(
+                        left=Constant(value='_csrf_token'),
+                        ops=[
+                            NotIn()],
+                        comparators=[
+                            Name(id='ignore', ctx=Load())]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='ignore', ctx=Load()),
+                                    attr='append',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='_csrf_token')],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='config', ctx=Load()),
+                                    attr='update',
+                                    ctx=Load()),
+                                args=[
+                                    Dict(
+                                        keys=[
+                                            Constant(value='tg.ignore_parameters')],
+                                        values=[
+                                            Name(id='ignore', ctx=Load())])],
+                                keywords=[]))],
+                    orelse=[]),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Attribute(
+                                    value=Name(id='turbogears', ctx=Load()),
+                                    attr='view',
+                                    ctx=Load()),
+                                attr='variable_providers',
+                                ctx=Load()),
+                            attr='append',
+                            ctx=Load()),
+                        args=[
+                            Name(id='add_custom_stdvars', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='request_format',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Constant(value="Return the output format that was requested by the user.\n\n    The user is able to specify a specific output format using either the\n    ``Accept:`` HTTP header or the ``tg_format`` query parameter.  This\n    function checks both of those to determine what format the reply should\n    be in.\n\n    :rtype: string\n    :returns: The requested format.  If none was specified, 'default' is\n        returned\n\n    .. versionchanged:: 0.3.17\n        Return symbolic names for json, html, xhtml, and xml instead of\n        letting raw mime types through\n    ")),
+                Assign(
+                    targets=[
+                        Name(id='output_format', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Attribute(
+                                            value=Name(id='cherrypy', ctx=Load()),
+                                            attr='request',
+                                            ctx=Load()),
+                                        attr='params',
+                                        ctx=Load()),
+                                    attr='get',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='tg_format'),
+                                    Constant(value='')],
+                                keywords=[]),
+                            attr='lower',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                If(
+                    test=UnaryOp(
+                        op=Not(),
+                        operand=Name(id='output_format', ctx=Load())),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='accept', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='tg_util', ctx=Load()),
+                                    attr='simplify_http_accept_header',
+                                    ctx=Load()),
+                                args=[
+                                    Call(
+                                        func=Attribute(
+                                            value=Call(
+                                                func=Attribute(
+                                                    value=Attribute(
+                                                        value=Name(id='request', ctx=Load()),
+                                                        attr='headers',
+                                                        ctx=Load()),
+                                                    attr='get',
+                                                    ctx=Load()),
+                                                args=[
+                                                    Constant(value='Accept'),
+                                                    Constant(value='default')],
+                                                keywords=[]),
+                                            attr='lower',
+                                            ctx=Load()),
+                                        args=[],
+                                        keywords=[])],
+                                keywords=[])),
+                        If(
+                            test=Compare(
+                                left=Name(id='accept', ctx=Load()),
+                                ops=[
+                                    In()],
+                                comparators=[
+                                    Tuple(
+                                        elts=[
+                                            Constant(value='text/javascript'),
+                                            Constant(value='application/json')],
+                                        ctx=Load())]),
+                            body=[
+                                Assign(
+                                    targets=[
+                                        Name(id='output_format', ctx=Store())],
+                                    value=Constant(value='json'))],
+                            orelse=[
+                                If(
+                                    test=Compare(
+                                        left=Name(id='accept', ctx=Load()),
+                                        ops=[
+                                            Eq()],
+                                        comparators=[
+                                            Constant(value='text/html')]),
+                                    body=[
+                                        Assign(
+                                            targets=[
+                                                Name(id='output_format', ctx=Store())],
+                                            value=Constant(value='html'))],
+                                    orelse=[
+                                        If(
+                                            test=Compare(
+                                                left=Name(id='accept', ctx=Load()),
+                                                ops=[
+                                                    Eq()],
+                                                comparators=[
+                                                    Constant(value='text/plain')]),
+                                            body=[
+                                                Assign(
+                                                    targets=[
+                                                        Name(id='output_format', ctx=Store())],
+                                                    value=Constant(value='plain'))],
+                                            orelse=[
+                                                If(
+                                                    test=Compare(
+                                                        left=Name(id='accept', ctx=Load()),
+                                                        ops=[
+                                                            Eq()],
+                                                        comparators=[
+                                                            Constant(value='text/xhtml')]),
+                                                    body=[
+                                                        Assign(
+                                                            targets=[
+                                                                Name(id='output_format', ctx=Store())],
+                                                            value=Constant(value='xhtml'))],
+                                                    orelse=[
+                                                        If(
+                                                            test=Compare(
+                                                                left=Name(id='accept', ctx=Load()),
+                                                                ops=[
+                                                                    Eq()],
+                                                                comparators=[
+                                                                    Constant(value='text/xml')]),
+                                                            body=[
+                                                                Assign(
+                                                                    targets=[
+                                                                        Name(id='output_format', ctx=Store())],
+                                                                    value=Constant(value='xml'))],
+                                                            orelse=[
+                                                                Assign(
+                                                                    targets=[
+                                                                        Name(id='output_format', ctx=Store())],
+                                                                    value=Name(id='accept', ctx=Load()))])])])])])],
+                    orelse=[]),
+                Return(
+                    value=Name(id='output_format', ctx=Load()))],
+            decorator_list=[]),
+        FunctionDef(
+            name='jsonify_validation_errors',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Constant(value="Return an error for :term:`JSON` if validation failed.\n\n    This function checks for two things:\n\n    1) We're expected to return :term:`JSON` data.\n    2) There were errors in the validation process.\n\n    If both of those are true, this function constructs a response that\n    will return the validation error messages as :term:`JSON` data.\n\n    All controller methods that are error_handlers need to use this::\n\n        @expose(template='templates.numberform')\n        def enter_number(self, number):\n            errors = fedora.tg.util.jsonify_validation_errors()\n            if errors:\n                return errors\n            [...]\n\n        @expose(allow_json=True)\n        @error_handler(enter_number)\n        @validate(form=number_form)\n        def save(self, number):\n            return dict(success=True)\n\n    :rtype: None or dict\n    :Returns: None if there are no validation errors or :term:`JSON` isn't\n        requested, otherwise a dictionary with the error that's suitable for\n        return from the controller.  The error message is set in tg_flash\n        whether :term:`JSON` was requested or not.\n    ")),
+                Assign(
+                    targets=[
+                        Name(id='errors', ctx=Store())],
+                    value=Call(
+                        func=Name(id='getattr', ctx=Load()),
+                        args=[
+                            Attribute(
+                                value=Name(id='cherrypy', ctx=Load()),
+                                attr='request',
+                                ctx=Load()),
+                            Constant(value='validation_errors'),
+                            Constant(value=None)],
+                        keywords=[])),
+                If(
+                    test=UnaryOp(
+                        op=Not(),
+                        operand=Name(id='errors', ctx=Load())),
+                    body=[
+                        Return(
+                            value=Constant(value=None))],
+                    orelse=[]),
+                Assign(
+                    targets=[
+                        Name(id='message', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Constant(value='\n', kind='u'),
+                            attr='join',
+                            ctx=Load()),
+                        args=[
+                            ListComp(
+                                elt=BinOp(
+                                    left=Constant(value='%s: %s', kind='u'),
+                                    op=Mod(),
+                                    right=Tuple(
+                                        elts=[
+                                            Name(id='param', ctx=Load()),
+                                            Name(id='msg', ctx=Load())],
+                                        ctx=Load())),
+                                generators=[
+                                    comprehension(
+                                        target=Tuple(
+                                            elts=[
+                                                Name(id='param', ctx=Store()),
+                                                Name(id='msg', ctx=Store())],
+                                            ctx=Store()),
+                                        iter=Call(
+                                            func=Attribute(
+                                                value=Name(id='errors', ctx=Load()),
+                                                attr='items',
+                                                ctx=Load()),
+                                            args=[],
+                                            keywords=[]),
+                                        ifs=[],
+                                        is_async=0)])],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='format', ctx=Store())],
+                    value=Call(
+                        func=Name(id='request_format', ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                If(
+                    test=Compare(
+                        left=Name(id='format', ctx=Load()),
+                        ops=[
+                            In()],
+                        comparators=[
+                            Tuple(
+                                elts=[
+                                    Constant(value='html'),
+                                    Constant(value='xhtml')],
+                                ctx=Load())]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='message', ctx=Load()),
+                                    attr='translate',
+                                    ctx=Load()),
+                                args=[
+                                    Dict(
+                                        keys=[
+                                            Call(
+                                                func=Name(id='ord', ctx=Load()),
+                                                args=[
+                                                    Constant(value='\n')],
+                                                keywords=[])],
+                                        values=[
+                                            Constant(value='<br />\n', kind='u')])],
+                                keywords=[]))],
+                    orelse=[]),
+                Expr(
+                    value=Call(
+                        func=Name(id='flash', ctx=Load()),
+                        args=[
+                            Name(id='message', ctx=Load())],
+                        keywords=[])),
+                If(
+                    test=Compare(
+                        left=Name(id='format', ctx=Load()),
+                        ops=[
+                            Eq()],
+                        comparators=[
+                            Constant(value='json')]),
+                    body=[
+                        Return(
+                            value=Call(
+                                func=Name(id='dict', ctx=Load()),
+                                args=[],
+                                keywords=[
+                                    keyword(
+                                        arg='exc',
+                                        value=Constant(value='Invalid')),
+                                    keyword(
+                                        arg='tg_template',
+                                        value=Constant(value='json'))]))],
+                    orelse=[]),
+                Return(
+                    value=Constant(value=None))],
+            decorator_list=[]),
+        FunctionDef(
+            name='json_or_redirect',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='forward_url')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Constant(value="If :term:`JSON` is requested, return a dict, otherwise redirect.\n\n    This is a decorator to use with a method that returns :term:`JSON` by\n    default.  If :term:`JSON` is requested, then it will return the dict from\n    the method.  If :term:`JSON` is not requested, it will redirect to the\n    given URL.  The method that is decorated should be constructed so that it\n    calls turbogears.flash() with a message that will be displayed on the\n    forward_url page.\n\n    Use it like this::\n\n        import turbogears\n\n        @json_or_redirect('http://localhost/calc/')\n        @expose(allow_json=True)\n        def divide(self, dividend, divisor):\n            try:\n                answer = dividend * 1.0 / divisor\n            except ZeroDivisionError:\n                turbogears.flash('Division by zero not allowed')\n                return dict(exc='ZeroDivisionError')\n            turbogears.flash('The quotient is %s' % answer)\n            return dict(quotient=answer)\n\n    In the example, we return either an exception or an answer, using\n    :func:`turbogears.flash` to tell people of the result in either case.  If\n    :term:`JSON` data is requested, the user will get back a :term:`JSON`\n    string with the proper information.  If html is requested, we will be\n    redirected to 'http://localhost/calc/' where the flashed message will be\n    displayed.\n\n    :arg forward_url: If :term:`JSON` was not requested, redirect to this URL\n        after.\n\n    .. versionadded:: 0.3.7\n       To make writing methods that use validation easier\n    ")),
+                FunctionDef(
+                    name='call',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='func')],
+                        vararg=arg(arg='args'),
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        kwarg=arg(arg='kwargs'),
+                        defaults=[]),
+                    body=[
+                        If(
+                            test=Compare(
+                                left=Call(
+                                    func=Name(id='request_format', ctx=Load()),
+                                    args=[],
+                                    keywords=[]),
+                                ops=[
+                                    Eq()],
+                                comparators=[
+                                    Constant(value='json')]),
+                            body=[
+                                Return(
+                                    value=Call(
+                                        func=Name(id='func', ctx=Load()),
+                                        args=[
+                                            Starred(
+                                                value=Name(id='args', ctx=Load()),
+                                                ctx=Load())],
+                                        keywords=[
+                                            keyword(
+                                                value=Name(id='kwargs', ctx=Load()))]))],
+                            orelse=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='func', ctx=Load()),
+                                        args=[
+                                            Starred(
+                                                value=Name(id='args', ctx=Load()),
+                                                ctx=Load())],
+                                        keywords=[
+                                            keyword(
+                                                value=Name(id='kwargs', ctx=Load()))])),
+                                Raise(
+                                    exc=Call(
+                                        func=Name(id='redirect', ctx=Load()),
+                                        args=[
+                                            Name(id='forward_url', ctx=Load())],
+                                        keywords=[]))])],
+                    decorator_list=[]),
+                Return(
+                    value=Call(
+                        func=Name(id='decorator', ctx=Load()),
+                        args=[
+                            Name(id='call', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        If(
+            test=Call(
+                func=Name(id='hasattr', ctx=Load()),
+                args=[
+                    Name(id='turbogears', ctx=Load()),
+                    Constant(value='get_server_name')],
+                keywords=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='_get_server_name', ctx=Store())],
+                    value=Attribute(
+                        value=Name(id='turbogears', ctx=Load()),
+                        attr='get_server_name',
+                        ctx=Load()))],
+            orelse=[]),
+        FunctionDef(
+            name='fedora_template',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='template'),
+                    arg(arg='template_type')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[
+                    Constant(value='genshi')]),
+            body=[
+                Expr(
+                    value=Constant(value="Function to return the path to a template.\n\n    :arg template: filename of the template itself.  Ex: login.html\n    :kwarg template_type: template language we need the template written in\n        Defaults to 'genshi'\n    :returns: filesystem path to the template\n    ")),
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='pkg_resources', ctx=Load()),
+                            attr='resource_filename',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='fedora'),
+                            Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='os', ctx=Load()),
+                                        attr='path',
+                                        ctx=Load()),
+                                    attr='join',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='tg'),
+                                    Constant(value='templates'),
+                                    Name(id='template_type', ctx=Load()),
+                                    Name(id='template', ctx=Load())],
+                                keywords=[])],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='__all__', ctx=Store())],
+            value=Tuple(
+                elts=[
+                    Constant(value='add_custom_stdvars'),
+                    Constant(value='absolute_url'),
+                    Constant(value='enable_csrf'),
+                    Constant(value='fedora_template'),
+                    Constant(value='jsonify_validation_errors'),
+                    Constant(value='json_or_redirect'),
+                    Constant(value='request_format'),
+                    Constant(value='tg_absolute_url'),
+                    Constant(value='tg_url'),
+                    Constant(value='url')],
+                ctx=Load()))],
+    type_ignores=[])

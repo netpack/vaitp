@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from flask_security import Security, SQLAlchemyUser Datastore, UserMixin, RoleMixin
+from flask_security import Security, SQLAlchemyUserDatastore, UserMixin, RoleMixin
 
 app = Flask(__name__)
 
@@ -18,7 +18,7 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(length=255))
 
 # Setup Flask-Security
-user_datastore = SQLAlchemyUser Datastore(db, User, Role)
+user_datastore = SQLAlchemyUserDatastore(db, User, Role)
 security = Security(app, user_datastore)
 
 @app.route('/login', methods=['GET', 'POST'])

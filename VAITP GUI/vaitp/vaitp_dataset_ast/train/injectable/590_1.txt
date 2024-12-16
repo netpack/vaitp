@@ -1,0 +1,40 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='bpy')]),
+        FunctionDef(
+            name='safe_script_link',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='This script link is safe and does not execute arbitrary Python statements.')],
+                        keywords=[]))],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Attribute(
+                            value=Attribute(
+                                value=Name(id='bpy', ctx=Load()),
+                                attr='app',
+                                ctx=Load()),
+                            attr='handlers',
+                            ctx=Load()),
+                        attr='load_post',
+                        ctx=Load()),
+                    attr='append',
+                    ctx=Load()),
+                args=[
+                    Name(id='safe_script_link', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

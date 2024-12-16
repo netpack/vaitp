@@ -1,0 +1,106 @@
+Module(
+    body=[
+        Assign(
+            targets=[
+                Name(id='USERNAME', ctx=Store())],
+            value=Constant(value='admin')),
+        Assign(
+            targets=[
+                Name(id='PASSWORD', ctx=Store())],
+            value=Constant(value='password123')),
+        FunctionDef(
+            name='authenticate',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='user'),
+                    arg(arg='pwd')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=BoolOp(
+                        op=And(),
+                        values=[
+                            Compare(
+                                left=Name(id='user', ctx=Load()),
+                                ops=[
+                                    Eq()],
+                                comparators=[
+                                    Name(id='USERNAME', ctx=Load())]),
+                            Compare(
+                                left=Name(id='pwd', ctx=Load()),
+                                ops=[
+                                    Eq()],
+                                comparators=[
+                                    Name(id='PASSWORD', ctx=Load())])]),
+                    body=[
+                        Return(
+                            value=Constant(value=True))],
+                    orelse=[]),
+                Return(
+                    value=Constant(value=False))],
+            decorator_list=[]),
+        FunctionDef(
+            name='main',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='user_input', ctx=Store())],
+                    value=Call(
+                        func=Name(id='input', ctx=Load()),
+                        args=[
+                            Constant(value='Enter your username: ')],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='pwd_input', ctx=Store())],
+                    value=Call(
+                        func=Name(id='input', ctx=Load()),
+                        args=[
+                            Constant(value='Enter your password: ')],
+                        keywords=[])),
+                If(
+                    test=Call(
+                        func=Name(id='authenticate', ctx=Load()),
+                        args=[
+                            Name(id='user_input', ctx=Load()),
+                            Name(id='pwd_input', ctx=Load())],
+                        keywords=[]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Authentication successful!')],
+                                keywords=[]))],
+                    orelse=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Authentication failed.')],
+                                keywords=[]))])],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='main', ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

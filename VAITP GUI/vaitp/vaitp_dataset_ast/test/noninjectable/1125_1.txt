@@ -1,0 +1,107 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='aiohttp')]),
+        Import(
+            names=[
+                alias(name='asyncio')]),
+        AsyncFunctionDef(
+            name='handle_request',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='request')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='data', ctx=Store())],
+                    value=Await(
+                        value=Call(
+                            func=Attribute(
+                                value=Name(id='request', ctx=Load()),
+                                attr='text',
+                                ctx=Load()),
+                            args=[],
+                            keywords=[]))),
+                If(
+                    test=Compare(
+                        left=Constant(value='malicious'),
+                        ops=[
+                            In()],
+                        comparators=[
+                            Name(id='data', ctx=Load())]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='Exception', ctx=Load()),
+                                args=[
+                                    Constant(value='Malformed input')],
+                                keywords=[]))],
+                    orelse=[]),
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='aiohttp', ctx=Load()),
+                                attr='web',
+                                ctx=Load()),
+                            attr='Response',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[
+                            keyword(
+                                arg='text',
+                                value=Constant(value='Request processed successfully'))]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='app', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='aiohttp', ctx=Load()),
+                        attr='web',
+                        ctx=Load()),
+                    attr='Application',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='app', ctx=Load()),
+                        attr='router',
+                        ctx=Load()),
+                    attr='add_post',
+                    ctx=Load()),
+                args=[
+                    Constant(value='/endpoint'),
+                    Name(id='handle_request', ctx=Load())],
+                keywords=[])),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='aiohttp', ctx=Load()),
+                                attr='web',
+                                ctx=Load()),
+                            attr='run_app',
+                            ctx=Load()),
+                        args=[
+                            Name(id='app', ctx=Load())],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

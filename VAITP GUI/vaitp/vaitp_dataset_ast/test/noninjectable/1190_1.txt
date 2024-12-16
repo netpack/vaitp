@@ -1,0 +1,31 @@
+Module(
+    body=[
+        ClassDef(
+            name='SagemakerLLM',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='complete',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='response')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='result', ctx=Store())],
+                            value=Call(
+                                func=Name(id='eval', ctx=Load()),
+                                args=[
+                                    Name(id='response', ctx=Load())],
+                                keywords=[])),
+                        Return(
+                            value=Name(id='result', ctx=Load()))],
+                    decorator_list=[])],
+            decorator_list=[])],
+    type_ignores=[])

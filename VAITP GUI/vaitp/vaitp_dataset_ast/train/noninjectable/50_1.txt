@@ -1,0 +1,43 @@
+Module(
+    body=[
+        ImportFrom(
+            module='PIL',
+            names=[
+                alias(name='Image')],
+            level=0),
+        FunctionDef(
+            name='parse_image_string',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='image_string')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='Image', ctx=Load()),
+                            attr='fromstring',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='RGB'),
+                            Tuple(
+                                elts=[
+                                    Constant(value=1),
+                                    Constant(value=1)],
+                                ctx=Load()),
+                            Name(id='image_string', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='parse_image_string', ctx=Load()),
+                args=[
+                    BinOp(
+                        left=Constant(value='A'),
+                        op=Mult(),
+                        right=Constant(value=1000000))],
+                keywords=[]))],
+    type_ignores=[])

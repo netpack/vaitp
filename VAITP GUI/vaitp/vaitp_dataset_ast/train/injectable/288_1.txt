@@ -1,0 +1,105 @@
+Module(
+    body=[
+        ClassDef(
+            name='SafeDict',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='data',
+                                    ctx=Store())],
+                            value=Dict(keys=[], values=[]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='set_item',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='key'),
+                            arg(arg='value')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Subscript(
+                                    value=Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='data',
+                                        ctx=Load()),
+                                    slice=Name(id='key', ctx=Load()),
+                                    ctx=Store())],
+                            value=Name(id='value', ctx=Load()))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='get_item',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='key')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Return(
+                            value=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='data',
+                                        ctx=Load()),
+                                    attr='get',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='key', ctx=Load()),
+                                    Constant(value=None)],
+                                keywords=[]))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='safe_dict', ctx=Store())],
+            value=Call(
+                func=Name(id='SafeDict', ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='safe_dict', ctx=Load()),
+                    attr='set_item',
+                    ctx=Load()),
+                args=[
+                    Constant(value='key1'),
+                    Constant(value='value1')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Call(
+                        func=Attribute(
+                            value=Name(id='safe_dict', ctx=Load()),
+                            attr='get_item',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='key1')],
+                        keywords=[])],
+                keywords=[]))],
+    type_ignores=[])

@@ -1,0 +1,43 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='requests')]),
+        FunctionDef(
+            name='make_request_to_domain',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='domain')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='response', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='requests', ctx=Load()),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Name(id='domain', ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=Attribute(
+                        value=Name(id='response', ctx=Load()),
+                        attr='content',
+                        ctx=Load()))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='domain', ctx=Store())],
+            value=Constant(value='http://example.com')),
+        Expr(
+            value=Call(
+                func=Name(id='make_request_to_domain', ctx=Load()),
+                args=[
+                    Name(id='domain', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

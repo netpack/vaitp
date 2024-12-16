@@ -1,0 +1,106 @@
+Module(
+    body=[
+        ImportFrom(
+            module='PIL',
+            names=[
+                alias(name='Image')],
+            level=0),
+        FunctionDef(
+            name='load_image',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='filename')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='image', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='Image', ctx=Load()),
+                            attr='open',
+                            ctx=Load()),
+                        args=[
+                            Name(id='filename', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='max_size', ctx=Store())],
+                    value=Constant(value=10000000)),
+                If(
+                    test=BoolOp(
+                        op=Or(),
+                        values=[
+                            Compare(
+                                left=Subscript(
+                                    value=Attribute(
+                                        value=Name(id='image', ctx=Load()),
+                                        attr='size',
+                                        ctx=Load()),
+                                    slice=Constant(value=0),
+                                    ctx=Load()),
+                                ops=[
+                                    Gt()],
+                                comparators=[
+                                    Name(id='max_size', ctx=Load())]),
+                            Compare(
+                                left=Subscript(
+                                    value=Attribute(
+                                        value=Name(id='image', ctx=Load()),
+                                        attr='size',
+                                        ctx=Load()),
+                                    slice=Constant(value=1),
+                                    ctx=Load()),
+                                ops=[
+                                    Gt()],
+                                comparators=[
+                                    Name(id='max_size', ctx=Load())])]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Image size exceeds maximum allowed size')],
+                                keywords=[]))],
+                    orelse=[]),
+                Return(
+                    value=Name(id='image', ctx=Load()))],
+            decorator_list=[]),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='image', ctx=Store())],
+                    value=Call(
+                        func=Name(id='load_image', ctx=Load()),
+                        args=[
+                            Constant(value='image.jpg')],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Image loaded successfully!')],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ValueError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            Constant(value='Error loading image: '),
+                                            FormattedValue(
+                                                value=Name(id='e', ctx=Load()),
+                                                conversion=-1)])],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

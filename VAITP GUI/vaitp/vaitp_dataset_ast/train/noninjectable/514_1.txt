@@ -1,0 +1,152 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        FunctionDef(
+            name='execute_python_version',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='current_directory', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='os', ctx=Load()),
+                            attr='getcwd',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='version_file_path', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='path',
+                                ctx=Load()),
+                            attr='join',
+                            ctx=Load()),
+                        args=[
+                            Name(id='current_directory', ctx=Load()),
+                            Constant(value='.python-version')],
+                        keywords=[])),
+                If(
+                    test=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='path',
+                                ctx=Load()),
+                            attr='exists',
+                            ctx=Load()),
+                        args=[
+                            Name(id='version_file_path', ctx=Load())],
+                        keywords=[]),
+                    body=[
+                        With(
+                            items=[
+                                withitem(
+                                    context_expr=Call(
+                                        func=Name(id='open', ctx=Load()),
+                                        args=[
+                                            Name(id='version_file_path', ctx=Load()),
+                                            Constant(value='r')],
+                                        keywords=[]),
+                                    optional_vars=Name(id='f', ctx=Store()))],
+                            body=[
+                                Assign(
+                                    targets=[
+                                        Name(id='version', ctx=Store())],
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Call(
+                                                func=Attribute(
+                                                    value=Name(id='f', ctx=Load()),
+                                                    attr='read',
+                                                    ctx=Load()),
+                                                args=[],
+                                                keywords=[]),
+                                            attr='strip',
+                                            ctx=Load()),
+                                        args=[],
+                                        keywords=[])),
+                                Assign(
+                                    targets=[
+                                        Name(id='pyenv_root', ctx=Store())],
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Attribute(
+                                                value=Name(id='os', ctx=Load()),
+                                                attr='path',
+                                                ctx=Load()),
+                                            attr='expanduser',
+                                            ctx=Load()),
+                                        args=[
+                                            Constant(value='~/.pyenv')],
+                                        keywords=[])),
+                                Assign(
+                                    targets=[
+                                        Name(id='version_path', ctx=Store())],
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Attribute(
+                                                value=Name(id='os', ctx=Load()),
+                                                attr='path',
+                                                ctx=Load()),
+                                            attr='join',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='pyenv_root', ctx=Load()),
+                                            Constant(value='versions'),
+                                            Name(id='version', ctx=Load())],
+                                        keywords=[])),
+                                If(
+                                    test=Call(
+                                        func=Attribute(
+                                            value=Attribute(
+                                                value=Name(id='os', ctx=Load()),
+                                                attr='path',
+                                                ctx=Load()),
+                                            attr='isfile',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='version_path', ctx=Load())],
+                                        keywords=[]),
+                                    body=[
+                                        Expr(
+                                            value=Call(
+                                                func=Attribute(
+                                                    value=Name(id='os', ctx=Load()),
+                                                    attr='system',
+                                                    ctx=Load()),
+                                                args=[
+                                                    Name(id='version_path', ctx=Load())],
+                                                keywords=[]))],
+                                    orelse=[
+                                        Expr(
+                                            value=Call(
+                                                func=Name(id='print', ctx=Load()),
+                                                args=[
+                                                    JoinedStr(
+                                                        values=[
+                                                            Constant(value='Python version '),
+                                                            FormattedValue(
+                                                                value=Name(id='version', ctx=Load()),
+                                                                conversion=-1),
+                                                            Constant(value=' not found.')])],
+                                                keywords=[]))])])],
+                    orelse=[])],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='execute_python_version', ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

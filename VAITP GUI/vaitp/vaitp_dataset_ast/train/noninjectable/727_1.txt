@@ -1,0 +1,67 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='logging')]),
+        Import(
+            names=[
+                alias(name='locale')]),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='locale', ctx=Load()),
+                    attr='setlocale',
+                    ctx=Load()),
+                args=[
+                    Attribute(
+                        value=Name(id='locale', ctx=Load()),
+                        attr='LC_ALL',
+                        ctx=Load()),
+                    Constant(value='en_US.ISO-8859-1')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='logging', ctx=Load()),
+                    attr='basicConfig',
+                    ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='level',
+                        value=Attribute(
+                            value=Name(id='logging', ctx=Load()),
+                            attr='INFO',
+                            ctx=Load()))])),
+        FunctionDef(
+            name='log_unicode_data',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='action_name')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='logging', ctx=Load()),
+                            attr='info',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='Action executed: %s'),
+                            Name(id='action_name', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        While(
+            test=Constant(value=True),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='log_unicode_data', ctx=Load()),
+                        args=[
+                            Constant(value='Example Action with Unicode: ñ')],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

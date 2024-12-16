@@ -1,0 +1,11 @@
+```html
+<style>
+    body { background: red; }
+    /*<script>alert('XSS');</script>*/
+</style>
+<div>
+    <svg><text>Malicious content</text></svg>
+    <math><mi>x</mi><mo>=</mo><mn>5</mn></math>
+    <noscript><script>alert('XSS');</script></noscript>
+</div>
+```

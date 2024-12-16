@@ -1,0 +1,60 @@
+Module(
+    body=[
+        ImportFrom(
+            module='lxml',
+            names=[
+                alias(name='etree')],
+            level=0),
+        FunctionDef(
+            name='parse_xml_vulnerable',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='xml_data')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='parser', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='etree', ctx=Load()),
+                            attr='XMLParser',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='tree', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='etree', ctx=Load()),
+                            attr='fromstring',
+                            ctx=Load()),
+                        args=[
+                            Name(id='xml_data', ctx=Load()),
+                            Name(id='parser', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Attribute(
+                                value=Name(id='tree', ctx=Load()),
+                                attr='tag',
+                                ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='xml_data', ctx=Store())],
+            value=Constant(value='\n<!DOCTYPE root [\n<!ENTITY read SYSTEM "file:///etc/passwd">\n]>\n<root>&read;</root>\n')),
+        Expr(
+            value=Call(
+                func=Name(id='parse_xml_vulnerable', ctx=Load()),
+                args=[
+                    Name(id='xml_data', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

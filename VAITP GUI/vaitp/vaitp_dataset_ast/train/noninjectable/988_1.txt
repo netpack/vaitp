@@ -1,0 +1,60 @@
+Module(
+    body=[
+        ImportFrom(
+            module='ecdsa',
+            names=[
+                alias(name='SigningKey'),
+                alias(name='NIST256p')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='sk', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='SigningKey', ctx=Load()),
+                    attr='generate',
+                    ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='curve',
+                        value=Name(id='NIST256p', ctx=Load()))])),
+        Assign(
+            targets=[
+                Name(id='vk', ctx=Store())],
+            value=Attribute(
+                value=Name(id='sk', ctx=Load()),
+                attr='verifying_key',
+                ctx=Load())),
+        Assign(
+            targets=[
+                Name(id='message', ctx=Store())],
+            value=Constant(value=b'Secure message')),
+        Assign(
+            targets=[
+                Name(id='signature', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='sk', ctx=Load()),
+                    attr='sign',
+                    ctx=Load()),
+                args=[
+                    Name(id='message', ctx=Load())],
+                keywords=[])),
+        Assert(
+            test=Call(
+                func=Attribute(
+                    value=Name(id='vk', ctx=Load()),
+                    attr='verify',
+                    ctx=Load()),
+                args=[
+                    Name(id='signature', ctx=Load()),
+                    Name(id='message', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Constant(value='Signature verified.')],
+                keywords=[]))],
+    type_ignores=[])

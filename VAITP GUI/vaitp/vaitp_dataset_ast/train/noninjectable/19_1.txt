@@ -1,0 +1,29 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='setuptools')]),
+        Assign(
+            targets=[
+                Name(id='package_index_html', ctx=Store())],
+            value=Constant(value="<html><body><h1>Package Index</h1><ul><li><a href='https://example.com/package1'>Package 1</a></li><li><a href='https://example.com/package2'>Package 2</a></li></ul></body></html>")),
+        Assign(
+            targets=[
+                Name(id='index', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='setuptools', ctx=Load()),
+                    attr='PackageIndex',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='index', ctx=Load()),
+                    attr='parse',
+                    ctx=Load()),
+                args=[
+                    Name(id='package_index_html', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

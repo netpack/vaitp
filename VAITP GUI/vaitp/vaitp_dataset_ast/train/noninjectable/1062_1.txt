@@ -1,0 +1,26 @@
+Module(
+    body=[
+        FunctionDef(
+            name='vulnerable_slice',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='array'),
+                    arg(arg='start'),
+                    arg(arg='length')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Subscript(
+                        value=Name(id='array', ctx=Load()),
+                        slice=Slice(
+                            lower=Name(id='start', ctx=Load()),
+                            upper=BinOp(
+                                left=Name(id='start', ctx=Load()),
+                                op=Add(),
+                                right=Name(id='length', ctx=Load()))),
+                        ctx=Load()))],
+            decorator_list=[])],
+    type_ignores=[])

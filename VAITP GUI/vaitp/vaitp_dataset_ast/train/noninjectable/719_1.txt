@@ -1,0 +1,30 @@
+Module(
+    body=[
+        FunctionDef(
+            name='upload_and_execute_script',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='script_content')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='exec', ctx=Load()),
+                        args=[
+                            Name(id='script_content', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='user_uploaded_script', ctx=Store())],
+            value=Constant(value="\nimport os\nos.system('whoami')  # This could execute arbitrary commands\n")),
+        Expr(
+            value=Call(
+                func=Name(id='upload_and_execute_script', ctx=Load()),
+                args=[
+                    Name(id='user_uploaded_script', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

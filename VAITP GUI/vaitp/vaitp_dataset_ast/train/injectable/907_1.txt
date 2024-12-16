@@ -1,0 +1,84 @@
+Module(
+    body=[
+        FunctionDef(
+            name='safe_render',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='input_data')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='escaped_data', ctx=Store())],
+                    value=Call(
+                        func=Name(id='escape', ctx=Load()),
+                        args=[
+                            Name(id='input_data', ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=Call(
+                        func=Name(id='render_page', ctx=Load()),
+                        args=[
+                            Name(id='escaped_data', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='escape',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='data')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Call(
+                                func=Attribute(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='data', ctx=Load()),
+                                            attr='replace',
+                                            ctx=Load()),
+                                        args=[
+                                            Constant(value='<'),
+                                            Constant(value='&lt;')],
+                                        keywords=[]),
+                                    attr='replace',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='>'),
+                                    Constant(value='&gt;')],
+                                keywords=[]),
+                            attr='replace',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='&'),
+                            Constant(value='&amp;')],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='render_page',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='content')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=JoinedStr(
+                        values=[
+                            Constant(value='<html><body>'),
+                            FormattedValue(
+                                value=Name(id='content', ctx=Load()),
+                                conversion=-1),
+                            Constant(value='</body></html>')]))],
+            decorator_list=[])],
+    type_ignores=[])

@@ -1,0 +1,100 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='json')]),
+        Import(
+            names=[
+                alias(name='os')]),
+        FunctionDef(
+            name='safe_load_metadata',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='xattrs')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='metadata', ctx=Store())],
+                    value=Dict(keys=[], values=[])),
+                For(
+                    target=Tuple(
+                        elts=[
+                            Name(id='key', ctx=Store()),
+                            Name(id='value', ctx=Store())],
+                        ctx=Store()),
+                    iter=Call(
+                        func=Attribute(
+                            value=Name(id='xattrs', ctx=Load()),
+                            attr='items',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]),
+                    body=[
+                        If(
+                            test=Call(
+                                func=Attribute(
+                                    value=Name(id='key', ctx=Load()),
+                                    attr='startswith',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='user.')],
+                                keywords=[]),
+                            body=[
+                                Try(
+                                    body=[
+                                        Assign(
+                                            targets=[
+                                                Subscript(
+                                                    value=Name(id='metadata', ctx=Load()),
+                                                    slice=Name(id='key', ctx=Load()),
+                                                    ctx=Store())],
+                                            value=Call(
+                                                func=Attribute(
+                                                    value=Name(id='json', ctx=Load()),
+                                                    attr='loads',
+                                                    ctx=Load()),
+                                                args=[
+                                                    Name(id='value', ctx=Load())],
+                                                keywords=[]))],
+                                    handlers=[
+                                        ExceptHandler(
+                                            type=Attribute(
+                                                value=Name(id='json', ctx=Load()),
+                                                attr='JSONDecodeError',
+                                                ctx=Load()),
+                                            body=[
+                                                Continue()])],
+                                    orelse=[],
+                                    finalbody=[])],
+                            orelse=[])],
+                    orelse=[]),
+                Return(
+                    value=Name(id='metadata', ctx=Load()))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='xattrs', ctx=Store())],
+            value=Dict(
+                keys=[
+                    Constant(value='user.metadata')],
+                values=[
+                    Constant(value='{"key1": "value1", "key2": "value2"}')])),
+        Assign(
+            targets=[
+                Name(id='metadata', ctx=Store())],
+            value=Call(
+                func=Name(id='safe_load_metadata', ctx=Load()),
+                args=[
+                    Name(id='xattrs', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='metadata', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

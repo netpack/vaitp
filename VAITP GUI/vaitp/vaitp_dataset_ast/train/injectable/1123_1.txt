@@ -1,0 +1,108 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='builtins')]),
+        ClassDef(
+            name='SecureSandbox',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='allowed_builtins',
+                                    ctx=Store())],
+                            value=DictComp(
+                                key=Name(id='name', ctx=Load()),
+                                value=Call(
+                                    func=Name(id='getattr', ctx=Load()),
+                                    args=[
+                                        Name(id='builtins', ctx=Load()),
+                                        Name(id='name', ctx=Load())],
+                                    keywords=[]),
+                                generators=[
+                                    comprehension(
+                                        target=Name(id='name', ctx=Store()),
+                                        iter=Call(
+                                            func=Name(id='dir', ctx=Load()),
+                                            args=[
+                                                Name(id='builtins', ctx=Load())],
+                                            keywords=[]),
+                                        ifs=[
+                                            Compare(
+                                                left=Name(id='name', ctx=Load()),
+                                                ops=[
+                                                    NotIn()],
+                                                comparators=[
+                                                    List(
+                                                        elts=[
+                                                            Constant(value='__import__'),
+                                                            Constant(value='__subclasses__'),
+                                                            Constant(value='__globals__'),
+                                                            Constant(value='__getattribute__'),
+                                                            Constant(value='__bases__'),
+                                                            Constant(value='__mro__'),
+                                                            Constant(value='__base__')],
+                                                        ctx=Load())])],
+                                        is_async=0)]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='execute',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='code')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='exec', ctx=Load()),
+                                args=[
+                                    Name(id='code', ctx=Load()),
+                                    Dict(
+                                        keys=[
+                                            Constant(value='__builtins__')],
+                                        values=[
+                                            Attribute(
+                                                value=Name(id='self', ctx=Load()),
+                                                attr='allowed_builtins',
+                                                ctx=Load())])],
+                                keywords=[]))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='sandbox', ctx=Store())],
+            value=Call(
+                func=Name(id='SecureSandbox', ctx=Load()),
+                args=[],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='malicious_code', ctx=Store())],
+            value=Constant(value="__import__('os').system('echo Vulnerable!')")),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='sandbox', ctx=Load()),
+                    attr='execute',
+                    ctx=Load()),
+                args=[
+                    Name(id='malicious_code', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

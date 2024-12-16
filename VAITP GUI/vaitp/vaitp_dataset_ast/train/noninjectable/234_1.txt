@@ -1,0 +1,113 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        Import(
+            names=[
+                alias(name='pam')]),
+        FunctionDef(
+            name='pam_sm_authenticate',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='pamh'),
+                    arg(arg='flags'),
+                    arg(arg='argv')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='username', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='pamh', ctx=Load()),
+                            attr='get_user',
+                            ctx=Load()),
+                        args=[
+                            Constant(value=None)],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='user_env', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='environ',
+                                ctx=Load()),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='USER_ENV_VAR'),
+                            Constant(value='default_value')],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='pamh', ctx=Load()),
+                            attr='log',
+                            ctx=Load()),
+                        args=[
+                            BinOp(
+                                left=Constant(value='User  environment variable: '),
+                                op=Add(),
+                                right=Name(id='user_env', ctx=Load()))],
+                        keywords=[])),
+                If(
+                    test=Compare(
+                        left=Name(id='user_env', ctx=Load()),
+                        ops=[
+                            Eq()],
+                        comparators=[
+                            Constant(value='malicious_value')]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='pamh', ctx=Load()),
+                                    attr='set_authtok',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='malicious_token')],
+                                keywords=[]))],
+                    orelse=[]),
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='pamh', ctx=Load()),
+                            attr='authenticate',
+                            ctx=Load()),
+                        args=[
+                            Name(id='username', ctx=Load()),
+                            Constant(value=None)],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='pam_sm_setcred',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='pamh'),
+                    arg(arg='flags'),
+                    arg(arg='argv')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='pamh', ctx=Load()),
+                            attr='setcred',
+                            ctx=Load()),
+                        args=[
+                            Attribute(
+                                value=Name(id='pam', ctx=Load()),
+                                attr='PAM_SUCCESS',
+                                ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[])],
+    type_ignores=[])

@@ -1,0 +1,23 @@
+Module(
+    body=[
+        FunctionDef(
+            name='default',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Constant(value=1))],
+            decorator_list=[
+                Name(id='public', ctx=Load()),
+                Call(
+                    func=Name(id='nonreentrant', ctx=Load()),
+                    args=[
+                        Constant(value='lock')],
+                    keywords=[]),
+                Name(id='payable', ctx=Load())],
+            returns=Name(id='uint256', ctx=Load()))],
+    type_ignores=[])

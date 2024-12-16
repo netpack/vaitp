@@ -1,0 +1,35 @@
+Module(
+    body=[
+        FunctionDef(
+            name='save_content',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='data'),
+                    arg(arg='filename')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                With(
+                    items=[
+                        withitem(
+                            context_expr=Call(
+                                func=Name(id='open', ctx=Load()),
+                                args=[
+                                    Name(id='filename', ctx=Load()),
+                                    Constant(value='w')],
+                                keywords=[]),
+                            optional_vars=Name(id='file', ctx=Store()))],
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='file', ctx=Load()),
+                                    attr='write',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='data', ctx=Load())],
+                                keywords=[]))])],
+            decorator_list=[])],
+    type_ignores=[])

@@ -1,0 +1,40 @@
+Module(
+    body=[
+        FunctionDef(
+            name='render_button',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='user_input')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=JoinedStr(
+                        values=[
+                            Constant(value='<button onclick="'),
+                            FormattedValue(
+                                value=Name(id='user_input', ctx=Load()),
+                                conversion=-1),
+                            Constant(value='">Cancel and return to page</button>')]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='user_input', ctx=Store())],
+            value=Constant(value="returnToPage(); alert('XSS Vulnerability!');")),
+        Assign(
+            targets=[
+                Name(id='html_output', ctx=Store())],
+            value=Call(
+                func=Name(id='render_button', ctx=Load()),
+                args=[
+                    Name(id='user_input', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='html_output', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

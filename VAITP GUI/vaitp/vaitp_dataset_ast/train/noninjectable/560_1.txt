@@ -1,0 +1,39 @@
+Module(
+    body=[
+        FunctionDef(
+            name='create_object',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='context'),
+                    arg(arg='type_name'),
+                    arg(arg='id')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                kwarg=arg(arg='kwargs'),
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='obj', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Attribute(
+                                    value=Name(id='context', ctx=Load()),
+                                    attr='portal_skins',
+                                    ctx=Load()),
+                                attr='custom',
+                                ctx=Load()),
+                            attr='createObject',
+                            ctx=Load()),
+                        args=[
+                            Name(id='type_name', ctx=Load()),
+                            Name(id='id', ctx=Load())],
+                        keywords=[
+                            keyword(
+                                value=Name(id='kwargs', ctx=Load()))])),
+                Return(
+                    value=Name(id='obj', ctx=Load()))],
+            decorator_list=[])],
+    type_ignores=[])

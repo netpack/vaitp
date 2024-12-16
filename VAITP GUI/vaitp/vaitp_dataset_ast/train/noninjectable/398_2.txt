@@ -1,0 +1,24 @@
+Module(
+    body=[
+        FunctionDef(
+            name='deploy_from_blueprint',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(
+                        arg='salt',
+                        annotation=Name(id='uint256', ctx=Load()))],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='create_from_blueprint', ctx=Load()),
+                        args=[
+                            Name(id='my_blueprint', ctx=Load()),
+                            Name(id='salt', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[
+                Name(id='public', ctx=Load())])],
+    type_ignores=[])

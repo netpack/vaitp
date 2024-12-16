@@ -1,0 +1,139 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        Import(
+            names=[
+                alias(name='json')]),
+        FunctionDef(
+            name='load_repository',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='repository_path')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='roles', ctx=Store())],
+                    value=Dict(keys=[], values=[])),
+                For(
+                    target=Name(id='filename', ctx=Store()),
+                    iter=Call(
+                        func=Attribute(
+                            value=Name(id='os', ctx=Load()),
+                            attr='listdir',
+                            ctx=Load()),
+                        args=[
+                            Name(id='repository_path', ctx=Load())],
+                        keywords=[]),
+                    body=[
+                        If(
+                            test=Call(
+                                func=Attribute(
+                                    value=Name(id='filename', ctx=Load()),
+                                    attr='endswith',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='.json')],
+                                keywords=[]),
+                            body=[
+                                Assign(
+                                    targets=[
+                                        Name(id='role_name', ctx=Store())],
+                                    value=Subscript(
+                                        value=Call(
+                                            func=Attribute(
+                                                value=Attribute(
+                                                    value=Name(id='os', ctx=Load()),
+                                                    attr='path',
+                                                    ctx=Load()),
+                                                attr='splitext',
+                                                ctx=Load()),
+                                            args=[
+                                                Name(id='filename', ctx=Load())],
+                                            keywords=[]),
+                                        slice=Constant(value=0),
+                                        ctx=Load())),
+                                With(
+                                    items=[
+                                        withitem(
+                                            context_expr=Call(
+                                                func=Name(id='open', ctx=Load()),
+                                                args=[
+                                                    Call(
+                                                        func=Attribute(
+                                                            value=Attribute(
+                                                                value=Name(id='os', ctx=Load()),
+                                                                attr='path',
+                                                                ctx=Load()),
+                                                            attr='join',
+                                                            ctx=Load()),
+                                                        args=[
+                                                            Name(id='repository_path', ctx=Load()),
+                                                            Name(id='filename', ctx=Load())],
+                                                        keywords=[]),
+                                                    Constant(value='r')],
+                                                keywords=[]),
+                                            optional_vars=Name(id='f', ctx=Store()))],
+                                    body=[
+                                        Assign(
+                                            targets=[
+                                                Subscript(
+                                                    value=Name(id='roles', ctx=Load()),
+                                                    slice=Name(id='role_name', ctx=Load()),
+                                                    ctx=Store())],
+                                            value=Call(
+                                                func=Attribute(
+                                                    value=Name(id='json', ctx=Load()),
+                                                    attr='load',
+                                                    ctx=Load()),
+                                                args=[
+                                                    Name(id='f', ctx=Load())],
+                                                keywords=[]))]),
+                                With(
+                                    items=[
+                                        withitem(
+                                            context_expr=Call(
+                                                func=Name(id='open', ctx=Load()),
+                                                args=[
+                                                    JoinedStr(
+                                                        values=[
+                                                            FormattedValue(
+                                                                value=Name(id='role_name', ctx=Load()),
+                                                                conversion=-1),
+                                                            Constant(value='.json')]),
+                                                    Constant(value='w')],
+                                                keywords=[]),
+                                            optional_vars=Name(id='f', ctx=Store()))],
+                                    body=[
+                                        Expr(
+                                            value=Call(
+                                                func=Attribute(
+                                                    value=Name(id='json', ctx=Load()),
+                                                    attr='dump',
+                                                    ctx=Load()),
+                                                args=[
+                                                    Subscript(
+                                                        value=Name(id='roles', ctx=Load()),
+                                                        slice=Name(id='role_name', ctx=Load()),
+                                                        ctx=Load()),
+                                                    Name(id='f', ctx=Load())],
+                                                keywords=[]))])],
+                            orelse=[])],
+                    orelse=[]),
+                Return(
+                    value=Name(id='roles', ctx=Load()))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='repository', ctx=Store())],
+            value=Call(
+                func=Name(id='load_repository', ctx=Load()),
+                args=[
+                    Constant(value='/path/to/repository')],
+                keywords=[]))],
+    type_ignores=[])

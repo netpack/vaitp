@@ -1,0 +1,89 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='scrapy')]),
+        ClassDef(
+            name='MySpider',
+            bases=[
+                Attribute(
+                    value=Name(id='scrapy', ctx=Load()),
+                    attr='Spider',
+                    ctx=Load())],
+            keywords=[],
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='name', ctx=Store())],
+                    value=Constant(value='my_spider')),
+                Assign(
+                    targets=[
+                        Name(id='http_user', ctx=Store())],
+                    value=Constant(value='your_username')),
+                Assign(
+                    targets=[
+                        Name(id='http_pass', ctx=Store())],
+                    value=Constant(value='your_password')),
+                FunctionDef(
+                    name='start_requests',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='urls', ctx=Store())],
+                            value=List(
+                                elts=[
+                                    Constant(value='http://example.com'),
+                                    Constant(value='http://anotherdomain.com')],
+                                ctx=Load())),
+                        For(
+                            target=Name(id='url', ctx=Store()),
+                            iter=Name(id='urls', ctx=Load()),
+                            body=[
+                                Expr(
+                                    value=Yield(
+                                        value=Call(
+                                            func=Attribute(
+                                                value=Name(id='scrapy', ctx=Load()),
+                                                attr='Request',
+                                                ctx=Load()),
+                                            args=[
+                                                Name(id='url', ctx=Load())],
+                                            keywords=[])))],
+                            orelse=[])],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='parse',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='response')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='log',
+                                    ctx=Load()),
+                                args=[
+                                    BinOp(
+                                        left=Constant(value='Visited: '),
+                                        op=Add(),
+                                        right=Attribute(
+                                            value=Name(id='response', ctx=Load()),
+                                            attr='url',
+                                            ctx=Load()))],
+                                keywords=[]))],
+                    decorator_list=[])],
+            decorator_list=[])],
+    type_ignores=[])

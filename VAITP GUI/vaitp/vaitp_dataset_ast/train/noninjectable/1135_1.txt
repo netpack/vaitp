@@ -1,0 +1,69 @@
+Module(
+    body=[
+        ClassDef(
+            name='Vanna',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='ask',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='prompt'),
+                            arg(arg='visualize')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[
+                            Constant(value=True)]),
+                    body=[
+                        If(
+                            test=Name(id='visualize', ctx=Load()),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='exec', ctx=Load()),
+                                        args=[
+                                            Name(id='prompt', ctx=Load())],
+                                        keywords=[]))],
+                            orelse=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    Constant(value='Input received: '),
+                                                    FormattedValue(
+                                                        value=Name(id='prompt', ctx=Load()),
+                                                        conversion=-1)])],
+                                        keywords=[]))])],
+                    decorator_list=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='vanna', ctx=Store())],
+            value=Call(
+                func=Name(id='Vanna', ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='vanna', ctx=Load()),
+                    attr='ask',
+                    ctx=Load()),
+                args=[
+                    Constant(value="print('This is a safe output')")],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='vanna', ctx=Load()),
+                    attr='ask',
+                    ctx=Load()),
+                args=[
+                    Constant(value="import os; os.system('echo Vulnerable!')")],
+                keywords=[]))],
+    type_ignores=[])

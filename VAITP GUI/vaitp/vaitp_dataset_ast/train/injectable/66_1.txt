@@ -1,0 +1,93 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='yaml')]),
+        ImportFrom(
+            module='jw.util',
+            names=[
+                alias(name='load_config')],
+            level=0),
+        FunctionDef(
+            name='load_config_safely',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='config_data')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Constant(value='Loads configuration data from a string, safely preventing code execution.\n\n    Args:\n        config_data (str): The configuration data as a string.\n\n    Returns:\n        dict: The parsed configuration data as a dictionary.\n    ')),
+                Try(
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='config', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='yaml', ctx=Load()),
+                                    attr='safe_load',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='config_data', ctx=Load())],
+                                keywords=[])),
+                        Return(
+                            value=Name(id='config', ctx=Load()))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Attribute(
+                                value=Name(id='yaml', ctx=Load()),
+                                attr='YAMLError',
+                                ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    Constant(value='Error parsing configuration: '),
+                                                    FormattedValue(
+                                                        value=Name(id='e', ctx=Load()),
+                                                        conversion=-1)])],
+                                        keywords=[])),
+                                Return(
+                                    value=Constant(value=None))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='config_string', ctx=Store())],
+            value=Constant(value='\njwt_secret: your_secret_key\n# Other configuration options\n')),
+        Assign(
+            targets=[
+                Name(id='config', ctx=Store())],
+            value=Call(
+                func=Name(id='load_config_safely', ctx=Load()),
+                args=[
+                    Name(id='config_string', ctx=Load())],
+                keywords=[])),
+        If(
+            test=Name(id='config', ctx=Load()),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Subscript(
+                                value=Name(id='config', ctx=Load()),
+                                slice=Constant(value='jwt_secret'),
+                                ctx=Load())],
+                        keywords=[]))],
+            orelse=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Failed to load configuration')],
+                        keywords=[]))])],
+    type_ignores=[])

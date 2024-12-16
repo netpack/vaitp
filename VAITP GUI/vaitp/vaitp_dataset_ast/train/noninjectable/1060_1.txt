@@ -1,0 +1,44 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='http.cookies')]),
+        Assign(
+            targets=[
+                Name(id='cookie_string', ctx=Store())],
+            value=Constant(value='Set-Cookie: test="value with backslashes \\\\"')),
+        Assign(
+            targets=[
+                Name(id='cookie', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='http', ctx=Load()),
+                        attr='cookies',
+                        ctx=Load()),
+                    attr='SimpleCookie',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='cookie', ctx=Load()),
+                    attr='load',
+                    ctx=Load()),
+                args=[
+                    Name(id='cookie_string', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Attribute(
+                        value=Subscript(
+                            value=Name(id='cookie', ctx=Load()),
+                            slice=Constant(value='test'),
+                            ctx=Load()),
+                        attr='value',
+                        ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

@@ -1,0 +1,152 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='urllib2')]),
+        ClassDef(
+            name='SafeRedirectHandler',
+            bases=[
+                Attribute(
+                    value=Name(id='urllib2', ctx=Load()),
+                    attr='HTTPRedirectHandler',
+                    ctx=Load())],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='redirect_request',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='req'),
+                            arg(arg='fp'),
+                            arg(arg='code'),
+                            arg(arg='msg'),
+                            arg(arg='headers'),
+                            arg(arg='newurl')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='newurl_lower', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='newurl', ctx=Load()),
+                                    attr='lower',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[])),
+                        If(
+                            test=UnaryOp(
+                                op=Not(),
+                                operand=BoolOp(
+                                    op=Or(),
+                                    values=[
+                                        Call(
+                                            func=Attribute(
+                                                value=Name(id='newurl_lower', ctx=Load()),
+                                                attr='startswith',
+                                                ctx=Load()),
+                                            args=[
+                                                Constant(value='http://')],
+                                            keywords=[]),
+                                        Call(
+                                            func=Attribute(
+                                                value=Name(id='newurl_lower', ctx=Load()),
+                                                attr='startswith',
+                                                ctx=Load()),
+                                            args=[
+                                                Constant(value='https://')],
+                                            keywords=[])])),
+                            body=[
+                                Raise(
+                                    exc=Call(
+                                        func=Attribute(
+                                            value=Name(id='urllib2', ctx=Load()),
+                                            attr='HTTPError',
+                                            ctx=Load()),
+                                        args=[
+                                            Call(
+                                                func=Attribute(
+                                                    value=Name(id='req', ctx=Load()),
+                                                    attr='get_full_url',
+                                                    ctx=Load()),
+                                                args=[],
+                                                keywords=[]),
+                                            Name(id='code', ctx=Load()),
+                                            BinOp(
+                                                left=Constant(value='Unsafe redirection to %s'),
+                                                op=Mod(),
+                                                right=Name(id='newurl', ctx=Load())),
+                                            Name(id='headers', ctx=Load()),
+                                            Name(id='fp', ctx=Load())],
+                                        keywords=[]))],
+                            orelse=[]),
+                        Return(
+                            value=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='urllib2', ctx=Load()),
+                                        attr='HTTPRedirectHandler',
+                                        ctx=Load()),
+                                    attr='redirect_request',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='self', ctx=Load()),
+                                    Name(id='req', ctx=Load()),
+                                    Name(id='fp', ctx=Load()),
+                                    Name(id='code', ctx=Load()),
+                                    Name(id='msg', ctx=Load()),
+                                    Name(id='headers', ctx=Load()),
+                                    Name(id='newurl', ctx=Load())],
+                                keywords=[]))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='url', ctx=Store())],
+            value=Constant(value='http://example.com/malicious')),
+        Assign(
+            targets=[
+                Name(id='opener', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='urllib2', ctx=Load()),
+                    attr='build_opener',
+                    ctx=Load()),
+                args=[
+                    Call(
+                        func=Name(id='SafeRedirectHandler', ctx=Load()),
+                        args=[],
+                        keywords=[])],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='response', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='opener', ctx=Load()),
+                    attr='open',
+                    ctx=Load()),
+                args=[
+                    Name(id='url', ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='data', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='response', ctx=Load()),
+                    attr='read',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='data', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

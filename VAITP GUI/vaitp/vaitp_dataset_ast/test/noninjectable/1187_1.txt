@@ -1,0 +1,100 @@
+Module(
+    body=[
+        ClassDef(
+            name='RDMAOperation',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='lkey')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='lkey',
+                                    ctx=Store())],
+                            value=Name(id='lkey', ctx=Load()))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='perform_atomic_operation',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='atomic_write',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='atomic_write',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        If(
+                            test=Compare(
+                                left=Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='lkey',
+                                    ctx=Load()),
+                                ops=[
+                                    NotEq()],
+                                comparators=[
+                                    Constant(value=1001)]),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            Constant(value='Performing atomic write with invalid lkey, potential kernel panic!')],
+                                        keywords=[]))],
+                            orelse=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            Constant(value='Atomic write operation successful.')],
+                                        keywords=[]))])],
+                    decorator_list=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='operation', ctx=Store())],
+            value=Call(
+                func=Name(id='RDMAOperation', ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='lkey',
+                        value=Constant(value=9999))])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='operation', ctx=Load()),
+                    attr='perform_atomic_operation',
+                    ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

@@ -1,0 +1,129 @@
+Module(
+    body=[
+        ImportFrom(
+            module='sap_xssec',
+            names=[
+                alias(name='SecurityContext')],
+            level=0),
+        ClassDef(
+            name='SecureSecurityContext',
+            bases=[
+                Name(id='SecurityContext', ctx=Load())],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='token')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Call(
+                                        func=Name(id='super', ctx=Load()),
+                                        args=[],
+                                        keywords=[]),
+                                    attr='__init__',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='token', ctx=Load())],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='validate_token',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='token', ctx=Load())],
+                                keywords=[]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='validate_token',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='token')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        If(
+                            test=UnaryOp(
+                                op=Not(),
+                                operand=Call(
+                                    func=Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='is_token_valid',
+                                        ctx=Load()),
+                                    args=[
+                                        Name(id='token', ctx=Load())],
+                                    keywords=[])),
+                            body=[
+                                Raise(
+                                    exc=Call(
+                                        func=Name(id='ValueError', ctx=Load()),
+                                        args=[
+                                            Constant(value='Invalid token: Unauthorized access')],
+                                        keywords=[]))],
+                            orelse=[])],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='is_token_valid',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='token')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='valid_tokens', ctx=Store())],
+                            value=List(
+                                elts=[
+                                    Constant(value='valid_token_1'),
+                                    Constant(value='valid_token_2')],
+                                ctx=Load())),
+                        Return(
+                            value=Compare(
+                                left=Name(id='token', ctx=Load()),
+                                ops=[
+                                    In()],
+                                comparators=[
+                                    Name(id='valid_tokens', ctx=Load())]))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='secure_context', ctx=Store())],
+                    value=Call(
+                        func=Name(id='SecureSecurityContext', ctx=Load()),
+                        args=[
+                            Constant(value='user_provided_token')],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ValueError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

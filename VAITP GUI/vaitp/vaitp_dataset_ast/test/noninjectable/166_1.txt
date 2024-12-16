@@ -1,0 +1,95 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='ssl')]),
+        FunctionDef(
+            name='vulnerable_hostname_check',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='cert'),
+                    arg(arg='hostname')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Compare(
+                        left=Constant(value='wildcard'),
+                        ops=[
+                            In()],
+                        comparators=[
+                            Subscript(
+                                value=Subscript(
+                                    value=Subscript(
+                                        value=Subscript(
+                                            value=Name(id='cert', ctx=Load()),
+                                            slice=Constant(value='subject'),
+                                            ctx=Load()),
+                                        slice=Constant(value=0),
+                                        ctx=Load()),
+                                    slice=Constant(value=0),
+                                    ctx=Load()),
+                                slice=Constant(value=0),
+                                ctx=Load())]),
+                    body=[
+                        Return(
+                            value=Constant(value=True))],
+                    orelse=[]),
+                Return(
+                    value=Constant(value=False))],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='hostname', ctx=Store())],
+                    value=Constant(value='sub.example.com')),
+                Assign(
+                    targets=[
+                        Name(id='cert', ctx=Store())],
+                    value=Dict(
+                        keys=[
+                            Constant(value='subject')],
+                        values=[
+                            Tuple(
+                                elts=[
+                                    Tuple(
+                                        elts=[
+                                            Tuple(
+                                                elts=[
+                                                    Constant(value='commonName'),
+                                                    Constant(value='*.example.com')],
+                                                ctx=Load())],
+                                        ctx=Load())],
+                                ctx=Load())])),
+                If(
+                    test=Call(
+                        func=Name(id='vulnerable_hostname_check', ctx=Load()),
+                        args=[
+                            Name(id='cert', ctx=Load()),
+                            Name(id='hostname', ctx=Load())],
+                        keywords=[]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Hostname matches the certificate (vulnerable check).')],
+                                keywords=[]))],
+                    orelse=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Hostname does not match the certificate.')],
+                                keywords=[]))])],
+            orelse=[])],
+    type_ignores=[])

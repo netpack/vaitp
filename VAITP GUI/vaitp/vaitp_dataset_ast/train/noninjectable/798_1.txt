@@ -1,0 +1,106 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='eventlet')]),
+        ImportFrom(
+            module='eventlet',
+            names=[
+                alias(name='wsgi')],
+            level=0),
+        ImportFrom(
+            module='eventlet.green',
+            names=[
+                alias(name='websocket')],
+            level=0),
+        ClassDef(
+            name='MyWebSocketHandler',
+            bases=[
+                Attribute(
+                    value=Name(id='websocket', ctx=Load()),
+                    attr='WebSocketWSGI',
+                    ctx=Load())],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='on_message',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='message')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Received message:'),
+                                    Name(id='message', ctx=Load())],
+                                keywords=[]))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        FunctionDef(
+            name='application',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='environ'),
+                    arg(arg='start_response')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Compare(
+                        left=Subscript(
+                            value=Name(id='environ', ctx=Load()),
+                            slice=Constant(value='PATH_INFO'),
+                            ctx=Load()),
+                        ops=[
+                            Eq()],
+                        comparators=[
+                            Constant(value='/ws')]),
+                    body=[
+                        Return(
+                            value=Call(
+                                func=Name(id='MyWebSocketHandler', ctx=Load()),
+                                args=[
+                                    Name(id='environ', ctx=Load()),
+                                    Name(id='start_response', ctx=Load())],
+                                keywords=[]))],
+                    orelse=[]),
+                Expr(
+                    value=Call(
+                        func=Name(id='start_response', ctx=Load()),
+                        args=[
+                            Constant(value='404 Not Found'),
+                            List(elts=[], ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=List(elts=[], ctx=Load()))],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='wsgi', ctx=Load()),
+                    attr='server',
+                    ctx=Load()),
+                args=[
+                    Call(
+                        func=Attribute(
+                            value=Name(id='eventlet', ctx=Load()),
+                            attr='listen',
+                            ctx=Load()),
+                        args=[
+                            Tuple(
+                                elts=[
+                                    Constant(value='0.0.0.0'),
+                                    Constant(value=8000)],
+                                ctx=Load())],
+                        keywords=[]),
+                    Name(id='application', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

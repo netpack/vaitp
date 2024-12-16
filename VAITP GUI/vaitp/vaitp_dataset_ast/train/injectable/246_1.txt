@@ -1,0 +1,132 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        Import(
+            names=[
+                alias(name='json')]),
+        FunctionDef(
+            name='load_config_safe',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='config_path')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=BoolOp(
+                        op=Or(),
+                        values=[
+                            UnaryOp(
+                                op=Not(),
+                                operand=Call(
+                                    func=Attribute(
+                                        value=Attribute(
+                                            value=Name(id='os', ctx=Load()),
+                                            attr='path',
+                                            ctx=Load()),
+                                        attr='isfile',
+                                        ctx=Load()),
+                                    args=[
+                                        Name(id='config_path', ctx=Load())],
+                                    keywords=[])),
+                            UnaryOp(
+                                op=Not(),
+                                operand=Call(
+                                    func=Attribute(
+                                        value=Name(id='config_path', ctx=Load()),
+                                        attr='endswith',
+                                        ctx=Load()),
+                                    args=[
+                                        Constant(value='.json')],
+                                    keywords=[]))]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Invalid configuration file.')],
+                                keywords=[]))],
+                    orelse=[]),
+                With(
+                    items=[
+                        withitem(
+                            context_expr=Call(
+                                func=Name(id='open', ctx=Load()),
+                                args=[
+                                    Name(id='config_path', ctx=Load()),
+                                    Constant(value='r')],
+                                keywords=[]),
+                            optional_vars=Name(id='config_file', ctx=Store()))],
+                    body=[
+                        Try(
+                            body=[
+                                Assign(
+                                    targets=[
+                                        Name(id='config_data', ctx=Store())],
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='json', ctx=Load()),
+                                            attr='load',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='config_file', ctx=Load())],
+                                        keywords=[])),
+                                Assign(
+                                    targets=[
+                                        Name(id='allowed_keys', ctx=Store())],
+                                    value=Set(
+                                        elts=[
+                                            Constant(value='setting1'),
+                                            Constant(value='setting2')])),
+                                Assign(
+                                    targets=[
+                                        Name(id='filtered_config', ctx=Store())],
+                                    value=DictComp(
+                                        key=Name(id='key', ctx=Load()),
+                                        value=Subscript(
+                                            value=Name(id='config_data', ctx=Load()),
+                                            slice=Name(id='key', ctx=Load()),
+                                            ctx=Load()),
+                                        generators=[
+                                            comprehension(
+                                                target=Name(id='key', ctx=Store()),
+                                                iter=Name(id='allowed_keys', ctx=Load()),
+                                                ifs=[
+                                                    Compare(
+                                                        left=Name(id='key', ctx=Load()),
+                                                        ops=[
+                                                            In()],
+                                                        comparators=[
+                                                            Name(id='config_data', ctx=Load())])],
+                                                is_async=0)])),
+                                Return(
+                                    value=Name(id='filtered_config', ctx=Load()))],
+                            handlers=[
+                                ExceptHandler(
+                                    type=Attribute(
+                                        value=Name(id='json', ctx=Load()),
+                                        attr='JSONDecodeError',
+                                        ctx=Load()),
+                                    body=[
+                                        Raise(
+                                            exc=Call(
+                                                func=Name(id='ValueError', ctx=Load()),
+                                                args=[
+                                                    Constant(value='Invalid JSON format in configuration file.')],
+                                                keywords=[]))])],
+                            orelse=[],
+                            finalbody=[])])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='config', ctx=Store())],
+            value=Call(
+                func=Name(id='load_config_safe', ctx=Load()),
+                args=[
+                    Constant(value='path/to/config.json')],
+                keywords=[]))],
+    type_ignores=[])

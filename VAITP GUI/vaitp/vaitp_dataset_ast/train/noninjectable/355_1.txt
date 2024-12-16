@@ -1,0 +1,92 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='memcache')]),
+        Assign(
+            targets=[
+                Name(id='memcache_client', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='memcache', ctx=Load()),
+                    attr='Client',
+                    ctx=Load()),
+                args=[
+                    List(
+                        elts=[
+                            Constant(value='127.0.0.1:11211')],
+                        ctx=Load())],
+                keywords=[
+                    keyword(
+                        arg='debug',
+                        value=Constant(value=0))])),
+        FunctionDef(
+            name='create_new_token',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='user_id')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=JoinedStr(
+                        values=[
+                            Constant(value='token_for_'),
+                            FormattedValue(
+                                value=Name(id='user_id', ctx=Load()),
+                                conversion=-1)]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='get_user_token',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='user_id')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='token', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='memcache_client', ctx=Load()),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Name(id='user_id', ctx=Load())],
+                        keywords=[])),
+                If(
+                    test=Compare(
+                        left=Name(id='token', ctx=Load()),
+                        ops=[
+                            Is()],
+                        comparators=[
+                            Constant(value=None)]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='token', ctx=Store())],
+                            value=Call(
+                                func=Name(id='create_new_token', ctx=Load()),
+                                args=[
+                                    Name(id='user_id', ctx=Load())],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='memcache_client', ctx=Load()),
+                                    attr='set',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='user_id', ctx=Load()),
+                                    Name(id='token', ctx=Load())],
+                                keywords=[]))],
+                    orelse=[]),
+                Return(
+                    value=Name(id='token', ctx=Load()))],
+            decorator_list=[])],
+    type_ignores=[])

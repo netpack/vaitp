@@ -1,0 +1,203 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='tensorflow', asname='tf')]),
+        FunctionDef(
+            name='safe_quantized_batch_norm_with_global_normalization',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='input_tensor'),
+                    arg(arg='scale'),
+                    arg(arg='offset'),
+                    arg(arg='mean'),
+                    arg(arg='variance'),
+                    arg(arg='epsilon')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[
+                    Constant(value=1e-05)]),
+            body=[
+                If(
+                    test=Call(
+                        func=Attribute(
+                            value=Name(id='tf', ctx=Load()),
+                            attr='reduce_any',
+                            ctx=Load()),
+                        args=[
+                            Compare(
+                                left=Name(id='variance', ctx=Load()),
+                                ops=[
+                                    LtE()],
+                                comparators=[
+                                    Constant(value=0)])],
+                        keywords=[]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Variance must be greater than zero to avoid division by zero.')],
+                                keywords=[]))],
+                    orelse=[]),
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='tf', ctx=Load()),
+                                attr='raw_ops',
+                                ctx=Load()),
+                            attr='QuantizedBatchNormWithGlobalNormalization',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[
+                            keyword(
+                                arg='input',
+                                value=Name(id='input_tensor', ctx=Load())),
+                            keyword(
+                                arg='scale',
+                                value=Name(id='scale', ctx=Load())),
+                            keyword(
+                                arg='offset',
+                                value=Name(id='offset', ctx=Load())),
+                            keyword(
+                                arg='mean',
+                                value=Name(id='mean', ctx=Load())),
+                            keyword(
+                                arg='variance',
+                                value=Name(id='variance', ctx=Load())),
+                            keyword(
+                                arg='epsilon',
+                                value=Name(id='epsilon', ctx=Load()))]))],
+            decorator_list=[]),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='input_tensor', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='tf', ctx=Load()),
+                            attr='constant',
+                            ctx=Load()),
+                        args=[
+                            List(
+                                elts=[
+                                    Constant(value=1),
+                                    Constant(value=2),
+                                    Constant(value=3)],
+                                ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='dtype',
+                                value=Attribute(
+                                    value=Name(id='tf', ctx=Load()),
+                                    attr='qint8',
+                                    ctx=Load()))])),
+                Assign(
+                    targets=[
+                        Name(id='scale', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='tf', ctx=Load()),
+                            attr='constant',
+                            ctx=Load()),
+                        args=[
+                            List(
+                                elts=[
+                                    Constant(value=1.0)],
+                                ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='dtype',
+                                value=Attribute(
+                                    value=Name(id='tf', ctx=Load()),
+                                    attr='float32',
+                                    ctx=Load()))])),
+                Assign(
+                    targets=[
+                        Name(id='offset', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='tf', ctx=Load()),
+                            attr='constant',
+                            ctx=Load()),
+                        args=[
+                            List(
+                                elts=[
+                                    Constant(value=0.0)],
+                                ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='dtype',
+                                value=Attribute(
+                                    value=Name(id='tf', ctx=Load()),
+                                    attr='float32',
+                                    ctx=Load()))])),
+                Assign(
+                    targets=[
+                        Name(id='mean', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='tf', ctx=Load()),
+                            attr='constant',
+                            ctx=Load()),
+                        args=[
+                            List(
+                                elts=[
+                                    Constant(value=1.0)],
+                                ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='dtype',
+                                value=Attribute(
+                                    value=Name(id='tf', ctx=Load()),
+                                    attr='float32',
+                                    ctx=Load()))])),
+                Assign(
+                    targets=[
+                        Name(id='variance', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='tf', ctx=Load()),
+                            attr='constant',
+                            ctx=Load()),
+                        args=[
+                            List(
+                                elts=[
+                                    Constant(value=0.0)],
+                                ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='dtype',
+                                value=Attribute(
+                                    value=Name(id='tf', ctx=Load()),
+                                    attr='float32',
+                                    ctx=Load()))])),
+                Assign(
+                    targets=[
+                        Name(id='result', ctx=Store())],
+                    value=Call(
+                        func=Name(id='safe_quantized_batch_norm_with_global_normalization', ctx=Load()),
+                        args=[
+                            Name(id='input_tensor', ctx=Load()),
+                            Name(id='scale', ctx=Load()),
+                            Name(id='offset', ctx=Load()),
+                            Name(id='mean', ctx=Load()),
+                            Name(id='variance', ctx=Load())],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ValueError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

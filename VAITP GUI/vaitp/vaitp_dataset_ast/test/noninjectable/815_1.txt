@@ -1,0 +1,82 @@
+Module(
+    body=[
+        ImportFrom(
+            module='saml2',
+            names=[
+                alias(name='saml'),
+                alias(name='sigver')],
+            level=0),
+        FunctionDef(
+            name='process_saml_response',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='saml_response')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='response', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='saml', ctx=Load()),
+                            attr='Response',
+                            ctx=Load()),
+                        args=[
+                            Name(id='saml_response', ctx=Load())],
+                        keywords=[])),
+                Try(
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='sigver', ctx=Load()),
+                                    attr='verify_signature',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='response', ctx=Load())],
+                                keywords=[]))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Attribute(
+                                value=Name(id='sigver', ctx=Load()),
+                                attr='SignatureError',
+                                ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            Constant(value='Signature verification failed:'),
+                                            Name(id='e', ctx=Load())],
+                                        keywords=[])),
+                                Return(
+                                    value=Constant(value=False))])],
+                    orelse=[],
+                    finalbody=[]),
+                Return(
+                    value=Constant(value=True))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='saml_response', ctx=Store())],
+            value=Constant(value='<Your SAML Response Here>')),
+        Assign(
+            targets=[
+                Name(id='is_valid', ctx=Store())],
+            value=Call(
+                func=Name(id='process_saml_response', ctx=Load()),
+                args=[
+                    Name(id='saml_response', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Constant(value='Is the SAML response valid?'),
+                    Name(id='is_valid', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

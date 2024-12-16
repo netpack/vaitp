@@ -1,0 +1,55 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='pymongo')]),
+        ImportFrom(
+            module='bson',
+            names=[
+                alias(name='BSON')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='malicious_data', ctx=Store())],
+            value=Constant(value=b'\x16\x00\x00\x00\x02name\x00\x05\x00\x00\x00Alice\x00\x00\xff\xff\xff')),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='document', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Call(
+                                func=Name(id='BSON', ctx=Load()),
+                                args=[
+                                    Name(id='malicious_data', ctx=Load())],
+                                keywords=[]),
+                            attr='decode',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Name(id='document', ctx=Load())],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='Exception', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            Constant(value='Error: '),
+                                            FormattedValue(
+                                                value=Name(id='e', ctx=Load()),
+                                                conversion=-1)])],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

@@ -1,0 +1,180 @@
+Module(
+    body=[
+        ImportFrom(
+            module='cryptography.hazmat.backends',
+            names=[
+                alias(name='default_backend')],
+            level=0),
+        ImportFrom(
+            module='cryptography.hazmat.primitives',
+            names=[
+                alias(name='serialization')],
+            level=0),
+        ImportFrom(
+            module='cryptography.hazmat.primitives.asymmetric',
+            names=[
+                alias(name='rsa')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='private_key', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='rsa', ctx=Load()),
+                    attr='generate_private_key',
+                    ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='public_exponent',
+                        value=Constant(value=65537)),
+                    keyword(
+                        arg='key_size',
+                        value=Constant(value=2048)),
+                    keyword(
+                        arg='backend',
+                        value=Call(
+                            func=Name(id='default_backend', ctx=Load()),
+                            args=[],
+                            keywords=[]))])),
+        Assign(
+            targets=[
+                Name(id='private_pem', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='private_key', ctx=Load()),
+                    attr='private_bytes',
+                    ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='encoding',
+                        value=Attribute(
+                            value=Attribute(
+                                value=Name(id='serialization', ctx=Load()),
+                                attr='Encoding',
+                                ctx=Load()),
+                            attr='PEM',
+                            ctx=Load())),
+                    keyword(
+                        arg='format',
+                        value=Attribute(
+                            value=Attribute(
+                                value=Name(id='serialization', ctx=Load()),
+                                attr='PrivateFormat',
+                                ctx=Load()),
+                            attr='TraditionalOpenSSL',
+                            ctx=Load()))])),
+        Assign(
+            targets=[
+                Name(id='ssh_cert', ctx=Store())],
+            value=Dict(
+                keys=[
+                    Constant(value='key'),
+                    Constant(value='critical_options')],
+                values=[
+                    Name(id='private_pem', ctx=Load()),
+                    Dict(
+                        keys=[
+                            Constant(value='force-command')],
+                        values=[
+                            Constant(value="echo 'This is a critical command'")])])),
+        FunctionDef(
+            name='validate_ssh_certificate',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='cert')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Compare(
+                        left=Constant(value='force-command'),
+                        ops=[
+                            In()],
+                        comparators=[
+                            Subscript(
+                                value=Name(id='cert', ctx=Load()),
+                                slice=Constant(value='critical_options'),
+                                ctx=Load())]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value="Critical option 'force-command' is not allowed for security reasons.")],
+                                keywords=[]))],
+                    orelse=[]),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='SSH certificate is valid.')],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='handle_ssh_certificate',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='cert')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Try(
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='validate_ssh_certificate', ctx=Load()),
+                                args=[
+                                    Name(id='cert', ctx=Load())],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Handling SSH certificate...')],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            Constant(value='Key: '),
+                                            FormattedValue(
+                                                value=Subscript(
+                                                    value=Name(id='cert', ctx=Load()),
+                                                    slice=Constant(value='key'),
+                                                    ctx=Load()),
+                                                conversion=-1)])],
+                                keywords=[]))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='ValueError', ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    Constant(value='Validation Error: '),
+                                                    FormattedValue(
+                                                        value=Name(id='e', ctx=Load()),
+                                                        conversion=-1)])],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='handle_ssh_certificate', ctx=Load()),
+                args=[
+                    Name(id='ssh_cert', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

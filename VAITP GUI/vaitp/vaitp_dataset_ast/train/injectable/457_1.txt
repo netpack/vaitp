@@ -1,0 +1,80 @@
+Module(
+    body=[
+        ImportFrom(
+            module='html5lib',
+            names=[
+                alias(name='HTMLParser')],
+            level=0),
+        FunctionDef(
+            name='serialize_html',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='user_input')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='parser', ctx=Store())],
+                    value=Call(
+                        func=Name(id='HTMLParser', ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='document', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='parser', ctx=Load()),
+                            attr='parse',
+                            ctx=Load()),
+                        args=[
+                            Name(id='user_input', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='serializer', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='serializer', ctx=Load()),
+                            attr='HTMLSerializer',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[
+                            keyword(
+                                arg='integration',
+                                value=Constant(value='html5lib')),
+                            keyword(
+                                arg='escape',
+                                value=Constant(value=True))])),
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='serializer', ctx=Load()),
+                            attr='serialize',
+                            ctx=Load()),
+                        args=[
+                            Name(id='document', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='user_input', ctx=Store())],
+            value=Constant(value='<div onclick="alert(\'XSS\')">Click me</div>')),
+        Assign(
+            targets=[
+                Name(id='result', ctx=Store())],
+            value=Call(
+                func=Name(id='serialize_html', ctx=Load()),
+                args=[
+                    Name(id='user_input', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='result', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

@@ -1,0 +1,10 @@
+```python
+# Example payload to exploit the vulnerability in Vyper
+
+start = -1  # Negative start value
+N = 5
+
+# This would trigger the revert due to the vulnerability
+for i in range(start, start + N):
+    pass  # Loop will not execute and will revert
+```

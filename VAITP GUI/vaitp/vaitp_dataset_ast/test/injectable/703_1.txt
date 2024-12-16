@@ -1,0 +1,146 @@
+Module(
+    body=[
+        ImportFrom(
+            module='twisted.web.client',
+            names=[
+                alias(name='RedirectAgent')],
+            level=0),
+        ImportFrom(
+            module='twisted.web.http',
+            names=[
+                alias(name='Headers')],
+            level=0),
+        ClassDef(
+            name='SecureRedirectAgent',
+            bases=[
+                Name(id='RedirectAgent', ctx=Load())],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='reactor'),
+                            arg(arg='contextFactory')],
+                        vararg=arg(arg='args'),
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        kwarg=arg(arg='kwargs'),
+                        defaults=[]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Call(
+                                        func=Name(id='super', ctx=Load()),
+                                        args=[],
+                                        keywords=[]),
+                                    attr='__init__',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='reactor', ctx=Load()),
+                                    Name(id='contextFactory', ctx=Load()),
+                                    Starred(
+                                        value=Name(id='args', ctx=Load()),
+                                        ctx=Load())],
+                                keywords=[
+                                    keyword(
+                                        value=Name(id='kwargs', ctx=Load()))]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='_followRedirect',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='response'),
+                            arg(arg='request'),
+                            arg(arg='uri'),
+                            arg(arg='headers')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        If(
+                            test=Call(
+                                func=Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='_isCrossOriginRedirect',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='request', ctx=Load()),
+                                    Name(id='uri', ctx=Load())],
+                                keywords=[]),
+                            body=[
+                                Assign(
+                                    targets=[
+                                        Name(id='headers', ctx=Store())],
+                                    value=Call(
+                                        func=Name(id='Headers', ctx=Load()),
+                                        args=[
+                                            Dict(
+                                                keys=[
+                                                    Constant(value=b'cookie'),
+                                                    Constant(value=b'authorization')],
+                                                values=[
+                                                    List(elts=[], ctx=Load()),
+                                                    List(elts=[], ctx=Load())])],
+                                        keywords=[]))],
+                            orelse=[]),
+                        Return(
+                            value=Call(
+                                func=Attribute(
+                                    value=Call(
+                                        func=Name(id='super', ctx=Load()),
+                                        args=[],
+                                        keywords=[]),
+                                    attr='_followRedirect',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='response', ctx=Load()),
+                                    Name(id='request', ctx=Load()),
+                                    Name(id='uri', ctx=Load()),
+                                    Name(id='headers', ctx=Load())],
+                                keywords=[]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='_isCrossOriginRedirect',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='request'),
+                            arg(arg='uri')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='request_origin', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='request', ctx=Load()),
+                                    attr='getHost',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[])),
+                        Assign(
+                            targets=[
+                                Name(id='redirect_origin', ctx=Store())],
+                            value=Attribute(
+                                value=Name(id='uri', ctx=Load()),
+                                attr='host',
+                                ctx=Load())),
+                        Return(
+                            value=Compare(
+                                left=Name(id='request_origin', ctx=Load()),
+                                ops=[
+                                    NotEq()],
+                                comparators=[
+                                    Name(id='redirect_origin', ctx=Load())]))],
+                    decorator_list=[])],
+            decorator_list=[])],
+    type_ignores=[])

@@ -1,0 +1,155 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='pickle')]),
+        ClassDef(
+            name='SafeUnpickler',
+            bases=[],
+            keywords=[],
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='ALLOWED_CLASSES', ctx=Store())],
+                    value=Tuple(
+                        elts=[
+                            Name(id='YourAllowedClass1', ctx=Load()),
+                            Name(id='YourAllowedClass2', ctx=Load())],
+                        ctx=Load())),
+                FunctionDef(
+                    name='safe_load',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='cls'),
+                            arg(arg='data')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        ClassDef(
+                            name='RestrictedUnpickler',
+                            bases=[
+                                Attribute(
+                                    value=Name(id='pickle', ctx=Load()),
+                                    attr='Unpickler',
+                                    ctx=Load())],
+                            keywords=[],
+                            body=[
+                                FunctionDef(
+                                    name='find_class',
+                                    args=arguments(
+                                        posonlyargs=[],
+                                        args=[
+                                            arg(arg='self'),
+                                            arg(arg='module'),
+                                            arg(arg='name')],
+                                        kwonlyargs=[],
+                                        kw_defaults=[],
+                                        defaults=[]),
+                                    body=[
+                                        If(
+                                            test=Compare(
+                                                left=Tuple(
+                                                    elts=[
+                                                        Name(id='module', ctx=Load()),
+                                                        Name(id='name', ctx=Load())],
+                                                    ctx=Load()),
+                                                ops=[
+                                                    NotIn()],
+                                                comparators=[
+                                                    Attribute(
+                                                        value=Name(id='cls', ctx=Load()),
+                                                        attr='ALLOWED_CLASSES',
+                                                        ctx=Load())]),
+                                            body=[
+                                                Raise(
+                                                    exc=Call(
+                                                        func=Attribute(
+                                                            value=Name(id='pickle', ctx=Load()),
+                                                            attr='UnpicklingError',
+                                                            ctx=Load()),
+                                                        args=[
+                                                            Call(
+                                                                func=Attribute(
+                                                                    value=Constant(value='Class not allowed: {}.{}'),
+                                                                    attr='format',
+                                                                    ctx=Load()),
+                                                                args=[
+                                                                    Name(id='module', ctx=Load()),
+                                                                    Name(id='name', ctx=Load())],
+                                                                keywords=[])],
+                                                        keywords=[]))],
+                                            orelse=[]),
+                                        Return(
+                                            value=Call(
+                                                func=Attribute(
+                                                    value=Call(
+                                                        func=Name(id='super', ctx=Load()),
+                                                        args=[],
+                                                        keywords=[]),
+                                                    attr='find_class',
+                                                    ctx=Load()),
+                                                args=[
+                                                    Name(id='module', ctx=Load()),
+                                                    Name(id='name', ctx=Load())],
+                                                keywords=[]))],
+                                    decorator_list=[])],
+                            decorator_list=[]),
+                        Return(
+                            value=Call(
+                                func=Attribute(
+                                    value=Call(
+                                        func=Name(id='RestrictedUnpickler', ctx=Load()),
+                                        args=[
+                                            Call(
+                                                func=Attribute(
+                                                    value=Name(id='io', ctx=Load()),
+                                                    attr='BytesIO',
+                                                    ctx=Load()),
+                                                args=[
+                                                    Name(id='data', ctx=Load())],
+                                                keywords=[])],
+                                        keywords=[]),
+                                    attr='load',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[]))],
+                    decorator_list=[
+                        Name(id='classmethod', ctx=Load())])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='data', ctx=Store())],
+            value=Constant(value=b'...')),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='obj', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='SafeUnpickler', ctx=Load()),
+                            attr='safe_load',
+                            ctx=Load()),
+                        args=[
+                            Name(id='data', ctx=Load())],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Attribute(
+                        value=Name(id='pickle', ctx=Load()),
+                        attr='UnpicklingError',
+                        ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Unpickling failed:'),
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

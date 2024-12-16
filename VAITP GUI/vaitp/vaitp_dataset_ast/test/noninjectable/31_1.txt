@@ -1,0 +1,53 @@
+Module(
+    body=[
+        ImportFrom(
+            module='PIL',
+            names=[
+                alias(name='Image')],
+            level=0),
+        FunctionDef(
+            name='convert_image',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='image_path')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='image', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='Image', ctx=Load()),
+                            attr='open',
+                            ctx=Load()),
+                        args=[
+                            Name(id='image_path', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='image', ctx=Load()),
+                            attr='convert',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='RGB')],
+                        keywords=[])),
+                Return(
+                    value=Name(id='image', ctx=Load()))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='image_path', ctx=Store())],
+            value=Constant(value='path/to/image.jpg')),
+        Assign(
+            targets=[
+                Name(id='converted_image', ctx=Store())],
+            value=Call(
+                func=Name(id='convert_image', ctx=Load()),
+                args=[
+                    Name(id='image_path', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

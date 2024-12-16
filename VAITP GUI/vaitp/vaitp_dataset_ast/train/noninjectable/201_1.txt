@@ -1,0 +1,19 @@
+Module(
+    body=[
+        Assign(
+            targets=[
+                Name(id='unicode_string', ctx=Store())],
+            value=BinOp(
+                left=Constant(value='a', kind='u'),
+                op=Mult(),
+                right=BinOp(
+                    left=Constant(value=2),
+                    op=Pow(),
+                    right=Constant(value=31)))),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='unicode_string', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

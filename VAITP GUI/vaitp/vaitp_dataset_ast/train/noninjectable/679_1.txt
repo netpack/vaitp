@@ -1,0 +1,67 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='cracklib')]),
+        FunctionDef(
+            name='password_checker',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='password')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='result', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='cracklib', ctx=Load()),
+                            attr='FascistCheck',
+                            ctx=Load()),
+                        args=[
+                            Name(id='password', ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=Name(id='result', ctx=Load()))],
+            decorator_list=[]),
+        FunctionDef(
+            name='check_user_password',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='password')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Call(
+                        func=Name(id='password_checker', ctx=Load()),
+                        args=[
+                            Name(id='password', ctx=Load())],
+                        keywords=[]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Password is strong.')],
+                                keywords=[]))],
+                    orelse=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Password is weak.')],
+                                keywords=[]))])],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='check_user_password', ctx=Load()),
+                args=[
+                    Constant(value='example_password')],
+                keywords=[]))],
+    type_ignores=[])

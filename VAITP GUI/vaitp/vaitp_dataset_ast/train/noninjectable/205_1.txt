@@ -1,0 +1,66 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='zlib')]),
+        FunctionDef(
+            name='decompress',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='data')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='d', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='zlib', ctx=Load()),
+                            attr='decompressobj',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='d', ctx=Load()),
+                            attr='decompress',
+                            ctx=Load()),
+                        args=[
+                            Name(id='data', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='malicious_input', ctx=Store())],
+            value=Constant(value=b'x\xda\xbc\x02\xff\xff\xff\xff')),
+        Try(
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='decompress', ctx=Load()),
+                        args=[
+                            Name(id='malicious_input', ctx=Load())],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='Exception', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            Constant(value='Error: '),
+                                            FormattedValue(
+                                                value=Name(id='e', ctx=Load()),
+                                                conversion=-1)])],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

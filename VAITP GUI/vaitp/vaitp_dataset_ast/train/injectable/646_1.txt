@@ -1,0 +1,41 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        Import(
+            names=[
+                alias(name='sys')]),
+        Assign(
+            targets=[
+                Name(id='secure_path', ctx=Store())],
+            value=Constant(value='/usr/local/lib/intelpython')),
+        If(
+            test=Compare(
+                left=Name(id='secure_path', ctx=Load()),
+                ops=[
+                    NotIn()],
+                comparators=[
+                    Attribute(
+                        value=Name(id='sys', ctx=Load()),
+                        attr='path',
+                        ctx=Load())]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='sys', ctx=Load()),
+                                attr='path',
+                                ctx=Load()),
+                            attr='insert',
+                            ctx=Load()),
+                        args=[
+                            Constant(value=0),
+                            Name(id='secure_path', ctx=Load())],
+                        keywords=[]))],
+            orelse=[]),
+        Import(
+            names=[
+                alias(name='some_intel_library')])],
+    type_ignores=[])

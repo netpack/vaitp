@@ -1,0 +1,75 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='urllib.parse')]),
+        FunctionDef(
+            name='check_url_scheme',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='url')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='parsed_url', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='urllib', ctx=Load()),
+                                attr='parse',
+                                ctx=Load()),
+                            attr='urlparse',
+                            ctx=Load()),
+                        args=[
+                            Name(id='url', ctx=Load())],
+                        keywords=[])),
+                If(
+                    test=Compare(
+                        left=Attribute(
+                            value=Name(id='parsed_url', ctx=Load()),
+                            attr='scheme',
+                            ctx=Load()),
+                        ops=[
+                            Eq()],
+                        comparators=[
+                            Constant(value='https')]),
+                    body=[
+                        Return(
+                            value=Constant(value=True))],
+                    orelse=[
+                        Return(
+                            value=Constant(value=False))])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='user_input', ctx=Store())],
+            value=Call(
+                func=Name(id='input', ctx=Load()),
+                args=[
+                    Constant(value='Enter a URL: ')],
+                keywords=[])),
+        If(
+            test=Call(
+                func=Name(id='check_url_scheme', ctx=Load()),
+                args=[
+                    Name(id='user_input', ctx=Load())],
+                keywords=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='The URL is valid and secure.')],
+                        keywords=[]))],
+            orelse=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='The URL is invalid or insecure.')],
+                        keywords=[]))])],
+    type_ignores=[])

@@ -1,0 +1,125 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='ctypes')]),
+        Import(
+            names=[
+                alias(name='os')]),
+        FunctionDef(
+            name='listxattr_vulnerable',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='path'),
+                    arg(arg='size')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Compare(
+                        left=Name(id='size', ctx=Load()),
+                        ops=[
+                            Lt()],
+                        comparators=[
+                            Constant(value=0)]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Size must be non-negative')],
+                                keywords=[]))],
+                    orelse=[]),
+                Assign(
+                    targets=[
+                        Name(id='actual_size', ctx=Store())],
+                    value=Constant(value=16)),
+                If(
+                    test=Compare(
+                        left=Name(id='size', ctx=Load()),
+                        ops=[
+                            Eq()],
+                        comparators=[
+                            Constant(value=0)]),
+                    body=[
+                        Return(
+                            value=Name(id='actual_size', ctx=Load()))],
+                    orelse=[]),
+                Assign(
+                    targets=[
+                        Name(id='buffer', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='ctypes', ctx=Load()),
+                            attr='create_string_buffer',
+                            ctx=Load()),
+                        args=[
+                            Name(id='size', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Attribute(
+                            value=Name(id='buffer', ctx=Load()),
+                            attr='value',
+                            ctx=Store())],
+                    value=Constant(value=b'system.nfs4_acl')),
+                Return(
+                    value=Attribute(
+                        value=Name(id='buffer', ctx=Load()),
+                        attr='raw',
+                        ctx=Load()))],
+            decorator_list=[]),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='path', ctx=Store())],
+                    value=Constant(value='/some/path')),
+                Assign(
+                    targets=[
+                        Name(id='size', ctx=Store())],
+                    value=Constant(value=16)),
+                Assign(
+                    targets=[
+                        Name(id='result', ctx=Store())],
+                    value=Call(
+                        func=Name(id='listxattr_vulnerable', ctx=Load()),
+                        args=[
+                            Name(id='path', ctx=Load()),
+                            Name(id='size', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Attributes:'),
+                            Name(id='result', ctx=Load())],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='OSError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Error:'),
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))]),
+                ExceptHandler(
+                    type=Name(id='ValueError', ctx=Load()),
+                    name='ve',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Value Error:'),
+                                    Name(id='ve', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

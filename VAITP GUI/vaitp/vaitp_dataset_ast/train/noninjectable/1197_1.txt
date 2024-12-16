@@ -1,0 +1,38 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='subprocess')]),
+        FunctionDef(
+            name='vulnerable_python_execution',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='command', ctx=Store())],
+                    value=Constant(value='your_script.py')),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='subprocess', ctx=Load()),
+                            attr='run',
+                            ctx=Load()),
+                        args=[
+                            List(
+                                elts=[
+                                    Constant(value='python'),
+                                    Name(id='command', ctx=Load())],
+                                ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='vulnerable_python_execution', ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

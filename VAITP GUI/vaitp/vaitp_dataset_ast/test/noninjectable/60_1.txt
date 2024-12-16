@@ -1,0 +1,74 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='urllib.request')]),
+        Import(
+            names=[
+                alias(name='test.multibytecodec_support')]),
+        FunctionDef(
+            name='vulnerable_function',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='url', ctx=Store())],
+                    value=Constant(value='http://example.com/malicious_payload')),
+                Assign(
+                    targets=[
+                        Name(id='response', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='urllib', ctx=Load()),
+                                attr='request',
+                                ctx=Load()),
+                            attr='urlopen',
+                            ctx=Load()),
+                        args=[
+                            Name(id='url', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='content', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='response', ctx=Load()),
+                            attr='read',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='codec_name', ctx=Store())],
+                    value=Constant(value='utf-8')),
+                Assign(
+                    targets=[
+                        Name(id='errors', ctx=Store())],
+                    value=Constant(value='strict')),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='test', ctx=Load()),
+                                attr='multibytecodec_support',
+                                ctx=Load()),
+                            attr='test_cjk_codec_support',
+                            ctx=Load()),
+                        args=[
+                            Name(id='codec_name', ctx=Load()),
+                            Name(id='content', ctx=Load()),
+                            Name(id='errors', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='vulnerable_function', ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

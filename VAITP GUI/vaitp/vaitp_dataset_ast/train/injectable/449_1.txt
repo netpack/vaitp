@@ -1,0 +1,98 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        Import(
+            names=[
+                alias(name='sys')]),
+        FunctionDef(
+            name='safe_import',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='module_name')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='current_dir', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='path',
+                                ctx=Load()),
+                            attr='dirname',
+                            ctx=Load()),
+                        args=[
+                            Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='os', ctx=Load()),
+                                        attr='path',
+                                        ctx=Load()),
+                                    attr='abspath',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='__file__', ctx=Load())],
+                                keywords=[])],
+                        keywords=[])),
+                If(
+                    test=Compare(
+                        left=Name(id='current_dir', ctx=Load()),
+                        ops=[
+                            In()],
+                        comparators=[
+                            Attribute(
+                                value=Name(id='sys', ctx=Load()),
+                                attr='path',
+                                ctx=Load())]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='sys', ctx=Load()),
+                                        attr='path',
+                                        ctx=Load()),
+                                    attr='remove',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='current_dir', ctx=Load())],
+                                keywords=[]))],
+                    orelse=[]),
+                Assign(
+                    targets=[
+                        Name(id='module', ctx=Store())],
+                    value=Call(
+                        func=Name(id='__import__', ctx=Load()),
+                        args=[
+                            Name(id='module_name', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='sys', ctx=Load()),
+                                attr='path',
+                                ctx=Load()),
+                            attr='append',
+                            ctx=Load()),
+                        args=[
+                            Name(id='current_dir', ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=Name(id='module', ctx=Load()))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='my_module', ctx=Store())],
+            value=Call(
+                func=Name(id='safe_import', ctx=Load()),
+                args=[
+                    Constant(value='my_module')],
+                keywords=[]))],
+    type_ignores=[])

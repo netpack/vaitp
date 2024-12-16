@@ -8,9 +8,18 @@
 #include <QRegularExpression>
 #include <QSqlQuery>
 
-QString path_to_classificator = "../vaitp/VAITP_AI_RNN_Classificator_RunModel.py";
-QString path_to_s2s = "../vaitp/VAITP_AI_S2S_RunModel.py";
-QString path_to_SecurePythonGPT = "../vaitp/VAITP_AI_LLM_SecurePythonGPT.py";
+
+#ifdef Q_OS_MAC
+    QString srcpath = "../../../../../";
+#elif defined(Q_OS_LINUX)
+    QString srcpath = "../../";
+#else
+    QString srcpath = "..\..\";
+#endif
+
+QString path_to_classificator = srcpath+"VAITP_AI_RNN_Classificator_RunModel.py";
+QString path_to_s2s = srcpath+"VAITP_AI_S2S_RunModel.py";
+QString path_to_SecurePythonGPT = srcpath+"VAITP_AI_LLM_SecurePythonGPT.py";
 QString file_to_scan="vaitp.vaitp";
 
 
@@ -28,7 +37,7 @@ void aimodule::set_file_to_scan(QString aFile){
 QString aimodule::convertToHTML(QString input) {
     QString html = "<div>";
 
-    QStringList paragraphs = input.split("\n\n", QString::SkipEmptyParts);
+    QStringList paragraphs = input.split("\n\n", Qt::SkipEmptyParts);
     for (const QString& paragraph : paragraphs) {
         html += "<p>" + paragraph + "</p>";
     }
@@ -48,7 +57,7 @@ QStringList aimodule::run_classificator_model(QString selected_ai_classificator_
 
     QStringList out;
 
-    QString command("python");
+    QString command("python3");
     QStringList params;
 
     qDebug() << "AI Run Classificator. Selected file: " << file_to_scan;
@@ -103,7 +112,7 @@ QStringList aimodule::run_s2s_model(QStringList probable_inj_points, int limit_s
             if(i==limit_s2s+1)
                 break;
 
-            QString command("python");
+            QString command("python3");
             QStringList params;
 
             qDebug() << "AI Run S2S. Input string: " << pin;
@@ -146,7 +155,7 @@ QStringList aimodule::securePythonGPT(QString aFile){
     QStringList out;
     try {
 
-            QString command("python");
+            QString command("python3");
             QStringList params;
 
             qDebug() << "VAITP :: SecurePythonGPT. Input file: " << aFile;
@@ -250,7 +259,7 @@ void aimodule::opencvefixesdb(){
     if(!cvefixesdb.isOpen()){
         qDebug()<<"Opening CVEfixes db...";
         cvefixesdb=QSqlDatabase::addDatabase("QSQLITE");
-        cvefixesdb.setDatabaseName("../vaitp/CVEfixes.db");
+        cvefixesdb.setDatabaseName(srcpath+"CVEfixes.db");
         cvefixesdb.open();
     }
 }
@@ -268,30 +277,30 @@ void aimodule::rm_old_ai_vulns(QString path_vuln)
 
 void aimodule::rm_temp(){
     //rm temps
-    QString path_vuln = "../vaitp/vaitp_dataset/temp/vulnerable/";
-    QString path_nonvuln = "../vaitp/vaitp_dataset/temp/nonvulnerable/";
+    QString path_vuln = srcpath+"vaitp_dataset/temp/vulnerable/";
+    QString path_nonvuln = srcpath+"vaitp_dataset/temp/nonvulnerable/";
     rm_old_ai_vulns(path_vuln);
     rm_old_ai_vulns(path_nonvuln);
 }
 
 void aimodule::rm_temp_diffs(){
     //rm temps
-    QString path_vuln = "../vaitp/vaitp_dataset_diffs/temp/vulnerable/";
-    QString path_nonvuln = "../vaitp/vaitp_dataset_diffs/temp/nonvulnerable/";
+    QString path_vuln = srcpath+"vaitp_dataset_diffs/temp/vulnerable/";
+    QString path_nonvuln = srcpath+"vaitp_dataset_diffs/temp/nonvulnerable/";
     rm_old_ai_vulns(path_vuln);
     rm_old_ai_vulns(path_nonvuln);
 }
 
 void aimodule::rm_old_dataset(){
     //rm tests
-    QString path_vuln = "../vaitp/vaitp_dataset/test/vulnerable/";
-    QString path_nonvuln = "../vaitp/vaitp_dataset/test/nonvulnerable/";
+    QString path_vuln = srcpath+"vaitp_dataset/test/vulnerable/";
+    QString path_nonvuln = srcpath+"vaitp_dataset/test/nonvulnerable/";
     rm_old_ai_vulns(path_vuln);
     rm_old_ai_vulns(path_nonvuln);
 
     //rm trains
-    path_vuln = "../vaitp/vaitp_dataset/train/vulnerable/";
-    path_nonvuln = "../vaitp/vaitp_dataset/train/nonvulnerable/";
+    path_vuln = srcpath+"vaitp_dataset/train/vulnerable/";
+    path_nonvuln = srcpath+"vaitp_dataset/train/nonvulnerable/";
     rm_old_ai_vulns(path_vuln);
     rm_old_ai_vulns(path_nonvuln);
 }
@@ -327,8 +336,7 @@ QStringList aimodule::get_dataset_first_half(int aNumHalfDataset){
             //qDebug()<<"\n NAME: "<<txt_name<<"\n SIGNATURE: "<<txt_sig<<"\n NLOC: "<<txt_nloc<<"\n PARAMS: "<<txt_params<<"\n TOKEN COUNT: "<<txt_tokencount<<"\n CODE: "<<txt_code;
             qDebug()<<"Processing vulnerability for training: "<<txt_name;
             processedVulns.append(txt_name);
-
-            QString filename = QString("../vaitp/vaitp_dataset/train/vulnerable/%1.txt").arg(num_of_processed_vulns);
+            QString filename = QString(srcpath+"vaitp_dataset/train/vulnerable/%1.txt").arg(num_of_processed_vulns);
             QFile file(filename);
             if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
                 return processedVulns;
@@ -385,8 +393,7 @@ QStringList aimodule::get_dataset_first_half_patches(int aNumHalfDataset){
             //qDebug()<<"\n NAME: "<<txt_name<<"\n SIGNATURE: "<<txt_sig<<"\n NLOC: "<<txt_nloc<<"\n PARAMS: "<<txt_params<<"\n TOKEN COUNT: "<<txt_tokencount<<"\n CODE: "<<txt_code;
             qDebug()<<"Processing patch for training: "<<txt_name;
             processedVulns.append(txt_name);
-
-            QString filename = QString("../vaitp/vaitp_dataset/train/nonvulnerable/%1.txt").arg(num_of_processed);
+            QString filename = QString(srcpath+"vaitp_dataset/train/nonvulnerable/%1.txt").arg(num_of_processed);
             QFile file(filename);
             if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
                 return processedVulns;
@@ -444,8 +451,7 @@ QStringList aimodule::get_dataset_second_half(int aNumHalfDataset){
             //qDebug()<<"\n NAME: "<<txt_name<<"\n SIGNATURE: "<<txt_sig<<"\n NLOC: "<<txt_nloc<<"\n PARAMS: "<<txt_params<<"\n TOKEN COUNT: "<<txt_tokencount<<"\n CODE: "<<txt_code;
             qDebug()<<"Processing vulnerability for testing: "<<txt_name;
             processedVulns.append(txt_name);
-
-            QString filename = QString("../vaitp/vaitp_dataset/test/vulnerable/%1.txt").arg(num_of_processed_vulns);
+            QString filename = QString(srcpath+"vaitp_dataset/test/vulnerable/%1.txt").arg(num_of_processed_vulns);
             QFile file(filename);
             if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
                 return processedVulns;
@@ -507,8 +513,7 @@ QStringList aimodule::get_dataset_second_half_patches(int aNumHalfDataset){
             //qDebug()<<"\n NAME: "<<txt_name<<"\n SIGNATURE: "<<txt_sig<<"\n NLOC: "<<txt_nloc<<"\n PARAMS: "<<txt_params<<"\n TOKEN COUNT: "<<txt_tokencount<<"\n CODE: "<<txt_code;
             qDebug()<<"Processing patch for testing: "<<txt_name;
             processedVulns.append(txt_name);
-
-            QString filename = QString("../vaitp/vaitp_dataset/test/nonvulnerable/%1.txt").arg(num_of_processed);
+            QString filename = QString(srcpath+"vaitp_dataset/test/nonvulnerable/%1.txt").arg(num_of_processed);
             QFile file(filename);
             if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
                 return processedVulns;
@@ -563,8 +568,7 @@ QStringList aimodule::getAndProcess_dataset_vulnerabilities(){
             //qDebug()<<"\n NAME: "<<txt_name<<"\n SIGNATURE: "<<txt_sig<<"\n NLOC: "<<txt_nloc<<"\n PARAMS: "<<txt_params<<"\n TOKEN COUNT: "<<txt_tokencount<<"\n CODE: "<<txt_code;
             qDebug()<<"Processing vulnerablility: "<<txt_name;
             processedVulns.append(txt_name);
-
-            QString filename = QString("../vaitp/vaitp_dataset/temp/vulnerable/%1.txt").arg(num_of_processed);
+            QString filename = QString(srcpath+"vaitp_dataset/temp/vulnerable/%1.txt").arg(num_of_processed);
             QFile file(filename);
             if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
                 return processedVulns;
@@ -623,8 +627,7 @@ QStringList aimodule::getAndProcess_dataset_patches(){
             //qDebug()<<"\n NAME: "<<txt_name<<"\n SIGNATURE: "<<txt_sig<<"\n NLOC: "<<txt_nloc<<"\n PARAMS: "<<txt_params<<"\n TOKEN COUNT: "<<txt_tokencount<<"\n CODE: "<<txt_code;
             qDebug()<<"Processing patch: "<<txt_name;
             processedVulns.append(txt_name);
-
-            QString filename = QString("../vaitp/vaitp_dataset/temp/nonvulnerable/%1.txt").arg(num_of_processed);
+            QString filename = QString(srcpath+"vaitp_dataset/temp/nonvulnerable/%1.txt").arg(num_of_processed);
             QFile file(filename);
             if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
                 return processedVulns;
@@ -659,9 +662,8 @@ QStringList aimodule::getAndProcess_dataset_patches(){
 QStringList aimodule::getAndProcess_dataset_commonwords(){
     QSqlQuery sql_query;
     QStringList processedCode;
-    cleanermodule clnr;
-
-    QString filename = QString("../vaitp/common.txt");
+    cleanermodule clnr;    
+    QString filename = QString(srcpath+"common.txt");
     QFile file_vuln(filename);
     QTextStream out_vuln(&file_vuln);
 
@@ -677,7 +679,7 @@ QStringList aimodule::getAndProcess_dataset_commonwords(){
         while(sql_query.next()){
 
             QString txt_code = sql_query.value(0).toString();
-            QRegExp sep("\\s|\\.|,|:|\\/|\\*|\\#|\\!|\\'|\\(|\\)|\\-|\\=|\\{|\\}|\\[|\\]|\\%|\\$|\\@|\\\"|\\`|\\_|\\+");
+            QRegularExpression sep("\\s|\\.|,|:|\\/|\\*|\\#|\\!|\\'|\\(|\\)|\\-|\\=|\\{|\\}|\\[|\\]|\\%|\\$|\\@|\\\"|\\`|\\_|\\+");
             QStringList words = txt_code.split(sep);
             words.removeDuplicates();
                    foreach(QString word, words){
@@ -754,7 +756,7 @@ QStringList aimodule::getAndProcess_dataset_diffs(){
                 QRegularExpression rextract("\\d+,\\s('|\")");
                 QString extractedLine = linesadded_splitted[nl].replace(rextract,"").replace(QRegularExpression("from\\s+[\\w+\\.\\w+]+[\\s+import\\s+\\w*]"),""); //don't add imports
                 if(!extractedLine.trimmed().isEmpty()){
-                    if(extractedLine.trimmed().at(0) != "#"){ //filter out comments
+                    if(extractedLine.trimmed().at(0) != QChar('#')){ //filter out comments
 
 
                         bool hasMatched = false;
@@ -801,7 +803,7 @@ QStringList aimodule::getAndProcess_dataset_diffs(){
                 QRegularExpression rextract("\\d+,\\s('|\")");
                 QString extractedLine = linesdel_splitted[nl].replace(rextract,"").replace(QRegularExpression("from\\s+[\\w+\\.\\w+]+[\\s+import\\s+\\w*]"),""); //don't add imports
                 if(!extractedLine.trimmed().isEmpty()){
-                    if(extractedLine.trimmed().at(0) != "#"){ //filter out comments
+                    if(extractedLine.trimmed().at(0) != QChar('#')){ //filter out comments
 
                         bool hasMatched = false;
                         /*for(const auto& word : filterWords){
@@ -836,7 +838,8 @@ QStringList aimodule::getAndProcess_dataset_diffs(){
              */
 
             //int nl = 0;
-            QString filename_patch = QString("../vaitp/vaitp_dataset_diffs/temp/nonvulnerable/%1_%2.txt").arg(num_of_processed).arg(txt_file_change_id);
+            QString filename_patch = QString(srcpath+"vaitp_dataset_diffs/temp/nonvulnerable/%1_%2.txt").arg(num_of_processed).arg(txt_file_change_id);
+
             QFile file_patch(filename_patch);
             if (!file_patch.open((QIODevice::WriteOnly | QIODevice::Text)))
                 return processedVulns;
@@ -858,7 +861,9 @@ QStringList aimodule::getAndProcess_dataset_diffs(){
              */
 
             //nl = 0;
-            QString filename_vuln = QString("../vaitp/vaitp_dataset_diffs/temp/vulnerable/%1_%2.txt").arg(num_of_processed).arg(txt_file_change_id);
+
+            QString filename_vuln = QString(srcpath+"vaitp_dataset_diffs/temp/vulnerable/%1_%2.txt").arg(num_of_processed).arg(txt_file_change_id);
+
             QFile file_vuln(filename_vuln);
             if (!file_vuln.open((QIODevice::WriteOnly | QIODevice::Text)))
                 return processedVulns;
@@ -886,7 +891,7 @@ QStringList aimodule::getAndProcess_dataset_diffs(){
     qDebug()<<"Deleting duplicates...";
     /*delete duplicates*/
     QProcess process;
-    process.start("fdupes", QStringList() << "-rdN" << "/home/fred/msi/ano2/VAITP/VAITP GUI/vaitp/vaitp_dataset_diffs/temp/");
+    process.start("fdupes", QStringList() << "-rdN" << srcpath+"vaitp_dataset_diffs/temp/");
     process.waitForFinished(60000);
 
 
@@ -945,7 +950,7 @@ QStringList aimodule::getAndProcess_dataset_oneline_diffs(){
                 QRegularExpression rextract("\\d+,\\s('|\")");
                 QString extractedLine = linesadded_splitted[nl].replace(rextract,"");
                 if(!extractedLine.trimmed().isEmpty()){
-                    if(extractedLine.trimmed().at(0) != "#"){ //filter out comments
+                    if(extractedLine.trimmed().at(0) != QChar('#')){ //filter out comments
 
 
                         bool hasMatched = false;
@@ -984,7 +989,7 @@ QStringList aimodule::getAndProcess_dataset_oneline_diffs(){
                 QRegularExpression rextract("\\d+,\\s('|\")");
                 QString extractedLine = linesdel_splitted[nl].replace(rextract,"");
                 if(!extractedLine.trimmed().isEmpty()){
-                    if(extractedLine.trimmed().at(0) != "#"){ //filter out comments
+                    if(extractedLine.trimmed().at(0) != QChar('#')){ //filter out comments
 
                         bool hasMatched = false;
 
@@ -1015,7 +1020,7 @@ QStringList aimodule::getAndProcess_dataset_oneline_diffs(){
          */
 
         //int nl = 0;
-        QString filename_patch = QString("../vaitp/s2s_onelinediffs.txt");
+        QString filename_patch = QString(srcpath+"s2s_onelinediffs.txt");
         QFile file_patch(filename_patch);
         if (!file_patch.open((QIODevice::WriteOnly | QIODevice::Text)))
             return processedVulns;

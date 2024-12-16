@@ -1,0 +1,43 @@
+Module(
+    body=[
+        FunctionDef(
+            name='image_view_fullscreen',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='context'),
+                    arg(arg='request')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='redirect_url', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='request', ctx=Load()),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='redirect'),
+                            Constant(value=None)],
+                        keywords=[])),
+                If(
+                    test=Name(id='redirect_url', ctx=Load()),
+                    body=[
+                        Return(
+                            value=Call(
+                                func=Name(id='redirect', ctx=Load()),
+                                args=[
+                                    Name(id='redirect_url', ctx=Load())],
+                                keywords=[]))],
+                    orelse=[]),
+                Return(
+                    value=Call(
+                        func=Name(id='render_image', ctx=Load()),
+                        args=[
+                            Name(id='context', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[])],
+    type_ignores=[])

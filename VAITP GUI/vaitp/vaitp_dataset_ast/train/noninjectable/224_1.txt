@@ -1,0 +1,56 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='tuf')]),
+        Assign(
+            targets=[
+                Name(id='repo', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='tuf', ctx=Load()),
+                    attr='Repository',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Assign(
+            targets=[
+                Attribute(
+                    value=Name(id='repo', ctx=Load()),
+                    attr='metadata_directory',
+                    ctx=Store())],
+            value=Constant(value='/path/to/metadata')),
+        Assign(
+            targets=[
+                Name(id='rolename', ctx=Store())],
+            value=Constant(value='../../../../etc/passwd.json')),
+        Assign(
+            targets=[
+                Name(id='role', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='repo', ctx=Load()),
+                    attr='create_role',
+                    ctx=Load()),
+                args=[
+                    Name(id='rolename', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='role', ctx=Load()),
+                    attr='add_target',
+                    ctx=Load()),
+                args=[
+                    Constant(value='target1'),
+                    Constant(value='sha256:1234567890abcdef')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='repo', ctx=Load()),
+                    attr='writeall',
+                    ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

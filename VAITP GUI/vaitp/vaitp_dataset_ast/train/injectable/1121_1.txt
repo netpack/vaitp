@@ -1,0 +1,103 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='onnx')]),
+        Import(
+            names=[
+                alias(name='os')]),
+        FunctionDef(
+            name='load_model_safe',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='model_path')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='safe_directory', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='path',
+                                ctx=Load()),
+                            attr='abspath',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='safe_directory')],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='model_path', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='path',
+                                ctx=Load()),
+                            attr='abspath',
+                            ctx=Load()),
+                        args=[
+                            Name(id='model_path', ctx=Load())],
+                        keywords=[])),
+                If(
+                    test=UnaryOp(
+                        op=Not(),
+                        operand=Call(
+                            func=Attribute(
+                                value=Name(id='model_path', ctx=Load()),
+                                attr='startswith',
+                                ctx=Load()),
+                            args=[
+                                Name(id='safe_directory', ctx=Load())],
+                            keywords=[])),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Model path is outside of the safe directory.')],
+                                keywords=[]))],
+                    orelse=[]),
+                Assign(
+                    targets=[
+                        Name(id='model', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='onnx', ctx=Load()),
+                            attr='load',
+                            ctx=Load()),
+                        args=[
+                            Name(id='model_path', ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=Name(id='model', ctx=Load()))],
+            decorator_list=[]),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='model', ctx=Store())],
+                    value=Call(
+                        func=Name(id='load_model_safe', ctx=Load()),
+                        args=[
+                            Constant(value='path/to/your/model.onnx')],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ValueError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

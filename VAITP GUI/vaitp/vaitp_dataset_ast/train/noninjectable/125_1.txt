@@ -1,0 +1,75 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='tg')]),
+        Import(
+            names=[
+                alias(name='tgcaptcha2')]),
+        Assign(
+            targets=[
+                Name(id='app', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='tg', ctx=Load()),
+                    attr='TGController',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='captcha', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='tgcaptcha2', ctx=Load()),
+                    attr='TGCaptchaController',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='app', ctx=Load()),
+                    attr='add_component',
+                    ctx=Load()),
+                args=[
+                    Name(id='captcha', ctx=Load()),
+                    Constant(value='captcha')],
+                keywords=[])),
+        FunctionDef(
+            name='check_captcha',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='self'),
+                    arg(arg='captcha_id'),
+                    arg(arg='captcha_solution')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Call(
+                        func=Attribute(
+                            value=Name(id='captcha', ctx=Load()),
+                            attr='validate',
+                            ctx=Load()),
+                        args=[
+                            Name(id='captcha_id', ctx=Load()),
+                            Name(id='captcha_solution', ctx=Load())],
+                        keywords=[]),
+                    body=[
+                        Return(
+                            value=Constant(value='You are human!'))],
+                    orelse=[
+                        Return(
+                            value=Constant(value='You are a bot!'))])],
+            decorator_list=[
+                Call(
+                    func=Attribute(
+                        value=Name(id='app', ctx=Load()),
+                        attr='expose',
+                        ctx=Load()),
+                    args=[],
+                    keywords=[])])],
+    type_ignores=[])

@@ -1,0 +1,22 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='sys')]),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='sys', ctx=Load()),
+                        attr='path',
+                        ctx=Load()),
+                    attr='insert',
+                    ctx=Load()),
+                args=[
+                    Constant(value=0),
+                    Constant(value='/usr/local/lib/python2.7/site-packages/pgadmin4')],
+                keywords=[])),
+        Import(
+            names=[
+                alias(name='pgadmin4')])],
+    type_ignores=[])

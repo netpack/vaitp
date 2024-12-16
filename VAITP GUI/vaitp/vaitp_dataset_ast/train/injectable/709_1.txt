@@ -1,0 +1,137 @@
+Module(
+    body=[
+        ImportFrom(
+            module='pyspark',
+            names=[
+                alias(name='SparkConf'),
+                alias(name='SparkContext')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='conf', ctx=Store())],
+            value=Call(
+                func=Name(id='SparkConf', ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='conf', ctx=Load()),
+                    attr='set',
+                    ctx=Load()),
+                args=[
+                    Constant(value='spark.io.encryption.enabled'),
+                    Constant(value='true')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='conf', ctx=Load()),
+                    attr='set',
+                    ctx=Load()),
+                args=[
+                    Constant(value='spark.io.encryption.key'),
+                    Constant(value='your-encryption-key')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='conf', ctx=Load()),
+                    attr='set',
+                    ctx=Load()),
+                args=[
+                    Constant(value='spark.maxRemoteBlockSizeFetchToMem'),
+                    Constant(value='64m')],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='sc', ctx=Store())],
+            value=Call(
+                func=Name(id='SparkContext', ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='conf',
+                        value=Name(id='conf', ctx=Load()))])),
+        Assign(
+            targets=[
+                Name(id='data', ctx=Store())],
+            value=List(
+                elts=[
+                    Constant(value=1),
+                    Constant(value=2),
+                    Constant(value=3),
+                    Constant(value=4),
+                    Constant(value=5)],
+                ctx=Load())),
+        Assign(
+            targets=[
+                Name(id='rdd', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='sc', ctx=Load()),
+                    attr='parallelize',
+                    ctx=Load()),
+                args=[
+                    Name(id='data', ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='broadcast_var', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='sc', ctx=Load()),
+                    attr='broadcast',
+                    ctx=Load()),
+                args=[
+                    Call(
+                        func=Attribute(
+                            value=Name(id='rdd', ctx=Load()),
+                            attr='collect',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='result', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='rdd', ctx=Load()),
+                            attr='map',
+                            ctx=Load()),
+                        args=[
+                            Lambda(
+                                args=arguments(
+                                    posonlyargs=[],
+                                    args=[
+                                        arg(arg='x')],
+                                    kwonlyargs=[],
+                                    kw_defaults=[],
+                                    defaults=[]),
+                                body=BinOp(
+                                    left=Name(id='x', ctx=Load()),
+                                    op=Mult(),
+                                    right=Constant(value=2)))],
+                        keywords=[]),
+                    attr='collect',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='result', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='sc', ctx=Load()),
+                    attr='stop',
+                    ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

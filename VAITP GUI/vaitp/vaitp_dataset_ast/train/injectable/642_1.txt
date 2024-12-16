@@ -1,0 +1,95 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='ssl')]),
+        Import(
+            names=[
+                alias(name='qpid.messaging')]),
+        FunctionDef(
+            name='create_ssl_connection',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='host'),
+                    arg(arg='port')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='context', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='ssl', ctx=Load()),
+                            attr='create_default_context',
+                            ctx=Load()),
+                        args=[
+                            Attribute(
+                                value=Attribute(
+                                    value=Name(id='ssl', ctx=Load()),
+                                    attr='Purpose',
+                                    ctx=Load()),
+                                attr='CLIENT_AUTH',
+                                ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='connection', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='qpid', ctx=Load()),
+                                attr='messaging',
+                                ctx=Load()),
+                            attr='Connection',
+                            ctx=Load()),
+                        args=[
+                            Name(id='host', ctx=Load()),
+                            Name(id='port', ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='protocol',
+                                value=Constant(value='ssl')),
+                            keyword(
+                                arg='ssl_context',
+                                value=Name(id='context', ctx=Load()))])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='connection', ctx=Load()),
+                            attr='open',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Return(
+                    value=Name(id='connection', ctx=Load()))],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='host', ctx=Store())],
+                    value=Constant(value='example.com')),
+                Assign(
+                    targets=[
+                        Name(id='port', ctx=Store())],
+                    value=Constant(value=5671)),
+                Assign(
+                    targets=[
+                        Name(id='connection', ctx=Store())],
+                    value=Call(
+                        func=Name(id='create_ssl_connection', ctx=Load()),
+                        args=[
+                            Name(id='host', ctx=Load()),
+                            Name(id='port', ctx=Load())],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

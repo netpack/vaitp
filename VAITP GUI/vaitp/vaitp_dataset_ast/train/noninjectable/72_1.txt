@@ -1,0 +1,38 @@
+Module(
+    body=[
+        ImportFrom(
+            module='PIL',
+            names=[
+                alias(name='Image')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='img', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='Image', ctx=Load()),
+                    attr='open',
+                    ctx=Load()),
+                args=[
+                    Constant(value='image.jpg')],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='pixel_data', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='img', ctx=Load()),
+                    attr='load',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Subscript(
+                value=Name(id='pixel_data', ctx=Load()),
+                slice=Tuple(
+                    elts=[
+                        Constant(value=1000000),
+                        Constant(value=1000000)],
+                    ctx=Load()),
+                ctx=Load()))],
+    type_ignores=[])

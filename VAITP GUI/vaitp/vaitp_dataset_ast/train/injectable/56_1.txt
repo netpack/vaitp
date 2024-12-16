@@ -1,0 +1,72 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='struct')]),
+        FunctionDef(
+            name='safe_function',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='user_input')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='packed', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='struct', ctx=Load()),
+                            attr='pack',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='>d'),
+                            Call(
+                                func=Name(id='float', ctx=Load()),
+                                args=[
+                                    Name(id='user_input', ctx=Load())],
+                                keywords=[])],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='safe_repr', ctx=Store())],
+                    value=Subscript(
+                        value=Call(
+                            func=Attribute(
+                                value=Name(id='struct', ctx=Load()),
+                                attr='unpack',
+                                ctx=Load()),
+                            args=[
+                                Constant(value='>d'),
+                                Name(id='packed', ctx=Load())],
+                            keywords=[]),
+                        slice=Constant(value=0),
+                        ctx=Load())),
+                Return(
+                    value=Call(
+                        func=Name(id='str', ctx=Load()),
+                        args=[
+                            Name(id='safe_repr', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='user_input', ctx=Store())],
+            value=Constant(value='1.23456789012345678901234567890')),
+        Assign(
+            targets=[
+                Name(id='safe_output', ctx=Store())],
+            value=Call(
+                func=Name(id='safe_function', ctx=Load()),
+                args=[
+                    Name(id='user_input', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='safe_output', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

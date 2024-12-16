@@ -1,0 +1,34 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='re')]),
+        FunctionDef(
+            name='vulnerable_compile',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='pattern')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='re', ctx=Load()),
+                            attr='compile',
+                            ctx=Load()),
+                        args=[
+                            Name(id='pattern', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='regex', ctx=Store())],
+            value=Call(
+                func=Name(id='vulnerable_compile', ctx=Load()),
+                args=[
+                    Constant(value='a{1,1000000000}')],
+                keywords=[]))],
+    type_ignores=[])

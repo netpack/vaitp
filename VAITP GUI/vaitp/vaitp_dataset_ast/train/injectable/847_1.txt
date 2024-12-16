@@ -1,0 +1,135 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='subprocess')]),
+        Import(
+            names=[
+                alias(name='configparser')]),
+        Import(
+            names=[
+                alias(name='re')]),
+        FunctionDef(
+            name='create_config',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='user_input')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='sanitized_input', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='re', ctx=Load()),
+                            attr='sub',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='[^A-Za-z0-9]+'),
+                            Constant(value=''),
+                            Name(id='user_input', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='config_content', ctx=Store())],
+                    value=JoinedStr(
+                        values=[
+                            Constant(value='[settings]\nuser_setting='),
+                            FormattedValue(
+                                value=Name(id='sanitized_input', ctx=Load()),
+                                conversion=-1)])),
+                With(
+                    items=[
+                        withitem(
+                            context_expr=Call(
+                                func=Name(id='open', ctx=Load()),
+                                args=[
+                                    Constant(value='safe_config.ini'),
+                                    Constant(value='w')],
+                                keywords=[]),
+                            optional_vars=Name(id='config_file', ctx=Store()))],
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='config_file', ctx=Load()),
+                                    attr='write',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='config_content', ctx=Load())],
+                                keywords=[]))])],
+            decorator_list=[]),
+        FunctionDef(
+            name='run_with_config',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='config', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='configparser', ctx=Load()),
+                            attr='ConfigParser',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='config', ctx=Load()),
+                            attr='read',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='safe_config.ini')],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='user_setting', ctx=Store())],
+                    value=Subscript(
+                        value=Subscript(
+                            value=Name(id='config', ctx=Load()),
+                            slice=Constant(value='settings'),
+                            ctx=Load()),
+                        slice=Constant(value='user_setting'),
+                        ctx=Load())),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='subprocess', ctx=Load()),
+                            attr='run',
+                            ctx=Load()),
+                        args=[
+                            List(
+                                elts=[
+                                    Constant(value='echo'),
+                                    Name(id='user_setting', ctx=Load())],
+                                ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='shell',
+                                value=Constant(value=False))]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='user_input', ctx=Store())],
+            value=Constant(value='dummy; cat /etc/passwd #')),
+        Expr(
+            value=Call(
+                func=Name(id='create_config', ctx=Load()),
+                args=[
+                    Name(id='user_input', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='run_with_config', ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

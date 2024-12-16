@@ -1,0 +1,61 @@
+Module(
+    body=[
+        ImportFrom(
+            module='social_core.backends.google',
+            names=[
+                alias(name='GoogleOAuth2')],
+            level=0),
+        ImportFrom(
+            module='social_core.exceptions',
+            names=[
+                alias(name='AuthException')],
+            level=0),
+        ClassDef(
+            name='CustomGoogleOAuth2',
+            bases=[
+                Name(id='GoogleOAuth2', ctx=Load())],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='get_user_details',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='response')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='user_id', ctx=Store())],
+                            value=Subscript(
+                                value=Name(id='response', ctx=Load()),
+                                slice=Constant(value='id'),
+                                ctx=Load())),
+                        Assign(
+                            targets=[
+                                Name(id='email', ctx=Store())],
+                            value=Subscript(
+                                value=Name(id='response', ctx=Load()),
+                                slice=Constant(value='email'),
+                                ctx=Load())),
+                        Return(
+                            value=Dict(
+                                keys=[
+                                    Constant(value='username'),
+                                    Constant(value='email')],
+                                values=[
+                                    Name(id='user_id', ctx=Load()),
+                                    Name(id='email', ctx=Load())]))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='AUTHENTICATION_BACKENDS', ctx=Store())],
+            value=Tuple(
+                elts=[
+                    Constant(value='path.to.CustomGoogleOAuth2')],
+                ctx=Load()))],
+    type_ignores=[])

@@ -1,0 +1,210 @@
+Module(
+    body=[
+        ImportFrom(
+            module='flask',
+            names=[
+                alias(name='Flask'),
+                alias(name='request'),
+                alias(name='abort')],
+            level=0),
+        ImportFrom(
+            module='functools',
+            names=[
+                alias(name='wraps')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='app', ctx=Store())],
+            value=Call(
+                func=Name(id='Flask', ctx=Load()),
+                args=[
+                    Name(id='__name__', ctx=Load())],
+                keywords=[])),
+        FunctionDef(
+            name='validate_oauth_token',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='token')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Compare(
+                        left=Name(id='token', ctx=Load()),
+                        ops=[
+                            Eq()],
+                        comparators=[
+                            Constant(value='valid_oauth_token')]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='require_oauth',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='f')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                FunctionDef(
+                    name='decorated_function',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[],
+                        vararg=arg(arg='args'),
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        kwarg=arg(arg='kwargs'),
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='token', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='request', ctx=Load()),
+                                        attr='headers',
+                                        ctx=Load()),
+                                    attr='get',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='Authorization')],
+                                keywords=[])),
+                        If(
+                            test=BoolOp(
+                                op=Or(),
+                                values=[
+                                    UnaryOp(
+                                        op=Not(),
+                                        operand=Name(id='token', ctx=Load())),
+                                    UnaryOp(
+                                        op=Not(),
+                                        operand=Call(
+                                            func=Name(id='validate_oauth_token', ctx=Load()),
+                                            args=[
+                                                Subscript(
+                                                    value=Call(
+                                                        func=Attribute(
+                                                            value=Name(id='token', ctx=Load()),
+                                                            attr='split',
+                                                            ctx=Load()),
+                                                        args=[
+                                                            Constant(value=' ')],
+                                                        keywords=[]),
+                                                    slice=Constant(value=1),
+                                                    ctx=Load())],
+                                            keywords=[]))]),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='abort', ctx=Load()),
+                                        args=[
+                                            Constant(value=403)],
+                                        keywords=[]))],
+                            orelse=[]),
+                        Return(
+                            value=Call(
+                                func=Name(id='f', ctx=Load()),
+                                args=[
+                                    Starred(
+                                        value=Name(id='args', ctx=Load()),
+                                        ctx=Load())],
+                                keywords=[
+                                    keyword(
+                                        value=Name(id='kwargs', ctx=Load()))]))],
+                    decorator_list=[
+                        Call(
+                            func=Name(id='wraps', ctx=Load()),
+                            args=[
+                                Name(id='f', ctx=Load())],
+                            keywords=[])]),
+                Return(
+                    value=Name(id='decorated_function', ctx=Load()))],
+            decorator_list=[]),
+        FunctionDef(
+            name='list_tasks',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Dict(
+                        keys=[
+                            Constant(value='tasks')],
+                        values=[
+                            List(
+                                elts=[
+                                    Constant(value='task1'),
+                                    Constant(value='task2')],
+                                ctx=Load())]))],
+            decorator_list=[
+                Call(
+                    func=Attribute(
+                        value=Name(id='app', ctx=Load()),
+                        attr='route',
+                        ctx=Load()),
+                    args=[
+                        Constant(value='/api/celery/tasks')],
+                    keywords=[
+                        keyword(
+                            arg='methods',
+                            value=List(
+                                elts=[
+                                    Constant(value='GET')],
+                                ctx=Load()))]),
+                Name(id='require_oauth', ctx=Load())]),
+        FunctionDef(
+            name='execute_task',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Dict(
+                        keys=[
+                            Constant(value='status')],
+                        values=[
+                            Constant(value='task executed')]))],
+            decorator_list=[
+                Call(
+                    func=Attribute(
+                        value=Name(id='app', ctx=Load()),
+                        attr='route',
+                        ctx=Load()),
+                    args=[
+                        Constant(value='/api/celery/execute')],
+                    keywords=[
+                        keyword(
+                            arg='methods',
+                            value=List(
+                                elts=[
+                                    Constant(value='POST')],
+                                ctx=Load()))]),
+                Name(id='require_oauth', ctx=Load())]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='app', ctx=Load()),
+                            attr='run',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

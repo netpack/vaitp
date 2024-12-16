@@ -1,0 +1,67 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='re')]),
+        FunctionDef(
+            name='safe_strip_tags',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='value')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='max_iterations', ctx=Store())],
+                    value=Constant(value=1000)),
+                Assign(
+                    targets=[
+                        Name(id='iterations', ctx=Store())],
+                    value=Constant(value=0)),
+                While(
+                    test=Compare(
+                        left=Name(id='iterations', ctx=Load()),
+                        ops=[
+                            Lt()],
+                        comparators=[
+                            Name(id='max_iterations', ctx=Load())]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='new_value', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='re', ctx=Load()),
+                                    attr='sub',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='<[^>]+>'),
+                                    Constant(value=''),
+                                    Name(id='value', ctx=Load())],
+                                keywords=[])),
+                        If(
+                            test=Compare(
+                                left=Name(id='new_value', ctx=Load()),
+                                ops=[
+                                    Eq()],
+                                comparators=[
+                                    Name(id='value', ctx=Load())]),
+                            body=[
+                                Break()],
+                            orelse=[]),
+                        Assign(
+                            targets=[
+                                Name(id='value', ctx=Store())],
+                            value=Name(id='new_value', ctx=Load())),
+                        AugAssign(
+                            target=Name(id='iterations', ctx=Store()),
+                            op=Add(),
+                            value=Constant(value=1))],
+                    orelse=[]),
+                Return(
+                    value=Name(id='value', ctx=Load()))],
+            decorator_list=[])],
+    type_ignores=[])

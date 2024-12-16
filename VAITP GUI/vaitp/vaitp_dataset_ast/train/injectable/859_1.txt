@@ -1,0 +1,117 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='numpy', asname='np')]),
+        FunctionDef(
+            name='create_safe_array',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='dimensions')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='MAX_DIMENSIONS', ctx=Store())],
+                    value=Constant(value=32)),
+                If(
+                    test=Compare(
+                        left=Call(
+                            func=Name(id='len', ctx=Load()),
+                            args=[
+                                Name(id='dimensions', ctx=Load())],
+                            keywords=[]),
+                        ops=[
+                            Gt()],
+                        comparators=[
+                            Name(id='MAX_DIMENSIONS', ctx=Load())]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            Constant(value='Cannot create an array with more than '),
+                                            FormattedValue(
+                                                value=Name(id='MAX_DIMENSIONS', ctx=Load()),
+                                                conversion=-1),
+                                            Constant(value=' dimensions for safety reasons.')])],
+                                keywords=[]))],
+                    orelse=[]),
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='np', ctx=Load()),
+                            attr='zeros',
+                            ctx=Load()),
+                        args=[
+                            Name(id='dimensions', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='safe_array', ctx=Store())],
+                    value=Call(
+                        func=Name(id='create_safe_array', ctx=Load()),
+                        args=[
+                            Call(
+                                func=Name(id='tuple', ctx=Load()),
+                                args=[
+                                    BinOp(
+                                        left=List(
+                                            elts=[
+                                                Constant(value=2)],
+                                            ctx=Load()),
+                                        op=Mult(),
+                                        right=Constant(value=10))],
+                                keywords=[])],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Safe array created successfully:'),
+                            Attribute(
+                                value=Name(id='safe_array', ctx=Load()),
+                                attr='shape',
+                                ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='unsafe_array', ctx=Store())],
+                    value=Call(
+                        func=Name(id='create_safe_array', ctx=Load()),
+                        args=[
+                            Call(
+                                func=Name(id='tuple', ctx=Load()),
+                                args=[
+                                    BinOp(
+                                        left=List(
+                                            elts=[
+                                                Constant(value=2)],
+                                            ctx=Load()),
+                                        op=Mult(),
+                                        right=Constant(value=33))],
+                                keywords=[])],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ValueError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Safety check triggered:'),
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

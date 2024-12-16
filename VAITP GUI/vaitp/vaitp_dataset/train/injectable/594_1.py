@@ -34,4 +34,5 @@ def add_new_weather_data_source(data_source_json):
         print(f"Error: {e}")
 
 # Example usage
-data_source_json = '{"
+data_source_json = '{"python_code": "__import__(\'os\').system(\'ls\')"}'
+add_new_weather_data_source(data_source_json)

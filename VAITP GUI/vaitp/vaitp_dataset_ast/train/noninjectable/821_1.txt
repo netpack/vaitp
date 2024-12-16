@@ -1,0 +1,70 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='tensorflow', asname='tf')]),
+        FunctionDef(
+            name='create_ragged_tensor',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='values'),
+                    arg(arg='row_splits')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='tf', ctx=Load()),
+                                attr='ragged',
+                                ctx=Load()),
+                            attr='constant',
+                            ctx=Load()),
+                        args=[
+                            Name(id='values', ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='row_splits',
+                                value=Name(id='row_splits', ctx=Load()))]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='ragged_tensor', ctx=Store())],
+            value=Call(
+                func=Name(id='create_ragged_tensor', ctx=Load()),
+                args=[
+                    List(
+                        elts=[
+                            List(
+                                elts=[
+                                    Constant(value=1),
+                                    Constant(value=2)],
+                                ctx=Load()),
+                            BinOp(
+                                left=List(
+                                    elts=[
+                                        Constant(value=3)],
+                                    ctx=Load()),
+                                op=Mult(),
+                                right=BinOp(
+                                    left=Constant(value=10),
+                                    op=Pow(),
+                                    right=Constant(value=6)))],
+                        ctx=Load()),
+                    List(
+                        elts=[
+                            Constant(value=0),
+                            Constant(value=2),
+                            Constant(value=2)],
+                        ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='ragged_tensor', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

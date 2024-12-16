@@ -1,0 +1,21 @@
+Module(
+    body=[
+        ImportFrom(
+            module='PIL',
+            names=[
+                alias(name='ImageMath')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='expression', ctx=Store())],
+            value=Constant(value="os.system('rm -rf nonexistingfile')")),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='ImageMath', ctx=Load()),
+                    attr='eval',
+                    ctx=Load()),
+                args=[
+                    Name(id='expression', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

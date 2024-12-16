@@ -1,0 +1,123 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='bson')]),
+        FunctionDef(
+            name='safe_decode_dbref',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='dbref')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Try(
+                    body=[
+                        If(
+                            test=UnaryOp(
+                                op=Not(),
+                                operand=Call(
+                                    func=Name(id='isinstance', ctx=Load()),
+                                    args=[
+                                        Name(id='dbref', ctx=Load()),
+                                        Name(id='dict', ctx=Load())],
+                                    keywords=[])),
+                            body=[
+                                Raise(
+                                    exc=Call(
+                                        func=Name(id='ValueError', ctx=Load()),
+                                        args=[
+                                            Constant(value='Invalid DBRef: Must be a dictionary')],
+                                        keywords=[]))],
+                            orelse=[]),
+                        If(
+                            test=BoolOp(
+                                op=Or(),
+                                values=[
+                                    Compare(
+                                        left=Constant(value='$ref'),
+                                        ops=[
+                                            NotIn()],
+                                        comparators=[
+                                            Name(id='dbref', ctx=Load())]),
+                                    Compare(
+                                        left=Constant(value='$id'),
+                                        ops=[
+                                            NotIn()],
+                                        comparators=[
+                                            Name(id='dbref', ctx=Load())])]),
+                            body=[
+                                Raise(
+                                    exc=Call(
+                                        func=Name(id='ValueError', ctx=Load()),
+                                        args=[
+                                            Constant(value="Invalid DBRef: Missing '$ref' or '$id'")],
+                                        keywords=[]))],
+                            orelse=[]),
+                        Return(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='bson', ctx=Load()),
+                                    attr='decode_all',
+                                    ctx=Load()),
+                                args=[
+                                    Call(
+                                        func=Attribute(
+                                            value=Attribute(
+                                                value=Name(id='bson', ctx=Load()),
+                                                attr='BSON',
+                                                ctx=Load()),
+                                            attr='encode',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='dbref', ctx=Load())],
+                                        keywords=[])],
+                                keywords=[]))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='Exception', ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    Constant(value='Error decoding DBRef: '),
+                                                    FormattedValue(
+                                                        value=Name(id='e', ctx=Load()),
+                                                        conversion=-1)])],
+                                        keywords=[])),
+                                Return(
+                                    value=Constant(value=None))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='dbref', ctx=Store())],
+            value=Dict(
+                keys=[
+                    Constant(value='$ref'),
+                    Constant(value='$id')],
+                values=[
+                    Constant(value='collection_name'),
+                    Constant(value='some_id')])),
+        Assign(
+            targets=[
+                Name(id='result', ctx=Store())],
+            value=Call(
+                func=Name(id='safe_decode_dbref', ctx=Load()),
+                args=[
+                    Name(id='dbref', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='result', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

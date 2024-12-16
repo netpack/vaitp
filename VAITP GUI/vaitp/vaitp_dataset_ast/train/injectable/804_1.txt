@@ -1,0 +1,132 @@
+Module(
+    body=[
+        ImportFrom(
+            module='rest_framework',
+            names=[
+                alias(name='serializers')],
+            level=0),
+        ImportFrom(
+            module='models',
+            names=[
+                alias(name='User')],
+            level=1),
+        ClassDef(
+            name='UserSerializer',
+            bases=[
+                Attribute(
+                    value=Name(id='serializers', ctx=Load()),
+                    attr='ModelSerializer',
+                    ctx=Load())],
+            keywords=[],
+            body=[
+                ClassDef(
+                    name='Meta',
+                    bases=[],
+                    keywords=[],
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='model', ctx=Store())],
+                            value=Name(id='User', ctx=Load())),
+                        Assign(
+                            targets=[
+                                Name(id='fields', ctx=Store())],
+                            value=List(
+                                elts=[
+                                    Constant(value='id'),
+                                    Constant(value='username'),
+                                    Constant(value='email')],
+                                ctx=Load()))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        ImportFrom(
+            module='rest_framework',
+            names=[
+                alias(name='viewsets')],
+            level=0),
+        ClassDef(
+            name='UserViewSet',
+            bases=[
+                Attribute(
+                    value=Name(id='viewsets', ctx=Load()),
+                    attr='ModelViewSet',
+                    ctx=Load())],
+            keywords=[],
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='queryset', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='User', ctx=Load()),
+                                attr='objects',
+                                ctx=Load()),
+                            attr='all',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='serializer_class', ctx=Store())],
+                    value=Name(id='UserSerializer', ctx=Load())),
+                FunctionDef(
+                    name='get_queryset',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='depth', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Attribute(
+                                            value=Name(id='self', ctx=Load()),
+                                            attr='request',
+                                            ctx=Load()),
+                                        attr='query_params',
+                                        ctx=Load()),
+                                    attr='get',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='depth'),
+                                    Constant(value=None)],
+                                keywords=[])),
+                        If(
+                            test=Compare(
+                                left=Name(id='depth', ctx=Load()),
+                                ops=[
+                                    IsNot()],
+                                comparators=[
+                                    Constant(value=None)]),
+                            body=[
+                                Raise(
+                                    exc=Call(
+                                        func=Attribute(
+                                            value=Name(id='serializers', ctx=Load()),
+                                            attr='ValidationError',
+                                            ctx=Load()),
+                                        args=[
+                                            Constant(value="The 'depth' parameter is not allowed.")],
+                                        keywords=[]))],
+                            orelse=[]),
+                        Return(
+                            value=Call(
+                                func=Attribute(
+                                    value=Call(
+                                        func=Name(id='super', ctx=Load()),
+                                        args=[],
+                                        keywords=[]),
+                                    attr='get_queryset',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[]))],
+                    decorator_list=[])],
+            decorator_list=[])],
+    type_ignores=[])

@@ -1,0 +1,103 @@
+Module(
+    body=[
+        FunctionDef(
+            name='verify_bundle',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='bundle')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Constant(value='Simplified representation of vulnerable verification.')),
+                Try(
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='integration_time', ctx=Store())],
+                            value=Subscript(
+                                value=Name(id='bundle', ctx=Load()),
+                                slice=Constant(value='integration_time'),
+                                ctx=Load())),
+                        Assign(
+                            targets=[
+                                Name(id='signed_time_source', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='bundle', ctx=Load()),
+                                    attr='get',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='signed_time_source')],
+                                keywords=[])),
+                        If(
+                            test=Name(id='signed_time_source', ctx=Load()),
+                            body=[
+                                If(
+                                    test=UnaryOp(
+                                        op=Not(),
+                                        operand=Call(
+                                            func=Name(id='is_valid_time', ctx=Load()),
+                                            args=[
+                                                Name(id='integration_time', ctx=Load())],
+                                            keywords=[])),
+                                    body=[
+                                        Return(
+                                            value=Constant(value=False))],
+                                    orelse=[])],
+                            orelse=[
+                                Pass()]),
+                        Return(
+                            value=Constant(value=True))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='KeyError', ctx=Load()),
+                            body=[
+                                Return(
+                                    value=Constant(value=False))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[]),
+        FunctionDef(
+            name='is_valid_time',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='time')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Constant(value=True))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='vulnerable_bundle', ctx=Store())],
+            value=Dict(
+                keys=[
+                    Constant(value='integration_time')],
+                values=[
+                    Constant(value='2025-01-01T00:00:00Z')])),
+        Assign(
+            targets=[
+                Name(id='result', ctx=Store())],
+            value=Call(
+                func=Name(id='verify_bundle', ctx=Load()),
+                args=[
+                    Name(id='vulnerable_bundle', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    JoinedStr(
+                        values=[
+                            Constant(value='Verification result: '),
+                            FormattedValue(
+                                value=Name(id='result', ctx=Load()),
+                                conversion=-1)])],
+                keywords=[]))],
+    type_ignores=[])

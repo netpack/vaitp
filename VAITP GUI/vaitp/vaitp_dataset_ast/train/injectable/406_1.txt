@@ -1,0 +1,146 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='pickle')]),
+        ClassDef(
+            name='MyModel',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='model_data')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='model_data',
+                                    ctx=Store())],
+                            value=Name(id='model_data', ctx=Load()))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='train',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Training model with data:'),
+                                    Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='model_data',
+                                        ctx=Load())],
+                                keywords=[]))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        FunctionDef(
+            name='load_model',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='serialized_data')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Try(
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='model', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='pickle', ctx=Load()),
+                                    attr='loads',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='serialized_data', ctx=Load())],
+                                keywords=[])),
+                        If(
+                            test=UnaryOp(
+                                op=Not(),
+                                operand=Call(
+                                    func=Name(id='isinstance', ctx=Load()),
+                                    args=[
+                                        Name(id='model', ctx=Load()),
+                                        Name(id='MyModel', ctx=Load())],
+                                    keywords=[])),
+                            body=[
+                                Raise(
+                                    exc=Call(
+                                        func=Name(id='ValueError', ctx=Load()),
+                                        args=[
+                                            Constant(value='Deserialized object is not of the expected type MyModel.')],
+                                        keywords=[]))],
+                            orelse=[]),
+                        Return(
+                            value=Name(id='model', ctx=Load()))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='Exception', ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            Constant(value='Failed to load model:'),
+                                            Name(id='e', ctx=Load())],
+                                        keywords=[])),
+                                Return(
+                                    value=Constant(value=None))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='valid_model_data', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='pickle', ctx=Load()),
+                    attr='dumps',
+                    ctx=Load()),
+                args=[
+                    Call(
+                        func=Name(id='MyModel', ctx=Load()),
+                        args=[
+                            Constant(value='Some training data')],
+                        keywords=[])],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='model', ctx=Store())],
+            value=Call(
+                func=Name(id='load_model', ctx=Load()),
+                args=[
+                    Name(id='valid_model_data', ctx=Load())],
+                keywords=[])),
+        If(
+            test=Name(id='model', ctx=Load()),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='model', ctx=Load()),
+                            attr='train',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

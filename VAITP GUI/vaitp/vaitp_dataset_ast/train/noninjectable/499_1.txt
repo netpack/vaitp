@@ -1,0 +1,43 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='yaml')]),
+        FunctionDef(
+            name='read_yaml_file',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='file_path')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                With(
+                    items=[
+                        withitem(
+                            context_expr=Call(
+                                func=Name(id='open', ctx=Load()),
+                                args=[
+                                    Name(id='file_path', ctx=Load()),
+                                    Constant(value='r')],
+                                keywords=[]),
+                            optional_vars=Name(id='file', ctx=Store()))],
+                    body=[
+                        Return(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='yaml', ctx=Load()),
+                                    attr='load',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='file', ctx=Load())],
+                                keywords=[
+                                    keyword(
+                                        arg='Loader',
+                                        value=Attribute(
+                                            value=Name(id='yaml', ctx=Load()),
+                                            attr='FullLoader',
+                                            ctx=Load()))]))])],
+            decorator_list=[])],
+    type_ignores=[])

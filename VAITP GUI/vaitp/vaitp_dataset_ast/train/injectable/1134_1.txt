@@ -1,0 +1,95 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='sys')]),
+        ImportFrom(
+            module='tqdm',
+            names=[
+                alias(name='tqdm')],
+            level=0),
+        FunctionDef(
+            name='safe_tqdm',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='iterable')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                kwarg=arg(arg='kwargs'),
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='safe_kwargs', ctx=Store())],
+                    value=DictComp(
+                        key=Name(id='k', ctx=Load()),
+                        value=Name(id='v', ctx=Load()),
+                        generators=[
+                            comprehension(
+                                target=Tuple(
+                                    elts=[
+                                        Name(id='k', ctx=Store()),
+                                        Name(id='v', ctx=Store())],
+                                    ctx=Store()),
+                                iter=Call(
+                                    func=Attribute(
+                                        value=Name(id='kwargs', ctx=Load()),
+                                        attr='items',
+                                        ctx=Load()),
+                                    args=[],
+                                    keywords=[]),
+                                ifs=[
+                                    Compare(
+                                        left=Name(id='k', ctx=Load()),
+                                        ops=[
+                                            In()],
+                                        comparators=[
+                                            List(
+                                                elts=[
+                                                    Constant(value='total'),
+                                                    Constant(value='desc'),
+                                                    Constant(value='bar_format'),
+                                                    Constant(value='ncols'),
+                                                    Constant(value='leave')],
+                                                ctx=Load())])],
+                                is_async=0)])),
+                Return(
+                    value=Call(
+                        func=Name(id='tqdm', ctx=Load()),
+                        args=[
+                            Name(id='iterable', ctx=Load())],
+                        keywords=[
+                            keyword(
+                                value=Name(id='safe_kwargs', ctx=Load()))]))],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                For(
+                    target=Name(id='i', ctx=Store()),
+                    iter=Call(
+                        func=Name(id='safe_tqdm', ctx=Load()),
+                        args=[
+                            Call(
+                                func=Name(id='range', ctx=Load()),
+                                args=[
+                                    Constant(value=10)],
+                                keywords=[])],
+                        keywords=[
+                            keyword(
+                                arg='desc',
+                                value=Constant(value='Processing')),
+                            keyword(
+                                arg='total',
+                                value=Constant(value=10))]),
+                    body=[
+                        Pass()],
+                    orelse=[])],
+            orelse=[])],
+    type_ignores=[])

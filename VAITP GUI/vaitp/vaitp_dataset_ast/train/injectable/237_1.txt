@@ -1,0 +1,362 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='asyncio')]),
+        ImportFrom(
+            module='asyncua',
+            names=[
+                alias(name='Server'),
+                alias(name='ua')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='MAX_CHUNK_SIZE', ctx=Store())],
+            value=BinOp(
+                left=Constant(value=1024),
+                op=Mult(),
+                right=Constant(value=1024))),
+        Assign(
+            targets=[
+                Name(id='MAX_CHUNKS_PER_SESSION', ctx=Store())],
+            value=Constant(value=10)),
+        ClassDef(
+            name='SecureOPCUAServer',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='server',
+                                    ctx=Store())],
+                            value=Call(
+                                func=Name(id='Server', ctx=Load()),
+                                args=[],
+                                keywords=[])),
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='session_chunk_count',
+                                    ctx=Store())],
+                            value=Dict(keys=[], values=[]))],
+                    decorator_list=[]),
+                AsyncFunctionDef(
+                    name='start',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='server',
+                                        ctx=Load()),
+                                    attr='set_endpoint',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='opc.tcp://localhost:4840/freeopcua/server/')],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='server',
+                                        ctx=Load()),
+                                    attr='set_server_name',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='Secure OPC UA Server')],
+                                keywords=[])),
+                        Assign(
+                            targets=[
+                                Name(id='uri', ctx=Store())],
+                            value=Constant(value='http://example.org')),
+                        Assign(
+                            targets=[
+                                Name(id='idx', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='server',
+                                        ctx=Load()),
+                                    attr='register_namespace',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='uri', ctx=Load())],
+                                keywords=[])),
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='obj',
+                                    ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Attribute(
+                                            value=Attribute(
+                                                value=Name(id='self', ctx=Load()),
+                                                attr='server',
+                                                ctx=Load()),
+                                            attr='nodes',
+                                            ctx=Load()),
+                                        attr='objects',
+                                        ctx=Load()),
+                                    attr='add_object',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='idx', ctx=Load()),
+                                    Constant(value='MyObject')],
+                                keywords=[])),
+                        Expr(
+                            value=Await(
+                                value=Call(
+                                    func=Attribute(
+                                        value=Attribute(
+                                            value=Name(id='self', ctx=Load()),
+                                            attr='server',
+                                            ctx=Load()),
+                                        attr='start',
+                                        ctx=Load()),
+                                    args=[],
+                                    keywords=[]))),
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Call(
+                                        func=Attribute(
+                                            value=Constant(value='Server started at {}'),
+                                            attr='format',
+                                            ctx=Load()),
+                                        args=[
+                                            Attribute(
+                                                value=Attribute(
+                                                    value=Name(id='self', ctx=Load()),
+                                                    attr='server',
+                                                    ctx=Load()),
+                                                attr='endpoint',
+                                                ctx=Load())],
+                                        keywords=[])],
+                                keywords=[])),
+                        Try(
+                            body=[
+                                While(
+                                    test=Constant(value=True),
+                                    body=[
+                                        Expr(
+                                            value=Await(
+                                                value=Call(
+                                                    func=Attribute(
+                                                        value=Name(id='asyncio', ctx=Load()),
+                                                        attr='sleep',
+                                                        ctx=Load()),
+                                                    args=[
+                                                        Constant(value=1)],
+                                                    keywords=[])))],
+                                    orelse=[])],
+                            handlers=[],
+                            orelse=[],
+                            finalbody=[
+                                Expr(
+                                    value=Await(
+                                        value=Call(
+                                            func=Attribute(
+                                                value=Attribute(
+                                                    value=Name(id='self', ctx=Load()),
+                                                    attr='server',
+                                                    ctx=Load()),
+                                                attr='stop',
+                                                ctx=Load()),
+                                            args=[],
+                                            keywords=[])))])],
+                    decorator_list=[]),
+                AsyncFunctionDef(
+                    name='on_chunk_received',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='chunk'),
+                            arg(arg='session_id')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        If(
+                            test=Compare(
+                                left=Call(
+                                    func=Name(id='len', ctx=Load()),
+                                    args=[
+                                        Name(id='chunk', ctx=Load())],
+                                    keywords=[]),
+                                ops=[
+                                    Gt()],
+                                comparators=[
+                                    Name(id='MAX_CHUNK_SIZE', ctx=Load())]),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    Constant(value='Chunk size exceeded for session '),
+                                                    FormattedValue(
+                                                        value=Name(id='session_id', ctx=Load()),
+                                                        conversion=-1),
+                                                    Constant(value='.')])],
+                                        keywords=[])),
+                                Return()],
+                            orelse=[]),
+                        If(
+                            test=Compare(
+                                left=Name(id='session_id', ctx=Load()),
+                                ops=[
+                                    NotIn()],
+                                comparators=[
+                                    Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='session_chunk_count',
+                                        ctx=Load())]),
+                            body=[
+                                Assign(
+                                    targets=[
+                                        Subscript(
+                                            value=Attribute(
+                                                value=Name(id='self', ctx=Load()),
+                                                attr='session_chunk_count',
+                                                ctx=Load()),
+                                            slice=Name(id='session_id', ctx=Load()),
+                                            ctx=Store())],
+                                    value=Constant(value=0))],
+                            orelse=[]),
+                        If(
+                            test=Compare(
+                                left=Subscript(
+                                    value=Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='session_chunk_count',
+                                        ctx=Load()),
+                                    slice=Name(id='session_id', ctx=Load()),
+                                    ctx=Load()),
+                                ops=[
+                                    GtE()],
+                                comparators=[
+                                    Name(id='MAX_CHUNKS_PER_SESSION', ctx=Load())]),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    Constant(value='Max chunks exceeded for session '),
+                                                    FormattedValue(
+                                                        value=Name(id='session_id', ctx=Load()),
+                                                        conversion=-1),
+                                                    Constant(value='.')])],
+                                        keywords=[])),
+                                Return()],
+                            orelse=[]),
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            Constant(value='Received chunk from session '),
+                                            FormattedValue(
+                                                value=Name(id='session_id', ctx=Load()),
+                                                conversion=-1),
+                                            Constant(value=': '),
+                                            FormattedValue(
+                                                value=Call(
+                                                    func=Name(id='len', ctx=Load()),
+                                                    args=[
+                                                        Name(id='chunk', ctx=Load())],
+                                                    keywords=[]),
+                                                conversion=-1),
+                                            Constant(value=' bytes')])],
+                                keywords=[])),
+                        AugAssign(
+                            target=Subscript(
+                                value=Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='session_chunk_count',
+                                    ctx=Load()),
+                                slice=Name(id='session_id', ctx=Load()),
+                                ctx=Store()),
+                            op=Add(),
+                            value=Constant(value=1))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        AsyncFunctionDef(
+            name='main',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='server', ctx=Store())],
+                    value=Call(
+                        func=Name(id='SecureOPCUAServer', ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Expr(
+                    value=Await(
+                        value=Call(
+                            func=Attribute(
+                                value=Name(id='server', ctx=Load()),
+                                attr='start',
+                                ctx=Load()),
+                            args=[],
+                            keywords=[])))],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='asyncio', ctx=Load()),
+                            attr='run',
+                            ctx=Load()),
+                        args=[
+                            Call(
+                                func=Name(id='main', ctx=Load()),
+                                args=[],
+                                keywords=[])],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

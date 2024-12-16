@@ -1,0 +1,111 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='tensorflow', asname='tf')]),
+        FunctionDef(
+            name='func_a',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Name(id='func_b', ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            decorator_list=[
+                Attribute(
+                    value=Name(id='tf', ctx=Load()),
+                    attr='function',
+                    ctx=Load())]),
+        FunctionDef(
+            name='func_b',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Name(id='func_a', ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            decorator_list=[
+                Attribute(
+                    value=Name(id='tf', ctx=Load()),
+                    attr='function',
+                    ctx=Load())]),
+        Try(
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='func_a', ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='RuntimeError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Caught a RuntimeError, indicating a potential deadlock:'),
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[]),
+        FunctionDef(
+            name='safe_func_a',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Constant(value=1))],
+            decorator_list=[]),
+        FunctionDef(
+            name='safe_func_b',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Constant(value=2))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='result_a', ctx=Store())],
+            value=Call(
+                func=Name(id='safe_func_a', ctx=Load()),
+                args=[],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='result_b', ctx=Store())],
+            value=Call(
+                func=Name(id='safe_func_b', ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Constant(value='Results:'),
+                    Name(id='result_a', ctx=Load()),
+                    Name(id='result_b', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

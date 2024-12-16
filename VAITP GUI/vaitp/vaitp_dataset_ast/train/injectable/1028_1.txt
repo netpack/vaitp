@@ -1,0 +1,150 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='socket')]),
+        FunctionDef(
+            name='create_socket_pair',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='sock1', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='socket', ctx=Load()),
+                            attr='socket',
+                            ctx=Load()),
+                        args=[
+                            Attribute(
+                                value=Name(id='socket', ctx=Load()),
+                                attr='AF_INET',
+                                ctx=Load()),
+                            Attribute(
+                                value=Name(id='socket', ctx=Load()),
+                                attr='SOCK_STREAM',
+                                ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='sock2', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='socket', ctx=Load()),
+                            attr='socket',
+                            ctx=Load()),
+                        args=[
+                            Attribute(
+                                value=Name(id='socket', ctx=Load()),
+                                attr='AF_INET',
+                                ctx=Load()),
+                            Attribute(
+                                value=Name(id='socket', ctx=Load()),
+                                attr='SOCK_STREAM',
+                                ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='sock1', ctx=Load()),
+                            attr='bind',
+                            ctx=Load()),
+                        args=[
+                            Tuple(
+                                elts=[
+                                    Constant(value='localhost'),
+                                    Constant(value=0)],
+                                ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='sock2', ctx=Load()),
+                            attr='bind',
+                            ctx=Load()),
+                        args=[
+                            Tuple(
+                                elts=[
+                                    Constant(value='localhost'),
+                                    Constant(value=0)],
+                                ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='port', ctx=Store())],
+                    value=Subscript(
+                        value=Call(
+                            func=Attribute(
+                                value=Name(id='sock1', ctx=Load()),
+                                attr='getsockname',
+                                ctx=Load()),
+                            args=[],
+                            keywords=[]),
+                        slice=Constant(value=1),
+                        ctx=Load())),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='sock2', ctx=Load()),
+                            attr='connect',
+                            ctx=Load()),
+                        args=[
+                            Tuple(
+                                elts=[
+                                    Constant(value='localhost'),
+                                    Name(id='port', ctx=Load())],
+                                ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='sock1', ctx=Load()),
+                            attr='listen',
+                            ctx=Load()),
+                        args=[
+                            Constant(value=1)],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Tuple(
+                            elts=[
+                                Name(id='conn', ctx=Store()),
+                                Name(id='_', ctx=Store())],
+                            ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='sock1', ctx=Load()),
+                            attr='accept',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Return(
+                    value=Tuple(
+                        elts=[
+                            Name(id='conn', ctx=Load()),
+                            Name(id='sock2', ctx=Load())],
+                        ctx=Load()))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Tuple(
+                    elts=[
+                        Name(id='conn', ctx=Store()),
+                        Name(id='sock2', ctx=Store())],
+                    ctx=Store())],
+            value=Call(
+                func=Name(id='create_socket_pair', ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Constant(value='Connected sockets created successfully.')],
+                keywords=[]))],
+    type_ignores=[])

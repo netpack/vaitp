@@ -1,0 +1,98 @@
+Module(
+    body=[
+        FunctionDef(
+            name='process_data',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='data')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                For(
+                    target=Name(id='item', ctx=Store()),
+                    iter=Name(id='data', ctx=Load()),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='obj', ctx=Store())],
+                            value=Call(
+                                func=Name(id='create_object', ctx=Load()),
+                                args=[
+                                    Name(id='item', ctx=Load())],
+                                keywords=[])),
+                        Assign(
+                            targets=[
+                                Name(id='ref_count', ctx=Store())],
+                            value=Call(
+                                func=Name(id='get_ref_count', ctx=Load()),
+                                args=[
+                                    Name(id='obj', ctx=Load())],
+                                keywords=[])),
+                        If(
+                            test=Compare(
+                                left=Name(id='ref_count', ctx=Load()),
+                                ops=[
+                                    Eq()],
+                                comparators=[
+                                    Constant(value=1)]),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='free_object', ctx=Load()),
+                                        args=[
+                                            Name(id='obj', ctx=Load())],
+                                        keywords=[]))],
+                            orelse=[])],
+                    orelse=[])],
+            decorator_list=[]),
+        FunctionDef(
+            name='create_object',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='item')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Name(id='item', ctx=Load()))],
+            decorator_list=[]),
+        FunctionDef(
+            name='get_ref_count',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='obj')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Constant(value=2))],
+            decorator_list=[]),
+        FunctionDef(
+            name='free_object',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='obj')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            JoinedStr(
+                                values=[
+                                    Constant(value='Freeing object: '),
+                                    FormattedValue(
+                                        value=Name(id='obj', ctx=Load()),
+                                        conversion=-1)])],
+                        keywords=[]))],
+            decorator_list=[])],
+    type_ignores=[])

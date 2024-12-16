@@ -1,0 +1,186 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='requests')]),
+        Import(
+            names=[
+                alias(name='hashlib')]),
+        FunctionDef(
+            name='download_package',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='package_name'),
+                    arg(arg='version')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='url', ctx=Store())],
+                    value=JoinedStr(
+                        values=[
+                            Constant(value='https://pypi.org/pypi/'),
+                            FormattedValue(
+                                value=Name(id='package_name', ctx=Load()),
+                                conversion=-1),
+                            Constant(value='/'),
+                            FormattedValue(
+                                value=Name(id='version', ctx=Load()),
+                                conversion=-1),
+                            Constant(value='/json')])),
+                Assign(
+                    targets=[
+                        Name(id='response', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='requests', ctx=Load()),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Name(id='url', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='response', ctx=Load()),
+                            attr='raise_for_status',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='package_info', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='response', ctx=Load()),
+                            attr='json',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='package_url', ctx=Store())],
+                    value=Subscript(
+                        value=Subscript(
+                            value=Subscript(
+                                value=Name(id='package_info', ctx=Load()),
+                                slice=Constant(value='urls'),
+                                ctx=Load()),
+                            slice=Constant(value=0),
+                            ctx=Load()),
+                        slice=Constant(value='url'),
+                        ctx=Load())),
+                Assign(
+                    targets=[
+                        Name(id='expected_hash', ctx=Store())],
+                    value=Subscript(
+                        value=Subscript(
+                            value=Subscript(
+                                value=Subscript(
+                                    value=Name(id='package_info', ctx=Load()),
+                                    slice=Constant(value='urls'),
+                                    ctx=Load()),
+                                slice=Constant(value=0),
+                                ctx=Load()),
+                            slice=Constant(value='digests'),
+                            ctx=Load()),
+                        slice=Constant(value='sha256'),
+                        ctx=Load())),
+                Assign(
+                    targets=[
+                        Name(id='package_response', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='requests', ctx=Load()),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Name(id='package_url', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='package_response', ctx=Load()),
+                            attr='raise_for_status',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='actual_hash', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='hashlib', ctx=Load()),
+                                    attr='sha256',
+                                    ctx=Load()),
+                                args=[
+                                    Attribute(
+                                        value=Name(id='package_response', ctx=Load()),
+                                        attr='content',
+                                        ctx=Load())],
+                                keywords=[]),
+                            attr='hexdigest',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                If(
+                    test=Compare(
+                        left=Name(id='actual_hash', ctx=Load()),
+                        ops=[
+                            NotEq()],
+                        comparators=[
+                            Name(id='expected_hash', ctx=Load())]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Package integrity check failed!')],
+                                keywords=[]))],
+                    orelse=[]),
+                With(
+                    items=[
+                        withitem(
+                            context_expr=Call(
+                                func=Name(id='open', ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            FormattedValue(
+                                                value=Name(id='package_name', ctx=Load()),
+                                                conversion=-1),
+                                            Constant(value='-'),
+                                            FormattedValue(
+                                                value=Name(id='version', ctx=Load()),
+                                                conversion=-1),
+                                            Constant(value='.whl')]),
+                                    Constant(value='wb')],
+                                keywords=[]),
+                            optional_vars=Name(id='f', ctx=Store()))],
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='f', ctx=Load()),
+                                    attr='write',
+                                    ctx=Load()),
+                                args=[
+                                    Attribute(
+                                        value=Name(id='package_response', ctx=Load()),
+                                        attr='content',
+                                        ctx=Load())],
+                                keywords=[]))])],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='download_package', ctx=Load()),
+                args=[
+                    Constant(value='example-package'),
+                    Constant(value='1.0.0')],
+                keywords=[]))],
+    type_ignores=[])

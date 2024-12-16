@@ -1,0 +1,110 @@
+Module(
+    body=[
+        ImportFrom(
+            module='waitress',
+            names=[
+                alias(name='serve')],
+            level=0),
+        FunctionDef(
+            name='vulnerable_int_parsing',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='value')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Name(id='int', ctx=Load()),
+                        args=[
+                            Name(id='value', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='handle_request',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='environ'),
+                    arg(arg='start_response')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='headers', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='environ', ctx=Load()),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='HTTP_HEADERS'),
+                            Constant(value='')],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='response_body', ctx=Store())],
+                    value=Constant(value=b'Hello, World!')),
+                Assign(
+                    targets=[
+                        Name(id='status', ctx=Store())],
+                    value=Constant(value='200 OK')),
+                Expr(
+                    value=Call(
+                        func=Name(id='start_response', ctx=Load()),
+                        args=[
+                            Name(id='status', ctx=Load()),
+                            List(
+                                elts=[
+                                    Tuple(
+                                        elts=[
+                                            Constant(value='Content-Type'),
+                                            Constant(value='text/plain')],
+                                        ctx=Load()),
+                                    Tuple(
+                                        elts=[
+                                            Constant(value='Content-Length'),
+                                            Call(
+                                                func=Name(id='str', ctx=Load()),
+                                                args=[
+                                                    Call(
+                                                        func=Name(id='len', ctx=Load()),
+                                                        args=[
+                                                            Name(id='response_body', ctx=Load())],
+                                                        keywords=[])],
+                                                keywords=[])],
+                                        ctx=Load())],
+                                ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=List(
+                        elts=[
+                            Name(id='response_body', ctx=Load())],
+                        ctx=Load()))],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='serve', ctx=Load()),
+                        args=[
+                            Name(id='handle_request', ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='host',
+                                value=Constant(value='0.0.0.0')),
+                            keyword(
+                                arg='port',
+                                value=Constant(value=8080))]))],
+            orelse=[])],
+    type_ignores=[])

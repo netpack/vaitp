@@ -1,0 +1,61 @@
+Module(
+    body=[
+        ImportFrom(
+            module='markdown2',
+            names=[
+                alias(name='markdown')],
+            level=0),
+        Import(
+            names=[
+                alias(name='html')]),
+        FunctionDef(
+            name='render_markdown',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='user_input')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='escaped_input', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='html', ctx=Load()),
+                            attr='escape',
+                            ctx=Load()),
+                        args=[
+                            Name(id='user_input', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='html_output', ctx=Store())],
+                    value=Call(
+                        func=Name(id='markdown', ctx=Load()),
+                        args=[
+                            Name(id='escaped_input', ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=Name(id='html_output', ctx=Load()))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='user_input', ctx=Store())],
+            value=Constant(value="<script>alert('XSS');</script>")),
+        Assign(
+            targets=[
+                Name(id='output', ctx=Store())],
+            value=Call(
+                func=Name(id='render_markdown', ctx=Load()),
+                args=[
+                    Name(id='user_input', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='output', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

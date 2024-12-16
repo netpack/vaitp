@@ -1,0 +1,62 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='tensorflow', asname='tf')]),
+        Assert(
+            test=BoolOp(
+                op=Or(),
+                values=[
+                    Compare(
+                        left=Attribute(
+                            value=Name(id='tf', ctx=Load()),
+                            attr='__version__',
+                            ctx=Load()),
+                        ops=[
+                            GtE()],
+                        comparators=[
+                            Constant(value='1.15.1')]),
+                    Compare(
+                        left=Attribute(
+                            value=Name(id='tf', ctx=Load()),
+                            attr='__version__',
+                            ctx=Load()),
+                        ops=[
+                            GtE()],
+                        comparators=[
+                            Constant(value='2.0.1')])]),
+            msg=Constant(value='TensorFlow version is vulnerable!')),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='value', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='tf', ctx=Load()),
+                            attr='constant',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='hello')],
+                        keywords=[
+                            keyword(
+                                arg='dtype',
+                                value=Attribute(
+                                    value=Name(id='tf', ctx=Load()),
+                                    attr='float16',
+                                    ctx=Load()))]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='Exception', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Error:'),
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

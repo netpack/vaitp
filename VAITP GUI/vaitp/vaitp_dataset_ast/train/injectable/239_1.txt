@@ -1,0 +1,66 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='subprocess')]),
+        Import(
+            names=[
+                alias(name='shlex')]),
+        FunctionDef(
+            name='run_gcov',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='file_path')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=UnaryOp(
+                        op=Not(),
+                        operand=Call(
+                            func=Attribute(
+                                value=Name(id='file_path', ctx=Load()),
+                                attr='endswith',
+                                ctx=Load()),
+                            args=[
+                                Constant(value='.c')],
+                            keywords=[])),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value="Invalid file type. Only '.c' files are allowed.")],
+                                keywords=[]))],
+                    orelse=[]),
+                Assign(
+                    targets=[
+                        Name(id='command', ctx=Store())],
+                    value=List(
+                        elts=[
+                            Constant(value='gcov'),
+                            Name(id='file_path', ctx=Load())],
+                        ctx=Load())),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='subprocess', ctx=Load()),
+                            attr='Popen',
+                            ctx=Load()),
+                        args=[
+                            Name(id='command', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='safe_input', ctx=Store())],
+            value=Constant(value='file.c')),
+        Expr(
+            value=Call(
+                func=Name(id='run_gcov', ctx=Load()),
+                args=[
+                    Name(id='safe_input', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

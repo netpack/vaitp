@@ -1,0 +1,84 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='subprocess')]),
+        FunctionDef(
+            name='secure_chpasswd',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='username'),
+                    arg(arg='password')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Compare(
+                        left=Name(id='password', ctx=Load()),
+                        ops=[
+                            Eq()],
+                        comparators=[
+                            Constant(value='!')]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value="Setting the password to '!' is not allowed for security reasons.")],
+                                keywords=[]))],
+                    orelse=[]),
+                Assign(
+                    targets=[
+                        Name(id='command', ctx=Store())],
+                    value=JoinedStr(
+                        values=[
+                            Constant(value="echo '"),
+                            FormattedValue(
+                                value=Name(id='username', ctx=Load()),
+                                conversion=-1),
+                            Constant(value=':'),
+                            FormattedValue(
+                                value=Name(id='password', ctx=Load()),
+                                conversion=-1),
+                            Constant(value="' | chpasswd -e")])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='subprocess', ctx=Load()),
+                            attr='run',
+                            ctx=Load()),
+                        args=[
+                            Name(id='command', ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='shell',
+                                value=Constant(value=True)),
+                            keyword(
+                                arg='check',
+                                value=Constant(value=True))]))],
+            decorator_list=[]),
+        Try(
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='secure_chpasswd', ctx=Load()),
+                        args=[
+                            Constant(value='root'),
+                            Constant(value='!')],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ValueError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

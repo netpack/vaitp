@@ -1,0 +1,86 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='gradio', asname='gr')]),
+        Import(
+            names=[
+                alias(name='threading')]),
+        Assign(
+            targets=[
+                Name(id='root_url', ctx=Store())],
+            value=Constant(value='http://localhost:7860')),
+        FunctionDef(
+            name='update_root_in_config',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='new_root')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Global(
+                    names=[
+                        'root_url']),
+                Assign(
+                    targets=[
+                        Name(id='root_url', ctx=Store())],
+                    value=Name(id='new_root', ctx=Load()))],
+            decorator_list=[]),
+        FunctionDef(
+            name='attacker_thread',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                For(
+                    target=Name(id='_', ctx=Store()),
+                    iter=Call(
+                        func=Name(id='range', ctx=Load()),
+                        args=[
+                            Constant(value=10)],
+                        keywords=[]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='update_root_in_config', ctx=Load()),
+                                args=[
+                                    Constant(value='http://malicious-server.com')],
+                                keywords=[]))],
+                    orelse=[])],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='threading', ctx=Load()),
+                            attr='Thread',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[
+                            keyword(
+                                arg='target',
+                                value=Name(id='attacker_thread', ctx=Load()))]),
+                    attr='start',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='update_root_in_config', ctx=Load()),
+                args=[
+                    Constant(value='http://my-secure-server.com')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Constant(value='Final root URL:'),
+                    Name(id='root_url', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

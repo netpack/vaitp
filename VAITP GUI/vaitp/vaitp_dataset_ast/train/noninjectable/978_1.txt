@@ -1,0 +1,26 @@
+Module(
+    body=[
+        FunctionDef(
+            name='vulnerable_function',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(
+                        arg='amount',
+                        annotation=Name(id='decimal', ctx=Load()))],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                AnnAssign(
+                    target=Name(id='total', ctx=Store()),
+                    annotation=Name(id='decimal', ctx=Load()),
+                    value=Constant(value=100.0),
+                    simple=1),
+                AugAssign(
+                    target=Name(id='total', ctx=Store()),
+                    op=Add(),
+                    value=Name(id='amount', ctx=Load()))],
+            decorator_list=[
+                Name(id='public', ctx=Load())])],
+    type_ignores=[])

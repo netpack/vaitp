@@ -1,0 +1,189 @@
+Module(
+    body=[
+        ImportFrom(
+            module='pyramid.config',
+            names=[
+                alias(name='Configurator')],
+            level=0),
+        ImportFrom(
+            module='pyramid.response',
+            names=[
+                alias(name='Response')],
+            level=0),
+        Import(
+            names=[
+                alias(name='os')]),
+        FunctionDef(
+            name='safe_static_view',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='request')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='subpath', ctx=Store())],
+                    value=Subscript(
+                        value=Attribute(
+                            value=Name(id='request', ctx=Load()),
+                            attr='matchdict',
+                            ctx=Load()),
+                        slice=Constant(value='subpath'),
+                        ctx=Load())),
+                Assign(
+                    targets=[
+                        Name(id='base_directory', ctx=Store())],
+                    value=Constant(value='/path/to/static/')),
+                Assign(
+                    targets=[
+                        Name(id='full_path', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='path',
+                                ctx=Load()),
+                            attr='join',
+                            ctx=Load()),
+                        args=[
+                            Name(id='base_directory', ctx=Load()),
+                            Name(id='subpath', ctx=Load())],
+                        keywords=[])),
+                If(
+                    test=UnaryOp(
+                        op=Not(),
+                        operand=Compare(
+                            left=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='os', ctx=Load()),
+                                        attr='path',
+                                        ctx=Load()),
+                                    attr='commonpath',
+                                    ctx=Load()),
+                                args=[
+                                    List(
+                                        elts=[
+                                            Name(id='full_path', ctx=Load()),
+                                            Name(id='base_directory', ctx=Load())],
+                                        ctx=Load())],
+                                keywords=[]),
+                            ops=[
+                                Eq()],
+                            comparators=[
+                                Name(id='base_directory', ctx=Load())])),
+                    body=[
+                        Return(
+                            value=Call(
+                                func=Name(id='Response', ctx=Load()),
+                                args=[],
+                                keywords=[
+                                    keyword(
+                                        arg='status',
+                                        value=Constant(value=403)),
+                                    keyword(
+                                        arg='body',
+                                        value=Constant(value='Access denied.'))]))],
+                    orelse=[]),
+                If(
+                    test=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='path',
+                                ctx=Load()),
+                            attr='isfile',
+                            ctx=Load()),
+                        args=[
+                            Name(id='full_path', ctx=Load())],
+                        keywords=[]),
+                    body=[
+                        Return(
+                            value=Call(
+                                func=Name(id='Response', ctx=Load()),
+                                args=[],
+                                keywords=[
+                                    keyword(
+                                        arg='body',
+                                        value=Call(
+                                            func=Attribute(
+                                                value=Call(
+                                                    func=Name(id='open', ctx=Load()),
+                                                    args=[
+                                                        Name(id='full_path', ctx=Load()),
+                                                        Constant(value='rb')],
+                                                    keywords=[]),
+                                                attr='read',
+                                                ctx=Load()),
+                                            args=[],
+                                            keywords=[])),
+                                    keyword(
+                                        arg='content_type',
+                                        value=Constant(value='text/html'))]))],
+                    orelse=[
+                        Return(
+                            value=Call(
+                                func=Name(id='Response', ctx=Load()),
+                                args=[],
+                                keywords=[
+                                    keyword(
+                                        arg='status',
+                                        value=Constant(value=404)),
+                                    keyword(
+                                        arg='body',
+                                        value=Constant(value='File not found.'))]))])],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                With(
+                    items=[
+                        withitem(
+                            context_expr=Call(
+                                func=Name(id='Configurator', ctx=Load()),
+                                args=[],
+                                keywords=[]),
+                            optional_vars=Name(id='config', ctx=Store()))],
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='config', ctx=Load()),
+                                    attr='add_route',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='static'),
+                                    Constant(value='/static/*subpath')],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='config', ctx=Load()),
+                                    attr='add_view',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='safe_static_view', ctx=Load())],
+                                keywords=[
+                                    keyword(
+                                        arg='route_name',
+                                        value=Constant(value='static'))])),
+                        Assign(
+                            targets=[
+                                Name(id='app', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='config', ctx=Load()),
+                                    attr='make_wsgi_app',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[]))])],
+            orelse=[])],
+    type_ignores=[])

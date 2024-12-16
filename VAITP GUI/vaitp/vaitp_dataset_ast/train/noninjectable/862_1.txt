@@ -1,0 +1,51 @@
+Module(
+    body=[
+        FunctionDef(
+            name='import_attachment',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='attachment_content')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Constant(value='\n    Imports attachment content without proper escaping, leading to potential code execution.\n    ')),
+                Expr(
+                    value=Call(
+                        func=Name(id='execute_code', ctx=Load()),
+                        args=[
+                            Name(id='attachment_content', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='execute_code',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='code')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Constant(value='\n    Executes arbitrary code, which can lead to severe security vulnerabilities.\n    This simulates the execution of Groovy, Python, or Velocity code.\n    ')),
+                Expr(
+                    value=Call(
+                        func=Name(id='exec', ctx=Load()),
+                        args=[
+                            Name(id='code', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='attachment_content', ctx=Store())],
+            value=Constant(value="print('This is a test');")),
+        Expr(
+            value=Call(
+                func=Name(id='import_attachment', ctx=Load()),
+                args=[
+                    Name(id='attachment_content', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

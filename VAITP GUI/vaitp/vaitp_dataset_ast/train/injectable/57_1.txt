@@ -1,0 +1,57 @@
+Module(
+    body=[
+        ImportFrom(
+            module='PIL',
+            names=[
+                alias(name='Image')],
+            level=0),
+        With(
+            items=[
+                withitem(
+                    context_expr=Call(
+                        func=Name(id='open', ctx=Load()),
+                        args=[
+                            Constant(value='crafted_sgi_rle_image.sgi'),
+                            Constant(value='rb')],
+                        keywords=[]),
+                    optional_vars=Name(id='f', ctx=Store()))],
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='image_data', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='f', ctx=Load()),
+                            attr='read',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]))]),
+        Assign(
+            targets=[
+                Name(id='image', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='Image', ctx=Load()),
+                    attr='frombytes',
+                    ctx=Load()),
+                args=[
+                    Constant(value='L'),
+                    Tuple(
+                        elts=[
+                            Constant(value=100),
+                            Constant(value=100)],
+                        ctx=Load()),
+                    Name(id='image_data', ctx=Load())],
+                keywords=[
+                    keyword(
+                        arg='decoder_name',
+                        value=Constant(value='raw'))])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='image', ctx=Load()),
+                    attr='show',
+                    ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

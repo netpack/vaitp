@@ -1,0 +1,115 @@
+Module(
+    body=[
+        FunctionDef(
+            name='is_valid_email',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='email'),
+                    arg(arg='allowed_domains')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Constant(value='\n    Check if the email belongs to an allowed domain.\n    ')),
+                Assign(
+                    targets=[
+                        Name(id='domain', ctx=Store())],
+                    value=Subscript(
+                        value=Call(
+                            func=Attribute(
+                                value=Name(id='email', ctx=Load()),
+                                attr='split',
+                                ctx=Load()),
+                            args=[
+                                Constant(value='@')],
+                            keywords=[]),
+                        slice=UnaryOp(
+                            op=USub(),
+                            operand=Constant(value=1)),
+                        ctx=Load())),
+                Return(
+                    value=Compare(
+                        left=Name(id='domain', ctx=Load()),
+                        ops=[
+                            In()],
+                        comparators=[
+                            Name(id='allowed_domains', ctx=Load())]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='create_hail_account',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='email'),
+                    arg(arg='allowed_domains')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Constant(value='\n    Create a Hail account only if the email is from an allowed domain.\n    ')),
+                If(
+                    test=Call(
+                        func=Name(id='is_valid_email', ctx=Load()),
+                        args=[
+                            Name(id='email', ctx=Load()),
+                            Name(id='allowed_domains', ctx=Load())],
+                        keywords=[]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            Constant(value='Account created for '),
+                                            FormattedValue(
+                                                value=Name(id='email', ctx=Load()),
+                                                conversion=-1),
+                                            Constant(value='.')])],
+                                keywords=[]))],
+                    orelse=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            Constant(value='Email domain not allowed: '),
+                                            FormattedValue(
+                                                value=Name(id='email', ctx=Load()),
+                                                conversion=-1)])],
+                                keywords=[]))])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='allowed_domains', ctx=Store())],
+            value=Set(
+                elts=[
+                    Constant(value='example.org'),
+                    Constant(value='myorganization.com')])),
+        Try(
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='create_hail_account', ctx=Load()),
+                        args=[
+                            Constant(value='user@test@example.org'),
+                            Name(id='allowed_domains', ctx=Load())],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ValueError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

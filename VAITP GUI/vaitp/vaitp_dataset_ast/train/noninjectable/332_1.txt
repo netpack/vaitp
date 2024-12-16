@@ -1,0 +1,94 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='asyncio')]),
+        AsyncFunctionDef(
+            name='handle_request',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='reader'),
+                    arg(arg='writer')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='data', ctx=Store())],
+                    value=Await(
+                        value=Call(
+                            func=Attribute(
+                                value=Name(id='reader', ctx=Load()),
+                                attr='read',
+                                ctx=Load()),
+                            args=[
+                                Constant(value=100)],
+                            keywords=[]))),
+                If(
+                    test=Compare(
+                        left=Name(id='data', ctx=Load()),
+                        ops=[
+                            Eq()],
+                        comparators=[
+                            Constant(value=b'malformed_packet')]),
+                    body=[
+                        While(
+                            test=Constant(value=True),
+                            body=[
+                                Pass()],
+                            orelse=[])],
+                    orelse=[])],
+            decorator_list=[]),
+        AsyncFunctionDef(
+            name='main',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='server', ctx=Store())],
+                    value=Await(
+                        value=Call(
+                            func=Attribute(
+                                value=Name(id='asyncio', ctx=Load()),
+                                attr='start_server',
+                                ctx=Load()),
+                            args=[
+                                Name(id='handle_request', ctx=Load()),
+                                Constant(value='127.0.0.1'),
+                                Constant(value=8888)],
+                            keywords=[]))),
+                AsyncWith(
+                    items=[
+                        withitem(
+                            context_expr=Name(id='server', ctx=Load()))],
+                    body=[
+                        Expr(
+                            value=Await(
+                                value=Call(
+                                    func=Attribute(
+                                        value=Name(id='server', ctx=Load()),
+                                        attr='serve_forever',
+                                        ctx=Load()),
+                                    args=[],
+                                    keywords=[])))])],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='asyncio', ctx=Load()),
+                    attr='run',
+                    ctx=Load()),
+                args=[
+                    Call(
+                        func=Name(id='main', ctx=Load()),
+                        args=[],
+                        keywords=[])],
+                keywords=[]))],
+    type_ignores=[])

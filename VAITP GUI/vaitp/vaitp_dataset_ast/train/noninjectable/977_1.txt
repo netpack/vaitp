@@ -1,0 +1,79 @@
+Module(
+    body=[
+        FunctionDef(
+            name='process_schema',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='schema_lines')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='builtins', ctx=Store())],
+                    value=Dict(
+                        keys=[
+                            Constant(value='__builtins__')],
+                        values=[
+                            Dict(
+                                keys=[
+                                    Constant(value='print')],
+                                values=[
+                                    Name(id='print', ctx=Load())])])),
+                For(
+                    target=Name(id='line', ctx=Store()),
+                    iter=Name(id='schema_lines', ctx=Load()),
+                    body=[
+                        Try(
+                            body=[
+                                Assign(
+                                    targets=[
+                                        Name(id='result', ctx=Store())],
+                                    value=Call(
+                                        func=Name(id='eval', ctx=Load()),
+                                        args=[
+                                            Name(id='line', ctx=Load()),
+                                            Name(id='builtins', ctx=Load())],
+                                        keywords=[]))],
+                            handlers=[
+                                ExceptHandler(
+                                    type=Name(id='Exception', ctx=Load()),
+                                    name='e',
+                                    body=[
+                                        Expr(
+                                            value=Call(
+                                                func=Name(id='print', ctx=Load()),
+                                                args=[
+                                                    JoinedStr(
+                                                        values=[
+                                                            Constant(value="Error processing line '"),
+                                                            FormattedValue(
+                                                                value=Name(id='line', ctx=Load()),
+                                                                conversion=-1),
+                                                            Constant(value="': "),
+                                                            FormattedValue(
+                                                                value=Name(id='e', ctx=Load()),
+                                                                conversion=-1)])],
+                                                keywords=[]))])],
+                            orelse=[],
+                            finalbody=[])],
+                    orelse=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='schema', ctx=Store())],
+            value=List(
+                elts=[
+                    Constant(value='1 + 2'),
+                    Constant(value="'hello'.upper()"),
+                    Constant(value="__import__('os').system('ls')")],
+                ctx=Load())),
+        Expr(
+            value=Call(
+                func=Name(id='process_schema', ctx=Load()),
+                args=[
+                    Name(id='schema', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

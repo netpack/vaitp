@@ -1,0 +1,73 @@
+Module(
+    body=[
+        FunctionDef(
+            name='unsafe_strncpy',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='dest'),
+                    arg(arg='src')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                For(
+                    target=Name(id='i', ctx=Store()),
+                    iter=Call(
+                        func=Name(id='range', ctx=Load()),
+                        args=[
+                            Call(
+                                func=Name(id='len', ctx=Load()),
+                                args=[
+                                    Name(id='src', ctx=Load())],
+                                keywords=[])],
+                        keywords=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Subscript(
+                                    value=Name(id='dest', ctx=Load()),
+                                    slice=Name(id='i', ctx=Load()),
+                                    ctx=Store())],
+                            value=Subscript(
+                                value=Name(id='src', ctx=Load()),
+                                slice=Name(id='i', ctx=Load()),
+                                ctx=Load()))],
+                    orelse=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='destination_buffer', ctx=Store())],
+            value=BinOp(
+                left=List(
+                    elts=[
+                        Constant(value='')],
+                    ctx=Load()),
+                op=Mult(),
+                right=Constant(value=10))),
+        Assign(
+            targets=[
+                Name(id='source_string', ctx=Store())],
+            value=Constant(value='This string is definitely longer than the destination buffer')),
+        Expr(
+            value=Call(
+                func=Name(id='unsafe_strncpy', ctx=Load()),
+                args=[
+                    Name(id='destination_buffer', ctx=Load()),
+                    Name(id='source_string', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Constant(value='Buffer after copy:'),
+                    Call(
+                        func=Attribute(
+                            value=Constant(value=''),
+                            attr='join',
+                            ctx=Load()),
+                        args=[
+                            Name(id='destination_buffer', ctx=Load())],
+                        keywords=[])],
+                keywords=[]))],
+    type_ignores=[])

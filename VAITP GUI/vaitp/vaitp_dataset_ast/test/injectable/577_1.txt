@@ -1,0 +1,102 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        Import(
+            names=[
+                alias(name='sys')]),
+        FunctionDef(
+            name='secure_import',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='module_name')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='safe_path', ctx=Store())],
+                    value=Constant(value='/usr/local/lib/python3.8/site-packages')),
+                If(
+                    test=Compare(
+                        left=Name(id='safe_path', ctx=Load()),
+                        ops=[
+                            NotIn()],
+                        comparators=[
+                            Attribute(
+                                value=Name(id='sys', ctx=Load()),
+                                attr='path',
+                                ctx=Load())]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='sys', ctx=Load()),
+                                        attr='path',
+                                        ctx=Load()),
+                                    attr='insert',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value=0),
+                                    Name(id='safe_path', ctx=Load())],
+                                keywords=[]))],
+                    orelse=[]),
+                Try(
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='module', ctx=Store())],
+                            value=Call(
+                                func=Name(id='__import__', ctx=Load()),
+                                args=[
+                                    Name(id='module_name', ctx=Load())],
+                                keywords=[])),
+                        Return(
+                            value=Name(id='module', ctx=Load()))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='ImportError', ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    Constant(value='Error importing module '),
+                                                    FormattedValue(
+                                                        value=Name(id='module_name', ctx=Load()),
+                                                        conversion=-1),
+                                                    Constant(value=': '),
+                                                    FormattedValue(
+                                                        value=Name(id='e', ctx=Load()),
+                                                        conversion=-1)])],
+                                        keywords=[])),
+                                Return(
+                                    value=Constant(value=None))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='my_module', ctx=Store())],
+                    value=Call(
+                        func=Name(id='secure_import', ctx=Load()),
+                        args=[
+                            Constant(value='my_secure_module')],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

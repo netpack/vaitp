@@ -1,0 +1,27 @@
+Module(
+    body=[
+        ImportFrom(
+            module='PIL',
+            names=[
+                alias(name='Image')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='img', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='Image', ctx=Load()),
+                    attr='open',
+                    ctx=Load()),
+                args=[
+                    Constant(value='malicious.psd')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='img', ctx=Load()),
+                    attr='show',
+                    ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

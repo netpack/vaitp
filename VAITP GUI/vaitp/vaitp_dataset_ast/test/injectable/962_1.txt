@@ -1,0 +1,65 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='secrets')]),
+        FunctionDef(
+            name='generate_one_time_code',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='length')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[
+                    Constant(value=6)]),
+            body=[
+                Expr(
+                    value=Constant(value='Generate a cryptographically secure one-time code.')),
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Constant(value=''),
+                            attr='join',
+                            ctx=Load()),
+                        args=[
+                            GeneratorExp(
+                                elt=Call(
+                                    func=Attribute(
+                                        value=Name(id='secrets', ctx=Load()),
+                                        attr='choice',
+                                        ctx=Load()),
+                                    args=[
+                                        Constant(value='0123456789')],
+                                    keywords=[]),
+                                generators=[
+                                    comprehension(
+                                        target=Name(id='_', ctx=Store()),
+                                        iter=Call(
+                                            func=Name(id='range', ctx=Load()),
+                                            args=[
+                                                Name(id='length', ctx=Load())],
+                                            keywords=[]),
+                                        ifs=[],
+                                        is_async=0)])],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='one_time_code', ctx=Store())],
+            value=Call(
+                func=Name(id='generate_one_time_code', ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    JoinedStr(
+                        values=[
+                            Constant(value='Your one-time code is: '),
+                            FormattedValue(
+                                value=Name(id='one_time_code', ctx=Load()),
+                                conversion=-1)])],
+                keywords=[]))],
+    type_ignores=[])

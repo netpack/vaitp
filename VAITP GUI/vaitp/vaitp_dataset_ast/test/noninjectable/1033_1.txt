@@ -1,0 +1,131 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='ssl')]),
+        Import(
+            names=[
+                alias(name='threading')]),
+        Assign(
+            targets=[
+                Name(id='context', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='ssl', ctx=Load()),
+                    attr='create_default_context',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        FunctionDef(
+            name='load_certificates',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='context', ctx=Load()),
+                            attr='load_default_certs',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='access_ssl_methods',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Cert Store Stats:'),
+                            Call(
+                                func=Attribute(
+                                    value=Name(id='context', ctx=Load()),
+                                    attr='cert_store_stats',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[])],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='CA Certs:'),
+                            Call(
+                                func=Attribute(
+                                    value=Name(id='context', ctx=Load()),
+                                    attr='get_ca_certs',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[])],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='load_thread', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='threading', ctx=Load()),
+                    attr='Thread',
+                    ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='target',
+                        value=Name(id='load_certificates', ctx=Load()))])),
+        Assign(
+            targets=[
+                Name(id='access_thread', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='threading', ctx=Load()),
+                    attr='Thread',
+                    ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='target',
+                        value=Name(id='access_ssl_methods', ctx=Load()))])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='load_thread', ctx=Load()),
+                    attr='start',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='access_thread', ctx=Load()),
+                    attr='start',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='load_thread', ctx=Load()),
+                    attr='join',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='access_thread', ctx=Load()),
+                    attr='join',
+                    ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

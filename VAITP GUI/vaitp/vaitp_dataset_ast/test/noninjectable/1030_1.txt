@@ -1,0 +1,36 @@
+Module(
+    body=[
+        ImportFrom(
+            module='mjml',
+            names=[
+                alias(name='mjml2html')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='user_input', ctx=Store())],
+            value=Constant(value="<script>alert('XSS');</script>")),
+        Assign(
+            targets=[
+                Name(id='mjml_template', ctx=Store())],
+            value=JoinedStr(
+                values=[
+                    Constant(value='\n<mjml>\n  <mj-body>\n    <mj-section>\n      <mj-column>\n        <mj-text>'),
+                    FormattedValue(
+                        value=Name(id='user_input', ctx=Load()),
+                        conversion=-1),
+                    Constant(value='</mj-text>\n      </mj-column>\n    </mj-section>\n  </mj-body>\n</mjml>\n')])),
+        Assign(
+            targets=[
+                Name(id='html_output', ctx=Store())],
+            value=Call(
+                func=Name(id='mjml2html', ctx=Load()),
+                args=[
+                    Name(id='mjml_template', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='html_output', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

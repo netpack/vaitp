@@ -1,0 +1,131 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='re')]),
+        ClassDef(
+            name='Vanna',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='ask',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='prompt'),
+                            arg(arg='visualize')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[
+                            Constant(value=True)]),
+                    body=[
+                        If(
+                            test=Name(id='visualize', ctx=Load()),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='self', ctx=Load()),
+                                            attr='validate_prompt',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='prompt', ctx=Load())],
+                                        keywords=[])),
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    Constant(value='Visualizing: '),
+                                                    FormattedValue(
+                                                        value=Name(id='prompt', ctx=Load()),
+                                                        conversion=-1)])],
+                                        keywords=[]))],
+                            orelse=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    Constant(value='Input received: '),
+                                                    FormattedValue(
+                                                        value=Name(id='prompt', ctx=Load()),
+                                                        conversion=-1)])],
+                                        keywords=[]))])],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='validate_prompt',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='prompt')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        If(
+                            test=Call(
+                                func=Attribute(
+                                    value=Name(id='re', ctx=Load()),
+                                    attr='search',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='[^a-zA-Z0-9\\s]'),
+                                    Name(id='prompt', ctx=Load())],
+                                keywords=[]),
+                            body=[
+                                Raise(
+                                    exc=Call(
+                                        func=Name(id='ValueError', ctx=Load()),
+                                        args=[
+                                            Constant(value='Invalid input detected!')],
+                                        keywords=[]))],
+                            orelse=[])],
+                    decorator_list=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='vanna', ctx=Store())],
+            value=Call(
+                func=Name(id='Vanna', ctx=Load()),
+                args=[],
+                keywords=[])),
+        Try(
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='vanna', ctx=Load()),
+                            attr='ask',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='Show me the results')],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='vanna', ctx=Load()),
+                            attr='ask',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='Show me the results; import os')],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ValueError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

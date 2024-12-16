@@ -1,0 +1,181 @@
+Module(
+    body=[
+        ImportFrom(
+            module='Cryptodome.Cipher',
+            names=[
+                alias(name='AES')],
+            level=0),
+        ImportFrom(
+            module='Cryptodome.Random',
+            names=[
+                alias(name='get_random_bytes')],
+            level=0),
+        ClassDef(
+            name='SecureEncryption',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='key')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='key',
+                                    ctx=Store())],
+                            value=Name(id='key', ctx=Load()))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='encrypt',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='data')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='iv', ctx=Store())],
+                            value=Call(
+                                func=Name(id='get_random_bytes', ctx=Load()),
+                                args=[
+                                    Attribute(
+                                        value=Name(id='AES', ctx=Load()),
+                                        attr='block_size',
+                                        ctx=Load())],
+                                keywords=[])),
+                        Assign(
+                            targets=[
+                                Name(id='cipher', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='AES', ctx=Load()),
+                                    attr='new',
+                                    ctx=Load()),
+                                args=[
+                                    Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='key',
+                                        ctx=Load()),
+                                    Attribute(
+                                        value=Name(id='AES', ctx=Load()),
+                                        attr='MODE_CBC',
+                                        ctx=Load()),
+                                    Name(id='iv', ctx=Load())],
+                                keywords=[])),
+                        Assign(
+                            targets=[
+                                Name(id='padded_data', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='_pad',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='data', ctx=Load())],
+                                keywords=[])),
+                        Assign(
+                            targets=[
+                                Name(id='encrypted_data', ctx=Store())],
+                            value=BinOp(
+                                left=Name(id='iv', ctx=Load()),
+                                op=Add(),
+                                right=Call(
+                                    func=Attribute(
+                                        value=Name(id='cipher', ctx=Load()),
+                                        attr='encrypt',
+                                        ctx=Load()),
+                                    args=[
+                                        Name(id='padded_data', ctx=Load())],
+                                    keywords=[]))),
+                        Return(
+                            value=Name(id='encrypted_data', ctx=Load()))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='_pad',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='data')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='pad_len', ctx=Store())],
+                            value=BinOp(
+                                left=Attribute(
+                                    value=Name(id='AES', ctx=Load()),
+                                    attr='block_size',
+                                    ctx=Load()),
+                                op=Sub(),
+                                right=BinOp(
+                                    left=Call(
+                                        func=Name(id='len', ctx=Load()),
+                                        args=[
+                                            Name(id='data', ctx=Load())],
+                                        keywords=[]),
+                                    op=Mod(),
+                                    right=Attribute(
+                                        value=Name(id='AES', ctx=Load()),
+                                        attr='block_size',
+                                        ctx=Load())))),
+                        Return(
+                            value=BinOp(
+                                left=Name(id='data', ctx=Load()),
+                                op=Add(),
+                                right=Call(
+                                    func=Name(id='bytes', ctx=Load()),
+                                    args=[
+                                        BinOp(
+                                            left=List(
+                                                elts=[
+                                                    Name(id='pad_len', ctx=Load())],
+                                                ctx=Load()),
+                                            op=Mult(),
+                                            right=Name(id='pad_len', ctx=Load()))],
+                                    keywords=[])))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='key', ctx=Store())],
+            value=Call(
+                func=Name(id='get_random_bytes', ctx=Load()),
+                args=[
+                    Constant(value=16)],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='secure_encryption', ctx=Store())],
+            value=Call(
+                func=Name(id='SecureEncryption', ctx=Load()),
+                args=[
+                    Name(id='key', ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='encrypted', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='secure_encryption', ctx=Load()),
+                    attr='encrypt',
+                    ctx=Load()),
+                args=[
+                    Constant(value=b'Secret Message')],
+                keywords=[]))],
+    type_ignores=[])

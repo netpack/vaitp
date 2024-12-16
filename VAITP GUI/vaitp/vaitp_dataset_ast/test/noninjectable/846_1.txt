@@ -1,0 +1,72 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='requests')]),
+        ImportFrom(
+            module='owslib.wms',
+            names=[
+                alias(name='WebMapService')],
+            level=0),
+        FunctionDef(
+            name='fetch_wms_capabilities',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='url')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='wms', ctx=Store())],
+                    value=Call(
+                        func=Name(id='WebMapService', ctx=Load()),
+                        args=[
+                            Name(id='url', ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='wms', ctx=Load()),
+                            attr='getcapabilities',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='malicious_xml', ctx=Store())],
+            value=Constant(value='<?xml version="1.0"?>\n<!DOCTYPE foo [\n  <!ENTITY xxe SYSTEM "file:///etc/passwd">\n]>\n<request>\n  <data>&xxe;</data>\n</request>\n')),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='response', ctx=Store())],
+                    value=Call(
+                        func=Name(id='fetch_wms_capabilities', ctx=Load()),
+                        args=[
+                            Constant(value='http://example.com/wms?service=WMS&request=GetCapabilities')],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Name(id='response', ctx=Load())],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='Exception', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='An error occurred:'),
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

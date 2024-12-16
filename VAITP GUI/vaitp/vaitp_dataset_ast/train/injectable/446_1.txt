@@ -1,0 +1,52 @@
+Module(
+    body=[
+        ImportFrom(
+            module='tlslite.utils',
+            names=[
+                alias(name='constant_time_compare')],
+            level=0),
+        FunctionDef(
+            name='secure_rsa_decrypt',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='ciphertext'),
+                    arg(arg='private_key')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='decrypted', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='private_key', ctx=Load()),
+                            attr='decrypt',
+                            ctx=Load()),
+                        args=[
+                            Name(id='ciphertext', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='expected_plaintext', ctx=Store())],
+                    value=Constant(value='expected_value')),
+                If(
+                    test=Call(
+                        func=Name(id='constant_time_compare', ctx=Load()),
+                        args=[
+                            Name(id='decrypted', ctx=Load()),
+                            Name(id='expected_plaintext', ctx=Load())],
+                        keywords=[]),
+                    body=[
+                        Return(
+                            value=Name(id='decrypted', ctx=Load()))],
+                    orelse=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Decryption failed')],
+                                keywords=[]))])],
+            decorator_list=[])],
+    type_ignores=[])

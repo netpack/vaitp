@@ -1,0 +1,73 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='configparser')]),
+        FunctionDef(
+            name='load_plugin_config',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='file_path')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='config', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='configparser', ctx=Load()),
+                            attr='ConfigParser',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='config', ctx=Load()),
+                            attr='read',
+                            ctx=Load()),
+                        args=[
+                            Name(id='file_path', ctx=Load())],
+                        keywords=[])),
+                For(
+                    target=Name(id='section', ctx=Store()),
+                    iter=Call(
+                        func=Attribute(
+                            value=Name(id='config', ctx=Load()),
+                            attr='sections',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]),
+                    body=[
+                        For(
+                            target=Name(id='key', ctx=Store()),
+                            iter=Subscript(
+                                value=Name(id='config', ctx=Load()),
+                                slice=Name(id='section', ctx=Load()),
+                                ctx=Load()),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='exec', ctx=Load()),
+                                        args=[
+                                            Subscript(
+                                                value=Subscript(
+                                                    value=Name(id='config', ctx=Load()),
+                                                    slice=Name(id='section', ctx=Load()),
+                                                    ctx=Load()),
+                                                slice=Name(id='key', ctx=Load()),
+                                                ctx=Load())],
+                                        keywords=[]))],
+                            orelse=[])],
+                    orelse=[])],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='load_plugin_config', ctx=Load()),
+                args=[
+                    Constant(value='path/to/plugin.cfg')],
+                keywords=[]))],
+    type_ignores=[])

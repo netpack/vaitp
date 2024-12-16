@@ -1,0 +1,89 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='re')]),
+        ImportFrom(
+            module='packaging.version',
+            names=[
+                alias(name='parse', asname='parse_version')],
+            level=0),
+        FunctionDef(
+            name='validate_package_name_and_version',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='package_name'),
+                    arg(arg='version')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Compare(
+                        left=Name(id='package_name', ctx=Load()),
+                        ops=[
+                            NotEq()],
+                        comparators=[
+                            Subscript(
+                                value=Call(
+                                    func=Attribute(
+                                        value=Name(id='version', ctx=Load()),
+                                        attr='split',
+                                        ctx=Load()),
+                                    args=[
+                                        Constant(value='-')],
+                                    keywords=[]),
+                                slice=Constant(value=0),
+                                ctx=Load())]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Package name does not match the version prefix.')],
+                                keywords=[]))],
+                    orelse=[]),
+                If(
+                    test=Compare(
+                        left=Call(
+                            func=Name(id='parse_version', ctx=Load()),
+                            args=[
+                                Name(id='version', ctx=Load())],
+                            keywords=[]),
+                        ops=[
+                            Is()],
+                        comparators=[
+                            Constant(value=None)]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Invalid version format.')],
+                                keywords=[]))],
+                    orelse=[])],
+            decorator_list=[]),
+        Try(
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='validate_package_name_and_version', ctx=Load()),
+                        args=[
+                            Constant(value='foo'),
+                            Constant(value='foo-2.0')],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ValueError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

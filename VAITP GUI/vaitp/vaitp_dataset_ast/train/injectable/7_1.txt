@@ -1,0 +1,32 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='ctypes')]),
+        Assign(
+            targets=[
+                Name(id='b', ctx=Store())],
+            value=Constant(value=b'AAAA')),
+        Assign(
+            targets=[
+                Name(id='new_b', ctx=Store())],
+            value=Constant(value=b'BBBB')),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='new_b', ctx=Load()),
+                    attr='decode',
+                    ctx=Load()),
+                args=[
+                    Constant(value='ascii')],
+                keywords=[
+                    keyword(
+                        arg='errors',
+                        value=Constant(value='strict'))])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='new_b', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

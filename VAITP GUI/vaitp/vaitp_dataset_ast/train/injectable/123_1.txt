@@ -1,0 +1,37 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='tablib')]),
+        Import(
+            names=[
+                alias(name='yaml')]),
+        Assign(
+            targets=[
+                Name(id='yaml_file', ctx=Store())],
+            value=Constant(value='\n- !!python/object/apply:os.system ["echo Hello World"]\n')),
+        Assign(
+            targets=[
+                Name(id='databook', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='tablib', ctx=Load()),
+                            attr='Databook',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]),
+                    attr='load',
+                    ctx=Load()),
+                args=[
+                    Constant(value='yaml'),
+                    Name(id='yaml_file', ctx=Load())],
+                keywords=[
+                    keyword(
+                        arg='loader',
+                        value=Attribute(
+                            value=Name(id='yaml', ctx=Load()),
+                            attr='SafeLoader',
+                            ctx=Load()))]))],
+    type_ignores=[])

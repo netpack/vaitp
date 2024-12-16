@@ -1,0 +1,142 @@
+Module(
+    body=[
+        ImportFrom(
+            module='fastapi',
+            names=[
+                alias(name='FastAPI'),
+                alias(name='Request'),
+                alias(name='HTTPException')],
+            level=0),
+        ImportFrom(
+            module='fastapi.middleware.cors',
+            names=[
+                alias(name='CORSMiddleware')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='app', ctx=Store())],
+            value=Call(
+                func=Name(id='FastAPI', ctx=Load()),
+                args=[],
+                keywords=[])),
+        AsyncFunctionDef(
+            name='check_content_type',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(
+                        arg='request',
+                        annotation=Name(id='Request', ctx=Load())),
+                    arg(arg='call_next')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Compare(
+                        left=Attribute(
+                            value=Name(id='request', ctx=Load()),
+                            attr='method',
+                            ctx=Load()),
+                        ops=[
+                            In()],
+                        comparators=[
+                            List(
+                                elts=[
+                                    Constant(value='POST'),
+                                    Constant(value='PUT'),
+                                    Constant(value='PATCH')],
+                                ctx=Load())]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='content_type', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='request', ctx=Load()),
+                                        attr='headers',
+                                        ctx=Load()),
+                                    attr='get',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='content-type')],
+                                keywords=[])),
+                        If(
+                            test=BoolOp(
+                                op=Or(),
+                                values=[
+                                    Compare(
+                                        left=Name(id='content_type', ctx=Load()),
+                                        ops=[
+                                            Is()],
+                                        comparators=[
+                                            Constant(value=None)]),
+                                    UnaryOp(
+                                        op=Not(),
+                                        operand=Call(
+                                            func=Attribute(
+                                                value=Name(id='content_type', ctx=Load()),
+                                                attr='startswith',
+                                                ctx=Load()),
+                                            args=[
+                                                Constant(value='application/json')],
+                                            keywords=[]))]),
+                            body=[
+                                Raise(
+                                    exc=Call(
+                                        func=Name(id='HTTPException', ctx=Load()),
+                                        args=[],
+                                        keywords=[
+                                            keyword(
+                                                arg='status_code',
+                                                value=Constant(value=415)),
+                                            keyword(
+                                                arg='detail',
+                                                value=Constant(value='Unsupported Media Type'))]))],
+                            orelse=[])],
+                    orelse=[]),
+                Assign(
+                    targets=[
+                        Name(id='response', ctx=Store())],
+                    value=Await(
+                        value=Call(
+                            func=Name(id='call_next', ctx=Load()),
+                            args=[
+                                Name(id='request', ctx=Load())],
+                            keywords=[]))),
+                Return(
+                    value=Name(id='response', ctx=Load()))],
+            decorator_list=[
+                Call(
+                    func=Attribute(
+                        value=Name(id='app', ctx=Load()),
+                        attr='middleware',
+                        ctx=Load()),
+                    args=[
+                        Constant(value='http')],
+                    keywords=[])]),
+        AsyncFunctionDef(
+            name='create_item',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(
+                        arg='item',
+                        annotation=Name(id='dict', ctx=Load()))],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Name(id='item', ctx=Load()))],
+            decorator_list=[
+                Call(
+                    func=Attribute(
+                        value=Name(id='app', ctx=Load()),
+                        attr='post',
+                        ctx=Load()),
+                    args=[
+                        Constant(value='/items/')],
+                    keywords=[])])],
+    type_ignores=[])

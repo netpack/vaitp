@@ -1,0 +1,33 @@
+Module(
+    body=[
+        FunctionDef(
+            name='vulnerable_function',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='a'),
+                    arg(arg='b')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Global(
+                    names=[
+                        'side_effect_var']),
+                Assign(
+                    targets=[
+                        Name(id='side_effect_var', ctx=Store())],
+                    value=BinOp(
+                        left=Name(id='a', ctx=Load()),
+                        op=Add(),
+                        right=Constant(value=1))),
+                Return(
+                    value=Call(
+                        func=Name(id='uint256_addmod', ctx=Load()),
+                        args=[
+                            Name(id='a', ctx=Load()),
+                            Name(id='side_effect_var', ctx=Load()),
+                            Constant(value=10)],
+                        keywords=[]))],
+            decorator_list=[])],
+    type_ignores=[])

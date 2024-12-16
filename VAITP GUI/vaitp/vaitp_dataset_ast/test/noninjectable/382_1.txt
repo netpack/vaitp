@@ -1,0 +1,100 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='socket')]),
+        Import(
+            names=[
+                alias(name='struct')]),
+        FunctionDef(
+            name='send_dns_request',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='domain')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='sock', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='socket', ctx=Load()),
+                            attr='socket',
+                            ctx=Load()),
+                        args=[
+                            Attribute(
+                                value=Name(id='socket', ctx=Load()),
+                                attr='AF_INET',
+                                ctx=Load()),
+                            Attribute(
+                                value=Name(id='socket', ctx=Load()),
+                                attr='SOCK_DGRAM',
+                                ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='transaction_id', ctx=Store())],
+                    value=Constant(value=4660)),
+                Assign(
+                    targets=[
+                        Name(id='query', ctx=Store())],
+                    value=BinOp(
+                        left=BinOp(
+                            left=BinOp(
+                                left=Call(
+                                    func=Attribute(
+                                        value=Name(id='struct', ctx=Load()),
+                                        attr='pack',
+                                        ctx=Load()),
+                                    args=[
+                                        Constant(value='>H'),
+                                        Name(id='transaction_id', ctx=Load())],
+                                    keywords=[]),
+                                op=Add(),
+                                right=Constant(value=b'\x01\x00\x00\x01\x00\x00\x00\x00\x00\x00')),
+                            op=Add(),
+                            right=Call(
+                                func=Attribute(
+                                    value=Name(id='domain', ctx=Load()),
+                                    attr='encode',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[])),
+                        op=Add(),
+                        right=Constant(value=b'\x00\x00\x01\x00\x01'))),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='sock', ctx=Load()),
+                            attr='sendto',
+                            ctx=Load()),
+                        args=[
+                            Name(id='query', ctx=Load()),
+                            Tuple(
+                                elts=[
+                                    Constant(value='8.8.8.8'),
+                                    Constant(value=53)],
+                                ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Tuple(
+                            elts=[
+                                Name(id='response', ctx=Store()),
+                                Name(id='_', ctx=Store())],
+                            ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='sock', ctx=Load()),
+                            attr='recvfrom',
+                            ctx=Load()),
+                        args=[
+                            Constant(value=512)],
+                        keywords=[])),
+                Return(
+                    value=Name(id='response', ctx=Load()))],
+            decorator_list=[])],
+    type_ignores=[])

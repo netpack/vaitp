@@ -1,0 +1,81 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        Import(
+            names=[
+                alias(name='zipfile')]),
+        FunctionDef(
+            name='_zip_file',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='old_cmd')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Constant(value='path/to/archive.zip'))],
+            decorator_list=[]),
+        FunctionDef(
+            name='side_effect',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='old_cmd'),
+                    arg(arg='command')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                With(
+                    items=[
+                        withitem(
+                            context_expr=Call(
+                                func=Attribute(
+                                    value=Name(id='zipfile', ctx=Load()),
+                                    attr='ZipFile',
+                                    ctx=Load()),
+                                args=[
+                                    Call(
+                                        func=Name(id='_zip_file', ctx=Load()),
+                                        args=[
+                                            Name(id='old_cmd', ctx=Load())],
+                                        keywords=[]),
+                                    Constant(value='r')],
+                                keywords=[]),
+                            optional_vars=Name(id='archive', ctx=Store()))],
+                    body=[
+                        For(
+                            target=Name(id='file', ctx=Store()),
+                            iter=Call(
+                                func=Attribute(
+                                    value=Name(id='archive', ctx=Load()),
+                                    attr='namelist',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[]),
+                            body=[
+                                Try(
+                                    body=[
+                                        Expr(
+                                            value=Call(
+                                                func=Attribute(
+                                                    value=Name(id='os', ctx=Load()),
+                                                    attr='remove',
+                                                    ctx=Load()),
+                                                args=[
+                                                    Name(id='file', ctx=Load())],
+                                                keywords=[]))],
+                                    handlers=[
+                                        ExceptHandler(
+                                            type=Name(id='OSError', ctx=Load()),
+                                            body=[
+                                                Pass()])],
+                                    orelse=[],
+                                    finalbody=[])],
+                            orelse=[])])],
+            decorator_list=[])],
+    type_ignores=[])

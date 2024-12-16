@@ -1,0 +1,118 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='asyncio')]),
+        ImportFrom(
+            module='aiosmtpd.controller',
+            names=[
+                alias(name='Controller')],
+            level=0),
+        ImportFrom(
+            module='aiosmtpd.smtp',
+            names=[
+                alias(name='SMTP')],
+            level=0),
+        ClassDef(
+            name='VulnerableSMTP',
+            bases=[
+                Name(id='SMTP', ctx=Load())],
+            keywords=[],
+            body=[
+                AsyncFunctionDef(
+                    name='handle_DATA',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='server'),
+                            arg(arg='session'),
+                            arg(arg='envelope')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            Constant(value='Received email from: '),
+                                            FormattedValue(
+                                                value=Attribute(
+                                                    value=Name(id='envelope', ctx=Load()),
+                                                    attr='mail_from',
+                                                    ctx=Load()),
+                                                conversion=-1)])],
+                                keywords=[])),
+                        Return(
+                            value=Constant(value='250 OK'))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        AsyncFunctionDef(
+            name='main',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='controller', ctx=Store())],
+                    value=Call(
+                        func=Name(id='Controller', ctx=Load()),
+                        args=[
+                            Name(id='VulnerableSMTP', ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='port',
+                                value=Constant(value=1025))])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='controller', ctx=Load()),
+                            attr='start',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Expr(
+                    value=Await(
+                        value=Call(
+                            func=Attribute(
+                                value=Call(
+                                    func=Attribute(
+                                        value=Name(id='asyncio', ctx=Load()),
+                                        attr='Event',
+                                        ctx=Load()),
+                                    args=[],
+                                    keywords=[]),
+                                attr='wait',
+                                ctx=Load()),
+                            args=[],
+                            keywords=[])))],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='asyncio', ctx=Load()),
+                            attr='run',
+                            ctx=Load()),
+                        args=[
+                            Call(
+                                func=Name(id='main', ctx=Load()),
+                                args=[],
+                                keywords=[])],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

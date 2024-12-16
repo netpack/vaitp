@@ -1,0 +1,142 @@
+Module(
+    body=[
+        ClassDef(
+            name='VulnerableDynamicArray',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='data',
+                                    ctx=Store())],
+                            value=List(elts=[], ctx=Load()))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='append',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='value')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='data',
+                                        ctx=Load()),
+                                    attr='append',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='value', ctx=Load())],
+                                keywords=[]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='get',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='index')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Return(
+                            value=Subscript(
+                                value=Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='data',
+                                    ctx=Load()),
+                                slice=Name(id='index', ctx=Load()),
+                                ctx=Load()))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='set',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='index'),
+                            arg(arg='value')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Subscript(
+                                    value=Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='data',
+                                        ctx=Load()),
+                                    slice=Name(id='index', ctx=Load()),
+                                    ctx=Store())],
+                            value=Name(id='value', ctx=Load()))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='array', ctx=Store())],
+            value=Call(
+                func=Name(id='VulnerableDynamicArray', ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='array', ctx=Load()),
+                    attr='append',
+                    ctx=Load()),
+                args=[
+                    Constant(value=1)],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='array', ctx=Load()),
+                    attr='append',
+                    ctx=Load()),
+                args=[
+                    Constant(value=2)],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='array', ctx=Load()),
+                    attr='set',
+                    ctx=Load()),
+                args=[
+                    Constant(value=2),
+                    Constant(value=3)],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Call(
+                        func=Attribute(
+                            value=Name(id='array', ctx=Load()),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Constant(value=2)],
+                        keywords=[])],
+                keywords=[]))],
+    type_ignores=[])

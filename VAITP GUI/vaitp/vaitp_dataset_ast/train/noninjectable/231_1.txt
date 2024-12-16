@@ -1,0 +1,104 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        ImportFrom(
+            module='wheel',
+            names=[
+                alias(name='bdist_wheel')],
+            level=0),
+        FunctionDef(
+            name='create_wheel',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='package_name')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=UnaryOp(
+                        op=Not(),
+                        operand=Name(id='package_name', ctx=Load())),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Package name cannot be empty.')],
+                                keywords=[]))],
+                    orelse=[]),
+                Assign(
+                    targets=[
+                        Name(id='temp_dir', ctx=Store())],
+                    value=JoinedStr(
+                        values=[
+                            Constant(value='/tmp/'),
+                            FormattedValue(
+                                value=Name(id='package_name', ctx=Load()),
+                                conversion=-1)])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='os', ctx=Load()),
+                            attr='makedirs',
+                            ctx=Load()),
+                        args=[
+                            Name(id='temp_dir', ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='exist_ok',
+                                value=Constant(value=True))])),
+                Assign(
+                    targets=[
+                        Name(id='wheel_cmd', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='bdist_wheel', ctx=Load()),
+                            attr='bdist_wheel',
+                            ctx=Load()),
+                        args=[
+                            Name(id='temp_dir', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='wheel_cmd', ctx=Load()),
+                            attr='run',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            JoinedStr(
+                                values=[
+                                    Constant(value='Wheel created at '),
+                                    FormattedValue(
+                                        value=Name(id='temp_dir', ctx=Load()),
+                                        conversion=-1),
+                                    Constant(value='/'),
+                                    FormattedValue(
+                                        value=Name(id='package_name', ctx=Load()),
+                                        conversion=-1),
+                                    Constant(value='.whl')])],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='user_input', ctx=Store())],
+            value=Call(
+                func=Name(id='input', ctx=Load()),
+                args=[
+                    Constant(value='Enter the package name: ')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='create_wheel', ctx=Load()),
+                args=[
+                    Name(id='user_input', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

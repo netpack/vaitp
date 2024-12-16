@@ -1,0 +1,57 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        Import(
+            names=[
+                alias(name='ctypes')]),
+        FunctionDef(
+            name='load_library',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='library_name')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='ctypes', ctx=Load()),
+                            attr='CDLL',
+                            ctx=Load()),
+                        args=[
+                            Name(id='library_name', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='my_library', ctx=Store())],
+                    value=Call(
+                        func=Name(id='load_library', ctx=Load()),
+                        args=[
+                            Constant(value='my_library.dll')],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='Exception', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            Constant(value='Error: '),
+                                            FormattedValue(
+                                                value=Name(id='e', ctx=Load()),
+                                                conversion=-1)])],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

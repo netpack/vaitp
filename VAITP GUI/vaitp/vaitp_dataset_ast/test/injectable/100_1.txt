@@ -1,0 +1,74 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='zipfile')]),
+        Assign(
+            targets=[
+                Name(id='MAX_SIZE', ctx=Store())],
+            value=Constant(value=1000000)),
+        With(
+            items=[
+                withitem(
+                    context_expr=Call(
+                        func=Attribute(
+                            value=Name(id='zipfile', ctx=Load()),
+                            attr='ZipFile',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='file.zip'),
+                            Constant(value='r')],
+                        keywords=[]),
+                    optional_vars=Name(id='zf', ctx=Store()))],
+            body=[
+                For(
+                    target=Name(id='zinfo', ctx=Store()),
+                    iter=Call(
+                        func=Attribute(
+                            value=Name(id='zf', ctx=Load()),
+                            attr='infolist',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]),
+                    body=[
+                        If(
+                            test=Compare(
+                                left=Attribute(
+                                    value=Name(id='zinfo', ctx=Load()),
+                                    attr='file_size',
+                                    ctx=Load()),
+                                ops=[
+                                    Gt()],
+                                comparators=[
+                                    Name(id='MAX_SIZE', ctx=Load())]),
+                            body=[
+                                Raise(
+                                    exc=Call(
+                                        func=Attribute(
+                                            value=Name(id='zipfile', ctx=Load()),
+                                            attr='LargeZipFile',
+                                            ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    Constant(value='File '),
+                                                    FormattedValue(
+                                                        value=Attribute(
+                                                            value=Name(id='zinfo', ctx=Load()),
+                                                            attr='filename',
+                                                            ctx=Load()),
+                                                        conversion=-1),
+                                                    Constant(value=' is too large')])],
+                                        keywords=[]))],
+                            orelse=[]),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='zf', ctx=Load()),
+                                    attr='extract',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='zinfo', ctx=Load())],
+                                keywords=[]))],
+                    orelse=[])])],
+    type_ignores=[])

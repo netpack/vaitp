@@ -1,40 +1,68 @@
-import sqlite3, re, requests, time
+#import sqlite3, re, requests, time
+import mysql.connector, os, requests, time, random, re, importlib, sys
 from bs4 import BeautifulSoup
 
-db_path = '/Users/fredericbogaerts/vaitp/VAITP GUI/vaitp/vaitp.db'
-    
+def load_external_module(module_path, module_name):
+    """
+    Dynamically load a module from the given path.
+    """
+    spec = importlib.util.spec_from_file_location(module_name, module_path)
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[module_name] = module
+    spec.loader.exec_module(module)
+    return module
+
 headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36"
 }
 
-def execute_query(query):
+vaitp_email = load_external_module("/Users/fredericbogaerts/vaitp/VAITP GUI/vaitp/py/scrappers/send_mail.py","vaitp_email")
+
+
+time.sleep(1) #Ensures polite use
+
+# Check if required environment variables are set
+required_vars = ['MYSQL_USER', 'MYSQL_PASSWORD', 'MYSQL_HOST', 'MYSQL_DATABASE', 'SMTP_PASSWORD']
+missing_vars = [var for var in required_vars if os.getenv(var) is None]
+
+if missing_vars:
+    exit(f"Error: The following environment variables are not set: {', '.join(missing_vars)}")
+
+def execute_query(query, params=None):
     """
     Execute a SQL query
 
     Parameters:
-    - db_path: str, the path to the SQLite database file.
     - query: str, the SQL query to execute.
-
     - results: list, the results of the executed query.
     """
-    global db_path
-    # Connect to the SQLite database
-    conn = sqlite3.connect(db_path)
-    
+    cnx = mysql.connector.connect(
+        user=os.getenv('MYSQL_USER'),
+        password=os.getenv('MYSQL_PASSWORD'),
+        host=os.getenv('MYSQL_HOST'),
+        database=os.getenv('MYSQL_DATABASE')
+    )
+
     try:
-        # Create a cursor object using the cursor() method
-        cursor = conn.cursor()
-        
-        # Execute the SQL query
-        cursor.execute(query)
-        
+        # Create a cursor object
+        cursor = cnx.cursor()
+        # Execute query
+        cursor.execute(query, params)
         # Fetch all rows from the last executed statement
         results = cursor.fetchall()
-        
+        # Commit the transaction
+        cnx.commit()
         return results
+    except mysql.connector.Error as err:
+        print("Something went wrong: {}".format(err))
     finally:
-        # Ensure the database connection is closed even if an error occurs
-        conn.close()
+        #try to close
+        try:
+            # Close the cursor and connection (even if there is an error)
+            cursor.close
+            cnx.close
+        except:
+            pass
 
 
 def insert_vulnerability(summary, cve_id, cvss_score, cve_publish_date_value, cwe_id):
@@ -42,18 +70,25 @@ def insert_vulnerability(summary, cve_id, cvss_score, cve_publish_date_value, cw
     Insert a vulnerability into the python_vulnerabilities table.
 
     Parameters:
-    - db_path: str, the path to the SQLite database file.
     - summary: str, the summary of the vulnerability.
     - cve_id: str, the CVE ID of the vulnerability.
     - cvss_score: float, the CVSS score of the vulnerability.
     - cve_publish_date_value: str, the publication date of the CVE.
     - cwe_id: int, the CWE ID related to the vulnerability.
     """
+    cnx = mysql.connector.connect(
+        user=os.getenv('MYSQL_USER'),
+        password=os.getenv('MYSQL_PASSWORD'),
+        host=os.getenv('MYSQL_HOST'),
+        database=os.getenv('MYSQL_DATABASE')
+    )
 
-    global db_path
+    cve_url = f"https://www.cvedetails.com/cve/{cve_id}/"
+    
+    # If the cvss score, publish date, or cwe id is N/A try to scrape it from cvedetails
 
     if cvss_score == "N/A" or cve_publish_date_value == "N/A" or cwe_id == "N/A":
-        newResponse = requests.get(f"https://www.cvedetails.com/cve/{cve_id}", headers=headers)
+        newResponse = requests.get(cve_url, headers=headers)
         newSoup = BeautifulSoup(newResponse.text, "html.parser")
     
     try:
@@ -70,9 +105,8 @@ def insert_vulnerability(summary, cve_id, cvss_score, cve_publish_date_value, cw
         else:
             cwe_num = "N/A"
             
-
-    cve_url = f"https://www.cvedetails.com/cve/{cve_id}/"
     cwe_url = f"https://cwe.mitre.org/data/definitions/{cwe_num}/" if cwe_num != "N/A" else "N/A"
+
 
     if cvss_score == "N/A":
         print("Detected empty CVSS Score. Trying to scrape from cvedetails.com with this CVE ID...")
@@ -96,16 +130,32 @@ def insert_vulnerability(summary, cve_id, cvss_score, cve_publish_date_value, cw
             cve_publish_date_value = re.search(cve_date_pattern, cve_publish_date).group(0)
 
 
-    query = """
-    INSERT INTO python_vulnerabilities (ID, VulnerabilityLongDescription, CVE, CVELink, Score, Publishdate, CWE, CWELink)
-    VALUES (NULL,?, ?, ?, ?, ?, ?, ?);
-    """
-    
-    conn = sqlite3.connect(db_path)
     try:
-        cursor = conn.cursor()
-        cursor.execute(query, (summary, cve_id, cve_url, cvss_score, cve_publish_date_value, cwe_num, cwe_url))
-        conn.commit()
+        # Create a cursor object
+        cursor = cnx.cursor()
+        query = """
+        INSERT INTO python_vulnerabilities (ID, VulnerabilityLongDescription, CVE, CVELink, Score, Publishdate, CWE, CWELink)
+        VALUES (NULL,%s, %s, %s, %s, %s, %s, %s);
+        """
+        cursor.execute(query, (summary,cve_id,cve_url,cvss_score,cve_publish_date_value,cwe_num,cwe_url))
+        cnx.commit()
+        print(f"VAITP dataset updated with {cve_id}. Sending email to admin...")
+       
+        msg = f"<h2>{cve_id}</h2><br>{summary}<br>Disclosure date: {cve_publish_date_value}<br>Score: {cvss_score}<br>CWE: {cwe_num}<br>VAITP Link: https://netpack.pt/vaitp/dataset/?vcve={cve_id}<br>"
+        sender_email = "vaitp@netpack.pt"
+        sender_password=os.getenv('SMTP_PASSWORD')
+        # # List of recipient email addresses
+        recipient_emails = [
+            "info@netpack.pt"
+        ]
+        vaitp_email.send_html_email(sender_email, sender_password, recipient_emails, msg)
+
+    except Exception as e:
+        print(f"Error updating VAITP dataset: {e}")
     finally:
-        conn.close()
+        try:
+            cursor.close
+            cnx.close
+        except:
+            pass
 

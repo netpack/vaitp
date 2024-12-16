@@ -1,0 +1,31 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='nltk')]),
+        Import(
+            names=[
+                alias(name='ssl')]),
+        Assign(
+            targets=[
+                Attribute(
+                    value=Name(id='ssl', ctx=Load()),
+                    attr='_create_default_https_context',
+                    ctx=Store())],
+            value=Attribute(
+                value=Name(id='ssl', ctx=Load()),
+                attr='_create_unverified_context',
+                ctx=Load())),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='nltk', ctx=Load()),
+                    attr='download',
+                    ctx=Load()),
+                args=[
+                    Constant(value='punkt')],
+                keywords=[
+                    keyword(
+                        arg='ssl',
+                        value=Constant(value=True))]))],
+    type_ignores=[])

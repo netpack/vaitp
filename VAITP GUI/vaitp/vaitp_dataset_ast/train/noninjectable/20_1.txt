@@ -1,0 +1,125 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='ctypes')]),
+        Assign(
+            targets=[
+                Name(id='libkeccak', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='ctypes', ctx=Load()),
+                    attr='CDLL',
+                    ctx=Load()),
+                args=[
+                    Constant(value='./libkeccak.so')],
+                keywords=[])),
+        Assign(
+            targets=[
+                Attribute(
+                    value=Attribute(
+                        value=Name(id='libkeccak', ctx=Load()),
+                        attr='KeccakF_1600_32_rvk64',
+                        ctx=Load()),
+                    attr='restype',
+                    ctx=Store())],
+            value=Constant(value=None)),
+        Assign(
+            targets=[
+                Attribute(
+                    value=Attribute(
+                        value=Name(id='libkeccak', ctx=Load()),
+                        attr='KeccakF_1600_32_rvk64',
+                        ctx=Load()),
+                    attr='argtypes',
+                    ctx=Store())],
+            value=List(
+                elts=[
+                    Call(
+                        func=Attribute(
+                            value=Name(id='ctypes', ctx=Load()),
+                            attr='POINTER',
+                            ctx=Load()),
+                        args=[
+                            Attribute(
+                                value=Name(id='ctypes', ctx=Load()),
+                                attr='c_uint64',
+                                ctx=Load())],
+                        keywords=[]),
+                    Call(
+                        func=Attribute(
+                            value=Name(id='ctypes', ctx=Load()),
+                            attr='POINTER',
+                            ctx=Load()),
+                        args=[
+                            Attribute(
+                                value=Name(id='ctypes', ctx=Load()),
+                                attr='c_uint64',
+                                ctx=Load())],
+                        keywords=[]),
+                    Attribute(
+                        value=Name(id='ctypes', ctx=Load()),
+                        attr='c_size_t',
+                        ctx=Load())],
+                ctx=Load())),
+        Assign(
+            targets=[
+                Name(id='state', ctx=Store())],
+            value=Call(
+                func=BinOp(
+                    left=Attribute(
+                        value=Name(id='ctypes', ctx=Load()),
+                        attr='c_uint64',
+                        ctx=Load()),
+                    op=Mult(),
+                    right=Constant(value=25)),
+                args=[],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='input_data', ctx=Store())],
+            value=Call(
+                func=BinOp(
+                    left=Attribute(
+                        value=Name(id='ctypes', ctx=Load()),
+                        attr='c_uint64',
+                        ctx=Load()),
+                    op=Mult(),
+                    right=Constant(value=1000)),
+                args=[],
+                keywords=[])),
+        For(
+            target=Name(id='i', ctx=Store()),
+            iter=Call(
+                func=Name(id='range', ctx=Load()),
+                args=[
+                    Constant(value=1000)],
+                keywords=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Subscript(
+                            value=Name(id='input_data', ctx=Load()),
+                            slice=Name(id='i', ctx=Load()),
+                            ctx=Store())],
+                    value=Name(id='i', ctx=Load()))],
+            orelse=[]),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='libkeccak', ctx=Load()),
+                    attr='KeccakF_1600_32_rvk64',
+                    ctx=Load()),
+                args=[
+                    Name(id='state', ctx=Load()),
+                    Name(id='input_data', ctx=Load()),
+                    Call(
+                        func=Attribute(
+                            value=Name(id='ctypes', ctx=Load()),
+                            attr='c_size_t',
+                            ctx=Load()),
+                        args=[
+                            Constant(value=18446744073709551615)],
+                        keywords=[])],
+                keywords=[]))],
+    type_ignores=[])

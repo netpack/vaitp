@@ -1,0 +1,78 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='asyncio')]),
+        ClassDef(
+            name='FixedSelectorSocketTransport',
+            bases=[
+                Attribute(
+                    value=Name(id='asyncio', ctx=Load()),
+                    attr='SelectorSocketTransport',
+                    ctx=Load())],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='writelines',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='buffers')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        If(
+                            test=BoolOp(
+                                op=And(),
+                                values=[
+                                    Compare(
+                                        left=Attribute(
+                                            value=Name(id='self', ctx=Load()),
+                                            attr='_high_water_mark',
+                                            ctx=Load()),
+                                        ops=[
+                                            IsNot()],
+                                        comparators=[
+                                            Constant(value=None)]),
+                                    Compare(
+                                        left=Attribute(
+                                            value=Name(id='self', ctx=Load()),
+                                            attr='_buffer_size',
+                                            ctx=Load()),
+                                        ops=[
+                                            GtE()],
+                                        comparators=[
+                                            Attribute(
+                                                value=Name(id='self', ctx=Load()),
+                                                attr='_high_water_mark',
+                                                ctx=Load())])]),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Attribute(
+                                                value=Name(id='self', ctx=Load()),
+                                                attr='_protocol',
+                                                ctx=Load()),
+                                            attr='drain',
+                                            ctx=Load()),
+                                        args=[],
+                                        keywords=[]))],
+                            orelse=[]),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Call(
+                                        func=Name(id='super', ctx=Load()),
+                                        args=[],
+                                        keywords=[]),
+                                    attr='writelines',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='buffers', ctx=Load())],
+                                keywords=[]))],
+                    decorator_list=[])],
+            decorator_list=[])],
+    type_ignores=[])

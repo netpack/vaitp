@@ -1,0 +1,114 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        Import(
+            names=[
+                alias(name='re')]),
+        FunctionDef(
+            name='is_interpreter_using_old_source',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='interpreter_path')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='interpreters', ctx=Store())],
+                    value=Dict(
+                        keys=[
+                            Constant(value='python'),
+                            Constant(value='perl'),
+                            Constant(value='ruby')],
+                        values=[
+                            Constant(value='python[0-9]*'),
+                            Constant(value='perl'),
+                            Constant(value='ruby')])),
+                For(
+                    target=Tuple(
+                        elts=[
+                            Name(id='interpreter', ctx=Store()),
+                            Name(id='pattern', ctx=Store())],
+                        ctx=Store()),
+                    iter=Call(
+                        func=Attribute(
+                            value=Name(id='interpreters', ctx=Load()),
+                            attr='items',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]),
+                    body=[
+                        If(
+                            test=Call(
+                                func=Attribute(
+                                    value=Name(id='re', ctx=Load()),
+                                    attr='search',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='pattern', ctx=Load()),
+                                    Name(id='interpreter_path', ctx=Load())],
+                                keywords=[]),
+                            body=[
+                                Return(
+                                    value=Call(
+                                        func=Name(id='check_old_source_files', ctx=Load()),
+                                        args=[
+                                            Name(id='interpreter_path', ctx=Load())],
+                                        keywords=[]))],
+                            orelse=[])],
+                    orelse=[]),
+                Return(
+                    value=Constant(value=False))],
+            decorator_list=[]),
+        FunctionDef(
+            name='check_old_source_files',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='interpreter_path')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Constant(value=False))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='interpreter', ctx=Store())],
+            value=Constant(value='/usr/local/bin/python3')),
+        If(
+            test=Call(
+                func=Name(id='is_interpreter_using_old_source', ctx=Load()),
+                args=[
+                    Name(id='interpreter', ctx=Load())],
+                keywords=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            JoinedStr(
+                                values=[
+                                    FormattedValue(
+                                        value=Name(id='interpreter', ctx=Load()),
+                                        conversion=-1),
+                                    Constant(value=' is using old source files.')])],
+                        keywords=[]))],
+            orelse=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            JoinedStr(
+                                values=[
+                                    FormattedValue(
+                                        value=Name(id='interpreter', ctx=Load()),
+                                        conversion=-1),
+                                    Constant(value=' is up to date.')])],
+                        keywords=[]))])],
+    type_ignores=[])

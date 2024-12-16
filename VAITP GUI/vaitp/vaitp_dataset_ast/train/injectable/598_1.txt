@@ -1,0 +1,71 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        Import(
+            names=[
+                alias(name='subprocess')]),
+        FunctionDef(
+            name='secure_sudo_command',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='command')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='env', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='environ',
+                                ctx=Load()),
+                            attr='copy',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='env', ctx=Load()),
+                            attr='pop',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='PYTHONINSPECT'),
+                            Constant(value=None)],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='subprocess', ctx=Load()),
+                            attr='run',
+                            ctx=Load()),
+                        args=[
+                            BinOp(
+                                left=List(
+                                    elts=[
+                                        Constant(value='sudo')],
+                                    ctx=Load()),
+                                op=Add(),
+                                right=Name(id='command', ctx=Load()))],
+                        keywords=[
+                            keyword(
+                                arg='env',
+                                value=Name(id='env', ctx=Load()))]))],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='secure_sudo_command', ctx=Load()),
+                args=[
+                    List(
+                        elts=[
+                            Constant(value='ls'),
+                            Constant(value='/root')],
+                        ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

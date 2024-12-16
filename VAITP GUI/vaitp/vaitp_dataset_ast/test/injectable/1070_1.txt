@@ -1,0 +1,110 @@
+Module(
+    body=[
+        ImportFrom(
+            module='deepdiff',
+            names=[
+                alias(name='Delta')],
+            level=0),
+        FunctionDef(
+            name='safe_deserialize',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='delta_serialized')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                FunctionDef(
+                    name='validate_delta',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='delta')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        For(
+                            target=Name(id='key', ctx=Store()),
+                            iter=Call(
+                                func=Attribute(
+                                    value=Name(id='delta', ctx=Load()),
+                                    attr='keys',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[]),
+                            body=[
+                                If(
+                                    test=Call(
+                                        func=Attribute(
+                                            value=Name(id='key', ctx=Load()),
+                                            attr='startswith',
+                                            ctx=Load()),
+                                        args=[
+                                            Constant(value='__')],
+                                        keywords=[]),
+                                    body=[
+                                        Raise(
+                                            exc=Call(
+                                                func=Name(id='ValueError', ctx=Load()),
+                                                args=[
+                                                    Constant(value='Modification of dunder attributes is not allowed.')],
+                                                keywords=[]))],
+                                    orelse=[])],
+                            orelse=[])],
+                    decorator_list=[]),
+                Assign(
+                    targets=[
+                        Name(id='delta', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='Delta', ctx=Load()),
+                            attr='from_dict',
+                            ctx=Load()),
+                        args=[
+                            Name(id='delta_serialized', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='validate_delta', ctx=Load()),
+                        args=[
+                            Name(id='delta', ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=Name(id='delta', ctx=Load()))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='delta_serialized', ctx=Store())],
+            value=Dict(
+                keys=[
+                    Constant(value='some_attribute'),
+                    Constant(value='__dunder_attribute__')],
+                values=[
+                    Constant(value='new_value'),
+                    Constant(value='malicious_value')])),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='safe_delta', ctx=Store())],
+                    value=Call(
+                        func=Name(id='safe_deserialize', ctx=Load()),
+                        args=[
+                            Name(id='delta_serialized', ctx=Load())],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ValueError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

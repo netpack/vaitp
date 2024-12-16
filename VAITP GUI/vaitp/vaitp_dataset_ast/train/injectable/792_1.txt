@@ -1,0 +1,129 @@
+Module(
+    body=[
+        ImportFrom(
+            module='cryptography.hazmat.primitives.ciphers',
+            names=[
+                alias(name='Cipher'),
+                alias(name='algorithms'),
+                alias(name='modes')],
+            level=0),
+        ImportFrom(
+            module='cryptography.hazmat.backends',
+            names=[
+                alias(name='default_backend')],
+            level=0),
+        ImportFrom(
+            module='cryptography.exceptions',
+            names=[
+                alias(name='InvalidSignature')],
+            level=0),
+        FunctionDef(
+            name='secure_finalize_with_tag',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='key'),
+                    arg(arg='iv'),
+                    arg(arg='ciphertext'),
+                    arg(arg='tag')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Compare(
+                        left=Call(
+                            func=Name(id='len', ctx=Load()),
+                            args=[
+                                Name(id='tag', ctx=Load())],
+                            keywords=[]),
+                        ops=[
+                            NotEq()],
+                        comparators=[
+                            Constant(value=16)]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Invalid tag length. Tag must be 16 bytes.')],
+                                keywords=[]))],
+                    orelse=[]),
+                Assign(
+                    targets=[
+                        Name(id='cipher', ctx=Store())],
+                    value=Call(
+                        func=Name(id='Cipher', ctx=Load()),
+                        args=[
+                            Call(
+                                func=Attribute(
+                                    value=Name(id='algorithms', ctx=Load()),
+                                    attr='AES',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='key', ctx=Load())],
+                                keywords=[]),
+                            Call(
+                                func=Attribute(
+                                    value=Name(id='modes', ctx=Load()),
+                                    attr='GCM',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='iv', ctx=Load()),
+                                    Name(id='tag', ctx=Load())],
+                                keywords=[])],
+                        keywords=[
+                            keyword(
+                                arg='backend',
+                                value=Call(
+                                    func=Name(id='default_backend', ctx=Load()),
+                                    args=[],
+                                    keywords=[]))])),
+                Assign(
+                    targets=[
+                        Name(id='decryptor', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='cipher', ctx=Load()),
+                            attr='decryptor',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Try(
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='plaintext', ctx=Store())],
+                            value=BinOp(
+                                left=Call(
+                                    func=Attribute(
+                                        value=Name(id='decryptor', ctx=Load()),
+                                        attr='update',
+                                        ctx=Load()),
+                                    args=[
+                                        Name(id='ciphertext', ctx=Load())],
+                                    keywords=[]),
+                                op=Add(),
+                                right=Call(
+                                    func=Attribute(
+                                        value=Name(id='decryptor', ctx=Load()),
+                                        attr='finalize',
+                                        ctx=Load()),
+                                    args=[],
+                                    keywords=[]))),
+                        Return(
+                            value=Name(id='plaintext', ctx=Load()))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='InvalidSignature', ctx=Load()),
+                            body=[
+                                Raise(
+                                    exc=Call(
+                                        func=Name(id='ValueError', ctx=Load()),
+                                        args=[
+                                            Constant(value='Invalid MAC. Decryption failed.')],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[])],
+    type_ignores=[])

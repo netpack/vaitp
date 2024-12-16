@@ -1,0 +1,45 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='yaml')]),
+        FunctionDef(
+            name='load_fixtures',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='fixture_text')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='data', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='yaml', ctx=Load()),
+                            attr='load',
+                            ctx=Load()),
+                        args=[
+                            Name(id='fixture_text', ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='Loader',
+                                value=Attribute(
+                                    value=Name(id='yaml', ctx=Load()),
+                                    attr='FullLoader',
+                                    ctx=Load()))])),
+                For(
+                    target=Name(id='item', ctx=Store()),
+                    iter=Name(id='data', ctx=Load()),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='save_to_database', ctx=Load()),
+                                args=[
+                                    Name(id='item', ctx=Load())],
+                                keywords=[]))],
+                    orelse=[])],
+            decorator_list=[])],
+    type_ignores=[])

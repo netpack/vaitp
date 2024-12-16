@@ -1,0 +1,138 @@
+Module(
+    body=[
+        ClassDef(
+            name='TlsLite',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='buffer',
+                                    ctx=Store())],
+                            value=Call(
+                                func=Name(id='bytearray', ctx=Load()),
+                                args=[
+                                    Constant(value=10)],
+                                keywords=[]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='receive_data',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='data')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        For(
+                            target=Name(id='i', ctx=Store()),
+                            iter=Call(
+                                func=Name(id='range', ctx=Load()),
+                                args=[
+                                    Call(
+                                        func=Name(id='len', ctx=Load()),
+                                        args=[
+                                            Name(id='data', ctx=Load())],
+                                        keywords=[])],
+                                keywords=[]),
+                            body=[
+                                Assign(
+                                    targets=[
+                                        Subscript(
+                                            value=Attribute(
+                                                value=Name(id='self', ctx=Load()),
+                                                attr='buffer',
+                                                ctx=Load()),
+                                            slice=Name(id='i', ctx=Load()),
+                                            ctx=Store())],
+                                    value=Subscript(
+                                        value=Name(id='data', ctx=Load()),
+                                        slice=Name(id='i', ctx=Load()),
+                                        ctx=Load()))],
+                            orelse=[])],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='process_data',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Processing data:'),
+                                    Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='buffer',
+                                        ctx=Load())],
+                                keywords=[]))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='tls_lite', ctx=Store())],
+            value=Call(
+                func=Name(id='TlsLite', ctx=Load()),
+                args=[],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='malicious_data', ctx=Store())],
+            value=Call(
+                func=Name(id='bytearray', ctx=Load()),
+                args=[
+                    Constant(value=100)],
+                keywords=[])),
+        Try(
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='tls_lite', ctx=Load()),
+                            attr='receive_data',
+                            ctx=Load()),
+                        args=[
+                            Name(id='malicious_data', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='tls_lite', ctx=Load()),
+                            attr='process_data',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='IndexError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Caught an exception:'),
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

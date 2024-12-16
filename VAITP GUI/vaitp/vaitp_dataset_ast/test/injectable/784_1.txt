@@ -1,0 +1,156 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        ImportFrom(
+            module='urllib.parse',
+            names=[
+                alias(name='unquote')],
+            level=0),
+        FunctionDef(
+            name='load_script',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='script_path')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='base_directory', ctx=Store())],
+                    value=Constant(value='/path/to/libreoffice/share/Scripts/python')),
+                Assign(
+                    targets=[
+                        Name(id='user_directory', ctx=Store())],
+                    value=Constant(value='/path/to/libreoffice/user/Scripts/python')),
+                Assign(
+                    targets=[
+                        Name(id='decoded_path', ctx=Store())],
+                    value=Call(
+                        func=Name(id='unquote', ctx=Load()),
+                        args=[
+                            Name(id='script_path', ctx=Load())],
+                        keywords=[])),
+                If(
+                    test=UnaryOp(
+                        op=Not(),
+                        operand=BoolOp(
+                            op=Or(),
+                            values=[
+                                Call(
+                                    func=Attribute(
+                                        value=Name(id='decoded_path', ctx=Load()),
+                                        attr='startswith',
+                                        ctx=Load()),
+                                    args=[
+                                        Name(id='base_directory', ctx=Load())],
+                                    keywords=[]),
+                                Call(
+                                    func=Attribute(
+                                        value=Name(id='decoded_path', ctx=Load()),
+                                        attr='startswith',
+                                        ctx=Load()),
+                                    args=[
+                                        Name(id='user_directory', ctx=Load())],
+                                    keywords=[])])),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Access denied: Invalid script path')],
+                                keywords=[]))],
+                    orelse=[]),
+                Assign(
+                    targets=[
+                        Name(id='normalized_path', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='path',
+                                ctx=Load()),
+                            attr='normpath',
+                            ctx=Load()),
+                        args=[
+                            Name(id='decoded_path', ctx=Load())],
+                        keywords=[])),
+                If(
+                    test=UnaryOp(
+                        op=Not(),
+                        operand=BoolOp(
+                            op=Or(),
+                            values=[
+                                Call(
+                                    func=Attribute(
+                                        value=Name(id='normalized_path', ctx=Load()),
+                                        attr='startswith',
+                                        ctx=Load()),
+                                    args=[
+                                        Name(id='base_directory', ctx=Load())],
+                                    keywords=[]),
+                                Call(
+                                    func=Attribute(
+                                        value=Name(id='normalized_path', ctx=Load()),
+                                        attr='startswith',
+                                        ctx=Load()),
+                                    args=[
+                                        Name(id='user_directory', ctx=Load())],
+                                    keywords=[])])),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Access denied: Invalid script path after normalization')],
+                                keywords=[]))],
+                    orelse=[]),
+                With(
+                    items=[
+                        withitem(
+                            context_expr=Call(
+                                func=Name(id='open', ctx=Load()),
+                                args=[
+                                    Name(id='normalized_path', ctx=Load()),
+                                    Constant(value='r')],
+                                keywords=[]),
+                            optional_vars=Name(id='script_file', ctx=Store()))],
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='exec', ctx=Load()),
+                                args=[
+                                    Call(
+                                        func=Attribute(
+                                            value=Name(id='script_file', ctx=Load()),
+                                            attr='read',
+                                            ctx=Load()),
+                                        args=[],
+                                        keywords=[])],
+                                keywords=[]))])],
+            decorator_list=[]),
+        Try(
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='load_script', ctx=Load()),
+                        args=[
+                            Constant(value='/path/to/libreoffice/share/Scripts/python/my_script.py')],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ValueError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

@@ -1,0 +1,64 @@
+Module(
+    body=[
+        FunctionDef(
+            name='abi_decode',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='data'),
+                    arg(arg='start_index'),
+                    arg(arg='length')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Subscript(
+                        value=Name(id='data', ctx=Load()),
+                        slice=Slice(
+                            lower=Name(id='start_index', ctx=Load()),
+                            upper=BinOp(
+                                left=Name(id='start_index', ctx=Load()),
+                                op=Add(),
+                                right=Name(id='length', ctx=Load()))),
+                        ctx=Load()))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='data', ctx=Store())],
+            value=List(
+                elts=[
+                    Constant(value=1),
+                    Constant(value=2),
+                    Constant(value=3),
+                    Constant(value=4),
+                    Constant(value=5)],
+                ctx=Load())),
+        Assign(
+            targets=[
+                Name(id='start_index', ctx=Store())],
+            value=BinOp(
+                left=Constant(value=2),
+                op=Pow(),
+                right=Constant(value=32))),
+        Assign(
+            targets=[
+                Name(id='length', ctx=Store())],
+            value=Constant(value=3)),
+        Assign(
+            targets=[
+                Name(id='decoded_values', ctx=Store())],
+            value=Call(
+                func=Name(id='abi_decode', ctx=Load()),
+                args=[
+                    Name(id='data', ctx=Load()),
+                    Name(id='start_index', ctx=Load()),
+                    Name(id='length', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='decoded_values', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

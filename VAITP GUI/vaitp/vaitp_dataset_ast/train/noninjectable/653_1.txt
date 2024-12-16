@@ -1,0 +1,41 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='tensorflow', asname='tf')]),
+        Import(
+            names=[
+                alias(name='pybind11')]),
+        FunctionDef(
+            name='to_dlpack',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='obj')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='tensor_ptr', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='pybind11', ctx=Load()),
+                            attr='cast',
+                            ctx=Load()),
+                        args=[
+                            Name(id='obj', ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=Name(id='tensor_ptr', ctx=Load()))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='vulnerable_output', ctx=Store())],
+            value=Call(
+                func=Name(id='to_dlpack', ctx=Load()),
+                args=[
+                    Constant(value='not_a_tensor')],
+                keywords=[]))],
+    type_ignores=[])

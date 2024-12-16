@@ -1,0 +1,142 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='socket')]),
+        FunctionDef(
+            name='safe_recvfrom_into',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='sock', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='socket', ctx=Load()),
+                            attr='socket',
+                            ctx=Load()),
+                        args=[
+                            Attribute(
+                                value=Name(id='socket', ctx=Load()),
+                                attr='AF_INET',
+                                ctx=Load()),
+                            Attribute(
+                                value=Name(id='socket', ctx=Load()),
+                                attr='SOCK_DGRAM',
+                                ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='sock', ctx=Load()),
+                            attr='bind',
+                            ctx=Load()),
+                        args=[
+                            Tuple(
+                                elts=[
+                                    Constant(value='localhost'),
+                                    Constant(value=12345)],
+                                ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='buffer', ctx=Store())],
+                    value=Call(
+                        func=Name(id='bytearray', ctx=Load()),
+                        args=[
+                            Constant(value=1024)],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='temp_buffer', ctx=Store())],
+                    value=Call(
+                        func=Name(id='bytearray', ctx=Load()),
+                        args=[
+                            Constant(value=2048)],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Tuple(
+                            elts=[
+                                Name(id='nbytes', ctx=Store()),
+                                Name(id='address', ctx=Store())],
+                            ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='sock', ctx=Load()),
+                            attr='recvfrom_into',
+                            ctx=Load()),
+                        args=[
+                            Name(id='temp_buffer', ctx=Load())],
+                        keywords=[])),
+                If(
+                    test=Compare(
+                        left=Name(id='nbytes', ctx=Load()),
+                        ops=[
+                            Gt()],
+                        comparators=[
+                            Call(
+                                func=Name(id='len', ctx=Load()),
+                                args=[
+                                    Name(id='buffer', ctx=Load())],
+                                keywords=[])]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Warning: received more data than expected. Truncating...')],
+                                keywords=[])),
+                        Assign(
+                            targets=[
+                                Name(id='nbytes', ctx=Store())],
+                            value=Call(
+                                func=Name(id='len', ctx=Load()),
+                                args=[
+                                    Name(id='buffer', ctx=Load())],
+                                keywords=[])),
+                        Assign(
+                            targets=[
+                                Subscript(
+                                    value=Name(id='buffer', ctx=Load()),
+                                    slice=Slice(),
+                                    ctx=Store())],
+                            value=Subscript(
+                                value=Name(id='temp_buffer', ctx=Load()),
+                                slice=Slice(
+                                    upper=Name(id='nbytes', ctx=Load())),
+                                ctx=Load()))],
+                    orelse=[
+                        Assign(
+                            targets=[
+                                Subscript(
+                                    value=Name(id='buffer', ctx=Load()),
+                                    slice=Slice(),
+                                    ctx=Store())],
+                            value=Subscript(
+                                value=Name(id='temp_buffer', ctx=Load()),
+                                slice=Slice(
+                                    upper=Name(id='nbytes', ctx=Load())),
+                                ctx=Load()))]),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            JoinedStr(
+                                values=[
+                                    Constant(value='Safely received '),
+                                    FormattedValue(
+                                        value=Name(id='nbytes', ctx=Load()),
+                                        conversion=-1),
+                                    Constant(value=' bytes from '),
+                                    FormattedValue(
+                                        value=Name(id='address', ctx=Load()),
+                                        conversion=-1)])],
+                        keywords=[]))],
+            decorator_list=[])],
+    type_ignores=[])

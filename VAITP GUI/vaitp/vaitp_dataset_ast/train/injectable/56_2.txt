@@ -1,0 +1,68 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='ctypes')]),
+        FunctionDef(
+            name='check_param',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='arg')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=BoolOp(
+                        op=And(),
+                        values=[
+                            Call(
+                                func=Name(id='isinstance', ctx=Load()),
+                                args=[
+                                    Name(id='arg', ctx=Load()),
+                                    Name(id='float', ctx=Load())],
+                                keywords=[]),
+                            Call(
+                                func=Attribute(
+                                    value=Name(id='arg', ctx=Load()),
+                                    attr='isfinite',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[])]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='number', ctx=Store())],
+            value=Constant(value=1e+300)),
+        Try(
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='ctypes', ctx=Load()),
+                                attr='c_double',
+                                ctx=Load()),
+                            attr='from_param',
+                            ctx=Load()),
+                        args=[
+                            Name(id='number', ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='check_param',
+                                value=Name(id='check_param', ctx=Load()))]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='TypeError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

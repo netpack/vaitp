@@ -1,0 +1,54 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='pyarrow', asname='pa')]),
+        Import(
+            names=[
+                alias(name='pyarrow.parquet', asname='pq')]),
+        Assign(
+            targets=[
+                Name(id='untrusted_file', ctx=Store())],
+            value=Constant(value='untrusted_file.parquet')),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='table', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='pq', ctx=Load()),
+                            attr='read_table',
+                            ctx=Load()),
+                        args=[
+                            Name(id='untrusted_file', ctx=Load())],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='Exception', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            Constant(value='Error reading the Parquet file: '),
+                                            FormattedValue(
+                                                value=Name(id='e', ctx=Load()),
+                                                conversion=-1)])],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[]),
+        Assign(
+            targets=[
+                Name(id='df', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='table', ctx=Load()),
+                    attr='to_pandas',
+                    ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

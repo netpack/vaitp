@@ -1,0 +1,42 @@
+Module(
+    body=[
+        FunctionDef(
+            name='vulnerable_open',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='file_path'),
+                    arg(arg='mode')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Name(id='open', ctx=Load()),
+                        args=[
+                            Name(id='file_path', ctx=Load()),
+                            Name(id='mode', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        With(
+            items=[
+                withitem(
+                    context_expr=Call(
+                        func=Name(id='vulnerable_open', ctx=Load()),
+                        args=[
+                            Constant(value='/some_arbitrary_path/my_file.txt'),
+                            Constant(value='w')],
+                        keywords=[]),
+                    optional_vars=Name(id='f', ctx=Store()))],
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='f', ctx=Load()),
+                            attr='write',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='This could be any file!')],
+                        keywords=[]))])],
+    type_ignores=[])

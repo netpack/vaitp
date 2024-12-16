@@ -1,0 +1,90 @@
+Module(
+    body=[
+        FunctionDef(
+            name='vulnerable_sha3_64',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='key'),
+                    arg(arg='value')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='height', ctx=Store())],
+                    value=Call(
+                        func=Name(id='calculate_incorrect_height', ctx=Load()),
+                        args=[
+                            Name(id='key', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='hash_value', ctx=Store())],
+                    value=Call(
+                        func=Name(id='sha3_64_computation', ctx=Load()),
+                        args=[
+                            Name(id='key', ctx=Load()),
+                            Name(id='height', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Subscript(
+                            value=Name(id='mapping', ctx=Load()),
+                            slice=Name(id='hash_value', ctx=Load()),
+                            ctx=Store())],
+                    value=Name(id='value', ctx=Load()))],
+            decorator_list=[]),
+        FunctionDef(
+            name='calculate_incorrect_height',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='key')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=BinOp(
+                        left=Call(
+                            func=Name(id='len', ctx=Load()),
+                            args=[
+                                Name(id='key', ctx=Load())],
+                            keywords=[]),
+                        op=Add(),
+                        right=Constant(value=1)))],
+            decorator_list=[]),
+        FunctionDef(
+            name='sha3_64_computation',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='key'),
+                    arg(arg='height')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Name(id='sha3', ctx=Load()),
+                        args=[
+                            BinOp(
+                                left=Name(id='key', ctx=Load()),
+                                op=Add(),
+                                right=Call(
+                                    func=Attribute(
+                                        value=Call(
+                                            func=Name(id='str', ctx=Load()),
+                                            args=[
+                                                Name(id='height', ctx=Load())],
+                                            keywords=[]),
+                                        attr='encode',
+                                        ctx=Load()),
+                                    args=[],
+                                    keywords=[]))],
+                        keywords=[]))],
+            decorator_list=[])],
+    type_ignores=[])

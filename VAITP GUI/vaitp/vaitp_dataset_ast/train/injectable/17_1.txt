@@ -1,0 +1,107 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='urllib.parse')]),
+        FunctionDef(
+            name='not_vulnerable_function',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='url')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Try(
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='hostname', ctx=Store())],
+                            value=Attribute(
+                                value=Call(
+                                    func=Attribute(
+                                        value=Attribute(
+                                            value=Name(id='urllib', ctx=Load()),
+                                            attr='parse',
+                                            ctx=Load()),
+                                        attr='urlparse',
+                                        ctx=Load()),
+                                    args=[
+                                        Name(id='url', ctx=Load())],
+                                    keywords=[]),
+                                attr='hostname',
+                                ctx=Load())),
+                        Assign(
+                            targets=[
+                                Name(id='hostname', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='hostname', ctx=Load()),
+                                            attr='encode',
+                                            ctx=Load()),
+                                        args=[
+                                            Constant(value='ascii')],
+                                        keywords=[]),
+                                    attr='decode',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='ascii')],
+                                keywords=[])),
+                        Return(
+                            value=Name(id='hostname', ctx=Load()))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='ValueError', ctx=Load()),
+                            body=[
+                                Return(
+                                    value=Constant(value=None))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='url', ctx=Store())],
+            value=Constant(value='https://example.com')),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='hostname', ctx=Store())],
+                    value=Call(
+                        func=Name(id='not_vulnerable_function', ctx=Load()),
+                        args=[
+                            Name(id='url', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            JoinedStr(
+                                values=[
+                                    Constant(value='Hostname: '),
+                                    FormattedValue(
+                                        value=Name(id='hostname', ctx=Load()),
+                                        conversion=-1)])],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='Exception', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            Constant(value='Error: '),
+                                            FormattedValue(
+                                                value=Name(id='e', ctx=Load()),
+                                                conversion=-1)])],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

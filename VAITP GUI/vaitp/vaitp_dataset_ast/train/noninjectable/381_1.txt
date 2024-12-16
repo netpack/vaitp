@@ -1,0 +1,51 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='cjson')]),
+        FunctionDef(
+            name='vulnerable_function',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='data')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='encoded_data', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='cjson', ctx=Load()),
+                            attr='encode',
+                            ctx=Load()),
+                        args=[
+                            Name(id='data', ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=Name(id='encoded_data', ctx=Load()))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='user_input', ctx=Store())],
+            value=BinOp(
+                left=Constant(value='\uffff', kind='u'),
+                op=Mult(),
+                right=Constant(value=100000))),
+        Assign(
+            targets=[
+                Name(id='result', ctx=Store())],
+            value=Call(
+                func=Name(id='vulnerable_function', ctx=Load()),
+                args=[
+                    Name(id='user_input', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='result', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

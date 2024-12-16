@@ -1,0 +1,242 @@
+Module(
+    body=[
+        ClassDef(
+            name='MediaTransport',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='is_active',
+                                    ctx=Store())],
+                            value=Constant(value=False))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='start',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='is_active',
+                                    ctx=Store())],
+                            value=Constant(value=True))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='stop',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='is_active',
+                                    ctx=Store())],
+                            value=Constant(value=False))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        ClassDef(
+            name='SRTP',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='transport')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='transport',
+                                    ctx=Store())],
+                            value=Name(id='transport', ctx=Load())),
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='is_initialized',
+                                    ctx=Store())],
+                            value=Constant(value=False))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='initialize',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        If(
+                            test=Attribute(
+                                value=Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='transport',
+                                    ctx=Load()),
+                                attr='is_active',
+                                ctx=Load()),
+                            body=[
+                                Assign(
+                                    targets=[
+                                        Attribute(
+                                            value=Name(id='self', ctx=Load()),
+                                            attr='is_initialized',
+                                            ctx=Store())],
+                                    value=Constant(value=True))],
+                            orelse=[])],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='cleanup',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        If(
+                            test=Attribute(
+                                value=Name(id='self', ctx=Load()),
+                                attr='is_initialized',
+                                ctx=Load()),
+                            body=[
+                                Assign(
+                                    targets=[
+                                        Attribute(
+                                            value=Name(id='self', ctx=Load()),
+                                            attr='is_initialized',
+                                            ctx=Store())],
+                                    value=Constant(value=False)),
+                                Assign(
+                                    targets=[
+                                        Attribute(
+                                            value=Name(id='self', ctx=Load()),
+                                            attr='transport',
+                                            ctx=Store())],
+                                    value=Constant(value=None))],
+                            orelse=[])],
+                    decorator_list=[])],
+            decorator_list=[]),
+        FunctionDef(
+            name='main',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='transport', ctx=Store())],
+                    value=Call(
+                        func=Name(id='MediaTransport', ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='transport', ctx=Load()),
+                            attr='start',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='srtp', ctx=Store())],
+                    value=Call(
+                        func=Name(id='SRTP', ctx=Load()),
+                        args=[
+                            Name(id='transport', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='srtp', ctx=Load()),
+                            attr='initialize',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='srtp', ctx=Load()),
+                            attr='cleanup',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                If(
+                    test=Compare(
+                        left=Attribute(
+                            value=Name(id='srtp', ctx=Load()),
+                            attr='transport',
+                            ctx=Load()),
+                        ops=[
+                            IsNot()],
+                        comparators=[
+                            Constant(value=None)]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Transport is still available, potential use-after-free!')],
+                                keywords=[]))],
+                    orelse=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Transport has been safely cleaned up.')],
+                                keywords=[]))])],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='main', ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

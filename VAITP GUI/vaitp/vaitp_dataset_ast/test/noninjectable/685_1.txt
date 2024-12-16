@@ -1,0 +1,199 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='dbus')]),
+        Import(
+            names=[
+                alias(name='dbus.service')]),
+        Import(
+            names=[
+                alias(name='dbus.mainloop.glib')]),
+        ImportFrom(
+            module='gi.repository',
+            names=[
+                alias(name='GLib')],
+            level=0),
+        ClassDef(
+            name='VulnerableGuakeService',
+            bases=[
+                Attribute(
+                    value=Attribute(
+                        value=Name(id='dbus', ctx=Load()),
+                        attr='service',
+                        ctx=Load()),
+                    attr='Object',
+                    ctx=Load())],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='bus_name')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='bus_name',
+                                    ctx=Store())],
+                            value=Name(id='bus_name', ctx=Load())),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Attribute(
+                                            value=Name(id='dbus', ctx=Load()),
+                                            attr='service',
+                                            ctx=Load()),
+                                        attr='Object',
+                                        ctx=Load()),
+                                    attr='__init__',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='self', ctx=Load()),
+                                    Name(id='bus_name', ctx=Load()),
+                                    Constant(value='/com/example/guake')],
+                                keywords=[]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='execute_command',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='command')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Import(
+                            names=[
+                                alias(name='subprocess')]),
+                        Assign(
+                            targets=[
+                                Name(id='result', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='subprocess', ctx=Load()),
+                                    attr='run',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='command', ctx=Load())],
+                                keywords=[
+                                    keyword(
+                                        arg='shell',
+                                        value=Constant(value=True)),
+                                    keyword(
+                                        arg='capture_output',
+                                        value=Constant(value=True)),
+                                    keyword(
+                                        arg='text',
+                                        value=Constant(value=True))])),
+                        Return(
+                            value=Attribute(
+                                value=Name(id='result', ctx=Load()),
+                                attr='stdout',
+                                ctx=Load()))],
+                    decorator_list=[
+                        Call(
+                            func=Attribute(
+                                value=Attribute(
+                                    value=Name(id='dbus', ctx=Load()),
+                                    attr='service',
+                                    ctx=Load()),
+                                attr='method',
+                                ctx=Load()),
+                            args=[
+                                Constant(value='com.example.guake')],
+                            keywords=[
+                                keyword(
+                                    arg='in_signature',
+                                    value=Constant(value='s')),
+                                keyword(
+                                    arg='out_signature',
+                                    value=Constant(value='s'))])])],
+            decorator_list=[]),
+        FunctionDef(
+            name='main',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Attribute(
+                                    value=Name(id='dbus', ctx=Load()),
+                                    attr='mainloop',
+                                    ctx=Load()),
+                                attr='glib',
+                                ctx=Load()),
+                            attr='DBusGMainLoop',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[
+                            keyword(
+                                arg='set_as_default',
+                                value=Constant(value=True))])),
+                Assign(
+                    targets=[
+                        Name(id='bus_name', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='dbus', ctx=Load()),
+                                attr='service',
+                                ctx=Load()),
+                            attr='BusName',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='com.example.guake')],
+                        keywords=[
+                            keyword(
+                                arg='bus',
+                                value=Call(
+                                    func=Attribute(
+                                        value=Name(id='dbus', ctx=Load()),
+                                        attr='SessionBus',
+                                        ctx=Load()),
+                                    args=[],
+                                    keywords=[]))])),
+                Assign(
+                    targets=[
+                        Name(id='service', ctx=Store())],
+                    value=Call(
+                        func=Name(id='VulnerableGuakeService', ctx=Load()),
+                        args=[
+                            Name(id='bus_name', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='loop', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='GLib', ctx=Load()),
+                            attr='MainLoop',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='loop', ctx=Load()),
+                            attr='run',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            decorator_list=[])],
+    type_ignores=[])

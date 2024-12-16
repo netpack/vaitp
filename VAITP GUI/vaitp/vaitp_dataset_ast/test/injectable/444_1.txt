@@ -1,0 +1,58 @@
+Module(
+    body=[
+        FunctionDef(
+            name='process_request',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='data')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Compare(
+                        left=Call(
+                            func=Name(id='len', ctx=Load()),
+                            args=[
+                                Name(id='data', ctx=Load())],
+                            keywords=[]),
+                        ops=[
+                            Gt()],
+                        comparators=[
+                            Constant(value=1000)]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Input too large')],
+                                keywords=[]))],
+                    orelse=[]),
+                If(
+                    test=UnaryOp(
+                        op=Not(),
+                        operand=Call(
+                            func=Name(id='isinstance', ctx=Load()),
+                            args=[
+                                Name(id='data', ctx=Load()),
+                                Name(id='str', ctx=Load())],
+                            keywords=[])),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='TypeError', ctx=Load()),
+                                args=[
+                                    Constant(value='Input must be a string')],
+                                keywords=[]))],
+                    orelse=[]),
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='data', ctx=Load()),
+                            attr='lower',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            decorator_list=[])],
+    type_ignores=[])

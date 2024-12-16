@@ -1,0 +1,115 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='snowflake.connector')]),
+        FunctionDef(
+            name='validate_sso_url',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='url')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='trusted_domains', ctx=Store())],
+                    value=List(
+                        elts=[
+                            Constant(value='trusted-domain.com'),
+                            Constant(value='another-trusted-domain.com')],
+                        ctx=Load())),
+                Return(
+                    value=Call(
+                        func=Name(id='any', ctx=Load()),
+                        args=[
+                            GeneratorExp(
+                                elt=Compare(
+                                    left=Name(id='domain', ctx=Load()),
+                                    ops=[
+                                        In()],
+                                    comparators=[
+                                        Name(id='url', ctx=Load())]),
+                                generators=[
+                                    comprehension(
+                                        target=Name(id='domain', ctx=Store()),
+                                        iter=Name(id='trusted_domains', ctx=Load()),
+                                        ifs=[],
+                                        is_async=0)])],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='sso_url', ctx=Store())],
+            value=Constant(value='https://malicious-server.com/snowflake_sso')),
+        Assign(
+            targets=[
+                Name(id='conn', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='snowflake', ctx=Load()),
+                        attr='connector',
+                        ctx=Load()),
+                    attr='connect',
+                    ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='user',
+                        value=Constant(value='username')),
+                    keyword(
+                        arg='password',
+                        value=Constant(value='password')),
+                    keyword(
+                        arg='account',
+                        value=Constant(value='account_name')),
+                    keyword(
+                        arg='warehouse',
+                        value=Constant(value='warehouse_name')),
+                    keyword(
+                        arg='database',
+                        value=Constant(value='database_name')),
+                    keyword(
+                        arg='schema',
+                        value=Constant(value='schema_name')),
+                    keyword(
+                        arg='sso_browser_auth',
+                        value=Constant(value=True))])),
+        If(
+            test=UnaryOp(
+                op=Not(),
+                operand=Call(
+                    func=Name(id='validate_sso_url', ctx=Load()),
+                    args=[
+                        Name(id='sso_url', ctx=Load())],
+                    keywords=[])),
+            body=[
+                Raise(
+                    exc=Call(
+                        func=Name(id='ValueError', ctx=Load()),
+                        args=[
+                            Constant(value='Invalid SSO URL')],
+                        keywords=[]))],
+            orelse=[]),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Attribute(
+                            value=Attribute(
+                                value=Name(id='conn', ctx=Load()),
+                                attr='snowflake',
+                                ctx=Load()),
+                            attr='connector',
+                            ctx=Load()),
+                        attr='SnowflakeConnection',
+                        ctx=Load()),
+                    attr='sso_browser_auth',
+                    ctx=Load()),
+                args=[
+                    Name(id='sso_url', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

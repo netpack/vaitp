@@ -1,0 +1,103 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        FunctionDef(
+            name='execute_python_code',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='code'),
+                    arg(arg='basename')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='safe_basename', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='path',
+                                ctx=Load()),
+                            attr='basename',
+                            ctx=Load()),
+                        args=[
+                            Name(id='basename', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='safe_path', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='path',
+                                ctx=Load()),
+                            attr='join',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='workspace'),
+                            Name(id='safe_basename', ctx=Load())],
+                        keywords=[])),
+                If(
+                    test=UnaryOp(
+                        op=Not(),
+                        operand=Call(
+                            func=Attribute(
+                                value=Name(id='safe_path', ctx=Load()),
+                                attr='startswith',
+                                ctx=Load()),
+                            args=[
+                                Call(
+                                    func=Attribute(
+                                        value=Attribute(
+                                            value=Name(id='os', ctx=Load()),
+                                            attr='path',
+                                            ctx=Load()),
+                                        attr='join',
+                                        ctx=Load()),
+                                    args=[
+                                        Call(
+                                            func=Attribute(
+                                                value=Name(id='os', ctx=Load()),
+                                                attr='getcwd',
+                                                ctx=Load()),
+                                            args=[],
+                                            keywords=[]),
+                                        Constant(value='workspace')],
+                                    keywords=[])],
+                            keywords=[])),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Invalid file path')],
+                                keywords=[]))],
+                    orelse=[]),
+                With(
+                    items=[
+                        withitem(
+                            context_expr=Call(
+                                func=Name(id='open', ctx=Load()),
+                                args=[
+                                    Name(id='safe_path', ctx=Load()),
+                                    Constant(value='w')],
+                                keywords=[]),
+                            optional_vars=Name(id='f', ctx=Store()))],
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='f', ctx=Load()),
+                                    attr='write',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='code', ctx=Load())],
+                                keywords=[]))])],
+            decorator_list=[])],
+    type_ignores=[])

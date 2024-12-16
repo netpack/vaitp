@@ -1,0 +1,99 @@
+Module(
+    body=[
+        ImportFrom(
+            module='jinja2',
+            names=[
+                alias(name='Environment'),
+                alias(name='FileSystemLoader'),
+                alias(name='select_autoescape')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='env', ctx=Store())],
+            value=Call(
+                func=Name(id='Environment', ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='loader',
+                        value=Call(
+                            func=Name(id='FileSystemLoader', ctx=Load()),
+                            args=[
+                                Constant(value='templates')],
+                            keywords=[])),
+                    keyword(
+                        arg='autoescape',
+                        value=Call(
+                            func=Name(id='select_autoescape', ctx=Load()),
+                            args=[
+                                List(
+                                    elts=[
+                                        Constant(value='html'),
+                                        Constant(value='xml')],
+                                    ctx=Load())],
+                            keywords=[]))])),
+        FunctionDef(
+            name='safe_render',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='template_name'),
+                    arg(arg='context')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='template', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='env', ctx=Load()),
+                            attr='get_template',
+                            ctx=Load()),
+                        args=[
+                            Name(id='template_name', ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='template', ctx=Load()),
+                            attr='render',
+                            ctx=Load()),
+                        args=[
+                            Name(id='context', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='user_context', ctx=Store())],
+                    value=Dict(
+                        keys=[
+                            Constant(value='safe_variable')],
+                        values=[
+                            Constant(value='This is safe')])),
+                Assign(
+                    targets=[
+                        Name(id='output', ctx=Store())],
+                    value=Call(
+                        func=Name(id='safe_render', ctx=Load()),
+                        args=[
+                            Constant(value='example_template.html'),
+                            Name(id='user_context', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Name(id='output', ctx=Load())],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

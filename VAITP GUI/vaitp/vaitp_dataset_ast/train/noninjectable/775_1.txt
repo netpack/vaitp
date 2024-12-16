@@ -1,0 +1,70 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='pyarrow', asname='pa')]),
+        FunctionDef(
+            name='create_array_with_nulls',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='data')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='array', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='pa', ctx=Load()),
+                            attr='array',
+                            ctx=Load()),
+                        args=[
+                            Name(id='data', ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='mask',
+                                value=ListComp(
+                                    elt=Compare(
+                                        left=Name(id='value', ctx=Load()),
+                                        ops=[
+                                            Is()],
+                                        comparators=[
+                                            Constant(value=None)]),
+                                    generators=[
+                                        comprehension(
+                                            target=Name(id='value', ctx=Store()),
+                                            iter=Name(id='data', ctx=Load()),
+                                            ifs=[],
+                                            is_async=0)]))])),
+                Return(
+                    value=Name(id='array', ctx=Load()))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='data', ctx=Store())],
+            value=List(
+                elts=[
+                    Constant(value=1),
+                    Constant(value=None),
+                    Constant(value=3),
+                    Constant(value=None),
+                    Constant(value=5)],
+                ctx=Load())),
+        Assign(
+            targets=[
+                Name(id='array_with_nulls', ctx=Store())],
+            value=Call(
+                func=Name(id='create_array_with_nulls', ctx=Load()),
+                args=[
+                    Name(id='data', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='array_with_nulls', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

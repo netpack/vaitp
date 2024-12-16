@@ -1,0 +1,45 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='awscrt')]),
+        Assign(
+            targets=[
+                Name(id='tls_context', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='awscrt', ctx=Load()),
+                    attr='TlsContext',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='user_ca_cert', ctx=Store())],
+            value=Constant(value='path/to/user_ca.pem')),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='tls_context', ctx=Load()),
+                    attr='override_default_trust_store',
+                    ctx=Load()),
+                args=[
+                    Name(id='user_ca_cert', ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='mqtt_client', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='awscrt', ctx=Load()),
+                        attr='mqtt',
+                        ctx=Load()),
+                    attr='MqttClient',
+                    ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='tls_context',
+                        value=Name(id='tls_context', ctx=Load()))]))],
+    type_ignores=[])

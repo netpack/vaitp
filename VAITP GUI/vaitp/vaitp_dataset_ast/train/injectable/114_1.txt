@@ -1,0 +1,42 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        ImportFrom(
+            module='xml.etree',
+            names=[
+                alias(name='ElementTree')],
+            level=0),
+        Assign(
+            targets=[
+                Subscript(
+                    value=Attribute(
+                        value=Name(id='os', ctx=Load()),
+                        attr='environ',
+                        ctx=Load()),
+                    slice=Constant(value='PYTHONDONTWRITEBYTECODE'),
+                    ctx=Store())],
+            value=Constant(value='1')),
+        Assign(
+            targets=[
+                Name(id='tree', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='ElementTree', ctx=Load()),
+                    attr='parse',
+                    ctx=Load()),
+                args=[
+                    Constant(value='evil.xml')],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='root', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='tree', ctx=Load()),
+                    attr='getroot',
+                    ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

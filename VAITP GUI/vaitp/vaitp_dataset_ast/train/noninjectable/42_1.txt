@@ -1,0 +1,57 @@
+Module(
+    body=[
+        ImportFrom(
+            module='PIL',
+            names=[
+                alias(name='Image')],
+            level=0),
+        ImportFrom(
+            module='io',
+            names=[
+                alias(name='BytesIO')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='blp_data', ctx=Store())],
+            value=Constant(value=b'BLP\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x01')),
+        AugAssign(
+            target=Name(id='blp_data', ctx=Store()),
+            op=Add(),
+            value=BinOp(
+                left=Constant(value=b'\x00'),
+                op=Mult(),
+                right=BinOp(
+                    left=BinOp(
+                        left=Constant(value=2),
+                        op=Pow(),
+                        right=Constant(value=32)),
+                    op=Sub(),
+                    right=Call(
+                        func=Name(id='len', ctx=Load()),
+                        args=[
+                            Name(id='blp_data', ctx=Load())],
+                        keywords=[])))),
+        Assign(
+            targets=[
+                Name(id='img', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='Image', ctx=Load()),
+                    attr='open',
+                    ctx=Load()),
+                args=[
+                    Call(
+                        func=Name(id='BytesIO', ctx=Load()),
+                        args=[
+                            Name(id='blp_data', ctx=Load())],
+                        keywords=[])],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='img', ctx=Load()),
+                    attr='load',
+                    ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

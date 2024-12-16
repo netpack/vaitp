@@ -1,0 +1,21 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='sys')]),
+        Import(
+            names=[
+                alias(name='site')]),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='site', ctx=Load()),
+                    attr='addsitedir',
+                    ctx=Load()),
+                args=[
+                    Constant(value='/usr/local/lib/python2.7/site-packages/pgadmin4')],
+                keywords=[])),
+        Import(
+            names=[
+                alias(name='pgadmin4')])],
+    type_ignores=[])

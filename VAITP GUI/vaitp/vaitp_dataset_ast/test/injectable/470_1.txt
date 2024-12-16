@@ -1,0 +1,87 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='sys')]),
+        Assign(
+            targets=[
+                Name(id='ALLOWED_MODULES', ctx=Store())],
+            value=Set(
+                elts=[
+                    Constant(value='module1'),
+                    Constant(value='module2'),
+                    Constant(value='module3')])),
+        FunctionDef(
+            name='handle_core_dump',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='module_name')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Compare(
+                        left=Name(id='module_name', ctx=Load()),
+                        ops=[
+                            In()],
+                        comparators=[
+                            Name(id='ALLOWED_MODULES', ctx=Load())]),
+                    body=[
+                        Try(
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='__import__', ctx=Load()),
+                                        args=[
+                                            Name(id='module_name', ctx=Load())],
+                                        keywords=[]))],
+                            handlers=[
+                                ExceptHandler(
+                                    type=Name(id='ImportError', ctx=Load()),
+                                    name='e',
+                                    body=[
+                                        Expr(
+                                            value=Call(
+                                                func=Name(id='print', ctx=Load()),
+                                                args=[
+                                                    JoinedStr(
+                                                        values=[
+                                                            Constant(value='Error importing module: '),
+                                                            FormattedValue(
+                                                                value=Name(id='e', ctx=Load()),
+                                                                conversion=-1)])],
+                                                keywords=[]))])],
+                            orelse=[],
+                            finalbody=[])],
+                    orelse=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            Constant(value='Attempt to import disallowed module: '),
+                                            FormattedValue(
+                                                value=Name(id='module_name', ctx=Load()),
+                                                conversion=-1)])],
+                                keywords=[]))])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='user_input', ctx=Store())],
+            value=Subscript(
+                value=Attribute(
+                    value=Name(id='sys', ctx=Load()),
+                    attr='argv',
+                    ctx=Load()),
+                slice=Constant(value=1),
+                ctx=Load())),
+        Expr(
+            value=Call(
+                func=Name(id='handle_core_dump', ctx=Load()),
+                args=[
+                    Name(id='user_input', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

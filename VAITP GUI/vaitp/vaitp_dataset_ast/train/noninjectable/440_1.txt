@@ -1,0 +1,107 @@
+Module(
+    body=[
+        ImportFrom(
+            module='botbuilder.core',
+            names=[
+                alias(name='ActivityHandler'),
+                alias(name='TurnContext')],
+            level=0),
+        ClassDef(
+            name='MyBot',
+            bases=[
+                Name(id='ActivityHandler', ctx=Load())],
+            keywords=[],
+            body=[
+                AsyncFunctionDef(
+                    name='on_message_activity',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(
+                                arg='turn_context',
+                                annotation=Name(id='TurnContext', ctx=Load()))],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='user_message', ctx=Store())],
+                            value=Attribute(
+                                value=Attribute(
+                                    value=Name(id='turn_context', ctx=Load()),
+                                    attr='activity',
+                                    ctx=Load()),
+                                attr='text',
+                                ctx=Load())),
+                        Assign(
+                            targets=[
+                                Name(id='response_message', ctx=Store())],
+                            value=JoinedStr(
+                                values=[
+                                    Constant(value='You said: '),
+                                    FormattedValue(
+                                        value=Name(id='user_message', ctx=Load()),
+                                        conversion=-1),
+                                    Constant(value=". Here's some sensitive info: "),
+                                    FormattedValue(
+                                        value=Attribute(
+                                            value=Name(id='turn_context', ctx=Load()),
+                                            attr='activity',
+                                            ctx=Load()),
+                                        conversion=-1),
+                                    Constant(value='.')])),
+                        Expr(
+                            value=Await(
+                                value=Call(
+                                    func=Attribute(
+                                        value=Name(id='turn_context', ctx=Load()),
+                                        attr='send_activity',
+                                        ctx=Load()),
+                                    args=[
+                                        Name(id='response_message', ctx=Load())],
+                                    keywords=[])))],
+                    decorator_list=[]),
+                AsyncFunctionDef(
+                    name='on_turn',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(
+                                arg='turn_context',
+                                annotation=Name(id='TurnContext', ctx=Load()))],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        If(
+                            test=Compare(
+                                left=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='turn_context', ctx=Load()),
+                                        attr='activity',
+                                        ctx=Load()),
+                                    attr='type',
+                                    ctx=Load()),
+                                ops=[
+                                    Eq()],
+                                comparators=[
+                                    Constant(value='message')]),
+                            body=[
+                                Expr(
+                                    value=Await(
+                                        value=Call(
+                                            func=Attribute(
+                                                value=Name(id='self', ctx=Load()),
+                                                attr='on_message_activity',
+                                                ctx=Load()),
+                                            args=[
+                                                Name(id='turn_context', ctx=Load())],
+                                            keywords=[])))],
+                            orelse=[
+                                Pass()])],
+                    decorator_list=[])],
+            decorator_list=[])],
+    type_ignores=[])

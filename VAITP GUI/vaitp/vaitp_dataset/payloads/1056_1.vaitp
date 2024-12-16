@@ -1,0 +1,3 @@
+```python
+os.system("malicious_command")
+```

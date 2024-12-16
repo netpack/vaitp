@@ -1,0 +1,82 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        Import(
+            names=[
+                alias(name='sqlite3')]),
+        Import(
+            names=[
+                alias(name='tempfile')]),
+        FunctionDef(
+            name='create_database',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='db_file', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='tempfile', ctx=Load()),
+                            attr='mktemp',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[
+                            keyword(
+                                arg='suffix',
+                                value=Constant(value='.db'))])),
+                Assign(
+                    targets=[
+                        Name(id='conn', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='sqlite3', ctx=Load()),
+                            attr='connect',
+                            ctx=Load()),
+                        args=[
+                            Name(id='db_file', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='conn', ctx=Load()),
+                            attr='execute',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='CREATE TABLE api_keys (key TEXT, bucket_id TEXT)')],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='conn', ctx=Load()),
+                            attr='close',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='os', ctx=Load()),
+                            attr='chmod',
+                            ctx=Load()),
+                        args=[
+                            Name(id='db_file', ctx=Load()),
+                            Constant(value=384)],
+                        keywords=[])),
+                Return(
+                    value=Name(id='db_file', ctx=Load()))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='db_path', ctx=Store())],
+            value=Call(
+                func=Name(id='create_database', ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

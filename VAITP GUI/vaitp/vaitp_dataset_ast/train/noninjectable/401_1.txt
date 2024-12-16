@@ -1,0 +1,51 @@
+Module(
+    body=[
+        Assign(
+            targets=[
+                Name(id='state', ctx=Store())],
+            value=Dict(
+                keys=[
+                    Constant(value='value')],
+                values=[
+                    Constant(value=0)])),
+        FunctionDef(
+            name='side_effect_function',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                AugAssign(
+                    target=Subscript(
+                        value=Name(id='state', ctx=Load()),
+                        slice=Constant(value='value'),
+                        ctx=Store()),
+                    op=Add(),
+                    value=Constant(value=1)),
+                Return(
+                    value=Subscript(
+                        value=Name(id='state', ctx=Load()),
+                        slice=Constant(value='value'),
+                        ctx=Load()))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='result', ctx=Store())],
+            value=Call(
+                func=Name(id='unsafe_add', ctx=Load()),
+                args=[
+                    Constant(value=5),
+                    Call(
+                        func=Name(id='side_effect_function', ctx=Load()),
+                        args=[],
+                        keywords=[])],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='result', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

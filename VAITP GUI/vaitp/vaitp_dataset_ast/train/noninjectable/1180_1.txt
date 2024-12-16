@@ -1,0 +1,100 @@
+Module(
+    body=[
+        ClassDef(
+            name='CompletionQueue',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='dbg',
+                                    ctx=Store())],
+                            value=Constant(value='debug_info'))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='debug_cq_remove',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Removing debug information.')],
+                                keywords=[]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='destroy_cq',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='success', ctx=Store())],
+                            value=Constant(value=False)),
+                        If(
+                            test=UnaryOp(
+                                op=Not(),
+                                operand=Name(id='success', ctx=Load())),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            Constant(value='Failed to destroy CQ. Proceeding to cleanup.')],
+                                        keywords=[])),
+                                Expr(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='self', ctx=Load()),
+                                            attr='debug_cq_remove',
+                                            ctx=Load()),
+                                        args=[],
+                                        keywords=[]))],
+                            orelse=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            Constant(value='Successfully destroyed CQ.')],
+                                        keywords=[]))])],
+                    decorator_list=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='cq', ctx=Store())],
+            value=Call(
+                func=Name(id='CompletionQueue', ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='cq', ctx=Load()),
+                    attr='destroy_cq',
+                    ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

@@ -1,0 +1,98 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='urllib3')]),
+        FunctionDef(
+            name='vulnerable_function',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='url'),
+                    arg(arg='headers')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='http', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='urllib3', ctx=Load()),
+                            attr='PoolManager',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='request', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='http', ctx=Load()),
+                            attr='request',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='GET'),
+                            Name(id='url', ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='headers',
+                                value=Name(id='headers', ctx=Load()))])),
+                Return(
+                    value=Attribute(
+                        value=Name(id='request', ctx=Load()),
+                        attr='data',
+                        ctx=Load()))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='url', ctx=Store())],
+            value=Constant(value='https://example.com')),
+        Assign(
+            targets=[
+                Name(id='headers', ctx=Store())],
+            value=Dict(
+                keys=[
+                    Constant(value='Transfer-Encoding'),
+                    Constant(value='Content-Length')],
+                values=[
+                    Constant(value='chunked'),
+                    Constant(value='0')])),
+        Assign(
+            targets=[
+                Name(id='chunked_payload', ctx=Store())],
+            value=Constant(value='5\r\nHello\r\n0\r\n\r\n')),
+        Expr(
+            value=Call(
+                func=Name(id='vulnerable_function', ctx=Load()),
+                args=[
+                    Name(id='url', ctx=Load()),
+                    Name(id='headers', ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='http', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='urllib3', ctx=Load()),
+                    attr='PoolManager',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='request', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='http', ctx=Load()),
+                    attr='request',
+                    ctx=Load()),
+                args=[
+                    Constant(value='POST'),
+                    Name(id='url', ctx=Load())],
+                keywords=[
+                    keyword(
+                        arg='body',
+                        value=Name(id='chunked_payload', ctx=Load()))]))],
+    type_ignores=[])

@@ -1,0 +1,169 @@
+Module(
+    body=[
+        FunctionDef(
+            name='safe_integer_addition',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='a'),
+                    arg(arg='b')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=BoolOp(
+                        op=And(),
+                        values=[
+                            Compare(
+                                left=Name(id='a', ctx=Load()),
+                                ops=[
+                                    Gt()],
+                                comparators=[
+                                    Constant(value=0)]),
+                            Compare(
+                                left=Name(id='b', ctx=Load()),
+                                ops=[
+                                    Gt()],
+                                comparators=[
+                                    Constant(value=0)]),
+                            Compare(
+                                left=Name(id='a', ctx=Load()),
+                                ops=[
+                                    Gt()],
+                                comparators=[
+                                    BinOp(
+                                        left=BinOp(
+                                            left=BinOp(
+                                                left=Constant(value=2),
+                                                op=Pow(),
+                                                right=Constant(value=31)),
+                                            op=Sub(),
+                                            right=Constant(value=1)),
+                                        op=Sub(),
+                                        right=Name(id='b', ctx=Load()))])]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='OverflowError', ctx=Load()),
+                                args=[
+                                    Constant(value='Integer addition overflow')],
+                                keywords=[]))],
+                    orelse=[]),
+                Return(
+                    value=BinOp(
+                        left=Name(id='a', ctx=Load()),
+                        op=Add(),
+                        right=Name(id='b', ctx=Load())))],
+            decorator_list=[]),
+        FunctionDef(
+            name='safe_integer_multiplication',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='a'),
+                    arg(arg='b')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=BoolOp(
+                        op=And(),
+                        values=[
+                            Compare(
+                                left=Name(id='a', ctx=Load()),
+                                ops=[
+                                    Gt()],
+                                comparators=[
+                                    Constant(value=0)]),
+                            Compare(
+                                left=Name(id='b', ctx=Load()),
+                                ops=[
+                                    Gt()],
+                                comparators=[
+                                    Constant(value=0)]),
+                            Compare(
+                                left=Name(id='a', ctx=Load()),
+                                ops=[
+                                    Gt()],
+                                comparators=[
+                                    BinOp(
+                                        left=BinOp(
+                                            left=BinOp(
+                                                left=Constant(value=2),
+                                                op=Pow(),
+                                                right=Constant(value=31)),
+                                            op=Sub(),
+                                            right=Constant(value=1)),
+                                        op=FloorDiv(),
+                                        right=Name(id='b', ctx=Load()))])]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='OverflowError', ctx=Load()),
+                                args=[
+                                    Constant(value='Integer multiplication overflow')],
+                                keywords=[]))],
+                    orelse=[]),
+                Return(
+                    value=BinOp(
+                        left=Name(id='a', ctx=Load()),
+                        op=Mult(),
+                        right=Name(id='b', ctx=Load())))],
+            decorator_list=[]),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='result', ctx=Store())],
+                    value=Call(
+                        func=Name(id='safe_integer_addition', ctx=Load()),
+                        args=[
+                            Constant(value=2147483647),
+                            Constant(value=1)],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='OverflowError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[]),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='result', ctx=Store())],
+                    value=Call(
+                        func=Name(id='safe_integer_multiplication', ctx=Load()),
+                        args=[
+                            Constant(value=100000),
+                            Constant(value=30000)],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Name(id='result', ctx=Load())],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='OverflowError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

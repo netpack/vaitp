@@ -1,0 +1,179 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        Import(
+            names=[
+                alias(name='re')]),
+        ImportFrom(
+            module='wheel',
+            names=[
+                alias(name='bdist_wheel')],
+            level=0),
+        FunctionDef(
+            name='is_valid_package_name',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='package_name')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Name(id='bool', ctx=Load()),
+                        args=[
+                            Call(
+                                func=Attribute(
+                                    value=Name(id='re', ctx=Load()),
+                                    attr='match',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='^[a-zA-Z0-9-_]+$'),
+                                    Name(id='package_name', ctx=Load())],
+                                keywords=[])],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='create_wheel',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='package_name')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=UnaryOp(
+                        op=Not(),
+                        operand=Call(
+                            func=Name(id='is_valid_package_name', ctx=Load()),
+                            args=[
+                                Name(id='package_name', ctx=Load())],
+                            keywords=[])),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Invalid package name. Only alphanumeric characters, dashes, and underscores are allowed.')],
+                                keywords=[]))],
+                    orelse=[]),
+                Assign(
+                    targets=[
+                        Name(id='temp_dir', ctx=Store())],
+                    value=JoinedStr(
+                        values=[
+                            Constant(value='/tmp/'),
+                            FormattedValue(
+                                value=Name(id='package_name', ctx=Load()),
+                                conversion=-1)])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='os', ctx=Load()),
+                            attr='makedirs',
+                            ctx=Load()),
+                        args=[
+                            Name(id='temp_dir', ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='exist_ok',
+                                value=Constant(value=True))])),
+                Try(
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='wheel_cmd', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='bdist_wheel', ctx=Load()),
+                                    attr='bdist_wheel',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='temp_dir', ctx=Load())],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='wheel_cmd', ctx=Load()),
+                                    attr='run',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            Constant(value='Wheel created at '),
+                                            FormattedValue(
+                                                value=Name(id='temp_dir', ctx=Load()),
+                                                conversion=-1),
+                                            Constant(value='/'),
+                                            FormattedValue(
+                                                value=Name(id='package_name', ctx=Load()),
+                                                conversion=-1),
+                                            Constant(value='.whl')])],
+                                keywords=[]))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='Exception', ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    Constant(value='An error occurred while creating the wheel: '),
+                                                    FormattedValue(
+                                                        value=Name(id='e', ctx=Load()),
+                                                        conversion=-1)])],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[
+                        If(
+                            test=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='os', ctx=Load()),
+                                        attr='path',
+                                        ctx=Load()),
+                                    attr='exists',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='temp_dir', ctx=Load())],
+                                keywords=[]),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='os', ctx=Load()),
+                                            attr='rmdir',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='temp_dir', ctx=Load())],
+                                        keywords=[]))],
+                            orelse=[])])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='user_input', ctx=Store())],
+            value=Call(
+                func=Name(id='input', ctx=Load()),
+                args=[
+                    Constant(value='Enter the package name: ')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='create_wheel', ctx=Load()),
+                args=[
+                    Name(id='user_input', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

@@ -1,0 +1,28 @@
+Module(
+    body=[
+        ImportFrom(
+            module='democritus_dicts',
+            names=[
+                alias(name='malicious_function')],
+            level=0),
+        FunctionDef(
+            name='risky_operation',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='malicious_function', ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='risky_operation', ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

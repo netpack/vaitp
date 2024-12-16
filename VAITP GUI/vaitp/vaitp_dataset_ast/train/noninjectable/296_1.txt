@@ -1,0 +1,13 @@
+Module(
+    body=[
+        ImportFrom(
+            module='democritus_file_system',
+            names=[
+                alias(name='unsafe_function')],
+            level=0),
+        Expr(
+            value=Call(
+                func=Name(id='unsafe_function', ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

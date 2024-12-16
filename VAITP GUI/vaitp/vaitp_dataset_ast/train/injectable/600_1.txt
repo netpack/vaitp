@@ -1,0 +1,100 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='ast')]),
+        Import(
+            names=[
+                alias(name='logging')]),
+        FunctionDef(
+            name='safe_script_invoke',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='script')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Try(
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='safe_code', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='ast', ctx=Load()),
+                                    attr='literal_eval',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='script', ctx=Load())],
+                                keywords=[])),
+                        Return(
+                            value=Name(id='safe_code', ctx=Load()))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Tuple(
+                                elts=[
+                                    Name(id='ValueError', ctx=Load()),
+                                    Name(id='SyntaxError', ctx=Load())],
+                                ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='logging', ctx=Load()),
+                                            attr='error',
+                                            ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    Constant(value='Invalid script: '),
+                                                    FormattedValue(
+                                                        value=Name(id='e', ctx=Load()),
+                                                        conversion=-1)])],
+                                        keywords=[])),
+                                Return(
+                                    value=Constant(value=None))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='user_input_script', ctx=Store())],
+            value=Constant(value='1 + 2')),
+        Assign(
+            targets=[
+                Name(id='result', ctx=Store())],
+            value=Call(
+                func=Name(id='safe_script_invoke', ctx=Load()),
+                args=[
+                    Name(id='user_input_script', ctx=Load())],
+                keywords=[])),
+        If(
+            test=Compare(
+                left=Name(id='result', ctx=Load()),
+                ops=[
+                    IsNot()],
+                comparators=[
+                    Constant(value=None)]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            JoinedStr(
+                                values=[
+                                    Constant(value='Result: '),
+                                    FormattedValue(
+                                        value=Name(id='result', ctx=Load()),
+                                        conversion=-1)])],
+                        keywords=[]))],
+            orelse=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Execution failed due to unsafe script.')],
+                        keywords=[]))])],
+    type_ignores=[])

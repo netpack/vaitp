@@ -1,0 +1,40 @@
+Module(
+    body=[
+        FunctionDef(
+            name='render_page',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='input_data')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=JoinedStr(
+                        values=[
+                            Constant(value='<html><body>'),
+                            FormattedValue(
+                                value=Name(id='input_data', ctx=Load()),
+                                conversion=-1),
+                            Constant(value='</body></html>')]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='payload', ctx=Store())],
+            value=Constant(value="<script>alert('Vulnerable!');</script>")),
+        Assign(
+            targets=[
+                Name(id='output', ctx=Store())],
+            value=Call(
+                func=Name(id='render_page', ctx=Load()),
+                args=[
+                    Name(id='payload', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='output', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

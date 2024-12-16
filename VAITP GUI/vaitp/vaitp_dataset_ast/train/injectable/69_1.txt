@@ -1,0 +1,64 @@
+Module(
+    body=[
+        FunctionDef(
+            name='convert_to_int',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='text')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Try(
+                    body=[
+                        Return(
+                            value=Call(
+                                func=Name(id='int', ctx=Load()),
+                                args=[
+                                    Name(id='text', ctx=Load())],
+                                keywords=[]))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='ValueError', ctx=Load()),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            Constant(value='Invalid input. Please enter a valid integer.')],
+                                        keywords=[])),
+                                Return(
+                                    value=Constant(value=None))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='user_input', ctx=Store())],
+            value=Constant(value='1e308')),
+        Assign(
+            targets=[
+                Name(id='result', ctx=Store())],
+            value=Call(
+                func=Name(id='convert_to_int', ctx=Load()),
+                args=[
+                    Name(id='user_input', ctx=Load())],
+                keywords=[])),
+        If(
+            test=Compare(
+                left=Name(id='result', ctx=Load()),
+                ops=[
+                    IsNot()],
+                comparators=[
+                    Constant(value=None)]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Converted number:'),
+                            Name(id='result', ctx=Load())],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

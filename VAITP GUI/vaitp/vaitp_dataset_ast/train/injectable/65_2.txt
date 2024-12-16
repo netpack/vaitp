@@ -1,0 +1,32 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='ipaddress')]),
+        Assign(
+            targets=[
+                Name(id='address', ctx=Store())],
+            value=Constant(value='192.168.0.1')),
+        Assign(
+            targets=[
+                Name(id='interface', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='ipaddress', ctx=Load()),
+                    attr='IPv4Interface',
+                    ctx=Load()),
+                args=[
+                    Name(id='address', ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='dictionary', ctx=Store())],
+            value=Dict(keys=[], values=[])),
+        Assign(
+            targets=[
+                Subscript(
+                    value=Name(id='dictionary', ctx=Load()),
+                    slice=Name(id='interface', ctx=Load()),
+                    ctx=Store())],
+            value=Constant(value='test'))],
+    type_ignores=[])

@@ -1,0 +1,70 @@
+Module(
+    body=[
+        ImportFrom(
+            module='PIL',
+            names=[
+                alias(name='Image')],
+            level=0),
+        With(
+            items=[
+                withitem(
+                    context_expr=Call(
+                        func=Name(id='open', ctx=Load()),
+                        args=[
+                            Constant(value='malicious_image.tif'),
+                            Constant(value='wb')],
+                        keywords=[]),
+                    optional_vars=Name(id='f', ctx=Store()))],
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='f', ctx=Load()),
+                            attr='write',
+                            ctx=Load()),
+                        args=[
+                            Constant(value=b'II*\x00\x10\x00\x00\x00\x10\x00\x00\x00\x10\x00\x00\x00\x01\x00\x10\x00')],
+                        keywords=[]))]),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='img', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='Image', ctx=Load()),
+                            attr='open',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='malicious_image.tif')],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='img', ctx=Load()),
+                            attr='load',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[
+                            keyword(
+                                arg='readonly',
+                                value=Constant(value=True)),
+                            keyword(
+                                arg='buffer',
+                                value=BinOp(
+                                    left=Constant(value=1024),
+                                    op=Mult(),
+                                    right=Constant(value=1024)))]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='IOError', ctx=Load()),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Error loading image')],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

@@ -1,0 +1,121 @@
+Module(
+    body=[
+        ImportFrom(
+            module='waitress',
+            names=[
+                alias(name='serve')],
+            level=0),
+        Import(
+            names=[
+                alias(name='socket')]),
+        Import(
+            names=[
+                alias(name='threading')]),
+        FunctionDef(
+            name='app',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='environ'),
+                    arg(arg='start_response')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='status', ctx=Store())],
+                    value=Constant(value='200 OK')),
+                Assign(
+                    targets=[
+                        Name(id='headers', ctx=Store())],
+                    value=List(
+                        elts=[
+                            Tuple(
+                                elts=[
+                                    Constant(value='Content-type'),
+                                    Constant(value='text/plain; charset=utf-8')],
+                                ctx=Load())],
+                        ctx=Load())),
+                Expr(
+                    value=Call(
+                        func=Name(id='start_response', ctx=Load()),
+                        args=[
+                            Name(id='status', ctx=Load()),
+                            Name(id='headers', ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=List(
+                        elts=[
+                            Constant(value=b'Hello, World!')],
+                        ctx=Load()))],
+            decorator_list=[]),
+        FunctionDef(
+            name='close_socket',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='sock')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='sock', ctx=Load()),
+                            attr='close',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='server', ctx=Store())],
+                    value=Call(
+                        func=Name(id='serve', ctx=Load()),
+                        args=[
+                            Name(id='app', ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='host',
+                                value=Constant(value='0.0.0.0')),
+                            keyword(
+                                arg='port',
+                                value=Constant(value=8080))])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='threading', ctx=Load()),
+                                    attr='Thread',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[
+                                    keyword(
+                                        arg='target',
+                                        value=Name(id='close_socket', ctx=Load())),
+                                    keyword(
+                                        arg='args',
+                                        value=Tuple(
+                                            elts=[
+                                                Attribute(
+                                                    value=Name(id='server', ctx=Load()),
+                                                    attr='socket',
+                                                    ctx=Load())],
+                                            ctx=Load()))]),
+                            attr='start',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

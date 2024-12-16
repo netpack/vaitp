@@ -1,0 +1,78 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='xdg.Menu')]),
+        FunctionDef(
+            name='sanitize_menu_file',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='menu_file')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                With(
+                    items=[
+                        withitem(
+                            context_expr=Call(
+                                func=Name(id='open', ctx=Load()),
+                                args=[
+                                    Name(id='menu_file', ctx=Load()),
+                                    Constant(value='r')],
+                                keywords=[]),
+                            optional_vars=Name(id='f', ctx=Store()))],
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='menu_data', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='f', ctx=Load()),
+                                    attr='read',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[]))]),
+                Assign(
+                    targets=[
+                        Name(id='sanitized_menu_data', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='menu_data', ctx=Load()),
+                                    attr='replace',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='<Category>'),
+                                    Constant(value='')],
+                                keywords=[]),
+                            attr='replace',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='</Category>'),
+                            Constant(value='')],
+                        keywords=[])),
+                Return(
+                    value=Name(id='sanitized_menu_data', ctx=Load()))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='menu', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='xdg', ctx=Load()),
+                        attr='Menu',
+                        ctx=Load()),
+                    attr='parse',
+                    ctx=Load()),
+                args=[
+                    Call(
+                        func=Name(id='sanitize_menu_file', ctx=Load()),
+                        args=[
+                            Constant(value='safe.menu')],
+                        keywords=[])],
+                keywords=[]))],
+    type_ignores=[])

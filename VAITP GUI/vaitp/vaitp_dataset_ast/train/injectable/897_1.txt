@@ -1,0 +1,180 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='tensorflow', asname='tf')]),
+        FunctionDef(
+            name='safe_sparse_dense_cwise_mul',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='sparse_tensor'),
+                    arg(arg='dense_tensor')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='sparse_shape', ctx=Store())],
+                    value=Attribute(
+                        value=Name(id='sparse_tensor', ctx=Load()),
+                        attr='shape',
+                        ctx=Load())),
+                Assign(
+                    targets=[
+                        Name(id='dense_shape', ctx=Store())],
+                    value=Attribute(
+                        value=Name(id='dense_tensor', ctx=Load()),
+                        attr='shape',
+                        ctx=Load())),
+                If(
+                    test=Compare(
+                        left=Subscript(
+                            value=Name(id='sparse_shape', ctx=Load()),
+                            slice=Constant(value=1),
+                            ctx=Load()),
+                        ops=[
+                            NotEq()],
+                        comparators=[
+                            Subscript(
+                                value=Name(id='dense_shape', ctx=Load()),
+                                slice=Constant(value=0),
+                                ctx=Load())]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            Constant(value="Incompatible dimensions: sparse tensor's second dimension ("),
+                                            FormattedValue(
+                                                value=Subscript(
+                                                    value=Name(id='sparse_shape', ctx=Load()),
+                                                    slice=Constant(value=1),
+                                                    ctx=Load()),
+                                                conversion=-1),
+                                            Constant(value=") must match dense tensor's first dimension ("),
+                                            FormattedValue(
+                                                value=Subscript(
+                                                    value=Name(id='dense_shape', ctx=Load()),
+                                                    slice=Constant(value=0),
+                                                    ctx=Load()),
+                                                conversion=-1),
+                                            Constant(value=').')])],
+                                keywords=[]))],
+                    orelse=[]),
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='tf', ctx=Load()),
+                                attr='raw_ops',
+                                ctx=Load()),
+                            attr='SparseDenseCwiseMul',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[
+                            keyword(
+                                arg='sparse_indices',
+                                value=Attribute(
+                                    value=Name(id='sparse_tensor', ctx=Load()),
+                                    attr='indices',
+                                    ctx=Load())),
+                            keyword(
+                                arg='sparse_values',
+                                value=Attribute(
+                                    value=Name(id='sparse_tensor', ctx=Load()),
+                                    attr='values',
+                                    ctx=Load())),
+                            keyword(
+                                arg='sparse_shape',
+                                value=Name(id='sparse_shape', ctx=Load())),
+                            keyword(
+                                arg='dense',
+                                value=Name(id='dense_tensor', ctx=Load()))]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='sparse_tensor', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='tf', ctx=Load()),
+                        attr='sparse',
+                        ctx=Load()),
+                    attr='SparseTensor',
+                    ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='indices',
+                        value=List(
+                            elts=[
+                                List(
+                                    elts=[
+                                        Constant(value=0),
+                                        Constant(value=0)],
+                                    ctx=Load()),
+                                List(
+                                    elts=[
+                                        Constant(value=1),
+                                        Constant(value=2)],
+                                    ctx=Load())],
+                            ctx=Load())),
+                    keyword(
+                        arg='values',
+                        value=List(
+                            elts=[
+                                Constant(value=1.0),
+                                Constant(value=2.0)],
+                            ctx=Load())),
+                    keyword(
+                        arg='dense_shape',
+                        value=List(
+                            elts=[
+                                Constant(value=2),
+                                Constant(value=3)],
+                            ctx=Load()))])),
+        Assign(
+            targets=[
+                Name(id='dense_tensor', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='tf', ctx=Load()),
+                    attr='constant',
+                    ctx=Load()),
+                args=[
+                    List(
+                        elts=[
+                            List(
+                                elts=[
+                                    Constant(value=1.0),
+                                    Constant(value=2.0),
+                                    Constant(value=3.0)],
+                                ctx=Load()),
+                            List(
+                                elts=[
+                                    Constant(value=4.0),
+                                    Constant(value=5.0),
+                                    Constant(value=6.0)],
+                                ctx=Load())],
+                        ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='result', ctx=Store())],
+            value=Call(
+                func=Name(id='safe_sparse_dense_cwise_mul', ctx=Load()),
+                args=[
+                    Name(id='sparse_tensor', ctx=Load()),
+                    Name(id='dense_tensor', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='result', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

@@ -1,0 +1,17 @@
+Module(
+    body=[
+        ImportFrom(
+            module='waitress',
+            names=[
+                alias(name='serve')],
+            level=0),
+        Expr(
+            value=Call(
+                func=Name(id='serve', ctx=Load()),
+                args=[
+                    Name(id='app', ctx=Load())],
+                keywords=[
+                    keyword(
+                        arg='channel_request_lookahead',
+                        value=Constant(value=0))]))],
+    type_ignores=[])

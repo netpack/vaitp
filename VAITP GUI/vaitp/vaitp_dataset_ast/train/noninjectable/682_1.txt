@@ -1,0 +1,33 @@
+Module(
+    body=[
+        FunctionDef(
+            name='start_unichar',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='attrs')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='code', ctx=Store())],
+                    value=Subscript(
+                        value=Name(id='attrs', ctx=Load()),
+                        slice=Constant(value='code'),
+                        ctx=Load())),
+                Expr(
+                    value=Call(
+                        func=Name(id='exec', ctx=Load()),
+                        args=[
+                            JoinedStr(
+                                values=[
+                                    Constant(value='unichr('),
+                                    FormattedValue(
+                                        value=Name(id='code', ctx=Load()),
+                                        conversion=-1),
+                                    Constant(value=')')])],
+                        keywords=[]))],
+            decorator_list=[])],
+    type_ignores=[])

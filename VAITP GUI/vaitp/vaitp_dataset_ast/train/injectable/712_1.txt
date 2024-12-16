@@ -1,0 +1,89 @@
+Module(
+    body=[
+        ClassDef(
+            name='VulnerableClass',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='execute_command',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='command')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='os', ctx=Load()),
+                                    attr='system',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='command', ctx=Load())],
+                                keywords=[]))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        Import(
+            names=[
+                alias(name='subprocess')]),
+        ClassDef(
+            name='FixedClass',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='execute_command',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='command')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='allowed_commands', ctx=Store())],
+                            value=List(
+                                elts=[
+                                    Constant(value='ls'),
+                                    Constant(value='whoami')],
+                                ctx=Load())),
+                        If(
+                            test=Compare(
+                                left=Name(id='command', ctx=Load()),
+                                ops=[
+                                    In()],
+                                comparators=[
+                                    Name(id='allowed_commands', ctx=Load())]),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='subprocess', ctx=Load()),
+                                            attr='run',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='command', ctx=Load())],
+                                        keywords=[
+                                            keyword(
+                                                arg='shell',
+                                                value=Constant(value=True)),
+                                            keyword(
+                                                arg='check',
+                                                value=Constant(value=True))]))],
+                            orelse=[
+                                Raise(
+                                    exc=Call(
+                                        func=Name(id='ValueError', ctx=Load()),
+                                        args=[
+                                            Constant(value='Unauthorized command')],
+                                        keywords=[]))])],
+                    decorator_list=[])],
+            decorator_list=[])],
+    type_ignores=[])

@@ -1,0 +1,82 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='sys')]),
+        Import(
+            names=[
+                alias(name='os')]),
+        FunctionDef(
+            name='safe_import',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='module_name')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Compare(
+                        left=Call(
+                            func=Attribute(
+                                value=Attribute(
+                                    value=Name(id='os', ctx=Load()),
+                                    attr='path',
+                                    ctx=Load()),
+                                attr='dirname',
+                                ctx=Load()),
+                            args=[
+                                Name(id='module_name', ctx=Load())],
+                            keywords=[]),
+                        ops=[
+                            NotIn()],
+                        comparators=[
+                            Attribute(
+                                value=Name(id='sys', ctx=Load()),
+                                attr='path',
+                                ctx=Load())]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ImportError', ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            Constant(value='Untrusted import attempt from '),
+                                            FormattedValue(
+                                                value=Name(id='module_name', ctx=Load()),
+                                                conversion=-1)])],
+                                keywords=[]))],
+                    orelse=[]),
+                Return(
+                    value=Call(
+                        func=Name(id='__import__', ctx=Load()),
+                        args=[
+                            Name(id='module_name', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='my_module', ctx=Store())],
+                    value=Call(
+                        func=Name(id='safe_import', ctx=Load()),
+                        args=[
+                            Constant(value='my_trusted_module')],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ImportError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

@@ -1,0 +1,141 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='re')]),
+        FunctionDef(
+            name='safe_execute',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='command')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='allowed_commands', ctx=Store())],
+                    value=List(
+                        elts=[
+                            Constant(value='command1'),
+                            Constant(value='command2'),
+                            Constant(value='command3')],
+                        ctx=Load())),
+                If(
+                    test=Compare(
+                        left=Name(id='command', ctx=Load()),
+                        ops=[
+                            In()],
+                        comparators=[
+                            Name(id='allowed_commands', ctx=Load())]),
+                    body=[
+                        Return(
+                            value=Call(
+                                func=Name(id='execute_command', ctx=Load()),
+                                args=[
+                                    Name(id='command', ctx=Load())],
+                                keywords=[]))],
+                    orelse=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Unauthorized command execution attempt.')],
+                                keywords=[]))])],
+            decorator_list=[]),
+        FunctionDef(
+            name='execute_command',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='command')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=JoinedStr(
+                        values=[
+                            Constant(value='Executing: '),
+                            FormattedValue(
+                                value=Name(id='command', ctx=Load()),
+                                conversion=-1)]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='api_call',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='command')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Try(
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='result', ctx=Store())],
+                            value=Call(
+                                func=Name(id='safe_execute', ctx=Load()),
+                                args=[
+                                    Name(id='command', ctx=Load())],
+                                keywords=[])),
+                        Return(
+                            value=Dict(
+                                keys=[
+                                    Constant(value='status'),
+                                    Constant(value='result')],
+                                values=[
+                                    Constant(value='success'),
+                                    Name(id='result', ctx=Load())]))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='ValueError', ctx=Load()),
+                            name='e',
+                            body=[
+                                Return(
+                                    value=Dict(
+                                        keys=[
+                                            Constant(value='status'),
+                                            Constant(value='message')],
+                                        values=[
+                                            Constant(value='error'),
+                                            Call(
+                                                func=Name(id='str', ctx=Load()),
+                                                args=[
+                                                    Name(id='e', ctx=Load())],
+                                                keywords=[])]))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='response', ctx=Store())],
+            value=Call(
+                func=Name(id='api_call', ctx=Load()),
+                args=[
+                    Constant(value='command1')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='response', ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='response', ctx=Store())],
+            value=Call(
+                func=Name(id='api_call', ctx=Load()),
+                args=[
+                    Constant(value='unauthorized_command')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='response', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

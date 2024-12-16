@@ -1,0 +1,22 @@
+Module(
+    body=[
+        ImportFrom(
+            module='PIL',
+            names=[
+                alias(name='Image'),
+                alias(name='ImageMath')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='expr', ctx=Store())],
+            value=Constant(value='exec(\'import os; os.system("whoami")\')')),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='ImageMath', ctx=Load()),
+                    attr='eval',
+                    ctx=Load()),
+                args=[
+                    Name(id='expr', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

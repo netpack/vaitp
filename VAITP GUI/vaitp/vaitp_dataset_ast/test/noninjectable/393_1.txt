@@ -1,0 +1,97 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='rsa')]),
+        FunctionDef(
+            name='decrypt_message',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='private_key'),
+                    arg(arg='ciphertext')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='decrypted_message', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='rsa', ctx=Load()),
+                            attr='decrypt',
+                            ctx=Load()),
+                        args=[
+                            Name(id='ciphertext', ctx=Load()),
+                            Name(id='private_key', ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=Name(id='decrypted_message', ctx=Load()))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Tuple(
+                    elts=[
+                        Name(id='private_key', ctx=Store()),
+                        Name(id='public_key', ctx=Store())],
+                    ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='rsa', ctx=Load()),
+                    attr='newkeys',
+                    ctx=Load()),
+                args=[
+                    Constant(value=512)],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='ciphertext', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='rsa', ctx=Load()),
+                    attr='encrypt',
+                    ctx=Load()),
+                args=[
+                    Constant(value=b'Secret Message'),
+                    Name(id='public_key', ctx=Load())],
+                keywords=[])),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='plaintext', ctx=Store())],
+                    value=Call(
+                        func=Name(id='decrypt_message', ctx=Load()),
+                        args=[
+                            Name(id='private_key', ctx=Load()),
+                            Name(id='ciphertext', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Call(
+                                func=Attribute(
+                                    value=Name(id='plaintext', ctx=Load()),
+                                    attr='decode',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[])],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Attribute(
+                        value=Name(id='rsa', ctx=Load()),
+                        attr='DecryptionError',
+                        ctx=Load()),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Decryption failed.')],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

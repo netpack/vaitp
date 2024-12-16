@@ -1,0 +1,65 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='subprocess')]),
+        FunctionDef(
+            name='shell_quote',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='arg')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Name(id='arg', ctx=Load()))],
+            decorator_list=[]),
+        FunctionDef(
+            name='execute_command',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='user_input')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='command', ctx=Store())],
+                    value=JoinedStr(
+                        values=[
+                            Constant(value='echo '),
+                            FormattedValue(
+                                value=Call(
+                                    func=Name(id='shell_quote', ctx=Load()),
+                                    args=[
+                                        Name(id='user_input', ctx=Load())],
+                                    keywords=[]),
+                                conversion=-1)])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='subprocess', ctx=Load()),
+                            attr='call',
+                            ctx=Load()),
+                        args=[
+                            Name(id='command', ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='shell',
+                                value=Constant(value=True))]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='user_input', ctx=Store())],
+            value=Constant(value='hello; cat /etc/passwd')),
+        Expr(
+            value=Call(
+                func=Name(id='execute_command', ctx=Load()),
+                args=[
+                    Name(id='user_input', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

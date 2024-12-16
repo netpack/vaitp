@@ -1,0 +1,34 @@
+Module(
+    body=[
+        ImportFrom(
+            module='setuptools',
+            names=[
+                alias(name='setup'),
+                alias(name='find_packages')],
+            level=0),
+        Expr(
+            value=Call(
+                func=Name(id='setup', ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='name',
+                        value=Constant(value='example_package')),
+                    keyword(
+                        arg='version',
+                        value=Constant(value='1.0')),
+                    keyword(
+                        arg='packages',
+                        value=Call(
+                            func=Name(id='find_packages', ctx=Load()),
+                            args=[],
+                            keywords=[])),
+                    keyword(
+                        arg='install_requires',
+                        value=List(
+                            elts=[
+                                Constant(value='numpy'),
+                                Constant(value='scipy'),
+                                Constant(value='gfortran==0.17.4')],
+                            ctx=Load()))]))],
+    type_ignores=[])

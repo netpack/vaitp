@@ -1,0 +1,32 @@
+Module(
+    body=[
+        FunctionDef(
+            name='_get_option',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='option_name')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='options', ctx=Store())],
+                    value=Dict(
+                        keys=[
+                            Constant(value='example')],
+                        values=[
+                            Constant(value='<script>alert("XSS Attack!")</script>')])),
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='options', ctx=Load()),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Name(id='option_name', ctx=Load()),
+                            Constant(value='')],
+                        keywords=[]))],
+            decorator_list=[])],
+    type_ignores=[])

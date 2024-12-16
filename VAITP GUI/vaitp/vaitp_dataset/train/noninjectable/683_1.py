@@ -9,7 +9,7 @@ def check_password(service, user, password):
         kerberos.authGSSClientStep(context, "")
         
         # Set the user and password
-        kerberos.authGSSClientUser Name(context, user)
+        kerberos.authGSSClientUserName(context, user)
         kerberos.authGSSClientPassword(context, password)
 
         # Complete the authentication process

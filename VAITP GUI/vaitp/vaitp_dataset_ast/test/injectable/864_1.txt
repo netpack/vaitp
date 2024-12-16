@@ -1,0 +1,152 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        FunctionDef(
+            name='is_safe_path',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='base_path'),
+                    arg(arg='user_input')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='user_input_abs', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='path',
+                                ctx=Load()),
+                            attr='abspath',
+                            ctx=Load()),
+                        args=[
+                            Name(id='user_input', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='base_path_abs', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='path',
+                                ctx=Load()),
+                            attr='abspath',
+                            ctx=Load()),
+                        args=[
+                            Name(id='base_path', ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=Compare(
+                        left=Call(
+                            func=Attribute(
+                                value=Attribute(
+                                    value=Name(id='os', ctx=Load()),
+                                    attr='path',
+                                    ctx=Load()),
+                                attr='commonpath',
+                                ctx=Load()),
+                            args=[
+                                List(
+                                    elts=[
+                                        Name(id='base_path_abs', ctx=Load())],
+                                    ctx=Load())],
+                            keywords=[]),
+                        ops=[
+                            Eq()],
+                        comparators=[
+                            Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='os', ctx=Load()),
+                                        attr='path',
+                                        ctx=Load()),
+                                    attr='commonpath',
+                                    ctx=Load()),
+                                args=[
+                                    List(
+                                        elts=[
+                                            Name(id='base_path_abs', ctx=Load()),
+                                            Name(id='user_input_abs', ctx=Load())],
+                                        ctx=Load())],
+                                keywords=[])]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='execute_script',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='script_path')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='base_path', ctx=Store())],
+                    value=Constant(value='/path/to/safe/scripts')),
+                If(
+                    test=Call(
+                        func=Name(id='is_safe_path', ctx=Load()),
+                        args=[
+                            Name(id='base_path', ctx=Load()),
+                            Name(id='script_path', ctx=Load())],
+                        keywords=[]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='exec', ctx=Load()),
+                                args=[
+                                    Call(
+                                        func=Attribute(
+                                            value=Call(
+                                                func=Name(id='open', ctx=Load()),
+                                                args=[
+                                                    Name(id='script_path', ctx=Load())],
+                                                keywords=[]),
+                                            attr='read',
+                                            ctx=Load()),
+                                        args=[],
+                                        keywords=[])],
+                                keywords=[]))],
+                    orelse=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Attempted to execute a script outside of the safe directory.')],
+                                keywords=[]))])],
+            decorator_list=[]),
+        Try(
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='execute_script', ctx=Load()),
+                        args=[
+                            Constant(value='user_input_script.py')],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='Exception', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            Constant(value='Error: '),
+                                            FormattedValue(
+                                                value=Name(id='e', ctx=Load()),
+                                                conversion=-1)])],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

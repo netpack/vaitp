@@ -1,0 +1,47 @@
+Module(
+    body=[
+        ClassDef(
+            name='VulnerableExecutor',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='execute_code',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='code')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='exec', ctx=Load()),
+                                args=[
+                                    Name(id='code', ctx=Load())],
+                                keywords=[]))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='executor', ctx=Store())],
+            value=Call(
+                func=Name(id='VulnerableExecutor', ctx=Load()),
+                args=[],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='user_input', ctx=Store())],
+            value=Constant(value="__import__('os').system('echo Vulnerable!')")),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='executor', ctx=Load()),
+                    attr='execute_code',
+                    ctx=Load()),
+                args=[
+                    Name(id='user_input', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

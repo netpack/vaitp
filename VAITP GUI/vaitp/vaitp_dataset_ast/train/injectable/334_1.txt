@@ -1,0 +1,178 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='ast')]),
+        ClassDef(
+            name='DBusTestCase',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='AddTemplate',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='template_name'),
+                            arg(arg='template_code')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Try(
+                            body=[
+                                Assign(
+                                    targets=[
+                                        Name(id='parsed_code', ctx=Store())],
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='ast', ctx=Load()),
+                                            attr='parse',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='template_code', ctx=Load())],
+                                        keywords=[
+                                            keyword(
+                                                arg='mode',
+                                                value=Constant(value='eval'))])),
+                                For(
+                                    target=Name(id='node', ctx=Store()),
+                                    iter=Call(
+                                        func=Attribute(
+                                            value=Name(id='ast', ctx=Load()),
+                                            attr='walk',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='parsed_code', ctx=Load())],
+                                        keywords=[]),
+                                    body=[
+                                        If(
+                                            test=UnaryOp(
+                                                op=Not(),
+                                                operand=Call(
+                                                    func=Name(id='isinstance', ctx=Load()),
+                                                    args=[
+                                                        Name(id='node', ctx=Load()),
+                                                        Tuple(
+                                                            elts=[
+                                                                Attribute(
+                                                                    value=Name(id='ast', ctx=Load()),
+                                                                    attr='Expression',
+                                                                    ctx=Load()),
+                                                                Attribute(
+                                                                    value=Name(id='ast', ctx=Load()),
+                                                                    attr='Num',
+                                                                    ctx=Load()),
+                                                                Attribute(
+                                                                    value=Name(id='ast', ctx=Load()),
+                                                                    attr='Str',
+                                                                    ctx=Load()),
+                                                                Attribute(
+                                                                    value=Name(id='ast', ctx=Load()),
+                                                                    attr='List',
+                                                                    ctx=Load()),
+                                                                Attribute(
+                                                                    value=Name(id='ast', ctx=Load()),
+                                                                    attr='Dict',
+                                                                    ctx=Load())],
+                                                            ctx=Load())],
+                                                    keywords=[])),
+                                            body=[
+                                                Raise(
+                                                    exc=Call(
+                                                        func=Name(id='ValueError', ctx=Load()),
+                                                        args=[
+                                                            Constant(value='Unsafe code detected')],
+                                                        keywords=[]))],
+                                            orelse=[])],
+                                    orelse=[]),
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='exec', ctx=Load()),
+                                        args=[
+                                            Call(
+                                                func=Name(id='compile', ctx=Load()),
+                                                args=[
+                                                    Name(id='parsed_code', ctx=Load())],
+                                                keywords=[
+                                                    keyword(
+                                                        arg='filename',
+                                                        value=Constant(value='<ast>')),
+                                                    keyword(
+                                                        arg='mode',
+                                                        value=Constant(value='eval'))])],
+                                        keywords=[]))],
+                            handlers=[
+                                ExceptHandler(
+                                    type=Name(id='Exception', ctx=Load()),
+                                    name='e',
+                                    body=[
+                                        Raise(
+                                            exc=Call(
+                                                func=Name(id='ValueError', ctx=Load()),
+                                                args=[
+                                                    Call(
+                                                        func=Attribute(
+                                                            value=Constant(value='Invalid template code: {}'),
+                                                            attr='format',
+                                                            ctx=Load()),
+                                                        args=[
+                                                            Name(id='e', ctx=Load())],
+                                                        keywords=[])],
+                                                keywords=[]))])],
+                            orelse=[],
+                            finalbody=[])],
+                    decorator_list=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='test_case', ctx=Store())],
+            value=Call(
+                func=Name(id='DBusTestCase', ctx=Load()),
+                args=[],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='safe_code', ctx=Store())],
+            value=Constant(value='1 + 1')),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='test_case', ctx=Load()),
+                    attr='AddTemplate',
+                    ctx=Load()),
+                args=[
+                    Constant(value='safe_template'),
+                    Name(id='safe_code', ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='malicious_code', ctx=Store())],
+            value=Constant(value="__import__('os').system('cat /etc/passwd')")),
+        Try(
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='test_case', ctx=Load()),
+                            attr='AddTemplate',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='malicious_template'),
+                            Name(id='malicious_code', ctx=Load())],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ValueError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

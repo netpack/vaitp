@@ -1,0 +1,71 @@
+Module(
+    body=[
+        ImportFrom(
+            module='defusedxml.ElementTree',
+            names=[
+                alias(name='parse')],
+            level=0),
+        FunctionDef(
+            name='parse_xml_secure',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='xml_input')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='tree', ctx=Store())],
+                    value=Call(
+                        func=Name(id='parse', ctx=Load()),
+                        args=[
+                            Name(id='xml_input', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='root', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='tree', ctx=Load()),
+                            attr='getroot',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Processing XML data securely...')],
+                        keywords=[])),
+                For(
+                    target=Name(id='elem', ctx=Store()),
+                    iter=Name(id='root', ctx=Load()),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Attribute(
+                                        value=Name(id='elem', ctx=Load()),
+                                        attr='tag',
+                                        ctx=Load()),
+                                    Attribute(
+                                        value=Name(id='elem', ctx=Load()),
+                                        attr='text',
+                                        ctx=Load())],
+                                keywords=[]))],
+                    orelse=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='xml_file', ctx=Store())],
+            value=Constant(value='example.xml')),
+        Expr(
+            value=Call(
+                func=Name(id='parse_xml_secure', ctx=Load()),
+                args=[
+                    Name(id='xml_file', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

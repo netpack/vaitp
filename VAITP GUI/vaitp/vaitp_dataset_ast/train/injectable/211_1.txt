@@ -1,0 +1,59 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        Assign(
+            targets=[
+                Name(id='long_dir_name', ctx=Store())],
+            value=BinOp(
+                left=Constant(value='a'),
+                op=Mult(),
+                right=Constant(value=10000))),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='os', ctx=Load()),
+                    attr='mkdir',
+                    ctx=Load()),
+                args=[
+                    Name(id='long_dir_name', ctx=Load())],
+                keywords=[])),
+        If(
+            test=Compare(
+                left=Call(
+                    func=Name(id='len', ctx=Load()),
+                    args=[
+                        Name(id='long_dir_name', ctx=Load())],
+                    keywords=[]),
+                ops=[
+                    Lt()],
+                comparators=[
+                    Constant(value=1000)]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='os', ctx=Load()),
+                            attr='chdir',
+                            ctx=Load()),
+                        args=[
+                            Name(id='long_dir_name', ctx=Load())],
+                        keywords=[]))],
+            orelse=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Error: Directory name is too long')],
+                        keywords=[]))]),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='os', ctx=Load()),
+                    attr='system',
+                    ctx=Load()),
+                args=[
+                    Constant(value='python script.py')],
+                keywords=[]))],
+    type_ignores=[])

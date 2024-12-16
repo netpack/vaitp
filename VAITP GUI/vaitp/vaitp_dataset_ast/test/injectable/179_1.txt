@@ -1,0 +1,114 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='hashlib')]),
+        Assign(
+            targets=[
+                Name(id='MAX_INPUT_SIZE', ctx=Store())],
+            value=BinOp(
+                left=Constant(value=1024),
+                op=Mult(),
+                right=Constant(value=1024))),
+        FunctionDef(
+            name='hash_data',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='data')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Compare(
+                        left=Call(
+                            func=Name(id='len', ctx=Load()),
+                            args=[
+                                Name(id='data', ctx=Load())],
+                            keywords=[]),
+                        ops=[
+                            Gt()],
+                        comparators=[
+                            Name(id='MAX_INPUT_SIZE', ctx=Load())]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Input data too large')],
+                                keywords=[]))],
+                    orelse=[]),
+                Assign(
+                    targets=[
+                        Name(id='hasher', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='hashlib', ctx=Load()),
+                            attr='sha1',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='hasher', ctx=Load()),
+                            attr='update',
+                            ctx=Load()),
+                        args=[
+                            Name(id='data', ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='hasher', ctx=Load()),
+                            attr='hexdigest',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            decorator_list=[]),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='user_input', ctx=Store())],
+                    value=BinOp(
+                        left=Constant(value='large_untrusted_input'),
+                        op=Mult(),
+                        right=Constant(value=1000000))),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Call(
+                                func=Name(id='hash_data', ctx=Load()),
+                                args=[
+                                    Call(
+                                        func=Attribute(
+                                            value=Name(id='user_input', ctx=Load()),
+                                            attr='encode',
+                                            ctx=Load()),
+                                        args=[
+                                            Constant(value='utf-8')],
+                                        keywords=[])],
+                                keywords=[])],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ValueError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            Constant(value='Error: '),
+                                            FormattedValue(
+                                                value=Name(id='e', ctx=Load()),
+                                                conversion=-1)])],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

@@ -1,0 +1,142 @@
+Module(
+    body=[
+        FunctionDef(
+            name='execute_macro',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='user'),
+                    arg(arg='macro_code')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=UnaryOp(
+                        op=Not(),
+                        operand=Call(
+                            func=Attribute(
+                                value=Name(id='user', ctx=Load()),
+                                attr='has_permission',
+                                ctx=Load()),
+                            args=[
+                                Constant(value='execute_macro')],
+                            keywords=[])),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='PermissionError', ctx=Load()),
+                                args=[
+                                    Constant(value='User  does not have permission to execute macros.')],
+                                keywords=[]))],
+                    orelse=[]),
+                Assign(
+                    targets=[
+                        Name(id='allowed_macros', ctx=Store())],
+                    value=List(
+                        elts=[
+                            Constant(value='safe_macro1'),
+                            Constant(value='safe_macro2')],
+                        ctx=Load())),
+                If(
+                    test=Compare(
+                        left=Name(id='macro_code', ctx=Load()),
+                        ops=[
+                            NotIn()],
+                        comparators=[
+                            Name(id='allowed_macros', ctx=Load())]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Macro execution is restricted.')],
+                                keywords=[]))],
+                    orelse=[]),
+                Return(
+                    value=Call(
+                        func=Name(id='run_safe_macro', ctx=Load()),
+                        args=[
+                            Name(id='macro_code', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='run_safe_macro',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='macro_code')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Compare(
+                        left=Name(id='macro_code', ctx=Load()),
+                        ops=[
+                            Eq()],
+                        comparators=[
+                            Constant(value='safe_macro1')]),
+                    body=[
+                        Return(
+                            value=Constant(value='Executing safe macro 1'))],
+                    orelse=[
+                        If(
+                            test=Compare(
+                                left=Name(id='macro_code', ctx=Load()),
+                                ops=[
+                                    Eq()],
+                                comparators=[
+                                    Constant(value='safe_macro2')]),
+                            body=[
+                                Return(
+                                    value=Constant(value='Executing safe macro 2'))],
+                            orelse=[])])],
+            decorator_list=[]),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='user', ctx=Store())],
+                    value=Call(
+                        func=Name(id='get_current_user', ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='result', ctx=Store())],
+                    value=Call(
+                        func=Name(id='execute_macro', ctx=Load()),
+                        args=[
+                            Name(id='user', ctx=Load()),
+                            Constant(value='some_dangerous_macro')],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Name(id='result', ctx=Load())],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Tuple(
+                        elts=[
+                            Name(id='PermissionError', ctx=Load()),
+                            Name(id='ValueError', ctx=Load())],
+                        ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            Constant(value='Error: '),
+                                            FormattedValue(
+                                                value=Name(id='e', ctx=Load()),
+                                                conversion=-1)])],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

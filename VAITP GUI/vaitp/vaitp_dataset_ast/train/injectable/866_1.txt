@@ -1,0 +1,132 @@
+Module(
+    body=[
+        ImportFrom(
+            module='saml2',
+            names=[
+                alias(name='saml'),
+                alias(name='sigver')],
+            level=0),
+        ImportFrom(
+            module='saml2.sigver',
+            names=[
+                alias(name='SignatureVerifier')],
+            level=0),
+        ImportFrom(
+            module='saml2.config',
+            names=[
+                alias(name='Config')],
+            level=0),
+        ImportFrom(
+            module='saml2.backend',
+            names=[
+                alias(name='InMemory')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='config', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Call(
+                        func=Name(id='Config', ctx=Load()),
+                        args=[],
+                        keywords=[]),
+                    attr='load',
+                    ctx=Load()),
+                args=[
+                    Dict(keys=[], values=[])],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='backend', ctx=Store())],
+            value=Call(
+                func=Name(id='InMemory', ctx=Load()),
+                args=[
+                    Name(id='config', ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='verifier', ctx=Store())],
+            value=Call(
+                func=Name(id='SignatureVerifier', ctx=Load()),
+                args=[
+                    Name(id='backend', ctx=Load())],
+                keywords=[
+                    keyword(
+                        arg='use_x509',
+                        value=Constant(value=True))])),
+        FunctionDef(
+            name='verify_signed_saml_document',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='signed_document')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Try(
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='saml_response', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='saml', ctx=Load()),
+                                    attr='from_string',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='signed_document', ctx=Load())],
+                                keywords=[])),
+                        If(
+                            test=Call(
+                                func=Attribute(
+                                    value=Name(id='verifier', ctx=Load()),
+                                    attr='verify',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='saml_response', ctx=Load())],
+                                keywords=[]),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            Constant(value='Signature is valid.')],
+                                        keywords=[]))],
+                            orelse=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            Constant(value='Signature verification failed.')],
+                                        keywords=[]))])],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='Exception', ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    Constant(value='An error occurred during verification: '),
+                                                    FormattedValue(
+                                                        value=Name(id='e', ctx=Load()),
+                                                        conversion=-1)])],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='signed_saml', ctx=Store())],
+            value=Constant(value='<Your Signed SAML Document Here>')),
+        Expr(
+            value=Call(
+                func=Name(id='verify_signed_saml_document', ctx=Load()),
+                args=[
+                    Name(id='signed_saml', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

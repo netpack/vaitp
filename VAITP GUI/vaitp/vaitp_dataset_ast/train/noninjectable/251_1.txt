@@ -1,0 +1,65 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='AWSIoTPythonSDK.MQTTLib', asname='AWSIoTPyMQTT')]),
+        Assign(
+            targets=[
+                Name(id='mqtt_client', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='AWSIoTPyMQTT', ctx=Load()),
+                    attr='AWSIoTMQTTClient',
+                    ctx=Load()),
+                args=[
+                    Constant(value='MyClientID')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='mqtt_client', ctx=Load()),
+                    attr='configureEndpoint',
+                    ctx=Load()),
+                args=[
+                    Constant(value='your-iot-endpoint.amazonaws.com'),
+                    Constant(value=8883)],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='mqtt_client', ctx=Load()),
+                    attr='configureCredentials',
+                    ctx=Load()),
+                args=[
+                    Constant(value='path/to/rootCA.pem'),
+                    Constant(value='path/to/private.key'),
+                    Constant(value='path/to/certificate.pem')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='mqtt_client', ctx=Load()),
+                    attr='connect',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='mqtt_client', ctx=Load()),
+                    attr='publish',
+                    ctx=Load()),
+                args=[
+                    Constant(value='test/topic'),
+                    Constant(value='Hello from vulnerable client!'),
+                    Constant(value=0)],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='mqtt_client', ctx=Load()),
+                    attr='disconnect',
+                    ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

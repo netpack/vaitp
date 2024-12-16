@@ -1,0 +1,58 @@
+Module(
+    body=[
+        FunctionDef(
+            name='disable_librelogo_event_handlers',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='libreoffice_document', ctx=Store())],
+                    value=Call(
+                        func=Name(id='get_current_document', ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='libreoffice_document', ctx=Load()),
+                            attr='disable_event_handler',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='onMouseOver')],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='libreoffice_document', ctx=Load()),
+                            attr='disable_event_handler',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='onDocumentOpen')],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='libreoffice_document', ctx=Load()),
+                            attr='disable_event_handler',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='onDocumentClose')],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='LibreLogo event handlers disabled to prevent arbitrary code execution.')],
+                        keywords=[]))],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='disable_librelogo_event_handlers', ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

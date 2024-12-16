@@ -1,0 +1,95 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        Import(
+            names=[
+                alias(name='subprocess')]),
+        FunctionDef(
+            name='safe_execute',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='command')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='allowed_commands', ctx=Store())],
+                    value=List(
+                        elts=[
+                            Constant(value='ls'),
+                            Constant(value='whoami')],
+                        ctx=Load())),
+                If(
+                    test=Compare(
+                        left=Name(id='command', ctx=Load()),
+                        ops=[
+                            In()],
+                        comparators=[
+                            Name(id='allowed_commands', ctx=Load())]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='result', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='subprocess', ctx=Load()),
+                                    attr='run',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='command', ctx=Load())],
+                                keywords=[
+                                    keyword(
+                                        arg='shell',
+                                        value=Constant(value=True)),
+                                    keyword(
+                                        arg='capture_output',
+                                        value=Constant(value=True)),
+                                    keyword(
+                                        arg='text',
+                                        value=Constant(value=True))])),
+                        Return(
+                            value=Attribute(
+                                value=Name(id='result', ctx=Load()),
+                                attr='stdout',
+                                ctx=Load()))],
+                    orelse=[
+                        Return(
+                            value=Constant(value='Command not allowed.'))])],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='user_command', ctx=Store())],
+                    value=Call(
+                        func=Name(id='input', ctx=Load()),
+                        args=[
+                            Constant(value='Enter a command to execute: ')],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='output', ctx=Store())],
+                    value=Call(
+                        func=Name(id='safe_execute', ctx=Load()),
+                        args=[
+                            Name(id='user_command', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Name(id='output', ctx=Load())],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

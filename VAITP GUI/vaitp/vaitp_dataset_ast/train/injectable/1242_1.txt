@@ -1,0 +1,157 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        Import(
+            names=[
+                alias(name='zipfile')]),
+        FunctionDef(
+            name='extract',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='zip_file_path'),
+                    arg(arg='extract_dir')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Constant(value='\n    Extracts a zip file, mitigating directory traversal.\n    ')),
+                Try(
+                    body=[
+                        With(
+                            items=[
+                                withitem(
+                                    context_expr=Call(
+                                        func=Attribute(
+                                            value=Name(id='zipfile', ctx=Load()),
+                                            attr='ZipFile',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='zip_file_path', ctx=Load()),
+                                            Constant(value='r')],
+                                        keywords=[]),
+                                    optional_vars=Name(id='zf', ctx=Store()))],
+                            body=[
+                                For(
+                                    target=Name(id='member', ctx=Store()),
+                                    iter=Call(
+                                        func=Attribute(
+                                            value=Name(id='zf', ctx=Load()),
+                                            attr='infolist',
+                                            ctx=Load()),
+                                        args=[],
+                                        keywords=[]),
+                                    body=[
+                                        Assign(
+                                            targets=[
+                                                Name(id='target_path', ctx=Store())],
+                                            value=Call(
+                                                func=Attribute(
+                                                    value=Attribute(
+                                                        value=Name(id='os', ctx=Load()),
+                                                        attr='path',
+                                                        ctx=Load()),
+                                                    attr='join',
+                                                    ctx=Load()),
+                                                args=[
+                                                    Name(id='extract_dir', ctx=Load()),
+                                                    Call(
+                                                        func=Attribute(
+                                                            value=Attribute(
+                                                                value=Name(id='os', ctx=Load()),
+                                                                attr='path',
+                                                                ctx=Load()),
+                                                            attr='basename',
+                                                            ctx=Load()),
+                                                        args=[
+                                                            Attribute(
+                                                                value=Name(id='member', ctx=Load()),
+                                                                attr='filename',
+                                                                ctx=Load())],
+                                                        keywords=[])],
+                                                keywords=[])),
+                                        If(
+                                            test=UnaryOp(
+                                                op=Not(),
+                                                operand=Call(
+                                                    func=Attribute(
+                                                        value=Call(
+                                                            func=Attribute(
+                                                                value=Attribute(
+                                                                    value=Name(id='os', ctx=Load()),
+                                                                    attr='path',
+                                                                    ctx=Load()),
+                                                                attr='abspath',
+                                                                ctx=Load()),
+                                                            args=[
+                                                                Name(id='target_path', ctx=Load())],
+                                                            keywords=[]),
+                                                        attr='startswith',
+                                                        ctx=Load()),
+                                                    args=[
+                                                        Call(
+                                                            func=Attribute(
+                                                                value=Attribute(
+                                                                    value=Name(id='os', ctx=Load()),
+                                                                    attr='path',
+                                                                    ctx=Load()),
+                                                                attr='abspath',
+                                                                ctx=Load()),
+                                                            args=[
+                                                                Name(id='extract_dir', ctx=Load())],
+                                                            keywords=[])],
+                                                    keywords=[])),
+                                            body=[
+                                                Raise(
+                                                    exc=Call(
+                                                        func=Name(id='ValueError', ctx=Load()),
+                                                        args=[
+                                                            Constant(value='Path traversal detected!')],
+                                                        keywords=[]))],
+                                            orelse=[]),
+                                        Expr(
+                                            value=Call(
+                                                func=Attribute(
+                                                    value=Name(id='zf', ctx=Load()),
+                                                    attr='extract',
+                                                    ctx=Load()),
+                                                args=[
+                                                    Name(id='member', ctx=Load()),
+                                                    Name(id='extract_dir', ctx=Load())],
+                                                keywords=[]))],
+                                    orelse=[])])],
+                    handlers=[
+                        ExceptHandler(
+                            type=Attribute(
+                                value=Name(id='zipfile', ctx=Load()),
+                                attr='BadZipFile',
+                                ctx=Load()),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            Constant(value='Invalid or corrupt zip file.')],
+                                        keywords=[]))]),
+                        ExceptHandler(
+                            type=Name(id='ValueError', ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    Constant(value='Error: '),
+                                                    FormattedValue(
+                                                        value=Name(id='e', ctx=Load()),
+                                                        conversion=-1)])],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[])],
+    type_ignores=[])

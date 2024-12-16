@@ -1,0 +1,188 @@
+Module(
+    body=[
+        ClassDef(
+            name='SafeIPAddressManager',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='ip_addresses',
+                                    ctx=Store())],
+                            value=List(elts=[], ctx=Load()))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='add_ip_address',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='ip')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        If(
+                            test=Call(
+                                func=Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='validate_ip',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='ip', ctx=Load())],
+                                keywords=[]),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Attribute(
+                                                value=Name(id='self', ctx=Load()),
+                                                attr='ip_addresses',
+                                                ctx=Load()),
+                                            attr='append',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='ip', ctx=Load())],
+                                        keywords=[]))],
+                            orelse=[
+                                Raise(
+                                    exc=Call(
+                                        func=Name(id='ValueError', ctx=Load()),
+                                        args=[
+                                            Constant(value='Invalid IP address format')],
+                                        keywords=[]))])],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='validate_ip',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='ip')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='parts', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='ip', ctx=Load()),
+                                    attr='split',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='.')],
+                                keywords=[])),
+                        If(
+                            test=Compare(
+                                left=Call(
+                                    func=Name(id='len', ctx=Load()),
+                                    args=[
+                                        Name(id='parts', ctx=Load())],
+                                    keywords=[]),
+                                ops=[
+                                    NotEq()],
+                                comparators=[
+                                    Constant(value=4)]),
+                            body=[
+                                Return(
+                                    value=Constant(value=False))],
+                            orelse=[]),
+                        For(
+                            target=Name(id='part', ctx=Store()),
+                            iter=Name(id='parts', ctx=Load()),
+                            body=[
+                                If(
+                                    test=BoolOp(
+                                        op=Or(),
+                                        values=[
+                                            UnaryOp(
+                                                op=Not(),
+                                                operand=Call(
+                                                    func=Attribute(
+                                                        value=Name(id='part', ctx=Load()),
+                                                        attr='isdigit',
+                                                        ctx=Load()),
+                                                    args=[],
+                                                    keywords=[])),
+                                            UnaryOp(
+                                                op=Not(),
+                                                operand=Compare(
+                                                    left=Constant(value=0),
+                                                    ops=[
+                                                        LtE(),
+                                                        LtE()],
+                                                    comparators=[
+                                                        Call(
+                                                            func=Name(id='int', ctx=Load()),
+                                                            args=[
+                                                                Name(id='part', ctx=Load())],
+                                                            keywords=[]),
+                                                        Constant(value=255)]))]),
+                                    body=[
+                                        Return(
+                                            value=Constant(value=False))],
+                                    orelse=[])],
+                            orelse=[]),
+                        Return(
+                            value=Constant(value=True))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='get_ip_addresses',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Return(
+                            value=Attribute(
+                                value=Name(id='self', ctx=Load()),
+                                attr='ip_addresses',
+                                ctx=Load()))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='manager', ctx=Store())],
+            value=Call(
+                func=Name(id='SafeIPAddressManager', ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='manager', ctx=Load()),
+                    attr='add_ip_address',
+                    ctx=Load()),
+                args=[
+                    Constant(value='192.168.1.1')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Call(
+                        func=Attribute(
+                            value=Name(id='manager', ctx=Load()),
+                            attr='get_ip_addresses',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])],
+                keywords=[]))],
+    type_ignores=[])

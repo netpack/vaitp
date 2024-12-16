@@ -1,0 +1,52 @@
+Module(
+    body=[
+        ImportFrom(
+            module='pymongo',
+            names=[
+                alias(name='MongoClient')],
+            level=0),
+        ImportFrom(
+            module='bson',
+            names=[
+                alias(name='BSON')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='client', ctx=Store())],
+            value=Call(
+                func=Name(id='MongoClient', ctx=Load()),
+                args=[
+                    Constant(value='mongodb://localhost:27017/')],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='db', ctx=Store())],
+            value=Attribute(
+                value=Name(id='client', ctx=Load()),
+                attr='test_database',
+                ctx=Load())),
+        Assign(
+            targets=[
+                Name(id='malformed_bson', ctx=Store())],
+            value=Constant(value=b'\x00\x01\x02')),
+        Assign(
+            targets=[
+                Name(id='data', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Call(
+                        func=Name(id='BSON', ctx=Load()),
+                        args=[
+                            Name(id='malformed_bson', ctx=Load())],
+                        keywords=[]),
+                    attr='decode',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='data', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

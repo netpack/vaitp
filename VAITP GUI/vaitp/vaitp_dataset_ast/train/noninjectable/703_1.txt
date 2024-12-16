@@ -1,0 +1,90 @@
+Module(
+    body=[
+        ImportFrom(
+            module='twisted.web.client',
+            names=[
+                alias(name='RedirectAgent')],
+            level=0),
+        ImportFrom(
+            module='twisted.web.http',
+            names=[
+                alias(name='Headers')],
+            level=0),
+        ClassDef(
+            name='VulnerableRedirectAgent',
+            bases=[
+                Name(id='RedirectAgent', ctx=Load())],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='_followRedirect',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='response'),
+                            arg(arg='request'),
+                            arg(arg='uri'),
+                            arg(arg='headers')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Return(
+                            value=Call(
+                                func=Attribute(
+                                    value=Call(
+                                        func=Name(id='super', ctx=Load()),
+                                        args=[],
+                                        keywords=[]),
+                                    attr='_followRedirect',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='response', ctx=Load()),
+                                    Name(id='request', ctx=Load()),
+                                    Name(id='uri', ctx=Load()),
+                                    Name(id='headers', ctx=Load())],
+                                keywords=[]))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='agent', ctx=Store())],
+            value=Call(
+                func=Name(id='VulnerableRedirectAgent', ctx=Load()),
+                args=[
+                    Name(id='reactor', ctx=Load()),
+                    Name(id='contextFactory', ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='headers', ctx=Store())],
+            value=Call(
+                func=Name(id='Headers', ctx=Load()),
+                args=[
+                    Dict(
+                        keys=[
+                            Constant(value='cookie'),
+                            Constant(value='authorization')],
+                        values=[
+                            List(
+                                elts=[
+                                    Constant(value=b'sessionid=abc123')],
+                                ctx=Load()),
+                            List(
+                                elts=[
+                                    Constant(value=b'Bearer token')],
+                                ctx=Load())])],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='agent', ctx=Load()),
+                    attr='request',
+                    ctx=Load()),
+                args=[
+                    Constant(value=b'GET'),
+                    Constant(value=b'http://example.com/some/resource'),
+                    Name(id='headers', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

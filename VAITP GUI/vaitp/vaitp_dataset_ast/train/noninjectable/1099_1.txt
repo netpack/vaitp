@@ -1,0 +1,38 @@
+Module(
+    body=[
+        FunctionDef(
+            name='math_command',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='expression')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='result', ctx=Store())],
+                    value=Call(
+                        func=Name(id='eval', ctx=Load()),
+                        args=[
+                            Name(id='expression', ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=Name(id='result', ctx=Load()))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='user_input', ctx=Store())],
+            value=Constant(value='2 + 2')),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Call(
+                        func=Name(id='math_command', ctx=Load()),
+                        args=[
+                            Name(id='user_input', ctx=Load())],
+                        keywords=[])],
+                keywords=[]))],
+    type_ignores=[])

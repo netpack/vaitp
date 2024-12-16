@@ -19,4 +19,3 @@ if __name__ == "__main__":
         load_module('vds_bootstrap.py')
     except ImportError as e:
         print(e)
-        sys.exit(

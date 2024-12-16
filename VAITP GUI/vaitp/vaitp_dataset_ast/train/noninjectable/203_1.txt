@@ -1,0 +1,25 @@
+Module(
+    body=[
+        Assign(
+            targets=[
+                Name(id='s', ctx=Store())],
+            value=BinOp(
+                left=Constant(value=' '),
+                op=Mult(),
+                right=BinOp(
+                    left=Constant(value=2),
+                    op=Pow(),
+                    right=Constant(value=31)))),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='s', ctx=Load()),
+                    attr='expandtabs',
+                    ctx=Load()),
+                args=[
+                    BinOp(
+                        left=Constant(value=2),
+                        op=Pow(),
+                        right=Constant(value=31))],
+                keywords=[]))],
+    type_ignores=[])

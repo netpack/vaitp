@@ -1,0 +1,106 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='zipfile')]),
+        Import(
+            names=[
+                alias(name='io')]),
+        With(
+            items=[
+                withitem(
+                    context_expr=Call(
+                        func=Attribute(
+                            value=Name(id='zipfile', ctx=Load()),
+                            attr='ZipFile',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='vulnerable.zip'),
+                            Constant(value='w')],
+                        keywords=[]),
+                    optional_vars=Name(id='zf', ctx=Store()))],
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='zf', ctx=Load()),
+                            attr='writestr',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='file1.txt'),
+                            BinOp(
+                                left=Constant(value=b'A'),
+                                op=Mult(),
+                                right=BinOp(
+                                    left=Constant(value=10),
+                                    op=Pow(),
+                                    right=Constant(value=6)))],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='zf', ctx=Load()),
+                            attr='writestr',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='file2.txt'),
+                            BinOp(
+                                left=Constant(value=b'B'),
+                                op=Mult(),
+                                right=BinOp(
+                                    left=Constant(value=10),
+                                    op=Pow(),
+                                    right=Constant(value=6)))],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='zf', ctx=Load()),
+                            attr='writestr',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='file1.txt'),
+                            BinOp(
+                                left=Constant(value=b'A'),
+                                op=Mult(),
+                                right=BinOp(
+                                    left=Constant(value=10),
+                                    op=Pow(),
+                                    right=Constant(value=6)))],
+                        keywords=[]))]),
+        With(
+            items=[
+                withitem(
+                    context_expr=Call(
+                        func=Attribute(
+                            value=Name(id='zipfile', ctx=Load()),
+                            attr='ZipFile',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='vulnerable.zip'),
+                            Constant(value='r')],
+                        keywords=[]),
+                    optional_vars=Name(id='zf', ctx=Store()))],
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Call(
+                                func=Attribute(
+                                    value=Name(id='zf', ctx=Load()),
+                                    attr='namelist',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[])],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='zf', ctx=Load()),
+                            attr='extractall',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='extracted_files')],
+                        keywords=[]))])],
+    type_ignores=[])

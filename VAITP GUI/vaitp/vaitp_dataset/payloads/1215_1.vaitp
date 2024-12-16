@@ -1,0 +1,14 @@
+```python
+# Example of a malicious contract to exploit the vulnerability
+
+contract Malicious:
+    def attack():
+        # Call the vulnerable default function of the target contract
+        target_contract.default()
+
+    @public
+    @payable
+    def fallback():
+        # Trigger the attack when receiving Ether
+        self.attack()
+```

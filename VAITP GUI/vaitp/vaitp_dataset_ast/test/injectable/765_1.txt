@@ -1,0 +1,106 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        Import(
+            names=[
+                alias(name='sys')]),
+        FunctionDef(
+            name='safe_execute_macro',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='macro_path')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='safe_base_dir', ctx=Store())],
+                    value=Constant(value='/path/to/libreoffice/install/location')),
+                Assign(
+                    targets=[
+                        Name(id='normalized_path', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='path',
+                                ctx=Load()),
+                            attr='normpath',
+                            ctx=Load()),
+                        args=[
+                            Name(id='macro_path', ctx=Load())],
+                        keywords=[])),
+                If(
+                    test=UnaryOp(
+                        op=Not(),
+                        operand=Call(
+                            func=Attribute(
+                                value=Name(id='normalized_path', ctx=Load()),
+                                attr='startswith',
+                                ctx=Load()),
+                            args=[
+                                Name(id='safe_base_dir', ctx=Load())],
+                            keywords=[])),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Attempted directory traversal detected!')],
+                                keywords=[]))],
+                    orelse=[]),
+                Expr(
+                    value=Call(
+                        func=Name(id='execute_macro', ctx=Load()),
+                        args=[
+                            Name(id='normalized_path', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='execute_macro',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='macro_path')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            JoinedStr(
+                                values=[
+                                    Constant(value='Executing macro from: '),
+                                    FormattedValue(
+                                        value=Name(id='macro_path', ctx=Load()),
+                                        conversion=-1)])],
+                        keywords=[]))],
+            decorator_list=[]),
+        Try(
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='safe_execute_macro', ctx=Load()),
+                        args=[
+                            Constant(value='../some/unsafe/path/to/macro.py')],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ValueError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

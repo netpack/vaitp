@@ -1,0 +1,130 @@
+Module(
+    body=[
+        ImportFrom(
+            module='Crypto.Cipher',
+            names=[
+                alias(name='AES')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='cipher', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='AES', ctx=Load()),
+                    attr='new',
+                    ctx=Load()),
+                args=[
+                    BinOp(
+                        left=Constant(value=b'\x00'),
+                        op=Mult(),
+                        right=Constant(value=16))],
+                keywords=[])),
+        FunctionDef(
+            name='encrypt',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='message')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Compare(
+                        left=Call(
+                            func=Name(id='len', ctx=Load()),
+                            args=[
+                                Name(id='message', ctx=Load())],
+                            keywords=[]),
+                        ops=[
+                            Lt()],
+                        comparators=[
+                            Constant(value=16)]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Message must be at least 16 bytes long')],
+                                keywords=[]))],
+                    orelse=[]),
+                Assign(
+                    targets=[
+                        Name(id='ciphertext', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='cipher', ctx=Load()),
+                            attr='encrypt',
+                            ctx=Load()),
+                        args=[
+                            Name(id='message', ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=Name(id='ciphertext', ctx=Load()))],
+            decorator_list=[]),
+        FunctionDef(
+            name='decrypt',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='ciphertext')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Compare(
+                        left=Call(
+                            func=Name(id='len', ctx=Load()),
+                            args=[
+                                Name(id='ciphertext', ctx=Load())],
+                            keywords=[]),
+                        ops=[
+                            Lt()],
+                        comparators=[
+                            Constant(value=16)]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Ciphertext must be at least 16 bytes long')],
+                                keywords=[]))],
+                    orelse=[]),
+                Assign(
+                    targets=[
+                        Name(id='message', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='cipher', ctx=Load()),
+                            attr='decrypt',
+                            ctx=Load()),
+                        args=[
+                            Name(id='ciphertext', ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=Name(id='message', ctx=Load()))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='ciphertext', ctx=Store())],
+            value=Call(
+                func=Name(id='encrypt', ctx=Load()),
+                args=[
+                    Constant(value=b'Hello world! This is a long message.')],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='message', ctx=Store())],
+            value=Call(
+                func=Name(id='decrypt', ctx=Load()),
+                args=[
+                    Name(id='ciphertext', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='message', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

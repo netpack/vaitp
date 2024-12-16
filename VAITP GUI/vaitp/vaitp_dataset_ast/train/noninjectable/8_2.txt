@@ -1,0 +1,56 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='requests')]),
+        Assign(
+            targets=[
+                Name(id='proxy_url', ctx=Store())],
+            value=Constant(value='http://user:pass@proxy.example.com:8080')),
+        Assign(
+            targets=[
+                Name(id='proxy_dict', ctx=Store())],
+            value=Dict(
+                keys=[
+                    Constant(value='http'),
+                    Constant(value='https')],
+                values=[
+                    Name(id='proxy_url', ctx=Load()),
+                    Name(id='proxy_url', ctx=Load())])),
+        Assign(
+            targets=[
+                Name(id='target_url', ctx=Store())],
+            value=Constant(value='http://example.com')),
+        Assign(
+            targets=[
+                Name(id='response', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='requests', ctx=Load()),
+                    attr='get',
+                    ctx=Load()),
+                args=[
+                    Name(id='target_url', ctx=Load())],
+                keywords=[
+                    keyword(
+                        arg='proxies',
+                        value=Name(id='proxy_dict', ctx=Load()))])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Attribute(
+                        value=Name(id='response', ctx=Load()),
+                        attr='status_code',
+                        ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Attribute(
+                        value=Name(id='response', ctx=Load()),
+                        attr='text',
+                        ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

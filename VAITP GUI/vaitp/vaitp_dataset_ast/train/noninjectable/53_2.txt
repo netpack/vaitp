@@ -1,0 +1,22 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='urllib.request')]),
+        Assign(
+            targets=[
+                Name(id='url', ctx=Store())],
+            value=Constant(value='http://malicious.http.server')),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='urllib', ctx=Load()),
+                        attr='request',
+                        ctx=Load()),
+                    attr='urlopen',
+                    ctx=Load()),
+                args=[
+                    Name(id='url', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

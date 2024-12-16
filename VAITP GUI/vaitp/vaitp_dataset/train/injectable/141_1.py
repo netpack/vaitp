@@ -1,11 +1,13 @@
-# Import Pillow
-from PIL import Image
+def process_fli_data(data: bytes) -> None:
+    # Vulnerable code (simulated):  No size check, leading to potential overflow.
+    # buffer = bytearray(1024)  # Fixed size buffer.
+    # buffer[:len(data)] = data  # Copies data into buffer without size check.
 
-# Upgrade Pillow to version 3.1.1 or later
-pip install --upgrade Pillow
+    # Fixed code: Check data size before copying.
+    MAX_SIZE = 1024
+    if len(data) > MAX_SIZE:
+        raise ValueError("FLI data exceeds maximum allowed size.")
+    buffer = bytearray(MAX_SIZE)
+    buffer[:len(data)] = data
 
-# Open a malicious FLI file
-fli = Image.open("malicious.fli")
-
-# Decode the FLI file
-fli.load()==
+    # ... further processing of buffer ...

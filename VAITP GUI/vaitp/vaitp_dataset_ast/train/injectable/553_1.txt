@@ -1,0 +1,144 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        Import(
+            names=[
+                alias(name='stat')]),
+        FunctionDef(
+            name='secure_install_directory',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='directory')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='os', ctx=Load()),
+                            attr='chmod',
+                            ctx=Load()),
+                        args=[
+                            Name(id='directory', ctx=Load()),
+                            BinOp(
+                                left=BinOp(
+                                    left=Attribute(
+                                        value=Name(id='stat', ctx=Load()),
+                                        attr='S_IRUSR',
+                                        ctx=Load()),
+                                    op=BitOr(),
+                                    right=Attribute(
+                                        value=Name(id='stat', ctx=Load()),
+                                        attr='S_IWUSR',
+                                        ctx=Load())),
+                                op=BitOr(),
+                                right=Attribute(
+                                    value=Name(id='stat', ctx=Load()),
+                                    attr='S_IXUSR',
+                                    ctx=Load()))],
+                        keywords=[])),
+                For(
+                    target=Tuple(
+                        elts=[
+                            Name(id='root', ctx=Store()),
+                            Name(id='dirs', ctx=Store()),
+                            Name(id='files', ctx=Store())],
+                        ctx=Store()),
+                    iter=Call(
+                        func=Attribute(
+                            value=Name(id='os', ctx=Load()),
+                            attr='walk',
+                            ctx=Load()),
+                        args=[
+                            Name(id='directory', ctx=Load())],
+                        keywords=[]),
+                    body=[
+                        For(
+                            target=Name(id='dir', ctx=Store()),
+                            iter=Name(id='dirs', ctx=Load()),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='os', ctx=Load()),
+                                            attr='chmod',
+                                            ctx=Load()),
+                                        args=[
+                                            Call(
+                                                func=Attribute(
+                                                    value=Attribute(
+                                                        value=Name(id='os', ctx=Load()),
+                                                        attr='path',
+                                                        ctx=Load()),
+                                                    attr='join',
+                                                    ctx=Load()),
+                                                args=[
+                                                    Name(id='root', ctx=Load()),
+                                                    Name(id='dir', ctx=Load())],
+                                                keywords=[]),
+                                            BinOp(
+                                                left=BinOp(
+                                                    left=Attribute(
+                                                        value=Name(id='stat', ctx=Load()),
+                                                        attr='S_IRUSR',
+                                                        ctx=Load()),
+                                                    op=BitOr(),
+                                                    right=Attribute(
+                                                        value=Name(id='stat', ctx=Load()),
+                                                        attr='S_IWUSR',
+                                                        ctx=Load())),
+                                                op=BitOr(),
+                                                right=Attribute(
+                                                    value=Name(id='stat', ctx=Load()),
+                                                    attr='S_IXUSR',
+                                                    ctx=Load()))],
+                                        keywords=[]))],
+                            orelse=[]),
+                        For(
+                            target=Name(id='file', ctx=Store()),
+                            iter=Name(id='files', ctx=Load()),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='os', ctx=Load()),
+                                            attr='chmod',
+                                            ctx=Load()),
+                                        args=[
+                                            Call(
+                                                func=Attribute(
+                                                    value=Attribute(
+                                                        value=Name(id='os', ctx=Load()),
+                                                        attr='path',
+                                                        ctx=Load()),
+                                                    attr='join',
+                                                    ctx=Load()),
+                                                args=[
+                                                    Name(id='root', ctx=Load()),
+                                                    Name(id='file', ctx=Load())],
+                                                keywords=[]),
+                                            BinOp(
+                                                left=Attribute(
+                                                    value=Name(id='stat', ctx=Load()),
+                                                    attr='S_IRUSR',
+                                                    ctx=Load()),
+                                                op=BitOr(),
+                                                right=Attribute(
+                                                    value=Name(id='stat', ctx=Load()),
+                                                    attr='S_IWUSR',
+                                                    ctx=Load()))],
+                                        keywords=[]))],
+                            orelse=[])],
+                    orelse=[])],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='secure_install_directory', ctx=Load()),
+                args=[
+                    Constant(value='/path/to/install/directory')],
+                keywords=[]))],
+    type_ignores=[])

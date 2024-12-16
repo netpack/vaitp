@@ -1,0 +1,67 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='re')]),
+        FunctionDef(
+            name='safe_compile',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='pattern')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Call(
+                        func=Attribute(
+                            value=Name(id='re', ctx=Load()),
+                            attr='search',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='(\\d+|\\d+\\s*,\\s*\\d*)\\s*\\{(\\d+),(\\d+)\\}'),
+                            Name(id='pattern', ctx=Load())],
+                        keywords=[]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Quantifier values are too large or malformed.')],
+                                keywords=[]))],
+                    orelse=[]),
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='re', ctx=Load()),
+                            attr='compile',
+                            ctx=Load()),
+                        args=[
+                            Name(id='pattern', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='regex', ctx=Store())],
+                    value=Call(
+                        func=Name(id='safe_compile', ctx=Load()),
+                        args=[
+                            Constant(value='a{1,1000000000}')],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ValueError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

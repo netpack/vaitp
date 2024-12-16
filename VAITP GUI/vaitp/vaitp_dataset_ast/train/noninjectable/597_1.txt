@@ -1,0 +1,94 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='ssl')]),
+        Import(
+            names=[
+                alias(name='socket')]),
+        FunctionDef(
+            name='connect_to_server',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='host'),
+                    arg(arg='port')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='context', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='ssl', ctx=Load()),
+                            attr='SSLContext',
+                            ctx=Load()),
+                        args=[
+                            Attribute(
+                                value=Name(id='ssl', ctx=Load()),
+                                attr='PROTOCOL_TLS_CLIENT',
+                                ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Attribute(
+                            value=Name(id='context', ctx=Load()),
+                            attr='verify_mode',
+                            ctx=Store())],
+                    value=Attribute(
+                        value=Name(id='ssl', ctx=Load()),
+                        attr='CERT_NONE',
+                        ctx=Load())),
+                With(
+                    items=[
+                        withitem(
+                            context_expr=Call(
+                                func=Attribute(
+                                    value=Name(id='socket', ctx=Load()),
+                                    attr='create_connection',
+                                    ctx=Load()),
+                                args=[
+                                    Tuple(
+                                        elts=[
+                                            Name(id='host', ctx=Load()),
+                                            Name(id='port', ctx=Load())],
+                                        ctx=Load())],
+                                keywords=[]),
+                            optional_vars=Name(id='sock', ctx=Store()))],
+                    body=[
+                        With(
+                            items=[
+                                withitem(
+                                    context_expr=Call(
+                                        func=Attribute(
+                                            value=Name(id='context', ctx=Load()),
+                                            attr='wrap_socket',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='sock', ctx=Load())],
+                                        keywords=[]),
+                                    optional_vars=Name(id='ssock', ctx=Store()))],
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            Call(
+                                                func=Attribute(
+                                                    value=Name(id='ssock', ctx=Load()),
+                                                    attr='version',
+                                                    ctx=Load()),
+                                                args=[],
+                                                keywords=[])],
+                                        keywords=[]))])])],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='connect_to_server', ctx=Load()),
+                args=[
+                    Constant(value='example.com'),
+                    Constant(value=443)],
+                keywords=[]))],
+    type_ignores=[])

@@ -1,0 +1,23 @@
+Module(
+    body=[
+        ImportFrom(
+            module='langchain_experimental',
+            names=[
+                alias(name='REPL')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='repl', ctx=Store())],
+            value=Call(
+                func=Name(id='REPL', ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='repl', ctx=Load()),
+                    attr='run',
+                    ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

@@ -1,0 +1,72 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='ipaddress')]),
+        FunctionDef(
+            name='validate_ip_address',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='ip')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Try(
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='ipaddress', ctx=Load()),
+                                    attr='ip_address',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='ip', ctx=Load())],
+                                keywords=[])),
+                        Return(
+                            value=Constant(value=True))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='ValueError', ctx=Load()),
+                            body=[
+                                Return(
+                                    value=Constant(value=False))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='ip', ctx=Store())],
+            value=Constant(value='0127.0.0.1')),
+        If(
+            test=Call(
+                func=Name(id='validate_ip_address', ctx=Load()),
+                args=[
+                    Name(id='ip', ctx=Load())],
+                keywords=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            JoinedStr(
+                                values=[
+                                    FormattedValue(
+                                        value=Name(id='ip', ctx=Load()),
+                                        conversion=-1),
+                                    Constant(value=' is a valid IP address')])],
+                        keywords=[]))],
+            orelse=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            JoinedStr(
+                                values=[
+                                    FormattedValue(
+                                        value=Name(id='ip', ctx=Load()),
+                                        conversion=-1),
+                                    Constant(value=' is not a valid IP address')])],
+                        keywords=[]))])],
+    type_ignores=[])

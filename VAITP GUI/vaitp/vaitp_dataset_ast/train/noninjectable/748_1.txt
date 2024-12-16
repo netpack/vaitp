@@ -1,0 +1,45 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='rrdtool')]),
+        FunctionDef(
+            name='vulnerable_graph',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='filename'),
+                    arg(arg='title'),
+                    arg(arg='data')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='rrdtool', ctx=Load()),
+                            attr='graph',
+                            ctx=Load()),
+                        args=[
+                            Name(id='filename', ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='title',
+                                value=Name(id='title', ctx=Load())),
+                            keyword(
+                                arg='data',
+                                value=Name(id='data', ctx=Load()))]))],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='vulnerable_graph', ctx=Load()),
+                args=[
+                    Constant(value='output.png'),
+                    Constant(value='Sample Graph'),
+                    BinOp(
+                        left=Constant(value='Data: %s'),
+                        op=Mod(),
+                        right=Constant(value='Sample data'))],
+                keywords=[]))],
+    type_ignores=[])

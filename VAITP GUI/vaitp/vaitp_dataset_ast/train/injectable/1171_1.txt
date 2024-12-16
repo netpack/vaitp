@@ -1,0 +1,149 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='asyncio')]),
+        ImportFrom(
+            module='aiosmtpd.controller',
+            names=[
+                alias(name='Controller')],
+            level=0),
+        ImportFrom(
+            module='aiosmtpd.smtp',
+            names=[
+                alias(name='SMTP')],
+            level=0),
+        ClassDef(
+            name='CustomSMTP',
+            bases=[
+                Name(id='SMTP', ctx=Load())],
+            keywords=[],
+            body=[
+                AsyncFunctionDef(
+                    name='handle_DATA',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='server'),
+                            arg(arg='session'),
+                            arg(arg='envelope')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        If(
+                            test=UnaryOp(
+                                op=Not(),
+                                operand=Call(
+                                    func=Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='is_valid_sender',
+                                        ctx=Load()),
+                                    args=[
+                                        Attribute(
+                                            value=Name(id='envelope', ctx=Load()),
+                                            attr='mail_from',
+                                            ctx=Load())],
+                                    keywords=[])),
+                            body=[
+                                Return(
+                                    value=Constant(value='550 Invalid sender address'))],
+                            orelse=[]),
+                        Return(
+                            value=Await(
+                                value=Call(
+                                    func=Attribute(
+                                        value=Call(
+                                            func=Name(id='super', ctx=Load()),
+                                            args=[],
+                                            keywords=[]),
+                                        attr='handle_DATA',
+                                        ctx=Load()),
+                                    args=[
+                                        Name(id='server', ctx=Load()),
+                                        Name(id='session', ctx=Load()),
+                                        Name(id='envelope', ctx=Load())],
+                                    keywords=[])))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='is_valid_sender',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='sender')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Return(
+                            value=Constant(value=True))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        AsyncFunctionDef(
+            name='main',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='controller', ctx=Store())],
+                    value=Call(
+                        func=Name(id='Controller', ctx=Load()),
+                        args=[
+                            Name(id='CustomSMTP', ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='port',
+                                value=Constant(value=1025))])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='controller', ctx=Load()),
+                            attr='start',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Expr(
+                    value=Await(
+                        value=Call(
+                            func=Attribute(
+                                value=Call(
+                                    func=Attribute(
+                                        value=Name(id='asyncio', ctx=Load()),
+                                        attr='Event',
+                                        ctx=Load()),
+                                    args=[],
+                                    keywords=[]),
+                                attr='wait',
+                                ctx=Load()),
+                            args=[],
+                            keywords=[])))],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='asyncio', ctx=Load()),
+                            attr='run',
+                            ctx=Load()),
+                        args=[
+                            Call(
+                                func=Name(id='main', ctx=Load()),
+                                args=[],
+                                keywords=[])],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

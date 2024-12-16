@@ -1,0 +1,178 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='weakref')]),
+        Import(
+            names=[
+                alias(name='threading')]),
+        Import(
+            names=[
+                alias(name='time')]),
+        FunctionDef(
+            name='create_object',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Constant(value='Simulates creating a rust object wrapped in Python.')),
+                Return(
+                    value=Dict(
+                        keys=[
+                            Constant(value='data')],
+                        values=[
+                            List(
+                                elts=[
+                                    Constant(value=1),
+                                    Constant(value=2),
+                                    Constant(value=3)],
+                                ctx=Load())]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='use_object',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='obj_ref')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Constant(value='Simulates using the object after the original has gone out of scope.')),
+                Assign(
+                    targets=[
+                        Name(id='obj', ctx=Store())],
+                    value=Call(
+                        func=Name(id='obj_ref', ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                If(
+                    test=Name(id='obj', ctx=Load()),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            Constant(value='Using object: '),
+                                            FormattedValue(
+                                                value=Subscript(
+                                                    value=Name(id='obj', ctx=Load()),
+                                                    slice=Constant(value='data'),
+                                                    ctx=Load()),
+                                                conversion=-1)])],
+                                keywords=[]))],
+                    orelse=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Object no longer available')],
+                                keywords=[]))])],
+            decorator_list=[]),
+        FunctionDef(
+            name='main',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='obj', ctx=Store())],
+                    value=Call(
+                        func=Name(id='create_object', ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='obj_ref', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='weakref', ctx=Load()),
+                            attr='ref',
+                            ctx=Load()),
+                        args=[
+                            Name(id='obj', ctx=Load())],
+                        keywords=[])),
+                FunctionDef(
+                    name='worker',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='time', ctx=Load()),
+                                    attr='sleep',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value=0.1)],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Name(id='use_object', ctx=Load()),
+                                args=[
+                                    Name(id='obj_ref', ctx=Load())],
+                                keywords=[]))],
+                    decorator_list=[]),
+                Assign(
+                    targets=[
+                        Name(id='t', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='threading', ctx=Load()),
+                            attr='Thread',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[
+                            keyword(
+                                arg='target',
+                                value=Name(id='worker', ctx=Load()))])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='t', ctx=Load()),
+                            attr='start',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Delete(
+                    targets=[
+                        Name(id='obj', ctx=Del())]),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='t', ctx=Load()),
+                            attr='join',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='main', ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

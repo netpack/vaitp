@@ -1,0 +1,81 @@
+Module(
+    body=[
+        ImportFrom(
+            module='definitions',
+            names=[
+                alias(name='load')],
+            level=0),
+        FunctionDef(
+            name='safe_load',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='input_data')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Call(
+                        func=Name(id='isinstance', ctx=Load()),
+                        args=[
+                            Name(id='input_data', ctx=Load()),
+                            Name(id='dict', ctx=Load())],
+                        keywords=[]),
+                    body=[
+                        Return(
+                            value=Call(
+                                func=Name(id='load', ctx=Load()),
+                                args=[
+                                    Name(id='input_data', ctx=Load())],
+                                keywords=[]))],
+                    orelse=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Invalid input data format. Expected a dictionary.')],
+                                keywords=[]))])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='safe_input', ctx=Store())],
+            value=Dict(
+                keys=[
+                    Constant(value='key'),
+                    Constant(value='another_key')],
+                values=[
+                    Constant(value='value'),
+                    Constant(value='another_value')])),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='result', ctx=Store())],
+                    value=Call(
+                        func=Name(id='safe_load', ctx=Load()),
+                        args=[
+                            Name(id='safe_input', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Loaded data:'),
+                            Name(id='result', ctx=Load())],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ValueError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Error:'),
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

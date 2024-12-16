@@ -1,0 +1,84 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='subprocess')]),
+        FunctionDef(
+            name='run_command_with_secret',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='secret')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Try(
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='result', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='subprocess', ctx=Load()),
+                                    attr='run',
+                                    ctx=Load()),
+                                args=[
+                                    List(
+                                        elts=[
+                                            Constant(value='your_command'),
+                                            Constant(value='arg1'),
+                                            Constant(value='arg2'),
+                                            Name(id='secret', ctx=Load())],
+                                        ctx=Load())],
+                                keywords=[
+                                    keyword(
+                                        arg='check',
+                                        value=Constant(value=True)),
+                                    keyword(
+                                        arg='capture_output',
+                                        value=Constant(value=True)),
+                                    keyword(
+                                        arg='text',
+                                        value=Constant(value=True))])),
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Attribute(
+                                        value=Name(id='result', ctx=Load()),
+                                        attr='stdout',
+                                        ctx=Load())],
+                                keywords=[]))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Attribute(
+                                value=Name(id='subprocess', ctx=Load()),
+                                attr='CalledProcessError',
+                                ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    Constant(value='Command failed with error: '),
+                                                    FormattedValue(
+                                                        value=Attribute(
+                                                            value=Name(id='e', ctx=Load()),
+                                                            attr='stderr',
+                                                            ctx=Load()),
+                                                        conversion=-1)])],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='run_command_with_secret', ctx=Load()),
+                args=[
+                    Constant(value='my_secret_value')],
+                keywords=[]))],
+    type_ignores=[])

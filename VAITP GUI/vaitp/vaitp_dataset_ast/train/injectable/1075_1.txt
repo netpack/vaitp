@@ -1,0 +1,63 @@
+Module(
+    body=[
+        ImportFrom(
+            module='urllib.parse',
+            names=[
+                alias(name='urlparse'),
+                alias(name='urlsplit')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='url', ctx=Store())],
+            value=Constant(value='http://[not-an-ipv6]:8080/path')),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='result', ctx=Store())],
+                    value=Call(
+                        func=Name(id='urlparse', ctx=Load()),
+                        args=[
+                            Name(id='url', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Parsed URL:'),
+                            Name(id='result', ctx=Load())],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ValueError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Error parsing URL:'),
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[]),
+        Assign(
+            targets=[
+                Name(id='valid_url', ctx=Store())],
+            value=Constant(value='http://[2001:db8::1]:8080/path')),
+        Assign(
+            targets=[
+                Name(id='parsed_valid', ctx=Store())],
+            value=Call(
+                func=Name(id='urlparse', ctx=Load()),
+                args=[
+                    Name(id='valid_url', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Constant(value='Parsed valid URL:'),
+                    Name(id='parsed_valid', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

@@ -1,0 +1,73 @@
+Module(
+    body=[
+        ClassDef(
+            name='RawLog',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='build_IR',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='topics')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='logged_topics', ctx=Store())],
+                            value=Name(id='topics', ctx=Load())),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='log',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='logged_topics', ctx=Load())],
+                                keywords=[]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='log',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='topics')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Logging topics:'),
+                                    Name(id='topics', ctx=Load())],
+                                keywords=[]))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='raw_log', ctx=Store())],
+            value=Call(
+                func=Name(id='RawLog', ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='raw_log', ctx=Load()),
+                    attr='build_IR',
+                    ctx=Load()),
+                args=[
+                    List(
+                        elts=[
+                            Constant(value='0x123'),
+                            Constant(value='0x456')],
+                        ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

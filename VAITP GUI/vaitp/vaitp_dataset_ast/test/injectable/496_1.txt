@@ -1,0 +1,124 @@
+Module(
+    body=[
+        ClassDef(
+            name='Togglee',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='settings',
+                                    ctx=Store())],
+                            value=Dict(keys=[], values=[]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='set_setting',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='key'),
+                            arg(arg='value')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        If(
+                            test=Compare(
+                                left=Name(id='key', ctx=Load()),
+                                ops=[
+                                    In()],
+                                comparators=[
+                                    List(
+                                        elts=[
+                                            Constant(value='setting1'),
+                                            Constant(value='setting2')],
+                                        ctx=Load())]),
+                            body=[
+                                Assign(
+                                    targets=[
+                                        Subscript(
+                                            value=Attribute(
+                                                value=Name(id='self', ctx=Load()),
+                                                attr='settings',
+                                                ctx=Load()),
+                                            slice=Name(id='key', ctx=Load()),
+                                            ctx=Store())],
+                                    value=Name(id='value', ctx=Load()))],
+                            orelse=[
+                                Raise(
+                                    exc=Call(
+                                        func=Name(id='ValueError', ctx=Load()),
+                                        args=[
+                                            Constant(value='Invalid setting key')],
+                                        keywords=[]))])],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='get_setting',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='key')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Return(
+                            value=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='settings',
+                                        ctx=Load()),
+                                    attr='get',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='key', ctx=Load()),
+                                    Constant(value=None)],
+                                keywords=[]))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='togglee', ctx=Store())],
+            value=Call(
+                func=Name(id='Togglee', ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='togglee', ctx=Load()),
+                    attr='set_setting',
+                    ctx=Load()),
+                args=[
+                    Constant(value='setting1'),
+                    Constant(value='value1')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Call(
+                        func=Attribute(
+                            value=Name(id='togglee', ctx=Load()),
+                            attr='get_setting',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='setting1')],
+                        keywords=[])],
+                keywords=[]))],
+    type_ignores=[])

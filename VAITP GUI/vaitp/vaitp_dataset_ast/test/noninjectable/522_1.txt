@@ -1,0 +1,99 @@
+Module(
+    body=[
+        ImportFrom(
+            module='plone.dexterity.content',
+            names=[
+                alias(name='Container')],
+            level=0),
+        ClassDef(
+            name='VulnerableTraceback',
+            bases=[
+                Name(id='Container', ctx=Load())],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='get_traceback',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='request')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        If(
+                            test=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='request', ctx=Load()),
+                                        attr='authenticated_user',
+                                        ctx=Load()),
+                                    attr='has_role',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='Manager')],
+                                keywords=[]),
+                            body=[
+                                Assign(
+                                    targets=[
+                                        Name(id='url', ctx=Store())],
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='request', ctx=Load()),
+                                            attr='get',
+                                            ctx=Load()),
+                                        args=[
+                                            Constant(value='url'),
+                                            Constant(value='')],
+                                        keywords=[])),
+                                Assign(
+                                    targets=[
+                                        Name(id='response', ctx=Store())],
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='self', ctx=Load()),
+                                            attr='make_request_to_url',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='url', ctx=Load())],
+                                        keywords=[])),
+                                Return(
+                                    value=Name(id='response', ctx=Load()))],
+                            orelse=[
+                                Raise(
+                                    exc=Call(
+                                        func=Name(id='PermissionError', ctx=Load()),
+                                        args=[
+                                            Constant(value='You do not have permission to view tracebacks.')],
+                                        keywords=[]))])],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='make_request_to_url',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='url')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Import(
+                            names=[
+                                alias(name='requests')]),
+                        Return(
+                            value=Attribute(
+                                value=Call(
+                                    func=Attribute(
+                                        value=Name(id='requests', ctx=Load()),
+                                        attr='get',
+                                        ctx=Load()),
+                                    args=[
+                                        Name(id='url', ctx=Load())],
+                                    keywords=[]),
+                                attr='text',
+                                ctx=Load()))],
+                    decorator_list=[])],
+            decorator_list=[])],
+    type_ignores=[])

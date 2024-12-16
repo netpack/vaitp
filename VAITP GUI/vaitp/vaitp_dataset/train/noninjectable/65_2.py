@@ -3,7 +3,7 @@ import ipaddress
 
 # Define a malicious IPv4 address
 # This address has 10000 dots
-address = ""."" * 10000
+address = "'.'" * 10000
 
 # Create an IPv4Interface object from the address
 # This will trigger the vulnerability in the ipaddress module

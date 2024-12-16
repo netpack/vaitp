@@ -1,0 +1,66 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='gradio', asname='gr')]),
+        Import(
+            names=[
+                alias(name='json')]),
+        FunctionDef(
+            name='safe_function',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='user_input')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=UnaryOp(
+                        op=Not(),
+                        operand=Call(
+                            func=Name(id='isinstance', ctx=Load()),
+                            args=[
+                                Name(id='user_input', ctx=Load()),
+                                Name(id='dict', ctx=Load())],
+                            keywords=[])),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Invalid input: Expected a JSON object.')],
+                                keywords=[]))],
+                    orelse=[]),
+                Return(
+                    value=Constant(value='Processed input safely.'))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='iface', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='gr', ctx=Load()),
+                    attr='Interface',
+                    ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='fn',
+                        value=Name(id='safe_function', ctx=Load())),
+                    keyword(
+                        arg='inputs',
+                        value=Constant(value='json')),
+                    keyword(
+                        arg='outputs',
+                        value=Constant(value='text'))])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='iface', ctx=Load()),
+                    attr='launch',
+                    ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

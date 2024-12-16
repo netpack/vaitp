@@ -1,0 +1,90 @@
+Module(
+    body=[
+        ImportFrom(
+            module='tuf',
+            names=[
+                alias(name='repository_tool')],
+            level=0),
+        ImportFrom(
+            module='tuf',
+            names=[
+                alias(name='exceptions')],
+            level=0),
+        FunctionDef(
+            name='download_and_verify_root_metadata',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='repository')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Try(
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='root_metadata', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='repository', ctx=Load()),
+                                    attr='get_root',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='repository', ctx=Load()),
+                                    attr='verify_root',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='root_metadata', ctx=Load())],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Root metadata verified successfully.')],
+                                keywords=[]))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Attribute(
+                                value=Name(id='exceptions', ctx=Load()),
+                                attr='MetadataError',
+                                ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    Constant(value='Root metadata verification failed: '),
+                                                    FormattedValue(
+                                                        value=Name(id='e', ctx=Load()),
+                                                        conversion=-1)])],
+                                        keywords=[])),
+                                Raise()])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='repository', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='repository_tool', ctx=Load()),
+                    attr='create_new_repository',
+                    ctx=Load()),
+                args=[
+                    Constant(value='repository_path')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='download_and_verify_root_metadata', ctx=Load()),
+                args=[
+                    Name(id='repository', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

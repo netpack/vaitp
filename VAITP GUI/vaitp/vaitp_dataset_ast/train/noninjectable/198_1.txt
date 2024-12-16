@@ -1,0 +1,86 @@
+Module(
+    body=[
+        ImportFrom(
+            module='PIL',
+            names=[
+                alias(name='Image')],
+            level=0),
+        FunctionDef(
+            name='vulnerable_crop',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='image'),
+                    arg(arg='box')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Tuple(
+                            elts=[
+                                Name(id='left', ctx=Store()),
+                                Name(id='upper', ctx=Store()),
+                                Name(id='right', ctx=Store()),
+                                Name(id='lower', ctx=Store())],
+                            ctx=Store())],
+                    value=Name(id='box', ctx=Load())),
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='image', ctx=Load()),
+                            attr='crop',
+                            ctx=Load()),
+                        args=[
+                            Name(id='box', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='img', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='Image', ctx=Load()),
+                            attr='open',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='example.jpg')],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='crop_box', ctx=Store())],
+                    value=Tuple(
+                        elts=[
+                            Constant(value=0),
+                            Constant(value=0),
+                            Constant(value=1000000000),
+                            Constant(value=1000000000)],
+                        ctx=Load())),
+                Assign(
+                    targets=[
+                        Name(id='cropped_image', ctx=Store())],
+                    value=Call(
+                        func=Name(id='vulnerable_crop', ctx=Load()),
+                        args=[
+                            Name(id='img', ctx=Load()),
+                            Name(id='crop_box', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='cropped_image', ctx=Load()),
+                            attr='show',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

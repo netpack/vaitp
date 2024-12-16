@@ -1,0 +1,98 @@
+Module(
+    body=[
+        ImportFrom(
+            module='multipart',
+            names=[
+                alias(name='MultipartParser')],
+            level=0),
+        FunctionDef(
+            name='handle_request',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='environ')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='content_type', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='environ', ctx=Load()),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='CONTENT_TYPE'),
+                            Constant(value='')],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='body', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Subscript(
+                                value=Name(id='environ', ctx=Load()),
+                                slice=Constant(value='wsgi.input'),
+                                ctx=Load()),
+                            attr='read',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='parser', ctx=Store())],
+                    value=Call(
+                        func=Name(id='MultipartParser', ctx=Load()),
+                        args=[
+                            Name(id='body', ctx=Load()),
+                            Name(id='content_type', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='handle_request_fixed',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='environ')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='content_type', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='environ', ctx=Load()),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='CONTENT_TYPE'),
+                            Constant(value='')],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='body', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Subscript(
+                                value=Name(id='environ', ctx=Load()),
+                                slice=Constant(value='wsgi.input'),
+                                ctx=Load()),
+                            attr='read',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='parser', ctx=Store())],
+                    value=Call(
+                        func=Name(id='MultipartParser', ctx=Load()),
+                        args=[
+                            Name(id='body', ctx=Load()),
+                            Name(id='content_type', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[])],
+    type_ignores=[])

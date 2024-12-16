@@ -1,0 +1,43 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='gradio', asname='gr')]),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='gr', ctx=Load()),
+                            attr='Interface',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[
+                            keyword(
+                                arg='fn',
+                                value=Lambda(
+                                    args=arguments(
+                                        posonlyargs=[],
+                                        args=[
+                                            arg(arg='x')],
+                                        kwonlyargs=[],
+                                        kw_defaults=[],
+                                        defaults=[]),
+                                    body=Name(id='x', ctx=Load()))),
+                            keyword(
+                                arg='inputs',
+                                value=Constant(value='text')),
+                            keyword(
+                                arg='outputs',
+                                value=Constant(value='text'))]),
+                    attr='launch',
+                    ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='share',
+                        value=Constant(value=True)),
+                    keyword(
+                        arg='server_name',
+                        value=Constant(value='your-https-domain.com'))]))],
+    type_ignores=[])

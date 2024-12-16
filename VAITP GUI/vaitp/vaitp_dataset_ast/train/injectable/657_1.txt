@@ -1,0 +1,119 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        Import(
+            names=[
+                alias(name='sys')]),
+        FunctionDef(
+            name='secure_import',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='module_name')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='std_lib_paths', ctx=Store())],
+                    value=ListComp(
+                        elt=Name(id='p', ctx=Load()),
+                        generators=[
+                            comprehension(
+                                target=Name(id='p', ctx=Store()),
+                                iter=Attribute(
+                                    value=Name(id='sys', ctx=Load()),
+                                    attr='path',
+                                    ctx=Load()),
+                                ifs=[
+                                    BoolOp(
+                                        op=And(),
+                                        values=[
+                                            Call(
+                                                func=Attribute(
+                                                    value=Attribute(
+                                                        value=Name(id='os', ctx=Load()),
+                                                        attr='path',
+                                                        ctx=Load()),
+                                                    attr='isdir',
+                                                    ctx=Load()),
+                                                args=[
+                                                    Name(id='p', ctx=Load())],
+                                                keywords=[]),
+                                            Compare(
+                                                left=Name(id='p', ctx=Load()),
+                                                ops=[
+                                                    NotEq()],
+                                                comparators=[
+                                                    Call(
+                                                        func=Attribute(
+                                                            value=Name(id='os', ctx=Load()),
+                                                            attr='getcwd',
+                                                            ctx=Load()),
+                                                        args=[],
+                                                        keywords=[])])])],
+                                is_async=0)])),
+                For(
+                    target=Name(id='path', ctx=Store()),
+                    iter=Name(id='std_lib_paths', ctx=Load()),
+                    body=[
+                        Try(
+                            body=[
+                                Assign(
+                                    targets=[
+                                        Name(id='module', ctx=Store())],
+                                    value=Call(
+                                        func=Name(id='__import__', ctx=Load()),
+                                        args=[
+                                            Name(id='module_name', ctx=Load())],
+                                        keywords=[
+                                            keyword(
+                                                arg='fromlist',
+                                                value=List(
+                                                    elts=[
+                                                        Constant(value='')],
+                                                    ctx=Load()))])),
+                                Return(
+                                    value=Name(id='module', ctx=Load()))],
+                            handlers=[
+                                ExceptHandler(
+                                    type=Name(id='ImportError', ctx=Load()),
+                                    body=[
+                                        Continue()])],
+                            orelse=[],
+                            finalbody=[])],
+                    orelse=[]),
+                Raise(
+                    exc=Call(
+                        func=Name(id='ImportError', ctx=Load()),
+                        args=[
+                            JoinedStr(
+                                values=[
+                                    Constant(value='Module '),
+                                    FormattedValue(
+                                        value=Name(id='module_name', ctx=Load()),
+                                        conversion=-1),
+                                    Constant(value=' not found in secure paths.')])],
+                        keywords=[]))],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='my_module', ctx=Store())],
+                    value=Call(
+                        func=Name(id='secure_import', ctx=Load()),
+                        args=[
+                            Constant(value='my_module')],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

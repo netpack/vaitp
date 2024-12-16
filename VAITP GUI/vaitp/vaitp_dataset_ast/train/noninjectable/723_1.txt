@@ -1,0 +1,50 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        FunctionDef(
+            name='download_file',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='url'),
+                    arg(arg='destination')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='os', ctx=Load()),
+                            attr='system',
+                            ctx=Load()),
+                        args=[
+                            JoinedStr(
+                                values=[
+                                    Constant(value='curl -k -o '),
+                                    FormattedValue(
+                                        value=Name(id='destination', ctx=Load()),
+                                        conversion=-1),
+                                    Constant(value=' '),
+                                    FormattedValue(
+                                        value=Name(id='url', ctx=Load()),
+                                        conversion=-1)])],
+                        keywords=[]))],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='download_file', ctx=Load()),
+                args=[
+                    Constant(value='https://example.com/deployUtil.py'),
+                    Constant(value='deployUtil.py')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='download_file', ctx=Load()),
+                args=[
+                    Constant(value='https://example.com/vds_bootstrap.py'),
+                    Constant(value='vds_bootstrap.py')],
+                keywords=[]))],
+    type_ignores=[])

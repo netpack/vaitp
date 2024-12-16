@@ -1,0 +1,173 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='sys')]),
+        ImportFrom(
+            module='PIL',
+            names=[
+                alias(name='Image')],
+            level=0),
+        FunctionDef(
+            name='safe_crop',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='image'),
+                    arg(arg='box')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Call(
+                        func=Name(id='any', ctx=Load()),
+                        args=[
+                            GeneratorExp(
+                                elt=BoolOp(
+                                    op=Or(),
+                                    values=[
+                                        UnaryOp(
+                                            op=Not(),
+                                            operand=Call(
+                                                func=Name(id='isinstance', ctx=Load()),
+                                                args=[
+                                                    Name(id='coord', ctx=Load()),
+                                                    Name(id='int', ctx=Load())],
+                                                keywords=[])),
+                                        Compare(
+                                            left=Name(id='coord', ctx=Load()),
+                                            ops=[
+                                                Lt()],
+                                            comparators=[
+                                                Constant(value=0)])]),
+                                generators=[
+                                    comprehension(
+                                        target=Name(id='coord', ctx=Store()),
+                                        iter=Name(id='box', ctx=Load()),
+                                        ifs=[],
+                                        is_async=0)])],
+                        keywords=[]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Coordinates must be non-negative integers.')],
+                                keywords=[]))],
+                    orelse=[]),
+                Assign(
+                    targets=[
+                        Tuple(
+                            elts=[
+                                Name(id='width', ctx=Store()),
+                                Name(id='height', ctx=Store())],
+                            ctx=Store())],
+                    value=Attribute(
+                        value=Name(id='image', ctx=Load()),
+                        attr='size',
+                        ctx=Load())),
+                Assign(
+                    targets=[
+                        Tuple(
+                            elts=[
+                                Name(id='left', ctx=Store()),
+                                Name(id='upper', ctx=Store()),
+                                Name(id='right', ctx=Store()),
+                                Name(id='lower', ctx=Store())],
+                            ctx=Store())],
+                    value=Name(id='box', ctx=Load())),
+                If(
+                    test=BoolOp(
+                        op=Or(),
+                        values=[
+                            Compare(
+                                left=Name(id='left', ctx=Load()),
+                                ops=[
+                                    GtE()],
+                                comparators=[
+                                    Name(id='right', ctx=Load())]),
+                            Compare(
+                                left=Name(id='upper', ctx=Load()),
+                                ops=[
+                                    GtE()],
+                                comparators=[
+                                    Name(id='lower', ctx=Load())]),
+                            Compare(
+                                left=Name(id='right', ctx=Load()),
+                                ops=[
+                                    Gt()],
+                                comparators=[
+                                    Name(id='width', ctx=Load())]),
+                            Compare(
+                                left=Name(id='lower', ctx=Load()),
+                                ops=[
+                                    Gt()],
+                                comparators=[
+                                    Name(id='height', ctx=Load())])]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Invalid crop box dimensions.')],
+                                keywords=[]))],
+                    orelse=[]),
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='image', ctx=Load()),
+                            attr='crop',
+                            ctx=Load()),
+                        args=[
+                            Name(id='box', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='img', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='Image', ctx=Load()),
+                            attr='open',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='example.jpg')],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='crop_box', ctx=Store())],
+                    value=Tuple(
+                        elts=[
+                            Constant(value=0),
+                            Constant(value=0),
+                            Constant(value=100),
+                            Constant(value=100)],
+                        ctx=Load())),
+                Assign(
+                    targets=[
+                        Name(id='cropped_image', ctx=Store())],
+                    value=Call(
+                        func=Name(id='safe_crop', ctx=Load()),
+                        args=[
+                            Name(id='img', ctx=Load()),
+                            Name(id='crop_box', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='cropped_image', ctx=Load()),
+                            attr='show',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

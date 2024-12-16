@@ -1,0 +1,38 @@
+Module(
+    body=[
+        FunctionDef(
+            name='unsafe_json_eval',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='data')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Name(id='eval', ctx=Load()),
+                        args=[
+                            Name(id='data', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='json_data', ctx=Store())],
+            value=Constant(value='{"key": "__import__(\'os\').system(\'ls\')"}')),
+        Assign(
+            targets=[
+                Name(id='parsed_data', ctx=Store())],
+            value=Call(
+                func=Name(id='unsafe_json_eval', ctx=Load()),
+                args=[
+                    Name(id='json_data', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='parsed_data', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

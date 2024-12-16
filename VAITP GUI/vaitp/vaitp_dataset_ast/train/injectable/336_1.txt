@@ -1,0 +1,97 @@
+Module(
+    body=[
+        ImportFrom(
+            module='pyparsing',
+            names=[
+                alias(name='Word'),
+                alias(name='alphas'),
+                alias(name='alphanums')],
+            level=0),
+        FunctionDef(
+            name='handle_authenticate_header',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='header')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Try(
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='scheme', ctx=Store())],
+                            value=Call(
+                                func=Name(id='Word', ctx=Load()),
+                                args=[
+                                    Name(id='alphas', ctx=Load())],
+                                keywords=[])),
+                        Assign(
+                            targets=[
+                                Name(id='auth_param', ctx=Store())],
+                            value=Call(
+                                func=Name(id='Word', ctx=Load()),
+                                args=[
+                                    BinOp(
+                                        left=Name(id='alphanums', ctx=Load()),
+                                        op=Add(),
+                                        right=Constant(value='._-'))],
+                                keywords=[])),
+                        Assign(
+                            targets=[
+                                Name(id='parser', ctx=Store())],
+                            value=BinOp(
+                                left=Name(id='scheme', ctx=Load()),
+                                op=Add(),
+                                right=Name(id='auth_param', ctx=Load()))),
+                        Assign(
+                            targets=[
+                                Name(id='result', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='parser', ctx=Load()),
+                                    attr='parseString',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='header', ctx=Load())],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Parsed header:'),
+                                    Name(id='result', ctx=Load())],
+                                keywords=[]))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='Exception', ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            Constant(value='Failed to parse header:'),
+                                            Name(id='e', ctx=Load())],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='header', ctx=Store())],
+            value=BinOp(
+                left=Constant(value='WWW-Authenticate: '),
+                op=Add(),
+                right=BinOp(
+                    left=Constant(value='\xa0'),
+                    op=Mult(),
+                    right=Constant(value=1000)))),
+        Expr(
+            value=Call(
+                func=Name(id='handle_authenticate_header', ctx=Load()),
+                args=[
+                    Name(id='header', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

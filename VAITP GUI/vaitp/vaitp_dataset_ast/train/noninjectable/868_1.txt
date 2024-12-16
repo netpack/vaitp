@@ -1,0 +1,60 @@
+Module(
+    body=[
+        ImportFrom(
+            module='RestrictedPython',
+            names=[
+                alias(name='compile_restricted')],
+            level=0),
+        FunctionDef(
+            name='vulnerable_format_string',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='format_string'),
+                    arg(arg='user')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='format_string', ctx=Load()),
+                            attr='format',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[
+                            keyword(
+                                arg='user',
+                                value=Name(id='user', ctx=Load()))]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='user_data', ctx=Store())],
+            value=Dict(
+                keys=[
+                    Constant(value='name'),
+                    Constant(value='secret')],
+                values=[
+                    Constant(value='Alice'),
+                    Constant(value='This is a secret!')])),
+        Assign(
+            targets=[
+                Name(id='format_string', ctx=Store())],
+            value=Constant(value='Hello, {user.name}. Your secret is: {user.secret}')),
+        Assign(
+            targets=[
+                Name(id='result', ctx=Store())],
+            value=Call(
+                func=Name(id='vulnerable_format_string', ctx=Load()),
+                args=[
+                    Name(id='format_string', ctx=Load()),
+                    Name(id='user_data', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='result', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

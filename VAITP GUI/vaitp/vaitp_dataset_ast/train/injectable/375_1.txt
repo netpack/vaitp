@@ -1,0 +1,126 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='gnupg')]),
+        Assign(
+            targets=[
+                Name(id='gpg', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='gnupg', ctx=Load()),
+                    attr='GPG',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        FunctionDef(
+            name='sanitize_input',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='file_name')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=UnaryOp(
+                        op=Not(),
+                        operand=Call(
+                            func=Attribute(
+                                value=Name(id='file_name', ctx=Load()),
+                                attr='isalnum',
+                                ctx=Load()),
+                            args=[],
+                            keywords=[])),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Invalid filename.')],
+                                keywords=[]))],
+                    orelse=[]),
+                Return(
+                    value=Name(id='file_name', ctx=Load()))],
+            decorator_list=[]),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='user_input', ctx=Store())],
+                    value=Constant(value='somefile.txt; cat /etc/passwd')),
+                Assign(
+                    targets=[
+                        Name(id='sanitized_input', ctx=Store())],
+                    value=Call(
+                        func=Name(id='sanitize_input', ctx=Load()),
+                        args=[
+                            Name(id='user_input', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='result', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='gpg', ctx=Load()),
+                            attr='encrypt_file',
+                            ctx=Load()),
+                        args=[
+                            Name(id='sanitized_input', ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='recipients',
+                                value=List(
+                                    elts=[
+                                        Constant(value='recipient@example.com')],
+                                    ctx=Load()))])),
+                If(
+                    test=Attribute(
+                        value=Name(id='result', ctx=Load()),
+                        attr='ok',
+                        ctx=Load()),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='File encrypted successfully.')],
+                                keywords=[]))],
+                    orelse=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Error:'),
+                                    Attribute(
+                                        value=Name(id='result', ctx=Load()),
+                                        attr='stderr',
+                                        ctx=Load())],
+                                keywords=[]))])],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ValueError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Input error:'),
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))]),
+                ExceptHandler(
+                    type=Name(id='Exception', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='An error occurred:'),
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

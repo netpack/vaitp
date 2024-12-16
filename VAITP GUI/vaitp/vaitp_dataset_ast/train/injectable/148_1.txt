@@ -1,0 +1,76 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='xml.sax')]),
+        Import(
+            names=[
+                alias(name='requests')]),
+        Assign(
+            targets=[
+                Name(id='data', ctx=Store())],
+            value=Attribute(
+                value=Call(
+                    func=Attribute(
+                        value=Name(id='requests', ctx=Load()),
+                        attr='get',
+                        ctx=Load()),
+                    args=[
+                        Constant(value='http://example.com/data.xml')],
+                    keywords=[]),
+                attr='text',
+                ctx=Load())),
+        Assign(
+            targets=[
+                Name(id='handler', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='xml', ctx=Load()),
+                        attr='sax',
+                        ctx=Load()),
+                    attr='ContentHandler',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='parser', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='xml', ctx=Load()),
+                        attr='sax',
+                        ctx=Load()),
+                    attr='make_parser',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='parser', ctx=Load()),
+                    attr='setContentHandler',
+                    ctx=Load()),
+                args=[
+                    Name(id='handler', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='parser', ctx=Load()),
+                    attr='parseString',
+                    ctx=Load()),
+                args=[
+                    Name(id='data', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Attribute(
+                        value=Name(id='handler', ctx=Load()),
+                        attr='root',
+                        ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

@@ -1,0 +1,73 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        Assign(
+            targets=[
+                Name(id='ALLOW_CUSTOM_CONNECTOR_FUNCTIONS', ctx=Store())],
+            value=Compare(
+                left=Call(
+                    func=Attribute(
+                        value=Call(
+                            func=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='getenv',
+                                ctx=Load()),
+                            args=[
+                                Constant(value='FIDES__SECURITY__ALLOW_CUSTOM_CONNECTOR_FUNCTIONS'),
+                                Constant(value='False')],
+                            keywords=[]),
+                        attr='lower',
+                        ctx=Load()),
+                    args=[],
+                    keywords=[]),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='true')])),
+        FunctionDef(
+            name='register_custom_connector_functions',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='connector_code')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=UnaryOp(
+                        op=Not(),
+                        operand=Name(id='ALLOW_CUSTOM_CONNECTOR_FUNCTIONS', ctx=Load())),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='PermissionError', ctx=Load()),
+                                args=[
+                                    Constant(value='Custom connector functions are not allowed. Please check your configuration.')],
+                                keywords=[]))],
+                    orelse=[])],
+            decorator_list=[]),
+        Try(
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='register_custom_connector_functions', ctx=Load()),
+                        args=[
+                            Constant(value='some_custom_code')],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='PermissionError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

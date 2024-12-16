@@ -1,0 +1,53 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='xml.parsers.expat')]),
+        FunctionDef(
+            name='parse_xml',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='xml_input')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='parser', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Attribute(
+                                    value=Name(id='xml', ctx=Load()),
+                                    attr='parsers',
+                                    ctx=Load()),
+                                attr='expat',
+                                ctx=Load()),
+                            attr='ParserCreate',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='parser', ctx=Load()),
+                            attr='Parse',
+                            ctx=Load()),
+                        args=[
+                            Name(id='xml_input', ctx=Load()),
+                            Constant(value=True)],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='xml_input', ctx=Store())],
+            value=Constant(value='<!ELEMENT name (#PCDATA)><name> Foo </name>')),
+        Expr(
+            value=Call(
+                func=Name(id='parse_xml', ctx=Load()),
+                args=[
+                    Name(id='xml_input', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

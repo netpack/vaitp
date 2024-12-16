@@ -1,0 +1,47 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='zlib')]),
+        Assign(
+            targets=[
+                Name(id='data', ctx=Store())],
+            value=BinOp(
+                left=BinOp(
+                    left=BinOp(
+                        left=Constant(value=b'A'),
+                        op=Mult(),
+                        right=Constant(value=1000000)),
+                    op=Add(),
+                    right=BinOp(
+                        left=Constant(value=b'B'),
+                        op=Mult(),
+                        right=Constant(value=1000000))),
+                op=Add(),
+                right=BinOp(
+                    left=Constant(value=b'C'),
+                    op=Mult(),
+                    right=Constant(value=1000000)))),
+        Assign(
+            targets=[
+                Name(id='compressed', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='zlib', ctx=Load()),
+                    attr='compress',
+                    ctx=Load()),
+                args=[
+                    Name(id='data', ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='decompressed', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='zlib', ctx=Load()),
+                    attr='decompress',
+                    ctx=Load()),
+                args=[
+                    Name(id='compressed', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

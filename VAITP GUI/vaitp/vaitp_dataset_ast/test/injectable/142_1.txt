@@ -1,0 +1,137 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='smtplib')]),
+        ClassDef(
+            name='SafeSMTP',
+            bases=[
+                Attribute(
+                    value=Name(id='smtplib', ctx=Load()),
+                    attr='SMTP',
+                    ctx=Load())],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='starttls',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='keyfile'),
+                            arg(arg='certfile')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[
+                            Constant(value=None),
+                            Constant(value=None)]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='response', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='docmd',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='STARTTLS')],
+                                keywords=[])),
+                        If(
+                            test=Compare(
+                                left=Subscript(
+                                    value=Name(id='response', ctx=Load()),
+                                    slice=Constant(value=0),
+                                    ctx=Load()),
+                                ops=[
+                                    NotEq()],
+                                comparators=[
+                                    Constant(value=220)]),
+                            body=[
+                                Raise(
+                                    exc=Call(
+                                        func=Name(id='RuntimeError', ctx=Load()),
+                                        args=[
+                                            Constant(value='STARTTLS failed, potential man-in-the-middle attack detected.')],
+                                        keywords=[]))],
+                            orelse=[]),
+                        Return(
+                            value=Call(
+                                func=Attribute(
+                                    value=Call(
+                                        func=Name(id='super', ctx=Load()),
+                                        args=[],
+                                        keywords=[]),
+                                    attr='starttls',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='keyfile', ctx=Load()),
+                                    Name(id='certfile', ctx=Load())],
+                                keywords=[]))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Try(
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='smtp', ctx=Store())],
+                            value=Call(
+                                func=Name(id='SafeSMTP', ctx=Load()),
+                                args=[
+                                    Constant(value='smtp.example.com'),
+                                    Constant(value=587)],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='smtp', ctx=Load()),
+                                    attr='ehlo',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='smtp', ctx=Load()),
+                                    attr='starttls',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='smtp', ctx=Load()),
+                                    attr='ehlo',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='TLS established successfully.')],
+                                keywords=[]))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='RuntimeError', ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            Constant(value='Error:'),
+                                            Name(id='e', ctx=Load())],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[])],
+            orelse=[])],
+    type_ignores=[])

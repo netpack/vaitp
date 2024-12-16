@@ -1,0 +1,149 @@
+Module(
+    body=[
+        ImportFrom(
+            module='flask',
+            names=[
+                alias(name='Flask'),
+                alias(name='request')],
+            level=0),
+        Import(
+            names=[
+                alias(name='psycopg2')]),
+        Assign(
+            targets=[
+                Name(id='app', ctx=Store())],
+            value=Call(
+                func=Name(id='Flask', ctx=Load()),
+                args=[
+                    Name(id='__name__', ctx=Load())],
+                keywords=[])),
+        FunctionDef(
+            name='get_db_connection',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='psycopg2', ctx=Load()),
+                            attr='connect',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='dbname=test user=postgres password=secret')],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='read_file',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='filename', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='request', ctx=Load()),
+                                attr='args',
+                                ctx=Load()),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='filename')],
+                        keywords=[])),
+                With(
+                    items=[
+                        withitem(
+                            context_expr=Call(
+                                func=Name(id='get_db_connection', ctx=Load()),
+                                args=[],
+                                keywords=[]),
+                            optional_vars=Name(id='conn', ctx=Store()))],
+                    body=[
+                        With(
+                            items=[
+                                withitem(
+                                    context_expr=Call(
+                                        func=Attribute(
+                                            value=Name(id='conn', ctx=Load()),
+                                            attr='cursor',
+                                            ctx=Load()),
+                                        args=[],
+                                        keywords=[]),
+                                    optional_vars=Name(id='cursor', ctx=Store()))],
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='cursor', ctx=Load()),
+                                            attr='execute',
+                                            ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    Constant(value="SELECT pg_read_file('"),
+                                                    FormattedValue(
+                                                        value=Name(id='filename', ctx=Load()),
+                                                        conversion=-1),
+                                                    Constant(value="');")])],
+                                        keywords=[])),
+                                Assign(
+                                    targets=[
+                                        Name(id='file_content', ctx=Store())],
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='cursor', ctx=Load()),
+                                            attr='fetchone',
+                                            ctx=Load()),
+                                        args=[],
+                                        keywords=[]))])]),
+                Return(
+                    value=Tuple(
+                        elts=[
+                            IfExp(
+                                test=Name(id='file_content', ctx=Load()),
+                                body=Name(id='file_content', ctx=Load()),
+                                orelse=Constant(value='File not found')),
+                            Constant(value=200)],
+                        ctx=Load()))],
+            decorator_list=[
+                Call(
+                    func=Attribute(
+                        value=Name(id='app', ctx=Load()),
+                        attr='route',
+                        ctx=Load()),
+                    args=[
+                        Constant(value='/read_file')],
+                    keywords=[
+                        keyword(
+                            arg='methods',
+                            value=List(
+                                elts=[
+                                    Constant(value='GET')],
+                                ctx=Load()))])]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='app', ctx=Load()),
+                            attr='run',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

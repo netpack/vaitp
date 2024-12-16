@@ -1,0 +1,83 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        Import(
+            names=[
+                alias(name='subprocess')]),
+        FunctionDef(
+            name='safe_subprocess_call',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='command'),
+                    arg(arg='extra_groups')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[
+                    Constant(value=None)]),
+            body=[
+                If(
+                    test=BoolOp(
+                        op=Or(),
+                        values=[
+                            Compare(
+                                left=Name(id='extra_groups', ctx=Load()),
+                                ops=[
+                                    Is()],
+                                comparators=[
+                                    Constant(value=None)]),
+                            Compare(
+                                left=Call(
+                                    func=Name(id='len', ctx=Load()),
+                                    args=[
+                                        Name(id='extra_groups', ctx=Load())],
+                                    keywords=[]),
+                                ops=[
+                                    Gt()],
+                                comparators=[
+                                    Constant(value=0)])]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='os', ctx=Load()),
+                                    attr='setgroups',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value=0),
+                                    List(elts=[], ctx=Load())],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='subprocess', ctx=Load()),
+                                    attr='run',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='command', ctx=Load())],
+                                keywords=[
+                                    keyword(
+                                        arg='extra_groups',
+                                        value=Name(id='extra_groups', ctx=Load()))]))],
+                    orelse=[])],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='safe_subprocess_call', ctx=Load()),
+                args=[
+                    List(
+                        elts=[
+                            Constant(value='ls'),
+                            Constant(value='-l')],
+                        ctx=Load())],
+                keywords=[
+                    keyword(
+                        arg='extra_groups',
+                        value=List(
+                            elts=[
+                                Constant(value=1001),
+                                Constant(value=1002)],
+                            ctx=Load()))]))],
+    type_ignores=[])

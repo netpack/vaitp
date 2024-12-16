@@ -1,0 +1,51 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='urllib3')]),
+        Assign(
+            targets=[
+                Name(id='ssl_context', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='urllib3', ctx=Load()),
+                        attr='ssl_',
+                        ctx=Load()),
+                    attr='create_urllib3_ssl_context',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='pool_manager', ctx=Store()),
+                Attribute(
+                    value=Attribute(
+                        value=Name(id='urllib3', ctx=Load()),
+                        attr='PoolManager',
+                        ctx=Load()),
+                    attr='ssl_context',
+                    ctx=Store())],
+            value=Name(id='ssl_context', ctx=Load())),
+        Assign(
+            targets=[
+                Name(id='response', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='pool_manager', ctx=Load()),
+                    attr='request',
+                    ctx=Load()),
+                args=[
+                    Constant(value='GET'),
+                    Constant(value='https://self-signed-server.com')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Attribute(
+                        value=Name(id='response', ctx=Load()),
+                        attr='status',
+                        ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

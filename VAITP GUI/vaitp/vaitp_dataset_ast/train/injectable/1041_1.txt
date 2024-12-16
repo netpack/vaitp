@@ -1,0 +1,34 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='gradio', asname='gr')]),
+        FunctionDef(
+            name='secure_update_root_in_config',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='new_root')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Global(
+                    names=[
+                        'current_root']),
+                Assign(
+                    targets=[
+                        Name(id='current_root', ctx=Store())],
+                    value=Name(id='new_root', ctx=Load()))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='current_root', ctx=Store())],
+            value=Constant(value='http://localhost:7860')),
+        Expr(
+            value=Call(
+                func=Name(id='secure_update_root_in_config', ctx=Load()),
+                args=[
+                    Constant(value='http://my-secure-server.com')],
+                keywords=[]))],
+    type_ignores=[])

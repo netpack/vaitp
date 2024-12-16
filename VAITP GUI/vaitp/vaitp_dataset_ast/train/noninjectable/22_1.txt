@@ -1,0 +1,28 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='marcador')]),
+        Assign(
+            targets=[
+                Name(id='bookmark', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='marcador', ctx=Load()),
+                    attr='Bookmark',
+                    ctx=Load()),
+                args=[
+                    Constant(value='https://example.com'),
+                    Constant(value='Example Website')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='marcador', ctx=Load()),
+                    attr='save',
+                    ctx=Load()),
+                args=[
+                    Name(id='bookmark', ctx=Load()),
+                    Constant(value='bookmarks.html')],
+                keywords=[]))],
+    type_ignores=[])

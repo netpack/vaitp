@@ -1,0 +1,89 @@
+Module(
+    body=[
+        FunctionDef(
+            name='safe_mpz_as_bytes',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='value')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Compare(
+                        left=Name(id='value', ctx=Load()),
+                        ops=[
+                            Lt()],
+                        comparators=[
+                            Constant(value=0)]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Negative values are not supported.')],
+                                keywords=[]))],
+                    orelse=[
+                        If(
+                            test=Compare(
+                                left=Name(id='value', ctx=Load()),
+                                ops=[
+                                    Eq()],
+                                comparators=[
+                                    Constant(value=0)]),
+                            body=[
+                                Return(
+                                    value=Constant(value=b'\x00'))],
+                            orelse=[
+                                Return(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='value', ctx=Load()),
+                                            attr='to_bytes',
+                                            ctx=Load()),
+                                        args=[
+                                            BinOp(
+                                                left=BinOp(
+                                                    left=Call(
+                                                        func=Attribute(
+                                                            value=Name(id='value', ctx=Load()),
+                                                            attr='bit_length',
+                                                            ctx=Load()),
+                                                        args=[],
+                                                        keywords=[]),
+                                                    op=Add(),
+                                                    right=Constant(value=7)),
+                                                op=FloorDiv(),
+                                                right=Constant(value=8))],
+                                        keywords=[
+                                            keyword(
+                                                arg='byteorder',
+                                                value=Constant(value='big'))]))])])],
+            decorator_list=[]),
+        Try(
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Call(
+                                func=Name(id='safe_mpz_as_bytes', ctx=Load()),
+                                args=[
+                                    Constant(value=0)],
+                                keywords=[])],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ValueError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

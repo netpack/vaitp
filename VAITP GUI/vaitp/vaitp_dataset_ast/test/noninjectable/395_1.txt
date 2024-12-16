@@ -1,0 +1,55 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='yaml')]),
+        FunctionDef(
+            name='load_model_config',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='file_path')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                With(
+                    items=[
+                        withitem(
+                            context_expr=Call(
+                                func=Name(id='open', ctx=Load()),
+                                args=[
+                                    Name(id='file_path', ctx=Load()),
+                                    Constant(value='r')],
+                                keywords=[]),
+                            optional_vars=Name(id='file', ctx=Store()))],
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='config', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='yaml', ctx=Load()),
+                                    attr='load',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='file', ctx=Load())],
+                                keywords=[]))]),
+                Return(
+                    value=Name(id='config', ctx=Load()))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='config', ctx=Store())],
+            value=Call(
+                func=Name(id='load_model_config', ctx=Load()),
+                args=[
+                    Constant(value='model_config.yaml')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='config', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

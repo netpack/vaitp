@@ -1,0 +1,178 @@
+Module(
+    body=[
+        ImportFrom(
+            module='flask',
+            names=[
+                alias(name='Flask'),
+                alias(name='request'),
+                alias(name='jsonify')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='app', ctx=Store())],
+            value=Call(
+                func=Name(id='Flask', ctx=Load()),
+                args=[
+                    Name(id='__name__', ctx=Load())],
+                keywords=[])),
+        FunctionDef(
+            name='get_client_ip',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='x_forwarded_for', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='request', ctx=Load()),
+                                attr='headers',
+                                ctx=Load()),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='X-Forwarded-For')],
+                        keywords=[])),
+                If(
+                    test=Name(id='x_forwarded_for', ctx=Load()),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='ip', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Subscript(
+                                        value=Call(
+                                            func=Attribute(
+                                                value=Name(id='x_forwarded_for', ctx=Load()),
+                                                attr='split',
+                                                ctx=Load()),
+                                            args=[
+                                                Constant(value=',')],
+                                            keywords=[]),
+                                        slice=Constant(value=0),
+                                        ctx=Load()),
+                                    attr='strip',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[]))],
+                    orelse=[
+                        Assign(
+                            targets=[
+                                Name(id='ip', ctx=Store())],
+                            value=Attribute(
+                                value=Name(id='request', ctx=Load()),
+                                attr='remote_addr',
+                                ctx=Load()))]),
+                If(
+                    test=Call(
+                        func=Name(id='validate_ip', ctx=Load()),
+                        args=[
+                            Name(id='ip', ctx=Load())],
+                        keywords=[]),
+                    body=[
+                        Return(
+                            value=Name(id='ip', ctx=Load()))],
+                    orelse=[
+                        Return(
+                            value=Constant(value=None))])],
+            decorator_list=[]),
+        FunctionDef(
+            name='validate_ip',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='ip')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Constant(value=True))],
+            decorator_list=[]),
+        FunctionDef(
+            name='some_endpoint',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='client_ip', ctx=Store())],
+                    value=Call(
+                        func=Name(id='get_client_ip', ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                If(
+                    test=Name(id='client_ip', ctx=Load()),
+                    body=[
+                        Return(
+                            value=Tuple(
+                                elts=[
+                                    Call(
+                                        func=Name(id='jsonify', ctx=Load()),
+                                        args=[
+                                            Dict(
+                                                keys=[
+                                                    Constant(value='client_ip')],
+                                                values=[
+                                                    Name(id='client_ip', ctx=Load())])],
+                                        keywords=[]),
+                                    Constant(value=200)],
+                                ctx=Load()))],
+                    orelse=[
+                        Return(
+                            value=Tuple(
+                                elts=[
+                                    Call(
+                                        func=Name(id='jsonify', ctx=Load()),
+                                        args=[
+                                            Dict(
+                                                keys=[
+                                                    Constant(value='error')],
+                                                values=[
+                                                    Constant(value='Invalid IP address')])],
+                                        keywords=[]),
+                                    Constant(value=400)],
+                                ctx=Load()))])],
+            decorator_list=[
+                Call(
+                    func=Attribute(
+                        value=Name(id='app', ctx=Load()),
+                        attr='route',
+                        ctx=Load()),
+                    args=[
+                        Constant(value='/some_endpoint')],
+                    keywords=[
+                        keyword(
+                            arg='methods',
+                            value=List(
+                                elts=[
+                                    Constant(value='GET')],
+                                ctx=Load()))])]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='app', ctx=Load()),
+                            attr='run',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

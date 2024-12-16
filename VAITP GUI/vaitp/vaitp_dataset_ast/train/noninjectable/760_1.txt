@@ -1,0 +1,115 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='grpc')]),
+        ImportFrom(
+            module='concurrent',
+            names=[
+                alias(name='futures')],
+            level=0),
+        Import(
+            names=[
+                alias(name='time')]),
+        ClassDef(
+            name='MyServiceServicer',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='MyMethod',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='request'),
+                            arg(arg='context')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Return(
+                            value=Constant(value='Response'))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        FunctionDef(
+            name='serve',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='server', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='grpc', ctx=Load()),
+                            attr='server',
+                            ctx=Load()),
+                        args=[
+                            Call(
+                                func=Attribute(
+                                    value=Name(id='futures', ctx=Load()),
+                                    attr='ThreadPoolExecutor',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[
+                                    keyword(
+                                        arg='max_workers',
+                                        value=Constant(value=10))])],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='server', ctx=Load()),
+                            attr='add_insecure_port',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='[::]:50051')],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='server', ctx=Load()),
+                            attr='start',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Server started, listening on port 50051.')],
+                        keywords=[])),
+                While(
+                    test=Constant(value=True),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='time', ctx=Load()),
+                                    attr='sleep',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value=86400)],
+                                keywords=[]))],
+                    orelse=[])],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='serve', ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

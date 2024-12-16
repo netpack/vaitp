@@ -1,0 +1,115 @@
+Module(
+    body=[
+        ImportFrom(
+            module='saml2',
+            names=[
+                alias(name='saml'),
+                alias(name='sigver')],
+            level=0),
+        ImportFrom(
+            module='saml2.config',
+            names=[
+                alias(name='Config')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='config', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Call(
+                        func=Name(id='Config', ctx=Load()),
+                        args=[],
+                        keywords=[]),
+                    attr='load',
+                    ctx=Load()),
+                args=[
+                    Constant(value='path/to/your/saml_config.conf')],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='entity', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='saml', ctx=Load()),
+                    attr='SAML2Entity',
+                    ctx=Load()),
+                args=[
+                    Name(id='config', ctx=Load())],
+                keywords=[])),
+        FunctionDef(
+            name='validate_saml_response',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='saml_response')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='response', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='entity', ctx=Load()),
+                            attr='parse_response',
+                            ctx=Load()),
+                        args=[
+                            Name(id='saml_response', ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='binding',
+                                value=Constant(value='urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST'))])),
+                Try(
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='sigver', ctx=Load()),
+                                    attr='verify_signature',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='response', ctx=Load())],
+                                keywords=[]))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Attribute(
+                                value=Name(id='sigver', ctx=Load()),
+                                attr='SignatureError',
+                                ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            Constant(value='Signature verification failed:'),
+                                            Name(id='e', ctx=Load())],
+                                        keywords=[])),
+                                Return(
+                                    value=Constant(value=False))])],
+                    orelse=[],
+                    finalbody=[]),
+                Return(
+                    value=Constant(value=True))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='saml_response', ctx=Store())],
+            value=Constant(value='<Your SAML Response Here>')),
+        Assign(
+            targets=[
+                Name(id='is_valid', ctx=Store())],
+            value=Call(
+                func=Name(id='validate_saml_response', ctx=Load()),
+                args=[
+                    Name(id='saml_response', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Constant(value='Is the SAML response valid?'),
+                    Name(id='is_valid', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

@@ -1,0 +1,88 @@
+Module(
+    body=[
+        FunctionDef(
+            name='increment_metric',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='metric_name')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            JoinedStr(
+                                values=[
+                                    Constant(value='Incrementing metric: '),
+                                    FormattedValue(
+                                        value=Name(id='metric_name', ctx=Load()),
+                                        conversion=-1)])],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='handle_request',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='request')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='metric_name', ctx=Store())],
+                    value=Attribute(
+                        value=Name(id='request', ctx=Load()),
+                        attr='method',
+                        ctx=Load())),
+                Expr(
+                    value=Call(
+                        func=Name(id='increment_metric', ctx=Load()),
+                        args=[
+                            Name(id='metric_name', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        ClassDef(
+            name='Request',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='method')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='method',
+                                    ctx=Store())],
+                            value=Name(id='method', ctx=Load()))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='request', ctx=Store())],
+            value=Call(
+                func=Name(id='Request', ctx=Load()),
+                args=[
+                    Constant(value='GET')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='handle_request', ctx=Load()),
+                args=[
+                    Name(id='request', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

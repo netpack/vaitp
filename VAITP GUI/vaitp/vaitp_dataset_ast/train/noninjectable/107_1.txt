@@ -1,0 +1,49 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='copy')]),
+        ClassDef(
+            name='Evil',
+            bases=[
+                Name(id='object', ctx=Load())],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__reduce__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Return(
+                            value=Tuple(
+                                elts=[
+                                    Name(id='eval', ctx=Load()),
+                                    Tuple(
+                                        elts=[
+                                            Constant(value="print('Hello, world!')")],
+                                        ctx=Load())],
+                                ctx=Load()))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='evil', ctx=Store())],
+            value=Call(
+                func=Name(id='Evil', ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='copy', ctx=Load()),
+                    attr='copy',
+                    ctx=Load()),
+                args=[
+                    Name(id='evil', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

@@ -1,0 +1,338 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='hashlib')]),
+        Import(
+            names=[
+                alias(name='requests')]),
+        ClassDef(
+            name='Version',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='url'),
+                            arg(arg='expected_sha256')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[
+                            Constant(value=None)]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='url',
+                                    ctx=Store())],
+                            value=Name(id='url', ctx=Load())),
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='expected_sha256',
+                                    ctx=Store())],
+                            value=Name(id='expected_sha256', ctx=Load()))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='fetch_binary',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Expr(
+                            value=Constant(value='Fetches a binary from the given URL, verifying the SHA256 hash.')),
+                        Assign(
+                            targets=[
+                                Name(id='response', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='requests', ctx=Load()),
+                                    attr='get',
+                                    ctx=Load()),
+                                args=[
+                                    Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='url',
+                                        ctx=Load())],
+                                keywords=[
+                                    keyword(
+                                        arg='stream',
+                                        value=Constant(value=True))])),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='response', ctx=Load()),
+                                    attr='raise_for_status',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[])),
+                        Assign(
+                            targets=[
+                                Name(id='hasher', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='hashlib', ctx=Load()),
+                                    attr='sha256',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[])),
+                        For(
+                            target=Name(id='chunk', ctx=Store()),
+                            iter=Call(
+                                func=Attribute(
+                                    value=Name(id='response', ctx=Load()),
+                                    attr='iter_content',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[
+                                    keyword(
+                                        arg='chunk_size',
+                                        value=Constant(value=4096))]),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='hasher', ctx=Load()),
+                                            attr='update',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='chunk', ctx=Load())],
+                                        keywords=[]))],
+                            orelse=[]),
+                        Assign(
+                            targets=[
+                                Name(id='actual_sha256', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='hasher', ctx=Load()),
+                                    attr='hexdigest',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[])),
+                        If(
+                            test=Attribute(
+                                value=Name(id='self', ctx=Load()),
+                                attr='expected_sha256',
+                                ctx=Load()),
+                            body=[
+                                If(
+                                    test=Compare(
+                                        left=Name(id='actual_sha256', ctx=Load()),
+                                        ops=[
+                                            NotEq()],
+                                        comparators=[
+                                            Attribute(
+                                                value=Name(id='self', ctx=Load()),
+                                                attr='expected_sha256',
+                                                ctx=Load())]),
+                                    body=[
+                                        Raise(
+                                            exc=Call(
+                                                func=Name(id='ValueError', ctx=Load()),
+                                                args=[
+                                                    JoinedStr(
+                                                        values=[
+                                                            Constant(value='SHA256 mismatch: Expected '),
+                                                            FormattedValue(
+                                                                value=Attribute(
+                                                                    value=Name(id='self', ctx=Load()),
+                                                                    attr='expected_sha256',
+                                                                    ctx=Load()),
+                                                                conversion=-1),
+                                                            Constant(value=', got '),
+                                                            FormattedValue(
+                                                                value=Name(id='actual_sha256', ctx=Load()),
+                                                                conversion=-1)])],
+                                                keywords=[]))],
+                                    orelse=[])],
+                            orelse=[]),
+                        Return(
+                            value=Attribute(
+                                value=Name(id='response', ctx=Load()),
+                                attr='content',
+                                ctx=Load()))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        ClassDef(
+            name='Package',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='binary_url'),
+                            arg(arg='binary_sha256')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='binary_version',
+                                    ctx=Store())],
+                            value=Call(
+                                func=Name(id='Version', ctx=Load()),
+                                args=[
+                                    Name(id='binary_url', ctx=Load()),
+                                    Name(id='binary_sha256', ctx=Load())],
+                                keywords=[]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='install',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='binary_data', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='binary_version',
+                                        ctx=Load()),
+                                    attr='fetch_binary',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Binary installed')],
+                                keywords=[]))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        FunctionDef(
+            name='_fetch_archives',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='package_list')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Constant(value='Fetches archives from a list of packages.')),
+                For(
+                    target=Name(id='package', ctx=Store()),
+                    iter=Name(id='package_list', ctx=Load()),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='package', ctx=Load()),
+                                    attr='install',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[]))],
+                    orelse=[])],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='valid_package', ctx=Store())],
+                    value=Call(
+                        func=Name(id='Package', ctx=Load()),
+                        args=[
+                            Constant(value='https://example.com/my_package.bin'),
+                            Constant(value='e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855')],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='package_no_hash', ctx=Store())],
+                    value=Call(
+                        func=Name(id='Package', ctx=Load()),
+                        args=[
+                            Constant(value='https://example.com/malicious_package.bin'),
+                            Constant(value=None)],
+                        keywords=[])),
+                Try(
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='_fetch_archives', ctx=Load()),
+                                args=[
+                                    List(
+                                        elts=[
+                                            Name(id='valid_package', ctx=Load())],
+                                        ctx=Load())],
+                                keywords=[]))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='ValueError', ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    Constant(value='Error installing package 1: '),
+                                                    FormattedValue(
+                                                        value=Name(id='e', ctx=Load()),
+                                                        conversion=-1)])],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[]),
+                Try(
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='_fetch_archives', ctx=Load()),
+                                args=[
+                                    List(
+                                        elts=[
+                                            Name(id='package_no_hash', ctx=Load())],
+                                        ctx=Load())],
+                                keywords=[]))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='ValueError', ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    Constant(value='Error installing package 2: '),
+                                                    FormattedValue(
+                                                        value=Name(id='e', ctx=Load()),
+                                                        conversion=-1)])],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[])],
+            orelse=[])],
+    type_ignores=[])

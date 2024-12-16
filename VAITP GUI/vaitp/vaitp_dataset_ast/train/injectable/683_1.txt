@@ -1,0 +1,134 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='kerberos')]),
+        FunctionDef(
+            name='check_password',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='service'),
+                    arg(arg='user'),
+                    arg(arg='password')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Try(
+                    body=[
+                        Assign(
+                            targets=[
+                                Tuple(
+                                    elts=[
+                                        Name(id='result', ctx=Store()),
+                                        Name(id='context', ctx=Store())],
+                                    ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='kerberos', ctx=Load()),
+                                    attr='authGSSClientInit',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='service', ctx=Load())],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='kerberos', ctx=Load()),
+                                    attr='authGSSClientStep',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='context', ctx=Load()),
+                                    Constant(value='')],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='kerberos', ctx=Load()),
+                                    attr='authGSSClientUserName',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='context', ctx=Load()),
+                                    Name(id='user', ctx=Load())],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='kerberos', ctx=Load()),
+                                    attr='authGSSClientPassword',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='context', ctx=Load()),
+                                    Name(id='password', ctx=Load())],
+                                keywords=[])),
+                        If(
+                            test=Compare(
+                                left=Call(
+                                    func=Attribute(
+                                        value=Name(id='kerberos', ctx=Load()),
+                                        attr='authGSSClientStep',
+                                        ctx=Load()),
+                                    args=[
+                                        Name(id='context', ctx=Load()),
+                                        Constant(value='')],
+                                    keywords=[]),
+                                ops=[
+                                    NotEq()],
+                                comparators=[
+                                    Attribute(
+                                        value=Name(id='kerberos', ctx=Load()),
+                                        attr='AUTH_GSS_COMPLETE',
+                                        ctx=Load())]),
+                            body=[
+                                Raise(
+                                    exc=Call(
+                                        func=Name(id='Exception', ctx=Load()),
+                                        args=[
+                                            Constant(value='KDC authentication failed or response invalid.')],
+                                        keywords=[]))],
+                            orelse=[]),
+                        Return(
+                            value=Constant(value=True))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Attribute(
+                                value=Name(id='kerberos', ctx=Load()),
+                                attr='GSSError',
+                                ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    Constant(value='Kerberos authentication error: '),
+                                                    FormattedValue(
+                                                        value=Name(id='e', ctx=Load()),
+                                                        conversion=-1)])],
+                                        keywords=[])),
+                                Return(
+                                    value=Constant(value=False))]),
+                        ExceptHandler(
+                            type=Name(id='Exception', ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    Constant(value='Error: '),
+                                                    FormattedValue(
+                                                        value=Name(id='e', ctx=Load()),
+                                                        conversion=-1)])],
+                                        keywords=[])),
+                                Return(
+                                    value=Constant(value=False))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[])],
+    type_ignores=[])

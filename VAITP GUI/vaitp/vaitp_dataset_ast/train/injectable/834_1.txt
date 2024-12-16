@@ -1,0 +1,109 @@
+Module(
+    body=[
+        ImportFrom(
+            module='flask',
+            names=[
+                alias(name='Flask'),
+                alias(name='request'),
+                alias(name='render_template_string')],
+            level=0),
+        Import(
+            names=[
+                alias(name='html')]),
+        Assign(
+            targets=[
+                Name(id='app', ctx=Store())],
+            value=Call(
+                func=Name(id='Flask', ctx=Load()),
+                args=[
+                    Name(id='__name__', ctx=Load())],
+                keywords=[])),
+        FunctionDef(
+            name='reset_password',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Compare(
+                        left=Attribute(
+                            value=Name(id='request', ctx=Load()),
+                            attr='method',
+                            ctx=Load()),
+                        ops=[
+                            Eq()],
+                        comparators=[
+                            Constant(value='POST')]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='user_input', ctx=Store())],
+                            value=Subscript(
+                                value=Attribute(
+                                    value=Name(id='request', ctx=Load()),
+                                    attr='form',
+                                    ctx=Load()),
+                                slice=Constant(value='user_input'),
+                                ctx=Load())),
+                        Assign(
+                            targets=[
+                                Name(id='sanitized_input', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='html', ctx=Load()),
+                                    attr='escape',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='user_input', ctx=Load())],
+                                keywords=[])),
+                        Return(
+                            value=JoinedStr(
+                                values=[
+                                    Constant(value='Password reset link has been sent to '),
+                                    FormattedValue(
+                                        value=Name(id='sanitized_input', ctx=Load()),
+                                        conversion=-1)]))],
+                    orelse=[]),
+                Return(
+                    value=Call(
+                        func=Name(id='render_template_string', ctx=Load()),
+                        args=[
+                            Constant(value='\n        <form method="post">\n            <label for="user_input">Enter your email:</label>\n            <input type="text" id="user_input" name="user_input">\n            <input type="submit" value="Reset Password">\n        </form>\n    ')],
+                        keywords=[]))],
+            decorator_list=[
+                Call(
+                    func=Attribute(
+                        value=Name(id='app', ctx=Load()),
+                        attr='route',
+                        ctx=Load()),
+                    args=[
+                        Constant(value='/reset_password')],
+                    keywords=[
+                        keyword(
+                            arg='methods',
+                            value=List(
+                                elts=[
+                                    Constant(value='GET'),
+                                    Constant(value='POST')],
+                                ctx=Load()))])]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='app', ctx=Load()),
+                            attr='run',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

@@ -1,0 +1,31 @@
+Module(
+    body=[
+        FunctionDef(
+            name='vulnerable_function',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(
+                        arg='target',
+                        annotation=Name(id='address', ctx=Load()))],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='raw_call', ctx=Load()),
+                        args=[
+                            Name(id='target', ctx=Load()),
+                            Constant(value=b'')],
+                        keywords=[
+                            keyword(
+                                arg='value',
+                                value=Attribute(
+                                    value=Name(id='msg', ctx=Load()),
+                                    attr='value',
+                                    ctx=Load()))]))],
+            decorator_list=[
+                Name(id='public', ctx=Load()),
+                Name(id='payable', ctx=Load())])],
+    type_ignores=[])

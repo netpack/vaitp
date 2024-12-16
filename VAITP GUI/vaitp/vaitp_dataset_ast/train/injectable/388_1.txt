@@ -1,0 +1,156 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        Import(
+            names=[
+                alias(name='tempfile')]),
+        FunctionDef(
+            name='safe_move_faqwiz',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='source'),
+                    arg(arg='destination')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                With(
+                    items=[
+                        withitem(
+                            context_expr=Call(
+                                func=Attribute(
+                                    value=Name(id='tempfile', ctx=Load()),
+                                    attr='NamedTemporaryFile',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[
+                                    keyword(
+                                        arg='delete',
+                                        value=Constant(value=False))]),
+                            optional_vars=Name(id='temp_file', ctx=Store()))],
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='temp_file_path', ctx=Store())],
+                            value=Attribute(
+                                value=Name(id='temp_file', ctx=Load()),
+                                attr='name',
+                                ctx=Load()))]),
+                Try(
+                    body=[
+                        With(
+                            items=[
+                                withitem(
+                                    context_expr=Call(
+                                        func=Name(id='open', ctx=Load()),
+                                        args=[
+                                            Name(id='source', ctx=Load()),
+                                            Constant(value='rb')],
+                                        keywords=[]),
+                                    optional_vars=Name(id='src_file', ctx=Store()))],
+                            body=[
+                                Assign(
+                                    targets=[
+                                        Name(id='data', ctx=Store())],
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='src_file', ctx=Load()),
+                                            attr='read',
+                                            ctx=Load()),
+                                        args=[],
+                                        keywords=[])),
+                                Expr(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='temp_file', ctx=Load()),
+                                            attr='write',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='data', ctx=Load())],
+                                        keywords=[]))]),
+                        If(
+                            test=BoolOp(
+                                op=And(),
+                                values=[
+                                    Call(
+                                        func=Attribute(
+                                            value=Attribute(
+                                                value=Name(id='os', ctx=Load()),
+                                                attr='path',
+                                                ctx=Load()),
+                                            attr='dirname',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='destination', ctx=Load())],
+                                        keywords=[]),
+                                    Call(
+                                        func=Attribute(
+                                            value=Name(id='os', ctx=Load()),
+                                            attr='access',
+                                            ctx=Load()),
+                                        args=[
+                                            Call(
+                                                func=Attribute(
+                                                    value=Attribute(
+                                                        value=Name(id='os', ctx=Load()),
+                                                        attr='path',
+                                                        ctx=Load()),
+                                                    attr='dirname',
+                                                    ctx=Load()),
+                                                args=[
+                                                    Name(id='destination', ctx=Load())],
+                                                keywords=[]),
+                                            Attribute(
+                                                value=Name(id='os', ctx=Load()),
+                                                attr='W_OK',
+                                                ctx=Load())],
+                                        keywords=[])]),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='os', ctx=Load()),
+                                            attr='rename',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='temp_file_path', ctx=Load()),
+                                            Name(id='destination', ctx=Load())],
+                                        keywords=[]))],
+                            orelse=[
+                                Raise(
+                                    exc=Call(
+                                        func=Name(id='PermissionError', ctx=Load()),
+                                        args=[
+                                            Constant(value='Destination directory is not writable or secure.')],
+                                        keywords=[]))])],
+                    handlers=[],
+                    orelse=[],
+                    finalbody=[
+                        If(
+                            test=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='os', ctx=Load()),
+                                        attr='path',
+                                        ctx=Load()),
+                                    attr='exists',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='temp_file_path', ctx=Load())],
+                                keywords=[]),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='os', ctx=Load()),
+                                            attr='remove',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='temp_file_path', ctx=Load())],
+                                        keywords=[]))],
+                            orelse=[])])],
+            decorator_list=[])],
+    type_ignores=[])

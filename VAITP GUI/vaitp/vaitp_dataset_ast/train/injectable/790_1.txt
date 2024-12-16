@@ -1,0 +1,94 @@
+Module(
+    body=[
+        FunctionDef(
+            name='authenticateAdSso',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='user_token')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=UnaryOp(
+                        op=Not(),
+                        operand=Call(
+                            func=Name(id='is_authenticated', ctx=Load()),
+                            args=[
+                                Name(id='user_token', ctx=Load())],
+                            keywords=[])),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='PermissionError', ctx=Load()),
+                                args=[
+                                    Constant(value='Authentication required to execute this method.')],
+                                keywords=[]))],
+                    orelse=[]),
+                Expr(
+                    value=Call(
+                        func=Name(id='execute_user_code', ctx=Load()),
+                        args=[
+                            Name(id='user_token', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='is_authenticated',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='user_token')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Compare(
+                        left=Name(id='user_token', ctx=Load()),
+                        ops=[
+                            In()],
+                        comparators=[
+                            Name(id='valid_tokens', ctx=Load())]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='execute_user_code',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='user_token')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Pass()],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='valid_tokens', ctx=Store())],
+            value=Set(
+                elts=[
+                    Constant(value='valid_token_1'),
+                    Constant(value='valid_token_2')])),
+        Try(
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='authenticateAdSso', ctx=Load()),
+                        args=[
+                            Constant(value='invalid_token')],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='PermissionError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

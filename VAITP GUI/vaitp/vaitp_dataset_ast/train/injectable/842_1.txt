@@ -1,0 +1,124 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='zipfile')]),
+        Import(
+            names=[
+                alias(name='os')]),
+        FunctionDef(
+            name='safe_extract',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='zip_file_path'),
+                    arg(arg='extract_to')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[
+                    Constant(value='.')]),
+            body=[
+                With(
+                    items=[
+                        withitem(
+                            context_expr=Call(
+                                func=Attribute(
+                                    value=Name(id='zipfile', ctx=Load()),
+                                    attr='ZipFile',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='zip_file_path', ctx=Load())],
+                                keywords=[]),
+                            optional_vars=Name(id='zf', ctx=Store()))],
+                    body=[
+                        For(
+                            target=Name(id='member', ctx=Store()),
+                            iter=Call(
+                                func=Attribute(
+                                    value=Name(id='zf', ctx=Load()),
+                                    attr='namelist',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[]),
+                            body=[
+                                If(
+                                    test=BoolOp(
+                                        op=Or(),
+                                        values=[
+                                            Call(
+                                                func=Attribute(
+                                                    value=Attribute(
+                                                        value=Name(id='os', ctx=Load()),
+                                                        attr='path',
+                                                        ctx=Load()),
+                                                    attr='isabs',
+                                                    ctx=Load()),
+                                                args=[
+                                                    Name(id='member', ctx=Load())],
+                                                keywords=[]),
+                                            Compare(
+                                                left=Constant(value='..'),
+                                                ops=[
+                                                    In()],
+                                                comparators=[
+                                                    Call(
+                                                        func=Attribute(
+                                                            value=Name(id='member', ctx=Load()),
+                                                            attr='split',
+                                                            ctx=Load()),
+                                                        args=[
+                                                            Attribute(
+                                                                value=Attribute(
+                                                                    value=Name(id='os', ctx=Load()),
+                                                                    attr='path',
+                                                                    ctx=Load()),
+                                                                attr='sep',
+                                                                ctx=Load())],
+                                                        keywords=[])])]),
+                                    body=[
+                                        Raise(
+                                            exc=Call(
+                                                func=Name(id='Exception', ctx=Load()),
+                                                args=[
+                                                    Constant(value='Attempted Path Traversal in ZIP file')],
+                                                keywords=[]))],
+                                    orelse=[])],
+                            orelse=[]),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='zf', ctx=Load()),
+                                    attr='extractall',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='extract_to', ctx=Load())],
+                                keywords=[]))])],
+            decorator_list=[]),
+        Try(
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='safe_extract', ctx=Load()),
+                        args=[
+                            Constant(value='malicious.zip'),
+                            Constant(value='extracted_files')],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='Exception', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            Constant(value='Error: '),
+                                            FormattedValue(
+                                                value=Name(id='e', ctx=Load()),
+                                                conversion=-1)])],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

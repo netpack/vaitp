@@ -1,0 +1,59 @@
+Module(
+    body=[
+        ImportFrom(
+            module='pwntools',
+            names=[
+                alias(name='shellcraft')],
+            level=0),
+        FunctionDef(
+            name='generate_shellcode',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='user_input')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='shellcode_template', ctx=Store())],
+                    value=JoinedStr(
+                        values=[
+                            Constant(value='\n    '),
+                            FormattedValue(
+                                value=Call(
+                                    func=Attribute(
+                                        value=Name(id='shellcraft', ctx=Load()),
+                                        attr='sh',
+                                        ctx=Load()),
+                                    args=[],
+                                    keywords=[]),
+                                conversion=-1),
+                            Constant(value='\n    '),
+                            FormattedValue(
+                                value=Name(id='user_input', ctx=Load()),
+                                conversion=-1),
+                            Constant(value='\n    ')])),
+                Return(
+                    value=Name(id='shellcode_template', ctx=Load()))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='user_input', ctx=Store())],
+            value=Constant(value="{{ config }}; echo 'Injected Command'")),
+        Assign(
+            targets=[
+                Name(id='output', ctx=Store())],
+            value=Call(
+                func=Name(id='generate_shellcode', ctx=Load()),
+                args=[
+                    Name(id='user_input', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='output', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

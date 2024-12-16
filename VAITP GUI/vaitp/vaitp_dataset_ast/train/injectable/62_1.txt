@@ -1,0 +1,163 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='http.server')]),
+        Import(
+            names=[
+                alias(name='socketserver')]),
+        Import(
+            names=[
+                alias(name='cgi')]),
+        ClassDef(
+            name='MyHandler',
+            bases=[
+                Attribute(
+                    value=Attribute(
+                        value=Name(id='http', ctx=Load()),
+                        attr='server',
+                        ctx=Load()),
+                    attr='BaseHTTPRequestHandler',
+                    ctx=Load())],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='do_GET',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='send_response',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value=200)],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='send_header',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='Content-type'),
+                                    Constant(value='text/html')],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='end_headers',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='wfile',
+                                        ctx=Load()),
+                                    attr='write',
+                                    ctx=Load()),
+                                args=[
+                                    Call(
+                                        func=Name(id='bytes', ctx=Load()),
+                                        args=[
+                                            Constant(value='<html><head><title>Hello, world!</title></head><body>'),
+                                            Constant(value='utf-8')],
+                                        keywords=[])],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='wfile',
+                                        ctx=Load()),
+                                    attr='write',
+                                    ctx=Load()),
+                                args=[
+                                    Call(
+                                        func=Name(id='bytes', ctx=Load()),
+                                        args=[
+                                            Call(
+                                                func=Attribute(
+                                                    value=Name(id='cgi', ctx=Load()),
+                                                    attr='escape',
+                                                    ctx=Load()),
+                                                args=[
+                                                    Subscript(
+                                                        value=Attribute(
+                                                            value=Name(id='self', ctx=Load()),
+                                                            attr='headers',
+                                                            ctx=Load()),
+                                                        slice=Constant(value='Method'),
+                                                        ctx=Load())],
+                                                keywords=[]),
+                                            Constant(value='utf-8')],
+                                        keywords=[])],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='wfile',
+                                        ctx=Load()),
+                                    attr='write',
+                                    ctx=Load()),
+                                args=[
+                                    Call(
+                                        func=Name(id='bytes', ctx=Load()),
+                                        args=[
+                                            Constant(value='</body></html>'),
+                                            Constant(value='utf-8')],
+                                        keywords=[])],
+                                keywords=[]))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        With(
+            items=[
+                withitem(
+                    context_expr=Call(
+                        func=Attribute(
+                            value=Name(id='socketserver', ctx=Load()),
+                            attr='TCPServer',
+                            ctx=Load()),
+                        args=[
+                            Tuple(
+                                elts=[
+                                    Constant(value='localhost'),
+                                    Constant(value=8000)],
+                                ctx=Load()),
+                            Name(id='MyHandler', ctx=Load())],
+                        keywords=[]),
+                    optional_vars=Name(id='httpd', ctx=Store()))],
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='serving at port'),
+                            Attribute(
+                                value=Name(id='httpd', ctx=Load()),
+                                attr='server_port',
+                                ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='httpd', ctx=Load()),
+                            attr='serve_forever',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]))])],
+    type_ignores=[])

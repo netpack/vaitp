@@ -1,0 +1,14 @@
+```python
+# Example payload to exploit the double eval vulnerability
+
+# A function that has a side effect
+def side_effect_function():
+    global state_variable
+    state_variable += 1  # Modify a global variable
+
+# Arguments list that includes a call to the side effect function
+args_with_side_effects = [side_effect_function(), another_value]
+
+# Call the vulnerable function with raw_args set to True
+create_from_blueprint(True, args_with_side_effects)
+```

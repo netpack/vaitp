@@ -1,0 +1,151 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='configparser')]),
+        Import(
+            names=[
+                alias(name='os')]),
+        FunctionDef(
+            name='load_plugin_config',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='file_path')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=BoolOp(
+                        op=Or(),
+                        values=[
+                            UnaryOp(
+                                op=Not(),
+                                operand=Call(
+                                    func=Attribute(
+                                        value=Attribute(
+                                            value=Name(id='os', ctx=Load()),
+                                            attr='path',
+                                            ctx=Load()),
+                                        attr='isfile',
+                                        ctx=Load()),
+                                    args=[
+                                        Name(id='file_path', ctx=Load())],
+                                    keywords=[])),
+                            UnaryOp(
+                                op=Not(),
+                                operand=Call(
+                                    func=Attribute(
+                                        value=Name(id='file_path', ctx=Load()),
+                                        attr='endswith',
+                                        ctx=Load()),
+                                    args=[
+                                        Constant(value='.cfg')],
+                                    keywords=[]))]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Invalid configuration file.')],
+                                keywords=[]))],
+                    orelse=[]),
+                Assign(
+                    targets=[
+                        Name(id='config', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='configparser', ctx=Load()),
+                            attr='ConfigParser',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='config', ctx=Load()),
+                            attr='read',
+                            ctx=Load()),
+                        args=[
+                            Name(id='file_path', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='allowed_keys', ctx=Store())],
+                    value=Set(
+                        elts=[
+                            Constant(value='plugin_name'),
+                            Constant(value='plugin_version'),
+                            Constant(value='plugin_settings')])),
+                For(
+                    target=Name(id='section', ctx=Store()),
+                    iter=Call(
+                        func=Attribute(
+                            value=Name(id='config', ctx=Load()),
+                            attr='sections',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]),
+                    body=[
+                        For(
+                            target=Name(id='key', ctx=Store()),
+                            iter=Subscript(
+                                value=Name(id='config', ctx=Load()),
+                                slice=Name(id='section', ctx=Load()),
+                                ctx=Load()),
+                            body=[
+                                If(
+                                    test=Compare(
+                                        left=Name(id='key', ctx=Load()),
+                                        ops=[
+                                            NotIn()],
+                                        comparators=[
+                                            Name(id='allowed_keys', ctx=Load())]),
+                                    body=[
+                                        Raise(
+                                            exc=Call(
+                                                func=Name(id='ValueError', ctx=Load()),
+                                                args=[
+                                                    JoinedStr(
+                                                        values=[
+                                                            Constant(value='Unexpected configuration key: '),
+                                                            FormattedValue(
+                                                                value=Name(id='key', ctx=Load()),
+                                                                conversion=-1)])],
+                                                keywords=[]))],
+                                    orelse=[])],
+                            orelse=[])],
+                    orelse=[]),
+                Return(
+                    value=Name(id='config', ctx=Load()))],
+            decorator_list=[]),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='plugin_config', ctx=Store())],
+                    value=Call(
+                        func=Name(id='load_plugin_config', ctx=Load()),
+                        args=[
+                            Constant(value='path/to/plugin.cfg')],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='Exception', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            Constant(value='Error loading plugin config: '),
+                                            FormattedValue(
+                                                value=Name(id='e', ctx=Load()),
+                                                conversion=-1)])],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

@@ -1,0 +1,71 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='urllib2')]),
+        Assign(
+            targets=[
+                Name(id='url', ctx=Store())],
+            value=Constant(value='https://example.com')),
+        Assign(
+            targets=[
+                Name(id='request', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='urllib2', ctx=Load()),
+                    attr='Request',
+                    ctx=Load()),
+                args=[
+                    Name(id='url', ctx=Load())],
+                keywords=[])),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='response', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='urllib2', ctx=Load()),
+                            attr='urlopen',
+                            ctx=Load()),
+                        args=[
+                            Name(id='request', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='content', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='response', ctx=Load()),
+                            attr='read',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Name(id='content', ctx=Load())],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Attribute(
+                        value=Name(id='urllib2', ctx=Load()),
+                        attr='URLError',
+                        ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            Constant(value='Failed to open URL: '),
+                                            FormattedValue(
+                                                value=Name(id='e', ctx=Load()),
+                                                conversion=-1)])],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

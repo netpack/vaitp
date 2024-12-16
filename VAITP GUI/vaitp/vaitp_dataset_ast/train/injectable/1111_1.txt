@@ -1,0 +1,51 @@
+Module(
+    body=[
+        ImportFrom(
+            module='nonebot',
+            names=[
+                alias(name='MessageTemplate')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='user_input', ctx=Store())],
+            value=Constant(value="User 's secret: ${SECRET_ENV_VAR}")),
+        Assign(
+            targets=[
+                Name(id='safe_input', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='user_input', ctx=Load()),
+                    attr='replace',
+                    ctx=Load()),
+                args=[
+                    Constant(value='_'),
+                    Constant(value='')],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='template', ctx=Store())],
+            value=Call(
+                func=Name(id='MessageTemplate', ctx=Load()),
+                args=[
+                    Constant(value='Here is your message: {message}')],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='message', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='template', ctx=Load()),
+                    attr='render',
+                    ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='message',
+                        value=Name(id='safe_input', ctx=Load()))])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='message', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

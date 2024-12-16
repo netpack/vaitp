@@ -1,0 +1,107 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='re')]),
+        FunctionDef(
+            name='parse_requirements',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='requirements_content')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='safe_requirements', ctx=Store())],
+                    value=List(elts=[], ctx=Load())),
+                For(
+                    target=Name(id='line', ctx=Store()),
+                    iter=Call(
+                        func=Attribute(
+                            value=Name(id='requirements_content', ctx=Load()),
+                            attr='splitlines',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]),
+                    body=[
+                        If(
+                            test=Call(
+                                func=Attribute(
+                                    value=Name(id='line', ctx=Load()),
+                                    attr='startswith',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='#')],
+                                keywords=[]),
+                            body=[
+                                Continue()],
+                            orelse=[]),
+                        If(
+                            test=Call(
+                                func=Attribute(
+                                    value=Name(id='re', ctx=Load()),
+                                    attr='search',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='--index-url'),
+                                    Name(id='line', ctx=Load())],
+                                keywords=[]),
+                            body=[
+                                Raise(
+                                    exc=Call(
+                                        func=Name(id='ValueError', ctx=Load()),
+                                        args=[
+                                            Constant(value='Malicious index-url detected in requirements.')],
+                                        keywords=[]))],
+                            orelse=[]),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='safe_requirements', ctx=Load()),
+                                    attr='append',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='line', ctx=Load())],
+                                keywords=[]))],
+                    orelse=[]),
+                Return(
+                    value=Name(id='safe_requirements', ctx=Load()))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='requirements_txt', ctx=Store())],
+            value=Constant(value='\n# This is a comment\nrequests==2.25.1\n# --index-url=https://malicious.com/simple\nflask==1.1.2\n')),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='safe_reqs', ctx=Store())],
+                    value=Call(
+                        func=Name(id='parse_requirements', ctx=Load()),
+                        args=[
+                            Name(id='requirements_txt', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Safe requirements:'),
+                            Name(id='safe_reqs', ctx=Load())],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ValueError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

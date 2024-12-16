@@ -1,0 +1,101 @@
+Module(
+    body=[
+        ImportFrom(
+            module='urllib.parse',
+            names=[
+                alias(name='urlparse'),
+                alias(name='urljoin')],
+            level=0),
+        FunctionDef(
+            name='safe_redirect',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='base_url'),
+                    arg(arg='redirect_url')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='parsed_base', ctx=Store())],
+                    value=Call(
+                        func=Name(id='urlparse', ctx=Load()),
+                        args=[
+                            Name(id='base_url', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='parsed_redirect', ctx=Store())],
+                    value=Call(
+                        func=Name(id='urlparse', ctx=Load()),
+                        args=[
+                            Name(id='redirect_url', ctx=Load())],
+                        keywords=[])),
+                If(
+                    test=BoolOp(
+                        op=And(),
+                        values=[
+                            Compare(
+                                left=Attribute(
+                                    value=Name(id='parsed_redirect', ctx=Load()),
+                                    attr='scheme',
+                                    ctx=Load()),
+                                ops=[
+                                    In()],
+                                comparators=[
+                                    List(
+                                        elts=[
+                                            Constant(value='http'),
+                                            Constant(value='https')],
+                                        ctx=Load())]),
+                            Compare(
+                                left=Attribute(
+                                    value=Name(id='parsed_redirect', ctx=Load()),
+                                    attr='netloc',
+                                    ctx=Load()),
+                                ops=[
+                                    Eq()],
+                                comparators=[
+                                    Attribute(
+                                        value=Name(id='parsed_base', ctx=Load()),
+                                        attr='netloc',
+                                        ctx=Load())])]),
+                    body=[
+                        Return(
+                            value=Name(id='redirect_url', ctx=Load()))],
+                    orelse=[
+                        Return(
+                            value=Call(
+                                func=Name(id='urljoin', ctx=Load()),
+                                args=[
+                                    Name(id='base_url', ctx=Load()),
+                                    Constant(value='/safe-default-page')],
+                                keywords=[]))])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='base_url', ctx=Store())],
+            value=Constant(value='https://example.com')),
+        Assign(
+            targets=[
+                Name(id='redirect_url', ctx=Store())],
+            value=Constant(value='https://example.com/some-page')),
+        Assign(
+            targets=[
+                Name(id='redirect_target', ctx=Store())],
+            value=Call(
+                func=Name(id='safe_redirect', ctx=Load()),
+                args=[
+                    Name(id='base_url', ctx=Load()),
+                    Name(id='redirect_url', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Constant(value='Redirecting to:'),
+                    Name(id='redirect_target', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

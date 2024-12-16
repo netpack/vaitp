@@ -1,0 +1,56 @@
+Module(
+    body=[
+        ImportFrom(
+            module='AccessControl',
+            names=[
+                alias(name='getSecurityManager')],
+            level=0),
+        FunctionDef(
+            name='execute_user_code',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='user_code')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Call(
+                        func=Attribute(
+                            value=Call(
+                                func=Name(id='getSecurityManager', ctx=Load()),
+                                args=[],
+                                keywords=[]),
+                            attr='checkPermission',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='Access contents information'),
+                            Constant(value=None)],
+                        keywords=[]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='exec', ctx=Load()),
+                                args=[
+                                    Name(id='user_code', ctx=Load())],
+                                keywords=[]))],
+                    orelse=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='Exception', ctx=Load()),
+                                args=[
+                                    Constant(value='Unauthorized access')],
+                                keywords=[]))])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='user_input', ctx=Store())],
+            value=Constant(value='cat /etc/passwd')),
+        Expr(
+            value=Call(
+                func=Name(id='execute_user_code', ctx=Load()),
+                args=[
+                    Name(id='user_input', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

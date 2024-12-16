@@ -1,0 +1,24 @@
+Module(
+    body=[
+        ImportFrom(
+            module='PIL',
+            names=[
+                alias(name='ImageMath')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='expression', ctx=Store())],
+            value=Constant(value='x**2')),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='ImageMath', ctx=Load()),
+                    attr='eval',
+                    ctx=Load()),
+                args=[
+                    Name(id='expression', ctx=Load())],
+                keywords=[
+                    keyword(
+                        arg='x',
+                        value=Constant(value=5))]))],
+    type_ignores=[])

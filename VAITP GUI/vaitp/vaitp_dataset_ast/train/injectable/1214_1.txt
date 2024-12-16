@@ -1,0 +1,105 @@
+Module(
+    body=[
+        FunctionDef(
+            name='create_from_blueprint',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(
+                        arg='raw_args',
+                        annotation=Name(id='bool', ctx=Load())),
+                    arg(
+                        arg='args',
+                        annotation=Name(id='list', ctx=Load()))],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Name(id='raw_args', ctx=Load()),
+                    body=[
+                        Return(
+                            value=Call(
+                                func=Name(id='_build_create_IR', ctx=Load()),
+                                args=[
+                                    Name(id='args', ctx=Load())],
+                                keywords=[]))],
+                    orelse=[])],
+            decorator_list=[
+                Name(id='public', ctx=Load()),
+                Name(id='constant', ctx=Load())],
+            returns=Name(id='address', ctx=Load())),
+        FunctionDef(
+            name='_build_create_IR',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(
+                        arg='args',
+                        annotation=Name(id='list', ctx=Load()))],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Name(id='create_new_contract', ctx=Load()),
+                        args=[
+                            Name(id='args', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[],
+            returns=Name(id='address', ctx=Load())),
+        FunctionDef(
+            name='create_from_blueprint_fixed',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(
+                        arg='raw_args',
+                        annotation=Name(id='bool', ctx=Load())),
+                    arg(
+                        arg='args',
+                        annotation=Name(id='list', ctx=Load()))],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Name(id='raw_args', ctx=Load()),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='cached_args', ctx=Store())],
+                            value=Name(id='args', ctx=Load())),
+                        Return(
+                            value=Call(
+                                func=Name(id='_build_create_IR', ctx=Load()),
+                                args=[
+                                    Name(id='cached_args', ctx=Load())],
+                                keywords=[]))],
+                    orelse=[])],
+            decorator_list=[
+                Name(id='public', ctx=Load()),
+                Name(id='constant', ctx=Load())],
+            returns=Name(id='address', ctx=Load())),
+        FunctionDef(
+            name='_build_create_IR_fixed',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(
+                        arg='cached_args',
+                        annotation=Name(id='list', ctx=Load()))],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Name(id='create_new_contract', ctx=Load()),
+                        args=[
+                            Name(id='cached_args', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[],
+            returns=Name(id='address', ctx=Load()))],
+    type_ignores=[])

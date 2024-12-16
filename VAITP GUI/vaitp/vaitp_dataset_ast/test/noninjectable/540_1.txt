@@ -1,0 +1,43 @@
+Module(
+    body=[
+        ClassDef(
+            name='PALChain',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='execute',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='code')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='exec', ctx=Load()),
+                                args=[
+                                    Name(id='code', ctx=Load())],
+                                keywords=[]))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='vulnerable_chain', ctx=Store())],
+            value=Call(
+                func=Name(id='PALChain', ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='vulnerable_chain', ctx=Load()),
+                    attr='execute',
+                    ctx=Load()),
+                args=[
+                    Constant(value="__import__('os').system('ls')")],
+                keywords=[]))],
+    type_ignores=[])

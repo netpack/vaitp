@@ -1,0 +1,96 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='email.utils')]),
+        FunctionDef(
+            name='validate_email_address',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='email_address')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Try(
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='parsed_email', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='email', ctx=Load()),
+                                        attr='utils',
+                                        ctx=Load()),
+                                    attr='parseaddr',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='email_address', ctx=Load())],
+                                keywords=[])),
+                        Assign(
+                            targets=[
+                                Tuple(
+                                    elts=[
+                                        Name(id='local_part', ctx=Store()),
+                                        Name(id='domain', ctx=Store())],
+                                    ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Subscript(
+                                        value=Name(id='parsed_email', ctx=Load()),
+                                        slice=Constant(value=1),
+                                        ctx=Load()),
+                                    attr='split',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='@')],
+                                keywords=[])),
+                        If(
+                            test=Compare(
+                                left=Name(id='domain', ctx=Load()),
+                                ops=[
+                                    Eq()],
+                                comparators=[
+                                    Constant(value='example.com')]),
+                            body=[
+                                Return(
+                                    value=Constant(value=True))],
+                            orelse=[
+                                Return(
+                                    value=Constant(value=False))])],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='ValueError', ctx=Load()),
+                            body=[
+                                Return(
+                                    value=Constant(value=False))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='email_address', ctx=Store())],
+            value=Constant(value='attacker@example.com@evil.com')),
+        If(
+            test=Call(
+                func=Name(id='validate_email_address', ctx=Load()),
+                args=[
+                    Name(id='email_address', ctx=Load())],
+                keywords=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Email address is valid')],
+                        keywords=[]))],
+            orelse=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Email address is not valid')],
+                        keywords=[]))])],
+    type_ignores=[])

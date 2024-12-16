@@ -1,0 +1,92 @@
+Module(
+    body=[
+        ImportFrom(
+            module='cryptography.hazmat.backends',
+            names=[
+                alias(name='default_backend')],
+            level=0),
+        ImportFrom(
+            module='cryptography.hazmat.primitives.asymmetric',
+            names=[
+                alias(name='rsa'),
+                alias(name='padding')],
+            level=0),
+        FunctionDef(
+            name='vulnerable_rsa_decrypt',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='private_key'),
+                    arg(arg='ciphertext')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Try(
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='plaintext', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='private_key', ctx=Load()),
+                                    attr='decrypt',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='ciphertext', ctx=Load()),
+                                    Call(
+                                        func=Attribute(
+                                            value=Name(id='padding', ctx=Load()),
+                                            attr='PKCS1v15',
+                                            ctx=Load()),
+                                        args=[],
+                                        keywords=[])],
+                                keywords=[])),
+                        Return(
+                            value=Name(id='plaintext', ctx=Load()))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='Exception', ctx=Load()),
+                            name='e',
+                            body=[
+                                Return(
+                                    value=Constant(value=None))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='private_key', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='rsa', ctx=Load()),
+                    attr='generate_private_key',
+                    ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='public_exponent',
+                        value=Constant(value=65537)),
+                    keyword(
+                        arg='key_size',
+                        value=Constant(value=2048)),
+                    keyword(
+                        arg='backend',
+                        value=Call(
+                            func=Name(id='default_backend', ctx=Load()),
+                            args=[],
+                            keywords=[]))])),
+        Assign(
+            targets=[
+                Name(id='ciphertext', ctx=Store())],
+            value=Constant(value=b'...')),
+        Assign(
+            targets=[
+                Name(id='plaintext', ctx=Store())],
+            value=Call(
+                func=Name(id='vulnerable_rsa_decrypt', ctx=Load()),
+                args=[
+                    Name(id='private_key', ctx=Load()),
+                    Name(id='ciphertext', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

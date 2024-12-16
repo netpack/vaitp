@@ -1,0 +1,52 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='ssl')]),
+        Import(
+            names=[
+                alias(name='urllib.request')]),
+        Assign(
+            targets=[
+                Name(id='context', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='ssl', ctx=Load()),
+                    attr='create_default_context',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='response', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='urllib', ctx=Load()),
+                        attr='request',
+                        ctx=Load()),
+                    attr='urlopen',
+                    ctx=Load()),
+                args=[
+                    Constant(value='https://swift.example.com')],
+                keywords=[
+                    keyword(
+                        arg='context',
+                        value=Name(id='context', ctx=Load()))])),
+        Assign(
+            targets=[
+                Name(id='data', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='response', ctx=Load()),
+                    attr='read',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='data', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

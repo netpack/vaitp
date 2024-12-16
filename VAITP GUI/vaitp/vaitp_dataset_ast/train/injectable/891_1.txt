@@ -1,0 +1,120 @@
+Module(
+    body=[
+        ImportFrom(
+            module='Products.CMFCore.utils',
+            names=[
+                alias(name='getToolByName')],
+            level=0),
+        ImportFrom(
+            module='plone.api.content',
+            names=[
+                alias(name='get_view')],
+            level=0),
+        FunctionDef(
+            name='secure_image_view_fullscreen',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='context'),
+                    arg(arg='request')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='redirect_url', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='request', ctx=Load()),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='redirect'),
+                            Constant(value='')],
+                        keywords=[])),
+                If(
+                    test=UnaryOp(
+                        op=Not(),
+                        operand=Call(
+                            func=Name(id='is_safe_redirect_url', ctx=Load()),
+                            args=[
+                                Name(id='redirect_url', ctx=Load())],
+                            keywords=[])),
+                    body=[
+                        Return(
+                            value=Constant(value='Invalid redirect URL'))],
+                    orelse=[]),
+                Return(
+                    value=Call(
+                        func=Call(
+                            func=Name(id='get_view', ctx=Load()),
+                            args=[
+                                Constant(value='image_view_fullscreen'),
+                                Name(id='context', ctx=Load()),
+                                Name(id='request', ctx=Load())],
+                            keywords=[]),
+                        args=[],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='is_safe_redirect_url',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='url')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='allowed_domains', ctx=Store())],
+                    value=List(
+                        elts=[
+                            Constant(value='example.com'),
+                            Constant(value='another-example.com')],
+                        ctx=Load())),
+                For(
+                    target=Name(id='domain', ctx=Store()),
+                    iter=Name(id='allowed_domains', ctx=Load()),
+                    body=[
+                        If(
+                            test=BoolOp(
+                                op=Or(),
+                                values=[
+                                    Call(
+                                        func=Attribute(
+                                            value=Name(id='url', ctx=Load()),
+                                            attr='startswith',
+                                            ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    Constant(value='http://'),
+                                                    FormattedValue(
+                                                        value=Name(id='domain', ctx=Load()),
+                                                        conversion=-1)])],
+                                        keywords=[]),
+                                    Call(
+                                        func=Attribute(
+                                            value=Name(id='url', ctx=Load()),
+                                            attr='startswith',
+                                            ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    Constant(value='https://'),
+                                                    FormattedValue(
+                                                        value=Name(id='domain', ctx=Load()),
+                                                        conversion=-1)])],
+                                        keywords=[])]),
+                            body=[
+                                Return(
+                                    value=Constant(value=True))],
+                            orelse=[])],
+                    orelse=[]),
+                Return(
+                    value=Constant(value=False))],
+            decorator_list=[])],
+    type_ignores=[])

@@ -1,0 +1,114 @@
+Module(
+    body=[
+        ImportFrom(
+            module='Crypto.Cipher',
+            names=[
+                alias(name='AES')],
+            level=0),
+        FunctionDef(
+            name='vulnerable_aes_encrypt',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='key'),
+                    arg(arg='iv'),
+                    arg(arg='plaintext')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='cipher', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='AES', ctx=Load()),
+                            attr='new',
+                            ctx=Load()),
+                        args=[
+                            Name(id='key', ctx=Load()),
+                            Attribute(
+                                value=Name(id='AES', ctx=Load()),
+                                attr='MODE_CBC',
+                                ctx=Load()),
+                            Name(id='iv', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='ciphertext', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='cipher', ctx=Load()),
+                            attr='encrypt',
+                            ctx=Load()),
+                        args=[
+                            Name(id='plaintext', ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=Name(id='ciphertext', ctx=Load()))],
+            decorator_list=[]),
+        FunctionDef(
+            name='vulnerable_aes_decrypt',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='key'),
+                    arg(arg='iv'),
+                    arg(arg='ciphertext')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='cipher', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='AES', ctx=Load()),
+                            attr='new',
+                            ctx=Load()),
+                        args=[
+                            Name(id='key', ctx=Load()),
+                            Attribute(
+                                value=Name(id='AES', ctx=Load()),
+                                attr='MODE_CBC',
+                                ctx=Load()),
+                            Name(id='iv', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='plaintext', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='cipher', ctx=Load()),
+                            attr='decrypt',
+                            ctx=Load()),
+                        args=[
+                            Name(id='ciphertext', ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=Name(id='plaintext', ctx=Load()))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='key', ctx=Store())],
+            value=Constant(value=b'16_byte_key_123')),
+        Assign(
+            targets=[
+                Name(id='iv', ctx=Store())],
+            value=Constant(value=b'16_byte_iv_12345')),
+        Assign(
+            targets=[
+                Name(id='plaintext', ctx=Store())],
+            value=Constant(value=b'This is a secret message that needs padding.')),
+        Assign(
+            targets=[
+                Name(id='ciphertext', ctx=Store())],
+            value=Call(
+                func=Name(id='vulnerable_aes_encrypt', ctx=Load()),
+                args=[
+                    Name(id='key', ctx=Load()),
+                    Name(id='iv', ctx=Load()),
+                    Name(id='plaintext', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

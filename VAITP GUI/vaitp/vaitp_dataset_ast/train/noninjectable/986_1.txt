@@ -1,0 +1,83 @@
+Module(
+    body=[
+        FunctionDef(
+            name='resolve_axis',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='axis'),
+                    arg(arg='tensor_shape')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Compare(
+                        left=Name(id='axis', ctx=Load()),
+                        ops=[
+                            Lt()],
+                        comparators=[
+                            Constant(value=0)]),
+                    body=[
+                        AugAssign(
+                            target=Name(id='axis', ctx=Store()),
+                            op=Add(),
+                            value=Call(
+                                func=Name(id='len', ctx=Load()),
+                                args=[
+                                    Name(id='tensor_shape', ctx=Load())],
+                                keywords=[]))],
+                    orelse=[]),
+                Return(
+                    value=Name(id='axis', ctx=Load()))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='tensor_shape', ctx=Store())],
+            value=List(
+                elts=[
+                    Constant(value=3),
+                    Constant(value=4),
+                    Constant(value=5)],
+                ctx=Load())),
+        Assign(
+            targets=[
+                Name(id='axis', ctx=Store())],
+            value=UnaryOp(
+                op=USub(),
+                operand=Constant(value=1))),
+        Assign(
+            targets=[
+                Name(id='resolved_axis', ctx=Store())],
+            value=Call(
+                func=Name(id='resolve_axis', ctx=Load()),
+                args=[
+                    Name(id='axis', ctx=Load()),
+                    Name(id='tensor_shape', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    JoinedStr(
+                        values=[
+                            Constant(value='Resolved axis: '),
+                            FormattedValue(
+                                value=Name(id='resolved_axis', ctx=Load()),
+                                conversion=-1)])],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    JoinedStr(
+                        values=[
+                            Constant(value='Accessing tensor at resolved axis: '),
+                            FormattedValue(
+                                value=Subscript(
+                                    value=Name(id='tensor_shape', ctx=Load()),
+                                    slice=Name(id='resolved_axis', ctx=Load()),
+                                    ctx=Load()),
+                                conversion=-1)])],
+                keywords=[]))],
+    type_ignores=[])

@@ -1,0 +1,96 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='subprocess')]),
+        ImportFrom(
+            module='astropy.visualization',
+            names=[
+                alias(name='TransformGraph')],
+            level=0),
+        FunctionDef(
+            name='safe_to_dot_graph',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='savelayout')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[
+                    Constant(value=None)]),
+            body=[
+                If(
+                    test=BoolOp(
+                        op=And(),
+                        values=[
+                            Compare(
+                                left=Name(id='savelayout', ctx=Load()),
+                                ops=[
+                                    IsNot()],
+                                comparators=[
+                                    Constant(value=None)]),
+                            UnaryOp(
+                                op=Not(),
+                                operand=Call(
+                                    func=Name(id='isinstance', ctx=Load()),
+                                    args=[
+                                        Name(id='savelayout', ctx=Load()),
+                                        Name(id='str', ctx=Load())],
+                                    keywords=[]))]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='savelayout must be a string representing a valid file path.')],
+                                keywords=[]))],
+                    orelse=[]),
+                Assign(
+                    targets=[
+                        Name(id='graph', ctx=Store())],
+                    value=Call(
+                        func=Name(id='TransformGraph', ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='dot_graph', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='graph', ctx=Load()),
+                            attr='to_dot_graph',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                If(
+                    test=Name(id='savelayout', ctx=Load()),
+                    body=[
+                        With(
+                            items=[
+                                withitem(
+                                    context_expr=Call(
+                                        func=Name(id='open', ctx=Load()),
+                                        args=[
+                                            Name(id='savelayout', ctx=Load()),
+                                            Constant(value='w')],
+                                        keywords=[]),
+                                    optional_vars=Name(id='f', ctx=Store()))],
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='f', ctx=Load()),
+                                            attr='write',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='dot_graph', ctx=Load())],
+                                        keywords=[]))])],
+                    orelse=[])],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='safe_to_dot_graph', ctx=Load()),
+                args=[
+                    Constant(value='output.dot')],
+                keywords=[]))],
+    type_ignores=[])

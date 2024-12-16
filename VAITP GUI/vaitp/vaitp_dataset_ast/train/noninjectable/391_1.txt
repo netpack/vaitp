@@ -1,0 +1,84 @@
+Module(
+    body=[
+        ImportFrom(
+            module='azure.storage.blob',
+            names=[
+                alias(name='BlobServiceClient')],
+            level=0),
+        FunctionDef(
+            name='upload_blob_with_insecure_encryption',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='container_name'),
+                    arg(arg='blob_name'),
+                    arg(arg='data')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='blob_service_client', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='BlobServiceClient', ctx=Load()),
+                            attr='from_connection_string',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='your_connection_string')],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='blob_client', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='blob_service_client', ctx=Load()),
+                            attr='get_blob_client',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[
+                            keyword(
+                                arg='container',
+                                value=Name(id='container_name', ctx=Load())),
+                            keyword(
+                                arg='blob',
+                                value=Name(id='blob_name', ctx=Load()))])),
+                Assign(
+                    targets=[
+                        Name(id='encrypted_data', ctx=Store())],
+                    value=Call(
+                        func=Name(id='insecure_encrypt', ctx=Load()),
+                        args=[
+                            Name(id='data', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='blob_client', ctx=Load()),
+                            attr='upload_blob',
+                            ctx=Load()),
+                        args=[
+                            Name(id='encrypted_data', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='insecure_encrypt',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='data')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Subscript(
+                        value=Name(id='data', ctx=Load()),
+                        slice=Slice(
+                            step=UnaryOp(
+                                op=USub(),
+                                operand=Constant(value=1))),
+                        ctx=Load()))],
+            decorator_list=[])],
+    type_ignores=[])

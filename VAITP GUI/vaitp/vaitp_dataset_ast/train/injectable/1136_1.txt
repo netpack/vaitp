@@ -1,0 +1,55 @@
+Module(
+    body=[
+        FunctionDef(
+            name='safe_select_where',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='query')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=BoolOp(
+                        op=Or(),
+                        values=[
+                            Compare(
+                                left=Constant(value='eval'),
+                                ops=[
+                                    In()],
+                                comparators=[
+                                    Name(id='query', ctx=Load())]),
+                            Compare(
+                                left=Constant(value='exec'),
+                                ops=[
+                                    In()],
+                                comparators=[
+                                    Name(id='query', ctx=Load())])]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Unsafe query detected.')],
+                                keywords=[]))],
+                    orelse=[]),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Executing safe query:'),
+                            Name(id='query', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='user_input', ctx=Store())],
+            value=Constant(value='SELECT * FROM table WHERE condition')),
+        Expr(
+            value=Call(
+                func=Name(id='safe_select_where', ctx=Load()),
+                args=[
+                    Name(id='user_input', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

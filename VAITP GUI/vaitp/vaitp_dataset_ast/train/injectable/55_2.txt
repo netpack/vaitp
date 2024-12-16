@@ -1,0 +1,19 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='pydoc')]),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='pydoc', ctx=Load()),
+                    attr='serve',
+                    ctx=Load()),
+                args=[
+                    Constant(value=8000),
+                    Name(id='ready', ctx=Load())],
+                keywords=[
+                    keyword(
+                        arg='no_getfile',
+                        value=Constant(value=True))]))],
+    type_ignores=[])

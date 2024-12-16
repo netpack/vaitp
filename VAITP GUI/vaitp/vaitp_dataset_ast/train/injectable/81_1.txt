@@ -1,0 +1,113 @@
+Module(
+    body=[
+        ImportFrom(
+            module='PIL',
+            names=[
+                alias(name='Image')],
+            level=0),
+        FunctionDef(
+            name='non_vulnerable_function',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='image_path')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Try(
+                    body=[
+                        With(
+                            items=[
+                                withitem(
+                                    context_expr=Call(
+                                        func=Name(id='open', ctx=Load()),
+                                        args=[
+                                            Name(id='image_path', ctx=Load()),
+                                            Constant(value='rb')],
+                                        keywords=[]),
+                                    optional_vars=Name(id='image_file', ctx=Store()))],
+                            body=[
+                                Assign(
+                                    targets=[
+                                        Name(id='image', ctx=Store())],
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='Image', ctx=Load()),
+                                            attr='open',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='image_file', ctx=Load())],
+                                        keywords=[])),
+                                Assign(
+                                    targets=[
+                                        Name(id='num_bands', ctx=Store())],
+                                    value=Attribute(
+                                        value=Attribute(
+                                            value=Name(id='image', ctx=Load()),
+                                            attr='im',
+                                            ctx=Load()),
+                                        attr='bands',
+                                        ctx=Load())),
+                                If(
+                                    test=Compare(
+                                        left=Name(id='num_bands', ctx=Load()),
+                                        ops=[
+                                            Gt()],
+                                        comparators=[
+                                            BinOp(
+                                                left=BinOp(
+                                                    left=Constant(value=2),
+                                                    op=Pow(),
+                                                    right=Constant(value=31)),
+                                                op=Sub(),
+                                                right=Constant(value=1))]),
+                                    body=[
+                                        Expr(
+                                            value=Call(
+                                                func=Name(id='print', ctx=Load()),
+                                                args=[
+                                                    Constant(value='Error: Number of bands is too large.')],
+                                                keywords=[])),
+                                        Return()],
+                                    orelse=[]),
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='range', ctx=Load()),
+                                        args=[
+                                            Name(id='num_bands', ctx=Load())],
+                                        keywords=[])),
+                                Expr(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='image', ctx=Load()),
+                                            attr='load',
+                                            ctx=Load()),
+                                        args=[],
+                                        keywords=[]))])],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='Exception', ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    Constant(value='An error occurred: '),
+                                                    FormattedValue(
+                                                        value=Name(id='e', ctx=Load()),
+                                                        conversion=-1)])],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='non_vulnerable_function', ctx=Load()),
+                args=[
+                    Constant(value='example_image.jpg')],
+                keywords=[]))],
+    type_ignores=[])

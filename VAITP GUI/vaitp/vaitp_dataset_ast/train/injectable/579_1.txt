@@ -1,0 +1,116 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='bleach')]),
+        FunctionDef(
+            name='sanitize_uri',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='input_uri')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='allowed_protocols', ctx=Store())],
+                    value=List(
+                        elts=[
+                            Constant(value='http'),
+                            Constant(value='https'),
+                            Constant(value='ftp')],
+                        ctx=Load())),
+                Assign(
+                    targets=[
+                        Name(id='sanitized_uri', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='bleach', ctx=Load()),
+                            attr='clean',
+                            ctx=Load()),
+                        args=[
+                            Name(id='input_uri', ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='tags',
+                                value=List(elts=[], ctx=Load())),
+                            keyword(
+                                arg='attributes',
+                                value=Dict(keys=[], values=[])),
+                            keyword(
+                                arg='styles',
+                                value=List(elts=[], ctx=Load())),
+                            keyword(
+                                arg='strip',
+                                value=Constant(value=True))])),
+                If(
+                    test=Call(
+                        func=Name(id='any', ctx=Load()),
+                        args=[
+                            GeneratorExp(
+                                elt=Call(
+                                    func=Attribute(
+                                        value=Name(id='sanitized_uri', ctx=Load()),
+                                        attr='startswith',
+                                        ctx=Load()),
+                                    args=[
+                                        BinOp(
+                                            left=Name(id='protocol', ctx=Load()),
+                                            op=Add(),
+                                            right=Constant(value='://'))],
+                                    keywords=[]),
+                                generators=[
+                                    comprehension(
+                                        target=Name(id='protocol', ctx=Store()),
+                                        iter=Name(id='allowed_protocols', ctx=Load()),
+                                        ifs=[],
+                                        is_async=0)])],
+                        keywords=[]),
+                    body=[
+                        Return(
+                            value=Name(id='sanitized_uri', ctx=Load()))],
+                    orelse=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Invalid URI: Only HTTP, HTTPS, and FTP protocols are allowed.')],
+                                keywords=[]))])],
+            decorator_list=[]),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='user_input', ctx=Store())],
+                    value=Constant(value="javascript:alert('XSS')")),
+                Assign(
+                    targets=[
+                        Name(id='safe_uri', ctx=Store())],
+                    value=Call(
+                        func=Name(id='sanitize_uri', ctx=Load()),
+                        args=[
+                            Name(id='user_input', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Sanitized URI:'),
+                            Name(id='safe_uri', ctx=Load())],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ValueError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

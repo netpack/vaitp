@@ -1,0 +1,72 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='urllib3')]),
+        Assign(
+            targets=[
+                Name(id='url', ctx=Store())],
+            value=Constant(value='http://example.com\r\nX-Fake-Header: injected\r\n\r\n')),
+        Assign(
+            targets=[
+                Name(id='http_connection', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='urllib3', ctx=Load()),
+                    attr='PoolManager',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='response', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='http_connection', ctx=Load()),
+                            attr='request',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='GET'),
+                            Name(id='url', ctx=Load())],
+                        keywords=[])),
+                If(
+                    test=Compare(
+                        left=Constant(value='X-Fake-Header'),
+                        ops=[
+                            In()],
+                        comparators=[
+                            Attribute(
+                                value=Name(id='response', ctx=Load()),
+                                attr='headers',
+                                ctx=Load())]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='The response contains a CRLF injection')],
+                                keywords=[]))],
+                    orelse=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='The response does not contain a CRLF injection')],
+                                keywords=[]))])],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='Exception', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='An error occurred:'),
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

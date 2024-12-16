@@ -1,0 +1,127 @@
+Module(
+    body=[
+        ImportFrom(
+            module='Products.PageTemplates.PageTemplateFile',
+            names=[
+                alias(name='PageTemplateFile')],
+            level=0),
+        ClassDef(
+            name='VulnerablePageTemplate',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='templates',
+                                    ctx=Store())],
+                            value=Dict(keys=[], values=[]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='addPageTemplate',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='template_id'),
+                            arg(arg='content')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Subscript(
+                                    value=Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='templates',
+                                        ctx=Load()),
+                                    slice=Name(id='template_id', ctx=Load()),
+                                    ctx=Store())],
+                            value=Call(
+                                func=Name(id='PageTemplateFile', ctx=Load()),
+                                args=[
+                                    Name(id='template_id', ctx=Load()),
+                                    Name(id='content', ctx=Load())],
+                                keywords=[]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='editPageTemplate',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='template_id'),
+                            arg(arg='new_content')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        If(
+                            test=Compare(
+                                left=Name(id='template_id', ctx=Load()),
+                                ops=[
+                                    In()],
+                                comparators=[
+                                    Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='templates',
+                                        ctx=Load())]),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Subscript(
+                                                value=Attribute(
+                                                    value=Name(id='self', ctx=Load()),
+                                                    attr='templates',
+                                                    ctx=Load()),
+                                                slice=Name(id='template_id', ctx=Load()),
+                                                ctx=Load()),
+                                            attr='write',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='new_content', ctx=Load())],
+                                        keywords=[]))],
+                            orelse=[])],
+                    decorator_list=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='vulnerable_template', ctx=Store())],
+            value=Call(
+                func=Name(id='VulnerablePageTemplate', ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='vulnerable_template', ctx=Load()),
+                    attr='addPageTemplate',
+                    ctx=Load()),
+                args=[
+                    Constant(value='untrusted_template'),
+                    Constant(value='<html><body>Hello World</body></html>')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='vulnerable_template', ctx=Load()),
+                    attr='editPageTemplate',
+                    ctx=Load()),
+                args=[
+                    Constant(value='untrusted_template'),
+                    Constant(value='<html><body>Modified Content</body></html>')],
+                keywords=[]))],
+    type_ignores=[])

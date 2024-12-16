@@ -1,0 +1,52 @@
+Module(
+    body=[
+        FunctionDef(
+            name='on_mouse_over',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='arbitrary_command', ctx=Store())],
+                    value=Constant(value="os.system('echo Vulnerable!')")),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='librelogo', ctx=Load()),
+                            attr='execute',
+                            ctx=Load()),
+                        args=[
+                            Name(id='arbitrary_command', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='simulate_mouse_over_event',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Mouse over event triggered.')],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='on_mouse_over', ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='simulate_mouse_over_event', ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

@@ -1,0 +1,106 @@
+Module(
+    body=[
+        FunctionDef(
+            name='handle_request',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='request')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=BoolOp(
+                        op=And(),
+                        values=[
+                            Compare(
+                                left=Constant(value='Transfer-Encoding'),
+                                ops=[
+                                    In()],
+                                comparators=[
+                                    Attribute(
+                                        value=Name(id='request', ctx=Load()),
+                                        attr='headers',
+                                        ctx=Load())]),
+                            Compare(
+                                left=Subscript(
+                                    value=Attribute(
+                                        value=Name(id='request', ctx=Load()),
+                                        attr='headers',
+                                        ctx=Load()),
+                                    slice=Constant(value='Transfer-Encoding'),
+                                    ctx=Load()),
+                                ops=[
+                                    Eq()],
+                                comparators=[
+                                    Constant(value='chunked')])]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='raw_data', ctx=Store())],
+                            value=Attribute(
+                                value=Name(id='request', ctx=Load()),
+                                attr='body',
+                                ctx=Load())),
+                        While(
+                            test=Name(id='raw_data', ctx=Load()),
+                            body=[
+                                Assign(
+                                    targets=[
+                                        Tuple(
+                                            elts=[
+                                                Name(id='chunk_size', ctx=Store()),
+                                                Name(id='raw_data', ctx=Store())],
+                                            ctx=Store())],
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='raw_data', ctx=Load()),
+                                            attr='split',
+                                            ctx=Load()),
+                                        args=[
+                                            Constant(value='\r\n'),
+                                            Constant(value=1)],
+                                        keywords=[])),
+                                Assign(
+                                    targets=[
+                                        Name(id='chunk_size', ctx=Store())],
+                                    value=Call(
+                                        func=Name(id='int', ctx=Load()),
+                                        args=[
+                                            Name(id='chunk_size', ctx=Load()),
+                                            Constant(value=16)],
+                                        keywords=[])),
+                                Assign(
+                                    targets=[
+                                        Tuple(
+                                            elts=[
+                                                Name(id='chunk_data', ctx=Store()),
+                                                Name(id='raw_data', ctx=Store())],
+                                            ctx=Store())],
+                                    value=Tuple(
+                                        elts=[
+                                            Subscript(
+                                                value=Name(id='raw_data', ctx=Load()),
+                                                slice=Slice(
+                                                    upper=Name(id='chunk_size', ctx=Load())),
+                                                ctx=Load()),
+                                            Subscript(
+                                                value=Name(id='raw_data', ctx=Load()),
+                                                slice=Slice(
+                                                    lower=BinOp(
+                                                        left=Name(id='chunk_size', ctx=Load()),
+                                                        op=Add(),
+                                                        right=Constant(value=2))),
+                                                ctx=Load())],
+                                        ctx=Load())),
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='process_data', ctx=Load()),
+                                        args=[
+                                            Name(id='chunk_data', ctx=Load())],
+                                        keywords=[]))],
+                            orelse=[])],
+                    orelse=[])],
+            decorator_list=[])],
+    type_ignores=[])

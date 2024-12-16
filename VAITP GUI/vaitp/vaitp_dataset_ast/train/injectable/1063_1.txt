@@ -1,0 +1,115 @@
+Module(
+    body=[
+        FunctionDef(
+            name='safe_external_call',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='target_contract'),
+                    arg(arg='input_data')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='return_data', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='target_contract', ctx=Load()),
+                            attr='call',
+                            ctx=Load()),
+                        args=[
+                            Name(id='input_data', ctx=Load())],
+                        keywords=[])),
+                If(
+                    test=Compare(
+                        left=Call(
+                            func=Name(id='len', ctx=Load()),
+                            args=[
+                                Name(id='return_data', ctx=Load())],
+                            keywords=[]),
+                        ops=[
+                            Lt()],
+                        comparators=[
+                            Name(id='expected_minimum_size', ctx=Load())]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Returned data size is less than the minimum required size')],
+                                keywords=[]))],
+                    orelse=[]),
+                Assign(
+                    targets=[
+                        Name(id='actual_length', ctx=Store())],
+                    value=Call(
+                        func=Name(id='decode_length_from_return_data', ctx=Load()),
+                        args=[
+                            Name(id='return_data', ctx=Load())],
+                        keywords=[])),
+                If(
+                    test=Compare(
+                        left=Name(id='actual_length', ctx=Load()),
+                        ops=[
+                            NotEq()],
+                        comparators=[
+                            Call(
+                                func=Name(id='len', ctx=Load()),
+                                args=[
+                                    Name(id='return_data', ctx=Load())],
+                                keywords=[])]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Returned data length does not match the expected length')],
+                                keywords=[]))],
+                    orelse=[]),
+                Expr(
+                    value=Call(
+                        func=Name(id='process_return_data', ctx=Load()),
+                        args=[
+                            Name(id='return_data', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='decode_length_from_return_data',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='return_data')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='int', ctx=Load()),
+                            attr='from_bytes',
+                            ctx=Load()),
+                        args=[
+                            Subscript(
+                                value=Name(id='return_data', ctx=Load()),
+                                slice=Slice(
+                                    upper=Constant(value=4)),
+                                ctx=Load()),
+                            Constant(value='big')],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='process_return_data',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='return_data')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Pass()],
+            decorator_list=[])],
+    type_ignores=[])

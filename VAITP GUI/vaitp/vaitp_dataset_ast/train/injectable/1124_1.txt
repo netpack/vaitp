@@ -1,0 +1,89 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='llama_cpp_python')]),
+        FunctionDef(
+            name='safe_load_model',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='model_path')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=UnaryOp(
+                        op=Not(),
+                        operand=Call(
+                            func=Name(id='validate_model', ctx=Load()),
+                            args=[
+                                Name(id='model_path', ctx=Load())],
+                            keywords=[])),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Invalid model file.')],
+                                keywords=[]))],
+                    orelse=[]),
+                Assign(
+                    targets=[
+                        Name(id='model', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='llama_cpp_python', ctx=Load()),
+                            attr='load_model',
+                            ctx=Load()),
+                        args=[
+                            Name(id='model_path', ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=Name(id='model', ctx=Load()))],
+            decorator_list=[]),
+        FunctionDef(
+            name='validate_model',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='model_path')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='model_path', ctx=Load()),
+                            attr='endswith',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='.gguf')],
+                        keywords=[]))],
+            decorator_list=[]),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='model', ctx=Store())],
+                    value=Call(
+                        func=Name(id='safe_load_model', ctx=Load()),
+                        args=[
+                            Constant(value='path/to/model.gguf')],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ValueError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

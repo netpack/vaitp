@@ -1,0 +1,20 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        Assign(
+            targets=[
+                Name(id='file_path', ctx=Store())],
+            value=Constant(value='/etc/openstack-dashboard/local_settings')),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='os', ctx=Load()),
+                    attr='chmod',
+                    ctx=Load()),
+                args=[
+                    Name(id='file_path', ctx=Load()),
+                    Constant(value=420)],
+                keywords=[]))],
+    type_ignores=[])

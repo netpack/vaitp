@@ -1,0 +1,57 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='numpy', asname='np')]),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='dimensions', ctx=Store())],
+                    value=Call(
+                        func=Name(id='tuple', ctx=Load()),
+                        args=[
+                            BinOp(
+                                left=List(
+                                    elts=[
+                                        Constant(value=2)],
+                                    ctx=Load()),
+                                op=Mult(),
+                                right=Constant(value=33))],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='large_dim_array', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='np', ctx=Load()),
+                            attr='zeros',
+                            ctx=Load()),
+                        args=[
+                            Name(id='dimensions', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Array created successfully:'),
+                            Attribute(
+                                value=Name(id='large_dim_array', ctx=Load()),
+                                attr='shape',
+                                ctx=Load())],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='Exception', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Error occurred:'),
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

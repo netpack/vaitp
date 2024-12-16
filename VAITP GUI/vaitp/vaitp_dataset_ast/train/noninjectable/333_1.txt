@@ -1,0 +1,37 @@
+Module(
+    body=[
+        ImportFrom(
+            module='flower',
+            names=[
+                alias(name='Flower')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='flower_config', ctx=Store())],
+            value=Dict(
+                keys=[
+                    Constant(value='broker_url'),
+                    Constant(value='pidfile'),
+                    Constant(value='port')],
+                values=[
+                    Constant(value='redis://localhost:6379/0'),
+                    Constant(value='/var/run/flower.pid'),
+                    Constant(value=5555)])),
+        Assign(
+            targets=[
+                Name(id='flower', ctx=Store())],
+            value=Call(
+                func=Name(id='Flower', ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        value=Name(id='flower_config', ctx=Load()))])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='flower', ctx=Load()),
+                    attr='start',
+                    ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

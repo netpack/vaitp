@@ -1,0 +1,161 @@
+Module(
+    body=[
+        ImportFrom(
+            module='flask',
+            names=[
+                alias(name='Flask'),
+                alias(name='request'),
+                alias(name='abort')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='app', ctx=Store())],
+            value=Call(
+                func=Name(id='Flask', ctx=Load()),
+                args=[
+                    Name(id='__name__', ctx=Load())],
+                keywords=[])),
+        FunctionDef(
+            name='check_auth',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='username'),
+                    arg(arg='password')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=BoolOp(
+                        op=And(),
+                        values=[
+                            Compare(
+                                left=Name(id='username', ctx=Load()),
+                                ops=[
+                                    Eq()],
+                                comparators=[
+                                    Constant(value='admin')]),
+                            Compare(
+                                left=Name(id='password', ctx=Load()),
+                                ops=[
+                                    Eq()],
+                                comparators=[
+                                    Constant(value='secret')])]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='require_auth',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='f')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                FunctionDef(
+                    name='decorated',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[],
+                        vararg=arg(arg='args'),
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        kwarg=arg(arg='kwargs'),
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='auth', ctx=Store())],
+                            value=Attribute(
+                                value=Name(id='request', ctx=Load()),
+                                attr='authorization',
+                                ctx=Load())),
+                        If(
+                            test=BoolOp(
+                                op=Or(),
+                                values=[
+                                    UnaryOp(
+                                        op=Not(),
+                                        operand=Name(id='auth', ctx=Load())),
+                                    UnaryOp(
+                                        op=Not(),
+                                        operand=Call(
+                                            func=Name(id='check_auth', ctx=Load()),
+                                            args=[
+                                                Attribute(
+                                                    value=Name(id='auth', ctx=Load()),
+                                                    attr='username',
+                                                    ctx=Load()),
+                                                Attribute(
+                                                    value=Name(id='auth', ctx=Load()),
+                                                    attr='password',
+                                                    ctx=Load())],
+                                            keywords=[]))]),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='abort', ctx=Load()),
+                                        args=[
+                                            Constant(value=401)],
+                                        keywords=[]))],
+                            orelse=[]),
+                        Return(
+                            value=Call(
+                                func=Name(id='f', ctx=Load()),
+                                args=[
+                                    Starred(
+                                        value=Name(id='args', ctx=Load()),
+                                        ctx=Load())],
+                                keywords=[
+                                    keyword(
+                                        value=Name(id='kwargs', ctx=Load()))]))],
+                    decorator_list=[]),
+                Return(
+                    value=Name(id='decorated', ctx=Load()))],
+            decorator_list=[]),
+        FunctionDef(
+            name='secure_function',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Constant(value='Access granted to secure function.'))],
+            decorator_list=[
+                Call(
+                    func=Attribute(
+                        value=Name(id='app', ctx=Load()),
+                        attr='route',
+                        ctx=Load()),
+                    args=[
+                        Constant(value='/secure_endpoint')],
+                    keywords=[
+                        keyword(
+                            arg='methods',
+                            value=List(
+                                elts=[
+                                    Constant(value='POST')],
+                                ctx=Load()))]),
+                Name(id='require_auth', ctx=Load())]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='app', ctx=Load()),
+                            attr='run',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

@@ -1,0 +1,24 @@
+Module(
+    body=[
+        FunctionDef(
+            name='safe_function',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='This function does not use the vulnerable package.')],
+                        keywords=[]))],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='safe_function', ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

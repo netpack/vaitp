@@ -1,0 +1,64 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='hashlib')]),
+        FunctionDef(
+            name='hash_password',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='password')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='hashed_password', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='hashlib', ctx=Load()),
+                                    attr='sha256',
+                                    ctx=Load()),
+                                args=[
+                                    Call(
+                                        func=Attribute(
+                                            value=Name(id='password', ctx=Load()),
+                                            attr='encode',
+                                            ctx=Load()),
+                                        args=[],
+                                        keywords=[])],
+                                keywords=[]),
+                            attr='hexdigest',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Return(
+                    value=Name(id='hashed_password', ctx=Load()))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='password', ctx=Store())],
+            value=Call(
+                func=Name(id='input', ctx=Load()),
+                args=[
+                    Constant(value='Enter your password: ')],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='hashed', ctx=Store())],
+            value=Call(
+                func=Name(id='hash_password', ctx=Load()),
+                args=[
+                    Name(id='password', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Constant(value='Password hashed successfully.')],
+                keywords=[]))],
+    type_ignores=[])

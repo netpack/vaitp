@@ -1,0 +1,92 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='feedparser')]),
+        ImportFrom(
+            module='feedparser',
+            names=[
+                alias(name='FeedParserDict')],
+            level=0),
+        FunctionDef(
+            name='safe_parse',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='feed_url')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                ClassDef(
+                    name='SafeFeedParserDict',
+                    bases=[
+                        Name(id='FeedParserDict', ctx=Load())],
+                    keywords=[],
+                    body=[
+                        FunctionDef(
+                            name='__init__',
+                            args=arguments(
+                                posonlyargs=[],
+                                args=[
+                                    arg(arg='self')],
+                                kwonlyargs=[],
+                                kw_defaults=[],
+                                defaults=[]),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Call(
+                                                func=Name(id='super', ctx=Load()),
+                                                args=[],
+                                                keywords=[]),
+                                            attr='__init__',
+                                            ctx=Load()),
+                                        args=[],
+                                        keywords=[])),
+                                Assign(
+                                    targets=[
+                                        Attribute(
+                                            value=Name(id='self', ctx=Load()),
+                                            attr='allow_doctype',
+                                            ctx=Store())],
+                                    value=Constant(value=False))],
+                            decorator_list=[])],
+                    decorator_list=[]),
+                Assign(
+                    targets=[
+                        Name(id='parser', ctx=Store())],
+                    value=Call(
+                        func=Name(id='SafeFeedParserDict', ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='parser', ctx=Load()),
+                            attr='parse',
+                            ctx=Load()),
+                        args=[
+                            Name(id='feed_url', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='feed_url', ctx=Store())],
+            value=Constant(value='http://example.com/feed')),
+        Assign(
+            targets=[
+                Name(id='parsed_feed', ctx=Store())],
+            value=Call(
+                func=Name(id='safe_parse', ctx=Load()),
+                args=[
+                    Name(id='feed_url', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='parsed_feed', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

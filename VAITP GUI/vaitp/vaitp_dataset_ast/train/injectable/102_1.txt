@@ -1,0 +1,43 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='pypiserver')]),
+        Assign(
+            targets=[
+                Name(id='app', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='pypiserver', ctx=Load()),
+                    attr='app',
+                    ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='root',
+                        value=Constant(value='/path/to/packages')),
+                    keyword(
+                        arg='password_file',
+                        value=Constant(value='/path/to/htpasswd')),
+                    keyword(
+                        arg='fallback_url',
+                        value=Constant(value='https://pypi.org/simple')),
+                    keyword(
+                        arg='ssl_context',
+                        value=Tuple(
+                            elts=[
+                                Constant(value='/path/to/cert.pem'),
+                                Constant(value='/path/to/key.pem')],
+                            ctx=Load()))])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='app', ctx=Load()),
+                    attr='run',
+                    ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='port',
+                        value=Constant(value=8080))]))],
+    type_ignores=[])

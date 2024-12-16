@@ -1,0 +1,30 @@
+Module(
+    body=[
+        With(
+            items=[
+                withitem(
+                    context_expr=Call(
+                        func=Name(id='open', ctx=Load()),
+                        args=[
+                            Constant(value='/sys/kernel/debug/tracing/osnoise/per_cpu/cpu0/timerlat_fd'),
+                            Constant(value='r')],
+                        keywords=[]),
+                    optional_vars=Name(id='timerlat_fd', ctx=Store()))],
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='data', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='timerlat_fd', ctx=Load()),
+                            attr='read',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Name(id='data', ctx=Load())],
+                        keywords=[]))])],
+    type_ignores=[])

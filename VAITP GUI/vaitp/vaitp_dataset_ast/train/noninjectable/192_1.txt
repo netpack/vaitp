@@ -1,0 +1,55 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='audioop')]),
+        FunctionDef(
+            name='vulnerable_lin2lin',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='data'),
+                    arg(arg='nchannels'),
+                    arg(arg='width'),
+                    arg(arg='new_nchannels'),
+                    arg(arg='new_width')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='audioop', ctx=Load()),
+                            attr='lin2lin',
+                            ctx=Load()),
+                        args=[
+                            Name(id='data', ctx=Load()),
+                            Name(id='width', ctx=Load()),
+                            Name(id='new_width', ctx=Load()),
+                            Name(id='new_nchannels', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='large_data', ctx=Store())],
+            value=BinOp(
+                left=Constant(value=b'\x00'),
+                op=Mult(),
+                right=BinOp(
+                    left=Constant(value=2),
+                    op=Pow(),
+                    right=Constant(value=31)))),
+        Assign(
+            targets=[
+                Name(id='result', ctx=Store())],
+            value=Call(
+                func=Name(id='vulnerable_lin2lin', ctx=Load()),
+                args=[
+                    Name(id='large_data', ctx=Load()),
+                    Constant(value=1),
+                    Constant(value=2),
+                    Constant(value=2),
+                    Constant(value=2)],
+                keywords=[]))],
+    type_ignores=[])

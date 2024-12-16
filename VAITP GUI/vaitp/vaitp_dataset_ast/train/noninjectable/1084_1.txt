@@ -1,0 +1,45 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        FunctionDef(
+            name='create_shared_environment',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='env_path')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='os', ctx=Load()),
+                            attr='makedirs',
+                            ctx=Load()),
+                        args=[
+                            Name(id='env_path', ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='exist_ok',
+                                value=Constant(value=True))])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='os', ctx=Load()),
+                            attr='chmod',
+                            ctx=Load()),
+                        args=[
+                            Name(id='env_path', ctx=Load()),
+                            Constant(value=511)],
+                        keywords=[]))],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='create_shared_environment', ctx=Load()),
+                args=[
+                    Constant(value='/path/to/shared/python/environment')],
+                keywords=[]))],
+    type_ignores=[])

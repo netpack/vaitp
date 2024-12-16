@@ -1,0 +1,110 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='zipfile')]),
+        ClassDef(
+            name='VulnerableZipFile',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='file')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='zip_file',
+                                    ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='zipfile', ctx=Load()),
+                                    attr='ZipFile',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='file', ctx=Load())],
+                                keywords=[]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='get_data',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='name')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='info', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='zip_file',
+                                        ctx=Load()),
+                                    attr='getinfo',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='name', ctx=Load())],
+                                keywords=[])),
+                        Return(
+                            value=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='zip_file',
+                                        ctx=Load()),
+                                    attr='read',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='name', ctx=Load())],
+                                keywords=[]))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='vulnerable_zip', ctx=Store())],
+                    value=Call(
+                        func=Name(id='VulnerableZipFile', ctx=Load()),
+                        args=[
+                            Constant(value='example.zip')],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='data', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='vulnerable_zip', ctx=Load()),
+                            attr='get_data',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='somefile.txt')],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Name(id='data', ctx=Load())],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

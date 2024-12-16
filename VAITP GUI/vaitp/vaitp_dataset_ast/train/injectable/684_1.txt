@@ -1,0 +1,59 @@
+Module(
+    body=[
+        Assign(
+            targets=[
+                Name(id='required_dependencies', ctx=Store())],
+            value=List(
+                elts=[
+                    Constant(value='numpy'),
+                    Constant(value='scipy'),
+                    Constant(value='matplotlib')],
+                ctx=Load())),
+        FunctionDef(
+            name='install_dependencies',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='dependencies')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Import(
+                    names=[
+                        alias(name='subprocess')]),
+                Import(
+                    names=[
+                        alias(name='sys')]),
+                For(
+                    target=Name(id='package', ctx=Store()),
+                    iter=Name(id='dependencies', ctx=Load()),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='subprocess', ctx=Load()),
+                                    attr='check_call',
+                                    ctx=Load()),
+                                args=[
+                                    List(
+                                        elts=[
+                                            Attribute(
+                                                value=Name(id='sys', ctx=Load()),
+                                                attr='executable',
+                                                ctx=Load()),
+                                            Constant(value='-m'),
+                                            Constant(value='pip'),
+                                            Constant(value='install'),
+                                            Name(id='package', ctx=Load())],
+                                        ctx=Load())],
+                                keywords=[]))],
+                    orelse=[])],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='install_dependencies', ctx=Load()),
+                args=[
+                    Name(id='required_dependencies', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

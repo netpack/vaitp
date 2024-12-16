@@ -1,0 +1,151 @@
+Module(
+    body=[
+        ImportFrom(
+            module='flask',
+            names=[
+                alias(name='Flask'),
+                alias(name='request')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='app', ctx=Store())],
+            value=Call(
+                func=Name(id='Flask', ctx=Load()),
+                args=[
+                    Name(id='__name__', ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='users', ctx=Store())],
+            value=Dict(
+                keys=[
+                    Constant(value='admin'),
+                    Constant(value='editor'),
+                    Constant(value='developer')],
+                values=[
+                    Dict(
+                        keys=[
+                            Constant(value='role')],
+                        values=[
+                            Constant(value='administrator')]),
+                    Dict(
+                        keys=[
+                            Constant(value='role')],
+                        values=[
+                            Constant(value='editor')]),
+                    Dict(
+                        keys=[
+                            Constant(value='role')],
+                        values=[
+                            Constant(value='developer')])])),
+        FunctionDef(
+            name='add_user',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='current_user', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='request', ctx=Load()),
+                                attr='form',
+                                ctx=Load()),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='current_user')],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='new_username', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='request', ctx=Load()),
+                                attr='form',
+                                ctx=Load()),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='new_username')],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='new_role', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='request', ctx=Load()),
+                                attr='form',
+                                ctx=Load()),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='new_role')],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Subscript(
+                            value=Name(id='users', ctx=Load()),
+                            slice=Name(id='new_username', ctx=Load()),
+                            ctx=Store())],
+                    value=Dict(
+                        keys=[
+                            Constant(value='role')],
+                        values=[
+                            Name(id='new_role', ctx=Load())])),
+                Return(
+                    value=Tuple(
+                        elts=[
+                            JoinedStr(
+                                values=[
+                                    Constant(value='User  '),
+                                    FormattedValue(
+                                        value=Name(id='new_username', ctx=Load()),
+                                        conversion=-1),
+                                    Constant(value=' added with role '),
+                                    FormattedValue(
+                                        value=Name(id='new_role', ctx=Load()),
+                                        conversion=-1),
+                                    Constant(value='.')]),
+                            Constant(value=201)],
+                        ctx=Load()))],
+            decorator_list=[
+                Call(
+                    func=Attribute(
+                        value=Name(id='app', ctx=Load()),
+                        attr='route',
+                        ctx=Load()),
+                    args=[
+                        Constant(value='/admin/user/add')],
+                    keywords=[
+                        keyword(
+                            arg='methods',
+                            value=List(
+                                elts=[
+                                    Constant(value='POST')],
+                                ctx=Load()))])]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='app', ctx=Load()),
+                            attr='run',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

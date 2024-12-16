@@ -1,0 +1,74 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='mysql.connector')]),
+        Assign(
+            targets=[
+                Name(id='connection', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='mysql', ctx=Load()),
+                        attr='connector',
+                        ctx=Load()),
+                    attr='connect',
+                    ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='host',
+                        value=Constant(value='localhost')),
+                    keyword(
+                        arg='user',
+                        value=Constant(value='')),
+                    keyword(
+                        arg='password',
+                        value=Constant(value='')),
+                    keyword(
+                        arg='database',
+                        value=Constant(value='your_database'))])),
+        Assign(
+            targets=[
+                Name(id='cursor', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='connection', ctx=Load()),
+                    attr='cursor',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='cursor', ctx=Load()),
+                    attr='execute',
+                    ctx=Load()),
+                args=[
+                    Constant(value='SELECT * FROM your_table')],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='results', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='cursor', ctx=Load()),
+                    attr='fetchall',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='results', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='connection', ctx=Load()),
+                    attr='close',
+                    ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

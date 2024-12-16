@@ -1,0 +1,188 @@
+Module(
+    body=[
+        ImportFrom(
+            module='flask',
+            names=[
+                alias(name='Flask'),
+                alias(name='request'),
+                alias(name='abort'),
+                alias(name='session')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='app', ctx=Store())],
+            value=Call(
+                func=Name(id='Flask', ctx=Load()),
+                args=[
+                    Name(id='__name__', ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Attribute(
+                    value=Name(id='app', ctx=Load()),
+                    attr='secret_key',
+                    ctx=Store())],
+            value=Constant(value='your_secret_key')),
+        FunctionDef(
+            name='preview_expression',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='csrf_token', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='session', ctx=Load()),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='csrf_token')],
+                        keywords=[])),
+                If(
+                    test=BoolOp(
+                        op=Or(),
+                        values=[
+                            UnaryOp(
+                                op=Not(),
+                                operand=Name(id='csrf_token', ctx=Load())),
+                            Compare(
+                                left=Name(id='csrf_token', ctx=Load()),
+                                ops=[
+                                    NotEq()],
+                                comparators=[
+                                    Call(
+                                        func=Attribute(
+                                            value=Attribute(
+                                                value=Name(id='request', ctx=Load()),
+                                                attr='form',
+                                                ctx=Load()),
+                                            attr='get',
+                                            ctx=Load()),
+                                        args=[
+                                            Constant(value='csrf_token')],
+                                        keywords=[])])]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='abort', ctx=Load()),
+                                args=[
+                                    Constant(value=403)],
+                                keywords=[]))],
+                    orelse=[]),
+                Assign(
+                    targets=[
+                        Name(id='project_id', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='request', ctx=Load()),
+                                attr='form',
+                                ctx=Load()),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='project_id')],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='expression', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='request', ctx=Load()),
+                                attr='form',
+                                ctx=Load()),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='expression')],
+                        keywords=[])),
+                Return(
+                    value=Call(
+                        func=Name(id='execute_expression', ctx=Load()),
+                        args=[
+                            Name(id='project_id', ctx=Load()),
+                            Name(id='expression', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[
+                Call(
+                    func=Attribute(
+                        value=Name(id='app', ctx=Load()),
+                        attr='route',
+                        ctx=Load()),
+                    args=[
+                        Constant(value='/preview-expression')],
+                    keywords=[
+                        keyword(
+                            arg='methods',
+                            value=List(
+                                elts=[
+                                    Constant(value='POST')],
+                                ctx=Load()))])]),
+        FunctionDef(
+            name='generate_csrf_token',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Pass()],
+            decorator_list=[]),
+        FunctionDef(
+            name='before_request',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Compare(
+                        left=Constant(value='csrf_token'),
+                        ops=[
+                            NotIn()],
+                        comparators=[
+                            Name(id='session', ctx=Load())]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Subscript(
+                                    value=Name(id='session', ctx=Load()),
+                                    slice=Constant(value='csrf_token'),
+                                    ctx=Store())],
+                            value=Call(
+                                func=Name(id='generate_csrf_token', ctx=Load()),
+                                args=[],
+                                keywords=[]))],
+                    orelse=[])],
+            decorator_list=[
+                Attribute(
+                    value=Name(id='app', ctx=Load()),
+                    attr='before_request',
+                    ctx=Load())]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='app', ctx=Load()),
+                            attr='run',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

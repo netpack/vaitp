@@ -1,0 +1,61 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='bleach')]),
+        FunctionDef(
+            name='unsafe_sanitize_uri',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='input_uri')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='sanitized_uri', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='bleach', ctx=Load()),
+                            attr='clean',
+                            ctx=Load()),
+                        args=[
+                            Name(id='input_uri', ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='tags',
+                                value=List(elts=[], ctx=Load())),
+                            keyword(
+                                arg='attributes',
+                                value=Dict(keys=[], values=[])),
+                            keyword(
+                                arg='styles',
+                                value=List(elts=[], ctx=Load())),
+                            keyword(
+                                arg='strip',
+                                value=Constant(value=True))])),
+                Return(
+                    value=Name(id='sanitized_uri', ctx=Load()))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='user_input', ctx=Store())],
+            value=Constant(value="javascript:alert('XSS')")),
+        Assign(
+            targets=[
+                Name(id='unsafe_uri', ctx=Store())],
+            value=Call(
+                func=Name(id='unsafe_sanitize_uri', ctx=Load()),
+                args=[
+                    Name(id='user_input', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Constant(value='Sanitized URI:'),
+                    Name(id='unsafe_uri', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

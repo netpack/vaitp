@@ -1,0 +1,72 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='pickle')]),
+        FunctionDef(
+            name='load_data',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='serialized_data')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='pickle', ctx=Load()),
+                            attr='loads',
+                            ctx=Load()),
+                        args=[
+                            Name(id='serialized_data', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='dump_data',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='data')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='pickle', ctx=Load()),
+                            attr='dumps',
+                            ctx=Load()),
+                        args=[
+                            Name(id='data', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='serialized_data', ctx=Store())],
+            value=Call(
+                func=Name(id='dump_data', ctx=Load()),
+                args=[
+                    Dict(
+                        keys=[
+                            Constant(value='key')],
+                        values=[
+                            Constant(value='value')])],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='deserialized_data', ctx=Store())],
+            value=Call(
+                func=Name(id='load_data', ctx=Load()),
+                args=[
+                    Name(id='serialized_data', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='deserialized_data', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

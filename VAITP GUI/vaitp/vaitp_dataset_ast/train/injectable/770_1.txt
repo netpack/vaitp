@@ -1,0 +1,105 @@
+Module(
+    body=[
+        FunctionDef(
+            name='safe_include',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='page_name')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='safe_page_name', ctx=Store())],
+                    value=Call(
+                        func=Name(id='escape', ctx=Load()),
+                        args=[
+                            Name(id='page_name', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='include_page', ctx=Load()),
+                        args=[
+                            Name(id='safe_page_name', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='escape',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='input_string')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Call(
+                                func=Attribute(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Call(
+                                                func=Attribute(
+                                                    value=Name(id='input_string', ctx=Load()),
+                                                    attr='replace',
+                                                    ctx=Load()),
+                                                args=[
+                                                    Constant(value='<'),
+                                                    Constant(value='&lt;')],
+                                                keywords=[]),
+                                            attr='replace',
+                                            ctx=Load()),
+                                        args=[
+                                            Constant(value='>'),
+                                            Constant(value='&gt;')],
+                                        keywords=[]),
+                                    attr='replace',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='${'),
+                                    Constant(value="${'${'}")],
+                                keywords=[]),
+                            attr='replace',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='#'),
+                            Constant(value='&#35;')],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='include_page',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='page_name')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            JoinedStr(
+                                values=[
+                                    Constant(value='Including page: '),
+                                    FormattedValue(
+                                        value=Name(id='page_name', ctx=Load()),
+                                        conversion=-1)])],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='user_input', ctx=Store())],
+            value=Constant(value="<script>alert('XSS')</script>")),
+        Expr(
+            value=Call(
+                func=Name(id='safe_include', ctx=Load()),
+                args=[
+                    Name(id='user_input', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

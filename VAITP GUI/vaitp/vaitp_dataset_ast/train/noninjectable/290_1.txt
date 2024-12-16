@@ -1,0 +1,40 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='democritus_html')]),
+        FunctionDef(
+            name='render_html',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='content')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='democritus_html', ctx=Load()),
+                            attr='render',
+                            ctx=Load()),
+                        args=[
+                            Name(id='content', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='html_content', ctx=Store())],
+            value=Call(
+                func=Name(id='render_html', ctx=Load()),
+                args=[
+                    Constant(value='Hello, world!')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='html_content', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

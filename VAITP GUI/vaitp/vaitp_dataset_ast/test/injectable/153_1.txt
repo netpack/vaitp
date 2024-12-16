@@ -1,0 +1,164 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='http.server')]),
+        Import(
+            names=[
+                alias(name='os')]),
+        ImportFrom(
+            module='urllib.parse',
+            names=[
+                alias(name='unquote')],
+            level=0),
+        ClassDef(
+            name='SafeHTTPRequestHandler',
+            bases=[
+                Attribute(
+                    value=Attribute(
+                        value=Name(id='http', ctx=Load()),
+                        attr='server',
+                        ctx=Load()),
+                    attr='SimpleHTTPRequestHandler',
+                    ctx=Load())],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='translate_path',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='path')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='path', ctx=Store())],
+                            value=Call(
+                                func=Name(id='unquote', ctx=Load()),
+                                args=[
+                                    Name(id='path', ctx=Load())],
+                                keywords=[])),
+                        Assign(
+                            targets=[
+                                Name(id='current_dir', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='os', ctx=Load()),
+                                        attr='path',
+                                        ctx=Load()),
+                                    attr='abspath',
+                                    ctx=Load()),
+                                args=[
+                                    Attribute(
+                                        value=Name(id='os', ctx=Load()),
+                                        attr='curdir',
+                                        ctx=Load())],
+                                keywords=[])),
+                        Assign(
+                            targets=[
+                                Name(id='potential_path', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='os', ctx=Load()),
+                                        attr='path',
+                                        ctx=Load()),
+                                    attr='abspath',
+                                    ctx=Load()),
+                                args=[
+                                    Call(
+                                        func=Attribute(
+                                            value=Attribute(
+                                                value=Name(id='os', ctx=Load()),
+                                                attr='path',
+                                                ctx=Load()),
+                                            attr='join',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='current_dir', ctx=Load()),
+                                            Call(
+                                                func=Attribute(
+                                                    value=Name(id='path', ctx=Load()),
+                                                    attr='lstrip',
+                                                    ctx=Load()),
+                                                args=[
+                                                    Constant(value='/')],
+                                                keywords=[])],
+                                        keywords=[])],
+                                keywords=[])),
+                        If(
+                            test=UnaryOp(
+                                op=Not(),
+                                operand=Call(
+                                    func=Attribute(
+                                        value=Name(id='potential_path', ctx=Load()),
+                                        attr='startswith',
+                                        ctx=Load()),
+                                    args=[
+                                        Name(id='current_dir', ctx=Load())],
+                                    keywords=[])),
+                            body=[
+                                Raise(
+                                    exc=Call(
+                                        func=Name(id='Exception', ctx=Load()),
+                                        args=[
+                                            Constant(value='Attempted Directory Traversal Attack')],
+                                        keywords=[]))],
+                            orelse=[]),
+                        Return(
+                            value=Name(id='potential_path', ctx=Load()))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='server_address', ctx=Store())],
+                    value=Tuple(
+                        elts=[
+                            Constant(value=''),
+                            Constant(value=8000)],
+                        ctx=Load())),
+                Assign(
+                    targets=[
+                        Name(id='httpd', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='http', ctx=Load()),
+                                attr='server',
+                                ctx=Load()),
+                            attr='HTTPServer',
+                            ctx=Load()),
+                        args=[
+                            Name(id='server_address', ctx=Load()),
+                            Name(id='SafeHTTPRequestHandler', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Serving at port'),
+                            Constant(value=8000)],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='httpd', ctx=Load()),
+                            attr='serve_forever',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

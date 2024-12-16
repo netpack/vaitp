@@ -1,0 +1,82 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='mimetypes')]),
+        FunctionDef(
+            name='handle_uploaded_file',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='file')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Tuple(
+                            elts=[
+                                Name(id='mime_type', ctx=Store()),
+                                Name(id='_', ctx=Store())],
+                            ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='mimetypes', ctx=Load()),
+                            attr='guess_type',
+                            ctx=Load()),
+                        args=[
+                            Attribute(
+                                value=Name(id='file', ctx=Load()),
+                                attr='filename',
+                                ctx=Load())],
+                        keywords=[])),
+                If(
+                    test=Call(
+                        func=Attribute(
+                            value=Name(id='mime_type', ctx=Load()),
+                            attr='startswith',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='text/')],
+                        keywords=[]),
+                    body=[
+                        With(
+                            items=[
+                                withitem(
+                                    context_expr=Call(
+                                        func=Name(id='open', ctx=Load()),
+                                        args=[
+                                            Attribute(
+                                                value=Name(id='file', ctx=Load()),
+                                                attr='filename',
+                                                ctx=Load()),
+                                            Constant(value='r')],
+                                        keywords=[]),
+                                    optional_vars=Name(id='f', ctx=Store()))],
+                            body=[
+                                Assign(
+                                    targets=[
+                                        Name(id='content', ctx=Store())],
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='f', ctx=Load()),
+                                            attr='read',
+                                            ctx=Load()),
+                                        args=[],
+                                        keywords=[])),
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='exec', ctx=Load()),
+                                        args=[
+                                            Name(id='content', ctx=Load())],
+                                        keywords=[]))])],
+                    orelse=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Unsupported file type.')],
+                                keywords=[]))])],
+            decorator_list=[])],
+    type_ignores=[])

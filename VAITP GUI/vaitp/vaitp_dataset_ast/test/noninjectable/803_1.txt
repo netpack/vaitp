@@ -1,0 +1,44 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='urllib3')]),
+        Assign(
+            targets=[
+                Name(id='http', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='urllib3', ctx=Load()),
+                    attr='PoolManager',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='response', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='http', ctx=Load()),
+                    attr='request',
+                    ctx=Load()),
+                args=[
+                    Constant(value='GET'),
+                    Constant(value='http://example.com')],
+                keywords=[
+                    keyword(
+                        arg='headers',
+                        value=Dict(
+                            keys=[
+                                Constant(value='Cookie')],
+                            values=[
+                                Constant(value='session_id=12345')]))])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Attribute(
+                        value=Name(id='response', ctx=Load()),
+                        attr='data',
+                        ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

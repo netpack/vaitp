@@ -1,0 +1,32 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='zipimport')]),
+        Assign(
+            targets=[
+                Name(id='zip_file', ctx=Store())],
+            value=Constant(value='malicious.zip')),
+        Assign(
+            targets=[
+                Name(id='zip_importer', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='zipimport', ctx=Load()),
+                    attr='zipimporter',
+                    ctx=Load()),
+                args=[
+                    Name(id='zip_file', ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='module', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='zip_importer', ctx=Load()),
+                    attr='load_module',
+                    ctx=Load()),
+                args=[
+                    Constant(value='module')],
+                keywords=[]))],
+    type_ignores=[])

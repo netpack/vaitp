@@ -1,0 +1,127 @@
+Module(
+    body=[
+        ImportFrom(
+            module='aws_encryption_sdk',
+            names=[
+                alias(name='encrypt'),
+                alias(name='decrypt')],
+            level=0),
+        ImportFrom(
+            module='aws_encryption_sdk.key_providers.kms',
+            names=[
+                alias(name='KMSMasterKeyProvider')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='kms_key_provider', ctx=Store())],
+            value=Call(
+                func=Name(id='KMSMasterKeyProvider', ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='key_ids',
+                        value=List(
+                            elts=[
+                                Constant(value='your-kms-key-id')],
+                            ctx=Load()))])),
+        FunctionDef(
+            name='vulnerable_encrypt',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='plaintext')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Tuple(
+                            elts=[
+                                Name(id='ciphertext', ctx=Store()),
+                                Name(id='encryptor_header', ctx=Store())],
+                            ctx=Store())],
+                    value=Call(
+                        func=Name(id='encrypt', ctx=Load()),
+                        args=[],
+                        keywords=[
+                            keyword(
+                                arg='source',
+                                value=Name(id='plaintext', ctx=Load())),
+                            keyword(
+                                arg='key_provider',
+                                value=Name(id='kms_key_provider', ctx=Load()))])),
+                Return(
+                    value=Name(id='ciphertext', ctx=Load()))],
+            decorator_list=[]),
+        FunctionDef(
+            name='decrypt_data',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='ciphertext')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Tuple(
+                            elts=[
+                                Name(id='plaintext', ctx=Store()),
+                                Name(id='decryptor_header', ctx=Store())],
+                            ctx=Store())],
+                    value=Call(
+                        func=Name(id='decrypt', ctx=Load()),
+                        args=[],
+                        keywords=[
+                            keyword(
+                                arg='source',
+                                value=Name(id='ciphertext', ctx=Load()))])),
+                Return(
+                    value=Name(id='plaintext', ctx=Load()))],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='plaintext', ctx=Store())],
+                    value=Constant(value=b'Sensitive data that needs encryption')),
+                Assign(
+                    targets=[
+                        Name(id='encrypted_data', ctx=Store())],
+                    value=Call(
+                        func=Name(id='vulnerable_encrypt', ctx=Load()),
+                        args=[
+                            Name(id='plaintext', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Encrypted data:'),
+                            Name(id='encrypted_data', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='decrypted_data', ctx=Store())],
+                    value=Call(
+                        func=Name(id='decrypt_data', ctx=Load()),
+                        args=[
+                            Name(id='encrypted_data', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Decrypted data:'),
+                            Name(id='decrypted_data', ctx=Load())],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

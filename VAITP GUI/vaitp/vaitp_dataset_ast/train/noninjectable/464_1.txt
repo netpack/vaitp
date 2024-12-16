@@ -1,0 +1,53 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        FunctionDef(
+            name='save_file',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='user_input_path'),
+                    arg(arg='data')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                With(
+                    items=[
+                        withitem(
+                            context_expr=Call(
+                                func=Name(id='open', ctx=Load()),
+                                args=[
+                                    Name(id='user_input_path', ctx=Load()),
+                                    Constant(value='w')],
+                                keywords=[]),
+                            optional_vars=Name(id='file', ctx=Store()))],
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='file', ctx=Load()),
+                                    attr='write',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='data', ctx=Load())],
+                                keywords=[]))])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='user_input', ctx=Store())],
+            value=Constant(value='/path/to/user/specified/file.txt')),
+        Assign(
+            targets=[
+                Name(id='data_to_save', ctx=Store())],
+            value=Constant(value='Sensitive data')),
+        Expr(
+            value=Call(
+                func=Name(id='save_file', ctx=Load()),
+                args=[
+                    Name(id='user_input', ctx=Load()),
+                    Name(id='data_to_save', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

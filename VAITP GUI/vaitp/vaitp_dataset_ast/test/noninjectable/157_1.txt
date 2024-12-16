@@ -1,0 +1,108 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        Import(
+            names=[
+                alias(name='threading')]),
+        FunctionDef(
+            name='create_dir',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='name')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='os', ctx=Load()),
+                            attr='makedirs',
+                            ctx=Load()),
+                        args=[
+                            Name(id='name', ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='exist_ok',
+                                value=Constant(value=True))]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='t1', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='threading', ctx=Load()),
+                    attr='Thread',
+                    ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='target',
+                        value=Name(id='create_dir', ctx=Load())),
+                    keyword(
+                        arg='args',
+                        value=Tuple(
+                            elts=[
+                                BinOp(
+                                    left=Constant(value='A'),
+                                    op=Mult(),
+                                    right=Constant(value=260))],
+                            ctx=Load()))])),
+        Assign(
+            targets=[
+                Name(id='t2', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='threading', ctx=Load()),
+                    attr='Thread',
+                    ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='target',
+                        value=Name(id='create_dir', ctx=Load())),
+                    keyword(
+                        arg='args',
+                        value=Tuple(
+                            elts=[
+                                BinOp(
+                                    left=Constant(value='A'),
+                                    op=Mult(),
+                                    right=Constant(value=260))],
+                            ctx=Load()))])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='t1', ctx=Load()),
+                    attr='start',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='t2', ctx=Load()),
+                    attr='start',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='t1', ctx=Load()),
+                    attr='join',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='t2', ctx=Load()),
+                    attr='join',
+                    ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

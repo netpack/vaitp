@@ -1,0 +1,60 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='bson')]),
+        FunctionDef(
+            name='decode_dbref',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='dbref')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='bson', ctx=Load()),
+                            attr='decode_all',
+                            ctx=Load()),
+                        args=[
+                            Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='bson', ctx=Load()),
+                                        attr='BSON',
+                                        ctx=Load()),
+                                    attr='encode',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='dbref', ctx=Load())],
+                                keywords=[])],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='invalid_dbref', ctx=Store())],
+            value=Dict(
+                keys=[
+                    Constant(value='$ref'),
+                    Constant(value='$id')],
+                values=[
+                    Constant(value=None),
+                    Constant(value=None)])),
+        Assign(
+            targets=[
+                Name(id='result', ctx=Store())],
+            value=Call(
+                func=Name(id='decode_dbref', ctx=Load()),
+                args=[
+                    Name(id='invalid_dbref', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='result', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

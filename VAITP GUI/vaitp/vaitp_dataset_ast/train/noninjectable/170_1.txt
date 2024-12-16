@@ -1,0 +1,48 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='hashlib')]),
+        FunctionDef(
+            name='insecure_hash_function',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='user_input')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='hashlib', ctx=Load()),
+                                    attr='sha256',
+                                    ctx=Load()),
+                                args=[
+                                    Call(
+                                        func=Attribute(
+                                            value=Name(id='user_input', ctx=Load()),
+                                            attr='encode',
+                                            ctx=Load()),
+                                        args=[],
+                                        keywords=[])],
+                                keywords=[]),
+                            attr='hexdigest',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Call(
+                        func=Name(id='insecure_hash_function', ctx=Load()),
+                        args=[
+                            Constant(value='example')],
+                        keywords=[])],
+                keywords=[]))],
+    type_ignores=[])

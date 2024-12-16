@@ -1,0 +1,128 @@
+Module(
+    body=[
+        ImportFrom(
+            module='flask',
+            names=[
+                alias(name='Flask'),
+                alias(name='request'),
+                alias(name='abort')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='app', ctx=Store())],
+            value=Call(
+                func=Name(id='Flask', ctx=Load()),
+                args=[
+                    Name(id='__name__', ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='USER_ROLES', ctx=Store())],
+            value=Dict(
+                keys=[
+                    Constant(value='readonly_user'),
+                    Constant(value='admin_user')],
+                values=[
+                    Constant(value='read-only'),
+                    Constant(value='admin')])),
+        FunctionDef(
+            name='check_permissions',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='user')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Compare(
+                        left=Call(
+                            func=Attribute(
+                                value=Name(id='USER_ROLES', ctx=Load()),
+                                attr='get',
+                                ctx=Load()),
+                            args=[
+                                Name(id='user', ctx=Load())],
+                            keywords=[]),
+                        ops=[
+                            NotEq()],
+                        comparators=[
+                            Constant(value='admin')]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='abort', ctx=Load()),
+                                args=[
+                                    Constant(value=403)],
+                                keywords=[]))],
+                    orelse=[])],
+            decorator_list=[]),
+        FunctionDef(
+            name='mmi_method',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='user', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='request', ctx=Load()),
+                                attr='headers',
+                                ctx=Load()),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='X-User ')],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='check_permissions', ctx=Load()),
+                        args=[
+                            Name(id='user', ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=Tuple(
+                        elts=[
+                            Constant(value='Action performed successfully'),
+                            Constant(value=200)],
+                        ctx=Load()))],
+            decorator_list=[
+                Call(
+                    func=Attribute(
+                        value=Name(id='app', ctx=Load()),
+                        attr='route',
+                        ctx=Load()),
+                    args=[
+                        Constant(value='/mmi')],
+                    keywords=[
+                        keyword(
+                            arg='methods',
+                            value=List(
+                                elts=[
+                                    Constant(value='POST')],
+                                ctx=Load()))])]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='app', ctx=Load()),
+                            attr='run',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

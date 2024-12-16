@@ -1,0 +1,60 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='re')]),
+        FunctionDef(
+            name='vulnerable_svg_processing',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='svg_content')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='vulnerable_regex', ctx=Store())],
+                    value=Constant(value='<svg.*>(.*?)</svg>')),
+                Assign(
+                    targets=[
+                        Name(id='complex_regex', ctx=Store())],
+                    value=Constant(value='<path d="(.*?)" fill="(.*?)"')),
+                Assign(
+                    targets=[
+                        Name(id='matches', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='re', ctx=Load()),
+                            attr='findall',
+                            ctx=Load()),
+                        args=[
+                            Name(id='vulnerable_regex', ctx=Load()),
+                            Name(id='svg_content', ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=Name(id='matches', ctx=Load()))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='malicious_svg_content', ctx=Store())],
+            value=BinOp(
+                left=BinOp(
+                    left=Constant(value='<svg>'),
+                    op=Add(),
+                    right=BinOp(
+                        left=Constant(value='A'),
+                        op=Mult(),
+                        right=Constant(value=10000))),
+                op=Add(),
+                right=Constant(value='</svg>'))),
+        Assign(
+            targets=[
+                Name(id='processed_svg', ctx=Store())],
+            value=Call(
+                func=Name(id='vulnerable_svg_processing', ctx=Load()),
+                args=[
+                    Name(id='malicious_svg_content', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

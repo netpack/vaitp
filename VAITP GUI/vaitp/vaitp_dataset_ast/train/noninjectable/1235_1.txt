@@ -1,0 +1,259 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='logging')]),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='logging', ctx=Load()),
+                    attr='basicConfig',
+                    ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='level',
+                        value=Attribute(
+                            value=Name(id='logging', ctx=Load()),
+                            attr='DEBUG',
+                            ctx=Load())),
+                    keyword(
+                        arg='filename',
+                        value=Constant(value='hmc.log')),
+                    keyword(
+                        arg='filemode',
+                        value=Constant(value='w'))])),
+        Assign(
+            targets=[
+                Name(id='api_logger', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='logging', ctx=Load()),
+                    attr='getLogger',
+                    ctx=Load()),
+                args=[
+                    Constant(value='zhmcclient.api')],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='hmc_logger', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='logging', ctx=Load()),
+                    attr='getLogger',
+                    ctx=Load()),
+                args=[
+                    Constant(value='zhmcclient.hmc')],
+                keywords=[])),
+        FunctionDef(
+            name='create_partition',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='password')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='api_logger', ctx=Load()),
+                            attr='debug',
+                            ctx=Load()),
+                        args=[
+                            JoinedStr(
+                                values=[
+                                    Constant(value='Creating partition with password: '),
+                                    FormattedValue(
+                                        value=Name(id='password', ctx=Load()),
+                                        conversion=-1)])],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='hmc_logger', ctx=Load()),
+                            attr='debug',
+                            ctx=Load()),
+                        args=[
+                            JoinedStr(
+                                values=[
+                                    Constant(value='Creating partition with password: '),
+                                    FormattedValue(
+                                        value=Name(id='password', ctx=Load()),
+                                        conversion=-1)])],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='update_lpar',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='password')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='api_logger', ctx=Load()),
+                            attr='debug',
+                            ctx=Load()),
+                        args=[
+                            JoinedStr(
+                                values=[
+                                    Constant(value='Updating LPAR with password: '),
+                                    FormattedValue(
+                                        value=Name(id='password', ctx=Load()),
+                                        conversion=-1)])],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='hmc_logger', ctx=Load()),
+                            attr='debug',
+                            ctx=Load()),
+                        args=[
+                            JoinedStr(
+                                values=[
+                                    Constant(value='Updating LPAR with password: '),
+                                    FormattedValue(
+                                        value=Name(id='password', ctx=Load()),
+                                        conversion=-1)])],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='create_image_profile',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='password')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='api_logger', ctx=Load()),
+                            attr='debug',
+                            ctx=Load()),
+                        args=[
+                            JoinedStr(
+                                values=[
+                                    Constant(value='Creating image profile with password: '),
+                                    FormattedValue(
+                                        value=Name(id='password', ctx=Load()),
+                                        conversion=-1)])],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='hmc_logger', ctx=Load()),
+                            attr='debug',
+                            ctx=Load()),
+                        args=[
+                            JoinedStr(
+                                values=[
+                                    Constant(value='Creating image profile with password: '),
+                                    FormattedValue(
+                                        value=Name(id='password', ctx=Load()),
+                                        conversion=-1)])],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='create_hmc_user',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='password')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='api_logger', ctx=Load()),
+                            attr='debug',
+                            ctx=Load()),
+                        args=[
+                            JoinedStr(
+                                values=[
+                                    Constant(value='Creating HMC user with password: '),
+                                    FormattedValue(
+                                        value=Name(id='password', ctx=Load()),
+                                        conversion=-1)])],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='create_ldap_server',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='bind_password')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='api_logger', ctx=Load()),
+                            attr='debug',
+                            ctx=Load()),
+                        args=[
+                            JoinedStr(
+                                values=[
+                                    Constant(value='Creating LDAP server with bind password: '),
+                                    FormattedValue(
+                                        value=Name(id='bind_password', ctx=Load()),
+                                        conversion=-1)])],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='hmc_logger', ctx=Load()),
+                            attr='debug',
+                            ctx=Load()),
+                        args=[
+                            JoinedStr(
+                                values=[
+                                    Constant(value='Creating LDAP server with bind password: '),
+                                    FormattedValue(
+                                        value=Name(id='bind_password', ctx=Load()),
+                                        conversion=-1)])],
+                        keywords=[]))],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='create_partition', ctx=Load()),
+                args=[
+                    Constant(value='MySecretPartitionPassword')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='update_lpar', ctx=Load()),
+                args=[
+                    Constant(value='MySecretLparPassword')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='create_image_profile', ctx=Load()),
+                args=[
+                    Constant(value='MySecretImagePassword')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='create_hmc_user', ctx=Load()),
+                args=[
+                    Constant(value='MySecretHmcPassword')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='create_ldap_server', ctx=Load()),
+                args=[
+                    Constant(value='MySecretLdapPassword')],
+                keywords=[]))],
+    type_ignores=[])

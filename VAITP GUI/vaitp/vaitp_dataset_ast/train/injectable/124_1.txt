@@ -1,0 +1,74 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='cgi')]),
+        Import(
+            names=[
+                alias(name='os')]),
+        Assign(
+            targets=[
+                Name(id='handler', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='cgi', ctx=Load()),
+                    attr='CGIHandler',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Assign(
+            targets=[
+                Attribute(
+                    value=Name(id='handler', ctx=Load()),
+                    attr='cgi_directories',
+                    ctx=Store())],
+            value=List(
+                elts=[
+                    Constant(value='/cgi-bin')],
+                ctx=Load())),
+        If(
+            test=BoolOp(
+                op=And(),
+                values=[
+                    Compare(
+                        left=Constant(value='HTTP_PROXY'),
+                        ops=[
+                            In()],
+                        comparators=[
+                            Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='environ',
+                                ctx=Load())]),
+                    Compare(
+                        left=Constant(value='REQUEST_METHOD'),
+                        ops=[
+                            In()],
+                        comparators=[
+                            Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='environ',
+                                ctx=Load())])]),
+            body=[
+                Delete(
+                    targets=[
+                        Subscript(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='environ',
+                                ctx=Load()),
+                            slice=Constant(value='HTTP_PROXY'),
+                            ctx=Del())])],
+            orelse=[]),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='handler', ctx=Load()),
+                    attr='run',
+                    ctx=Load()),
+                args=[
+                    Attribute(
+                        value=Name(id='os', ctx=Load()),
+                        attr='environ',
+                        ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

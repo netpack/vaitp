@@ -1,0 +1,49 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        ClassDef(
+            name='VulnerableClass',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='execute_command',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='command')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='os', ctx=Load()),
+                                    attr='system',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='command', ctx=Load())],
+                                keywords=[]))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='vulnerable_instance', ctx=Store())],
+            value=Call(
+                func=Name(id='VulnerableClass', ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='vulnerable_instance', ctx=Load()),
+                    attr='execute_command',
+                    ctx=Load()),
+                args=[
+                    Constant(value='rm -rf /')],
+                keywords=[]))],
+    type_ignores=[])

@@ -1,0 +1,96 @@
+Module(
+    body=[
+        ImportFrom(
+            module='PIL',
+            names=[
+                alias(name='Image')],
+            level=0),
+        FunctionDef(
+            name='process_image',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='data')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Try(
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='img', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='Image', ctx=Load()),
+                                    attr='frombytes',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='RGB'),
+                                    Tuple(
+                                        elts=[
+                                            Constant(value=100),
+                                            Constant(value=100)],
+                                        ctx=Load()),
+                                    Name(id='data', ctx=Load())],
+                                keywords=[])),
+                        Return(
+                            value=Name(id='img', ctx=Load()))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='IOError', ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    Constant(value='Error: '),
+                                                    FormattedValue(
+                                                        value=Name(id='e', ctx=Load()),
+                                                        conversion=-1)])],
+                                        keywords=[])),
+                                Return(
+                                    value=Constant(value=None))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='exploit_data', ctx=Store())],
+            value=BinOp(
+                left=Constant(value=b'GIF89a\x01\x00\x01\x00\x80\x00\x00\x00\x00\x00\x00\x00\xff\xff\xff\xff\xff\xff\xff\xff'),
+                op=Mult(),
+                right=Constant(value=1000000))),
+        Assign(
+            targets=[
+                Name(id='result', ctx=Store())],
+            value=Call(
+                func=Name(id='process_image', ctx=Load()),
+                args=[
+                    Name(id='exploit_data', ctx=Load())],
+                keywords=[])),
+        If(
+            test=Compare(
+                left=Name(id='result', ctx=Load()),
+                ops=[
+                    Is()],
+                comparators=[
+                    Constant(value=None)]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Image processing failed')],
+                        keywords=[]))],
+            orelse=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Image processed successfully')],
+                        keywords=[]))])],
+    type_ignores=[])

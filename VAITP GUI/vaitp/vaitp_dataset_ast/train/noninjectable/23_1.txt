@@ -1,0 +1,88 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        Import(
+            names=[
+                alias(name='sys')]),
+        FunctionDef(
+            name='add_user_writable_path',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='user_writable_directory', ctx=Store())],
+                    value=Constant(value='C:\\Users\\Public\\WritableDirectory')),
+                Assign(
+                    targets=[
+                        Name(id='current_path', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='environ',
+                                ctx=Load()),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='PATH'),
+                            Constant(value='')],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='new_path', ctx=Store())],
+                    value=BinOp(
+                        left=BinOp(
+                            left=Name(id='current_path', ctx=Load()),
+                            op=Add(),
+                            right=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='pathsep',
+                                ctx=Load())),
+                        op=Add(),
+                        right=Name(id='user_writable_directory', ctx=Load()))),
+                Assign(
+                    targets=[
+                        Subscript(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='environ',
+                                ctx=Load()),
+                            slice=Constant(value='PATH'),
+                            ctx=Store())],
+                    value=Name(id='new_path', ctx=Load()))],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='add_user_writable_path', ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Insecure PATH modified:'),
+                            Subscript(
+                                value=Attribute(
+                                    value=Name(id='os', ctx=Load()),
+                                    attr='environ',
+                                    ctx=Load()),
+                                slice=Constant(value='PATH'),
+                                ctx=Load())],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

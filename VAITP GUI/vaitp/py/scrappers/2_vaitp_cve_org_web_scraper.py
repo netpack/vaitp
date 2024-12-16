@@ -26,7 +26,7 @@ try:
 except Exception as e:
     print(f"Error initializing Chrome WebDriver: {e}")
 
-wait = WebDriverWait(driver, 30)  # wait for a maximum of 30 seconds
+wait = WebDriverWait(driver, 240)  # wait for a maximum of 240 seconds
 
 headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36"
@@ -92,7 +92,7 @@ def process_json_file(file_path):
                 cwe_id = "N/A"
             
             # Check if we already have it in the db
-            query = f"SELECT id FROM python_vulnerabilities WHERE cve LIKE '{cve_id}';"
+            query = f"SELECT ID FROM python_vulnerabilities WHERE CVE LIKE '{cve_id}';"
             results = vaitp_db.execute_query(query)
 
             if results:

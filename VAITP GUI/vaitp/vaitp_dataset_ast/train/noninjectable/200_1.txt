@@ -1,0 +1,67 @@
+Module(
+    body=[
+        FunctionDef(
+            name='vulnerable_integer_addition',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='a'),
+                    arg(arg='b')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=BinOp(
+                        left=Name(id='a', ctx=Load()),
+                        op=Add(),
+                        right=Name(id='b', ctx=Load())))],
+            decorator_list=[]),
+        FunctionDef(
+            name='vulnerable_integer_multiplication',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='a'),
+                    arg(arg='b')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=BinOp(
+                        left=Name(id='a', ctx=Load()),
+                        op=Mult(),
+                        right=Name(id='b', ctx=Load())))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='result_add', ctx=Store())],
+            value=Call(
+                func=Name(id='vulnerable_integer_addition', ctx=Load()),
+                args=[
+                    Constant(value=2147483647),
+                    Constant(value=1)],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='result_add', ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='result_mul', ctx=Store())],
+            value=Call(
+                func=Name(id='vulnerable_integer_multiplication', ctx=Load()),
+                args=[
+                    Constant(value=100000),
+                    Constant(value=30000)],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='result_mul', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

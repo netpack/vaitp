@@ -1,0 +1,52 @@
+Module(
+    body=[
+        Assign(
+            targets=[
+                Name(id='SENTRY_SEND_DEFAULT_PII', ctx=Store())],
+            value=Constant(value=False)),
+        Assign(
+            targets=[
+                Name(id='SESSION_COOKIE_NAME', ctx=Store())],
+            value=Constant(value='sessionid')),
+        Assign(
+            targets=[
+                Name(id='CSRF_COOKIE_NAME', ctx=Store())],
+            value=Constant(value='csrftoken')),
+        ImportFrom(
+            module='sentry_sdk',
+            names=[
+                alias(name='capture_exception')],
+            level=0),
+        FunctionDef(
+            name='my_view',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='request')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Try(
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='An error occurred!')],
+                                keywords=[]))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='Exception', ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='capture_exception', ctx=Load()),
+                                        args=[
+                                            Name(id='e', ctx=Load())],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[])],
+    type_ignores=[])

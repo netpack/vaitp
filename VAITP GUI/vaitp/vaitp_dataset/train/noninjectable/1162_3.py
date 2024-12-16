@@ -1,0 +1,184 @@
+{% extends 'base.html' %}
+{% load buttons %}
+{% load helpers %}
+{% load plugins %}
+{% load static %}
+
+{% block header %}
+    <div class="row noprint">
+        <div class="{% if search_form %}col-sm-8 col-md-9 {% else %} col-md-12 {% endif %}">
+            <ol class="breadcrumb">
+            {% block breadcrumbs %}
+                {% if list_url %}
+                <li><a href="{% url list_url %}">{{ title }}</a></li>
+                {% endif %}
+                {% block extra_breadcrumbs %}{% endblock extra_breadcrumbs %}
+            {% endblock breadcrumbs %}
+            </ol>
+        </div>
+        {% if search_form %}
+        <div class="col-sm-4 col-md-3">
+            <form action="#" method="get" id="search-form">
+                <div class="input-group">
+                    {{ search_form.q }}
+                    <span class="input-group-btn">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="mdi mdi-magnify"></i>
+                        </button>
+                    </span>
+                </div>
+            </form>
+        </div>
+        {% endif %}
+    </div>
+{% endblock header %}
+
+
+{% block content %}
+<div class="pull-right noprint">
+    {% block buttons %}{% endblock %}
+    {% plugin_buttons content_type.model_class 'list' %}
+    {% if table and request.user.is_authenticated and table_config_form %}
+        {% block table_config_button %}
+            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#ObjectTable_config" title="Configure table"><i class="mdi mdi-cog"></i> Configure</button>
+        {% endblock table_config_button %}
+    {% endif %}
+    {% if filter_form or dynamic_filter_form %}
+        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#FilterForm_modal" title="Add filters" id="id__filterbtn"><i class="mdi mdi-filter"></i> Filter</button>
+    {% endif %}
+    {% if permissions.add and 'add' in action_buttons %}
+        {% add_button content_type.model_class|validated_viewname:"add" %}
+    {% endif %}
+    {% if permissions.add and 'import' in action_buttons %}
+        {% block import_button %}
+            {% job_import_button content_type %}
+        {% endblock import_button %}
+    {% endif %}
+    {% if 'export' in action_buttons %}
+        {% block export_button %}
+            {% export_button content_type %}
+        {% endblock export_button %}
+    {% endif %}
+</div>
+<h1>{% block title %}{{ title }}{% endblock %}</h1>
+{% block header_extra %}{% endblock %}
+{% if filter_params %}
+<div class="filters-applied">
+    <b>Filters:</b>
+    {% for field in filter_params %}
+    <span class="filter-container" dir="ltr">
+        <span
+                class="filter-selection">
+            <b>{{ field.display }}:</b>
+            <span
+                    class="remove-filter-param"
+                    title="Remove all items"
+                    data-field-type="parent"
+                    data-field-value={{ field.name }}
+            >×</span>
+            <ul class="filter-selection-rendered">
+                {% for value in field.values %}
+                <li
+                        class="filter-selection-choice"
+                        title="{{ value.name }}"
+                >
+                    <span
+                            class="filter-selection-choice-remove remove-filter-param"
+                            data-field-type="child"
+                            data-field-parent={{ field.name }}
+                            data-field-value={{ value.name }}
+                    >×</span>{{ value.display }}
+                </li>
+                {% endfor %}
+            </ul>
+        </span>
+    </span>
+    {% endfor %}
+</div>
+<hr>
+{% endif %}
+
+<div class="row">
+    {% block table %}
+    <div class="col-md-12">
+        {% with bulk_edit_url=content_type.model_class|validated_viewname:"bulk_edit" bulk_delete_url=content_type.model_class|validated_viewname:"bulk_delete" %}
+        {% if permissions.change or permissions.delete %}
+            <form method="post" class="form form-horizontal">
+                {% csrf_token %}
+                <input type="hidden" name="return_url" value="{% if return_url %}{{ return_url }}{% else %}{{ request.path }}{% if request.GET %}?{{ request.GET.urlencode }}{% endif %}{% endif %}" />
+                {% if table.paginator.num_pages > 1 %}
+                <div class="table-responsive">
+                    <div id="select_all_box" class="hidden panel panel-default noprint">
+                        <div class="panel-body">
+                            <div class="checkbox-inline">
+                                <label for="select_all">
+                                    <input type="checkbox" id="select_all" name="_all" />
+                                    Select <strong>all {{ table.rows|length }} {{ table.data.verbose_name_plural }}</strong> matching query
+                                </label>
+                            </div>
+                            <div class="pull-right">
+                                {% if bulk_edit_url and permissions.change %}
+                                    <button type="submit" name="_edit" formaction="{% url bulk_edit_url %}{% if request.GET %}?{{ request.GET.urlencode }}{% endif %}" class="btn btn-warning btn-sm" disabled="disabled">
+                                        <span class="mdi mdi-pencil" aria-hidden="true"></span> Edit All
+                                    </button>
+                                {% endif %}
+                                {% if bulk_delete_url and permissions.delete %}
+                                    <button type="submit" name="_delete" formaction="{% url bulk_delete_url %}{% if request.GET %}?{{ request.GET.urlencode }}{% endif %}" class="btn btn-danger btn-sm" disabled="disabled">
+                                        <span class="mdi mdi-trash-can-outline" aria-hidden="true"></span> Delete All
+                                    </button>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                {% include table_template|default:'panel_table.html' %}
+                <div class="pull-left noprint">
+                    {% block bulk_buttons %}{% endblock %}
+                    {% if bulk_edit_url and permissions.change %}
+                        <button type="submit" name="_edit" formaction="{% url bulk_edit_url %}{% if request.GET %}?{{ request.GET.urlencode }}{% endif %}" class="btn btn-warning btn-sm">
+                            <span class="mdi mdi-pencil" aria-hidden="true"></span> Edit Selected
+                        </button>
+                    {% endif %}
+                    {% if bulk_delete_url and permissions.delete %}
+                        <button type="submit" name="_delete" formaction="{% url bulk_delete_url %}{% if request.GET %}?{{ request.GET.urlencode }}{% endif %}" class="btn btn-danger btn-sm">
+                            <span class="mdi mdi-trash-can-outline" aria-hidden="true"></span> Delete Selected
+                        </button>
+                    {% endif %}
+                </div>
+            </form>
+        {% else %}
+            {% include table_template|default:'panel_table.html' %}
+        {% endif %}
+        {% endwith %}
+        {% include 'inc/paginator.html' with paginator=table.paginator page=table.page %}
+        <div class="clearfix"></div>
+    </div>
+    {% endblock %}
+</div>
+{% if table %}{% table_config_form table table_name="ObjectTable" %}{% endif %}
+{% filter_form_modal filter_form dynamic_filter_form model_plural_name=title %}
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'js/tableconfig.js' %}"></script>
+<script src="{% static 'jquery/jquery.formset.js' %}"></script>
+<script>
+    var clipboard = new ClipboardJS('.btn');
+
+    clipboard.on('success', function (e) {});
+
+    clipboard.on('error', function (e) {});
+
+    $('.formset_row-dynamic-filterform').formset({
+        addText: '<span class="mdi mdi-plus-thick" aria-hidden="true"></span> Add another Filter',
+        addCssClass: 'btn btn-primary add-row',
+        deleteText: '<span class="mdi mdi-trash-can-outline" aria-hidden="true"></span>',
+        deleteCssClass: 'btn btn-danger delete-row',
+        prefix: 'form',
+        formCssClass: 'dynamic-filterform',
+        added: jsify_form,
+        removed: (row) => { row.remove(); }
+    });
+</script>
+{% endblock %}

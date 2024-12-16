@@ -1,0 +1,25 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='encodings.idna')]),
+        Assign(
+            targets=[
+                Name(id='hostname', ctx=Store())],
+            value=BinOp(
+                left=Constant(value='.'),
+                op=Mult(),
+                right=Constant(value=10000))),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='encodings', ctx=Load()),
+                        attr='idna',
+                        ctx=Load()),
+                    attr='decode',
+                    ctx=Load()),
+                args=[
+                    Name(id='hostname', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

@@ -1,0 +1,73 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='fontTools.ttLib')]),
+        ImportFrom(
+            module='fontTools.ttLib',
+            names=[
+                alias(name='TTFont')],
+            level=0),
+        ImportFrom(
+            module='lxml',
+            names=[
+                alias(name='etree')],
+            level=0),
+        FunctionDef(
+            name='parse_ot_svg_font',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='font_path')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='font', ctx=Store())],
+                    value=Call(
+                        func=Name(id='TTFont', ctx=Load()),
+                        args=[
+                            Name(id='font_path', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='svg_table', ctx=Store())],
+                    value=Attribute(
+                        value=Subscript(
+                            value=Name(id='font', ctx=Load()),
+                            slice=Constant(value='SVG '),
+                            ctx=Load()),
+                        attr='table',
+                        ctx=Load())),
+                Assign(
+                    targets=[
+                        Name(id='xml_data', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='svg_table', ctx=Load()),
+                            attr='toXML',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='xml_tree', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='etree', ctx=Load()),
+                            attr='fromstring',
+                            ctx=Load()),
+                        args=[
+                            Call(
+                                func=Attribute(
+                                    value=Name(id='xml_data', ctx=Load()),
+                                    attr='encode',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='utf-8')],
+                                keywords=[])],
+                        keywords=[]))],
+            decorator_list=[])],
+    type_ignores=[])

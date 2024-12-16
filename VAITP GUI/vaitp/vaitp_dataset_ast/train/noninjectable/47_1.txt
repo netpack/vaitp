@@ -1,0 +1,47 @@
+Module(
+    body=[
+        ImportFrom(
+            module='PIL',
+            names=[
+                alias(name='Image')],
+            level=0),
+        With(
+            items=[
+                withitem(
+                    context_expr=Call(
+                        func=Name(id='open', ctx=Load()),
+                        args=[
+                            Constant(value='crafted_ycbcr_file.ycbcr'),
+                            Constant(value='wb')],
+                        keywords=[]),
+                    optional_vars=Name(id='f', ctx=Store()))],
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='f', ctx=Load()),
+                            attr='write',
+                            ctx=Load()),
+                        args=[
+                            Constant(value=b'\x00\x01\x02\x03\x04\x05\x06\x07\x08\t\x10\x11\x12\x13\x14\x15')],
+                        keywords=[]))]),
+        Assign(
+            targets=[
+                Name(id='image', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='Image', ctx=Load()),
+                    attr='open',
+                    ctx=Load()),
+                args=[
+                    Constant(value='crafted_ycbcr_file.ycbcr')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='image', ctx=Load()),
+                    attr='load',
+                    ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

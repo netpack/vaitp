@@ -1,0 +1,112 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='sys')]),
+        Import(
+            names=[
+                alias(name='hashlib')]),
+        Assign(
+            targets=[
+                Name(id='table', ctx=Store())],
+            value=Dict(keys=[], values=[])),
+        While(
+            test=Constant(value=True),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='s', ctx=Store())],
+                    value=Call(
+                        func=Name(id='input', ctx=Load()),
+                        args=[
+                            Constant(value='Enter a string: ')],
+                        keywords=[])),
+                If(
+                    test=Compare(
+                        left=Name(id='s', ctx=Load()),
+                        ops=[
+                            Eq()],
+                        comparators=[
+                            Constant(value='quit')]),
+                    body=[
+                        Break()],
+                    orelse=[]),
+                Assign(
+                    targets=[
+                        Name(id='h', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='hashlib', ctx=Load()),
+                                    attr='sha256',
+                                    ctx=Load()),
+                                args=[
+                                    Call(
+                                        func=Attribute(
+                                            value=Name(id='s', ctx=Load()),
+                                            attr='encode',
+                                            ctx=Load()),
+                                        args=[],
+                                        keywords=[])],
+                                keywords=[]),
+                            attr='hexdigest',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            JoinedStr(
+                                values=[
+                                    Constant(value='The hash of '),
+                                    FormattedValue(
+                                        value=Name(id='s', ctx=Load()),
+                                        conversion=-1),
+                                    Constant(value=' is '),
+                                    FormattedValue(
+                                        value=Name(id='h', ctx=Load()),
+                                        conversion=-1)])],
+                        keywords=[])),
+                If(
+                    test=Compare(
+                        left=Name(id='h', ctx=Load()),
+                        ops=[
+                            In()],
+                        comparators=[
+                            Name(id='table', ctx=Load())]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            Constant(value='Collision detected with '),
+                                            FormattedValue(
+                                                value=Subscript(
+                                                    value=Name(id='table', ctx=Load()),
+                                                    slice=Name(id='h', ctx=Load()),
+                                                    ctx=Load()),
+                                                conversion=-1)])],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='sys', ctx=Load()),
+                                    attr='exit',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value=1)],
+                                keywords=[]))],
+                    orelse=[
+                        Assign(
+                            targets=[
+                                Subscript(
+                                    value=Name(id='table', ctx=Load()),
+                                    slice=Name(id='h', ctx=Load()),
+                                    ctx=Store())],
+                            value=Name(id='s', ctx=Load()))])],
+            orelse=[])],
+    type_ignores=[])

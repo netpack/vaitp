@@ -1,0 +1,65 @@
+Module(
+    body=[
+        FunctionDef(
+            name='vulnerable_mget',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='input_string')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='pointer', ctx=Store())],
+                    value=Constant(value=None)),
+                If(
+                    test=Compare(
+                        left=Call(
+                            func=Name(id='len', ctx=Load()),
+                            args=[
+                                Name(id='input_string', ctx=Load())],
+                            keywords=[]),
+                        ops=[
+                            Gt()],
+                        comparators=[
+                            Constant(value=100)]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='pointer', ctx=Store())],
+                            value=Subscript(
+                                value=Name(id='input_string', ctx=Load()),
+                                slice=Slice(
+                                    lower=Constant(value=100)),
+                                ctx=Load()))],
+                    orelse=[]),
+                Assign(
+                    targets=[
+                        Name(id='processed_string', ctx=Store())],
+                    value=BinOp(
+                        left=Name(id='input_string', ctx=Load()),
+                        op=Add(),
+                        right=Name(id='pointer', ctx=Load()))),
+                Return(
+                    value=Name(id='processed_string', ctx=Load()))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='result', ctx=Store())],
+            value=Call(
+                func=Name(id='vulnerable_mget', ctx=Load()),
+                args=[
+                    BinOp(
+                        left=Constant(value='A'),
+                        op=Mult(),
+                        right=Constant(value=150))],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='result', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

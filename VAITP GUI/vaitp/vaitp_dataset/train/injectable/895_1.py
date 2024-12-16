@@ -10,6 +10,3 @@ def read_object(self, object_id):
         return obj
     except Exception as e:
         raise ValueError("An error occurred while reading the PDF object: " + str(e))
-```
-
-This code should be placed in the appropriate location within the `PyPDF2/generic/_data_structures.py` file to prevent the infinite loop when handling malformed PDFs.

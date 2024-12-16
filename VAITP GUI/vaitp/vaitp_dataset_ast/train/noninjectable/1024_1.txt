@@ -1,0 +1,132 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='json')]),
+        ImportFrom(
+            module='flask',
+            names=[
+                alias(name='Flask'),
+                alias(name='request'),
+                alias(name='jsonify')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='app', ctx=Store())],
+            value=Call(
+                func=Name(id='Flask', ctx=Load()),
+                args=[
+                    Name(id='__name__', ctx=Load())],
+                keywords=[])),
+        FunctionDef(
+            name='create_notebook',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='data', ctx=Store())],
+                    value=Attribute(
+                        value=Name(id='request', ctx=Load()),
+                        attr='json',
+                        ctx=Load())),
+                If(
+                    test=BoolOp(
+                        op=Or(),
+                        values=[
+                            UnaryOp(
+                                op=Not(),
+                                operand=Name(id='data', ctx=Load())),
+                            Compare(
+                                left=Constant(value='name'),
+                                ops=[
+                                    NotIn()],
+                                comparators=[
+                                    Name(id='data', ctx=Load())])]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='error_message', ctx=Store())],
+                            value=Constant(value='Invalid notebook data.')),
+                        Return(
+                            value=Tuple(
+                                elts=[
+                                    Call(
+                                        func=Name(id='jsonify', ctx=Load()),
+                                        args=[
+                                            Dict(
+                                                keys=[
+                                                    Constant(value='error')],
+                                                values=[
+                                                    Name(id='error_message', ctx=Load())])],
+                                        keywords=[]),
+                                    Constant(value=400)],
+                                ctx=Load()))],
+                    orelse=[]),
+                Assign(
+                    targets=[
+                        Name(id='notebook_name', ctx=Store())],
+                    value=Subscript(
+                        value=Name(id='data', ctx=Load()),
+                        slice=Constant(value='name'),
+                        ctx=Load())),
+                Return(
+                    value=Tuple(
+                        elts=[
+                            Call(
+                                func=Name(id='jsonify', ctx=Load()),
+                                args=[
+                                    Dict(
+                                        keys=[
+                                            Constant(value='message')],
+                                        values=[
+                                            JoinedStr(
+                                                values=[
+                                                    Constant(value='Notebook '),
+                                                    FormattedValue(
+                                                        value=Name(id='notebook_name', ctx=Load()),
+                                                        conversion=-1),
+                                                    Constant(value=' created successfully!')])])],
+                                keywords=[]),
+                            Constant(value=201)],
+                        ctx=Load()))],
+            decorator_list=[
+                Call(
+                    func=Attribute(
+                        value=Name(id='app', ctx=Load()),
+                        attr='route',
+                        ctx=Load()),
+                    args=[
+                        Constant(value='/api/notebooks')],
+                    keywords=[
+                        keyword(
+                            arg='methods',
+                            value=List(
+                                elts=[
+                                    Constant(value='POST')],
+                                ctx=Load()))])]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='app', ctx=Load()),
+                            attr='run',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[
+                            keyword(
+                                arg='debug',
+                                value=Constant(value=True))]))],
+            orelse=[])],
+    type_ignores=[])

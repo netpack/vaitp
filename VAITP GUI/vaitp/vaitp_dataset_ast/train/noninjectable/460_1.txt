@@ -1,0 +1,60 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='json')]),
+        FunctionDef(
+            name='load_notebook',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='file_path')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                With(
+                    items=[
+                        withitem(
+                            context_expr=Call(
+                                func=Name(id='open', ctx=Load()),
+                                args=[
+                                    Name(id='file_path', ctx=Load()),
+                                    Constant(value='r')],
+                                keywords=[]),
+                            optional_vars=Name(id='f', ctx=Store()))],
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='notebook_content', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='json', ctx=Load()),
+                                    attr='load',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='f', ctx=Load())],
+                                keywords=[]))]),
+                Expr(
+                    value=Call(
+                        func=Name(id='exec', ctx=Load()),
+                        args=[
+                            Subscript(
+                                value=Subscript(
+                                    value=Subscript(
+                                        value=Name(id='notebook_content', ctx=Load()),
+                                        slice=Constant(value='cells'),
+                                        ctx=Load()),
+                                    slice=Constant(value=0),
+                                    ctx=Load()),
+                                slice=Constant(value='source'),
+                                ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='load_notebook', ctx=Load()),
+                args=[
+                    Constant(value='malicious_notebook.ipynb')],
+                keywords=[]))],
+    type_ignores=[])

@@ -1,0 +1,116 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='mechanize'),
+                alias(name='re')]),
+        Assign(
+            targets=[
+                Name(id='br', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='mechanize', ctx=Load()),
+                    attr='Browser',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='safe_regex', ctx=Store())],
+            value=Constant(value='^a+$')),
+        Assign(
+            targets=[
+                Name(id='input_string', ctx=Store())],
+            value=BinOp(
+                left=Constant(value='a'),
+                op=Mult(),
+                right=Constant(value=1000))),
+        Try(
+            body=[
+                If(
+                    test=Call(
+                        func=Attribute(
+                            value=Name(id='re', ctx=Load()),
+                            attr='match',
+                            ctx=Load()),
+                        args=[
+                            Name(id='safe_regex', ctx=Load()),
+                            Name(id='input_string', ctx=Load())],
+                        keywords=[]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Match found!')],
+                                keywords=[]))],
+                    orelse=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='No match.')],
+                                keywords=[]))])],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='Exception', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            Constant(value='An error occurred: '),
+                                            FormattedValue(
+                                                value=Name(id='e', ctx=Load()),
+                                                conversion=-1)])],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[]),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='response', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='br', ctx=Load()),
+                            attr='open',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='http://example.com')],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Successfully opened URL:'),
+                            Call(
+                                func=Attribute(
+                                    value=Name(id='response', ctx=Load()),
+                                    attr='geturl',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[])],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='Exception', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            Constant(value='Failed to open URL: '),
+                                            FormattedValue(
+                                                value=Name(id='e', ctx=Load()),
+                                                conversion=-1)])],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

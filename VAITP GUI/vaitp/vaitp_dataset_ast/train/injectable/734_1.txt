@@ -1,0 +1,132 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        Import(
+            names=[
+                alias(name='onnx')]),
+        FunctionDef(
+            name='safe_load_onnx_model',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='model_path'),
+                    arg(arg='allowed_directory')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='allowed_directory', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='path',
+                                ctx=Load()),
+                            attr='abspath',
+                            ctx=Load()),
+                        args=[
+                            Name(id='allowed_directory', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='model', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='onnx', ctx=Load()),
+                            attr='load',
+                            ctx=Load()),
+                        args=[
+                            Name(id='model_path', ctx=Load())],
+                        keywords=[])),
+                For(
+                    target=Name(id='tensor', ctx=Store()),
+                    iter=Attribute(
+                        value=Attribute(
+                            value=Name(id='model', ctx=Load()),
+                            attr='graph',
+                            ctx=Load()),
+                        attr='initializer',
+                        ctx=Load()),
+                    body=[
+                        If(
+                            test=Attribute(
+                                value=Name(id='tensor', ctx=Load()),
+                                attr='external_data',
+                                ctx=Load()),
+                            body=[
+                                Assign(
+                                    targets=[
+                                        Name(id='external_data_path', ctx=Store())],
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Attribute(
+                                                value=Name(id='os', ctx=Load()),
+                                                attr='path',
+                                                ctx=Load()),
+                                            attr='abspath',
+                                            ctx=Load()),
+                                        args=[
+                                            Attribute(
+                                                value=Name(id='tensor', ctx=Load()),
+                                                attr='external_data',
+                                                ctx=Load())],
+                                        keywords=[])),
+                                If(
+                                    test=UnaryOp(
+                                        op=Not(),
+                                        operand=Call(
+                                            func=Attribute(
+                                                value=Name(id='external_data_path', ctx=Load()),
+                                                attr='startswith',
+                                                ctx=Load()),
+                                            args=[
+                                                Name(id='allowed_directory', ctx=Load())],
+                                            keywords=[])),
+                                    body=[
+                                        Raise(
+                                            exc=Call(
+                                                func=Name(id='ValueError', ctx=Load()),
+                                                args=[
+                                                    JoinedStr(
+                                                        values=[
+                                                            Constant(value='External data path '),
+                                                            FormattedValue(
+                                                                value=Name(id='external_data_path', ctx=Load()),
+                                                                conversion=-1),
+                                                            Constant(value=' is outside the allowed directory.')])],
+                                                keywords=[]))],
+                                    orelse=[])],
+                            orelse=[])],
+                    orelse=[]),
+                Return(
+                    value=Name(id='model', ctx=Load()))],
+            decorator_list=[]),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='model', ctx=Store())],
+                    value=Call(
+                        func=Name(id='safe_load_onnx_model', ctx=Load()),
+                        args=[
+                            Constant(value='model.onnx'),
+                            Constant(value='/path/to/allowed/directory')],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ValueError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

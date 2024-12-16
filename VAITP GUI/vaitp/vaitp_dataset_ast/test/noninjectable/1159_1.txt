@@ -1,0 +1,125 @@
+Module(
+    body=[
+        ImportFrom(
+            module='flask',
+            names=[
+                alias(name='Flask'),
+                alias(name='request')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='app', ctx=Store())],
+            value=Call(
+                func=Name(id='Flask', ctx=Load()),
+                args=[
+                    Name(id='__name__', ctx=Load())],
+                keywords=[])),
+        FunctionDef(
+            name='handle_file_upload',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Compare(
+                        left=Constant(value='file'),
+                        ops=[
+                            NotIn()],
+                        comparators=[
+                            Attribute(
+                                value=Name(id='request', ctx=Load()),
+                                attr='files',
+                                ctx=Load())]),
+                    body=[
+                        Return(
+                            value=Tuple(
+                                elts=[
+                                    Constant(value='No file part'),
+                                    Constant(value=400)],
+                                ctx=Load()))],
+                    orelse=[]),
+                Assign(
+                    targets=[
+                        Name(id='file', ctx=Store())],
+                    value=Subscript(
+                        value=Attribute(
+                            value=Name(id='request', ctx=Load()),
+                            attr='files',
+                            ctx=Load()),
+                        slice=Constant(value='file'),
+                        ctx=Load())),
+                If(
+                    test=Compare(
+                        left=Attribute(
+                            value=Name(id='file', ctx=Load()),
+                            attr='filename',
+                            ctx=Load()),
+                        ops=[
+                            Eq()],
+                        comparators=[
+                            Constant(value='')]),
+                    body=[
+                        Return(
+                            value=Tuple(
+                                elts=[
+                                    Constant(value='No selected file'),
+                                    Constant(value=400)],
+                                ctx=Load()))],
+                    orelse=[]),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='file', ctx=Load()),
+                            attr='save',
+                            ctx=Load()),
+                        args=[
+                            BinOp(
+                                left=Constant(value='/path/to/save/'),
+                                op=Add(),
+                                right=Attribute(
+                                    value=Name(id='file', ctx=Load()),
+                                    attr='filename',
+                                    ctx=Load()))],
+                        keywords=[])),
+                Return(
+                    value=Tuple(
+                        elts=[
+                            Constant(value='File uploaded successfully'),
+                            Constant(value=200)],
+                        ctx=Load()))],
+            decorator_list=[
+                Call(
+                    func=Attribute(
+                        value=Name(id='app', ctx=Load()),
+                        attr='route',
+                        ctx=Load()),
+                    args=[
+                        Constant(value='/upload')],
+                    keywords=[
+                        keyword(
+                            arg='methods',
+                            value=List(
+                                elts=[
+                                    Constant(value='POST')],
+                                ctx=Load()))])]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='app', ctx=Load()),
+                            attr='run',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

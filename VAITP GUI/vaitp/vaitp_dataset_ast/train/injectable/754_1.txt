@@ -1,0 +1,87 @@
+Module(
+    body=[
+        ImportFrom(
+            module='django.core.validators',
+            names=[
+                alias(name='URLValidator')],
+            level=0),
+        ImportFrom(
+            module='django.core.exceptions',
+            names=[
+                alias(name='ValidationError')],
+            level=0),
+        FunctionDef(
+            name='validate_url',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='url')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='validator', ctx=Store())],
+                    value=Call(
+                        func=Name(id='URLValidator', ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Try(
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='validator', ctx=Load()),
+                                args=[
+                                    Name(id='url', ctx=Load())],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Valid URL')],
+                                keywords=[]))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='ValidationError', ctx=Load()),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            Constant(value='Invalid URL: contains newlines or tabs')],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='url_with_newline', ctx=Store())],
+            value=Constant(value='http://example.com\n')),
+        Assign(
+            targets=[
+                Name(id='url_with_tab', ctx=Store())],
+            value=Constant(value='http://example.com\t')),
+        Assign(
+            targets=[
+                Name(id='url_valid', ctx=Store())],
+            value=Constant(value='http://example.com')),
+        Expr(
+            value=Call(
+                func=Name(id='validate_url', ctx=Load()),
+                args=[
+                    Name(id='url_with_newline', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='validate_url', ctx=Load()),
+                args=[
+                    Name(id='url_with_tab', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='validate_url', ctx=Load()),
+                args=[
+                    Name(id='url_valid', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

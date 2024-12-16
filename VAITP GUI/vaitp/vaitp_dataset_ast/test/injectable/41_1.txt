@@ -1,0 +1,120 @@
+Module(
+    body=[
+        ImportFrom(
+            module='PIL',
+            names=[
+                alias(name='Image')],
+            level=0),
+        FunctionDef(
+            name='load_icns_safely',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='filename')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                With(
+                    items=[
+                        withitem(
+                            context_expr=Call(
+                                func=Name(id='open', ctx=Load()),
+                                args=[
+                                    Name(id='filename', ctx=Load()),
+                                    Constant(value='rb')],
+                                keywords=[]),
+                            optional_vars=Name(id='f', ctx=Store()))],
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='icns_header', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='f', ctx=Load()),
+                                    attr='read',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value=8)],
+                                keywords=[])),
+                        If(
+                            test=Compare(
+                                left=Subscript(
+                                    value=Name(id='icns_header', ctx=Load()),
+                                    slice=Slice(
+                                        upper=Constant(value=4)),
+                                    ctx=Load()),
+                                ops=[
+                                    NotEq()],
+                                comparators=[
+                                    Constant(value=b'ICNS')]),
+                            body=[
+                                Raise(
+                                    exc=Call(
+                                        func=Name(id='ValueError', ctx=Load()),
+                                        args=[
+                                            Constant(value='Not an ICNS file')],
+                                        keywords=[]))],
+                            orelse=[]),
+                        Assign(
+                            targets=[
+                                Name(id='image_size', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='int', ctx=Load()),
+                                    attr='from_bytes',
+                                    ctx=Load()),
+                                args=[
+                                    Subscript(
+                                        value=Name(id='icns_header', ctx=Load()),
+                                        slice=Slice(
+                                            lower=Constant(value=4)),
+                                        ctx=Load()),
+                                    Constant(value='big')],
+                                keywords=[])),
+                        If(
+                            test=Compare(
+                                left=Name(id='image_size', ctx=Load()),
+                                ops=[
+                                    Gt()],
+                                comparators=[
+                                    Constant(value=16777216)]),
+                            body=[
+                                Raise(
+                                    exc=Call(
+                                        func=Name(id='ValueError', ctx=Load()),
+                                        args=[
+                                            Constant(value='Image size is too large')],
+                                        keywords=[]))],
+                            orelse=[]),
+                        Assign(
+                            targets=[
+                                Name(id='img', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='Image', ctx=Load()),
+                                    attr='open',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='f', ctx=Load())],
+                                keywords=[])),
+                        Return(
+                            value=Name(id='img', ctx=Load()))])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='img', ctx=Store())],
+            value=Call(
+                func=Name(id='load_icns_safely', ctx=Load()),
+                args=[
+                    Constant(value='example.icns')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='img', ctx=Load()),
+                    attr='load',
+                    ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

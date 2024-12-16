@@ -1,0 +1,48 @@
+Module(
+    body=[
+        ImportFrom(
+            module='frappe',
+            names=[
+                alias(name='render_template')],
+            level=0),
+        FunctionDef(
+            name='render_with_user_input',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='template_name'),
+                    arg(arg='user_input')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='context', ctx=Store())],
+                    value=Dict(
+                        keys=[
+                            Constant(value='user_input')],
+                        values=[
+                            Name(id='user_input', ctx=Load())])),
+                Return(
+                    value=Call(
+                        func=Name(id='render_template', ctx=Load()),
+                        args=[
+                            Name(id='template_name', ctx=Load()),
+                            Name(id='context', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='user_input', ctx=Store())],
+            value=Constant(value="<script>alert('XSS');</script>")),
+        Assign(
+            targets=[
+                Name(id='unsafe_output', ctx=Store())],
+            value=Call(
+                func=Name(id='render_with_user_input', ctx=Load()),
+                args=[
+                    Constant(value='portal_page.html'),
+                    Name(id='user_input', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

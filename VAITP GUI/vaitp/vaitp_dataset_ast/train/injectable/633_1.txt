@@ -1,0 +1,104 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='re')]),
+        ImportFrom(
+            module='xml.sax',
+            names=[
+                alias(name='saxutils')],
+            level=0),
+        FunctionDef(
+            name='sanitize_input',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='input_data')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='saxutils', ctx=Load()),
+                            attr='escape',
+                            ctx=Load()),
+                        args=[
+                            Name(id='input_data', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='parse_feed',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='feed_content')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='malicious_pattern', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='re', ctx=Load()),
+                            attr='compile',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='<!--(.*?)-->')],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='sanitized_content', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='malicious_pattern', ctx=Load()),
+                            attr='sub',
+                            ctx=Load()),
+                        args=[
+                            Lambda(
+                                args=arguments(
+                                    posonlyargs=[],
+                                    args=[
+                                        arg(arg='m')],
+                                    kwonlyargs=[],
+                                    kw_defaults=[],
+                                    defaults=[]),
+                                body=Call(
+                                    func=Name(id='sanitize_input', ctx=Load()),
+                                    args=[
+                                        Call(
+                                            func=Attribute(
+                                                value=Name(id='m', ctx=Load()),
+                                                attr='group',
+                                                ctx=Load()),
+                                            args=[
+                                                Constant(value=0)],
+                                            keywords=[])],
+                                    keywords=[])),
+                            Name(id='feed_content', ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=Name(id='sanitized_content', ctx=Load()))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='feed', ctx=Store())],
+            value=Constant(value="<!--<script>alert('XSS')</script>--> <item>Example Item</item>")),
+        Assign(
+            targets=[
+                Name(id='parsed_feed', ctx=Store())],
+            value=Call(
+                func=Name(id='parse_feed', ctx=Load()),
+                args=[
+                    Name(id='feed', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='parsed_feed', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

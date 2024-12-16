@@ -1,0 +1,77 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='ctypes')]),
+        FunctionDef(
+            name='trigger_vulnerability',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='result', ctx=Store())],
+                    value=BinOp(
+                        left=Call(
+                            func=Attribute(
+                                value=Name(id='ctypes', ctx=Load()),
+                                attr='c_float',
+                                ctx=Load()),
+                            args=[
+                                Constant(value=1.0)],
+                            keywords=[]),
+                        op=Div(),
+                        right=Call(
+                            func=Attribute(
+                                value=Name(id='ctypes', ctx=Load()),
+                                attr='c_float',
+                                ctx=Load()),
+                            args=[
+                                Constant(value=0.0)],
+                            keywords=[]))),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Name(id='result', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Try(
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='trigger_vulnerability', ctx=Load()),
+                                args=[],
+                                keywords=[]))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='Exception', ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    Constant(value='Caught an exception: '),
+                                                    FormattedValue(
+                                                        value=Name(id='e', ctx=Load()),
+                                                        conversion=-1)])],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[])],
+            orelse=[])],
+    type_ignores=[])

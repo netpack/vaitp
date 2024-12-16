@@ -1,0 +1,127 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='ssl')]),
+        Import(
+            names=[
+                alias(name='socket')]),
+        FunctionDef(
+            name='create_ssl_context',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='context', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='ssl', ctx=Load()),
+                            attr='create_default_context',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Attribute(
+                            value=Name(id='context', ctx=Load()),
+                            attr='check_hostname',
+                            ctx=Store())],
+                    value=Constant(value=True)),
+                Assign(
+                    targets=[
+                        Attribute(
+                            value=Name(id='context', ctx=Load()),
+                            attr='minimum_version',
+                            ctx=Store())],
+                    value=Attribute(
+                        value=Attribute(
+                            value=Name(id='ssl', ctx=Load()),
+                            attr='TLSVersion',
+                            ctx=Load()),
+                        attr='TLSv1_2',
+                        ctx=Load())),
+                Return(
+                    value=Name(id='context', ctx=Load()))],
+            decorator_list=[]),
+        FunctionDef(
+            name='connect_to_server',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='hostname'),
+                    arg(arg='port')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='context', ctx=Store())],
+                    value=Call(
+                        func=Name(id='create_ssl_context', ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                With(
+                    items=[
+                        withitem(
+                            context_expr=Call(
+                                func=Attribute(
+                                    value=Name(id='socket', ctx=Load()),
+                                    attr='create_connection',
+                                    ctx=Load()),
+                                args=[
+                                    Tuple(
+                                        elts=[
+                                            Name(id='hostname', ctx=Load()),
+                                            Name(id='port', ctx=Load())],
+                                        ctx=Load())],
+                                keywords=[]),
+                            optional_vars=Name(id='sock', ctx=Store()))],
+                    body=[
+                        With(
+                            items=[
+                                withitem(
+                                    context_expr=Call(
+                                        func=Attribute(
+                                            value=Name(id='context', ctx=Load()),
+                                            attr='wrap_socket',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='sock', ctx=Load())],
+                                        keywords=[
+                                            keyword(
+                                                arg='server_hostname',
+                                                value=Name(id='hostname', ctx=Load()))]),
+                                    optional_vars=Name(id='ssock', ctx=Store()))],
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    Constant(value='SSL established. Peer: '),
+                                                    FormattedValue(
+                                                        value=Call(
+                                                            func=Attribute(
+                                                                value=Name(id='ssock', ctx=Load()),
+                                                                attr='getpeercert',
+                                                                ctx=Load()),
+                                                            args=[],
+                                                            keywords=[]),
+                                                        conversion=-1)])],
+                                        keywords=[]))])])],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='connect_to_server', ctx=Load()),
+                args=[
+                    Constant(value='example.com'),
+                    Constant(value=443)],
+                keywords=[]))],
+    type_ignores=[])

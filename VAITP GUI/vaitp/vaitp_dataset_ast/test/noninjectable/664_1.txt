@@ -1,0 +1,41 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='sys')]),
+        FunctionDef(
+            name='vulnerable_import',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='module_name')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='sys', ctx=Load()),
+                                attr='path',
+                                ctx=Load()),
+                            attr='append',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='')],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='__import__', ctx=Load()),
+                        args=[
+                            Name(id='module_name', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='vulnerable_import', ctx=Load()),
+                args=[
+                    Constant(value='malicious_module')],
+                keywords=[]))],
+    type_ignores=[])

@@ -1,0 +1,141 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='subprocess')]),
+        ClassDef(
+            name='VulnerableIPAddressManager',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='ip_addresses',
+                                    ctx=Store())],
+                            value=List(elts=[], ctx=Load()))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='add_ip_address',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='ip')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        If(
+                            test=Call(
+                                func=Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='is_malicious',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='ip', ctx=Load())],
+                                keywords=[]),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='subprocess', ctx=Load()),
+                                            attr='run',
+                                            ctx=Load()),
+                                        args=[
+                                            List(
+                                                elts=[
+                                                    Constant(value='echo'),
+                                                    Constant(value='Malicious command executed!')],
+                                                ctx=Load())],
+                                        keywords=[]))],
+                            orelse=[
+                                Expr(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Attribute(
+                                                value=Name(id='self', ctx=Load()),
+                                                attr='ip_addresses',
+                                                ctx=Load()),
+                                            attr='append',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='ip', ctx=Load())],
+                                        keywords=[]))])],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='is_malicious',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='ip')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Return(
+                            value=Compare(
+                                left=Name(id='ip', ctx=Load()),
+                                ops=[
+                                    Eq()],
+                                comparators=[
+                                    Constant(value='1.2.3.4')]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='get_ip_addresses',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Return(
+                            value=Attribute(
+                                value=Name(id='self', ctx=Load()),
+                                attr='ip_addresses',
+                                ctx=Load()))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='manager', ctx=Store())],
+            value=Call(
+                func=Name(id='VulnerableIPAddressManager', ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='manager', ctx=Load()),
+                    attr='add_ip_address',
+                    ctx=Load()),
+                args=[
+                    Constant(value='1.2.3.4')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Call(
+                        func=Attribute(
+                            value=Name(id='manager', ctx=Load()),
+                            attr='get_ip_addresses',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])],
+                keywords=[]))],
+    type_ignores=[])

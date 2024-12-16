@@ -1,0 +1,108 @@
+Module(
+    body=[
+        ImportFrom(
+            module='PIL',
+            names=[
+                alias(name='Image')],
+            level=0),
+        FunctionDef(
+            name='safely_open_image',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='image_path')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Try(
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='img', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='Image', ctx=Load()),
+                                    attr='open',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='image_path', ctx=Load())],
+                                keywords=[
+                                    keyword(
+                                        arg='verify',
+                                        value=Constant(value=True))])),
+                        If(
+                            test=UnaryOp(
+                                op=Not(),
+                                operand=Call(
+                                    func=Attribute(
+                                        value=Name(id='img', ctx=Load()),
+                                        attr='verify',
+                                        ctx=Load()),
+                                    args=[],
+                                    keywords=[])),
+                            body=[
+                                Raise(
+                                    exc=Call(
+                                        func=Name(id='ValueError', ctx=Load()),
+                                        args=[
+                                            Constant(value='Invalid or corrupted image')],
+                                        keywords=[]))],
+                            orelse=[]),
+                        Assign(
+                            targets=[
+                                Name(id='img', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='img', ctx=Load()),
+                                    attr='resize',
+                                    ctx=Load()),
+                                args=[
+                                    Tuple(
+                                        elts=[
+                                            Constant(value=300),
+                                            Constant(value=300)],
+                                        ctx=Load())],
+                                keywords=[])),
+                        Return(
+                            value=Name(id='img', ctx=Load()))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Tuple(
+                                elts=[
+                                    Name(id='IOError', ctx=Load()),
+                                    Attribute(
+                                        value=Name(id='Image', ctx=Load()),
+                                        attr='DecompressionBombError',
+                                        ctx=Load()),
+                                    Name(id='ValueError', ctx=Load())],
+                                ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    Constant(value='Error opening image: '),
+                                                    FormattedValue(
+                                                        value=Name(id='e', ctx=Load()),
+                                                        conversion=-1)])],
+                                        keywords=[])),
+                                Return(
+                                    value=Constant(value=None))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='malicious_image_path', ctx=Store())],
+            value=Constant(value='malicious_image.tga')),
+        Expr(
+            value=Call(
+                func=Name(id='safely_open_image', ctx=Load()),
+                args=[
+                    Name(id='malicious_image_path', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

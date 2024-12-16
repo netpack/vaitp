@@ -1,0 +1,139 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='docx')]),
+        ImportFrom(
+            module='lxml',
+            names=[
+                alias(name='etree')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='malicious_doc', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='docx', ctx=Load()),
+                    attr='Document',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='malicious_doc', ctx=Load()),
+                    attr='add_paragraph',
+                    ctx=Load()),
+                args=[
+                    Constant(value='<?xml version="1.0"?>\n    <!DOCTYPE root [\n        <!ENTITY xxe SYSTEM "file:///etc/passwd">\n    ]>\n    <root>\n        <data>&xxe;</data>\n    </root>')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='malicious_doc', ctx=Load()),
+                    attr='save',
+                    ctx=Load()),
+                args=[
+                    Constant(value='malicious.docx')],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='doc', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='docx', ctx=Load()),
+                    attr='Document',
+                    ctx=Load()),
+                args=[
+                    Constant(value='safe.docx')],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='xml_content', ctx=Store())],
+            value=Attribute(
+                value=Attribute(
+                    value=Name(id='doc', ctx=Load()),
+                    attr='element',
+                    ctx=Load()),
+                attr='xml',
+                ctx=Load())),
+        FunctionDef(
+            name='safe_parse',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='xml_content')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='parser', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='etree', ctx=Load()),
+                            attr='XMLParser',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[
+                            keyword(
+                                arg='resolve_entities',
+                                value=Constant(value=False))])),
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='etree', ctx=Load()),
+                            attr='fromstring',
+                            ctx=Load()),
+                        args=[
+                            Name(id='xml_content', ctx=Load()),
+                            Name(id='parser', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='safe_xml', ctx=Store())],
+                    value=Call(
+                        func=Name(id='safe_parse', ctx=Load()),
+                        args=[
+                            Name(id='xml_content', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='content', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='safe_xml', ctx=Load()),
+                            attr='xpath',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='//w:p//w:t/text()')],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Name(id='content', ctx=Load())],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='Exception', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            Constant(value='An error occurred: '),
+                                            FormattedValue(
+                                                value=Name(id='e', ctx=Load()),
+                                                conversion=-1)])],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

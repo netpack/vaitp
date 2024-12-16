@@ -1,0 +1,32 @@
+```
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/mman.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
+
+#define DISPATCH_LOG_BYTES 4096
+
+int main() {
+    int fd = open("/sys/kernel/debug/powerpc/dtl/cpu-0", O_RDONLY);
+    if (fd < 0) {
+        perror("open");
+        return 1;
+    }
+
+    char buf[DISPATCH_LOG_BYTES];
+    ssize_t bytes_read = read(fd, buf, DISPATCH_LOG_BYTES);
+    if (bytes_read < 0) {
+        perror("read");
+        return 1;
+    }
+
+    printf("Read %zd bytes from dispatch trace log:\n", bytes_read);
+    printf("%.*s\n", (int)bytes_read, buf);
+
+    close(fd);
+    return 0;
+}
+```

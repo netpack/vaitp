@@ -1,0 +1,4 @@
+```python
+# Example payload to exploit the vulnerability by passing memory or storage arguments
+raw_log.build_IR(['0x123', some_memory_variable])  # where `some_memory_variable` could be a memory reference
+```

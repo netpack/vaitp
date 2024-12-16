@@ -1,0 +1,131 @@
+Module(
+    body=[
+        ClassDef(
+            name='User',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='username'),
+                            arg(arg='has_scripting_permissions')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='username',
+                                    ctx=Store())],
+                            value=Name(id='username', ctx=Load())),
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='has_scripting_permissions',
+                                    ctx=Store())],
+                            value=Name(id='has_scripting_permissions', ctx=Load()))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        ClassDef(
+            name='DashboardEditor',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='user')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='user',
+                                    ctx=Store())],
+                            value=Name(id='user', ctx=Load()))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='edit_dashboard',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='script')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='execute_script',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='script', ctx=Load())],
+                                keywords=[]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='execute_script',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='script')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            Constant(value='Executing script: '),
+                                            FormattedValue(
+                                                value=Name(id='script', ctx=Load()),
+                                                conversion=-1)])],
+                                keywords=[]))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='user_without_permission', ctx=Store())],
+            value=Call(
+                func=Name(id='User', ctx=Load()),
+                args=[
+                    Constant(value='guest'),
+                    Constant(value=False)],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='editor', ctx=Store())],
+            value=Call(
+                func=Name(id='DashboardEditor', ctx=Load()),
+                args=[
+                    Name(id='user_without_permission', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='editor', ctx=Load()),
+                    attr='edit_dashboard',
+                    ctx=Load()),
+                args=[
+                    Constant(value="print('Hello, Guest! This should not be allowed.')")],
+                keywords=[]))],
+    type_ignores=[])

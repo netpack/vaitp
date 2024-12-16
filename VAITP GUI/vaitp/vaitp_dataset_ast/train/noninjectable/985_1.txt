@@ -1,0 +1,68 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        FunctionDef(
+            name='vulnerable_walk',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='top')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Constant(value='A function that demonstrates the vulnerability by using os.walk(), which can hit recursion limits.')),
+                For(
+                    target=Tuple(
+                        elts=[
+                            Name(id='dirpath', ctx=Store()),
+                            Name(id='dirnames', ctx=Store()),
+                            Name(id='filenames', ctx=Store())],
+                        ctx=Store()),
+                    iter=Call(
+                        func=Attribute(
+                            value=Name(id='os', ctx=Load()),
+                            attr='walk',
+                            ctx=Load()),
+                        args=[
+                            Name(id='top', ctx=Load())],
+                        keywords=[]),
+                    body=[
+                        For(
+                            target=Name(id='filename', ctx=Store()),
+                            iter=Name(id='filenames', ctx=Load()),
+                            body=[
+                                Assign(
+                                    targets=[
+                                        Name(id='full_path', ctx=Store())],
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Attribute(
+                                                value=Name(id='os', ctx=Load()),
+                                                attr='path',
+                                                ctx=Load()),
+                                            attr='join',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='dirpath', ctx=Load()),
+                                            Name(id='filename', ctx=Load())],
+                                        keywords=[])),
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            Name(id='full_path', ctx=Load())],
+                                        keywords=[]))],
+                            orelse=[])],
+                    orelse=[])],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='vulnerable_walk', ctx=Load()),
+                args=[
+                    Constant(value='/path/to/scan')],
+                keywords=[]))],
+    type_ignores=[])

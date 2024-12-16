@@ -1,0 +1,118 @@
+Module(
+    body=[
+        FunctionDef(
+            name='safe_load_image',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='image_data')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='max_width', ctx=Store())],
+                    value=Constant(value=10000)),
+                Assign(
+                    targets=[
+                        Name(id='max_height', ctx=Store())],
+                    value=Constant(value=10000)),
+                Assign(
+                    targets=[
+                        Name(id='width', ctx=Store())],
+                    value=Call(
+                        func=Name(id='get_image_width', ctx=Load()),
+                        args=[
+                            Name(id='image_data', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='height', ctx=Store())],
+                    value=Call(
+                        func=Name(id='get_image_height', ctx=Load()),
+                        args=[
+                            Name(id='image_data', ctx=Load())],
+                        keywords=[])),
+                If(
+                    test=BoolOp(
+                        op=Or(),
+                        values=[
+                            Compare(
+                                left=Name(id='width', ctx=Load()),
+                                ops=[
+                                    Lt()],
+                                comparators=[
+                                    Constant(value=0)]),
+                            Compare(
+                                left=Name(id='height', ctx=Load()),
+                                ops=[
+                                    Lt()],
+                                comparators=[
+                                    Constant(value=0)]),
+                            Compare(
+                                left=Name(id='width', ctx=Load()),
+                                ops=[
+                                    Gt()],
+                                comparators=[
+                                    Name(id='max_width', ctx=Load())]),
+                            Compare(
+                                left=Name(id='height', ctx=Load()),
+                                ops=[
+                                    Gt()],
+                                comparators=[
+                                    Name(id='max_height', ctx=Load())])]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Invalid image dimensions')],
+                                keywords=[]))],
+                    orelse=[]),
+                Assign(
+                    targets=[
+                        Name(id='image_buffer_size', ctx=Store())],
+                    value=BinOp(
+                        left=BinOp(
+                            left=Name(id='width', ctx=Load()),
+                            op=Mult(),
+                            right=Name(id='height', ctx=Load())),
+                        op=Mult(),
+                        right=Constant(value=3))),
+                If(
+                    test=BoolOp(
+                        op=Or(),
+                        values=[
+                            Compare(
+                                left=Name(id='image_buffer_size', ctx=Load()),
+                                ops=[
+                                    Lt()],
+                                comparators=[
+                                    Constant(value=0)]),
+                            Compare(
+                                left=Name(id='image_buffer_size', ctx=Load()),
+                                ops=[
+                                    Gt()],
+                                comparators=[
+                                    Name(id='MAX_BUFFER_SIZE', ctx=Load())])]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Image buffer size is too large')],
+                                keywords=[]))],
+                    orelse=[]),
+                Assign(
+                    targets=[
+                        Name(id='image_buffer', ctx=Store())],
+                    value=Call(
+                        func=Name(id='bytearray', ctx=Load()),
+                        args=[
+                            Name(id='image_buffer_size', ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=Name(id='image_buffer', ctx=Load()))],
+            decorator_list=[])],
+    type_ignores=[])

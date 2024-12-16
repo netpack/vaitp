@@ -1,0 +1,98 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='git')]),
+        Import(
+            names=[
+                alias(name='re')]),
+        FunctionDef(
+            name='is_valid_git_url',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='url')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Compare(
+                        left=Call(
+                            func=Attribute(
+                                value=Name(id='re', ctx=Load()),
+                                attr='match',
+                                ctx=Load()),
+                            args=[
+                                Constant(value='^(https?|git|ssh)://[^\\s]+\\.git$'),
+                                Name(id='url', ctx=Load())],
+                            keywords=[]),
+                        ops=[
+                            IsNot()],
+                        comparators=[
+                            Constant(value=None)]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='clone_repository',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='repo_url'),
+                    arg(arg='destination')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=UnaryOp(
+                        op=Not(),
+                        operand=Call(
+                            func=Name(id='is_valid_git_url', ctx=Load()),
+                            args=[
+                                Name(id='repo_url', ctx=Load())],
+                            keywords=[])),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Invalid repository URL')],
+                                keywords=[]))],
+                    orelse=[]),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='git', ctx=Load()),
+                                attr='Repo',
+                                ctx=Load()),
+                            attr='clone_from',
+                            ctx=Load()),
+                        args=[
+                            Name(id='repo_url', ctx=Load()),
+                            Name(id='destination', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Try(
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='clone_repository', ctx=Load()),
+                        args=[
+                            Constant(value='http://malicious-url.com/repo.git'),
+                            Constant(value='/path/to/destination')],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ValueError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

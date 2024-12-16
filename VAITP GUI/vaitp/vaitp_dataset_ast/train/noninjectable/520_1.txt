@@ -1,0 +1,60 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='xml.etree.ElementTree', asname='ET')]),
+        FunctionDef(
+            name='vulnerable_parse_xmp',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='xmp_data')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='ET', ctx=Load()),
+                            attr='fromstring',
+                            ctx=Load()),
+                        args=[
+                            Name(id='xmp_data', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='xmp_data', ctx=Store())],
+            value=Constant(value='<xmpmeta>\n    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">\n        <rdf:Description rdf:about="http://example.com">\n            <dc:title>Example Title</dc:title>\n            <!DOCTYPE foo [\n                <!ENTITY xxe SYSTEM "file:///etc/passwd">\n            ]>\n            <dc:content>&xxe;</dc:content>\n        </rdf:Description>\n    </rdf:RDF>\n</xmpmeta>')),
+        Assign(
+            targets=[
+                Name(id='parsed_xmp', ctx=Store())],
+            value=Call(
+                func=Name(id='vulnerable_parse_xmp', ctx=Load()),
+                args=[
+                    Name(id='xmp_data', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Call(
+                        func=Attribute(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='ET', ctx=Load()),
+                                    attr='tostring',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='parsed_xmp', ctx=Load())],
+                                keywords=[
+                                    keyword(
+                                        arg='pretty_print',
+                                        value=Constant(value=True))]),
+                            attr='decode',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])],
+                keywords=[]))],
+    type_ignores=[])

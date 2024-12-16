@@ -1,0 +1,76 @@
+Module(
+    body=[
+        ImportFrom(
+            module='jinja2',
+            names=[
+                alias(name='Environment'),
+                alias(name='Markup')],
+            level=0),
+        FunctionDef(
+            name='vulnerable_urlize',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='text')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Import(
+                    names=[
+                        alias(name='re')]),
+                Assign(
+                    targets=[
+                        Name(id='_punctuation_re', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='re', ctx=Load()),
+                            attr='compile',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='[\\w]+[^\\w\\s]*')],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='urls', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='_punctuation_re', ctx=Load()),
+                            attr='findall',
+                            ctx=Load()),
+                        args=[
+                            Name(id='text', ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=Call(
+                        func=Name(id='Markup', ctx=Load()),
+                        args=[
+                            Call(
+                                func=Attribute(
+                                    value=Constant(value=' '),
+                                    attr='join',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='urls', ctx=Load())],
+                                keywords=[])],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='user_input', ctx=Store())],
+            value=Constant(value='Check this out: http://example.com!!!')),
+        Assign(
+            targets=[
+                Name(id='vulnerable_output', ctx=Store())],
+            value=Call(
+                func=Name(id='vulnerable_urlize', ctx=Load()),
+                args=[
+                    Name(id='user_input', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='vulnerable_output', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

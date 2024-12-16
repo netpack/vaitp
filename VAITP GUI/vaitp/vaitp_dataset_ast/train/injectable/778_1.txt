@@ -1,0 +1,164 @@
+Module(
+    body=[
+        ImportFrom(
+            module='keystone',
+            names=[
+                alias(name='exception')],
+            level=0),
+        ImportFrom(
+            module='keystone',
+            names=[
+                alias(name='token')],
+            level=0),
+        ImportFrom(
+            module='keystone',
+            names=[
+                alias(name='identity')],
+            level=0),
+        ClassDef(
+            name='SecureTokenProvider',
+            bases=[
+                Attribute(
+                    value=Name(id='token', ctx=Load()),
+                    attr='Provider',
+                    ctx=Load())],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='validate_token',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='token_id'),
+                            arg(arg='context')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[
+                            Constant(value=None)]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='token_data', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='get_token_data',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='token_id', ctx=Load())],
+                                keywords=[])),
+                        If(
+                            test=Call(
+                                func=Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='is_token_revoked',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='token_id', ctx=Load())],
+                                keywords=[]),
+                            body=[
+                                Raise(
+                                    exc=Call(
+                                        func=Attribute(
+                                            value=Name(id='exception', ctx=Load()),
+                                            attr='Unauthorized',
+                                            ctx=Load()),
+                                        args=[
+                                            Constant(value='Token has been revoked.')],
+                                        keywords=[]))],
+                            orelse=[]),
+                        Return(
+                            value=Name(id='token_data', ctx=Load()))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='is_token_revoked',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='token_id')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='revoked_tokens', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='get_revoked_tokens',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[])),
+                        Return(
+                            value=Compare(
+                                left=Name(id='token_id', ctx=Load()),
+                                ops=[
+                                    In()],
+                                comparators=[
+                                    Name(id='revoked_tokens', ctx=Load())]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='revoke_token',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='token_id')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='add_to_revoked_tokens',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='token_id', ctx=Load())],
+                                keywords=[]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='get_token_data',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='token_id')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Pass()],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='get_revoked_tokens',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Return(
+                            value=List(elts=[], ctx=Load()))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='add_to_revoked_tokens',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='token_id')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Pass()],
+                    decorator_list=[])],
+            decorator_list=[])],
+    type_ignores=[])

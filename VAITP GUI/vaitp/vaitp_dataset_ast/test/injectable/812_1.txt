@@ -1,0 +1,81 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='re')]),
+        FunctionDef(
+            name='safe_parse_index_url',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='url')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='pattern', ctx=Store())],
+                    value=Constant(value='^(https?://[^\\s/$.?#].[^\\s]*)$')),
+                Assign(
+                    targets=[
+                        Name(id='match', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='re', ctx=Load()),
+                            attr='match',
+                            ctx=Load()),
+                        args=[
+                            Name(id='pattern', ctx=Load()),
+                            Name(id='url', ctx=Load())],
+                        keywords=[])),
+                If(
+                    test=Name(id='match', ctx=Load()),
+                    body=[
+                        Return(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='match', ctx=Load()),
+                                    attr='group',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value=0)],
+                                keywords=[]))],
+                    orelse=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Invalid index server URL')],
+                                keywords=[]))])],
+            decorator_list=[]),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='url', ctx=Store())],
+                    value=Constant(value='https://example.com/index')),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Call(
+                                func=Name(id='safe_parse_index_url', ctx=Load()),
+                                args=[
+                                    Name(id='url', ctx=Load())],
+                                keywords=[])],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ValueError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

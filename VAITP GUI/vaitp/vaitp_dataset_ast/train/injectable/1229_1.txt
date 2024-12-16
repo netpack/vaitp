@@ -1,0 +1,77 @@
+Module(
+    body=[
+        FunctionDef(
+            name='vulnerable_bytes_manipulation',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='data', ctx=Store())],
+                    value=Call(
+                        func=Name(id='bytearray', ctx=Load()),
+                        args=[
+                            Constant(value=b'initial data')],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='data', ctx=Store())],
+                    value=Subscript(
+                        value=Name(id='data', ctx=Load()),
+                        slice=Slice(
+                            upper=Constant(value=10)),
+                        ctx=Load())),
+                Assign(
+                    targets=[
+                        Subscript(
+                            value=Name(id='data', ctx=Load()),
+                            slice=Slice(
+                                lower=Constant(value=0),
+                                upper=Constant(value=10)),
+                            ctx=Store())],
+                    value=Name(id='data', ctx=Load())),
+                Return(
+                    value=Name(id='data', ctx=Load()))],
+            decorator_list=[]),
+        FunctionDef(
+            name='fixed_bytes_manipulation',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='data', ctx=Store())],
+                    value=Call(
+                        func=Name(id='bytearray', ctx=Load()),
+                        args=[
+                            Constant(value=b'initial data')],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='temp_data', ctx=Store())],
+                    value=Subscript(
+                        value=Name(id='data', ctx=Load()),
+                        slice=Slice(
+                            upper=Constant(value=10)),
+                        ctx=Load())),
+                Assign(
+                    targets=[
+                        Subscript(
+                            value=Name(id='data', ctx=Load()),
+                            slice=Slice(
+                                lower=Constant(value=0),
+                                upper=Constant(value=10)),
+                            ctx=Store())],
+                    value=Name(id='temp_data', ctx=Load())),
+                Return(
+                    value=Name(id='data', ctx=Load()))],
+            decorator_list=[])],
+    type_ignores=[])

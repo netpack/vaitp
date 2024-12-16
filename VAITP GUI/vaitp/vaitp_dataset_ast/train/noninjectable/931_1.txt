@@ -1,0 +1,47 @@
+Module(
+    body=[
+        ImportFrom(
+            module='sap_xssec',
+            names=[
+                alias(name='SecurityContext')],
+            level=0),
+        ClassDef(
+            name='VulnerableSecurityContext',
+            bases=[
+                Name(id='SecurityContext', ctx=Load())],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='token')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Call(
+                                        func=Name(id='super', ctx=Load()),
+                                        args=[],
+                                        keywords=[]),
+                                    attr='__init__',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='token', ctx=Load())],
+                                keywords=[]))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='vulnerable_context', ctx=Store())],
+            value=Call(
+                func=Name(id='VulnerableSecurityContext', ctx=Load()),
+                args=[
+                    Constant(value='user_provided_token')],
+                keywords=[]))],
+    type_ignores=[])

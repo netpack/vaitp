@@ -1,0 +1,247 @@
+Module(
+    body=[
+        FunctionDef(
+            name='render_page_with_query_param',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='param_name')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Compare(
+                        left=Name(id='param_name', ctx=Load()),
+                        ops=[
+                            Eq()],
+                        comparators=[
+                            Constant(value='url')]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='query_value', ctx=Store())],
+                            value=Call(
+                                func=Name(id='get_query_parameter', ctx=Load()),
+                                args=[
+                                    Constant(value='url')],
+                                keywords=[]))],
+                    orelse=[
+                        If(
+                            test=Compare(
+                                left=Name(id='param_name', ctx=Load()),
+                                ops=[
+                                    Eq()],
+                                comparators=[
+                                    Constant(value='x')]),
+                            body=[
+                                Assign(
+                                    targets=[
+                                        Name(id='query_value', ctx=Store())],
+                                    value=Call(
+                                        func=Name(id='get_query_parameter', ctx=Load()),
+                                        args=[
+                                            Constant(value='x')],
+                                        keywords=[]))],
+                            orelse=[
+                                If(
+                                    test=Compare(
+                                        left=Name(id='param_name', ctx=Load()),
+                                        ops=[
+                                            Eq()],
+                                        comparators=[
+                                            Constant(value='name')]),
+                                    body=[
+                                        Assign(
+                                            targets=[
+                                                Name(id='query_value', ctx=Store())],
+                                            value=Call(
+                                                func=Name(id='get_query_parameter', ctx=Load()),
+                                                args=[
+                                                    Constant(value='name')],
+                                                keywords=[]))],
+                                    orelse=[
+                                        If(
+                                            test=Compare(
+                                                left=Name(id='param_name', ctx=Load()),
+                                                ops=[
+                                                    Eq()],
+                                                comparators=[
+                                                    Constant(value='Name')]),
+                                            body=[
+                                                Assign(
+                                                    targets=[
+                                                        Name(id='query_value', ctx=Store())],
+                                                    value=Call(
+                                                        func=Name(id='get_query_parameter', ctx=Load()),
+                                                        args=[
+                                                            Constant(value='Name')],
+                                                        keywords=[]))],
+                                            orelse=[
+                                                If(
+                                                    test=Compare(
+                                                        left=Name(id='param_name', ctx=Load()),
+                                                        ops=[
+                                                            Eq()],
+                                                        comparators=[
+                                                            Constant(value='mytextarea')]),
+                                                    body=[
+                                                        Assign(
+                                                            targets=[
+                                                                Name(id='query_value', ctx=Store())],
+                                                            value=Call(
+                                                                func=Name(id='get_query_parameter', ctx=Load()),
+                                                                args=[
+                                                                    Constant(value='mytextarea')],
+                                                                keywords=[]))],
+                                                    orelse=[
+                                                        If(
+                                                            test=Compare(
+                                                                left=Name(id='param_name', ctx=Load()),
+                                                                ops=[
+                                                                    Eq()],
+                                                                comparators=[
+                                                                    Constant(value='mypass')]),
+                                                            body=[
+                                                                Assign(
+                                                                    targets=[
+                                                                        Name(id='query_value', ctx=Store())],
+                                                                    value=Call(
+                                                                        func=Name(id='get_query_parameter', ctx=Load()),
+                                                                        args=[
+                                                                            Constant(value='mypass')],
+                                                                        keywords=[]))],
+                                                            orelse=[
+                                                                If(
+                                                                    test=Compare(
+                                                                        left=Name(id='param_name', ctx=Load()),
+                                                                        ops=[
+                                                                            Eq()],
+                                                                        comparators=[
+                                                                            Constant(value='newline')]),
+                                                                    body=[
+                                                                        Assign(
+                                                                            targets=[
+                                                                                Name(id='query_value', ctx=Store())],
+                                                                            value=Call(
+                                                                                func=Name(id='get_query_parameter', ctx=Load()),
+                                                                                args=[
+                                                                                    Constant(value='newline')],
+                                                                                keywords=[]))],
+                                                                    orelse=[
+                                                                        If(
+                                                                            test=Compare(
+                                                                                left=Name(id='param_name', ctx=Load()),
+                                                                                ops=[
+                                                                                    Eq()],
+                                                                                comparators=[
+                                                                                    Constant(value='text1')]),
+                                                                            body=[
+                                                                                Assign(
+                                                                                    targets=[
+                                                                                        Name(id='query_value', ctx=Store())],
+                                                                                    value=Call(
+                                                                                        func=Name(id='get_query_parameter', ctx=Load()),
+                                                                                        args=[
+                                                                                            Constant(value='text1')],
+                                                                                        keywords=[]))],
+                                                                            orelse=[
+                                                                                If(
+                                                                                    test=Compare(
+                                                                                        left=Name(id='param_name', ctx=Load()),
+                                                                                        ops=[
+                                                                                            Eq()],
+                                                                                        comparators=[
+                                                                                            Constant(value='mytext')]),
+                                                                                    body=[
+                                                                                        Assign(
+                                                                                            targets=[
+                                                                                                Name(id='query_value', ctx=Store())],
+                                                                                            value=Call(
+                                                                                                func=Name(id='get_query_parameter', ctx=Load()),
+                                                                                                args=[
+                                                                                                    Constant(value='mytext')],
+                                                                                                keywords=[]))],
+                                                                                    orelse=[
+                                                                                        If(
+                                                                                            test=Compare(
+                                                                                                left=Name(id='param_name', ctx=Load()),
+                                                                                                ops=[
+                                                                                                    Eq()],
+                                                                                                comparators=[
+                                                                                                    Constant(value='mydate')]),
+                                                                                            body=[
+                                                                                                Assign(
+                                                                                                    targets=[
+                                                                                                        Name(id='query_value', ctx=Store())],
+                                                                                                    value=Call(
+                                                                                                        func=Name(id='get_query_parameter', ctx=Load()),
+                                                                                                        args=[
+                                                                                                            Constant(value='mydate')],
+                                                                                                        keywords=[]))],
+                                                                                            orelse=[
+                                                                                                Assign(
+                                                                                                    targets=[
+                                                                                                        Name(id='query_value', ctx=Store())],
+                                                                                                    value=Constant(value=''))])])])])])])])])])]),
+                Assign(
+                    targets=[
+                        Name(id='html_output', ctx=Store())],
+                    value=JoinedStr(
+                        values=[
+                            Constant(value='<h1>The parameter value is: '),
+                            FormattedValue(
+                                value=Name(id='query_value', ctx=Load()),
+                                conversion=-1),
+                            Constant(value='</h1>')])),
+                Return(
+                    value=Name(id='html_output', ctx=Load()))],
+            decorator_list=[]),
+        FunctionDef(
+            name='get_query_parameter',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='param_name')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='query_params', ctx=Store())],
+                    value=Dict(
+                        keys=[
+                            Constant(value='url'),
+                            Constant(value='x'),
+                            Constant(value='name'),
+                            Constant(value='Name'),
+                            Constant(value='mytextarea'),
+                            Constant(value='mypass'),
+                            Constant(value='newline'),
+                            Constant(value='text1'),
+                            Constant(value='mytext'),
+                            Constant(value='mydate')],
+                        values=[
+                            Constant(value='test'),
+                            Constant(value='test'),
+                            Constant(value='test'),
+                            Constant(value='test'),
+                            Constant(value='test'),
+                            Constant(value='test'),
+                            Constant(value='test'),
+                            Constant(value='test'),
+                            Constant(value='test'),
+                            Constant(value='test')])),
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='query_params', ctx=Load()),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Name(id='param_name', ctx=Load()),
+                            Constant(value='')],
+                        keywords=[]))],
+            decorator_list=[])],
+    type_ignores=[])

@@ -1,0 +1,34 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='importlib')]),
+        FunctionDef(
+            name='insecure_import',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='module_name')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='importlib', ctx=Load()),
+                            attr='import_module',
+                            ctx=Load()),
+                        args=[
+                            Name(id='module_name', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='module', ctx=Store())],
+            value=Call(
+                func=Name(id='insecure_import', ctx=Load()),
+                args=[
+                    Constant(value='os')],
+                keywords=[]))],
+    type_ignores=[])

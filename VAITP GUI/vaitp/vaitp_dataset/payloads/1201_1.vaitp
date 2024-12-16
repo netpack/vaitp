@@ -1,0 +1,14 @@
+```python
+import aiohttp
+import asyncio
+
+async def send_requests():
+    async with aiohttp.ClientSession() as session:
+        for _ in range(1000000):  # Sending a large number of requests
+            try:
+                await session.get('http://localhost:8080/nonexistent')  # URL that triggers MatchInfoError
+            except Exception as e:
+                print(f"Error: {e}")
+
+asyncio.run(send_requests())
+```

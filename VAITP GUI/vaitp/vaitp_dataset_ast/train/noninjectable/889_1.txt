@@ -1,0 +1,66 @@
+Module(
+    body=[
+        FunctionDef(
+            name='handle_third_party_invite',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='event'),
+                    arg(arg='user_ip')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Constant(value='Handle third-party invite events without IP validation.')),
+                Assign(
+                    targets=[
+                        Name(id='request_url', ctx=Store())],
+                    value=Subscript(
+                        value=Name(id='event', ctx=Load()),
+                        slice=Constant(value='invite_url'),
+                        ctx=Load())),
+                Assign(
+                    targets=[
+                        Name(id='response', ctx=Store())],
+                    value=Call(
+                        func=Name(id='make_request_to_url', ctx=Load()),
+                        args=[
+                            Name(id='request_url', ctx=Load()),
+                            Subscript(
+                                value=Name(id='event', ctx=Load()),
+                                slice=Constant(value='request_body'),
+                                ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Invite processed with response:'),
+                            Name(id='response', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='make_request_to_url',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='url'),
+                    arg(arg='body')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Constant(value='Simulate making a request to the given URL with the provided body.')),
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Constant(value='Response from {}'),
+                            attr='format',
+                            ctx=Load()),
+                        args=[
+                            Name(id='url', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[])],
+    type_ignores=[])

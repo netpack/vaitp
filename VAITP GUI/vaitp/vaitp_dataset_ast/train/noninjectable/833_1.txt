@@ -1,0 +1,39 @@
+Module(
+    body=[
+        FunctionDef(
+            name='execute_macro',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='user'),
+                    arg(arg='macro_code')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='exec', ctx=Load()),
+                        args=[
+                            Name(id='macro_code', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='user', ctx=Store())],
+            value=Call(
+                func=Name(id='get_current_user', ctx=Load()),
+                args=[],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='macro_input', ctx=Store())],
+            value=Constant(value="import os; os.system('echo Vulnerable!')")),
+        Expr(
+            value=Call(
+                func=Name(id='execute_macro', ctx=Load()),
+                args=[
+                    Name(id='user', ctx=Load()),
+                    Name(id='macro_input', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

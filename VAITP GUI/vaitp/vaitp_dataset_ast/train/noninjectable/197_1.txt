@@ -1,0 +1,42 @@
+Module(
+    body=[
+        FunctionDef(
+            name='vulnerable_expandtabs',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='input_string'),
+                    arg(arg='tabsize')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='input_string', ctx=Load()),
+                            attr='expandtabs',
+                            ctx=Load()),
+                        args=[
+                            Name(id='tabsize', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='result', ctx=Store())],
+            value=Call(
+                func=Name(id='vulnerable_expandtabs', ctx=Load()),
+                args=[
+                    Constant(value='Hello\tWorld'),
+                    BinOp(
+                        left=Constant(value=2),
+                        op=Pow(),
+                        right=Constant(value=31))],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='result', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

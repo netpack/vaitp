@@ -1,0 +1,159 @@
+Module(
+    body=[
+        FunctionDef(
+            name='safe_read_pyc',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='file_path')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Try(
+                    body=[
+                        With(
+                            items=[
+                                withitem(
+                                    context_expr=Call(
+                                        func=Name(id='open', ctx=Load()),
+                                        args=[
+                                            Name(id='file_path', ctx=Load()),
+                                            Constant(value='rb')],
+                                        keywords=[]),
+                                    optional_vars=Name(id='f', ctx=Store()))],
+                            body=[
+                                Assign(
+                                    targets=[
+                                        Name(id='magic', ctx=Store())],
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='f', ctx=Load()),
+                                            attr='read',
+                                            ctx=Load()),
+                                        args=[
+                                            Constant(value=4)],
+                                        keywords=[])),
+                                Assign(
+                                    targets=[
+                                        Name(id='timestamp', ctx=Store())],
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='f', ctx=Load()),
+                                            attr='read',
+                                            ctx=Load()),
+                                        args=[
+                                            Constant(value=4)],
+                                        keywords=[])),
+                                Assign(
+                                    targets=[
+                                        Name(id='code_length_bytes', ctx=Store())],
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='f', ctx=Load()),
+                                            attr='read',
+                                            ctx=Load()),
+                                        args=[
+                                            Constant(value=4)],
+                                        keywords=[])),
+                                If(
+                                    test=Compare(
+                                        left=Call(
+                                            func=Name(id='len', ctx=Load()),
+                                            args=[
+                                                Name(id='code_length_bytes', ctx=Load())],
+                                            keywords=[]),
+                                        ops=[
+                                            Lt()],
+                                        comparators=[
+                                            Constant(value=4)]),
+                                    body=[
+                                        Raise(
+                                            exc=Call(
+                                                func=Name(id='ValueError', ctx=Load()),
+                                                args=[
+                                                    Constant(value='Invalid PYC file: insufficient data')],
+                                                keywords=[]))],
+                                    orelse=[]),
+                                Assign(
+                                    targets=[
+                                        Name(id='code_length', ctx=Store())],
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='int', ctx=Load()),
+                                            attr='from_bytes',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='code_length_bytes', ctx=Load())],
+                                        keywords=[
+                                            keyword(
+                                                arg='byteorder',
+                                                value=Constant(value='little'))])),
+                                Assign(
+                                    targets=[
+                                        Name(id='code_data', ctx=Store())],
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='f', ctx=Load()),
+                                            attr='read',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='code_length', ctx=Load())],
+                                        keywords=[])),
+                                If(
+                                    test=Compare(
+                                        left=Call(
+                                            func=Name(id='len', ctx=Load()),
+                                            args=[
+                                                Name(id='code_data', ctx=Load())],
+                                            keywords=[]),
+                                        ops=[
+                                            Lt()],
+                                        comparators=[
+                                            Name(id='code_length', ctx=Load())]),
+                                    body=[
+                                        Raise(
+                                            exc=Call(
+                                                func=Name(id='ValueError', ctx=Load()),
+                                                args=[
+                                                    Constant(value='Invalid PYC file: code object is truncated')],
+                                                keywords=[]))],
+                                    orelse=[]),
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='process_code_object', ctx=Load()),
+                                        args=[
+                                            Name(id='code_data', ctx=Load())],
+                                        keywords=[]))])],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='Exception', ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    Constant(value='Error reading PYC file: '),
+                                                    FormattedValue(
+                                                        value=Name(id='e', ctx=Load()),
+                                                        conversion=-1)])],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[]),
+        FunctionDef(
+            name='process_code_object',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='code_data')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Pass()],
+            decorator_list=[])],
+    type_ignores=[])

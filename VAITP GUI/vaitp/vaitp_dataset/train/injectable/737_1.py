@@ -1,36 +1,111 @@
-from trytond.model import ModelSQL, ModelView, fields
-from trytond.exceptions import AccessError
+def check_access(model_name, field_name, operation, user):
+    """
+    Simulates access control logic for a Many2Many field, preventing unauthorized modifications.
 
-class User(ModelSQL, ModelView):
-    "User "
-    __name__ = 'res.user'
+    Args:
+        model_name (str): The name of the model being accessed.
+        field_name (str): The name of the Many2Many field.
+        operation (str): The operation being performed ('create', 'write', 'delete', 'copy').
+        user (dict): Dictionary representing the current user, with a 'groups' key representing their assigned roles or groups.
 
-    # Define Many2Many field with access control
-    groups = fields.Many2Many('res.group', 'user_group_rel', 'user_id', 'group_id', 
-                               domain=[('id', 'in', User.get_accessible_groups())])
+    Returns:
+        bool: True if access is allowed, False otherwise.
+    """
+    if model_name == 'res.user' and field_name == 'groups':
+      if user.get('groups') == ['admin']:
+        return True
+      else:
+          return False
 
-    @classmethod
-    def get_accessible_groups(cls):
-        # Only return groups that the current user has access to
-        user = cls.get_current_user()
-        return [group.id for group in user.groups]
+    # For any other cases access is granted
+    return True
+      
 
-    @classmethod
-    def create(cls, values):
-        # Custom create method to restrict group assignment
-        if 'groups' in values:
-            values['groups'] = cls.filter_accessible_groups(values['groups'])
-        return super(User, cls).create(values)
 
-    @classmethod
-    def write(cls, ids, values):
-        # Custom write method to restrict group assignment
-        if 'groups' in values:
-            values['groups'] = cls.filter_accessible_groups(values['groups'])
-        return super(User, cls).write(ids, values)
+def create_record(model_name, data, user):
+  if not check_access(model_name, "groups", "create", user):
+    raise Exception("Access Denied, User not authorized")
+  
+  print(f"Creating record for {model_name} with data {data}")
+  return {model_name: data}
 
-    @classmethod
-    def filter_accessible_groups(cls, groups):
-        # Filter groups to ensure user can only assign accessible groups
-        accessible_groups = cls.get_accessible_groups()
-        return [group for group in groups
+
+def write_record(model_name, record_id, data, user):
+  if not check_access(model_name, "groups", "write", user):
+    raise Exception("Access Denied, User not authorized")
+
+  print(f"Writing record {record_id} of {model_name} with data {data}")
+  return {model_name: {record_id: data}}
+  
+def delete_record(model_name, record_id, user):
+  if not check_access(model_name, "groups", "delete", user):
+      raise Exception("Access Denied, User not authorized")
+  print(f"Deleting record {record_id} of {model_name}")
+  return {model_name: record_id}
+
+
+def copy_record(model_name, record_id, user):
+  if not check_access(model_name, "groups", "copy", user):
+    raise Exception("Access Denied, User not authorized")
+
+  print(f"Copying record {record_id} of {model_name}")
+  return {model_name: record_id}
+
+
+if __name__ == '__main__':
+  admin_user = { 'id': 1,'groups': ['admin']}
+  regular_user = {'id': 2,'groups': ['user']}
+
+  #Example of authorized access
+  try:
+    create_record('res.user', {'name': 'test_user','groups': [1]}, admin_user)
+  except Exception as e:
+      print(e)
+  try:
+    write_record('res.user', 1, {'groups':[2]}, admin_user)
+  except Exception as e:
+      print(e)
+  try:
+    delete_record('res.user', 1, admin_user)
+  except Exception as e:
+      print(e)
+  try:
+    copy_record('res.user', 1, admin_user)
+  except Exception as e:
+      print(e)
+  
+  #Example of unauthorized access
+  try:
+    create_record('res.user', {'name': 'test_user','groups': [1]}, regular_user)
+  except Exception as e:
+    print(e)
+  try:
+    write_record('res.user', 1, {'groups':[2]}, regular_user)
+  except Exception as e:
+      print(e)
+  try:
+    delete_record('res.user', 1, regular_user)
+  except Exception as e:
+      print(e)
+  try:
+    copy_record('res.user', 1, regular_user)
+  except Exception as e:
+      print(e)
+
+  #Example of authorized access in another Model
+  try:
+     create_record('res.partner', {'name': 'test_partner'}, regular_user)
+  except Exception as e:
+      print(e)
+  try:
+    write_record('res.partner', 1, {'name':'updated_name'}, regular_user)
+  except Exception as e:
+      print(e)
+  try:
+    delete_record('res.partner', 1, regular_user)
+  except Exception as e:
+    print(e)
+  try:
+     copy_record('res.partner', 1, regular_user)
+  except Exception as e:
+    print(e)

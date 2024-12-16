@@ -1,0 +1,79 @@
+Module(
+    body=[
+        Assign(
+            targets=[
+                Name(id='ALLOWED_MODULES', ctx=Store())],
+            value=Set(
+                elts=[
+                    Constant(value='math'),
+                    Constant(value='datetime')])),
+        FunctionDef(
+            name='allowmodule',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='module_name')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Compare(
+                        left=Name(id='module_name', ctx=Load()),
+                        ops=[
+                            In()],
+                        comparators=[
+                            Name(id='ALLOWED_MODULES', ctx=Load())]),
+                    body=[
+                        Return(
+                            value=Call(
+                                func=Name(id='__import__', ctx=Load()),
+                                args=[
+                                    Name(id='module_name', ctx=Load())],
+                                keywords=[]))],
+                    orelse=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ImportError', ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            Constant(value="Importing module '"),
+                                            FormattedValue(
+                                                value=Name(id='module_name', ctx=Load()),
+                                                conversion=-1),
+                                            Constant(value="' is not allowed.")])],
+                                keywords=[]))])],
+            decorator_list=[]),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='safe_math', ctx=Store())],
+                    value=Call(
+                        func=Name(id='allowmodule', ctx=Load()),
+                        args=[
+                            Constant(value='math')],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='unsafe_module', ctx=Store())],
+                    value=Call(
+                        func=Name(id='allowmodule', ctx=Load()),
+                        args=[
+                            Constant(value='os')],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ImportError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

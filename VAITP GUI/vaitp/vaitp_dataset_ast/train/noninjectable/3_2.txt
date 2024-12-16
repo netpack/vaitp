@@ -1,0 +1,30 @@
+Module(
+    body=[
+        ImportFrom(
+            module='os',
+            names=[
+                alias(name='path')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='user_input_path', ctx=Store())],
+            value=Constant(value='/legitimate/path\x00/../../../../etc/passwd')),
+        Assign(
+            targets=[
+                Name(id='normalized_path', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='path', ctx=Load()),
+                    attr='normpath',
+                    ctx=Load()),
+                args=[
+                    Name(id='user_input_path', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Constant(value='Normalized Path:'),
+                    Name(id='normalized_path', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

@@ -1,0 +1,4 @@
+```python
+# Example payload to exploit the vulnerability by executing an arbitrary command
+payload = "import os; os.system('whoami')"
+```

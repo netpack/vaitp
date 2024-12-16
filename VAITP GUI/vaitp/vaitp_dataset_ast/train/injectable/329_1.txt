@@ -1,0 +1,70 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='ujson')]),
+        FunctionDef(
+            name='decode_json',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='json_string')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Try(
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='result', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='ujson', ctx=Load()),
+                                    attr='decode',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='json_string', ctx=Load())],
+                                keywords=[])),
+                        Return(
+                            value=Name(id='result', ctx=Load()))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='Exception', ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    Constant(value='Error decoding JSON: '),
+                                                    FormattedValue(
+                                                        value=Name(id='e', ctx=Load()),
+                                                        conversion=-1)])],
+                                        keywords=[])),
+                                Return(
+                                    value=Constant(value=None))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='json_data', ctx=Store())],
+            value=Constant(value='{"key": "value"}')),
+        Assign(
+            targets=[
+                Name(id='decoded_data', ctx=Store())],
+            value=Call(
+                func=Name(id='decode_json', ctx=Load()),
+                args=[
+                    Name(id='json_data', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='decoded_data', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

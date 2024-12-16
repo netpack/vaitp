@@ -1,0 +1,33 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='rrdtool')]),
+        FunctionDef(
+            name='generate_graph',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='title'),
+                    arg(arg='output_file')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='rrdtool', ctx=Load()),
+                            attr='graph',
+                            ctx=Load()),
+                        args=[
+                            Name(id='output_file', ctx=Load()),
+                            JoinedStr(
+                                values=[
+                                    Constant(value='--title='),
+                                    FormattedValue(
+                                        value=Name(id='title', ctx=Load()),
+                                        conversion=-1)])],
+                        keywords=[]))],
+            decorator_list=[])],
+    type_ignores=[])

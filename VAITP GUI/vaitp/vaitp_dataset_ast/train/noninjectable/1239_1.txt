@@ -1,0 +1,291 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='asyncio')]),
+        ClassDef(
+            name='VulnerableProtocol',
+            bases=[
+                Attribute(
+                    value=Name(id='asyncio', ctx=Load()),
+                    attr='Protocol',
+                    ctx=Load())],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='buffer',
+                                    ctx=Store())],
+                            value=Call(
+                                func=Name(id='bytearray', ctx=Load()),
+                                args=[],
+                                keywords=[]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='connection_made',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='transport')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='transport',
+                                    ctx=Store())],
+                            value=Name(id='transport', ctx=Load()))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='data_received',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='data')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Pass()],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='connection_lost',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='exc')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Pass()],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='write_data',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='data')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='buffer',
+                                        ctx=Load()),
+                                    attr='extend',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='data', ctx=Load())],
+                                keywords=[]))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        AsyncFunctionDef(
+            name='main',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='loop', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='asyncio', ctx=Load()),
+                            attr='get_event_loop',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Tuple(
+                            elts=[
+                                Name(id='transport', ctx=Store()),
+                                Name(id='protocol', ctx=Store())],
+                            ctx=Store())],
+                    value=Await(
+                        value=Call(
+                            func=Attribute(
+                                value=Name(id='loop', ctx=Load()),
+                                attr='create_connection',
+                                ctx=Load()),
+                            args=[
+                                Lambda(
+                                    args=arguments(
+                                        posonlyargs=[],
+                                        args=[],
+                                        kwonlyargs=[],
+                                        kw_defaults=[],
+                                        defaults=[]),
+                                    body=Call(
+                                        func=Name(id='VulnerableProtocol', ctx=Load()),
+                                        args=[],
+                                        keywords=[])),
+                                Constant(value='127.0.0.1'),
+                                Constant(value=8888)],
+                            keywords=[]))),
+                Assign(
+                    targets=[
+                        Name(id='large_data', ctx=Store())],
+                    value=BinOp(
+                        left=Constant(value=b'a'),
+                        op=Mult(),
+                        right=BinOp(
+                            left=BinOp(
+                                left=Constant(value=1024),
+                                op=Mult(),
+                                right=Constant(value=1024)),
+                            op=Mult(),
+                            right=Constant(value=10)))),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='protocol', ctx=Load()),
+                            attr='write_data',
+                            ctx=Load()),
+                        args=[
+                            Name(id='large_data', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='loop', ctx=Load()),
+                            attr='run_until_complete',
+                            ctx=Load()),
+                        args=[
+                            Call(
+                                func=Attribute(
+                                    value=Name(id='asyncio', ctx=Load()),
+                                    attr='sleep',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value=1)],
+                                keywords=[])],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='transport', ctx=Load()),
+                            attr='close',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='loop', ctx=Load()),
+                            attr='close',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Import(
+                    names=[
+                        alias(name='socket')]),
+                Try(
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='s', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='socket', ctx=Load()),
+                                    attr='socket',
+                                    ctx=Load()),
+                                args=[
+                                    Attribute(
+                                        value=Name(id='socket', ctx=Load()),
+                                        attr='AF_INET',
+                                        ctx=Load()),
+                                    Attribute(
+                                        value=Name(id='socket', ctx=Load()),
+                                        attr='SOCK_STREAM',
+                                        ctx=Load())],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='s', ctx=Load()),
+                                    attr='bind',
+                                    ctx=Load()),
+                                args=[
+                                    Tuple(
+                                        elts=[
+                                            Constant(value='127.0.0.1'),
+                                            Constant(value=8888)],
+                                        ctx=Load())],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='s', ctx=Load()),
+                                    attr='listen',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value=1)],
+                                keywords=[]))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='OSError', ctx=Load()),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            Constant(value='Port 8888 is in use, try using another port')],
+                                        keywords=[])),
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='exit', ctx=Load()),
+                                        args=[],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[]),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='asyncio', ctx=Load()),
+                            attr='run',
+                            ctx=Load()),
+                        args=[
+                            Call(
+                                func=Name(id='main', ctx=Load()),
+                                args=[],
+                                keywords=[])],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

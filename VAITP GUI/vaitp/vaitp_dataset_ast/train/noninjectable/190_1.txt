@@ -1,0 +1,165 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='asyncore')]),
+        Import(
+            names=[
+                alias(name='socket')]),
+        ClassDef(
+            name='VulnerableServer',
+            bases=[
+                Attribute(
+                    value=Name(id='asyncore', ctx=Load()),
+                    attr='dispatcher',
+                    ctx=Load())],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='host'),
+                            arg(arg='port')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='asyncore', ctx=Load()),
+                                        attr='dispatcher',
+                                        ctx=Load()),
+                                    attr='__init__',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='self', ctx=Load())],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='create_socket',
+                                    ctx=Load()),
+                                args=[
+                                    Attribute(
+                                        value=Name(id='socket', ctx=Load()),
+                                        attr='AF_INET',
+                                        ctx=Load()),
+                                    Attribute(
+                                        value=Name(id='socket', ctx=Load()),
+                                        attr='SOCK_STREAM',
+                                        ctx=Load())],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='set_reuse_addr',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='bind',
+                                    ctx=Load()),
+                                args=[
+                                    Tuple(
+                                        elts=[
+                                            Name(id='host', ctx=Load()),
+                                            Name(id='port', ctx=Load())],
+                                        ctx=Load())],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='listen',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value=5)],
+                                keywords=[]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='handle_accept',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Try(
+                            body=[
+                                Assign(
+                                    targets=[
+                                        Name(id='client', ctx=Store())],
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='self', ctx=Load()),
+                                            attr='accept',
+                                            ctx=Load()),
+                                        args=[],
+                                        keywords=[])),
+                                If(
+                                    test=Compare(
+                                        left=Name(id='client', ctx=Load()),
+                                        ops=[
+                                            IsNot()],
+                                        comparators=[
+                                            Constant(value=None)]),
+                                    body=[
+                                        Expr(
+                                            value=Call(
+                                                func=Name(id='print', ctx=Load()),
+                                                args=[
+                                                    Constant(value='Client connected')],
+                                                keywords=[]))],
+                                    orelse=[])],
+                            handlers=[
+                                ExceptHandler(
+                                    type=Name(id='Exception', ctx=Load()),
+                                    name='e',
+                                    body=[
+                                        Expr(
+                                            value=Call(
+                                                func=Name(id='print', ctx=Load()),
+                                                args=[
+                                                    Call(
+                                                        func=Attribute(
+                                                            value=Constant(value='Error accepting connection: {}'),
+                                                            attr='format',
+                                                            ctx=Load()),
+                                                        args=[
+                                                            Name(id='e', ctx=Load())],
+                                                        keywords=[])],
+                                                keywords=[]))])],
+                            orelse=[],
+                            finalbody=[])],
+                    decorator_list=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='server', ctx=Store())],
+            value=Call(
+                func=Name(id='VulnerableServer', ctx=Load()),
+                args=[
+                    Constant(value='localhost'),
+                    Constant(value=8080)],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='asyncore', ctx=Load()),
+                    attr='loop',
+                    ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

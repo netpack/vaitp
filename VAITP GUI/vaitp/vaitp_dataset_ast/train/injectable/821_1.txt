@@ -1,0 +1,126 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='tensorflow', asname='tf')]),
+        FunctionDef(
+            name='create_ragged_tensor',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='values'),
+                    arg(arg='row_splits')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=UnaryOp(
+                        op=Not(),
+                        operand=Call(
+                            func=Name(id='isinstance', ctx=Load()),
+                            args=[
+                                Name(id='values', ctx=Load()),
+                                Tuple(
+                                    elts=[
+                                        Name(id='list', ctx=Load()),
+                                        Name(id='tuple', ctx=Load())],
+                                    ctx=Load())],
+                            keywords=[])),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Values must be a list or tuple.')],
+                                keywords=[]))],
+                    orelse=[]),
+                If(
+                    test=UnaryOp(
+                        op=Not(),
+                        operand=Call(
+                            func=Name(id='isinstance', ctx=Load()),
+                            args=[
+                                Name(id='row_splits', ctx=Load()),
+                                Tuple(
+                                    elts=[
+                                        Name(id='list', ctx=Load()),
+                                        Name(id='tuple', ctx=Load())],
+                                    ctx=Load())],
+                            keywords=[])),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Row splits must be a list or tuple.')],
+                                keywords=[]))],
+                    orelse=[]),
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='tf', ctx=Load()),
+                                attr='ragged',
+                                ctx=Load()),
+                            attr='constant',
+                            ctx=Load()),
+                        args=[
+                            Name(id='values', ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='row_splits',
+                                value=Name(id='row_splits', ctx=Load()))]))],
+            decorator_list=[]),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='ragged_tensor', ctx=Store())],
+                    value=Call(
+                        func=Name(id='create_ragged_tensor', ctx=Load()),
+                        args=[
+                            List(
+                                elts=[
+                                    List(
+                                        elts=[
+                                            Constant(value=1),
+                                            Constant(value=2)],
+                                        ctx=Load()),
+                                    List(
+                                        elts=[
+                                            Constant(value=3)],
+                                        ctx=Load())],
+                                ctx=Load()),
+                            List(
+                                elts=[
+                                    Constant(value=0),
+                                    Constant(value=2),
+                                    Constant(value=2)],
+                                ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Name(id='ragged_tensor', ctx=Load())],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ValueError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            Constant(value='Error: '),
+                                            FormattedValue(
+                                                value=Name(id='e', ctx=Load()),
+                                                conversion=-1)])],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

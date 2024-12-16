@@ -1,0 +1,113 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='subprocess')]),
+        FunctionDef(
+            name='safe_snyk_test',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='command_args')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='allowed_args', ctx=Store())],
+                    value=List(
+                        elts=[
+                            Constant(value='--all-projects'),
+                            Constant(value='--json'),
+                            Constant(value='--file'),
+                            Constant(value='--path')],
+                        ctx=Load())),
+                For(
+                    target=Name(id='arg', ctx=Store()),
+                    iter=Name(id='command_args', ctx=Load()),
+                    body=[
+                        If(
+                            test=Compare(
+                                left=Name(id='arg', ctx=Load()),
+                                ops=[
+                                    NotIn()],
+                                comparators=[
+                                    Name(id='allowed_args', ctx=Load())]),
+                            body=[
+                                Raise(
+                                    exc=Call(
+                                        func=Name(id='ValueError', ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    Constant(value='Unsafe argument detected: '),
+                                                    FormattedValue(
+                                                        value=Name(id='arg', ctx=Load()),
+                                                        conversion=-1)])],
+                                        keywords=[]))],
+                            orelse=[])],
+                    orelse=[]),
+                Assign(
+                    targets=[
+                        Name(id='command', ctx=Store())],
+                    value=BinOp(
+                        left=List(
+                            elts=[
+                                Constant(value='snyk'),
+                                Constant(value='test')],
+                            ctx=Load()),
+                        op=Add(),
+                        right=Name(id='command_args', ctx=Load()))),
+                Assign(
+                    targets=[
+                        Name(id='result', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='subprocess', ctx=Load()),
+                            attr='run',
+                            ctx=Load()),
+                        args=[
+                            Name(id='command', ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='capture_output',
+                                value=Constant(value=True)),
+                            keyword(
+                                arg='text',
+                                value=Constant(value=True))])),
+                Return(
+                    value=Attribute(
+                        value=Name(id='result', ctx=Load()),
+                        attr='stdout',
+                        ctx=Load()))],
+            decorator_list=[]),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='output', ctx=Store())],
+                    value=Call(
+                        func=Name(id='safe_snyk_test', ctx=Load()),
+                        args=[
+                            List(
+                                elts=[
+                                    Constant(value='--all-projects')],
+                                ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Name(id='output', ctx=Load())],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ValueError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Name(id='print', ctx=Load()))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

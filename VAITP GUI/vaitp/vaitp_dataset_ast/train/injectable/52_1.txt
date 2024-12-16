@@ -1,0 +1,130 @@
+Module(
+    body=[
+        ImportFrom(
+            module='ftplib',
+            names=[
+                alias(name='FTP')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='ftp', ctx=Store())],
+            value=Call(
+                func=Name(id='FTP', ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='ftp', ctx=Load()),
+                    attr='connect',
+                    ctx=Load()),
+                args=[
+                    Constant(value='malicious-ftp-server.com')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='ftp', ctx=Load()),
+                    attr='login',
+                    ctx=Load()),
+                args=[
+                    Constant(value='username'),
+                    Constant(value='password')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='ftp', ctx=Load()),
+                    attr='set_pasv',
+                    ctx=Load()),
+                args=[
+                    Constant(value=True)],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='pasv_response', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='ftp', ctx=Load()),
+                    attr='sendcmd',
+                    ctx=Load()),
+                args=[
+                    Constant(value='PASV')],
+                keywords=[])),
+        Assign(
+            targets=[
+                Tuple(
+                    elts=[
+                        Name(id='ip', ctx=Store()),
+                        Name(id='port', ctx=Store())],
+                    ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Subscript(
+                        value=Call(
+                            func=Attribute(
+                                value=Subscript(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='pasv_response', ctx=Load()),
+                                            attr='split',
+                                            ctx=Load()),
+                                        args=[
+                                            Constant(value='(')],
+                                        keywords=[]),
+                                    slice=Constant(value=1),
+                                    ctx=Load()),
+                                attr='split',
+                                ctx=Load()),
+                            args=[
+                                Constant(value=')')],
+                            keywords=[]),
+                        slice=Constant(value=0),
+                        ctx=Load()),
+                    attr='split',
+                    ctx=Load()),
+                args=[
+                    Constant(value=',')],
+                keywords=[])),
+        If(
+            test=Compare(
+                left=Name(id='ip', ctx=Load()),
+                ops=[
+                    NotEq()],
+                comparators=[
+                    Attribute(
+                        value=Name(id='ftp', ctx=Load()),
+                        attr='host',
+                        ctx=Load())]),
+            body=[
+                Raise(
+                    exc=Call(
+                        func=Name(id='ValueError', ctx=Load()),
+                        args=[
+                            Constant(value='PASV response IP address does not match the FTP server host')],
+                        keywords=[]))],
+            orelse=[]),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='ftp', ctx=Load()),
+                    attr='connect',
+                    ctx=Load()),
+                args=[
+                    Name(id='ip', ctx=Load()),
+                    Call(
+                        func=Name(id='int', ctx=Load()),
+                        args=[
+                            Name(id='port', ctx=Load())],
+                        keywords=[])],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='ftp', ctx=Load()),
+                    attr='retrlines',
+                    ctx=Load()),
+                args=[
+                    Constant(value='LIST')],
+                keywords=[]))],
+    type_ignores=[])

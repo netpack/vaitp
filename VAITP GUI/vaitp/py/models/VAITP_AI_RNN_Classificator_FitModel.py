@@ -1,44 +1,21 @@
-import sys
-import os
-import collections
-import pathlib
-import numpy as np
-import ast, re
-
-import tensorflow_datasets as tfds
-import tensorflow as tf
-
+import sys, os, pathlib, ast, re, tensorflow_datasets as tfds, tensorflow as tf, keras, matplotlib, matplotlib.pyplot as plt, datetime, time, shutil, random, pickle
 from tensorflow import keras
 from tensorflow.keras import layers
 from tensorflow.keras import losses
 from tensorflow.keras import utils
 from tensorflow.keras.layers import TextVectorization
-
-import tensorflow_datasets as tfds
-import tensorflow_text as tf_text
-
-import keras
-import keras.backend as K
-
-from sklearn.metrics import confusion_matrix
-
-tfds.disable_progress_bar()
-import matplotlib
-matplotlib.use('tkagg')
-import matplotlib.pyplot as plt
-
-import datetime
-import time
 from time import gmtime, strftime
 from datetime import timedelta
-
 from optparse import OptionParser
 
-import astor
-import shutil, random
+print("Starting VAITP AI RNN FitModel Script")
+print("TensorFlow version:", tf.__version__)
+print("Keras version:", keras.__version__)
+
+tfds.disable_progress_bar()
+matplotlib.use('tkagg')
 
 time_start = time.time()
-
 
 #The parser is used to better manipulate the supplied arvgs (just getting to many to handle)
 parser = OptionParser()
@@ -62,7 +39,6 @@ parser.add_option("-m", "--max_sequence_length", action="store", type="int", des
 #Model type
 if not options.model_type:
     exit('please specify the model type as -t bow or --model_type bow (see help for all support model types))')
-
 
 '''Parameters that are common to all models'''
 #Model epochs
@@ -123,13 +99,11 @@ if options.model_type.upper() == 'LSTM':
         exit('please add lstm units value as -u 7 or --lstm_units 7')
 
 
-
-
-
-
 #TODO: Add params:
 #Strides
 #Padding
+
+
 if options.model_type.upper() == 'C1D':
     filter_units = int(options.conv1d_filters)
     kernel_size = int(options.conv1d_kernel_size)
@@ -167,7 +141,7 @@ elif options.activation_model_sequencing == 5:
     activation_function_2 = "selu"
 
 #Setup logs for tensorboard
-log_dir = "/home/b7/vaitp/VAITP/VAITP GUI/vaitp/tf_logs/" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+log_dir = "/Users/fredericbogaerts/vaitp/VAITP/VAITP GUI/vaitp/tf_logs/" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
 #log_dir = "/mnt/vaitp/VAITP GUI/vaitp/tf_logs/" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
 
 tensorboard_callback = keras.callbacks.TensorBoard(
@@ -187,8 +161,8 @@ tensorboard_callback = keras.callbacks.TensorBoard(
 #  plt.legend([metric, 'val_'+metric])
 
 #select the dataset directory
-dataset_dir = pathlib.Path("../vaitp/vaitp_dataset_ast")
-dataset_dir_py_files = pathlib.Path("../vaitp/vaitp_dataset")
+dataset_dir = pathlib.Path("../../vaitp_dataset_ast")
+dataset_dir_py_files = pathlib.Path("../../vaitp_dataset")
 
 #tain directory
 train_dir = str(dataset_dir)+'/train'
@@ -199,7 +173,7 @@ test_dir = str(dataset_dir)+'/test'
 test_dir_py_files = str(dataset_dir_py_files)+'/test'
 
 print(f'AST Training dir path: {train_dir}\nAST Testing dir path: {test_dir}')
-print(f'Python Training dir path: {train_dir_py_files}\Python Testing dir path: {test_dir_py_files}')
+print(f'Python Training dir path: {train_dir_py_files}\nPython Testing dir path: {test_dir_py_files}')
 
 
 #count the number of files in the train dir
@@ -256,6 +230,7 @@ for noninj in noninjectable_files:
     shutil.move(os.path.join(train_dir_noninj, noninj), test_dir_noninj)
 
 
+"""
 #loop the selected files and copy the corresponding python code in the original dataset to the test folder for this cross validation iteraction
 print('VAITP :: moving injectable python versions, of the AST\'s selected for testing, in "vaitp_dataset" test folder...')
 for tempfile in os.listdir(test_dir_inj):
@@ -266,26 +241,19 @@ for tempfile in os.listdir(test_dir_inj):
 print('VAITP :: moving noninjectable python versions, of the AST\'s selected for testing, in "vaitp_dataset" test folder...')
 for tempfile in os.listdir(test_dir_noninj):
     original_file_name = tempfile.replace(".txt",".py")
-    #print(f'Selecting injectable test file in vaitp_dataset "{original_file_name}" from AST test file "{tempfile}"')
+    #print(f'Selecting noninjectable test file in vaitp_dataset "{original_file_name}" from AST test file "{tempfile}"')
     shutil.move(os.path.join(train_dir_noninj_py_files, original_file_name), test_dir_noninj_py_files)
-
+"""
 
 train_dir_count = train_dir_inj_count+train_dir_noninj_count
-
-#count the number of files in the test dir
-#test_dir_vuln = test_dir+"/vulnerable"
-#test_dir_vuln_count = len([n for n in os.listdir(test_dir_vuln) if os.path.isfile(os.path.join(test_dir_vuln, n))])
-#print(f'File list count in testing set: {test_dir_vuln_count} (vulnerable)')
-
-
-test_dir_noninj_count = len([n for n in os.listdir(test_dir_noninj) if os.path.isfile(os.path.join(test_dir_noninj, n))])
-print(f'Cross validadation :: Number of noninjectable files selected for testing: {test_dir_noninj_count}')
 
 test_dir_inj_count = len([n for n in os.listdir(test_dir_inj) if os.path.isfile(os.path.join(test_dir_inj, n))])
 print(f'Cross validadation :: Number of injectable files selected for testing: {test_dir_inj_count}')
 
-test_dir_count =test_dir_noninj_count+test_dir_inj_count
+test_dir_noninj_count = len([n for n in os.listdir(test_dir_noninj) if os.path.isfile(os.path.join(test_dir_noninj, n))])
+print(f'Cross validadation :: Number of noninjectable files selected for testing: {test_dir_noninj_count}')
 
+test_dir_count = test_dir_noninj_count+test_dir_inj_count
 
 #Create a full trainig set for final predictions
 raw_train_ds_full = utils.text_dataset_from_directory(
@@ -295,7 +263,7 @@ raw_train_ds_full = utils.text_dataset_from_directory(
 
 
 #Create trainig set  [should be around 20% of the set]
-batch_size = 145#160#228#64
+batch_size = 696#145#160#228#64
 seed = 4
 raw_train_ds = utils.text_dataset_from_directory(
     train_dir,
@@ -557,8 +525,8 @@ for input, label in zip(text_batch_test, predicted_labels):
   predicted_label = label.numpy()
   n_tmpo +=1
 
-  print(f'\n::::::::: ::::::::: ::::::::: ::::::::: VAITP :::::::: :::::::: ::::::: :::::::: \nexpected label: {expected_label}')
-  print(f'\npredicted label: {predicted_label}')
+  #print(f'\n::::::::: ::::::::: ::::::::: ::::::::: VAITP :::::::: :::::::: ::::::: :::::::: \nexpected label: {expected_label}')
+  #print(f'\npredicted label: {predicted_label}')
 
 
   '''
@@ -577,7 +545,13 @@ for input, label in zip(text_batch_test, predicted_labels):
     
 
   if str(predicted_label) != str(expected_label):
-      print(f'\nThe following code is {expected_label} but was predicted as {predicted_label}:\n\n\t\t{input}\n\n')
+      
+      
+      
+      #print(f'\nThe following code is {expected_label} but was predicted as {predicted_label}:\n\n\t\t{input}\n\n')
+      
+      
+      
       #source = astor.to_source(ast.parse(str(input.numpy())[2:][:-1].replace("\\n","").replace("\\t","")))
       #print(f'Original Python code: {ast.dump(ast.parse(source))}')
 
@@ -628,11 +602,25 @@ print(f'VAITP [total tp+tn+fp+fn = {tp+tn+fp+fn}]')
 
 
 #Save the model
-modelPath = "/home/fred/msi/ano2/VAITP/VAITP GUI/vaitp/exported_ai_models/"
+modelPath = "/Users/fredericbogaerts/vaitp/VAITP GUI/vaitp/exported_ai_models/"
 #modelPath = "/mnt/vaitp/VAITP GUI/vaitp/exported_ai_models/"
-modelexportfilename = modelPath+"vaitp_classificator_model_"+"{:2.2}".format(accuracy)+"_"+str(options.model_type.upper())+"_"+str(int(options.epochs))+"_"+str(int(options.layer_density))+"_"+strftime("%Y_%m_%d_%H_%M", gmtime())+".tfv"
+modelexportfilename = modelPath+"vaitp_classificator_model_"+"{:2.2}".format(accuracy)+"_"+str(options.model_type.upper())+"_"+str(int(options.epochs))+"_"+str(int(options.layer_density))+"_"+strftime("%Y_%m_%d_%H_%M", gmtime())+".keras"
 
 export_model.save(modelexportfilename)
+
+# Save the tokenizer
+
+if options.model_type.upper() == 'BOW':
+    tokenizer_path = modelexportfilename.replace(".keras", "_tokenizer.pickle")
+    with open(tokenizer_path, 'wb') as handle:
+        pickle.dump(binary_vectorize_layer, handle, protocol=pickle.HIGHEST_PROTOCOL)
+    print(f"Saved tokenizer at: {tokenizer_path}")
+
+else:
+    tokenizer_path = modelexportfilename.replace(".keras", "_tokenizer.pickle")
+    with open(tokenizer_path, 'wb') as handle:
+        pickle.dump(int_vectorize_layer, handle, protocol=pickle.HIGHEST_PROTOCOL)
+    print(f"Saved tokenizer at: {tokenizer_path}")
 
 
 time_now = time.time()

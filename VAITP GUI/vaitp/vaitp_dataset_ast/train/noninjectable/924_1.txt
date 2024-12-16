@@ -1,0 +1,71 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='re')]),
+        FunctionDef(
+            name='install_package',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='package_name'),
+                    arg(arg='version')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='package_version', ctx=Store())],
+                    value=JoinedStr(
+                        values=[
+                            FormattedValue(
+                                value=Name(id='package_name', ctx=Load()),
+                                conversion=-1),
+                            Constant(value='-'),
+                            FormattedValue(
+                                value=Name(id='version', ctx=Load()),
+                                conversion=-1)])),
+                If(
+                    test=Call(
+                        func=Attribute(
+                            value=Name(id='re', ctx=Load()),
+                            attr='match',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='^[a-zA-Z0-9-_]+-[0-9]+$'),
+                            Name(id='package_version', ctx=Load())],
+                        keywords=[]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            Constant(value='Installing '),
+                                            FormattedValue(
+                                                value=Name(id='package_name', ctx=Load()),
+                                                conversion=-1),
+                                            Constant(value=' version '),
+                                            FormattedValue(
+                                                value=Name(id='version', ctx=Load()),
+                                                conversion=-1),
+                                            Constant(value='...')])],
+                                keywords=[]))],
+                    orelse=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Invalid package version format.')],
+                                keywords=[]))])],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='install_package', ctx=Load()),
+                args=[
+                    Constant(value='foo'),
+                    Constant(value='2-2')],
+                keywords=[]))],
+    type_ignores=[])

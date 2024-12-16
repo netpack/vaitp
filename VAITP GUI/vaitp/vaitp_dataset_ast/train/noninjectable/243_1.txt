@@ -1,0 +1,35 @@
+Module(
+    body=[
+        ImportFrom(
+            module='definitions',
+            names=[
+                alias(name='load')],
+            level=0),
+        FunctionDef(
+            name='vulnerable_load',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='input_data')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Name(id='load', ctx=Load()),
+                        args=[
+                            Name(id='input_data', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='malicious_input', ctx=Store())],
+            value=Constant(value="\nimport os\nos.system('cat /etc/passwd')\n")),
+        Expr(
+            value=Call(
+                func=Name(id='vulnerable_load', ctx=Load()),
+                args=[
+                    Name(id='malicious_input', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

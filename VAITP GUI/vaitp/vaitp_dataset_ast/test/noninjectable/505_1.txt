@@ -1,0 +1,90 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='usd')]),
+        FunctionDef(
+            name='load_usd',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='file_path')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='stage', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='usd', ctx=Load()),
+                                attr='Stage',
+                                ctx=Load()),
+                            attr='Open',
+                            ctx=Load()),
+                        args=[
+                            Name(id='file_path', ctx=Load())],
+                        keywords=[])),
+                For(
+                    target=Name(id='layer', ctx=Store()),
+                    iter=Call(
+                        func=Attribute(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='stage', ctx=Load()),
+                                    attr='GetRootLayer',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[]),
+                            attr='GetSubLayers',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='exec', ctx=Load()),
+                                args=[
+                                    Call(
+                                        func=Attribute(
+                                            value=Name(id='layer', ctx=Load()),
+                                            attr='GetSourceUri',
+                                            ctx=Load()),
+                                        args=[],
+                                        keywords=[])],
+                                keywords=[]))],
+                    orelse=[]),
+                Return(
+                    value=Name(id='stage', ctx=Load()))],
+            decorator_list=[]),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='stage', ctx=Store())],
+                    value=Call(
+                        func=Name(id='load_usd', ctx=Load()),
+                        args=[
+                            Constant(value='path/to/malicious.usd')],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='Exception', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            Constant(value='Error loading USD file: '),
+                                            FormattedValue(
+                                                value=Name(id='e', ctx=Load()),
+                                                conversion=-1)])],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

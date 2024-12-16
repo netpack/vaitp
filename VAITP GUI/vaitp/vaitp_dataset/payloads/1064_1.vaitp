@@ -1,0 +1,8 @@
+```python
+# Example payload to exploit the vulnerability
+key = b"example_key"
+value = b"example_value"
+
+# Manually crafted IR that triggers the vulnerability
+vulnerable_sha3_64(key, value)  # This would be the function call in the context of the vulnerability
+```

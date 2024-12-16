@@ -1,0 +1,64 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='zipfile')]),
+        Import(
+            names=[
+                alias(name='os')]),
+        FunctionDef(
+            name='safe_process_zip',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='zip_path')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                With(
+                    items=[
+                        withitem(
+                            context_expr=Call(
+                                func=Attribute(
+                                    value=Name(id='zipfile', ctx=Load()),
+                                    attr='ZipFile',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='zip_path', ctx=Load())],
+                                keywords=[]),
+                            optional_vars=Name(id='z', ctx=Store()))],
+                    body=[
+                        For(
+                            target=Name(id='file_info', ctx=Store()),
+                            iter=Call(
+                                func=Attribute(
+                                    value=Name(id='z', ctx=Load()),
+                                    attr='infolist',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[]),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    Constant(value='Processing file: '),
+                                                    FormattedValue(
+                                                        value=Attribute(
+                                                            value=Name(id='file_info', ctx=Load()),
+                                                            attr='filename',
+                                                            ctx=Load()),
+                                                        conversion=-1)])],
+                                        keywords=[]))],
+                            orelse=[])])],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='safe_process_zip', ctx=Load()),
+                args=[
+                    Constant(value='path/to/safe_zip_file.zip')],
+                keywords=[]))],
+    type_ignores=[])

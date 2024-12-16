@@ -1,0 +1,102 @@
+Module(
+    body=[
+        ImportFrom(
+            module='AccessControl',
+            names=[
+                alias(name='getSecurityManager')],
+            level=0),
+        ImportFrom(
+            module='AccessControl',
+            names=[
+                alias(name='ClassSecurityInfo')],
+            level=0),
+        ImportFrom(
+            module='Products.Five',
+            names=[
+                alias(name='BrowserView')],
+            level=0),
+        ClassDef(
+            name='SecurePageTemplate',
+            bases=[
+                Name(id='BrowserView', ctx=Load())],
+            keywords=[],
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='security', ctx=Store())],
+                    value=Call(
+                        func=Name(id='ClassSecurityInfo', ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                FunctionDef(
+                    name='edit_template',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='template_id'),
+                            arg(arg='new_content')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        If(
+                            test=UnaryOp(
+                                op=Not(),
+                                operand=Call(
+                                    func=Attribute(
+                                        value=Call(
+                                            func=Name(id='getSecurityManager', ctx=Load()),
+                                            args=[],
+                                            keywords=[]),
+                                        attr='checkPermission',
+                                        ctx=Load()),
+                                    args=[
+                                        Constant(value='Manage Zope'),
+                                        Attribute(
+                                            value=Name(id='self', ctx=Load()),
+                                            attr='context',
+                                            ctx=Load())],
+                                    keywords=[])),
+                            body=[
+                                Raise(
+                                    exc=Call(
+                                        func=Name(id='Unauthorized', ctx=Load()),
+                                        args=[
+                                            Constant(value='You do not have permission to edit this template.')],
+                                        keywords=[]))],
+                            orelse=[]),
+                        Assign(
+                            targets=[
+                                Name(id='template', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='context',
+                                        ctx=Load()),
+                                    attr='restrictedTraverse',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='template_id', ctx=Load())],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='template', ctx=Load()),
+                                    attr='pt_edit',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='new_content', ctx=Load())],
+                                keywords=[]))],
+                    decorator_list=[
+                        Call(
+                            func=Attribute(
+                                value=Name(id='security', ctx=Load()),
+                                attr='protected',
+                                ctx=Load()),
+                            args=[
+                                Constant(value='Manage Zope')],
+                            keywords=[])])],
+            decorator_list=[])],
+    type_ignores=[])

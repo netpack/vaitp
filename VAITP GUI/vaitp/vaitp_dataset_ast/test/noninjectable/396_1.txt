@@ -1,0 +1,44 @@
+Module(
+    body=[
+        FunctionDef(
+            name='verify_signature',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(
+                        arg='message',
+                        annotation=Name(id='bytes32', ctx=Load())),
+                    arg(
+                        arg='signature',
+                        annotation=Name(id='bytes', ctx=Load()))],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='recovered_address', ctx=Store())],
+                    value=Call(
+                        func=Name(id='ecrecover', ctx=Load()),
+                        args=[
+                            Name(id='message', ctx=Load()),
+                            Name(id='signature', ctx=Load())],
+                        keywords=[])),
+                If(
+                    test=Compare(
+                        left=Name(id='recovered_address', ctx=Load()),
+                        ops=[
+                            Eq()],
+                        comparators=[
+                            Name(id='ZERO_ADDRESS', ctx=Load())]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='Exception', ctx=Load()),
+                                args=[
+                                    Constant(value='Invalid signature')],
+                                keywords=[]))],
+                    orelse=[])],
+            decorator_list=[
+                Name(id='public', ctx=Load())])],
+    type_ignores=[])

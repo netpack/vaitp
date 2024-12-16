@@ -1,0 +1,65 @@
+Module(
+    body=[
+        ImportFrom(
+            module='django.contrib.auth.mixins',
+            names=[
+                alias(name='LoginRequiredMixin')],
+            level=0),
+        ImportFrom(
+            module='nautobot.extras.views',
+            names=[
+                alias(name='JobView')],
+            level=0),
+        ClassDef(
+            name='JobButtonView',
+            bases=[
+                Name(id='LoginRequiredMixin', ctx=Load()),
+                Name(id='JobView', ctx=Load())],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='post',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='request')],
+                        vararg=arg(arg='args'),
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        kwarg=arg(arg='kwargs'),
+                        defaults=[]),
+                    body=[
+                        If(
+                            test=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='request', ctx=Load()),
+                                        attr='user',
+                                        ctx=Load()),
+                                    attr='has_perm',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='extras.run_job')],
+                                keywords=[]),
+                            body=[
+                                Return(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='self', ctx=Load()),
+                                            attr='run_job',
+                                            ctx=Load()),
+                                        args=[],
+                                        keywords=[]))],
+                            orelse=[
+                                Return(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='self', ctx=Load()),
+                                            attr='permission_denied',
+                                            ctx=Load()),
+                                        args=[],
+                                        keywords=[]))])],
+                    decorator_list=[])],
+            decorator_list=[])],
+    type_ignores=[])

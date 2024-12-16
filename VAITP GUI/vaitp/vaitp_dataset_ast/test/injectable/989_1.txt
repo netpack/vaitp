@@ -1,0 +1,84 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='pandas', asname='pd')]),
+        ImportFrom(
+            module='pandasai',
+            names=[
+                alias(name='PandasAI')],
+            level=0),
+        ClassDef(
+            name='SafeSDFCodeExecutor',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='execute',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='code')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='NotImplementedError', ctx=Load()),
+                                args=[
+                                    Constant(value='Execution of arbitrary code is disabled.')],
+                                keywords=[]))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='pandas_ai', ctx=Store())],
+            value=Call(
+                func=Name(id='PandasAI', ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='executor',
+                        value=Call(
+                            func=Name(id='SafeSDFCodeExecutor', ctx=Load()),
+                            args=[],
+                            keywords=[]))])),
+        Assign(
+            targets=[
+                Name(id='data', ctx=Store())],
+            value=Dict(
+                keys=[
+                    Constant(value='input')],
+                values=[
+                    List(
+                        elts=[
+                            Constant(value='Generate a DataFrame with two columns: name and age.')],
+                        ctx=Load())])),
+        Assign(
+            targets=[
+                Name(id='df', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='pd', ctx=Load()),
+                    attr='DataFrame',
+                    ctx=Load()),
+                args=[
+                    Name(id='data', ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='result', ctx=Store())],
+            value=Call(
+                func=Name(id='pandas_ai', ctx=Load()),
+                args=[
+                    Name(id='df', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='result', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

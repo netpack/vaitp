@@ -1,0 +1,103 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='pypdf')]),
+        FunctionDef(
+            name='vulnerable_pdf_processing',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='pdf_path')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                With(
+                    items=[
+                        withitem(
+                            context_expr=Call(
+                                func=Name(id='open', ctx=Load()),
+                                args=[
+                                    Name(id='pdf_path', ctx=Load()),
+                                    Constant(value='rb')],
+                                keywords=[]),
+                            optional_vars=Name(id='file', ctx=Store()))],
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='reader', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='pypdf', ctx=Load()),
+                                    attr='PdfReader',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='file', ctx=Load())],
+                                keywords=[])),
+                        For(
+                            target=Name(id='i', ctx=Store()),
+                            iter=Call(
+                                func=Name(id='range', ctx=Load()),
+                                args=[
+                                    Call(
+                                        func=Name(id='len', ctx=Load()),
+                                        args=[
+                                            Attribute(
+                                                value=Name(id='reader', ctx=Load()),
+                                                attr='pages',
+                                                ctx=Load())],
+                                        keywords=[])],
+                                keywords=[]),
+                            body=[
+                                For(
+                                    target=Name(id='j', ctx=Store()),
+                                    iter=Call(
+                                        func=Name(id='range', ctx=Load()),
+                                        args=[
+                                            Call(
+                                                func=Name(id='len', ctx=Load()),
+                                                args=[
+                                                    Attribute(
+                                                        value=Name(id='reader', ctx=Load()),
+                                                        attr='pages',
+                                                        ctx=Load())],
+                                                keywords=[])],
+                                        keywords=[]),
+                                    body=[
+                                        Assign(
+                                            targets=[
+                                                Name(id='page', ctx=Store())],
+                                            value=Subscript(
+                                                value=Attribute(
+                                                    value=Name(id='reader', ctx=Load()),
+                                                    attr='pages',
+                                                    ctx=Load()),
+                                                slice=Name(id='i', ctx=Load()),
+                                                ctx=Load())),
+                                        Assign(
+                                            targets=[
+                                                Name(id='text', ctx=Store())],
+                                            value=Call(
+                                                func=Attribute(
+                                                    value=Name(id='page', ctx=Load()),
+                                                    attr='extract_text',
+                                                    ctx=Load()),
+                                                args=[],
+                                                keywords=[])),
+                                        Expr(
+                                            value=Call(
+                                                func=Name(id='print', ctx=Load()),
+                                                args=[
+                                                    Name(id='text', ctx=Load())],
+                                                keywords=[]))],
+                                    orelse=[])],
+                            orelse=[])])],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='vulnerable_pdf_processing', ctx=Load()),
+                args=[
+                    Constant(value='example.pdf')],
+                keywords=[]))],
+    type_ignores=[])

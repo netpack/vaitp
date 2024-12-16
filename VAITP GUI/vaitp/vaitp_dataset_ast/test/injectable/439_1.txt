@@ -1,0 +1,119 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='re')]),
+        ImportFrom(
+            module='libvcs.shortcuts',
+            names=[
+                alias(name='create_repo')],
+            level=0),
+        FunctionDef(
+            name='is_valid_url',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='url')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='regex', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='re', ctx=Load()),
+                            attr='compile',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='^(?:http|ftp)s?://(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\\.)+(?:[A-Z]{2,6}\\.?|[A-Z0-9-]{2,}\\.?)|localhost|\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}|\\[?[A-F0-9]*:[A-F0-9:]+\\]?)(?::\\d+)?(?:/?|[/?]\\S+)$'),
+                            Attribute(
+                                value=Name(id='re', ctx=Load()),
+                                attr='IGNORECASE',
+                                ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=Compare(
+                        left=Call(
+                            func=Attribute(
+                                value=Name(id='re', ctx=Load()),
+                                attr='match',
+                                ctx=Load()),
+                            args=[
+                                Name(id='regex', ctx=Load()),
+                                Name(id='url', ctx=Load())],
+                            keywords=[]),
+                        ops=[
+                            IsNot()],
+                        comparators=[
+                            Constant(value=None)]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='safe_create_repo',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='url'),
+                    arg(arg='vcs'),
+                    arg(arg='repo_dir')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=UnaryOp(
+                        op=Not(),
+                        operand=Call(
+                            func=Name(id='is_valid_url', ctx=Load()),
+                            args=[
+                                Name(id='url', ctx=Load())],
+                            keywords=[])),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Invalid URL provided')],
+                                keywords=[]))],
+                    orelse=[]),
+                Return(
+                    value=Call(
+                        func=Name(id='create_repo', ctx=Load()),
+                        args=[],
+                        keywords=[
+                            keyword(
+                                arg='url',
+                                value=Name(id='url', ctx=Load())),
+                            keyword(
+                                arg='vcs',
+                                value=Name(id='vcs', ctx=Load())),
+                            keyword(
+                                arg='repo_dir',
+                                value=Name(id='repo_dir', ctx=Load()))]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='r', ctx=Store())],
+            value=Call(
+                func=Name(id='safe_create_repo', ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='url',
+                        value=Constant(value='https://example.com/repo')),
+                    keyword(
+                        arg='vcs',
+                        value=Constant(value='hg')),
+                    keyword(
+                        arg='repo_dir',
+                        value=Constant(value='./'))])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='r', ctx=Load()),
+                    attr='update_repo',
+                    ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

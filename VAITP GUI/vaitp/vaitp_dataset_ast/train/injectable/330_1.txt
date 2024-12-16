@@ -1,0 +1,73 @@
+Module(
+    body=[
+        ImportFrom(
+            module='ni_measurementlink_service',
+            names=[
+                alias(name='MeasurementLinkService')],
+            level=0),
+        ImportFrom(
+            module='flask',
+            names=[
+                alias(name='abort'),
+                alias(name='request')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='service', ctx=Store())],
+            value=Call(
+                func=Name(id='MeasurementLinkService', ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='service', ctx=Load()),
+                    attr='start',
+                    ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='host',
+                        value=Constant(value='127.0.0.1')),
+                    keyword(
+                        arg='port',
+                        value=Constant(value=8080))])),
+        FunctionDef(
+            name='sensitive_data',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Compare(
+                        left=Attribute(
+                            value=Name(id='request', ctx=Load()),
+                            attr='remote_addr',
+                            ctx=Load()),
+                        ops=[
+                            NotEq()],
+                        comparators=[
+                            Constant(value='127.0.0.1')]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='abort', ctx=Load()),
+                                args=[
+                                    Constant(value=403)],
+                                keywords=[]))],
+                    orelse=[]),
+                Return(
+                    value=Constant(value='This is sensitive data!'))],
+            decorator_list=[
+                Call(
+                    func=Attribute(
+                        value=Name(id='service', ctx=Load()),
+                        attr='route',
+                        ctx=Load()),
+                    args=[
+                        Constant(value='/sensitive-data')],
+                    keywords=[])])],
+    type_ignores=[])

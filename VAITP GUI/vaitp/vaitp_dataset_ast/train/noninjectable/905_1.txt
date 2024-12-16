@@ -1,0 +1,53 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='nltk')]),
+        Assign(
+            targets=[
+                Name(id='text_input', ctx=Store())],
+            value=BinOp(
+                left=Constant(value='A'),
+                op=Mult(),
+                right=Constant(value=1000000))),
+        Assign(
+            targets=[
+                Name(id='sentences', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='nltk', ctx=Load()),
+                        attr='tokenize',
+                        ctx=Load()),
+                    attr='sent_tokenize',
+                    ctx=Load()),
+                args=[
+                    Name(id='text_input', ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='words', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='nltk', ctx=Load()),
+                        attr='tokenize',
+                        ctx=Load()),
+                    attr='word_tokenize',
+                    ctx=Load()),
+                args=[
+                    Name(id='text_input', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='sentences', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='words', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

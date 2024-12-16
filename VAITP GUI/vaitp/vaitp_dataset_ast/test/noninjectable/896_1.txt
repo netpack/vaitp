@@ -1,0 +1,150 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='tensorflow', asname='tf')]),
+        FunctionDef(
+            name='vulnerable_ragged_bincount',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='splits'),
+                    arg(arg='values'),
+                    arg(arg='num_bins')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='splits_values', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='tf', ctx=Load()),
+                                attr='sparse',
+                                ctx=Load()),
+                            attr='to_dense',
+                            ctx=Load()),
+                        args=[
+                            Name(id='splits', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='batch_idx', ctx=Store())],
+                    value=Constant(value=0)),
+                While(
+                    test=Compare(
+                        left=Name(id='batch_idx', ctx=Load()),
+                        ops=[
+                            Lt()],
+                        comparators=[
+                            Subscript(
+                                value=Call(
+                                    func=Attribute(
+                                        value=Name(id='tf', ctx=Load()),
+                                        attr='shape',
+                                        ctx=Load()),
+                                    args=[
+                                        Name(id='splits_values', ctx=Load())],
+                                    keywords=[]),
+                                slice=Constant(value=0),
+                                ctx=Load())]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='next_batch_idx', ctx=Store())],
+                            value=IfExp(
+                                test=Compare(
+                                    left=BinOp(
+                                        left=Name(id='batch_idx', ctx=Load()),
+                                        op=Add(),
+                                        right=Constant(value=1)),
+                                    ops=[
+                                        Lt()],
+                                    comparators=[
+                                        Subscript(
+                                            value=Call(
+                                                func=Attribute(
+                                                    value=Name(id='tf', ctx=Load()),
+                                                    attr='shape',
+                                                    ctx=Load()),
+                                                args=[
+                                                    Name(id='splits_values', ctx=Load())],
+                                                keywords=[]),
+                                            slice=Constant(value=0),
+                                            ctx=Load())]),
+                                body=Subscript(
+                                    value=Name(id='splits_values', ctx=Load()),
+                                    slice=BinOp(
+                                        left=Name(id='batch_idx', ctx=Load()),
+                                        op=Add(),
+                                        right=Constant(value=1)),
+                                    ctx=Load()),
+                                orelse=Constant(value=0))),
+                        AugAssign(
+                            target=Name(id='batch_idx', ctx=Store()),
+                            op=Add(),
+                            value=Constant(value=1))],
+                    orelse=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='splits', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='tf', ctx=Load()),
+                    attr='SparseTensor',
+                    ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='indices',
+                        value=List(
+                            elts=[
+                                List(
+                                    elts=[
+                                        Constant(value=0),
+                                        Constant(value=0)],
+                                    ctx=Load())],
+                            ctx=Load())),
+                    keyword(
+                        arg='values',
+                        value=List(
+                            elts=[
+                                Constant(value=0)],
+                            ctx=Load())),
+                    keyword(
+                        arg='dense_shape',
+                        value=List(
+                            elts=[
+                                Constant(value=1),
+                                Constant(value=1)],
+                            ctx=Load()))])),
+        Assign(
+            targets=[
+                Name(id='values', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='tf', ctx=Load()),
+                    attr='constant',
+                    ctx=Load()),
+                args=[
+                    List(
+                        elts=[
+                            Constant(value=1)],
+                        ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='num_bins', ctx=Store())],
+            value=Constant(value=2)),
+        Expr(
+            value=Call(
+                func=Name(id='vulnerable_ragged_bincount', ctx=Load()),
+                args=[
+                    Name(id='splits', ctx=Load()),
+                    Name(id='values', ctx=Load()),
+                    Name(id='num_bins', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

@@ -1,0 +1,24 @@
+Module(
+    body=[
+        ImportFrom(
+            module='PIL',
+            names=[
+                alias(name='Image')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='color', ctx=Store())],
+            value=BinOp(
+                left=Constant(value='a'),
+                op=Mult(),
+                right=Constant(value=10000))),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='Image', ctx=Load()),
+                    attr='getrgb',
+                    ctx=Load()),
+                args=[
+                    Name(id='color', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

@@ -1,0 +1,48 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='urllib3')]),
+        Assign(
+            targets=[
+                Name(id='http', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='urllib3', ctx=Load()),
+                    attr='PoolManager',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='proxy', ctx=Store())],
+            value=Constant(value='https://malicious.com:8080')),
+        Assign(
+            targets=[
+                Name(id='url', ctx=Store())],
+            value=Constant(value='https://example.com')),
+        Assign(
+            targets=[
+                Name(id='response', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='http', ctx=Load()),
+                    attr='request',
+                    ctx=Load()),
+                args=[
+                    Constant(value='GET'),
+                    Name(id='url', ctx=Load())],
+                keywords=[
+                    keyword(
+                        arg='retries',
+                        value=Constant(value=False)),
+                    keyword(
+                        arg='timeout',
+                        value=Constant(value=10)),
+                    keyword(
+                        arg='preload_content',
+                        value=Constant(value=False)),
+                    keyword(
+                        arg='proxy_url',
+                        value=Name(id='proxy', ctx=Load()))]))],
+    type_ignores=[])

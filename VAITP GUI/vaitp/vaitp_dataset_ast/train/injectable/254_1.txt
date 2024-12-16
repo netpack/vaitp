@@ -1,0 +1,126 @@
+Module(
+    body=[
+        ImportFrom(
+            module='html_to_csv',
+            names=[
+                alias(name='HtmlToCsv')],
+            level=0),
+        ImportFrom(
+            module='bs4',
+            names=[
+                alias(name='BeautifulSoup')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='html_content', ctx=Store())],
+            value=Constant(value='\n<table>\n    <tr>\n        <th>Name</th>\n        <th>Score</th>\n    </tr>\n    <tr>\n        <td>John Doe</td>\n        <td>=HYPERLINK("http://malicious-link.com", "Click Here")</td>\n    </tr>\n    <tr>\n        <td>Jane Smith</td>\n        <td>95</td>\n    </tr>\n</table>\n')),
+        FunctionDef(
+            name='sanitize_html',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='html')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='soup', ctx=Store())],
+                    value=Call(
+                        func=Name(id='BeautifulSoup', ctx=Load()),
+                        args=[
+                            Name(id='html', ctx=Load()),
+                            Constant(value='html.parser')],
+                        keywords=[])),
+                For(
+                    target=Name(id='td', ctx=Store()),
+                    iter=Call(
+                        func=Attribute(
+                            value=Name(id='soup', ctx=Load()),
+                            attr='find_all',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='td')],
+                        keywords=[]),
+                    body=[
+                        If(
+                            test=Compare(
+                                left=Constant(value='='),
+                                ops=[
+                                    In()],
+                                comparators=[
+                                    Attribute(
+                                        value=Name(id='td', ctx=Load()),
+                                        attr='text',
+                                        ctx=Load())]),
+                            body=[
+                                Assign(
+                                    targets=[
+                                        Attribute(
+                                            value=Name(id='td', ctx=Load()),
+                                            attr='string',
+                                            ctx=Store())],
+                                    value=Constant(value='Formula removed'))],
+                            orelse=[])],
+                    orelse=[]),
+                Return(
+                    value=Call(
+                        func=Name(id='str', ctx=Load()),
+                        args=[
+                            Name(id='soup', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='sanitized_html', ctx=Store())],
+            value=Call(
+                func=Name(id='sanitize_html', ctx=Load()),
+                args=[
+                    Name(id='html_content', ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='converter', ctx=Store())],
+            value=Call(
+                func=Name(id='HtmlToCsv', ctx=Load()),
+                args=[],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='csv_output', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='converter', ctx=Load()),
+                    attr='convert',
+                    ctx=Load()),
+                args=[
+                    Name(id='sanitized_html', ctx=Load())],
+                keywords=[])),
+        With(
+            items=[
+                withitem(
+                    context_expr=Call(
+                        func=Name(id='open', ctx=Load()),
+                        args=[
+                            Constant(value='output.csv'),
+                            Constant(value='w')],
+                        keywords=[]),
+                    optional_vars=Name(id='file', ctx=Store()))],
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='file', ctx=Load()),
+                            attr='write',
+                            ctx=Load()),
+                        args=[
+                            Name(id='csv_output', ctx=Load())],
+                        keywords=[]))]),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Constant(value='CSV file created successfully with sanitized content.')],
+                keywords=[]))],
+    type_ignores=[])

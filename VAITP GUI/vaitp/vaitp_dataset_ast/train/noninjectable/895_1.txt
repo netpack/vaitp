@@ -1,0 +1,44 @@
+Module(
+    body=[
+        FunctionDef(
+            name='read_object',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='self'),
+                    arg(arg='object_id')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                While(
+                    test=Constant(value=True),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='obj', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='objects',
+                                        ctx=Load()),
+                                    attr='get',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='object_id', ctx=Load())],
+                                keywords=[])),
+                        If(
+                            test=Compare(
+                                left=Name(id='obj', ctx=Load()),
+                                ops=[
+                                    IsNot()],
+                                comparators=[
+                                    Constant(value=None)]),
+                            body=[
+                                Return(
+                                    value=Name(id='obj', ctx=Load()))],
+                            orelse=[])],
+                    orelse=[])],
+            decorator_list=[])],
+    type_ignores=[])

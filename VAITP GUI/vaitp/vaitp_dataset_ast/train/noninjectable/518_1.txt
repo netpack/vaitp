@@ -1,0 +1,37 @@
+Module(
+    body=[
+        FunctionDef(
+            name='install_package',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='git_url'),
+                    arg(arg='reference')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            JoinedStr(
+                                values=[
+                                    Constant(value='Installing package from '),
+                                    FormattedValue(
+                                        value=Name(id='git_url', ctx=Load()),
+                                        conversion=-1),
+                                    Constant(value=' at reference '),
+                                    FormattedValue(
+                                        value=Name(id='reference', ctx=Load()),
+                                        conversion=-1)])],
+                        keywords=[]))],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='install_package', ctx=Load()),
+                args=[
+                    Constant(value='https://github.com/example/repo.git'),
+                    Constant(value='main\u2028branch')],
+                keywords=[]))],
+    type_ignores=[])

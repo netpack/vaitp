@@ -1,0 +1,55 @@
+Module(
+    body=[
+        ImportFrom(
+            module='html5lib',
+            names=[
+                alias(name='HTMLParser'),
+                alias(name='HTMLSerializer')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='user_input', ctx=Store())],
+            value=Constant(value='<script>alert("XSS Attack!");</script>')),
+        Assign(
+            targets=[
+                Name(id='parser', ctx=Store())],
+            value=Call(
+                func=Name(id='HTMLParser', ctx=Load()),
+                args=[],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='document', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='parser', ctx=Load()),
+                    attr='parse',
+                    ctx=Load()),
+                args=[
+                    Name(id='user_input', ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='serializer', ctx=Store())],
+            value=Call(
+                func=Name(id='HTMLSerializer', ctx=Load()),
+                args=[],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='output', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='serializer', ctx=Load()),
+                    attr='serialize',
+                    ctx=Load()),
+                args=[
+                    Name(id='document', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='output', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

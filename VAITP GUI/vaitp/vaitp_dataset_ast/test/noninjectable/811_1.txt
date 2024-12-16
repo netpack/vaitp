@@ -1,0 +1,40 @@
+Module(
+    body=[
+        FunctionDef(
+            name='execute_user_input',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='style_properties')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='user_input', ctx=Store())],
+                    value=JoinedStr(
+                        values=[
+                            Constant(value='style={ '),
+                            FormattedValue(
+                                value=Name(id='style_properties', ctx=Load()),
+                                conversion=-1),
+                            Constant(value=' }')])),
+                Expr(
+                    value=Call(
+                        func=Name(id='eval', ctx=Load()),
+                        args=[
+                            Name(id='user_input', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='malicious_style_properties', ctx=Store())],
+            value=Constant(value="color: 'red; /* malicious code */ }; System.exit(1);")),
+        Expr(
+            value=Call(
+                func=Name(id='execute_user_input', ctx=Load()),
+                args=[
+                    Name(id='malicious_style_properties', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

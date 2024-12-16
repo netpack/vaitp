@@ -1,0 +1,34 @@
+Module(
+    body=[
+        ImportFrom(
+            module='setuptools',
+            names=[
+                alias(name='setup')],
+            level=0),
+        Expr(
+            value=Call(
+                func=Name(id='setup', ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='name',
+                        value=Constant(value='d8s-pdfs')),
+                    keyword(
+                        arg='version',
+                        value=Constant(value='0.1.0')),
+                    keyword(
+                        arg='description',
+                        value=Constant(value='A package for handling PDFs with potential vulnerabilities')),
+                    keyword(
+                        arg='packages',
+                        value=List(
+                            elts=[
+                                Constant(value='d8s_pdfs')],
+                            ctx=Load())),
+                    keyword(
+                        arg='install_requires',
+                        value=List(
+                            elts=[
+                                Constant(value='democritus-urls')],
+                            ctx=Load()))]))],
+    type_ignores=[])

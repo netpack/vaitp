@@ -1,0 +1,105 @@
+Module(
+    body=[
+        ClassDef(
+            name='OutputFilter',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='buffer',
+                                    ctx=Store())],
+                            value=Call(
+                                func=Name(id='bytearray', ctx=Load()),
+                                args=[],
+                                keywords=[]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='read',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='size')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        If(
+                            test=Compare(
+                                left=Name(id='size', ctx=Load()),
+                                ops=[
+                                    Gt()],
+                                comparators=[
+                                    Constant(value=16384)]),
+                            body=[
+                                Assign(
+                                    targets=[
+                                        Name(id='data', ctx=Store())],
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='self', ctx=Load()),
+                                            attr='_read_from_source',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='size', ctx=Load())],
+                                        keywords=[])),
+                                Expr(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Attribute(
+                                                value=Name(id='self', ctx=Load()),
+                                                attr='buffer',
+                                                ctx=Load()),
+                                            attr='extend',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='data', ctx=Load())],
+                                        keywords=[])),
+                                Return(
+                                    value=Name(id='data', ctx=Load()))],
+                            orelse=[
+                                Return(
+                                    value=Subscript(
+                                        value=Attribute(
+                                            value=Name(id='self', ctx=Load()),
+                                            attr='buffer',
+                                            ctx=Load()),
+                                        slice=Slice(
+                                            upper=Name(id='size', ctx=Load())),
+                                        ctx=Load()))])],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='_read_from_source',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='size')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Return(
+                            value=BinOp(
+                                left=Constant(value=b'Some data'),
+                                op=Mult(),
+                                right=BinOp(
+                                    left=Name(id='size', ctx=Load()),
+                                    op=FloorDiv(),
+                                    right=Constant(value=10))))],
+                    decorator_list=[])],
+            decorator_list=[])],
+    type_ignores=[])

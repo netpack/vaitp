@@ -1,0 +1,102 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='argparse')]),
+        Import(
+            names=[
+                alias(name='getpass')]),
+        FunctionDef(
+            name='update_password',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='username'),
+                    arg(arg='password')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            JoinedStr(
+                                values=[
+                                    Constant(value='Updating password for user: '),
+                                    FormattedValue(
+                                        value=Name(id='username', ctx=Load()),
+                                        conversion=-1)])],
+                        keywords=[]))],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='parser', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='argparse', ctx=Load()),
+                            attr='ArgumentParser',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[
+                            keyword(
+                                arg='description',
+                                value=Constant(value='Update user password'))])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='parser', ctx=Load()),
+                            attr='add_argument',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='--username')],
+                        keywords=[
+                            keyword(
+                                arg='required',
+                                value=Constant(value=True)),
+                            keyword(
+                                arg='help',
+                                value=Constant(value='Username of the account'))])),
+                Assign(
+                    targets=[
+                        Name(id='args', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='parser', ctx=Load()),
+                            attr='parse_args',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='password', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='getpass', ctx=Load()),
+                            attr='getpass',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[
+                            keyword(
+                                arg='prompt',
+                                value=Constant(value='Enter new password: '))])),
+                Expr(
+                    value=Call(
+                        func=Name(id='update_password', ctx=Load()),
+                        args=[
+                            Attribute(
+                                value=Name(id='args', ctx=Load()),
+                                attr='username',
+                                ctx=Load()),
+                            Name(id='password', ctx=Load())],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

@@ -1,24 +1,35 @@
-import pyo3
+import weakref
+import threading
+import time
 
-# Example demonstrating unsafe handling of weak references leading to use-after-free
-from pyo3 import prelude::*;
+def create_object():
+  """Simulates creating a rust object wrapped in Python."""
+  return {"data": [1, 2, 3]}
 
-#[pyclass]
-struct MyStruct {
-    value: String,
-}
+def use_object(obj_ref):
+    """Simulates using the object after the original has gone out of scope."""
+    obj = obj_ref()
+    if obj:
+      print(f"Using object: {obj['data']}")
+    else:
+      print("Object no longer available")
 
-#[pymethods]
-impl MyStruct {
-    #[new]
-    fn new(value: String) -> Self {
-        MyStruct { value }
-    }
+def main():
+    obj = create_object()
+    obj_ref = weakref.ref(obj)
+    
+    
+    def worker():
+      time.sleep(0.1)
+      use_object(obj_ref)
+      
+    t = threading.Thread(target=worker)
+    t.start()
 
-    fn get_value(&self, py: Python) -> PyResult<String> {
-        // Unsafely handling weak reference without checking validity
-        let weak_ref = PyWeak::new(py, &self.value);
-        let str_ref = weak_ref.upgrade().unwrap(); // Potential use-after-free if weak_ref is invalid
-        Ok(str_ref.to_string())
-    }
-}
+    del obj # Object is deleted in main thread
+    
+    t.join()
+
+
+if __name__ == "__main__":
+    main()

@@ -30,6 +30,3 @@ class Version:
     def save_file(self, content):
         with open(f"{self.package_name}_{self.version}.deb", "wb") as f:
             f.write(content)
-
-# Example usage
-version = Version("example-package", "1.

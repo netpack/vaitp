@@ -1,0 +1,214 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='html')]),
+        FunctionDef(
+            name='safe_input',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='data')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='html', ctx=Load()),
+                            attr='escape',
+                            ctx=Load()),
+                        args=[
+                            Name(id='data', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='handle_redirect',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='url'),
+                    arg(arg='type')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='safe_url', ctx=Store())],
+                    value=Call(
+                        func=Name(id='safe_input', ctx=Load()),
+                        args=[
+                            Name(id='url', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='safe_type', ctx=Store())],
+                    value=Call(
+                        func=Name(id='safe_input', ctx=Load()),
+                        args=[
+                            Name(id='type', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='handle_validate',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='x')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='safe_x', ctx=Store())],
+                    value=Call(
+                        func=Name(id='safe_input', ctx=Load()),
+                        args=[
+                            Name(id='x', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='handle_request',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='name')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='safe_name', ctx=Store())],
+                    value=Call(
+                        func=Name(id='safe_input', ctx=Load()),
+                        args=[
+                            Name(id='name', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='handle_getpost',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='Name')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='safe_Name', ctx=Store())],
+                    value=Call(
+                        func=Name(id='safe_input', ctx=Load()),
+                        args=[
+                            Name(id='Name', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='handle_formtag',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='mytextarea'),
+                    arg(arg='mypass'),
+                    arg(arg='empty_param')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='safe_mytextarea', ctx=Store())],
+                    value=Call(
+                        func=Name(id='safe_input', ctx=Load()),
+                        args=[
+                            Name(id='mytextarea', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='safe_mypass', ctx=Store())],
+                    value=Call(
+                        func=Name(id='safe_input', ctx=Load()),
+                        args=[
+                            Name(id='mypass', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='safe_empty_param', ctx=Store())],
+                    value=Call(
+                        func=Name(id='safe_input', ctx=Load()),
+                        args=[
+                            Name(id='empty_param', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='handle_chat',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='newline')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='safe_newline', ctx=Store())],
+                    value=Call(
+                        func=Name(id='safe_input', ctx=Load()),
+                        args=[
+                            Name(id='newline', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='handle_formintro',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='text1')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='safe_text1', ctx=Store())],
+                    value=Call(
+                        func=Name(id='safe_input', ctx=Load()),
+                        args=[
+                            Name(id='text1', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='handle_formtag_params',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='mytext'),
+                    arg(arg='mydate')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='safe_mytext', ctx=Store())],
+                    value=Call(
+                        func=Name(id='safe_input', ctx=Load()),
+                        args=[
+                            Name(id='mytext', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='safe_mydate', ctx=Store())],
+                    value=Call(
+                        func=Name(id='safe_input', ctx=Load()),
+                        args=[
+                            Name(id='mydate', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[])],
+    type_ignores=[])

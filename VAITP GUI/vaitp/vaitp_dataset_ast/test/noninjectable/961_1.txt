@@ -1,0 +1,32 @@
+Module(
+    body=[
+        ImportFrom(
+            module='pydrive2.auth',
+            names=[
+                alias(name='GoogleAuth')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='gauth', ctx=Store())],
+            value=Call(
+                func=Name(id='GoogleAuth', ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='gauth', ctx=Load()),
+                    attr='LoadSettingsFile',
+                    ctx=Load()),
+                args=[
+                    Constant(value='settings.yaml')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='gauth', ctx=Load()),
+                    attr='Authorize',
+                    ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

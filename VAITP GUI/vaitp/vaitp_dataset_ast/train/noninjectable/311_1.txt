@@ -1,0 +1,89 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        Import(
+            names=[
+                alias(name='tarfile')]),
+        FunctionDef(
+            name='_tar_file',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='script_parts')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=List(
+                        elts=[
+                            Constant(value='path/to/archive.tar')],
+                        ctx=Load()))],
+            decorator_list=[]),
+        FunctionDef(
+            name='side_effect',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='old_cmd'),
+                    arg(arg='command')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                With(
+                    items=[
+                        withitem(
+                            context_expr=Call(
+                                func=Attribute(
+                                    value=Name(id='tarfile', ctx=Load()),
+                                    attr='TarFile',
+                                    ctx=Load()),
+                                args=[
+                                    Subscript(
+                                        value=Call(
+                                            func=Name(id='_tar_file', ctx=Load()),
+                                            args=[
+                                                Attribute(
+                                                    value=Name(id='old_cmd', ctx=Load()),
+                                                    attr='script_parts',
+                                                    ctx=Load())],
+                                            keywords=[]),
+                                        slice=Constant(value=0),
+                                        ctx=Load())],
+                                keywords=[]),
+                            optional_vars=Name(id='archive', ctx=Store()))],
+                    body=[
+                        For(
+                            target=Name(id='file', ctx=Store()),
+                            iter=Call(
+                                func=Attribute(
+                                    value=Name(id='archive', ctx=Load()),
+                                    attr='getnames',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[]),
+                            body=[
+                                Try(
+                                    body=[
+                                        Expr(
+                                            value=Call(
+                                                func=Attribute(
+                                                    value=Name(id='os', ctx=Load()),
+                                                    attr='remove',
+                                                    ctx=Load()),
+                                                args=[
+                                                    Name(id='file', ctx=Load())],
+                                                keywords=[]))],
+                                    handlers=[
+                                        ExceptHandler(
+                                            type=Name(id='OSError', ctx=Load()),
+                                            body=[
+                                                Pass()])],
+                                    orelse=[],
+                                    finalbody=[])],
+                            orelse=[])])],
+            decorator_list=[])],
+    type_ignores=[])

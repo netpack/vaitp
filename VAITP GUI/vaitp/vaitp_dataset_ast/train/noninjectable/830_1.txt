@@ -1,0 +1,68 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='re')]),
+        Assign(
+            targets=[
+                Name(id='vulnerable_pattern', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='re', ctx=Load()),
+                    attr='compile',
+                    ctx=Load()),
+                args=[
+                    Constant(value='^(?P<group1>a+)(?P<group2>a+)$')],
+                keywords=[])),
+        FunctionDef(
+            name='parse_user_agent',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='user_agent')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='match', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='vulnerable_pattern', ctx=Load()),
+                            attr='match',
+                            ctx=Load()),
+                        args=[
+                            Name(id='user_agent', ctx=Load())],
+                        keywords=[])),
+                If(
+                    test=Name(id='match', ctx=Load()),
+                    body=[
+                        Return(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='match', ctx=Load()),
+                                    attr='groupdict',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[]))],
+                    orelse=[]),
+                Return(
+                    value=Constant(value=None))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='user_agent_vulnerable', ctx=Store())],
+            value=BinOp(
+                left=Constant(value='a'),
+                op=Mult(),
+                right=Constant(value=1000))),
+        Assign(
+            targets=[
+                Name(id='result_vulnerable', ctx=Store())],
+            value=Call(
+                func=Name(id='parse_user_agent', ctx=Load()),
+                args=[
+                    Name(id='user_agent_vulnerable', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

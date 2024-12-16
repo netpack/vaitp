@@ -1,0 +1,73 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='democritus_networking')]),
+        ClassDef(
+            name='HtmlRenderer',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='content')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='content',
+                                    ctx=Store())],
+                            value=Name(id='content', ctx=Load()))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='render',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Return(
+                            value=JoinedStr(
+                                values=[
+                                    Constant(value='<div>'),
+                                    FormattedValue(
+                                        value=Attribute(
+                                            value=Name(id='self', ctx=Load()),
+                                            attr='content',
+                                            ctx=Load()),
+                                        conversion=-1),
+                                    Constant(value='</div>')]))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='renderer', ctx=Store())],
+            value=Call(
+                func=Name(id='HtmlRenderer', ctx=Load()),
+                args=[
+                    Constant(value="<script>alert('This is a test');</script>")],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Call(
+                        func=Attribute(
+                            value=Name(id='renderer', ctx=Load()),
+                            attr='render',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])],
+                keywords=[]))],
+    type_ignores=[])

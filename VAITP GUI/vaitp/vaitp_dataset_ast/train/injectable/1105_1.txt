@@ -1,0 +1,67 @@
+Module(
+    body=[
+        ImportFrom(
+            module='langchain_experimental',
+            names=[
+                alias(name='REPL')],
+            level=0),
+        FunctionDef(
+            name='enable_repl_access',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='user_input', ctx=Store())],
+                    value=Call(
+                        func=Name(id='input', ctx=Load()),
+                        args=[
+                            Constant(value='Do you want to enable Python REPL access? (yes/no): ')],
+                        keywords=[])),
+                If(
+                    test=Compare(
+                        left=Call(
+                            func=Attribute(
+                                value=Name(id='user_input', ctx=Load()),
+                                attr='lower',
+                                ctx=Load()),
+                            args=[],
+                            keywords=[]),
+                        ops=[
+                            Eq()],
+                        comparators=[
+                            Constant(value='yes')]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='repl', ctx=Store())],
+                            value=Call(
+                                func=Name(id='REPL', ctx=Load()),
+                                args=[],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='repl', ctx=Load()),
+                                    attr='run',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[]))],
+                    orelse=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='REPL access is disabled.')],
+                                keywords=[]))])],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='enable_repl_access', ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

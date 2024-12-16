@@ -1,0 +1,98 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='requests')]),
+        FunctionDef(
+            name='safe_fetch_url',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='url')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='trusted_sources', ctx=Store())],
+                    value=List(
+                        elts=[
+                            Constant(value='https://example.com'),
+                            Constant(value='https://another-trusted-source.com')],
+                        ctx=Load())),
+                If(
+                    test=Call(
+                        func=Name(id='any', ctx=Load()),
+                        args=[
+                            GeneratorExp(
+                                elt=Call(
+                                    func=Attribute(
+                                        value=Name(id='url', ctx=Load()),
+                                        attr='startswith',
+                                        ctx=Load()),
+                                    args=[
+                                        Name(id='source', ctx=Load())],
+                                    keywords=[]),
+                                generators=[
+                                    comprehension(
+                                        target=Name(id='source', ctx=Store()),
+                                        iter=Name(id='trusted_sources', ctx=Load()),
+                                        ifs=[],
+                                        is_async=0)])],
+                        keywords=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='response', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='requests', ctx=Load()),
+                                    attr='get',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='url', ctx=Load())],
+                                keywords=[])),
+                        Return(
+                            value=Attribute(
+                                value=Name(id='response', ctx=Load()),
+                                attr='text',
+                                ctx=Load()))],
+                    orelse=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Untrusted URL!')],
+                                keywords=[]))])],
+            decorator_list=[]),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='content', ctx=Store())],
+                    value=Call(
+                        func=Name(id='safe_fetch_url', ctx=Load()),
+                        args=[
+                            Constant(value='https://example.com/resource')],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Name(id='content', ctx=Load())],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ValueError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

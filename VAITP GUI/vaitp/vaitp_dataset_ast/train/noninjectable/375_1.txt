@@ -1,0 +1,60 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='gnupg')]),
+        Assign(
+            targets=[
+                Name(id='gpg', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='gnupg', ctx=Load()),
+                    attr='GPG',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='user_input', ctx=Store())],
+            value=Constant(value='somefile.txt; cat /etc/passwd')),
+        Assign(
+            targets=[
+                Name(id='result', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='gpg', ctx=Load()),
+                    attr='encrypt_file',
+                    ctx=Load()),
+                args=[
+                    Name(id='user_input', ctx=Load())],
+                keywords=[
+                    keyword(
+                        arg='recipients',
+                        value=List(
+                            elts=[
+                                Constant(value='recipient@example.com')],
+                            ctx=Load()))])),
+        If(
+            test=Attribute(
+                value=Name(id='result', ctx=Load()),
+                attr='ok',
+                ctx=Load()),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='File encrypted successfully.')],
+                        keywords=[]))],
+            orelse=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Error:'),
+                            Attribute(
+                                value=Name(id='result', ctx=Load()),
+                                attr='stderr',
+                                ctx=Load())],
+                        keywords=[]))])],
+    type_ignores=[])

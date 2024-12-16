@@ -1,0 +1,65 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='requests')]),
+        Assign(
+            targets=[
+                Name(id='proxies', ctx=Store())],
+            value=Dict(
+                keys=[
+                    Constant(value='http'),
+                    Constant(value='https')],
+                values=[
+                    Constant(value='http://username:password@proxy:8080'),
+                    Constant(value='http://username:password@proxy:8080')])),
+        Assign(
+            targets=[
+                Name(id='response', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='requests', ctx=Load()),
+                    attr='get',
+                    ctx=Load()),
+                args=[
+                    Constant(value='https://example.com')],
+                keywords=[
+                    keyword(
+                        arg='proxies',
+                        value=Name(id='proxies', ctx=Load())),
+                    keyword(
+                        arg='allow_redirects',
+                        value=Constant(value=False))])),
+        If(
+            test=Compare(
+                left=Attribute(
+                    value=Name(id='response', ctx=Load()),
+                    attr='status_code',
+                    ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value=302)]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='response', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='requests', ctx=Load()),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Subscript(
+                                value=Attribute(
+                                    value=Name(id='response', ctx=Load()),
+                                    attr='headers',
+                                    ctx=Load()),
+                                slice=Constant(value='Location'),
+                                ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='proxies',
+                                value=Name(id='proxies', ctx=Load()))]))],
+            orelse=[])],
+    type_ignores=[])

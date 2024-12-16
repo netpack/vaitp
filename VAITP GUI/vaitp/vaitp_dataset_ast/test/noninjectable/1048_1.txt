@@ -1,0 +1,55 @@
+Module(
+    body=[
+        FunctionDef(
+            name='is_in_or_equal',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='directory'),
+                    arg(arg='target')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='target', ctx=Load()),
+                            attr='startswith',
+                            ctx=Load()),
+                        args=[
+                            Name(id='directory', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='directory', ctx=Store())],
+            value=Constant(value='/safe/directory')),
+        Assign(
+            targets=[
+                Name(id='target_file', ctx=Store())],
+            value=Constant(value='/safe/directory/../restricted_file.txt')),
+        If(
+            test=Call(
+                func=Name(id='is_in_or_equal', ctx=Load()),
+                args=[
+                    Name(id='directory', ctx=Load()),
+                    Name(id='target_file', ctx=Load())],
+                keywords=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Access granted to:'),
+                            Name(id='target_file', ctx=Load())],
+                        keywords=[]))],
+            orelse=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Access denied to:'),
+                            Name(id='target_file', ctx=Load())],
+                        keywords=[]))])],
+    type_ignores=[])

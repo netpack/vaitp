@@ -1,0 +1,107 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='fontTools.ttLib')]),
+        ImportFrom(
+            module='fontTools.ttLib',
+            names=[
+                alias(name='TTFont')],
+            level=0),
+        ImportFrom(
+            module='lxml',
+            names=[
+                alias(name='etree')],
+            level=0),
+        FunctionDef(
+            name='safe_parse_xml',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='xml_data')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='parser', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='etree', ctx=Load()),
+                            attr='XMLParser',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[
+                            keyword(
+                                arg='load_dtd',
+                                value=Constant(value=False)),
+                            keyword(
+                                arg='no_network',
+                                value=Constant(value=True))])),
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='etree', ctx=Load()),
+                            attr='fromstring',
+                            ctx=Load()),
+                        args=[
+                            Call(
+                                func=Attribute(
+                                    value=Name(id='xml_data', ctx=Load()),
+                                    attr='encode',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='utf-8')],
+                                keywords=[]),
+                            Name(id='parser', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='parse_ot_svg_font',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='font_path')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='font', ctx=Store())],
+                    value=Call(
+                        func=Name(id='TTFont', ctx=Load()),
+                        args=[
+                            Name(id='font_path', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='svg_table', ctx=Store())],
+                    value=Attribute(
+                        value=Subscript(
+                            value=Name(id='font', ctx=Load()),
+                            slice=Constant(value='SVG '),
+                            ctx=Load()),
+                        attr='table',
+                        ctx=Load())),
+                Assign(
+                    targets=[
+                        Name(id='xml_data', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='svg_table', ctx=Load()),
+                            attr='toXML',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='safe_xml', ctx=Store())],
+                    value=Call(
+                        func=Name(id='safe_parse_xml', ctx=Load()),
+                        args=[
+                            Name(id='xml_data', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[])],
+    type_ignores=[])

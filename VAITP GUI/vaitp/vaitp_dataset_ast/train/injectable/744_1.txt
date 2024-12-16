@@ -1,0 +1,105 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='xml.etree.ElementTree', asname='ET')]),
+        Import(
+            names=[
+                alias(name='xml.sax.saxutils', asname='saxutils')]),
+        FunctionDef(
+            name='safe_parse',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='xml_data')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='parser', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='ET', ctx=Load()),
+                            attr='XMLParser',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[
+                            keyword(
+                                arg='target',
+                                value=Call(
+                                    func=Attribute(
+                                        value=Name(id='ET', ctx=Load()),
+                                        attr='TreeBuilder',
+                                        ctx=Load()),
+                                    args=[],
+                                    keywords=[]))])),
+                Assign(
+                    targets=[
+                        Attribute(
+                            value=Name(id='parser', ctx=Load()),
+                            attr='entity',
+                            ctx=Store())],
+                    value=Dict(keys=[], values=[])),
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='ET', ctx=Load()),
+                            attr='fromstring',
+                            ctx=Load()),
+                        args=[
+                            Name(id='xml_data', ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='parser',
+                                value=Name(id='parser', ctx=Load()))]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='xml_input', ctx=Store())],
+            value=Constant(value='<?xml version="1.0"?>\n<!DOCTYPE foo [\n  <!ENTITY xxe SYSTEM "file:///etc/passwd">]><!--\n  <data>&xxe;</data>\n-->')),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='root', ctx=Store())],
+                    value=Call(
+                        func=Name(id='safe_parse', ctx=Load()),
+                        args=[
+                            Name(id='xml_input', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Call(
+                                func=Attribute(
+                                    value=Name(id='ET', ctx=Load()),
+                                    attr='tostring',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='root', ctx=Load())],
+                                keywords=[
+                                    keyword(
+                                        arg='encoding',
+                                        value=Constant(value='unicode'))])],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Attribute(
+                        value=Name(id='ET', ctx=Load()),
+                        attr='ParseError',
+                        ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='XML parsing error:'),
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

@@ -1,0 +1,65 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='re')]),
+        Assign(
+            targets=[
+                Name(id='pattern', ctx=Store())],
+            value=Constant(value='SELECT\\s+(?P<columns>[\\w\\s,]+)\\s+FROM\\s+(?P<table>\\w+)(?:\\s+WHERE\\s+(?P<condition>[^;]+))?')),
+        FunctionDef(
+            name='parse_sql',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='query')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='match', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='re', ctx=Load()),
+                            attr='match',
+                            ctx=Load()),
+                        args=[
+                            Name(id='pattern', ctx=Load()),
+                            Name(id='query', ctx=Load())],
+                        keywords=[])),
+                If(
+                    test=Name(id='match', ctx=Load()),
+                    body=[
+                        Return(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='match', ctx=Load()),
+                                    attr='groupdict',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[]))],
+                    orelse=[]),
+                Return(
+                    value=Constant(value=None))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='query', ctx=Store())],
+            value=Constant(value="SELECT a, b, c FROM my_table WHERE a = 'value' AND b = 'another_value'")),
+        Assign(
+            targets=[
+                Name(id='result', ctx=Store())],
+            value=Call(
+                func=Name(id='parse_sql', ctx=Load()),
+                args=[
+                    Name(id='query', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='result', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

@@ -1,0 +1,128 @@
+Module(
+    body=[
+        ClassDef(
+            name='SafePALChain',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='allowed_functions')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[
+                            Constant(value=None)]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='allowed_functions',
+                                    ctx=Store())],
+                            value=BoolOp(
+                                op=Or(),
+                                values=[
+                                    Name(id='allowed_functions', ctx=Load()),
+                                    Dict(keys=[], values=[])]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='execute',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='code')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='exec_globals', ctx=Store())],
+                            value=Dict(
+                                keys=[
+                                    Constant(value='__builtins__')],
+                                values=[
+                                    Dict(keys=[], values=[])])),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='exec_globals', ctx=Load()),
+                                    attr='update',
+                                    ctx=Load()),
+                                args=[
+                                    Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='allowed_functions',
+                                        ctx=Load())],
+                                keywords=[])),
+                        Try(
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='exec', ctx=Load()),
+                                        args=[
+                                            Name(id='code', ctx=Load()),
+                                            Name(id='exec_globals', ctx=Load())],
+                                        keywords=[]))],
+                            handlers=[
+                                ExceptHandler(
+                                    type=Name(id='Exception', ctx=Load()),
+                                    name='e',
+                                    body=[
+                                        Expr(
+                                            value=Call(
+                                                func=Name(id='print', ctx=Load()),
+                                                args=[
+                                                    JoinedStr(
+                                                        values=[
+                                                            Constant(value='Execution failed: '),
+                                                            FormattedValue(
+                                                                value=Name(id='e', ctx=Load()),
+                                                                conversion=-1)])],
+                                                keywords=[]))])],
+                            orelse=[],
+                            finalbody=[])],
+                    decorator_list=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='allowed_funcs', ctx=Store())],
+            value=Dict(
+                keys=[
+                    Constant(value='print')],
+                values=[
+                    Name(id='print', ctx=Load())])),
+        Assign(
+            targets=[
+                Name(id='safe_chain', ctx=Store())],
+            value=Call(
+                func=Name(id='SafePALChain', ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='allowed_functions',
+                        value=Name(id='allowed_funcs', ctx=Load()))])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='safe_chain', ctx=Load()),
+                    attr='execute',
+                    ctx=Load()),
+                args=[
+                    Constant(value="print('Hello, World!')")],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='safe_chain', ctx=Load()),
+                    attr='execute',
+                    ctx=Load()),
+                args=[
+                    Constant(value="__import__('os').system('ls')")],
+                keywords=[]))],
+    type_ignores=[])

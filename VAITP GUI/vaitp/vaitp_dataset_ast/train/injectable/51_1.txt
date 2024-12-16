@@ -1,0 +1,223 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='urllib.parse')]),
+        Assign(
+            targets=[
+                Name(id='proxy_url', ctx=Store())],
+            value=Constant(value='http://example.com/cache')),
+        Assign(
+            targets=[
+                Name(id='url', ctx=Store())],
+            value=Constant(value='http://example.com/app?param1=value1;param2=value2')),
+        Assign(
+            targets=[
+                Name(id='parsed_url', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='urllib', ctx=Load()),
+                        attr='parse',
+                        ctx=Load()),
+                    attr='urlparse',
+                    ctx=Load()),
+                args=[
+                    Name(id='url', ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='query_string', ctx=Store())],
+            value=Attribute(
+                value=Name(id='parsed_url', ctx=Load()),
+                attr='query',
+                ctx=Load())),
+        Assign(
+            targets=[
+                Name(id='params', ctx=Store())],
+            value=ListComp(
+                elt=Call(
+                    func=Attribute(
+                        value=Name(id='param', ctx=Load()),
+                        attr='split',
+                        ctx=Load()),
+                    args=[
+                        Constant(value='=')],
+                    keywords=[]),
+                generators=[
+                    comprehension(
+                        target=Name(id='param', ctx=Store()),
+                        iter=Call(
+                            func=Attribute(
+                                value=Name(id='query_string', ctx=Load()),
+                                attr='split',
+                                ctx=Load()),
+                            args=[
+                                Constant(value=';')],
+                            keywords=[]),
+                        ifs=[],
+                        is_async=0)])),
+        Assign(
+            targets=[
+                Name(id='new_query_string', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Constant(value=';'),
+                    attr='join',
+                    ctx=Load()),
+                args=[
+                    GeneratorExp(
+                        elt=JoinedStr(
+                            values=[
+                                FormattedValue(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Attribute(
+                                                value=Name(id='urllib', ctx=Load()),
+                                                attr='parse',
+                                                ctx=Load()),
+                                            attr='quote_plus',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='key', ctx=Load())],
+                                        keywords=[]),
+                                    conversion=-1),
+                                Constant(value='='),
+                                FormattedValue(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Attribute(
+                                                value=Name(id='urllib', ctx=Load()),
+                                                attr='parse',
+                                                ctx=Load()),
+                                            attr='quote_plus',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='value', ctx=Load())],
+                                        keywords=[]),
+                                    conversion=-1)]),
+                        generators=[
+                            comprehension(
+                                target=Tuple(
+                                    elts=[
+                                        Name(id='key', ctx=Store()),
+                                        Name(id='value', ctx=Store())],
+                                    ctx=Store()),
+                                iter=Name(id='params', ctx=Load()),
+                                ifs=[],
+                                is_async=0)])],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='new_url', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='urllib', ctx=Load()),
+                        attr='parse',
+                        ctx=Load()),
+                    attr='urlunparse',
+                    ctx=Load()),
+                args=[
+                    Tuple(
+                        elts=[
+                            Attribute(
+                                value=Name(id='parsed_url', ctx=Load()),
+                                attr='scheme',
+                                ctx=Load()),
+                            Attribute(
+                                value=Name(id='parsed_url', ctx=Load()),
+                                attr='netloc',
+                                ctx=Load()),
+                            Attribute(
+                                value=Name(id='parsed_url', ctx=Load()),
+                                attr='path',
+                                ctx=Load()),
+                            Attribute(
+                                value=Name(id='parsed_url', ctx=Load()),
+                                attr='params',
+                                ctx=Load()),
+                            Name(id='new_query_string', ctx=Load()),
+                            Attribute(
+                                value=Name(id='parsed_url', ctx=Load()),
+                                attr='fragment',
+                                ctx=Load())],
+                        ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='proxy_handler', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='urllib', ctx=Load()),
+                        attr='request',
+                        ctx=Load()),
+                    attr='ProxyHandler',
+                    ctx=Load()),
+                args=[
+                    Dict(
+                        keys=[
+                            Constant(value='http')],
+                        values=[
+                            Name(id='proxy_url', ctx=Load())])],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='opener', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='urllib', ctx=Load()),
+                        attr='request',
+                        ctx=Load()),
+                    attr='build_opener',
+                    ctx=Load()),
+                args=[
+                    Name(id='proxy_handler', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='urllib', ctx=Load()),
+                        attr='request',
+                        ctx=Load()),
+                    attr='install_opener',
+                    ctx=Load()),
+                args=[
+                    Name(id='opener', ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='response', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='urllib', ctx=Load()),
+                        attr='request',
+                        ctx=Load()),
+                    attr='urlopen',
+                    ctx=Load()),
+                args=[
+                    Name(id='new_url', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Call(
+                        func=Attribute(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='response', ctx=Load()),
+                                    attr='read',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[]),
+                            attr='decode',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])],
+                keywords=[]))],
+    type_ignores=[])

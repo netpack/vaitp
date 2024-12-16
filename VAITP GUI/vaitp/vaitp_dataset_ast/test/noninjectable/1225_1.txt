@@ -1,0 +1,39 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='subprocess')]),
+        Assign(
+            targets=[
+                Name(id='input_data', ctx=Store())],
+            value=BinOp(
+                left=BinOp(
+                    left=Constant(value='![l'),
+                    op=Mult(),
+                    right=Constant(value=100000)),
+                op=Add(),
+                right=Constant(value='\n'))),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='subprocess', ctx=Load()),
+                    attr='run',
+                    ctx=Load()),
+                args=[
+                    List(
+                        elts=[
+                            Constant(value='./cmark-gfm'),
+                            Constant(value='-e'),
+                            Constant(value='autolink')],
+                        ctx=Load())],
+                keywords=[
+                    keyword(
+                        arg='input',
+                        value=Call(
+                            func=Attribute(
+                                value=Name(id='input_data', ctx=Load()),
+                                attr='encode',
+                                ctx=Load()),
+                            args=[],
+                            keywords=[]))]))],
+    type_ignores=[])

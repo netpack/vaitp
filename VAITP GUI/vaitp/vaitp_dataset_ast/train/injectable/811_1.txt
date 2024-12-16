@@ -1,0 +1,122 @@
+Module(
+    body=[
+        FunctionDef(
+            name='escape_style_properties',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='style_properties')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='escaped_properties', ctx=Store())],
+                    value=Dict(keys=[], values=[])),
+                For(
+                    target=Tuple(
+                        elts=[
+                            Name(id='key', ctx=Store()),
+                            Name(id='value', ctx=Store())],
+                        ctx=Store()),
+                    iter=Call(
+                        func=Attribute(
+                            value=Name(id='style_properties', ctx=Load()),
+                            attr='items',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='safe_key', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Call(
+                                                func=Attribute(
+                                                    value=Name(id='key', ctx=Load()),
+                                                    attr='replace',
+                                                    ctx=Load()),
+                                                args=[
+                                                    Constant(value=';'),
+                                                    Constant(value='')],
+                                                keywords=[]),
+                                            attr='replace',
+                                            ctx=Load()),
+                                        args=[
+                                            Constant(value='}'),
+                                            Constant(value='')],
+                                        keywords=[]),
+                                    attr='replace',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='{'),
+                                    Constant(value='')],
+                                keywords=[])),
+                        Assign(
+                            targets=[
+                                Name(id='safe_value', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Call(
+                                                func=Attribute(
+                                                    value=Name(id='value', ctx=Load()),
+                                                    attr='replace',
+                                                    ctx=Load()),
+                                                args=[
+                                                    Constant(value=';'),
+                                                    Constant(value='')],
+                                                keywords=[]),
+                                            attr='replace',
+                                            ctx=Load()),
+                                        args=[
+                                            Constant(value='}'),
+                                            Constant(value='')],
+                                        keywords=[]),
+                                    attr='replace',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='{'),
+                                    Constant(value='')],
+                                keywords=[])),
+                        Assign(
+                            targets=[
+                                Subscript(
+                                    value=Name(id='escaped_properties', ctx=Load()),
+                                    slice=Name(id='safe_key', ctx=Load()),
+                                    ctx=Store())],
+                            value=Name(id='safe_value', ctx=Load()))],
+                    orelse=[]),
+                Return(
+                    value=Name(id='escaped_properties', ctx=Load()))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='style_properties', ctx=Store())],
+            value=Dict(
+                keys=[
+                    Constant(value='color'),
+                    Constant(value='background')],
+                values=[
+                    Constant(value='red; /* malicious code */ }'),
+                    Constant(value="{background: url('malicious-url');}")])),
+        Assign(
+            targets=[
+                Name(id='safe_style_properties', ctx=Store())],
+            value=Call(
+                func=Name(id='escape_style_properties', ctx=Load()),
+                args=[
+                    Name(id='style_properties', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='safe_style_properties', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

@@ -1,0 +1,65 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='json')]),
+        FunctionDef(
+            name='safe_evaluate_crashdb_field',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='crashdb_field')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Try(
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='parsed_data', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='json', ctx=Load()),
+                                    attr='loads',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='crashdb_field', ctx=Load())],
+                                keywords=[])),
+                        Return(
+                            value=Name(id='parsed_data', ctx=Load()))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Attribute(
+                                value=Name(id='json', ctx=Load()),
+                                attr='JSONDecodeError',
+                                ctx=Load()),
+                            body=[
+                                Raise(
+                                    exc=Call(
+                                        func=Name(id='ValueError', ctx=Load()),
+                                        args=[
+                                            Constant(value='Invalid CrashDB field format')],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='crashdb_field', ctx=Store())],
+            value=Constant(value='{"key": "value"}')),
+        Assign(
+            targets=[
+                Name(id='safe_data', ctx=Store())],
+            value=Call(
+                func=Name(id='safe_evaluate_crashdb_field', ctx=Load()),
+                args=[
+                    Name(id='crashdb_field', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='safe_data', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

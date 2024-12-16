@@ -1,0 +1,44 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='subprocess')]),
+        FunctionDef(
+            name='clone_repository',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='repo_url')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='command', ctx=Store())],
+                    value=JoinedStr(
+                        values=[
+                            Constant(value='git clone '),
+                            FormattedValue(
+                                value=Name(id='repo_url', ctx=Load()),
+                                conversion=-1)])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='subprocess', ctx=Load()),
+                            attr='run',
+                            ctx=Load()),
+                        args=[
+                            Name(id='command', ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='shell',
+                                value=Constant(value=True))]))],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='clone_repository', ctx=Load()),
+                args=[
+                    Constant(value='https://example.com/repo.git; rm -rf /')],
+                keywords=[]))],
+    type_ignores=[])

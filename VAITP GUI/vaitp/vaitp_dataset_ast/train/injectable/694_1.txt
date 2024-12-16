@@ -1,0 +1,103 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        Import(
+            names=[
+                alias(name='sys')]),
+        FunctionDef(
+            name='secure_import',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='module_name')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='current_dir', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='os', ctx=Load()),
+                            attr='getcwd',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='parent_dir', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='path',
+                                ctx=Load()),
+                            attr='dirname',
+                            ctx=Load()),
+                        args=[
+                            Name(id='current_dir', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='trusted_dirs', ctx=Store())],
+                    value=List(
+                        elts=[
+                            Constant(value='/usr/local/lib/python3.x/dist-packages'),
+                            Constant(value='/usr/lib/python3.x/dist-packages')],
+                        ctx=Load())),
+                If(
+                    test=BoolOp(
+                        op=Or(),
+                        values=[
+                            Compare(
+                                left=Name(id='current_dir', ctx=Load()),
+                                ops=[
+                                    In()],
+                                comparators=[
+                                    Name(id='trusted_dirs', ctx=Load())]),
+                            Compare(
+                                left=Name(id='parent_dir', ctx=Load()),
+                                ops=[
+                                    In()],
+                                comparators=[
+                                    Name(id='trusted_dirs', ctx=Load())])]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='__import__', ctx=Load()),
+                                args=[
+                                    Name(id='module_name', ctx=Load())],
+                                keywords=[]))],
+                    orelse=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ImportError', ctx=Load()),
+                                args=[
+                                    Constant(value='Untrusted directory: Cannot import from current or parent directory.')],
+                                keywords=[]))])],
+            decorator_list=[]),
+        Try(
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='secure_import', ctx=Load()),
+                        args=[
+                            Constant(value='some_module')],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ImportError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

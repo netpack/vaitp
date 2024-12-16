@@ -1,0 +1,52 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        FunctionDef(
+            name='vulnerable_execute',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='script_path')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='exec', ctx=Load()),
+                        args=[
+                            Call(
+                                func=Attribute(
+                                    value=Call(
+                                        func=Name(id='open', ctx=Load()),
+                                        args=[
+                                            Name(id='script_path', ctx=Load())],
+                                        keywords=[]),
+                                    attr='read',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[])],
+                        keywords=[]))],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='script_to_run', ctx=Store())],
+                    value=Constant(value='malicious_script.py')),
+                Expr(
+                    value=Call(
+                        func=Name(id='vulnerable_execute', ctx=Load()),
+                        args=[
+                            Name(id='script_to_run', ctx=Load())],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

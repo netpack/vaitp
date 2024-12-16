@@ -1,0 +1,18 @@
+```
+contract Payload {
+    function exploit(address vulnerable_contract) public {
+        bytes memory data = abi.encodeWithSignature("vulnerable_function(uint256,uint256)", malicious_start(), malicious_length());
+        vulnerable_contract.call(data);
+    }
+
+    function malicious_start() public returns (uint256) {
+        // Code with side-effects, e.g., modifying a variable or calling another function
+        return 1;
+    }
+
+    function malicious_length() public returns (uint256) {
+        // Code with side-effects, e.g., modifying a variable or calling another function
+        return 10;
+    }
+}
+```

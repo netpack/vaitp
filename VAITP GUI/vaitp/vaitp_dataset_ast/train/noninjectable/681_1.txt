@@ -1,0 +1,54 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='pickle')]),
+        FunctionDef(
+            name='load_data',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='data')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='pickle', ctx=Load()),
+                            attr='loads',
+                            ctx=Load()),
+                        args=[
+                            Name(id='data', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='malicious_data', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='pickle', ctx=Load()),
+                    attr='dumps',
+                    ctx=Load()),
+                args=[
+                    Dict(
+                        keys=[
+                            Constant(value='__class__'),
+                            Constant(value='__args__')],
+                        values=[
+                            Constant(value='os.system'),
+                            Tuple(
+                                elts=[
+                                    Constant(value='echo Vulnerable!')],
+                                ctx=Load())])],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='result', ctx=Store())],
+            value=Call(
+                func=Name(id='load_data', ctx=Load()),
+                args=[
+                    Name(id='malicious_data', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

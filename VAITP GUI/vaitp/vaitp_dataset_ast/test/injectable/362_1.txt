@@ -1,0 +1,55 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='vault_cli')]),
+        Assign(
+            targets=[
+                Name(id='malicious_secret', ctx=Store())],
+            value=Constant(value="!template! {{ config['exec']('echo Malicious Code Executed') }}")),
+        FunctionDef(
+            name='simulate_attack',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='client', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='vault_cli', ctx=Load()),
+                            attr='get_client',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[
+                            keyword(
+                                arg='render',
+                                value=Constant(value=False))])),
+                Assign(
+                    targets=[
+                        Name(id='rendered_secret', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='client', ctx=Load()),
+                            attr='get_secret',
+                            ctx=Load()),
+                        args=[
+                            Name(id='malicious_secret', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Name(id='rendered_secret', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='simulate_attack', ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

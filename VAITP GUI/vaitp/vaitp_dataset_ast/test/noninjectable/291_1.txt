@@ -1,0 +1,52 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='democritus_hashes')]),
+        FunctionDef(
+            name='insecure_hash',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='data')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Constant(value='Generates a hash of the input data using the vulnerable package.')),
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='democritus_hashes', ctx=Load()),
+                            attr='hash',
+                            ctx=Load()),
+                        args=[
+                            Name(id='data', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='user_input', ctx=Store())],
+                    value=Constant(value='sensitive data')),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Insecure hash:'),
+                            Call(
+                                func=Name(id='insecure_hash', ctx=Load()),
+                                args=[
+                                    Name(id='user_input', ctx=Load())],
+                                keywords=[])],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

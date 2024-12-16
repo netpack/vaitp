@@ -1,0 +1,70 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='zipfile')]),
+        ImportFrom(
+            module='pathlib',
+            names=[
+                alias(name='Path')],
+            level=0),
+        FunctionDef(
+            name='vulnerable_zip_path_handling',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='zip_file_path')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                With(
+                    items=[
+                        withitem(
+                            context_expr=Call(
+                                func=Attribute(
+                                    value=Name(id='zipfile', ctx=Load()),
+                                    attr='ZipFile',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='zip_file_path', ctx=Load()),
+                                    Constant(value='r')],
+                                keywords=[]),
+                            optional_vars=Name(id='zip_file', ctx=Store()))],
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='zip_path', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='zipfile', ctx=Load()),
+                                    attr='Path',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='zip_file', ctx=Load())],
+                                keywords=[])),
+                        For(
+                            target=Name(id='name', ctx=Store()),
+                            iter=Call(
+                                func=Attribute(
+                                    value=Name(id='zip_path', ctx=Load()),
+                                    attr='namelist',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[]),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            Name(id='name', ctx=Load())],
+                                        keywords=[]))],
+                            orelse=[])])],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='vulnerable_zip_path_handling', ctx=Load()),
+                args=[
+                    Constant(value='malicious.zip')],
+                keywords=[]))],
+    type_ignores=[])

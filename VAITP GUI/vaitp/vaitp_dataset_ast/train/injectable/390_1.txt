@@ -1,0 +1,80 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        Assign(
+            targets=[
+                Name(id='malicious_input', ctx=Store())],
+            value=Constant(value="__import__('os').popen('whoami').read()")),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Constant(value='Received input:'),
+                    Name(id='malicious_input', ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='allowed_commands', ctx=Store())],
+            value=Dict(
+                keys=[
+                    Constant(value='whoami')],
+                values=[
+                    Constant(value='whoami')])),
+        Assign(
+            targets=[
+                Name(id='command', ctx=Store())],
+            value=Subscript(
+                value=Call(
+                    func=Attribute(
+                        value=Name(id='malicious_input', ctx=Load()),
+                        attr='split',
+                        ctx=Load()),
+                    args=[
+                        Constant(value="'")],
+                    keywords=[]),
+                slice=Constant(value=1),
+                ctx=Load())),
+        If(
+            test=Compare(
+                left=Name(id='command', ctx=Load()),
+                ops=[
+                    In()],
+                comparators=[
+                    Name(id='allowed_commands', ctx=Load())]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='result', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='os', ctx=Load()),
+                                    attr='popen',
+                                    ctx=Load()),
+                                args=[
+                                    Subscript(
+                                        value=Name(id='allowed_commands', ctx=Load()),
+                                        slice=Name(id='command', ctx=Load()),
+                                        ctx=Load())],
+                                keywords=[]),
+                            attr='read',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Name(id='result', ctx=Load())],
+                        keywords=[]))],
+            orelse=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Command not allowed.')],
+                        keywords=[]))])],
+    type_ignores=[])

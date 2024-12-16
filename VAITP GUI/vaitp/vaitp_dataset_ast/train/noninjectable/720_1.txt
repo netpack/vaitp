@@ -1,0 +1,54 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='subprocess')]),
+        FunctionDef(
+            name='insecure_chpasswd',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='username'),
+                    arg(arg='password')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='command', ctx=Store())],
+                    value=JoinedStr(
+                        values=[
+                            Constant(value="echo '"),
+                            FormattedValue(
+                                value=Name(id='username', ctx=Load()),
+                                conversion=-1),
+                            Constant(value=':'),
+                            FormattedValue(
+                                value=Name(id='password', ctx=Load()),
+                                conversion=-1),
+                            Constant(value="' | chpasswd")])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='subprocess', ctx=Load()),
+                            attr='run',
+                            ctx=Load()),
+                        args=[
+                            Name(id='command', ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='shell',
+                                value=Constant(value=True)),
+                            keyword(
+                                arg='check',
+                                value=Constant(value=True))]))],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='insecure_chpasswd', ctx=Load()),
+                args=[
+                    Constant(value='root'),
+                    Constant(value='!')],
+                keywords=[]))],
+    type_ignores=[])

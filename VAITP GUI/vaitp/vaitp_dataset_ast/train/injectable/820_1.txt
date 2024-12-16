@@ -1,0 +1,222 @@
+Module(
+    body=[
+        ImportFrom(
+            module='twisted.web',
+            names=[
+                alias(name='server'),
+                alias(name='resource')],
+            level=0),
+        ImportFrom(
+            module='twisted.web.http',
+            names=[
+                alias(name='Request')],
+            level=0),
+        ClassDef(
+            name='MyResource',
+            bases=[
+                Attribute(
+                    value=Name(id='resource', ctx=Load()),
+                    attr='Resource',
+                    ctx=Load())],
+            keywords=[],
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='isLeaf', ctx=Store())],
+                    value=Constant(value=True)),
+                FunctionDef(
+                    name='render',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(
+                                arg='request',
+                                annotation=Name(id='Request', ctx=Load()))],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        If(
+                            test=UnaryOp(
+                                op=Not(),
+                                operand=Call(
+                                    func=Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='is_valid_uri',
+                                        ctx=Load()),
+                                    args=[
+                                        Attribute(
+                                            value=Name(id='request', ctx=Load()),
+                                            attr='uri',
+                                            ctx=Load())],
+                                    keywords=[])),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='request', ctx=Load()),
+                                            attr='setResponseCode',
+                                            ctx=Load()),
+                                        args=[
+                                            Constant(value=400)],
+                                        keywords=[])),
+                                Return(
+                                    value=Constant(value=b'Invalid URI'))],
+                            orelse=[]),
+                        If(
+                            test=UnaryOp(
+                                op=Not(),
+                                operand=Call(
+                                    func=Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='is_valid_method',
+                                        ctx=Load()),
+                                    args=[
+                                        Attribute(
+                                            value=Name(id='request', ctx=Load()),
+                                            attr='method',
+                                            ctx=Load())],
+                                    keywords=[])),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='request', ctx=Load()),
+                                            attr='setResponseCode',
+                                            ctx=Load()),
+                                        args=[
+                                            Constant(value=405)],
+                                        keywords=[])),
+                                Return(
+                                    value=Constant(value=b'Method Not Allowed'))],
+                            orelse=[]),
+                        Return(
+                            value=Constant(value=b'Hello, world!'))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='is_valid_uri',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='uri')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Return(
+                            value=BoolOp(
+                                op=And(),
+                                values=[
+                                    Call(
+                                        func=Name(id='all', ctx=Load()),
+                                        args=[
+                                            GeneratorExp(
+                                                elt=BoolOp(
+                                                    op=And(),
+                                                    values=[
+                                                        Compare(
+                                                            left=Call(
+                                                                func=Name(id='ord', ctx=Load()),
+                                                                args=[
+                                                                    Name(id='c', ctx=Load())],
+                                                                keywords=[]),
+                                                            ops=[
+                                                                GtE()],
+                                                            comparators=[
+                                                                Constant(value=32)]),
+                                                        Compare(
+                                                            left=Call(
+                                                                func=Name(id='ord', ctx=Load()),
+                                                                args=[
+                                                                    Name(id='c', ctx=Load())],
+                                                                keywords=[]),
+                                                            ops=[
+                                                                Lt()],
+                                                            comparators=[
+                                                                Constant(value=127)])]),
+                                                generators=[
+                                                    comprehension(
+                                                        target=Name(id='c', ctx=Store()),
+                                                        iter=Name(id='uri', ctx=Load()),
+                                                        ifs=[],
+                                                        is_async=0)])],
+                                        keywords=[]),
+                                    Compare(
+                                        left=Constant(value='\r'),
+                                        ops=[
+                                            NotIn()],
+                                        comparators=[
+                                            Name(id='uri', ctx=Load())]),
+                                    Compare(
+                                        left=Constant(value='\n'),
+                                        ops=[
+                                            NotIn()],
+                                        comparators=[
+                                            Name(id='uri', ctx=Load())])]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='is_valid_method',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='method')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Return(
+                            value=Compare(
+                                left=Name(id='method', ctx=Load()),
+                                ops=[
+                                    In()],
+                                comparators=[
+                                    List(
+                                        elts=[
+                                            Constant(value=b'GET'),
+                                            Constant(value=b'POST'),
+                                            Constant(value=b'PUT'),
+                                            Constant(value=b'DELETE')],
+                                        ctx=Load())]))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='site', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='server', ctx=Load()),
+                    attr='Site',
+                    ctx=Load()),
+                args=[
+                    Call(
+                        func=Name(id='MyResource', ctx=Load()),
+                        args=[],
+                        keywords=[])],
+                keywords=[])),
+        ImportFrom(
+            module='twisted.internet',
+            names=[
+                alias(name='reactor')],
+            level=0),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='reactor', ctx=Load()),
+                    attr='listenTCP',
+                    ctx=Load()),
+                args=[
+                    Constant(value=8080),
+                    Name(id='site', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='reactor', ctx=Load()),
+                    attr='run',
+                    ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

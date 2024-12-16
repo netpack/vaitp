@@ -1,0 +1,146 @@
+Module(
+    body=[
+        ImportFrom(
+            module='flask',
+            names=[
+                alias(name='Flask'),
+                alias(name='request'),
+                alias(name='jsonify')],
+            level=0),
+        Import(
+            names=[
+                alias(name='ast')]),
+        Assign(
+            targets=[
+                Name(id='app', ctx=Store())],
+            value=Call(
+                func=Name(id='Flask', ctx=Load()),
+                args=[
+                    Name(id='__name__', ctx=Load())],
+                keywords=[])),
+        FunctionDef(
+            name='custom_component',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='data', ctx=Store())],
+                    value=Attribute(
+                        value=Name(id='request', ctx=Load()),
+                        attr='json',
+                        ctx=Load())),
+                If(
+                    test=Compare(
+                        left=Constant(value='script'),
+                        ops=[
+                            NotIn()],
+                        comparators=[
+                            Name(id='data', ctx=Load())]),
+                    body=[
+                        Return(
+                            value=Tuple(
+                                elts=[
+                                    Call(
+                                        func=Name(id='jsonify', ctx=Load()),
+                                        args=[
+                                            Dict(
+                                                keys=[
+                                                    Constant(value='error')],
+                                                values=[
+                                                    Constant(value='No script provided')])],
+                                        keywords=[]),
+                                    Constant(value=400)],
+                                ctx=Load()))],
+                    orelse=[]),
+                Try(
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='safe_script', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='ast', ctx=Load()),
+                                    attr='literal_eval',
+                                    ctx=Load()),
+                                args=[
+                                    Subscript(
+                                        value=Name(id='data', ctx=Load()),
+                                        slice=Constant(value='script'),
+                                        ctx=Load())],
+                                keywords=[]))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Tuple(
+                                elts=[
+                                    Name(id='SyntaxError', ctx=Load()),
+                                    Name(id='ValueError', ctx=Load())],
+                                ctx=Load()),
+                            body=[
+                                Return(
+                                    value=Tuple(
+                                        elts=[
+                                            Call(
+                                                func=Name(id='jsonify', ctx=Load()),
+                                                args=[
+                                                    Dict(
+                                                        keys=[
+                                                            Constant(value='error')],
+                                                        values=[
+                                                            Constant(value='Invalid script provided')])],
+                                                keywords=[]),
+                                            Constant(value=400)],
+                                        ctx=Load()))])],
+                    orelse=[],
+                    finalbody=[]),
+                Return(
+                    value=Tuple(
+                        elts=[
+                            Call(
+                                func=Name(id='jsonify', ctx=Load()),
+                                args=[
+                                    Dict(
+                                        keys=[
+                                            Constant(value='message')],
+                                        values=[
+                                            Constant(value='Script processed successfully')])],
+                                keywords=[]),
+                            Constant(value=200)],
+                        ctx=Load()))],
+            decorator_list=[
+                Call(
+                    func=Attribute(
+                        value=Name(id='app', ctx=Load()),
+                        attr='route',
+                        ctx=Load()),
+                    args=[
+                        Constant(value='/api/v1/custom_component')],
+                    keywords=[
+                        keyword(
+                            arg='methods',
+                            value=List(
+                                elts=[
+                                    Constant(value='POST')],
+                                ctx=Load()))])]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='app', ctx=Load()),
+                            attr='run',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

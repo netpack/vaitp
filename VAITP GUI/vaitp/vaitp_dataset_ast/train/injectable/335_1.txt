@@ -1,0 +1,69 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        Import(
+            names=[
+                alias(name='git')]),
+        Assign(
+            targets=[
+                Name(id='git_executable_path', ctx=Store())],
+            value=Constant(value='C:\\Program Files\\Git\\cmd\\git.exe')),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Subscript(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='environ',
+                                ctx=Load()),
+                            slice=Constant(value='GIT_PYTHON_GIT_EXECUTABLE'),
+                            ctx=Store())],
+                    value=Name(id='git_executable_path', ctx=Load())),
+                Assign(
+                    targets=[
+                        Name(id='repo', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='git', ctx=Load()),
+                            attr='Repo',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='.')],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='repo', ctx=Load()),
+                                        attr='git',
+                                        ctx=Load()),
+                                    attr='status',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[])],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='Exception', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            Constant(value='Error: '),
+                                            FormattedValue(
+                                                value=Name(id='e', ctx=Load()),
+                                                conversion=-1)])],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

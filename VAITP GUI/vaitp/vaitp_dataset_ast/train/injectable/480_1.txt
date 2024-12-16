@@ -1,0 +1,72 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='subprocess')]),
+        FunctionDef(
+            name='process_metadata',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='metadata')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='command', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='metadata', ctx=Load()),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='command')],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='allowed_commands', ctx=Store())],
+                    value=Dict(
+                        keys=[
+                            Constant(value='list'),
+                            Constant(value='current_dir')],
+                        values=[
+                            Constant(value='ls'),
+                            Constant(value='pwd')])),
+                If(
+                    test=Compare(
+                        left=Name(id='command', ctx=Load()),
+                        ops=[
+                            In()],
+                        comparators=[
+                            Name(id='allowed_commands', ctx=Load())]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='safe_command', ctx=Store())],
+                            value=Subscript(
+                                value=Name(id='allowed_commands', ctx=Load()),
+                                slice=Name(id='command', ctx=Load()),
+                                ctx=Load())),
+                        Assign(
+                            targets=[
+                                Name(id='output', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='subprocess', ctx=Load()),
+                                    attr='check_output',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='safe_command', ctx=Load())],
+                                keywords=[
+                                    keyword(
+                                        arg='shell',
+                                        value=Constant(value=True))])),
+                        Return(
+                            value=Name(id='output', ctx=Load()))],
+                    orelse=[]),
+                Return(
+                    value=Constant(value='Invalid command provided.'))],
+            decorator_list=[])],
+    type_ignores=[])

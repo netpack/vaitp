@@ -1,0 +1,135 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='psycopg2')]),
+        FunctionDef(
+            name='execute_vulnerable_cypher_query',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='graph_name'),
+                    arg(arg='cypher_query')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='conn', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='psycopg2', ctx=Load()),
+                            attr='connect',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[
+                            keyword(
+                                arg='database',
+                                value=Constant(value='your_database')),
+                            keyword(
+                                arg='user',
+                                value=Constant(value='your_user')),
+                            keyword(
+                                arg='password',
+                                value=Constant(value='your_password')),
+                            keyword(
+                                arg='host',
+                                value=Constant(value='localhost')),
+                            keyword(
+                                arg='port',
+                                value=Constant(value='5432'))])),
+                Assign(
+                    targets=[
+                        Name(id='cursor', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='conn', ctx=Load()),
+                            attr='cursor',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='sql', ctx=Store())],
+                    value=JoinedStr(
+                        values=[
+                            Constant(value="SELECT cypher('"),
+                            FormattedValue(
+                                value=Name(id='graph_name', ctx=Load()),
+                                conversion=-1),
+                            Constant(value="', '"),
+                            FormattedValue(
+                                value=Name(id='cypher_query', ctx=Load()),
+                                conversion=-1),
+                            Constant(value="')")])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='cursor', ctx=Load()),
+                            attr='execute',
+                            ctx=Load()),
+                        args=[
+                            Name(id='sql', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='results', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='cursor', ctx=Load()),
+                            attr='fetchall',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='cursor', ctx=Load()),
+                            attr='close',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='conn', ctx=Load()),
+                            attr='commit',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='conn', ctx=Load()),
+                            attr='close',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Return(
+                    value=Name(id='results', ctx=Load()))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='graph_name', ctx=Store())],
+            value=Constant(value='my_graph')),
+        Assign(
+            targets=[
+                Name(id='cypher_query', ctx=Store())],
+            value=Constant(value='MATCH (n) RETURN n; DROP TABLE users;')),
+        Assign(
+            targets=[
+                Name(id='results', ctx=Store())],
+            value=Call(
+                func=Name(id='execute_vulnerable_cypher_query', ctx=Load()),
+                args=[
+                    Name(id='graph_name', ctx=Load()),
+                    Name(id='cypher_query', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='results', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

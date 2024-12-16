@@ -1,0 +1,37 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='xml.etree.ElementTree', asname='ET')]),
+        Assign(
+            targets=[
+                Name(id='xml_data', ctx=Store())],
+            value=Constant(value='\n<root>\n  <example>Safe example</example>\n</root>\n')),
+        Assign(
+            targets=[
+                Name(id='parser', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='ET', ctx=Load()),
+                    attr='XMLParser',
+                    ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='resolve_entities',
+                        value=Constant(value=False))])),
+        Assign(
+            targets=[
+                Name(id='tree', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='ET', ctx=Load()),
+                    attr='fromstring',
+                    ctx=Load()),
+                args=[
+                    Name(id='xml_data', ctx=Load())],
+                keywords=[
+                    keyword(
+                        arg='parser',
+                        value=Name(id='parser', ctx=Load()))]))],
+    type_ignores=[])

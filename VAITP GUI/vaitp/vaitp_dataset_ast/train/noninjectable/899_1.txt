@@ -1,0 +1,149 @@
+Module(
+    body=[
+        ClassDef(
+            name='VulnerableReferenceTable',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='references',
+                                    ctx=Store())],
+                            value=Dict(keys=[], values=[]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='add_reference',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='name'),
+                            arg(arg='url')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        If(
+                            test=Compare(
+                                left=Name(id='name', ctx=Load()),
+                                ops=[
+                                    In()],
+                                comparators=[
+                                    Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='references',
+                                        ctx=Load())]),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Subscript(
+                                                value=Attribute(
+                                                    value=Name(id='self', ctx=Load()),
+                                                    attr='references',
+                                                    ctx=Load()),
+                                                slice=Name(id='name', ctx=Load()),
+                                                ctx=Load()),
+                                            attr='append',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='url', ctx=Load())],
+                                        keywords=[]))],
+                            orelse=[
+                                Assign(
+                                    targets=[
+                                        Subscript(
+                                            value=Attribute(
+                                                value=Name(id='self', ctx=Load()),
+                                                attr='references',
+                                                ctx=Load()),
+                                            slice=Name(id='name', ctx=Load()),
+                                            ctx=Store())],
+                                    value=List(
+                                        elts=[
+                                            Name(id='url', ctx=Load())],
+                                        ctx=Load()))])],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='get_reference',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='name')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Return(
+                            value=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='references',
+                                        ctx=Load()),
+                                    attr='get',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='name', ctx=Load()),
+                                    Constant(value=None)],
+                                keywords=[]))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='vulnerable_table', ctx=Store())],
+            value=Call(
+                func=Name(id='VulnerableReferenceTable', ctx=Load()),
+                args=[],
+                keywords=[])),
+        For(
+            target=Name(id='i', ctx=Store()),
+            iter=Call(
+                func=Name(id='range', ctx=Load()),
+                args=[
+                    Constant(value=1000)],
+                keywords=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='vulnerable_table', ctx=Load()),
+                            attr='add_reference',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='collision_key'),
+                            JoinedStr(
+                                values=[
+                                    Constant(value='https://www.example.com/'),
+                                    FormattedValue(
+                                        value=Name(id='i', ctx=Load()),
+                                        conversion=-1)])],
+                        keywords=[]))],
+            orelse=[]),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Call(
+                        func=Attribute(
+                            value=Name(id='vulnerable_table', ctx=Load()),
+                            attr='get_reference',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='collision_key')],
+                        keywords=[])],
+                keywords=[]))],
+    type_ignores=[])

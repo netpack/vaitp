@@ -1,0 +1,44 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='xml.etree.ElementTree', asname='ET')]),
+        Assign(
+            targets=[
+                Name(id='xml_input', ctx=Store())],
+            value=Constant(value='<?xml version="1.0"?>\n<!DOCTYPE root [\n    <!ENTITY a "A">\n    <!ENTITY b "&a;&a;&a;&a;&a;&a;&a;&a;&a;&a;">\n    <!ENTITY c "&b;&b;&b;&b;&b;&b;&b;&b;&b;&b;">\n    <!ENTITY d "&c;&c;&c;&c;&c;&c;&c;&c;&c;&c;">\n    <!ENTITY e "&d;&d;&d;&d;&d;&d;&d;&d;&d;&d;">\n    <!ENTITY f "&e;&e;&e;&e;&e;&e;&e;&e;&e;&e;">\n    <!ENTITY g "&f;&f;&f;&f;&f;&f;&f;&f;&f;&f;">\n    <!ENTITY h "&g;&g;&g;&g;&g;&g;&g;&g;&g;&g;">\n    <!ENTITY i "&h;&h;&h;&h;&h;&h;&h;&h;&h;&h;">\n    <!ENTITY j "&i;&i;&i;&i;&i;&i;&i;&i;&i;&i;">\n]>\n<root>&j;</root>\n')),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='tree', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='ET', ctx=Load()),
+                            attr='fromstring',
+                            ctx=Load()),
+                        args=[
+                            Name(id='xml_input', ctx=Load())],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Attribute(
+                        value=Name(id='ET', ctx=Load()),
+                        attr='ParseError',
+                        ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            Constant(value='Error parsing XML: '),
+                                            FormattedValue(
+                                                value=Name(id='e', ctx=Load()),
+                                                conversion=-1)])],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

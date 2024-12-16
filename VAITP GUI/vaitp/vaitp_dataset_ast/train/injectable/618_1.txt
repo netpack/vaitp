@@ -1,0 +1,216 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        Import(
+            names=[
+                alias(name='json')]),
+        FunctionDef(
+            name='safe_load_repository',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='repository_path')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=UnaryOp(
+                        op=Not(),
+                        operand=Call(
+                            func=Attribute(
+                                value=Attribute(
+                                    value=Name(id='os', ctx=Load()),
+                                    attr='path',
+                                    ctx=Load()),
+                                attr='isdir',
+                                ctx=Load()),
+                            args=[
+                                Name(id='repository_path', ctx=Load())],
+                            keywords=[])),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Invalid repository path')],
+                                keywords=[]))],
+                    orelse=[]),
+                Assign(
+                    targets=[
+                        Name(id='roles', ctx=Store())],
+                    value=Dict(keys=[], values=[])),
+                For(
+                    target=Name(id='filename', ctx=Store()),
+                    iter=Call(
+                        func=Attribute(
+                            value=Name(id='os', ctx=Load()),
+                            attr='listdir',
+                            ctx=Load()),
+                        args=[
+                            Name(id='repository_path', ctx=Load())],
+                        keywords=[]),
+                    body=[
+                        If(
+                            test=Call(
+                                func=Attribute(
+                                    value=Name(id='filename', ctx=Load()),
+                                    attr='endswith',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='.json')],
+                                keywords=[]),
+                            body=[
+                                Assign(
+                                    targets=[
+                                        Name(id='role_name', ctx=Store())],
+                                    value=Subscript(
+                                        value=Call(
+                                            func=Attribute(
+                                                value=Attribute(
+                                                    value=Name(id='os', ctx=Load()),
+                                                    attr='path',
+                                                    ctx=Load()),
+                                                attr='splitext',
+                                                ctx=Load()),
+                                            args=[
+                                                Name(id='filename', ctx=Load())],
+                                            keywords=[]),
+                                        slice=Constant(value=0),
+                                        ctx=Load())),
+                                If(
+                                    test=UnaryOp(
+                                        op=Not(),
+                                        operand=Call(
+                                            func=Name(id='is_safe_role_name', ctx=Load()),
+                                            args=[
+                                                Name(id='role_name', ctx=Load())],
+                                            keywords=[])),
+                                    body=[
+                                        Raise(
+                                            exc=Call(
+                                                func=Name(id='ValueError', ctx=Load()),
+                                                args=[
+                                                    JoinedStr(
+                                                        values=[
+                                                            Constant(value='Unsafe role name detected: '),
+                                                            FormattedValue(
+                                                                value=Name(id='role_name', ctx=Load()),
+                                                                conversion=-1)])],
+                                                keywords=[]))],
+                                    orelse=[]),
+                                With(
+                                    items=[
+                                        withitem(
+                                            context_expr=Call(
+                                                func=Name(id='open', ctx=Load()),
+                                                args=[
+                                                    Call(
+                                                        func=Attribute(
+                                                            value=Attribute(
+                                                                value=Name(id='os', ctx=Load()),
+                                                                attr='path',
+                                                                ctx=Load()),
+                                                            attr='join',
+                                                            ctx=Load()),
+                                                        args=[
+                                                            Name(id='repository_path', ctx=Load()),
+                                                            Name(id='filename', ctx=Load())],
+                                                        keywords=[]),
+                                                    Constant(value='r')],
+                                                keywords=[]),
+                                            optional_vars=Name(id='f', ctx=Store()))],
+                                    body=[
+                                        Assign(
+                                            targets=[
+                                                Subscript(
+                                                    value=Name(id='roles', ctx=Load()),
+                                                    slice=Name(id='role_name', ctx=Load()),
+                                                    ctx=Store())],
+                                            value=Call(
+                                                func=Attribute(
+                                                    value=Name(id='json', ctx=Load()),
+                                                    attr='load',
+                                                    ctx=Load()),
+                                                args=[
+                                                    Name(id='f', ctx=Load())],
+                                                keywords=[]))])],
+                            orelse=[])],
+                    orelse=[]),
+                Return(
+                    value=Name(id='roles', ctx=Load()))],
+            decorator_list=[]),
+        FunctionDef(
+            name='is_safe_role_name',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='role_name')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Name(id='all', ctx=Load()),
+                        args=[
+                            GeneratorExp(
+                                elt=BoolOp(
+                                    op=Or(),
+                                    values=[
+                                        Call(
+                                            func=Attribute(
+                                                value=Name(id='c', ctx=Load()),
+                                                attr='isalnum',
+                                                ctx=Load()),
+                                            args=[],
+                                            keywords=[]),
+                                        Compare(
+                                            left=Name(id='c', ctx=Load()),
+                                            ops=[
+                                                In()],
+                                            comparators=[
+                                                Tuple(
+                                                    elts=[
+                                                        Constant(value='-'),
+                                                        Constant(value='_')],
+                                                    ctx=Load())])]),
+                                generators=[
+                                    comprehension(
+                                        target=Name(id='c', ctx=Store()),
+                                        iter=Name(id='role_name', ctx=Load()),
+                                        ifs=[],
+                                        is_async=0)])],
+                        keywords=[]))],
+            decorator_list=[]),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='repository', ctx=Store())],
+                    value=Call(
+                        func=Name(id='safe_load_repository', ctx=Load()),
+                        args=[
+                            Constant(value='/path/to/repository')],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ValueError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            Constant(value='Error loading repository: '),
+                                            FormattedValue(
+                                                value=Name(id='e', ctx=Load()),
+                                                conversion=-1)])],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

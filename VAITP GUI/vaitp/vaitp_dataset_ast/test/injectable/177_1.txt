@@ -1,0 +1,87 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='xml.etree.ElementTree', asname='ET')]),
+        FunctionDef(
+            name='parse_xml_safe',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='xml_string')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='parser', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='ET', ctx=Load()),
+                            attr='XMLParser',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[
+                            keyword(
+                                arg='target',
+                                value=Call(
+                                    func=Attribute(
+                                        value=Name(id='ET', ctx=Load()),
+                                        attr='TreeBuilder',
+                                        ctx=Load()),
+                                    args=[],
+                                    keywords=[])),
+                            keyword(
+                                arg='resolve_entities',
+                                value=Constant(value=False))])),
+                Assign(
+                    targets=[
+                        Name(id='tree', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='ET', ctx=Load()),
+                            attr='fromstring',
+                            ctx=Load()),
+                        args=[
+                            Name(id='xml_string', ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='parser',
+                                value=Name(id='parser', ctx=Load()))])),
+                For(
+                    target=Name(id='elem', ctx=Store()),
+                    iter=Call(
+                        func=Attribute(
+                            value=Name(id='tree', ctx=Load()),
+                            attr='iter',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Attribute(
+                                        value=Name(id='elem', ctx=Load()),
+                                        attr='tag',
+                                        ctx=Load()),
+                                    Attribute(
+                                        value=Name(id='elem', ctx=Load()),
+                                        attr='text',
+                                        ctx=Load())],
+                                keywords=[]))],
+                    orelse=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='xml_string', ctx=Store())],
+            value=Constant(value='\n<!DOCTYPE foo [<!ENTITY xxe SYSTEM "file:///etc/passwd"> ]>\n<creds>\n    <user>&xxe;</user>\n    <pass>bar</pass>\n</creds>\n')),
+        Expr(
+            value=Call(
+                func=Name(id='parse_xml_safe', ctx=Load()),
+                args=[
+                    Name(id='xml_string', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

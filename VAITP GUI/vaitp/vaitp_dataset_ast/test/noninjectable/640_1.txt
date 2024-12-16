@@ -1,0 +1,96 @@
+Module(
+    body=[
+        FunctionDef(
+            name='unsafe_execute',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='command')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Name(id='eval', ctx=Load()),
+                        args=[
+                            Name(id='command', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='api_call',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='command')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Try(
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='result', ctx=Store())],
+                            value=Call(
+                                func=Name(id='unsafe_execute', ctx=Load()),
+                                args=[
+                                    Name(id='command', ctx=Load())],
+                                keywords=[])),
+                        Return(
+                            value=Dict(
+                                keys=[
+                                    Constant(value='status'),
+                                    Constant(value='result')],
+                                values=[
+                                    Constant(value='success'),
+                                    Name(id='result', ctx=Load())]))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='Exception', ctx=Load()),
+                            name='e',
+                            body=[
+                                Return(
+                                    value=Dict(
+                                        keys=[
+                                            Constant(value='status'),
+                                            Constant(value='message')],
+                                        values=[
+                                            Constant(value='error'),
+                                            Call(
+                                                func=Name(id='str', ctx=Load()),
+                                                args=[
+                                                    Name(id='e', ctx=Load())],
+                                                keywords=[])]))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='response', ctx=Store())],
+            value=Call(
+                func=Name(id='api_call', ctx=Load()),
+                args=[
+                    Constant(value='2 + 2')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='response', ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='response', ctx=Store())],
+            value=Call(
+                func=Name(id='api_call', ctx=Load()),
+                args=[
+                    Constant(value='__import__("os").system("ls")')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='response', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

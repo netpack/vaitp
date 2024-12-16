@@ -1,0 +1,49 @@
+Module(
+    body=[
+        FunctionDef(
+            name='execute_user_script',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='user_input')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='exec', ctx=Load()),
+                        args=[
+                            Name(id='user_input', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='edit_user_profile',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='user_id'),
+                    arg(arg='script')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='execute_user_script', ctx=Load()),
+                        args=[
+                            Name(id='script', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='user_input', ctx=Store())],
+            value=Constant(value="__import__('os').system('rm -rf /')")),
+        Expr(
+            value=Call(
+                func=Name(id='edit_user_profile', ctx=Load()),
+                args=[
+                    Constant(value='user123'),
+                    Name(id='user_input', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

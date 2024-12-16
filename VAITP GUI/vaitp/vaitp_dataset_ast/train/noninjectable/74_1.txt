@@ -1,0 +1,15 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='ctypes')]),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='ctypes', ctx=Load()),
+                    attr='CDLL',
+                    ctx=Load()),
+                args=[
+                    Constant(value='user32')],
+                keywords=[]))],
+    type_ignores=[])

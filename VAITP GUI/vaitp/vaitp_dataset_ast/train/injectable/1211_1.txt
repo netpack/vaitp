@@ -1,0 +1,42 @@
+Module(
+    body=[
+        Assign(
+            targets=[
+                Name(id='start', ctx=Store())],
+            value=UnaryOp(
+                op=USub(),
+                operand=Constant(value=5))),
+        Assign(
+            targets=[
+                Name(id='N', ctx=Store())],
+            value=Constant(value=10)),
+        For(
+            target=Name(id='i', ctx=Store()),
+            iter=Call(
+                func=Name(id='range', ctx=Load()),
+                args=[
+                    Call(
+                        func=Name(id='max', ctx=Load()),
+                        args=[
+                            Name(id='start', ctx=Load()),
+                            Constant(value=0)],
+                        keywords=[]),
+                    BinOp(
+                        left=Call(
+                            func=Name(id='max', ctx=Load()),
+                            args=[
+                                Name(id='start', ctx=Load()),
+                                Constant(value=0)],
+                            keywords=[]),
+                        op=Add(),
+                        right=Name(id='N', ctx=Load()))],
+                keywords=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Name(id='i', ctx=Load())],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

@@ -1,0 +1,96 @@
+Module(
+    body=[
+        FunctionDef(
+            name='safe_shift',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='value'),
+                    arg(arg='shift')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='max_shift', ctx=Store())],
+                    value=BinOp(
+                        left=Call(
+                            func=Attribute(
+                                value=Name(id='value', ctx=Load()),
+                                attr='bit_length',
+                                ctx=Load()),
+                            args=[],
+                            keywords=[]),
+                        op=Sub(),
+                        right=Constant(value=1))),
+                If(
+                    test=BoolOp(
+                        op=Or(),
+                        values=[
+                            Compare(
+                                left=Name(id='shift', ctx=Load()),
+                                ops=[
+                                    Lt()],
+                                comparators=[
+                                    Constant(value=0)]),
+                            Compare(
+                                left=Name(id='shift', ctx=Load()),
+                                ops=[
+                                    GtE()],
+                                comparators=[
+                                    Name(id='max_shift', ctx=Load())])]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Shift out of bounds')],
+                                keywords=[]))],
+                    orelse=[]),
+                Return(
+                    value=BinOp(
+                        left=Name(id='value', ctx=Load()),
+                        op=RShift(),
+                        right=Name(id='shift', ctx=Load())))],
+            decorator_list=[]),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='result', ctx=Store())],
+                    value=Call(
+                        func=Name(id='safe_shift', ctx=Load()),
+                        args=[
+                            Constant(value=100),
+                            Constant(value=10)],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Name(id='result', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='result', ctx=Store())],
+                    value=Call(
+                        func=Name(id='safe_shift', ctx=Load()),
+                        args=[
+                            Constant(value=100),
+                            Constant(value=100)],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ValueError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

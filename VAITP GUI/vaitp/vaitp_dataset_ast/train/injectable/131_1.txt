@@ -1,0 +1,160 @@
+Module(
+    body=[
+        ClassDef(
+            name='PriorityTree',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='tree',
+                                    ctx=Store())],
+                            value=Dict(keys=[], values=[])),
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='max_streams',
+                                    ctx=Store())],
+                            value=Constant(value=100))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='add_stream',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='stream_id'),
+                            arg(arg='priority')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        If(
+                            test=Compare(
+                                left=Call(
+                                    func=Name(id='len', ctx=Load()),
+                                    args=[
+                                        Attribute(
+                                            value=Name(id='self', ctx=Load()),
+                                            attr='tree',
+                                            ctx=Load())],
+                                    keywords=[]),
+                                ops=[
+                                    GtE()],
+                                comparators=[
+                                    Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='max_streams',
+                                        ctx=Load())]),
+                            body=[
+                                Raise(
+                                    exc=Call(
+                                        func=Name(id='MemoryError', ctx=Load()),
+                                        args=[
+                                            Constant(value='Maximum number of streams reached. Cannot add more.')],
+                                        keywords=[]))],
+                            orelse=[]),
+                        Assign(
+                            targets=[
+                                Subscript(
+                                    value=Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='tree',
+                                        ctx=Load()),
+                                    slice=Name(id='stream_id', ctx=Load()),
+                                    ctx=Store())],
+                            value=Name(id='priority', ctx=Load()))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='get_priority',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='stream_id')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Return(
+                            value=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='tree',
+                                        ctx=Load()),
+                                    attr='get',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='stream_id', ctx=Load()),
+                                    Constant(value=None)],
+                                keywords=[]))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='priority_tree', ctx=Store())],
+                    value=Call(
+                        func=Name(id='PriorityTree', ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Try(
+                    body=[
+                        For(
+                            target=Name(id='i', ctx=Store()),
+                            iter=Call(
+                                func=Name(id='range', ctx=Load()),
+                                args=[
+                                    Constant(value=150)],
+                                keywords=[]),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='priority_tree', ctx=Load()),
+                                            attr='add_stream',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='i', ctx=Load())],
+                                        keywords=[
+                                            keyword(
+                                                arg='priority',
+                                                value=Name(id='i', ctx=Load()))]))],
+                            orelse=[])],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='MemoryError', ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            Constant(value='Error:'),
+                                            Name(id='e', ctx=Load())],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[])],
+            orelse=[])],
+    type_ignores=[])

@@ -1,0 +1,102 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='yaml')]),
+        ImportFrom(
+            module='sqlalchemy',
+            names=[
+                alias(name='create_engine')],
+            level=0),
+        ImportFrom(
+            module='sqlalchemy.orm',
+            names=[
+                alias(name='sessionmaker')],
+            level=0),
+        FunctionDef(
+            name='safe_load_yaml',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='fixture_text')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='yaml', ctx=Load()),
+                            attr='safe_load',
+                            ctx=Load()),
+                        args=[
+                            Name(id='fixture_text', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='load_fixtures',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='fixture_text')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='data', ctx=Store())],
+                    value=Call(
+                        func=Name(id='safe_load_yaml', ctx=Load()),
+                        args=[
+                            Name(id='fixture_text', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='engine', ctx=Store())],
+                    value=Call(
+                        func=Name(id='create_engine', ctx=Load()),
+                        args=[
+                            Constant(value='sqlite:///:memory:')],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='Session', ctx=Store())],
+                    value=Call(
+                        func=Name(id='sessionmaker', ctx=Load()),
+                        args=[],
+                        keywords=[
+                            keyword(
+                                arg='bind',
+                                value=Name(id='engine', ctx=Load()))])),
+                Assign(
+                    targets=[
+                        Name(id='session', ctx=Store())],
+                    value=Call(
+                        func=Name(id='Session', ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                For(
+                    target=Name(id='item', ctx=Store()),
+                    iter=Name(id='data', ctx=Load()),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='session', ctx=Load()),
+                                    attr='add',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='item', ctx=Load())],
+                                keywords=[]))],
+                    orelse=[]),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='session', ctx=Load()),
+                            attr='commit',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            decorator_list=[])],
+    type_ignores=[])

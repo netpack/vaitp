@@ -1,0 +1,99 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        Import(
+            names=[
+                alias(name='gradio', asname='gr')]),
+        Assign(
+            targets=[
+                Name(id='ssh_key', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='os', ctx=Load()),
+                    attr='getenv',
+                    ctx=Load()),
+                args=[
+                    Constant(value='SSH_PRIVATE_KEY')],
+                keywords=[])),
+        FunctionDef(
+            name='launch_app',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='gr', ctx=Load()),
+                                    attr='Interface',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[
+                                    keyword(
+                                        arg='fn',
+                                        value=Name(id='my_function', ctx=Load())),
+                                    keyword(
+                                        arg='inputs',
+                                        value=Constant(value='text')),
+                                    keyword(
+                                        arg='outputs',
+                                        value=Constant(value='text'))]),
+                            attr='launch',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[
+                            keyword(
+                                arg='share',
+                                value=Constant(value=True))]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='my_function',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='input_text')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Compare(
+                        left=Name(id='ssh_key', ctx=Load()),
+                        ops=[
+                            Is()],
+                        comparators=[
+                            Constant(value=None)]),
+                    body=[
+                        Return(
+                            value=Constant(value='SSH key not found. Please set the SSH_PRIVATE_KEY environment variable.'))],
+                    orelse=[]),
+                Return(
+                    value=JoinedStr(
+                        values=[
+                            Constant(value='Using SSH key: '),
+                            FormattedValue(
+                                value=Name(id='ssh_key', ctx=Load()),
+                                conversion=-1)]))],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='launch_app', ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

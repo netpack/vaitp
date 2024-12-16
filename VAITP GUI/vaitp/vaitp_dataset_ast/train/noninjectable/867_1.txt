@@ -1,0 +1,73 @@
+Module(
+    body=[
+        ClassDef(
+            name='SynapseHomeserver',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='get_well_known_file',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='domain')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='response', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='fetch_well_known_file',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='domain', ctx=Load())],
+                                keywords=[])),
+                        Return(
+                            value=Name(id='response', ctx=Load()))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='fetch_well_known_file',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='domain')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Return(
+                            value=JoinedStr(
+                                values=[
+                                    Constant(value='Retrieved .well-known file from '),
+                                    FormattedValue(
+                                        value=Name(id='domain', ctx=Load()),
+                                        conversion=-1)]))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='homeserver', ctx=Store())],
+            value=Call(
+                func=Name(id='SynapseHomeserver', ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Call(
+                        func=Attribute(
+                            value=Name(id='homeserver', ctx=Load()),
+                            attr='get_well_known_file',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='malicious-server.com')],
+                        keywords=[])],
+                keywords=[]))],
+    type_ignores=[])

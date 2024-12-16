@@ -1,0 +1,138 @@
+Module(
+    body=[
+        ImportFrom(
+            module='flask',
+            names=[
+                alias(name='Flask'),
+                alias(name='request'),
+                alias(name='jsonify')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='app', ctx=Store())],
+            value=Call(
+                func=Name(id='Flask', ctx=Load()),
+                args=[
+                    Name(id='__name__', ctx=Load())],
+                keywords=[])),
+        FunctionDef(
+            name='safe_typeahead_lookup',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='query')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='allowed_paths', ctx=Store())],
+                    value=List(
+                        elts=[
+                            Constant(value='/path1'),
+                            Constant(value='/path2'),
+                            Constant(value='/path3')],
+                        ctx=Load())),
+                If(
+                    test=Compare(
+                        left=Name(id='query', ctx=Load()),
+                        ops=[
+                            In()],
+                        comparators=[
+                            Name(id='allowed_paths', ctx=Load())]),
+                    body=[
+                        Return(
+                            value=Call(
+                                func=Name(id='jsonify', ctx=Load()),
+                                args=[
+                                    Dict(
+                                        keys=[
+                                            Constant(value='results')],
+                                        values=[
+                                            JoinedStr(
+                                                values=[
+                                                    Constant(value='Results for '),
+                                                    FormattedValue(
+                                                        value=Name(id='query', ctx=Load()),
+                                                        conversion=-1)])])],
+                                keywords=[]))],
+                    orelse=[
+                        Return(
+                            value=Tuple(
+                                elts=[
+                                    Call(
+                                        func=Name(id='jsonify', ctx=Load()),
+                                        args=[
+                                            Dict(
+                                                keys=[
+                                                    Constant(value='error')],
+                                                values=[
+                                                    Constant(value='Invalid path')])],
+                                        keywords=[]),
+                                    Constant(value=400)],
+                                ctx=Load()))])],
+            decorator_list=[]),
+        FunctionDef(
+            name='typeahead',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='query', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='request', ctx=Load()),
+                                attr='args',
+                                ctx=Load()),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='query'),
+                            Constant(value='')],
+                        keywords=[])),
+                Return(
+                    value=Call(
+                        func=Name(id='safe_typeahead_lookup', ctx=Load()),
+                        args=[
+                            Name(id='query', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[
+                Call(
+                    func=Attribute(
+                        value=Name(id='app', ctx=Load()),
+                        attr='route',
+                        ctx=Load()),
+                    args=[
+                        Constant(value='/typeahead')],
+                    keywords=[
+                        keyword(
+                            arg='methods',
+                            value=List(
+                                elts=[
+                                    Constant(value='GET')],
+                                ctx=Load()))])]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='app', ctx=Load()),
+                            attr='run',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

@@ -1,0 +1,19 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='lookatme')]),
+        Assign(
+            targets=[
+                Name(id='markdown_content', ctx=Store())],
+            value=Constant(value="\n# Example of Malicious Command\n```bash\necho 'This could execute a command!'\n```\n")),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='lookatme', ctx=Load()),
+                    attr='render',
+                    ctx=Load()),
+                args=[
+                    Name(id='markdown_content', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

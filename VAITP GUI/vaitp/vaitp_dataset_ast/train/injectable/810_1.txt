@@ -1,0 +1,147 @@
+Module(
+    body=[
+        FunctionDef(
+            name='escape_macro_parameters',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='params')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Constant(value='\n    Escape the parameters to prevent code injection vulnerabilities.\n    This function replaces dangerous characters with safe alternatives.\n    ')),
+                Assign(
+                    targets=[
+                        Name(id='safe_params', ctx=Store())],
+                    value=Dict(keys=[], values=[])),
+                For(
+                    target=Tuple(
+                        elts=[
+                            Name(id='key', ctx=Store()),
+                            Name(id='value', ctx=Store())],
+                        ctx=Store()),
+                    iter=Call(
+                        func=Attribute(
+                            value=Name(id='params', ctx=Load()),
+                            attr='items',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='safe_key', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Call(
+                                                func=Attribute(
+                                                    value=Name(id='key', ctx=Load()),
+                                                    attr='replace',
+                                                    ctx=Load()),
+                                                args=[
+                                                    Constant(value='{'),
+                                                    Constant(value='{{')],
+                                                keywords=[]),
+                                            attr='replace',
+                                            ctx=Load()),
+                                        args=[
+                                            Constant(value='}'),
+                                            Constant(value='}}')],
+                                        keywords=[]),
+                                    attr='replace',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='$'),
+                                    Constant(value='$$')],
+                                keywords=[])),
+                        Assign(
+                            targets=[
+                                Name(id='safe_value', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Call(
+                                                func=Attribute(
+                                                    value=Name(id='value', ctx=Load()),
+                                                    attr='replace',
+                                                    ctx=Load()),
+                                                args=[
+                                                    Constant(value='{'),
+                                                    Constant(value='{{')],
+                                                keywords=[]),
+                                            attr='replace',
+                                            ctx=Load()),
+                                        args=[
+                                            Constant(value='}'),
+                                            Constant(value='}}')],
+                                        keywords=[]),
+                                    attr='replace',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='$'),
+                                    Constant(value='$$')],
+                                keywords=[])),
+                        Assign(
+                            targets=[
+                                Subscript(
+                                    value=Name(id='safe_params', ctx=Load()),
+                                    slice=Name(id='safe_key', ctx=Load()),
+                                    ctx=Store())],
+                            value=Name(id='safe_value', ctx=Load()))],
+                    orelse=[]),
+                Return(
+                    value=Name(id='safe_params', ctx=Load()))],
+            decorator_list=[]),
+        FunctionDef(
+            name='render_document_tree_macro',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='params')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Constant(value='\n    Render the document tree macro with safe parameters.\n    ')),
+                Assign(
+                    targets=[
+                        Name(id='safe_params', ctx=Store())],
+                    value=Call(
+                        func=Name(id='escape_macro_parameters', ctx=Load()),
+                        args=[
+                            Name(id='params', ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=Name(id='safe_params', ctx=Load()))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='params', ctx=Store())],
+            value=Dict(
+                keys=[
+                    Constant(value='param1'),
+                    Constant(value='param2')],
+                values=[
+                    Constant(value='value1'),
+                    Constant(value='{malicious_code}')])),
+        Assign(
+            targets=[
+                Name(id='safe_output', ctx=Store())],
+            value=Call(
+                func=Name(id='render_document_tree_macro', ctx=Load()),
+                args=[
+                    Name(id='params', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='safe_output', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

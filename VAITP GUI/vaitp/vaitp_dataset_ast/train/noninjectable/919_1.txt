@@ -1,0 +1,41 @@
+Module(
+    body=[
+        ImportFrom(
+            module='datetime',
+            names=[
+                alias(name='datetime')],
+            level=0),
+        ImportFrom(
+            module='pydantic',
+            names=[
+                alias(name='BaseModel')],
+            level=0),
+        ClassDef(
+            name='User',
+            bases=[
+                Name(id='BaseModel', ctx=Load())],
+            keywords=[],
+            body=[
+                AnnAssign(
+                    target=Name(id='id', ctx=Store()),
+                    annotation=Name(id='int', ctx=Load()),
+                    simple=1),
+                AnnAssign(
+                    target=Name(id='signup_ts', ctx=Store()),
+                    annotation=Name(id='datetime', ctx=Load()),
+                    simple=1)],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='user', ctx=Store())],
+            value=Call(
+                func=Name(id='User', ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='id',
+                        value=Constant(value=1)),
+                    keyword(
+                        arg='signup_ts',
+                        value=Constant(value='infinity'))]))],
+    type_ignores=[])

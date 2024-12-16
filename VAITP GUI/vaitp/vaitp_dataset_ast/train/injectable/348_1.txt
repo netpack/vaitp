@@ -1,0 +1,85 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='re')]),
+        FunctionDef(
+            name='parse_schema',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='schema_definition')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='pattern', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='re', ctx=Load()),
+                            attr='compile',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='^[\\w]+\\s*=\\s*.*?;$')],
+                        keywords=[])),
+                If(
+                    test=UnaryOp(
+                        op=Not(),
+                        operand=Call(
+                            func=Name(id='isinstance', ctx=Load()),
+                            args=[
+                                Name(id='schema_definition', ctx=Load()),
+                                Name(id='str', ctx=Load())],
+                            keywords=[])),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Schema definition must be a string')],
+                                keywords=[]))],
+                    orelse=[]),
+                For(
+                    target=Name(id='line', ctx=Store()),
+                    iter=Call(
+                        func=Attribute(
+                            value=Name(id='schema_definition', ctx=Load()),
+                            attr='splitlines',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]),
+                    body=[
+                        If(
+                            test=Call(
+                                func=Attribute(
+                                    value=Name(id='pattern', ctx=Load()),
+                                    attr='match',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='line', ctx=Load())],
+                                keywords=[]),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    Constant(value='Parsed: '),
+                                                    FormattedValue(
+                                                        value=Name(id='line', ctx=Load()),
+                                                        conversion=-1)])],
+                                        keywords=[]))],
+                            orelse=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            Constant(value='Invalid schema line:'),
+                                            Name(id='line', ctx=Load())],
+                                        keywords=[]))])],
+                    orelse=[])],
+            decorator_list=[])],
+    type_ignores=[])

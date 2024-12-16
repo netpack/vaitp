@@ -1,0 +1,106 @@
+Module(
+    body=[
+        ImportFrom(
+            module='AccessControl',
+            names=[
+                alias(name='ClassSecurityInfo')],
+            level=0),
+        ImportFrom(
+            module='Products.CMFCore.permissions',
+            names=[
+                alias(name='ManagePortal')],
+            level=0),
+        ImportFrom(
+            module='Products.CMFCore.utils',
+            names=[
+                alias(name='getToolByName')],
+            level=0),
+        ClassDef(
+            name='SecurePageTemplate',
+            bases=[],
+            keywords=[],
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='security', ctx=Store())],
+                    value=Call(
+                        func=Name(id='ClassSecurityInfo', ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='security', ctx=Load()),
+                            attr='declareProtected',
+                            ctx=Load()),
+                        args=[
+                            Name(id='ManagePortal', ctx=Load()),
+                            Constant(value='editPageTemplate')],
+                        keywords=[])),
+                FunctionDef(
+                    name='editPageTemplate',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='template_id'),
+                            arg(arg='content')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Pass()],
+                    decorator_list=[])],
+            decorator_list=[]),
+        FunctionDef(
+            name='restrict_access',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='context')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='acl_users', ctx=Store())],
+                    value=Call(
+                        func=Name(id='getToolByName', ctx=Load()),
+                        args=[
+                            Name(id='context', ctx=Load()),
+                            Constant(value='acl_users')],
+                        keywords=[])),
+                For(
+                    target=Name(id='user', ctx=Store()),
+                    iter=Call(
+                        func=Attribute(
+                            value=Name(id='acl_users', ctx=Load()),
+                            attr='getUsers',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]),
+                    body=[
+                        If(
+                            test=Compare(
+                                left=Constant(value='untrusted_role'),
+                                ops=[
+                                    In()],
+                                comparators=[
+                                    Call(
+                                        func=Attribute(
+                                            value=Name(id='user', ctx=Load()),
+                                            attr='getRoles',
+                                            ctx=Load()),
+                                        args=[],
+                                        keywords=[])]),
+                            body=[
+                                Expr(
+                                    value=Attribute(
+                                        value=Name(id='user', ctx=Load()),
+                                        attr='removeRole',
+                                        ctx=Load()))],
+                            orelse=[])],
+                    orelse=[])],
+            decorator_list=[])],
+    type_ignores=[])

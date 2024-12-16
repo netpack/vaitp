@@ -1,0 +1,92 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='requests')]),
+        FunctionDef(
+            name='safe_fetch_user_agents',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='trusted_user_agents', ctx=Store())],
+                    value=List(
+                        elts=[
+                            Constant(value='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'),
+                            Constant(value='Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.0 Safari/605.1.15')],
+                        ctx=Load())),
+                Return(
+                    value=Name(id='trusted_user_agents', ctx=Load()))],
+            decorator_list=[]),
+        FunctionDef(
+            name='fetch_data',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='url')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='user_agents', ctx=Store())],
+                    value=Call(
+                        func=Name(id='safe_fetch_user_agents', ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='headers', ctx=Store())],
+                    value=Dict(
+                        keys=[
+                            Constant(value='User -Agent')],
+                        values=[
+                            Subscript(
+                                value=Name(id='user_agents', ctx=Load()),
+                                slice=Constant(value=0),
+                                ctx=Load())])),
+                Assign(
+                    targets=[
+                        Name(id='response', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='requests', ctx=Load()),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Name(id='url', ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='headers',
+                                value=Name(id='headers', ctx=Load()))])),
+                Return(
+                    value=Attribute(
+                        value=Name(id='response', ctx=Load()),
+                        attr='content',
+                        ctx=Load()))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='url', ctx=Store())],
+            value=Constant(value='https://example.com/api/data')),
+        Assign(
+            targets=[
+                Name(id='data', ctx=Store())],
+            value=Call(
+                func=Name(id='fetch_data', ctx=Load()),
+                args=[
+                    Name(id='url', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='data', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

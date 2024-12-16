@@ -1,0 +1,79 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='mysql.connector')]),
+        FunctionDef(
+            name='insecure_database_connection',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='host'),
+                    arg(arg='user'),
+                    arg(arg='password'),
+                    arg(arg='database')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Try(
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='connection', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='mysql', ctx=Load()),
+                                        attr='connector',
+                                        ctx=Load()),
+                                    attr='connect',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[
+                                    keyword(
+                                        arg='host',
+                                        value=Name(id='host', ctx=Load())),
+                                    keyword(
+                                        arg='user',
+                                        value=Name(id='user', ctx=Load())),
+                                    keyword(
+                                        arg='password',
+                                        value=Name(id='password', ctx=Load())),
+                                    keyword(
+                                        arg='database',
+                                        value=Name(id='database', ctx=Load()))])),
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Connection established without SSL.')],
+                                keywords=[])),
+                        Return(
+                            value=Name(id='connection', ctx=Load()))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Attribute(
+                                value=Attribute(
+                                    value=Name(id='mysql', ctx=Load()),
+                                    attr='connector',
+                                    ctx=Load()),
+                                attr='Error',
+                                ctx=Load()),
+                            name='err',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    Constant(value='Error: '),
+                                                    FormattedValue(
+                                                        value=Name(id='err', ctx=Load()),
+                                                        conversion=-1)])],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[])],
+    type_ignores=[])

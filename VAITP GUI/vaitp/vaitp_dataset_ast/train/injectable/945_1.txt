@@ -1,0 +1,100 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='signal')]),
+        Import(
+            names=[
+                alias(name='time')]),
+        FunctionDef(
+            name='signal_handler',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='signum'),
+                    arg(arg='frame')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Raise(
+                    exc=Call(
+                        func=Name(id='TimeoutError', ctx=Load()),
+                        args=[
+                            Constant(value='Operation timed out')],
+                        keywords=[]))],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='signal', ctx=Load()),
+                    attr='signal',
+                    ctx=Load()),
+                args=[
+                    Attribute(
+                        value=Name(id='signal', ctx=Load()),
+                        attr='SIGALRM',
+                        ctx=Load()),
+                    Name(id='signal_handler', ctx=Load())],
+                keywords=[])),
+        FunctionDef(
+            name='safe_operation',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='signal', ctx=Load()),
+                            attr='alarm',
+                            ctx=Load()),
+                        args=[
+                            Constant(value=5)],
+                        keywords=[])),
+                Try(
+                    body=[
+                        While(
+                            test=Constant(value=True),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='time', ctx=Load()),
+                                            attr='sleep',
+                                            ctx=Load()),
+                                        args=[
+                                            Constant(value=1)],
+                                        keywords=[]))],
+                            orelse=[])],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='TimeoutError', ctx=Load()),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            Constant(value='Operation was terminated due to timeout.')],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='signal', ctx=Load()),
+                                    attr='alarm',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value=0)],
+                                keywords=[]))])],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='safe_operation', ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

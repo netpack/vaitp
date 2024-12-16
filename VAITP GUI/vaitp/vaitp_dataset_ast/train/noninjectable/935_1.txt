@@ -1,0 +1,40 @@
+Module(
+    body=[
+        FunctionDef(
+            name='create_hail_account',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='email')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Constant(value='\n    Create a Hail account based solely on the provided email.\n    ')),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            JoinedStr(
+                                values=[
+                                    Constant(value='Account created for '),
+                                    FormattedValue(
+                                        value=Name(id='email', ctx=Load()),
+                                        conversion=-1),
+                                    Constant(value='.')])],
+                        keywords=[]))],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='create_hail_account', ctx=Load()),
+                args=[
+                    Constant(value='user@test@example.org')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='create_hail_account', ctx=Load()),
+                args=[
+                    Constant(value='user@example.org')],
+                keywords=[]))],
+    type_ignores=[])

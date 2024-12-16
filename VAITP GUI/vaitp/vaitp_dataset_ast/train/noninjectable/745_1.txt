@@ -1,0 +1,46 @@
+Module(
+    body=[
+        ImportFrom(
+            module='flask',
+            names=[
+                alias(name='request')],
+            level=0),
+        FunctionDef(
+            name='save_config',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='key', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='request', ctx=Load()),
+                                attr='args',
+                                ctx=Load()),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='key')],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='eval_result', ctx=Store())],
+                    value=Call(
+                        func=Name(id='eval', ctx=Load()),
+                        args=[
+                            Name(id='key', ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=Dict(
+                        keys=[
+                            Constant(value='result')],
+                        values=[
+                            Name(id='eval_result', ctx=Load())]))],
+            decorator_list=[])],
+    type_ignores=[])

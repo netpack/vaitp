@@ -1,0 +1,37 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='pybluemonday')]),
+        Assign(
+            targets=[
+                Name(id='s', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='pybluemonday', ctx=Load()),
+                    attr='NewPolicy',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='input', ctx=Store())],
+            value=Constant(value='<style>body {background-color: red;}</style>')),
+        Assign(
+            targets=[
+                Name(id='output', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='s', ctx=Load()),
+                    attr='sanitize',
+                    ctx=Load()),
+                args=[
+                    Name(id='input', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='output', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

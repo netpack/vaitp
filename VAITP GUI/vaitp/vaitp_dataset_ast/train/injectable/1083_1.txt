@@ -1,0 +1,67 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='subprocess')]),
+        FunctionDef(
+            name='safe_execute',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='command')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='allowed_commands', ctx=Store())],
+                    value=List(
+                        elts=[
+                            Constant(value='ls'),
+                            Constant(value='echo')],
+                        ctx=Load())),
+                If(
+                    test=Compare(
+                        left=Subscript(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='command', ctx=Load()),
+                                    attr='split',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[]),
+                            slice=Constant(value=0),
+                            ctx=Load()),
+                        ops=[
+                            In()],
+                        comparators=[
+                            Name(id='allowed_commands', ctx=Load())]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='subprocess', ctx=Load()),
+                                    attr='run',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='command', ctx=Load())],
+                                keywords=[
+                                    keyword(
+                                        arg='shell',
+                                        value=Constant(value=True))]))],
+                    orelse=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Command not allowed')],
+                                keywords=[]))])],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='safe_execute', ctx=Load()),
+                args=[
+                    Constant(value='echo Hello, World!')],
+                keywords=[]))],
+    type_ignores=[])

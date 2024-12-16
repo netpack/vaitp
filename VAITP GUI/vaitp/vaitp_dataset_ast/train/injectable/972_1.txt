@@ -1,0 +1,63 @@
+Module(
+    body=[
+        FunctionDef(
+            name='safe_bytestring_compare',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(
+                        arg='a',
+                        annotation=Name(id='bytes', ctx=Load())),
+                    arg(
+                        arg='b',
+                        annotation=Name(id='bytes', ctx=Load()))],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Compare(
+                        left=Call(
+                            func=Name(id='len', ctx=Load()),
+                            args=[
+                                Name(id='a', ctx=Load())],
+                            keywords=[]),
+                        ops=[
+                            NotEq()],
+                        comparators=[
+                            Call(
+                                func=Name(id='len', ctx=Load()),
+                                args=[
+                                    Name(id='b', ctx=Load())],
+                                keywords=[])]),
+                    body=[
+                        Return(
+                            value=Constant(value=False))],
+                    orelse=[]),
+                Return(
+                    value=Compare(
+                        left=Name(id='a', ctx=Load()),
+                        ops=[
+                            Eq()],
+                        comparators=[
+                            Name(id='b', ctx=Load())]))],
+            decorator_list=[],
+            returns=Name(id='bool', ctx=Load())),
+        Assign(
+            targets=[
+                Name(id='a', ctx=Store())],
+            value=Constant(value=b'example\x00')),
+        Assign(
+            targets=[
+                Name(id='b', ctx=Store())],
+            value=Constant(value=b'example')),
+        Assign(
+            targets=[
+                Name(id='result', ctx=Store())],
+            value=Call(
+                func=Name(id='safe_bytestring_compare', ctx=Load()),
+                args=[
+                    Name(id='a', ctx=Load()),
+                    Name(id='b', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

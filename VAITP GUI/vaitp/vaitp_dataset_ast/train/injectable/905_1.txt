@@ -1,0 +1,101 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='nltk')]),
+        FunctionDef(
+            name='safe_tokenize',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='text'),
+                    arg(arg='max_length')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[
+                    Constant(value=1000)]),
+            body=[
+                If(
+                    test=Compare(
+                        left=Call(
+                            func=Name(id='len', ctx=Load()),
+                            args=[
+                                Name(id='text', ctx=Load())],
+                            keywords=[]),
+                        ops=[
+                            Gt()],
+                        comparators=[
+                            Name(id='max_length', ctx=Load())]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            Constant(value='Input text exceeds the maximum allowed length of '),
+                                            FormattedValue(
+                                                value=Name(id='max_length', ctx=Load()),
+                                                conversion=-1),
+                                            Constant(value='.')])],
+                                keywords=[]))],
+                    orelse=[]),
+                Return(
+                    value=Tuple(
+                        elts=[
+                            Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='nltk', ctx=Load()),
+                                        attr='tokenize',
+                                        ctx=Load()),
+                                    attr='sent_tokenize',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='text', ctx=Load())],
+                                keywords=[]),
+                            Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='nltk', ctx=Load()),
+                                        attr='tokenize',
+                                        ctx=Load()),
+                                    attr='word_tokenize',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='text', ctx=Load())],
+                                keywords=[])],
+                        ctx=Load()))],
+            decorator_list=[]),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='text_input', ctx=Store())],
+                    value=Constant(value='Your long input text here...')),
+                Assign(
+                    targets=[
+                        Tuple(
+                            elts=[
+                                Name(id='sentences', ctx=Store()),
+                                Name(id='words', ctx=Store())],
+                            ctx=Store())],
+                    value=Call(
+                        func=Name(id='safe_tokenize', ctx=Load()),
+                        args=[
+                            Name(id='text_input', ctx=Load())],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ValueError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

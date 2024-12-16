@@ -1,0 +1,114 @@
+Module(
+    body=[
+        FunctionDef(
+            name='safe_mcopy',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='src'),
+                    arg(arg='dest'),
+                    arg(arg='max_length')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Constant(value='\n    Safely copy a string from src to dest with a maximum length restriction.\n    \n    Args:\n        src (str): The source string to copy from.\n        dest (list): The destination list to copy to (simulating a buffer).\n        max_length (int): The maximum allowed length to copy.\n    ')),
+                If(
+                    test=UnaryOp(
+                        op=Not(),
+                        operand=Call(
+                            func=Name(id='isinstance', ctx=Load()),
+                            args=[
+                                Name(id='src', ctx=Load()),
+                                Name(id='str', ctx=Load())],
+                            keywords=[])),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Source must be a string.')],
+                                keywords=[]))],
+                    orelse=[]),
+                If(
+                    test=Compare(
+                        left=Call(
+                            func=Name(id='len', ctx=Load()),
+                            args=[
+                                Name(id='src', ctx=Load())],
+                            keywords=[]),
+                        ops=[
+                            Gt()],
+                        comparators=[
+                            Name(id='max_length', ctx=Load())]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Source string exceeds maximum allowed length.')],
+                                keywords=[]))],
+                    orelse=[]),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='dest', ctx=Load()),
+                            attr='clear',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='dest', ctx=Load()),
+                            attr='extend',
+                            ctx=Load()),
+                        args=[
+                            Subscript(
+                                value=Name(id='src', ctx=Load()),
+                                slice=Slice(
+                                    upper=Name(id='max_length', ctx=Load())),
+                                ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='destination_buffer', ctx=Store())],
+            value=List(elts=[], ctx=Load())),
+        Assign(
+            targets=[
+                Name(id='max_allowed_length', ctx=Store())],
+            value=Constant(value=1024)),
+        Try(
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='safe_mcopy', ctx=Load()),
+                        args=[
+                            BinOp(
+                                left=Constant(value='A crafted string that could potentially cause issues'),
+                                op=Mult(),
+                                right=Constant(value=100)),
+                            Name(id='destination_buffer', ctx=Load()),
+                            Name(id='max_allowed_length', ctx=Load())],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ValueError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            Constant(value='Error: '),
+                                            FormattedValue(
+                                                value=Name(id='e', ctx=Load()),
+                                                conversion=-1)])],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

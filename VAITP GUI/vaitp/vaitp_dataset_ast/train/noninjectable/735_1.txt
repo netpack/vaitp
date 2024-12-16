@@ -1,0 +1,139 @@
+Module(
+    body=[
+        ImportFrom(
+            module='thrift.transport',
+            names=[
+                alias(name='TTransport')],
+            level=0),
+        ImportFrom(
+            module='thrift.protocol',
+            names=[
+                alias(name='TBinaryProtocol')],
+            level=0),
+        ImportFrom(
+            module='thrift.server',
+            names=[
+                alias(name='TServer')],
+            level=0),
+        ClassDef(
+            name='VulnerableThriftHandler',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='process_message',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='message')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='depth', ctx=Store())],
+                            value=Constant(value=0)),
+                        While(
+                            test=Constant(value=True),
+                            body=[
+                                AugAssign(
+                                    target=Name(id='depth', ctx=Store()),
+                                    op=Add(),
+                                    value=Constant(value=1)),
+                                If(
+                                    test=Compare(
+                                        left=Name(id='depth', ctx=Load()),
+                                        ops=[
+                                            Gt()],
+                                        comparators=[
+                                            Constant(value=10000)]),
+                                    body=[
+                                        Break()],
+                                    orelse=[])],
+                            orelse=[]),
+                        Return(
+                            value=Constant(value='Message processed successfully'))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='handler', ctx=Store())],
+            value=Call(
+                func=Name(id='VulnerableThriftHandler', ctx=Load()),
+                args=[],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='processor', ctx=Store())],
+            value=Call(
+                func=Name(id='TProcessor', ctx=Load()),
+                args=[
+                    Name(id='handler', ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='transport', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='TSocket', ctx=Load()),
+                    attr='TServerSocket',
+                    ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='host',
+                        value=Constant(value='127.0.0.1')),
+                    keyword(
+                        arg='port',
+                        value=Constant(value=9090))])),
+        Assign(
+            targets=[
+                Name(id='tfactory', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='TTransport', ctx=Load()),
+                    attr='TBufferedTransportFactory',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='pfactory', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='TBinaryProtocol', ctx=Load()),
+                    attr='TBinaryProtocolFactory',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='server', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='TServer', ctx=Load()),
+                    attr='TSimpleServer',
+                    ctx=Load()),
+                args=[
+                    Name(id='processor', ctx=Load()),
+                    Name(id='transport', ctx=Load()),
+                    Name(id='tfactory', ctx=Load()),
+                    Name(id='pfactory', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Constant(value='Starting the vulnerable server...')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='server', ctx=Load()),
+                    attr='serve',
+                    ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

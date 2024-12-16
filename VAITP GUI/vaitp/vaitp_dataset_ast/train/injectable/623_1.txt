@@ -1,0 +1,81 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        Import(
+            names=[
+                alias(name='subprocess')]),
+        FunctionDef(
+            name='safe_load_gdb_script',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='script_name')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='safe_directory', ctx=Store())],
+                    value=Constant(value='/path/to/safe/directory')),
+                If(
+                    test=Call(
+                        func=Attribute(
+                            value=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='os', ctx=Load()),
+                                        attr='path',
+                                        ctx=Load()),
+                                    attr='abspath',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='script_name', ctx=Load())],
+                                keywords=[]),
+                            attr='startswith',
+                            ctx=Load()),
+                        args=[
+                            Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='os', ctx=Load()),
+                                        attr='path',
+                                        ctx=Load()),
+                                    attr='abspath',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='safe_directory', ctx=Load())],
+                                keywords=[])],
+                        keywords=[]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='subprocess', ctx=Load()),
+                                    attr='run',
+                                    ctx=Load()),
+                                args=[
+                                    List(
+                                        elts=[
+                                            Constant(value='gdb'),
+                                            Constant(value='-x'),
+                                            Name(id='script_name', ctx=Load())],
+                                        ctx=Load())],
+                                keywords=[]))],
+                    orelse=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Error: Attempt to load script from an unsafe directory.')],
+                                keywords=[]))])],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='safe_load_gdb_script', ctx=Load()),
+                args=[
+                    Constant(value='example_script.py')],
+                keywords=[]))],
+    type_ignores=[])

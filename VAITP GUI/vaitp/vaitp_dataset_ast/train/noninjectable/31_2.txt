@@ -1,0 +1,48 @@
+Module(
+    body=[
+        ImportFrom(
+            module='PIL',
+            names=[
+                alias(name='Image')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='img', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='Image', ctx=Load()),
+                    attr='open',
+                    ctx=Load()),
+                args=[
+                    Constant(value='image.jpg')],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='param', ctx=Store())],
+            value=Tuple(
+                elts=[
+                    Constant(value='RGB'),
+                    Tuple(
+                        elts=[
+                            Constant(value=100),
+                            Constant(value=100)],
+                        ctx=Load()),
+                    BinOp(
+                        left=Constant(value=b'\x00'),
+                        op=Mult(),
+                        right=Constant(value=1000000)),
+                    Constant(value='raw'),
+                    Constant(value=None)],
+                ctx=Load())),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='img', ctx=Load()),
+                    attr='convert',
+                    ctx=Load()),
+                args=[
+                    Starred(
+                        value=Name(id='param', ctx=Load()),
+                        ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

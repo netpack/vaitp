@@ -1,0 +1,63 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='sqlite3')]),
+        FunctionDef(
+            name='get_user_details_patched',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='username')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='query', ctx=Store())],
+                    value=Constant(value='SELECT * FROM users WHERE username = ?')),
+                Assign(
+                    targets=[
+                        Name(id='conn', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='sqlite3', ctx=Load()),
+                            attr='connect',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='database.db')],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='cursor', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='conn', ctx=Load()),
+                            attr='cursor',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='cursor', ctx=Load()),
+                            attr='execute',
+                            ctx=Load()),
+                        args=[
+                            Name(id='query', ctx=Load()),
+                            Tuple(
+                                elts=[
+                                    Name(id='username', ctx=Load())],
+                                ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='cursor', ctx=Load()),
+                            attr='fetchall',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            decorator_list=[])],
+    type_ignores=[])

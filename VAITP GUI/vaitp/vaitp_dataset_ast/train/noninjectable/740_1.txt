@@ -1,0 +1,115 @@
+Module(
+    body=[
+        ImportFrom(
+            module='jinja2',
+            names=[
+                alias(name='Environment'),
+                alias(name='FileSystemLoader')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='env', ctx=Store())],
+            value=Call(
+                func=Name(id='Environment', ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='loader',
+                        value=Call(
+                            func=Name(id='FileSystemLoader', ctx=Load()),
+                            args=[
+                                Constant(value='templates')],
+                            keywords=[]))])),
+        FunctionDef(
+            name='vulnerable_render',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='template_name'),
+                    arg(arg='context')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='template', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='env', ctx=Load()),
+                            attr='get_template',
+                            ctx=Load()),
+                        args=[
+                            Name(id='template_name', ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='template', ctx=Load()),
+                            attr='render',
+                            ctx=Load()),
+                        args=[
+                            Name(id='context', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        ClassDef(
+            name='Resource',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='db',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Return(
+                            value=Constant(value='Database access'))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='resource', ctx=Store())],
+                    value=Call(
+                        func=Name(id='Resource', ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='user_context', ctx=Store())],
+                    value=Dict(
+                        keys=[
+                            Constant(value='resource'),
+                            Constant(value='unsafe_variable')],
+                        values=[
+                            Name(id='resource', ctx=Load()),
+                            Constant(value='{{ resource.db() }}')])),
+                Assign(
+                    targets=[
+                        Name(id='output', ctx=Store())],
+                    value=Call(
+                        func=Name(id='vulnerable_render', ctx=Load()),
+                        args=[
+                            Constant(value='example_template.html'),
+                            Name(id='user_context', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Name(id='output', ctx=Load())],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

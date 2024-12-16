@@ -1,0 +1,154 @@
+Module(
+    body=[
+        ImportFrom(
+            module='nicegui',
+            names=[
+                alias(name='ui')],
+            level=0),
+        FunctionDef(
+            name='safe_resources',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='key'),
+                    arg(arg='path')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=BoolOp(
+                        op=And(),
+                        values=[
+                            Call(
+                                func=Name(id='is_valid_key', ctx=Load()),
+                                args=[
+                                    Name(id='key', ctx=Load())],
+                                keywords=[]),
+                            Call(
+                                func=Name(id='is_valid_path', ctx=Load()),
+                                args=[
+                                    Name(id='path', ctx=Load())],
+                                keywords=[])]),
+                    body=[
+                        Return(
+                            value=Call(
+                                func=Name(id='serve_resource', ctx=Load()),
+                                args=[
+                                    Name(id='key', ctx=Load()),
+                                    Name(id='path', ctx=Load())],
+                                keywords=[]))],
+                    orelse=[
+                        Return(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='ui', ctx=Load()),
+                                    attr='response',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='Forbidden')],
+                                keywords=[
+                                    keyword(
+                                        arg='status',
+                                        value=Constant(value=403))]))])],
+            decorator_list=[
+                Call(
+                    func=Attribute(
+                        value=Name(id='ui', ctx=Load()),
+                        attr='route',
+                        ctx=Load()),
+                    args=[
+                        Constant(value='/safe_resources/<path:key>/<path:path>')],
+                    keywords=[])]),
+        FunctionDef(
+            name='is_valid_key',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='key')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Compare(
+                        left=Name(id='key', ctx=Load()),
+                        ops=[
+                            In()],
+                        comparators=[
+                            Name(id='allowed_keys', ctx=Load())]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='is_valid_path',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='path')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=UnaryOp(
+                        op=Not(),
+                        operand=Call(
+                            func=Name(id='any', ctx=Load()),
+                            args=[
+                                GeneratorExp(
+                                    elt=Compare(
+                                        left=Name(id='part', ctx=Load()),
+                                        ops=[
+                                            In()],
+                                        comparators=[
+                                            Name(id='path', ctx=Load())]),
+                                    generators=[
+                                        comprehension(
+                                            target=Name(id='part', ctx=Store()),
+                                            iter=List(
+                                                elts=[
+                                                    Constant(value='..'),
+                                                    Constant(value='/')],
+                                                ctx=Load()),
+                                            ifs=[],
+                                            is_async=0)])],
+                            keywords=[])))],
+            decorator_list=[]),
+        FunctionDef(
+            name='serve_resource',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='key'),
+                    arg(arg='path')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='ui', ctx=Load()),
+                            attr='send_file',
+                            ctx=Load()),
+                        args=[
+                            JoinedStr(
+                                values=[
+                                    Constant(value='resources/'),
+                                    FormattedValue(
+                                        value=Name(id='key', ctx=Load()),
+                                        conversion=-1),
+                                    Constant(value='/'),
+                                    FormattedValue(
+                                        value=Name(id='path', ctx=Load()),
+                                        conversion=-1)])],
+                        keywords=[]))],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='ui', ctx=Load()),
+                    attr='run',
+                    ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

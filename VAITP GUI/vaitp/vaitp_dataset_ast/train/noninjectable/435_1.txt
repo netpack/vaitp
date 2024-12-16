@@ -1,0 +1,22 @@
+Module(
+    body=[
+        FunctionDef(
+            name='render_page',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='user_input')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=JoinedStr(
+                        values=[
+                            Constant(value='<html><body>User input: '),
+                            FormattedValue(
+                                value=Name(id='user_input', ctx=Load()),
+                                conversion=-1),
+                            Constant(value='</body></html>')]))],
+            decorator_list=[])],
+    type_ignores=[])

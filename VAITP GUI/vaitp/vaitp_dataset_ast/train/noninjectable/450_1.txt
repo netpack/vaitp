@@ -1,0 +1,75 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='xml.etree.ElementTree', asname='ET')]),
+        FunctionDef(
+            name='process_xml',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='input_xml')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Try(
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='root', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='ET', ctx=Load()),
+                                    attr='fromstring',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='input_xml', ctx=Load())],
+                                keywords=[])),
+                        For(
+                            target=Name(id='child', ctx=Store()),
+                            iter=Name(id='root', ctx=Load()),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            Attribute(
+                                                value=Name(id='child', ctx=Load()),
+                                                attr='tag',
+                                                ctx=Load()),
+                                            Attribute(
+                                                value=Name(id='child', ctx=Load()),
+                                                attr='text',
+                                                ctx=Load())],
+                                        keywords=[]))],
+                            orelse=[])],
+                    handlers=[
+                        ExceptHandler(
+                            type=Attribute(
+                                value=Name(id='ET', ctx=Load()),
+                                attr='ParseError',
+                                ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            Constant(value='Error parsing XML:'),
+                                            Name(id='e', ctx=Load())],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='malicious_input', ctx=Store())],
+            value=Constant(value="<data><item>Valid</item><item><script>alert('XSS')</script></item></data>")),
+        Expr(
+            value=Call(
+                func=Name(id='process_xml', ctx=Load()),
+                args=[
+                    Name(id='malicious_input', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

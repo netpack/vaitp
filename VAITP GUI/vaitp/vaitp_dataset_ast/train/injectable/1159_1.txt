@@ -1,0 +1,224 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        ImportFrom(
+            module='flask',
+            names=[
+                alias(name='Flask'),
+                alias(name='request'),
+                alias(name='abort')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='app', ctx=Store())],
+            value=Call(
+                func=Name(id='Flask', ctx=Load()),
+                args=[
+                    Name(id='__name__', ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='ALLOWED_EXTENSIONS', ctx=Store())],
+            value=Set(
+                elts=[
+                    Constant(value='txt'),
+                    Constant(value='pdf'),
+                    Constant(value='png'),
+                    Constant(value='jpg'),
+                    Constant(value='jpeg'),
+                    Constant(value='gif')])),
+        FunctionDef(
+            name='allowed_file',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='filename')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=BoolOp(
+                        op=And(),
+                        values=[
+                            Compare(
+                                left=Constant(value='.'),
+                                ops=[
+                                    In()],
+                                comparators=[
+                                    Name(id='filename', ctx=Load())]),
+                            Compare(
+                                left=Call(
+                                    func=Attribute(
+                                        value=Subscript(
+                                            value=Call(
+                                                func=Attribute(
+                                                    value=Name(id='filename', ctx=Load()),
+                                                    attr='rsplit',
+                                                    ctx=Load()),
+                                                args=[
+                                                    Constant(value='.'),
+                                                    Constant(value=1)],
+                                                keywords=[]),
+                                            slice=Constant(value=1),
+                                            ctx=Load()),
+                                        attr='lower',
+                                        ctx=Load()),
+                                    args=[],
+                                    keywords=[]),
+                                ops=[
+                                    In()],
+                                comparators=[
+                                    Name(id='ALLOWED_EXTENSIONS', ctx=Load())])]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='handle_file_upload',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Compare(
+                        left=Constant(value='file'),
+                        ops=[
+                            NotIn()],
+                        comparators=[
+                            Attribute(
+                                value=Name(id='request', ctx=Load()),
+                                attr='files',
+                                ctx=Load())]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='abort', ctx=Load()),
+                                args=[
+                                    Constant(value=400),
+                                    Constant(value='No file part')],
+                                keywords=[]))],
+                    orelse=[]),
+                Assign(
+                    targets=[
+                        Name(id='file', ctx=Store())],
+                    value=Subscript(
+                        value=Attribute(
+                            value=Name(id='request', ctx=Load()),
+                            attr='files',
+                            ctx=Load()),
+                        slice=Constant(value='file'),
+                        ctx=Load())),
+                If(
+                    test=Compare(
+                        left=Attribute(
+                            value=Name(id='file', ctx=Load()),
+                            attr='filename',
+                            ctx=Load()),
+                        ops=[
+                            Eq()],
+                        comparators=[
+                            Constant(value='')]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='abort', ctx=Load()),
+                                args=[
+                                    Constant(value=400),
+                                    Constant(value='No selected file')],
+                                keywords=[]))],
+                    orelse=[]),
+                If(
+                    test=BoolOp(
+                        op=And(),
+                        values=[
+                            Name(id='file', ctx=Load()),
+                            Call(
+                                func=Name(id='allowed_file', ctx=Load()),
+                                args=[
+                                    Attribute(
+                                        value=Name(id='file', ctx=Load()),
+                                        attr='filename',
+                                        ctx=Load())],
+                                keywords=[])]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='filename', ctx=Store())],
+                            value=Call(
+                                func=Name(id='secure_filename', ctx=Load()),
+                                args=[
+                                    Attribute(
+                                        value=Name(id='file', ctx=Load()),
+                                        attr='filename',
+                                        ctx=Load())],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='file', ctx=Load()),
+                                    attr='save',
+                                    ctx=Load()),
+                                args=[
+                                    Call(
+                                        func=Attribute(
+                                            value=Attribute(
+                                                value=Name(id='os', ctx=Load()),
+                                                attr='path',
+                                                ctx=Load()),
+                                            attr='join',
+                                            ctx=Load()),
+                                        args=[
+                                            Constant(value='/path/to/save'),
+                                            Name(id='filename', ctx=Load())],
+                                        keywords=[])],
+                                keywords=[])),
+                        Return(
+                            value=Tuple(
+                                elts=[
+                                    Constant(value='File uploaded successfully'),
+                                    Constant(value=200)],
+                                ctx=Load()))],
+                    orelse=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='abort', ctx=Load()),
+                                args=[
+                                    Constant(value=400),
+                                    Constant(value='File type not allowed')],
+                                keywords=[]))])],
+            decorator_list=[
+                Call(
+                    func=Attribute(
+                        value=Name(id='app', ctx=Load()),
+                        attr='route',
+                        ctx=Load()),
+                    args=[
+                        Constant(value='/upload')],
+                    keywords=[
+                        keyword(
+                            arg='methods',
+                            value=List(
+                                elts=[
+                                    Constant(value='POST')],
+                                ctx=Load()))])]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='app', ctx=Load()),
+                            attr='run',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

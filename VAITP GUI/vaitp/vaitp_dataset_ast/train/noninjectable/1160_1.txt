@@ -1,0 +1,71 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='eval')]),
+        FunctionDef(
+            name='process_expression',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='project_id'),
+                    arg(arg='expression')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Try(
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='result', ctx=Store())],
+                            value=Call(
+                                func=Name(id='eval', ctx=Load()),
+                                args=[
+                                    Name(id='expression', ctx=Load())],
+                                keywords=[])),
+                        Return(
+                            value=Name(id='result', ctx=Load()))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='Exception', ctx=Load()),
+                            name='e',
+                            body=[
+                                Return(
+                                    value=JoinedStr(
+                                        values=[
+                                            Constant(value='Error: '),
+                                            FormattedValue(
+                                                value=Name(id='e', ctx=Load()),
+                                                conversion=-1)]))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='user_expression', ctx=Store())],
+            value=Call(
+                func=Name(id='input', ctx=Load()),
+                args=[
+                    Constant(value='Enter an expression: ')],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='project_id', ctx=Store())],
+            value=Constant(value='some_valid_project_id')),
+        Assign(
+            targets=[
+                Name(id='result', ctx=Store())],
+            value=Call(
+                func=Name(id='process_expression', ctx=Load()),
+                args=[
+                    Name(id='project_id', ctx=Load()),
+                    Name(id='user_expression', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='result', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

@@ -1,0 +1,31 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='xml.etree.ElementTree', asname='ET')]),
+        Assign(
+            targets=[
+                Name(id='xml_file', ctx=Store())],
+            value=Constant(value='malicious.xml')),
+        Assign(
+            targets=[
+                Name(id='tree', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='ET', ctx=Load()),
+                    attr='parse',
+                    ctx=Load()),
+                args=[
+                    Name(id='xml_file', ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='root', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='tree', ctx=Load()),
+                    attr='getroot',
+                    ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

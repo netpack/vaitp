@@ -1,0 +1,219 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='hashlib')]),
+        Import(
+            names=[
+                alias(name='requests')]),
+        ClassDef(
+            name='Version',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='package_name'),
+                            arg(arg='version')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='package_name',
+                                    ctx=Store())],
+                            value=Name(id='package_name', ctx=Load())),
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='version',
+                                    ctx=Store())],
+                            value=Name(id='version', ctx=Load())),
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='url',
+                                    ctx=Store())],
+                            value=JoinedStr(
+                                values=[
+                                    Constant(value='http://example.com/packages/'),
+                                    FormattedValue(
+                                        value=Name(id='package_name', ctx=Load()),
+                                        conversion=-1),
+                                    Constant(value='_'),
+                                    FormattedValue(
+                                        value=Name(id='version', ctx=Load()),
+                                        conversion=-1),
+                                    Constant(value='.deb')]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='fetch_binary',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='response', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='requests', ctx=Load()),
+                                    attr='get',
+                                    ctx=Load()),
+                                args=[
+                                    Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='url',
+                                        ctx=Load())],
+                                keywords=[])),
+                        If(
+                            test=Compare(
+                                left=Attribute(
+                                    value=Name(id='response', ctx=Load()),
+                                    attr='status_code',
+                                    ctx=Load()),
+                                ops=[
+                                    Eq()],
+                                comparators=[
+                                    Constant(value=200)]),
+                            body=[
+                                Assign(
+                                    targets=[
+                                        Name(id='md5_hash', ctx=Store())],
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Call(
+                                                func=Attribute(
+                                                    value=Name(id='hashlib', ctx=Load()),
+                                                    attr='md5',
+                                                    ctx=Load()),
+                                                args=[
+                                                    Attribute(
+                                                        value=Name(id='response', ctx=Load()),
+                                                        attr='content',
+                                                        ctx=Load())],
+                                                keywords=[]),
+                                            attr='hexdigest',
+                                            ctx=Load()),
+                                        args=[],
+                                        keywords=[])),
+                                Assign(
+                                    targets=[
+                                        Name(id='expected_md5', ctx=Store())],
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='self', ctx=Load()),
+                                            attr='get_expected_md5',
+                                            ctx=Load()),
+                                        args=[],
+                                        keywords=[])),
+                                If(
+                                    test=Compare(
+                                        left=Name(id='md5_hash', ctx=Load()),
+                                        ops=[
+                                            NotEq()],
+                                        comparators=[
+                                            Name(id='expected_md5', ctx=Load())]),
+                                    body=[
+                                        Raise(
+                                            exc=Call(
+                                                func=Name(id='ValueError', ctx=Load()),
+                                                args=[
+                                                    Constant(value='MD5 checksum does not match. Potential tampering detected.')],
+                                                keywords=[]))],
+                                    orelse=[]),
+                                Expr(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='self', ctx=Load()),
+                                            attr='save_file',
+                                            ctx=Load()),
+                                        args=[
+                                            Attribute(
+                                                value=Name(id='response', ctx=Load()),
+                                                attr='content',
+                                                ctx=Load())],
+                                        keywords=[]))],
+                            orelse=[
+                                Raise(
+                                    exc=Call(
+                                        func=Name(id='Exception', ctx=Load()),
+                                        args=[
+                                            Constant(value='Failed to download the package.')],
+                                        keywords=[]))])],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='get_expected_md5',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Return(
+                            value=Constant(value='expected_md5_hash_value'))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='save_file',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='content')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        With(
+                            items=[
+                                withitem(
+                                    context_expr=Call(
+                                        func=Name(id='open', ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    FormattedValue(
+                                                        value=Attribute(
+                                                            value=Name(id='self', ctx=Load()),
+                                                            attr='package_name',
+                                                            ctx=Load()),
+                                                        conversion=-1),
+                                                    Constant(value='_'),
+                                                    FormattedValue(
+                                                        value=Attribute(
+                                                            value=Name(id='self', ctx=Load()),
+                                                            attr='version',
+                                                            ctx=Load()),
+                                                        conversion=-1),
+                                                    Constant(value='.deb')]),
+                                            Constant(value='wb')],
+                                        keywords=[]),
+                                    optional_vars=Name(id='f', ctx=Store()))],
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='f', ctx=Load()),
+                                            attr='write',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='content', ctx=Load())],
+                                        keywords=[]))])],
+                    decorator_list=[])],
+            decorator_list=[])],
+    type_ignores=[])

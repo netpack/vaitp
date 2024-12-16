@@ -1,0 +1,201 @@
+Module(
+    body=[
+        ClassDef(
+            name='User',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='username')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='username',
+                                    ctx=Store())],
+                            value=Name(id='username', ctx=Load()))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        ClassDef(
+            name='VirtualMachine',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='user_sessions',
+                                    ctx=Store())],
+                            value=Dict(keys=[], values=[]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='login',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='user')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Subscript(
+                                    value=Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='user_sessions',
+                                        ctx=Load()),
+                                    slice=Attribute(
+                                        value=Name(id='user', ctx=Load()),
+                                        attr='username',
+                                        ctx=Load()),
+                                    ctx=Store())],
+                            value=Name(id='user', ctx=Load())),
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            FormattedValue(
+                                                value=Attribute(
+                                                    value=Name(id='user', ctx=Load()),
+                                                    attr='username',
+                                                    ctx=Load()),
+                                                conversion=-1),
+                                            Constant(value=' logged in successfully.')])],
+                                keywords=[]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='execute_code',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='user'),
+                            arg(arg='code')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        If(
+                            test=Compare(
+                                left=Attribute(
+                                    value=Name(id='user', ctx=Load()),
+                                    attr='username',
+                                    ctx=Load()),
+                                ops=[
+                                    In()],
+                                comparators=[
+                                    Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='user_sessions',
+                                        ctx=Load())]),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='exec', ctx=Load()),
+                                        args=[
+                                            Name(id='code', ctx=Load())],
+                                        keywords=[]))],
+                            orelse=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    Constant(value='User  '),
+                                                    FormattedValue(
+                                                        value=Attribute(
+                                                            value=Name(id='user', ctx=Load()),
+                                                            attr='username',
+                                                            ctx=Load()),
+                                                        conversion=-1),
+                                                    Constant(value=' is not logged in.')])],
+                                        keywords=[]))])],
+                    decorator_list=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='user1', ctx=Store())],
+            value=Call(
+                func=Name(id='User', ctx=Load()),
+                args=[
+                    Constant(value='user1')],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='user2', ctx=Store())],
+            value=Call(
+                func=Name(id='User', ctx=Load()),
+                args=[
+                    Constant(value='user2')],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='vm', ctx=Store())],
+            value=Call(
+                func=Name(id='VirtualMachine', ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='vm', ctx=Load()),
+                    attr='login',
+                    ctx=Load()),
+                args=[
+                    Name(id='user1', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='vm', ctx=Load()),
+                    attr='login',
+                    ctx=Load()),
+                args=[
+                    Name(id='user2', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='vm', ctx=Load()),
+                    attr='execute_code',
+                    ctx=Load()),
+                args=[
+                    Name(id='user1', ctx=Load()),
+                    Constant(value='print("User  1 executing code")')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='vm', ctx=Load()),
+                    attr='execute_code',
+                    ctx=Load()),
+                args=[
+                    Name(id='user2', ctx=Load()),
+                    Constant(value='print("User  2 executing code")')],
+                keywords=[]))],
+    type_ignores=[])

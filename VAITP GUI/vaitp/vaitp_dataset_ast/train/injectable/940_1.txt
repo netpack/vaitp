@@ -1,0 +1,140 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        Import(
+            names=[
+                alias(name='shutil')]),
+        Import(
+            names=[
+                alias(name='tempfile')]),
+        FunctionDef(
+            name='safe_rmtree',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='path')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Compare(
+                        left=Call(
+                            func=Attribute(
+                                value=Attribute(
+                                    value=Name(id='os', ctx=Load()),
+                                    attr='path',
+                                    ctx=Load()),
+                                attr='commonpath',
+                                ctx=Load()),
+                            args=[
+                                List(
+                                    elts=[
+                                        Name(id='path', ctx=Load()),
+                                        Call(
+                                            func=Attribute(
+                                                value=Name(id='tempfile', ctx=Load()),
+                                                attr='gettempdir',
+                                                ctx=Load()),
+                                            args=[],
+                                            keywords=[])],
+                                    ctx=Load())],
+                            keywords=[]),
+                        ops=[
+                            Eq()],
+                        comparators=[
+                            Call(
+                                func=Attribute(
+                                    value=Name(id='tempfile', ctx=Load()),
+                                    attr='gettempdir',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[])]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='PermissionError', ctx=Load()),
+                                args=[
+                                    Constant(value="Attempting to delete files outside of the user's temporary directory is not allowed.")],
+                                keywords=[]))],
+                    orelse=[]),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='shutil', ctx=Load()),
+                            attr='rmtree',
+                            ctx=Load()),
+                        args=[
+                            Name(id='path', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='temp_dir', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='tempfile', ctx=Load()),
+                            attr='mkdtemp',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='os', ctx=Load()),
+                            attr='mkdir',
+                            ctx=Load()),
+                        args=[
+                            Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='os', ctx=Load()),
+                                        attr='path',
+                                        ctx=Load()),
+                                    attr='join',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='temp_dir', ctx=Load()),
+                                    Constant(value='to_delete')],
+                                keywords=[])],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='safe_rmtree', ctx=Load()),
+                        args=[
+                            Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='os', ctx=Load()),
+                                        attr='path',
+                                        ctx=Load()),
+                                    attr='join',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='temp_dir', ctx=Load()),
+                                    Constant(value='to_delete')],
+                                keywords=[])],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='Exception', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            Constant(value='Error: '),
+                                            FormattedValue(
+                                                value=Name(id='e', ctx=Load()),
+                                                conversion=-1)])],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

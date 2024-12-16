@@ -1,0 +1,108 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='requests')]),
+        ImportFrom(
+            module='requests.auth',
+            names=[
+                alias(name='HTTPBasicAuth')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='client_id', ctx=Store())],
+            value=Constant(value='your_client_id')),
+        Assign(
+            targets=[
+                Name(id='client_secret', ctx=Store())],
+            value=Constant(value='your_client_secret')),
+        Assign(
+            targets=[
+                Name(id='issuer_url', ctx=Store())],
+            value=Constant(value='https://your-issuer-url.com/oauth/token')),
+        Assign(
+            targets=[
+                Name(id='response', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='requests', ctx=Load()),
+                    attr='post',
+                    ctx=Load()),
+                args=[
+                    Name(id='issuer_url', ctx=Load())],
+                keywords=[
+                    keyword(
+                        arg='auth',
+                        value=Call(
+                            func=Name(id='HTTPBasicAuth', ctx=Load()),
+                            args=[
+                                Name(id='client_id', ctx=Load()),
+                                Name(id='client_secret', ctx=Load())],
+                            keywords=[])),
+                    keyword(
+                        arg='verify',
+                        value=Constant(value=False)),
+                    keyword(
+                        arg='data',
+                        value=Dict(
+                            keys=[
+                                Constant(value='grant_type')],
+                            values=[
+                                Constant(value='client_credentials')]))])),
+        If(
+            test=Compare(
+                left=Attribute(
+                    value=Name(id='response', ctx=Load()),
+                    attr='status_code',
+                    ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value=200)]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Access token retrieved successfully.')],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='access_token', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='response', ctx=Load()),
+                                    attr='json',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[]),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='access_token')],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Access Token:'),
+                            Name(id='access_token', ctx=Load())],
+                        keywords=[]))],
+            orelse=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Failed to retrieve access token:'),
+                            Attribute(
+                                value=Name(id='response', ctx=Load()),
+                                attr='status_code',
+                                ctx=Load()),
+                            Attribute(
+                                value=Name(id='response', ctx=Load()),
+                                attr='text',
+                                ctx=Load())],
+                        keywords=[]))])],
+    type_ignores=[])

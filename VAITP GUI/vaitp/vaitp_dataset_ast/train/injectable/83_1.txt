@@ -1,0 +1,59 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='ast')]),
+        Import(
+            names=[
+                alias(name='typed_ast')]),
+        FunctionDef(
+            name='non_vulnerable_function',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='source_code')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='tree', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='ast', ctx=Load()),
+                            attr='parse',
+                            ctx=Load()),
+                        args=[
+                            Name(id='source_code', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='typed_tree', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='typed_ast', ctx=Load()),
+                            attr='ast_to_typed_ast',
+                            ctx=Load()),
+                        args=[
+                            Name(id='tree', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Attribute(
+                        value=Subscript(
+                            value=Attribute(
+                                value=Name(id='typed_tree', ctx=Load()),
+                                attr='body',
+                                ctx=Load()),
+                            slice=Constant(value=0),
+                            ctx=Load()),
+                        attr='value',
+                        ctx=Load()))],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='non_vulnerable_function', ctx=Load()),
+                args=[
+                    Constant(value='x = 1')],
+                keywords=[]))],
+    type_ignores=[])

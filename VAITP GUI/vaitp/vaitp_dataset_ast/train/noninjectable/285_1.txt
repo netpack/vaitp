@@ -1,0 +1,26 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='democritus_csv')]),
+        FunctionDef(
+            name='read_csv',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='file_path')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='democritus_csv', ctx=Load()),
+                            attr='load_csv',
+                            ctx=Load()),
+                        args=[
+                            Name(id='file_path', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[])],
+    type_ignores=[])

@@ -1,0 +1,32 @@
+Module(
+    body=[
+        ImportFrom(
+            module='democritus_dicts',
+            names=[
+                alias(name='some_function')],
+            level=0),
+        FunctionDef(
+            name='vulnerable_function',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='result', ctx=Store())],
+                    value=Call(
+                        func=Name(id='some_function', ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Return(
+                    value=Name(id='result', ctx=Load()))],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='vulnerable_function', ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

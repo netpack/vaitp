@@ -1,0 +1,98 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='sys')]),
+        ImportFrom(
+            module='tqdm',
+            names=[
+                alias(name='tqdm')],
+            level=0),
+        FunctionDef(
+            name='vulnerable_tqdm',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='iterable')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                kwarg=arg(arg='kwargs'),
+                defaults=[]),
+            body=[
+                For(
+                    target=Tuple(
+                        elts=[
+                            Name(id='key', ctx=Store()),
+                            Name(id='value', ctx=Store())],
+                        ctx=Store()),
+                    iter=Call(
+                        func=Attribute(
+                            value=Name(id='kwargs', ctx=Load()),
+                            attr='items',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]),
+                    body=[
+                        If(
+                            test=Compare(
+                                left=Name(id='key', ctx=Load()),
+                                ops=[
+                                    In()],
+                                comparators=[
+                                    List(
+                                        elts=[
+                                            Constant(value='--delim'),
+                                            Constant(value='--buf-size'),
+                                            Constant(value='--manpath')],
+                                        ctx=Load())]),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='eval', ctx=Load()),
+                                        args=[
+                                            Name(id='value', ctx=Load())],
+                                        keywords=[]))],
+                            orelse=[])],
+                    orelse=[]),
+                Return(
+                    value=Call(
+                        func=Name(id='tqdm', ctx=Load()),
+                        args=[
+                            Name(id='iterable', ctx=Load())],
+                        keywords=[
+                            keyword(
+                                value=Name(id='kwargs', ctx=Load()))]))],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                For(
+                    target=Name(id='i', ctx=Store()),
+                    iter=Call(
+                        func=Name(id='vulnerable_tqdm', ctx=Load()),
+                        args=[
+                            Call(
+                                func=Name(id='range', ctx=Load()),
+                                args=[
+                                    Constant(value=10)],
+                                keywords=[])],
+                        keywords=[
+                            keyword(
+                                arg='desc',
+                                value=Constant(value='Processing')),
+                            keyword(
+                                arg='total',
+                                value=Constant(value=10)),
+                            keyword(
+                                arg='buf_size',
+                                value=Constant(value="os.system('echo Vulnerable!')"))]),
+                    body=[
+                        Pass()],
+                    orelse=[])],
+            orelse=[])],
+    type_ignores=[])

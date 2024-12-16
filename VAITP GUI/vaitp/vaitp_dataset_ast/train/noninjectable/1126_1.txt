@@ -1,0 +1,31 @@
+Module(
+    body=[
+        FunctionDef(
+            name='get_redirect_url',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='redirect_url')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Name(id='redirect_url', ctx=Load()))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='malicious_redirect', ctx=Store())],
+            value=Constant(value='https://attacker.com')),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Constant(value='Redirecting to:'),
+                    Call(
+                        func=Name(id='get_redirect_url', ctx=Load()),
+                        args=[
+                            Name(id='malicious_redirect', ctx=Load())],
+                        keywords=[])],
+                keywords=[]))],
+    type_ignores=[])

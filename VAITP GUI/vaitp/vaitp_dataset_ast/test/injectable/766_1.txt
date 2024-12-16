@@ -1,0 +1,126 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        Import(
+            names=[
+                alias(name='tempfile')]),
+        Import(
+            names=[
+                alias(name='stat')]),
+        FunctionDef(
+            name='create_makefile_conf',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                With(
+                    items=[
+                        withitem(
+                            context_expr=Call(
+                                func=Attribute(
+                                    value=Name(id='tempfile', ctx=Load()),
+                                    attr='NamedTemporaryFile',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[
+                                    keyword(
+                                        arg='delete',
+                                        value=Constant(value=False))]),
+                            optional_vars=Name(id='temp_file', ctx=Store()))],
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='temp_file_name', ctx=Store())],
+                            value=Attribute(
+                                value=Name(id='temp_file', ctx=Load()),
+                                attr='name',
+                                ctx=Load())),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='temp_file', ctx=Load()),
+                                    attr='write',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value=b'# Makefile configuration\n')],
+                                keywords=[]))]),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='os', ctx=Load()),
+                            attr='chmod',
+                            ctx=Load()),
+                        args=[
+                            Name(id='temp_file_name', ctx=Load()),
+                            BinOp(
+                                left=BinOp(
+                                    left=BinOp(
+                                        left=Attribute(
+                                            value=Name(id='stat', ctx=Load()),
+                                            attr='S_IRUSR',
+                                            ctx=Load()),
+                                        op=BitOr(),
+                                        right=Attribute(
+                                            value=Name(id='stat', ctx=Load()),
+                                            attr='S_IWUSR',
+                                            ctx=Load())),
+                                    op=BitOr(),
+                                    right=Attribute(
+                                        value=Name(id='stat', ctx=Load()),
+                                        attr='S_IRGRP',
+                                        ctx=Load())),
+                                op=BitOr(),
+                                right=Attribute(
+                                    value=Name(id='stat', ctx=Load()),
+                                    attr='S_IROTH',
+                                    ctx=Load()))],
+                        keywords=[])),
+                Try(
+                    body=[
+                        With(
+                            items=[
+                                withitem(
+                                    context_expr=Call(
+                                        func=Name(id='open', ctx=Load()),
+                                        args=[
+                                            Name(id='temp_file_name', ctx=Load()),
+                                            Constant(value='r')],
+                                        keywords=[]),
+                                    optional_vars=Name(id='file', ctx=Store()))],
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            Call(
+                                                func=Attribute(
+                                                    value=Name(id='file', ctx=Load()),
+                                                    attr='read',
+                                                    ctx=Load()),
+                                                args=[],
+                                                keywords=[])],
+                                        keywords=[]))])],
+                    handlers=[],
+                    orelse=[],
+                    finalbody=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='os', ctx=Load()),
+                                    attr='remove',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='temp_file_name', ctx=Load())],
+                                keywords=[]))])],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='create_makefile_conf', ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

@@ -1,0 +1,88 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='IPython.utils.terminal')]),
+        FunctionDef(
+            name='safe_set_term_title',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='title')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Call(
+                        func=Name(id='any', ctx=Load()),
+                        args=[
+                            GeneratorExp(
+                                elt=Compare(
+                                    left=Name(id='char', ctx=Load()),
+                                    ops=[
+                                        In()],
+                                    comparators=[
+                                        Name(id='title', ctx=Load())]),
+                                generators=[
+                                    comprehension(
+                                        target=Name(id='char', ctx=Store()),
+                                        iter=List(
+                                            elts=[
+                                                Constant(value=';'),
+                                                Constant(value='&'),
+                                                Constant(value='|'),
+                                                Constant(value='>'),
+                                                Constant(value='<'),
+                                                Constant(value='$'),
+                                                Constant(value='`')],
+                                            ctx=Load()),
+                                        ifs=[],
+                                        is_async=0)])],
+                        keywords=[]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Unsafe title provided')],
+                                keywords=[]))],
+                    orelse=[]),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Attribute(
+                                    value=Name(id='IPython', ctx=Load()),
+                                    attr='utils',
+                                    ctx=Load()),
+                                attr='terminal',
+                                ctx=Load()),
+                            attr='set_term_title',
+                            ctx=Load()),
+                        args=[
+                            Name(id='title', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Try(
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='safe_set_term_title', ctx=Load()),
+                        args=[
+                            Constant(value='My Safe Title')],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ValueError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

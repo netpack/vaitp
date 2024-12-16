@@ -1,0 +1,44 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='gradio', asname='gr')]),
+        Assign(
+            targets=[
+                Name(id='interface', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='gr', ctx=Load()),
+                    attr='Interface',
+                    ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='fn',
+                        value=Lambda(
+                            args=arguments(
+                                posonlyargs=[],
+                                args=[
+                                    arg(arg='x')],
+                                kwonlyargs=[],
+                                kw_defaults=[],
+                                defaults=[]),
+                            body=Name(id='x', ctx=Load()))),
+                    keyword(
+                        arg='inputs',
+                        value=Constant(value='text')),
+                    keyword(
+                        arg='outputs',
+                        value=Constant(value='text')),
+                    keyword(
+                        arg='enable_monitoring',
+                        value=Constant(value=False))])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='interface', ctx=Load()),
+                    attr='launch',
+                    ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

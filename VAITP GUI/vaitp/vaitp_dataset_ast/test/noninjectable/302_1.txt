@@ -1,0 +1,33 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='xml.etree.ElementTree', asname='ET')]),
+        FunctionDef(
+            name='vulnerable_parse_xml',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='xml_string')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='exec', ctx=Load()),
+                        args=[
+                            Name(id='xml_string', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='xml_data', ctx=Store())],
+            value=Constant(value="<root><child>Some data</child><script>print('Executing arbitrary code!')</script></root>")),
+        Expr(
+            value=Call(
+                func=Name(id='vulnerable_parse_xml', ctx=Load()),
+                args=[
+                    Name(id='xml_data', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

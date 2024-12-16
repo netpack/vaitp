@@ -1,0 +1,207 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='configparser')]),
+        ClassDef(
+            name='Page',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='locator_file')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='locators',
+                                    ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='__load_locators',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='locator_file', ctx=Load())],
+                                keywords=[]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='__load_locators',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='locator_file')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='config', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='configparser', ctx=Load()),
+                                    attr='ConfigParser',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='config', ctx=Load()),
+                                    attr='read',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='locator_file', ctx=Load())],
+                                keywords=[])),
+                        Assign(
+                            targets=[
+                                Name(id='locators', ctx=Store())],
+                            value=Dict(keys=[], values=[])),
+                        For(
+                            target=Name(id='section', ctx=Store()),
+                            iter=Call(
+                                func=Attribute(
+                                    value=Name(id='config', ctx=Load()),
+                                    attr='sections',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[]),
+                            body=[
+                                For(
+                                    target=Tuple(
+                                        elts=[
+                                            Name(id='key', ctx=Store()),
+                                            Name(id='value', ctx=Store())],
+                                        ctx=Store()),
+                                    iter=Call(
+                                        func=Attribute(
+                                            value=Name(id='config', ctx=Load()),
+                                            attr='items',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='section', ctx=Load())],
+                                        keywords=[]),
+                                    body=[
+                                        If(
+                                            test=UnaryOp(
+                                                op=Not(),
+                                                operand=Call(
+                                                    func=Attribute(
+                                                        value=Name(id='self', ctx=Load()),
+                                                        attr='__is_safe_locator',
+                                                        ctx=Load()),
+                                                    args=[
+                                                        Name(id='value', ctx=Load())],
+                                                    keywords=[])),
+                                            body=[
+                                                Raise(
+                                                    exc=Call(
+                                                        func=Name(id='ValueError', ctx=Load()),
+                                                        args=[
+                                                            JoinedStr(
+                                                                values=[
+                                                                    Constant(value='Unsafe locator found: '),
+                                                                    FormattedValue(
+                                                                        value=Name(id='value', ctx=Load()),
+                                                                        conversion=-1)])],
+                                                        keywords=[]))],
+                                            orelse=[]),
+                                        Assign(
+                                            targets=[
+                                                Subscript(
+                                                    value=Name(id='locators', ctx=Load()),
+                                                    slice=Name(id='key', ctx=Load()),
+                                                    ctx=Store())],
+                                            value=Name(id='value', ctx=Load()))],
+                                    orelse=[])],
+                            orelse=[]),
+                        Return(
+                            value=Name(id='locators', ctx=Load()))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='__is_safe_locator',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='locator')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Return(
+                            value=BoolOp(
+                                op=And(),
+                                values=[
+                                    Call(
+                                        func=Name(id='isinstance', ctx=Load()),
+                                        args=[
+                                            Name(id='locator', ctx=Load()),
+                                            Name(id='str', ctx=Load())],
+                                        keywords=[]),
+                                    UnaryOp(
+                                        op=Not(),
+                                        operand=Call(
+                                            func=Name(id='any', ctx=Load()),
+                                            args=[
+                                                GeneratorExp(
+                                                    elt=Compare(
+                                                        left=Name(id='char', ctx=Load()),
+                                                        ops=[
+                                                            In()],
+                                                        comparators=[
+                                                            Name(id='locator', ctx=Load())]),
+                                                    generators=[
+                                                        comprehension(
+                                                            target=Name(id='char', ctx=Store()),
+                                                            iter=List(
+                                                                elts=[
+                                                                    Constant(value=';'),
+                                                                    Constant(value='&'),
+                                                                    Constant(value='|'),
+                                                                    Constant(value='>'),
+                                                                    Constant(value='<')],
+                                                                ctx=Load()),
+                                                            ifs=[],
+                                                            is_async=0)])],
+                                            keywords=[]))]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='__locator__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(
+                                arg='locator_name',
+                                annotation=Name(id='str', ctx=Load()))],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Return(
+                            value=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='locators',
+                                        ctx=Load()),
+                                    attr='get',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='locator_name', ctx=Load())],
+                                keywords=[]))],
+                    decorator_list=[])],
+            decorator_list=[])],
+    type_ignores=[])

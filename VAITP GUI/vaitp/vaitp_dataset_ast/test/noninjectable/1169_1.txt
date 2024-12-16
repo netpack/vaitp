@@ -1,0 +1,57 @@
+Module(
+    body=[
+        FunctionDef(
+            name='verify_password',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='stored_password'),
+                    arg(arg='provided_password')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Compare(
+                        left=Name(id='stored_password', ctx=Load()),
+                        ops=[
+                            Eq()],
+                        comparators=[
+                            Name(id='provided_password', ctx=Load())]),
+                    body=[
+                        Return(
+                            value=Constant(value=True))],
+                    orelse=[]),
+                Return(
+                    value=Constant(value=False))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='stored_password', ctx=Store())],
+            value=Constant(value='securepassword')),
+        Assign(
+            targets=[
+                Name(id='provided_password', ctx=Store())],
+            value=Constant(value='userinputpassword')),
+        If(
+            test=Call(
+                func=Name(id='verify_password', ctx=Load()),
+                args=[
+                    Name(id='stored_password', ctx=Load()),
+                    Name(id='provided_password', ctx=Load())],
+                keywords=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Password is correct.')],
+                        keywords=[]))],
+            orelse=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Password is incorrect.')],
+                        keywords=[]))])],
+    type_ignores=[])

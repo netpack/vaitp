@@ -1,0 +1,93 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='xml.etree.ElementTree', asname='ET')]),
+        ImportFrom(
+            module='xml.parsers.expat',
+            names=[
+                alias(name='ParserCreate')],
+            level=0),
+        FunctionDef(
+            name='secure_elementtree_parse',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='xml_data')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='parser', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='ET', ctx=Load()),
+                            attr='XMLParser',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[
+                            keyword(
+                                arg='target',
+                                value=Call(
+                                    func=Attribute(
+                                        value=Name(id='ET', ctx=Load()),
+                                        attr='TreeBuilder',
+                                        ctx=Load()),
+                                    args=[],
+                                    keywords=[]))])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='parser', ctx=Load()),
+                                attr='parser',
+                                ctx=Load()),
+                            attr='UseForeignDTD',
+                            ctx=Load()),
+                        args=[
+                            Constant(value=False)],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Attribute(
+                            value=Name(id='parser', ctx=Load()),
+                            attr='entity',
+                            ctx=Store())],
+                    value=Dict(keys=[], values=[])),
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='ET', ctx=Load()),
+                            attr='fromstring',
+                            ctx=Load()),
+                        args=[
+                            Name(id='xml_data', ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='parser',
+                                value=Name(id='parser', ctx=Load()))]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='xml_data', ctx=Store())],
+            value=Constant(value='\n<!DOCTYPE bomb [\n<!ENTITY lol "lol">\n<!ENTITY lol2 "&lol;&lol;&lol;&lol;&lol;&lol;&lol;&lol;&lol;&lol;">\n<!ENTITY lol3 "&lol2;&lol2;&lol2;&lol2;&lol2;&lol2;&lol2;&lol2;&lol2;&lol2;">\n<!ENTITY lol4 "&lol3;&lol3;&lol3;&lol3;&lol3;&lol3;&lol3;&lol3;&lol3;&lol3;">\n<!ENTITY lol5 "&lol4;&lol4;&lol4;&lol4;&lol4;&lol4;&lol4;&lol4;&lol4;&lol4;">\n<!ENTITY lol6 "&lol5;&lol5;&lol5;&lol5;&lol5;&lol5;&lol5;&lol5;&lol5;&lol5;">\n<!ENTITY lol7 "&lol6;&lol6;&lol6;&lol6;&lol6;&lol6;&lol6;&lol6;&lol6;&lol6;">\n<!ENTITY lol8 "&lol7;&lol7;&lol7;&lol7;&lol7;&lol7;&lol7;&lol7;&lol7;&lol7;">\n<!ENTITY lol9 "&lol8;&lol8;&lol8;&lol8;&lol8;&lol8;&lol8;&lol8;&lol8;&lol8;">\n]>\n<start>&lol9;</start>\n')),
+        Assign(
+            targets=[
+                Name(id='tree', ctx=Store())],
+            value=Call(
+                func=Name(id='secure_elementtree_parse', ctx=Load()),
+                args=[
+                    Name(id='xml_data', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Attribute(
+                        value=Name(id='tree', ctx=Load()),
+                        attr='tag',
+                        ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

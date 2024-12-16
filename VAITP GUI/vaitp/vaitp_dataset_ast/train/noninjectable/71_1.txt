@@ -1,0 +1,141 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='struct')]),
+        ImportFrom(
+            module='PIL',
+            names=[
+                alias(name='Image')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='pcx_header', ctx=Store())],
+            value=Constant(value=b'\xc5PCX')),
+        AugAssign(
+            target=Name(id='pcx_header', ctx=Store()),
+            op=Add(),
+            value=Constant(value=b'\x01')),
+        AugAssign(
+            target=Name(id='pcx_header', ctx=Store()),
+            op=Add(),
+            value=Constant(value=b'\x01')),
+        AugAssign(
+            target=Name(id='pcx_header', ctx=Store()),
+            op=Add(),
+            value=Constant(value=b'\x10\x00')),
+        AugAssign(
+            target=Name(id='pcx_header', ctx=Store()),
+            op=Add(),
+            value=Constant(value=b'\x10\x00')),
+        AugAssign(
+            target=Name(id='pcx_header', ctx=Store()),
+            op=Add(),
+            value=Constant(value=b'\x01\x00')),
+        AugAssign(
+            target=Name(id='pcx_header', ctx=Store()),
+            op=Add(),
+            value=Constant(value=b'\x00\x00')),
+        AugAssign(
+            target=Name(id='pcx_header', ctx=Store()),
+            op=Add(),
+            value=Constant(value=b'\x00\x00')),
+        AugAssign(
+            target=Name(id='pcx_header', ctx=Store()),
+            op=Add(),
+            value=Constant(value=b'\x10\x00')),
+        AugAssign(
+            target=Name(id='pcx_header', ctx=Store()),
+            op=Add(),
+            value=Constant(value=b'\x10\x00')),
+        With(
+            items=[
+                withitem(
+                    context_expr=Call(
+                        func=Name(id='open', ctx=Load()),
+                        args=[
+                            Constant(value='crafted_pcx.pcx'),
+                            Constant(value='wb')],
+                        keywords=[]),
+                    optional_vars=Name(id='f', ctx=Store()))],
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='f', ctx=Load()),
+                            attr='write',
+                            ctx=Load()),
+                        args=[
+                            Name(id='pcx_header', ctx=Load())],
+                        keywords=[]))]),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Constant(value='Crafted PCX file created: crafted_pcx.pcx')],
+                keywords=[])),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='img', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='Image', ctx=Load()),
+                            attr='open',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='crafted_pcx.pcx')],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Pillow opened the crafted PCX file successfully.')],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='img', ctx=Load()),
+                            attr='resize',
+                            ctx=Load()),
+                        args=[
+                            Tuple(
+                                elts=[
+                                    Constant(value=100),
+                                    Constant(value=100)],
+                                ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='img', ctx=Load()),
+                            attr='close',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='Exception', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Error: Pillow failed to open or process the crafted PCX file.')],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            Constant(value='Error message: '),
+                                            FormattedValue(
+                                                value=Name(id='e', ctx=Load()),
+                                                conversion=-1)])],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

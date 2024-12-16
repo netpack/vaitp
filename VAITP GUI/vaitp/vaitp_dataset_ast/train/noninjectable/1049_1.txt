@@ -1,0 +1,20 @@
+Module(
+    body=[
+        ImportFrom(
+            module='sagemaker.serve.save_retrive.version_1_0_0.save.utils',
+            names=[
+                alias(name='capture_dependencies')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='user_input', ctx=Store())],
+            value=Constant(value='/path/to/requirements.txt; rm -rf /')),
+        Expr(
+            value=Call(
+                func=Name(id='capture_dependencies', ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='requirements_path',
+                        value=Name(id='user_input', ctx=Load()))]))],
+    type_ignores=[])

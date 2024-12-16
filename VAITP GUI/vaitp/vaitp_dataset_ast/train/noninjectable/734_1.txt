@@ -1,0 +1,74 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='onnx')]),
+        FunctionDef(
+            name='load_onnx_model',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='model_path')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='model', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='onnx', ctx=Load()),
+                            attr='load',
+                            ctx=Load()),
+                        args=[
+                            Name(id='model_path', ctx=Load())],
+                        keywords=[])),
+                For(
+                    target=Name(id='tensor', ctx=Store()),
+                    iter=Attribute(
+                        value=Attribute(
+                            value=Name(id='model', ctx=Load()),
+                            attr='graph',
+                            ctx=Load()),
+                        attr='initializer',
+                        ctx=Load()),
+                    body=[
+                        If(
+                            test=Attribute(
+                                value=Name(id='tensor', ctx=Load()),
+                                attr='external_data',
+                                ctx=Load()),
+                            body=[
+                                Assign(
+                                    targets=[
+                                        Name(id='external_data_path', ctx=Store())],
+                                    value=Attribute(
+                                        value=Name(id='tensor', ctx=Load()),
+                                        attr='external_data',
+                                        ctx=Load())),
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    Constant(value='Loading external data from: '),
+                                                    FormattedValue(
+                                                        value=Name(id='external_data_path', ctx=Load()),
+                                                        conversion=-1)])],
+                                        keywords=[]))],
+                            orelse=[])],
+                    orelse=[]),
+                Return(
+                    value=Name(id='model', ctx=Load()))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='model', ctx=Store())],
+            value=Call(
+                func=Name(id='load_onnx_model', ctx=Load()),
+                args=[
+                    Constant(value='model.onnx')],
+                keywords=[]))],
+    type_ignores=[])

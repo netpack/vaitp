@@ -1,0 +1,71 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        Assign(
+            targets=[
+                Name(id='pth_file', ctx=Store())],
+            value=Constant(value='python38._pth')),
+        Assign(
+            targets=[
+                Name(id='pth_content', ctx=Store())],
+            value=Constant(value='import site')),
+        With(
+            items=[
+                withitem(
+                    context_expr=Call(
+                        func=Name(id='open', ctx=Load()),
+                        args=[
+                            Name(id='pth_file', ctx=Load()),
+                            Constant(value='w')],
+                        keywords=[]),
+                    optional_vars=Name(id='f', ctx=Store()))],
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='f', ctx=Load()),
+                            attr='write',
+                            ctx=Load()),
+                        args=[
+                            Name(id='pth_content', ctx=Load())],
+                        keywords=[]))]),
+        Assign(
+            targets=[
+                Name(id='code_file', ctx=Store())],
+            value=Constant(value='hello.py')),
+        Assign(
+            targets=[
+                Name(id='code_content', ctx=Store())],
+            value=Constant(value="print('Hello, world!')")),
+        With(
+            items=[
+                withitem(
+                    context_expr=Call(
+                        func=Name(id='open', ctx=Load()),
+                        args=[
+                            Name(id='code_file', ctx=Load()),
+                            Constant(value='w')],
+                        keywords=[]),
+                    optional_vars=Name(id='f', ctx=Store()))],
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='f', ctx=Load()),
+                            attr='write',
+                            ctx=Load()),
+                        args=[
+                            Name(id='code_content', ctx=Load())],
+                        keywords=[]))]),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='os', ctx=Load()),
+                    attr='system',
+                    ctx=Load()),
+                args=[
+                    Constant(value='python')],
+                keywords=[]))],
+    type_ignores=[])

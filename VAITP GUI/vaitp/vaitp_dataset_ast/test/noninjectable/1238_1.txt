@@ -1,0 +1,116 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='logging')]),
+        FunctionDef(
+            name='parse_multipart',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='data'),
+                    arg(arg='boundary')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='logging', ctx=Load()),
+                            attr='info',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='Parsing started...')],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='parts', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='data', ctx=Load()),
+                            attr='split',
+                            ctx=Load()),
+                        args=[
+                            Name(id='boundary', ctx=Load())],
+                        keywords=[])),
+                For(
+                    target=Name(id='part', ctx=Store()),
+                    iter=Subscript(
+                        value=Name(id='parts', ctx=Load()),
+                        slice=Slice(
+                            lower=Constant(value=1),
+                            upper=UnaryOp(
+                                op=USub(),
+                                operand=Constant(value=1))),
+                        ctx=Load()),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='logging', ctx=Load()),
+                                    attr='info',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='Processing part: %s'),
+                                    Name(id='part', ctx=Load())],
+                                keywords=[]))],
+                    orelse=[]),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='logging', ctx=Load()),
+                            attr='info',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='Parsing finished...')],
+                        keywords=[]))],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='logging', ctx=Load()),
+                    attr='basicConfig',
+                    ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='level',
+                        value=Attribute(
+                            value=Name(id='logging', ctx=Load()),
+                            attr='INFO',
+                            ctx=Load()))])),
+        Assign(
+            targets=[
+                Name(id='boundary', ctx=Store())],
+            value=Constant(value=b'----boundary----')),
+        Assign(
+            targets=[
+                Name(id='malicious_data', ctx=Store())],
+            value=BinOp(
+                left=BinOp(
+                    left=BinOp(
+                        left=BinOp(
+                            left=BinOp(
+                                left=Constant(value=b'A'),
+                                op=Mult(),
+                                right=Constant(value=1000000)),
+                            op=Add(),
+                            right=Name(id='boundary', ctx=Load())),
+                        op=Add(),
+                        right=Constant(value=b'test')),
+                    op=Add(),
+                    right=Name(id='boundary', ctx=Load())),
+                op=Add(),
+                right=BinOp(
+                    left=Constant(value=b'B'),
+                    op=Mult(),
+                    right=Constant(value=1000000)))),
+        Expr(
+            value=Call(
+                func=Name(id='parse_multipart', ctx=Load()),
+                args=[
+                    Name(id='malicious_data', ctx=Load()),
+                    Name(id='boundary', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

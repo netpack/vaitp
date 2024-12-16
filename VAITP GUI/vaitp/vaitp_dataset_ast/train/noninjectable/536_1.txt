@@ -1,0 +1,125 @@
+Module(
+    body=[
+        ImportFrom(
+            module='flask',
+            names=[
+                alias(name='Flask'),
+                alias(name='request')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='app', ctx=Store())],
+            value=Call(
+                func=Name(id='Flask', ctx=Load()),
+                args=[
+                    Name(id='__name__', ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='CPE_DATABASE', ctx=Store())],
+            value=Dict(
+                keys=[
+                    Constant(value='1'),
+                    Constant(value='2'),
+                    Constant(value='3')],
+                values=[
+                    Constant(value='CPE 1'),
+                    Constant(value='CPE 2'),
+                    Constant(value='CPE 3')])),
+        FunctionDef(
+            name='delete_cpes_by_ids',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='cpe_ids', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='request', ctx=Load()),
+                                attr='args',
+                                ctx=Load()),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='cpe_ids')],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='eval', ctx=Load()),
+                        args=[
+                            BinOp(
+                                left=Constant(value='delete_ids = '),
+                                op=Add(),
+                                right=Name(id='cpe_ids', ctx=Load()))],
+                        keywords=[])),
+                For(
+                    target=Name(id='cpe_id', ctx=Store()),
+                    iter=Name(id='delete_ids', ctx=Load()),
+                    body=[
+                        If(
+                            test=Compare(
+                                left=Name(id='cpe_id', ctx=Load()),
+                                ops=[
+                                    In()],
+                                comparators=[
+                                    Name(id='CPE_DATABASE', ctx=Load())]),
+                            body=[
+                                Delete(
+                                    targets=[
+                                        Subscript(
+                                            value=Name(id='CPE_DATABASE', ctx=Load()),
+                                            slice=Name(id='cpe_id', ctx=Load()),
+                                            ctx=Del())])],
+                            orelse=[])],
+                    orelse=[]),
+                Return(
+                    value=Tuple(
+                        elts=[
+                            Dict(
+                                keys=[
+                                    Constant(value='status'),
+                                    Constant(value='deleted_ids')],
+                                values=[
+                                    Constant(value='success'),
+                                    Name(id='delete_ids', ctx=Load())]),
+                            Constant(value=200)],
+                        ctx=Load()))],
+            decorator_list=[
+                Call(
+                    func=Attribute(
+                        value=Name(id='app', ctx=Load()),
+                        attr='route',
+                        ctx=Load()),
+                    args=[
+                        Constant(value='/live/CPEManager/AXCampaignManager/delete_cpes_by_ids')],
+                    keywords=[
+                        keyword(
+                            arg='methods',
+                            value=List(
+                                elts=[
+                                    Constant(value='DELETE')],
+                                ctx=Load()))])]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='app', ctx=Load()),
+                            attr='run',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

@@ -1,0 +1,121 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='re')]),
+        FunctionDef(
+            name='normalize_url',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='url')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='pattern', ctx=Store())],
+                    value=Constant(value='^(https?://)?(www\\.)?([^/]+)(/.*)?$')),
+                Assign(
+                    targets=[
+                        Name(id='match', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='re', ctx=Load()),
+                            attr='match',
+                            ctx=Load()),
+                        args=[
+                            Name(id='pattern', ctx=Load()),
+                            Name(id='url', ctx=Load())],
+                        keywords=[])),
+                If(
+                    test=Name(id='match', ctx=Load()),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='scheme', ctx=Store())],
+                            value=BoolOp(
+                                op=Or(),
+                                values=[
+                                    Call(
+                                        func=Attribute(
+                                            value=Name(id='match', ctx=Load()),
+                                            attr='group',
+                                            ctx=Load()),
+                                        args=[
+                                            Constant(value=1)],
+                                        keywords=[]),
+                                    Constant(value='http://')])),
+                        Assign(
+                            targets=[
+                                Name(id='domain', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='match', ctx=Load()),
+                                    attr='group',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value=3)],
+                                keywords=[])),
+                        Assign(
+                            targets=[
+                                Name(id='path', ctx=Store())],
+                            value=BoolOp(
+                                op=Or(),
+                                values=[
+                                    Call(
+                                        func=Attribute(
+                                            value=Name(id='match', ctx=Load()),
+                                            attr='group',
+                                            ctx=Load()),
+                                        args=[
+                                            Constant(value=4)],
+                                        keywords=[]),
+                                    Constant(value='/')])),
+                        Return(
+                            value=JoinedStr(
+                                values=[
+                                    FormattedValue(
+                                        value=Name(id='scheme', ctx=Load()),
+                                        conversion=-1),
+                                    FormattedValue(
+                                        value=Name(id='domain', ctx=Load()),
+                                        conversion=-1),
+                                    FormattedValue(
+                                        value=Name(id='path', ctx=Load()),
+                                        conversion=-1)]))],
+                    orelse=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Invalid URL')],
+                                keywords=[]))])],
+            decorator_list=[]),
+        Try(
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Call(
+                                func=Name(id='normalize_url', ctx=Load()),
+                                args=[
+                                    Constant(value='http://example.com/some/path')],
+                                keywords=[])],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ValueError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

@@ -1,0 +1,49 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='setuptools')]),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='setuptools', ctx=Load()),
+                    attr='setup',
+                    ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='name',
+                        value=Constant(value='malicious-package')),
+                    keyword(
+                        arg='version',
+                        value=Constant(value='0.0.1')),
+                    keyword(
+                        arg='description',
+                        value=Constant(value='A malicious package that exploits CVE-2022-40897')),
+                    keyword(
+                        arg='url',
+                        value=Constant(value='https://example.com/malicious-package')),
+                    keyword(
+                        arg='download_url',
+                        value=Constant(value='https://example.com/malicious.html')),
+                    keyword(
+                        arg='classifiers',
+                        value=List(
+                            elts=[
+                                Constant(value='Programming Language :: Python :: 3'),
+                                Constant(value='License :: OSI Approved :: MIT License'),
+                                Constant(value='Operating System :: OS Independent')],
+                            ctx=Load())),
+                    keyword(
+                        arg='packages',
+                        value=Call(
+                            func=Attribute(
+                                value=Name(id='setuptools', ctx=Load()),
+                                attr='find_packages',
+                                ctx=Load()),
+                            args=[],
+                            keywords=[])),
+                    keyword(
+                        arg='python_requires',
+                        value=Constant(value='>=3.6'))]))],
+    type_ignores=[])

@@ -1,0 +1,78 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='re')]),
+        FunctionDef(
+            name='is_valid_uri',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='uri')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='valid_schemes', ctx=Store())],
+                    value=List(
+                        elts=[
+                            Constant(value='http:'),
+                            Constant(value='https:'),
+                            Constant(value='ftp:')],
+                        ctx=Load())),
+                Assign(
+                    targets=[
+                        Name(id='scheme', ctx=Store())],
+                    value=BinOp(
+                        left=Subscript(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='uri', ctx=Load()),
+                                    attr='split',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value=':'),
+                                    Constant(value=1)],
+                                keywords=[]),
+                            slice=Constant(value=0),
+                            ctx=Load()),
+                        op=Add(),
+                        right=Constant(value=':'))),
+                Return(
+                    value=Compare(
+                        left=Name(id='scheme', ctx=Load()),
+                        ops=[
+                            In()],
+                        comparators=[
+                            Name(id='valid_schemes', ctx=Load())]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='parse_feed',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='uri')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=UnaryOp(
+                        op=Not(),
+                        operand=Call(
+                            func=Name(id='is_valid_uri', ctx=Load()),
+                            args=[
+                                Name(id='uri', ctx=Load())],
+                            keywords=[])),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Invalid URI scheme')],
+                                keywords=[]))],
+                    orelse=[])],
+            decorator_list=[])],
+    type_ignores=[])

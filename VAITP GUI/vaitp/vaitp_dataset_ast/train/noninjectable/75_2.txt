@@ -1,0 +1,38 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='urllib3')]),
+        Assign(
+            targets=[
+                Name(id='url', ctx=Store())],
+            value=BinOp(
+                left=Constant(value='http://example.com/'),
+                op=Add(),
+                right=BinOp(
+                    left=Constant(value='%20'),
+                    op=Mult(),
+                    right=Constant(value=1000000)))),
+        Assign(
+            targets=[
+                Name(id='http', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='urllib3', ctx=Load()),
+                    attr='PoolManager',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='response', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='http', ctx=Load()),
+                    attr='request',
+                    ctx=Load()),
+                args=[
+                    Constant(value='GET'),
+                    Name(id='url', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

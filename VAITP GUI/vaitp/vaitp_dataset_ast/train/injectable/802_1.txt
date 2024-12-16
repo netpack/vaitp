@@ -1,0 +1,68 @@
+Module(
+    body=[
+        FunctionDef(
+            name='receive_room_key',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='self'),
+                    arg(arg='room_key')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=UnaryOp(
+                        op=Not(),
+                        operand=Call(
+                            func=Attribute(
+                                value=Name(id='self', ctx=Load()),
+                                attr='is_valid_sender',
+                                ctx=Load()),
+                            args=[
+                                Attribute(
+                                    value=Name(id='room_key', ctx=Load()),
+                                    attr='sender',
+                                    ctx=Load())],
+                            keywords=[])),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Invalid sender for room key')],
+                                keywords=[]))],
+                    orelse=[]),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='self', ctx=Load()),
+                            attr='store_room_key',
+                            ctx=Load()),
+                        args=[
+                            Name(id='room_key', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='is_valid_sender',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='self'),
+                    arg(arg='sender')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Compare(
+                        left=Name(id='sender', ctx=Load()),
+                        ops=[
+                            In()],
+                        comparators=[
+                            Attribute(
+                                value=Name(id='self', ctx=Load()),
+                                attr='trusted_senders',
+                                ctx=Load())]))],
+            decorator_list=[])],
+    type_ignores=[])

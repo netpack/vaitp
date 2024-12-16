@@ -1,0 +1,30 @@
+Module(
+    body=[
+        FunctionDef(
+            name='unsafe_script_invoke',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='script')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='exec', ctx=Load()),
+                        args=[
+                            Name(id='script', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='user_input_script', ctx=Store())],
+            value=Constant(value="__import__('os').system('ls')")),
+        Expr(
+            value=Call(
+                func=Name(id='unsafe_script_invoke', ctx=Load()),
+                args=[
+                    Name(id='user_input_script', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

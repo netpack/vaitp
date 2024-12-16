@@ -1,0 +1,60 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='re')]),
+        FunctionDef(
+            name='check_for_invalid_imports',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='template_code')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Call(
+                        func=Attribute(
+                            value=Name(id='re', ctx=Load()),
+                            attr='search',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='^\\s*#import\\s+'),
+                            Name(id='template_code', ctx=Load()),
+                            Attribute(
+                                value=Name(id='re', ctx=Load()),
+                                attr='MULTILINE',
+                                ctx=Load())],
+                        keywords=[]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Import statements are not allowed in templates.')],
+                                keywords=[]))],
+                    orelse=[])],
+            decorator_list=[]),
+        Try(
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='check_for_invalid_imports', ctx=Load()),
+                        args=[
+                            Constant(value='\n    # This is a comment\n    #from os import path  # This should not raise an error\n    print("Hello, World!")\n    ')],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ValueError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

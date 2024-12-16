@@ -1,0 +1,84 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='tarfile')]),
+        Import(
+            names=[
+                alias(name='os')]),
+        Assign(
+            targets=[
+                Name(id='tar', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='tarfile', ctx=Load()),
+                    attr='TarFile',
+                    ctx=Load()),
+                args=[
+                    Constant(value='example.tar'),
+                    Constant(value='w')],
+                keywords=[])),
+        FunctionDef(
+            name='is_safe_path',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='path')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='os', ctx=Load()),
+                                        attr='path',
+                                        ctx=Load()),
+                                    attr='realpath',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='path', ctx=Load())],
+                                keywords=[]),
+                            attr='startswith',
+                            ctx=Load()),
+                        args=[
+                            Call(
+                                func=Attribute(
+                                    value=Name(id='os', ctx=Load()),
+                                    attr='getcwd',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[])],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='file_path', ctx=Store())],
+            value=Constant(value='../etc/passwd')),
+        If(
+            test=Call(
+                func=Name(id='is_safe_path', ctx=Load()),
+                args=[
+                    Name(id='file_path', ctx=Load())],
+                keywords=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='tar', ctx=Load()),
+                            attr='add',
+                            ctx=Load()),
+                        args=[
+                            Name(id='file_path', ctx=Load())],
+                        keywords=[]))],
+            orelse=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Error: File path is not safe')],
+                        keywords=[]))])],
+    type_ignores=[])

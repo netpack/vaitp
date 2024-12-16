@@ -1,0 +1,65 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='tweepy')]),
+        Import(
+            names=[
+                alias(name='ssl')]),
+        Import(
+            names=[
+                alias(name='certifi')]),
+        Assign(
+            targets=[
+                Name(id='ssl_context', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='ssl', ctx=Load()),
+                    attr='create_default_context',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='ssl_context', ctx=Load()),
+                    attr='load_verify_locations',
+                    ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='cafile',
+                        value=Call(
+                            func=Attribute(
+                                value=Name(id='certifi', ctx=Load()),
+                                attr='where',
+                                ctx=Load()),
+                            args=[],
+                            keywords=[]))])),
+        Assign(
+            targets=[
+                Name(id='auth', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='tweepy', ctx=Load()),
+                    attr='OAuthHandler',
+                    ctx=Load()),
+                args=[
+                    Constant(value='consumer_key'),
+                    Constant(value='consumer_secret')],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='api', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='tweepy', ctx=Load()),
+                    attr='API',
+                    ctx=Load()),
+                args=[
+                    Name(id='auth', ctx=Load())],
+                keywords=[
+                    keyword(
+                        arg='ssl_context',
+                        value=Name(id='ssl_context', ctx=Load()))]))],
+    type_ignores=[])

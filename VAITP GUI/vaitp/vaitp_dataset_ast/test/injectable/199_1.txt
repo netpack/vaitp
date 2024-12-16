@@ -1,0 +1,77 @@
+Module(
+    body=[
+        FunctionDef(
+            name='safe_vsnprintf',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='format_string')],
+                vararg=arg(arg='args'),
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='MAX_LENGTH', ctx=Store())],
+                    value=Constant(value=1024)),
+                Assign(
+                    targets=[
+                        Name(id='formatted_string', ctx=Store())],
+                    value=BinOp(
+                        left=Name(id='format_string', ctx=Load()),
+                        op=Mod(),
+                        right=Name(id='args', ctx=Load()))),
+                If(
+                    test=Compare(
+                        left=Call(
+                            func=Name(id='len', ctx=Load()),
+                            args=[
+                                Name(id='formatted_string', ctx=Load())],
+                            keywords=[]),
+                        ops=[
+                            Gt()],
+                        comparators=[
+                            Name(id='MAX_LENGTH', ctx=Load())]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Formatted string exceeds maximum length')],
+                                keywords=[]))],
+                    orelse=[]),
+                Return(
+                    value=Name(id='formatted_string', ctx=Load()))],
+            decorator_list=[]),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='result', ctx=Store())],
+                    value=Call(
+                        func=Name(id='safe_vsnprintf', ctx=Load()),
+                        args=[
+                            Constant(value='Hello, %s!'),
+                            Constant(value='World')],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Name(id='result', ctx=Load())],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ValueError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

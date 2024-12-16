@@ -1,0 +1,220 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        Import(
+            names=[
+                alias(name='pwd')]),
+        FunctionDef(
+            name='get_pid_info',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='pid')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Try(
+                    body=[
+                        With(
+                            items=[
+                                withitem(
+                                    context_expr=Call(
+                                        func=Name(id='open', ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    Constant(value='/proc/'),
+                                                    FormattedValue(
+                                                        value=Name(id='pid', ctx=Load()),
+                                                        conversion=-1),
+                                                    Constant(value='/status')])],
+                                        keywords=[]),
+                                    optional_vars=Name(id='f', ctx=Store()))],
+                            body=[
+                                Assign(
+                                    targets=[
+                                        Name(id='status_info', ctx=Store())],
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='f', ctx=Load()),
+                                            attr='read',
+                                            ctx=Load()),
+                                        args=[],
+                                        keywords=[]))]),
+                        Assign(
+                            targets=[
+                                Name(id='uid', ctx=Store())],
+                            value=Call(
+                                func=Name(id='int', ctx=Load()),
+                                args=[
+                                    Subscript(
+                                        value=Call(
+                                            func=Attribute(
+                                                value=Subscript(
+                                                    value=Call(
+                                                        func=Attribute(
+                                                            value=Name(id='status_info', ctx=Load()),
+                                                            attr='split',
+                                                            ctx=Load()),
+                                                        args=[
+                                                            Constant(value='Uid:')],
+                                                        keywords=[]),
+                                                    slice=Constant(value=1),
+                                                    ctx=Load()),
+                                                attr='split',
+                                                ctx=Load()),
+                                            args=[],
+                                            keywords=[]),
+                                        slice=Constant(value=0),
+                                        ctx=Load())],
+                                keywords=[])),
+                        Assign(
+                            targets=[
+                                Name(id='user', ctx=Store())],
+                            value=Attribute(
+                                value=Call(
+                                    func=Attribute(
+                                        value=Name(id='pwd', ctx=Load()),
+                                        attr='getpwuid',
+                                        ctx=Load()),
+                                    args=[
+                                        Name(id='uid', ctx=Load())],
+                                    keywords=[]),
+                                attr='pw_name',
+                                ctx=Load())),
+                        Return(
+                            value=Tuple(
+                                elts=[
+                                    Name(id='user', ctx=Load()),
+                                    Name(id='status_info', ctx=Load())],
+                                ctx=Load()))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='FileNotFoundError', ctx=Load()),
+                            body=[
+                                Return(
+                                    value=Tuple(
+                                        elts=[
+                                            Constant(value=None),
+                                            Constant(value=None)],
+                                        ctx=Load()))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[]),
+        FunctionDef(
+            name='secure_read_proc',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='pid')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Tuple(
+                            elts=[
+                                Name(id='user', ctx=Store()),
+                                Name(id='status_info', ctx=Store())],
+                            ctx=Store())],
+                    value=Call(
+                        func=Name(id='get_pid_info', ctx=Load()),
+                        args=[
+                            Name(id='pid', ctx=Load())],
+                        keywords=[])),
+                If(
+                    test=Compare(
+                        left=Name(id='user', ctx=Load()),
+                        ops=[
+                            Is()],
+                        comparators=[
+                            Constant(value=None)]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Invalid PID or process does not exist.')],
+                                keywords=[]))],
+                    orelse=[]),
+                Assign(
+                    targets=[
+                        Name(id='current_user', ctx=Store())],
+                    value=Attribute(
+                        value=Call(
+                            func=Attribute(
+                                value=Name(id='pwd', ctx=Load()),
+                                attr='getpwuid',
+                                ctx=Load()),
+                            args=[
+                                Call(
+                                    func=Attribute(
+                                        value=Name(id='os', ctx=Load()),
+                                        attr='getuid',
+                                        ctx=Load()),
+                                    args=[],
+                                    keywords=[])],
+                            keywords=[]),
+                        attr='pw_name',
+                        ctx=Load())),
+                If(
+                    test=Compare(
+                        left=Name(id='user', ctx=Load()),
+                        ops=[
+                            NotEq()],
+                        comparators=[
+                            Name(id='current_user', ctx=Load())]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='PermissionError', ctx=Load()),
+                                args=[
+                                    Constant(value='Attempt to read information from a process owned by another user.')],
+                                keywords=[]))],
+                    orelse=[]),
+                Return(
+                    value=Name(id='status_info', ctx=Load()))],
+            decorator_list=[]),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='pid', ctx=Store())],
+                    value=Constant(value=1234)),
+                Assign(
+                    targets=[
+                        Name(id='proc_info', ctx=Store())],
+                    value=Call(
+                        func=Name(id='secure_read_proc', ctx=Load()),
+                        args=[
+                            Name(id='pid', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Name(id='proc_info', ctx=Load())],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='Exception', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            Constant(value='Error: '),
+                                            FormattedValue(
+                                                value=Name(id='e', ctx=Load()),
+                                                conversion=-1)])],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

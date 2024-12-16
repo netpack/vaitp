@@ -1,0 +1,29 @@
+Module(
+    body=[
+        FunctionDef(
+            name='vulnerable_concat',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(
+                        arg='a',
+                        annotation=Name(id='bytes', ctx=Load())),
+                    arg(
+                        arg='b',
+                        annotation=Name(id='bytes', ctx=Load()))],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Name(id='concat', ctx=Load()),
+                        args=[
+                            Name(id='a', ctx=Load()),
+                            Name(id='b', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[
+                Name(id='public', ctx=Load()),
+                Name(id='pure', ctx=Load())],
+            returns=Name(id='bytes', ctx=Load()))],
+    type_ignores=[])

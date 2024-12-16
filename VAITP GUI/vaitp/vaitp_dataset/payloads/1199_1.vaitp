@@ -1,0 +1,8 @@
+```python
+# malicious_script.py
+import os
+import subprocess
+
+# This code could be executed with elevated privileges
+subprocess.call(["/bin/sh", "-c", "echo 'Compromised!' > /tmp/compromised.txt"])
+```

@@ -1,0 +1,20 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='logging')]),
+        Assign(
+            targets=[
+                Name(id='user_input', ctx=Store())],
+            value=Constant(value='User  input that could be malicious')),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='logging', ctx=Load()),
+                    attr='info',
+                    ctx=Load()),
+                args=[
+                    Constant(value='User  input: %s'),
+                    Name(id='user_input', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

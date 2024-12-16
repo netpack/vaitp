@@ -1,0 +1,86 @@
+Module(
+    body=[
+        ImportFrom(
+            module='cryptography.hazmat.primitives.asymmetric',
+            names=[
+                alias(name='rsa'),
+                alias(name='padding')],
+            level=0),
+        ImportFrom(
+            module='cryptography.hazmat.primitives',
+            names=[
+                alias(name='hashes')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='private_key', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='rsa', ctx=Load()),
+                    attr='generate_private_key',
+                    ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='public_exponent',
+                        value=Constant(value=65537)),
+                    keyword(
+                        arg='key_size',
+                        value=Constant(value=1024))])),
+        Assign(
+            targets=[
+                Name(id='public_key', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='private_key', ctx=Load()),
+                    attr='public_key',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='message', ctx=Store())],
+            value=Constant(value=b'Sensitive data')),
+        Assign(
+            targets=[
+                Name(id='ciphertext', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='public_key', ctx=Load()),
+                    attr='encrypt',
+                    ctx=Load()),
+                args=[
+                    Name(id='message', ctx=Load()),
+                    Call(
+                        func=Attribute(
+                            value=Name(id='padding', ctx=Load()),
+                            attr='PKCS1v15',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='decrypted_message', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='private_key', ctx=Load()),
+                    attr='decrypt',
+                    ctx=Load()),
+                args=[
+                    Name(id='ciphertext', ctx=Load()),
+                    Call(
+                        func=Attribute(
+                            value=Name(id='padding', ctx=Load()),
+                            attr='PKCS1v15',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='decrypted_message', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

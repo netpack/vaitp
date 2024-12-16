@@ -1,0 +1,75 @@
+Module(
+    body=[
+        FunctionDef(
+            name='verify_presentation',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='presentation')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='proof_verified', ctx=Store())],
+                    value=Call(
+                        func=Name(id='verify_proof', ctx=Load()),
+                        args=[
+                            Subscript(
+                                value=Name(id='presentation', ctx=Load()),
+                                slice=Constant(value='proof'),
+                                ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='presentation_valid', ctx=Store())],
+                    value=Call(
+                        func=Name(id='validate_presentation', ctx=Load()),
+                        args=[
+                            Name(id='presentation', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Subscript(
+                            value=Name(id='presentation', ctx=Load()),
+                            slice=Constant(value='verified'),
+                            ctx=Store())],
+                    value=BoolOp(
+                        op=And(),
+                        values=[
+                            Name(id='proof_verified', ctx=Load()),
+                            Name(id='presentation_valid', ctx=Load())])),
+                Return(
+                    value=Subscript(
+                        value=Name(id='presentation', ctx=Load()),
+                        slice=Constant(value='verified'),
+                        ctx=Load()))],
+            decorator_list=[]),
+        FunctionDef(
+            name='verify_proof',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='proof')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Constant(value=True))],
+            decorator_list=[]),
+        FunctionDef(
+            name='validate_presentation',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='presentation')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Constant(value=True))],
+            decorator_list=[])],
+    type_ignores=[])

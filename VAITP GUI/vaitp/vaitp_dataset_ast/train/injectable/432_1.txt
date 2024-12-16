@@ -1,0 +1,36 @@
+Module(
+    body=[
+        FunctionDef(
+            name='secure_function',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='input_string')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=BoolOp(
+                        op=And(),
+                        values=[
+                            Compare(
+                                left=Name(id='input_string', ctx=Load()),
+                                ops=[
+                                    IsNot()],
+                                comparators=[
+                                    Constant(value=None)]),
+                            Compare(
+                                left=Name(id='input_string', ctx=Load()),
+                                ops=[
+                                    Eq()],
+                                comparators=[
+                                    Constant(value='expected_value')])]),
+                    body=[
+                        Return(
+                            value=Constant(value=True))],
+                    orelse=[]),
+                Return(
+                    value=Constant(value=False))],
+            decorator_list=[])],
+    type_ignores=[])

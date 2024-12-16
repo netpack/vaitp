@@ -1,0 +1,282 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='CGIHTTPServer')]),
+        Import(
+            names=[
+                alias(name='socket')]),
+        Import(
+            names=[
+                alias(name='sys')]),
+        ClassDef(
+            name='SafeCGIRequestHandler',
+            bases=[
+                Attribute(
+                    value=Name(id='CGIHTTPServer', ctx=Load()),
+                    attr='CGIHTTPRequestHandler',
+                    ctx=Load())],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='handle',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Try(
+                            body=[
+                                Assign(
+                                    targets=[
+                                        Attribute(
+                                            value=Name(id='self', ctx=Load()),
+                                            attr='raw_requestline',
+                                            ctx=Store())],
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Attribute(
+                                                value=Name(id='self', ctx=Load()),
+                                                attr='rfile',
+                                                ctx=Load()),
+                                            attr='readline',
+                                            ctx=Load()),
+                                        args=[
+                                            Constant(value=65537)],
+                                        keywords=[])),
+                                If(
+                                    test=Compare(
+                                        left=Call(
+                                            func=Name(id='len', ctx=Load()),
+                                            args=[
+                                                Attribute(
+                                                    value=Name(id='self', ctx=Load()),
+                                                    attr='raw_requestline',
+                                                    ctx=Load())],
+                                            keywords=[]),
+                                        ops=[
+                                            Gt()],
+                                        comparators=[
+                                            Constant(value=65536)]),
+                                    body=[
+                                        Assign(
+                                            targets=[
+                                                Attribute(
+                                                    value=Name(id='self', ctx=Load()),
+                                                    attr='requestline',
+                                                    ctx=Store())],
+                                            value=Constant(value='')),
+                                        Assign(
+                                            targets=[
+                                                Attribute(
+                                                    value=Name(id='self', ctx=Load()),
+                                                    attr='request_version',
+                                                    ctx=Store())],
+                                            value=Constant(value='')),
+                                        Assign(
+                                            targets=[
+                                                Attribute(
+                                                    value=Name(id='self', ctx=Load()),
+                                                    attr='command',
+                                                    ctx=Store())],
+                                            value=Constant(value='')),
+                                        Expr(
+                                            value=Call(
+                                                func=Attribute(
+                                                    value=Name(id='self', ctx=Load()),
+                                                    attr='send_error',
+                                                    ctx=Load()),
+                                                args=[
+                                                    Constant(value=414)],
+                                                keywords=[])),
+                                        Return()],
+                                    orelse=[]),
+                                If(
+                                    test=UnaryOp(
+                                        op=Not(),
+                                        operand=Call(
+                                            func=Attribute(
+                                                value=Name(id='self', ctx=Load()),
+                                                attr='parse_request',
+                                                ctx=Load()),
+                                            args=[],
+                                            keywords=[])),
+                                    body=[
+                                        Return()],
+                                    orelse=[]),
+                                Expr(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='self', ctx=Load()),
+                                            attr='run_cgi',
+                                            ctx=Load()),
+                                        args=[],
+                                        keywords=[]))],
+                            handlers=[
+                                ExceptHandler(
+                                    type=Attribute(
+                                        value=Name(id='socket', ctx=Load()),
+                                        attr='error',
+                                        ctx=Load()),
+                                    name='e',
+                                    body=[
+                                        If(
+                                            test=Compare(
+                                                left=Subscript(
+                                                    value=Attribute(
+                                                        value=Name(id='e', ctx=Load()),
+                                                        attr='args',
+                                                        ctx=Load()),
+                                                    slice=Constant(value=0),
+                                                    ctx=Load()),
+                                                ops=[
+                                                    In()],
+                                                comparators=[
+                                                    Tuple(
+                                                        elts=[
+                                                            Attribute(
+                                                                value=Name(id='socket', ctx=Load()),
+                                                                attr='ECONNABORTED',
+                                                                ctx=Load()),
+                                                            Attribute(
+                                                                value=Name(id='socket', ctx=Load()),
+                                                                attr='EAGAIN',
+                                                                ctx=Load()),
+                                                            Attribute(
+                                                                value=Name(id='socket', ctx=Load()),
+                                                                attr='EWOULDBLOCK',
+                                                                ctx=Load())],
+                                                        ctx=Load())]),
+                                            body=[
+                                                Expr(
+                                                    value=Call(
+                                                        func=Attribute(
+                                                            value=Attribute(
+                                                                value=Name(id='sys', ctx=Load()),
+                                                                attr='stderr',
+                                                                ctx=Load()),
+                                                            attr='write',
+                                                            ctx=Load()),
+                                                        args=[
+                                                            BinOp(
+                                                                left=Constant(value='Connection closed by peer: %s\n'),
+                                                                op=Mod(),
+                                                                right=Name(id='e', ctx=Load()))],
+                                                        keywords=[]))],
+                                            orelse=[
+                                                If(
+                                                    test=Compare(
+                                                        left=Subscript(
+                                                            value=Attribute(
+                                                                value=Name(id='e', ctx=Load()),
+                                                                attr='args',
+                                                                ctx=Load()),
+                                                            slice=Constant(value=0),
+                                                            ctx=Load()),
+                                                        ops=[
+                                                            Eq()],
+                                                        comparators=[
+                                                            Attribute(
+                                                                value=Name(id='socket', ctx=Load()),
+                                                                attr='ENOTCONN',
+                                                                ctx=Load())]),
+                                                    body=[
+                                                        Expr(
+                                                            value=Call(
+                                                                func=Attribute(
+                                                                    value=Attribute(
+                                                                        value=Name(id='sys', ctx=Load()),
+                                                                        attr='stderr',
+                                                                        ctx=Load()),
+                                                                    attr='write',
+                                                                    ctx=Load()),
+                                                                args=[
+                                                                    BinOp(
+                                                                        left=Constant(value='Connection not established: %s\n'),
+                                                                        op=Mod(),
+                                                                        right=Name(id='e', ctx=Load()))],
+                                                                keywords=[]))],
+                                                    orelse=[
+                                                        Expr(
+                                                            value=Call(
+                                                                func=Attribute(
+                                                                    value=Attribute(
+                                                                        value=Name(id='sys', ctx=Load()),
+                                                                        attr='stderr',
+                                                                        ctx=Load()),
+                                                                    attr='write',
+                                                                    ctx=Load()),
+                                                                args=[
+                                                                    BinOp(
+                                                                        left=Constant(value='Socket error: %s\n'),
+                                                                        op=Mod(),
+                                                                        right=Name(id='e', ctx=Load()))],
+                                                                keywords=[]))])])]),
+                                ExceptHandler(
+                                    type=Name(id='Exception', ctx=Load()),
+                                    name='e',
+                                    body=[
+                                        Expr(
+                                            value=Call(
+                                                func=Attribute(
+                                                    value=Attribute(
+                                                        value=Name(id='sys', ctx=Load()),
+                                                        attr='stderr',
+                                                        ctx=Load()),
+                                                    attr='write',
+                                                    ctx=Load()),
+                                                args=[
+                                                    BinOp(
+                                                        left=Constant(value='Unknown error: %s\n'),
+                                                        op=Mod(),
+                                                        right=Name(id='e', ctx=Load()))],
+                                                keywords=[]))])],
+                            orelse=[],
+                            finalbody=[])],
+                    decorator_list=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='server', ctx=Store())],
+            value=Name(id='SafeCGIRequestHandler', ctx=Load())),
+        Assign(
+            targets=[
+                Attribute(
+                    value=Name(id='server', ctx=Load()),
+                    attr='cgi_directories',
+                    ctx=Store())],
+            value=List(
+                elts=[
+                    Constant(value='/cgi-bin')],
+                ctx=Load())),
+        Assign(
+            targets=[
+                Name(id='httpd', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='CGIHTTPServer', ctx=Load()),
+                        attr='BaseHTTPServer',
+                        ctx=Load()),
+                    attr='HTTPServer',
+                    ctx=Load()),
+                args=[
+                    Tuple(
+                        elts=[
+                            Constant(value=''),
+                            Constant(value=8000)],
+                        ctx=Load()),
+                    Name(id='server', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='httpd', ctx=Load()),
+                    attr='serve_forever',
+                    ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

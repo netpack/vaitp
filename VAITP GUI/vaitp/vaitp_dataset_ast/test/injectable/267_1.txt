@@ -1,0 +1,112 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        Import(
+            names=[
+                alias(name='py7zr')]),
+        ClassDef(
+            name='SevenZipFile',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='extractall',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='path')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        With(
+                            items=[
+                                withitem(
+                                    context_expr=Call(
+                                        func=Attribute(
+                                            value=Name(id='py7zr', ctx=Load()),
+                                            attr='SevenZipFile',
+                                            ctx=Load()),
+                                        args=[
+                                            Constant(value='archive.7z')],
+                                        keywords=[
+                                            keyword(
+                                                arg='mode',
+                                                value=Constant(value='r'))]),
+                                    optional_vars=Name(id='z', ctx=Store()))],
+                            body=[
+                                For(
+                                    target=Name(id='member', ctx=Store()),
+                                    iter=Call(
+                                        func=Attribute(
+                                            value=Name(id='z', ctx=Load()),
+                                            attr='getnames',
+                                            ctx=Load()),
+                                        args=[],
+                                        keywords=[]),
+                                    body=[
+                                        If(
+                                            test=BoolOp(
+                                                op=Or(),
+                                                values=[
+                                                    Call(
+                                                        func=Attribute(
+                                                            value=Attribute(
+                                                                value=Name(id='os', ctx=Load()),
+                                                                attr='path',
+                                                                ctx=Load()),
+                                                            attr='isabs',
+                                                            ctx=Load()),
+                                                        args=[
+                                                            Name(id='member', ctx=Load())],
+                                                        keywords=[]),
+                                                    Compare(
+                                                        left=Constant(value='..'),
+                                                        ops=[
+                                                            In()],
+                                                        comparators=[
+                                                            Call(
+                                                                func=Attribute(
+                                                                    value=Name(id='member', ctx=Load()),
+                                                                    attr='split',
+                                                                    ctx=Load()),
+                                                                args=[
+                                                                    Attribute(
+                                                                        value=Attribute(
+                                                                            value=Name(id='os', ctx=Load()),
+                                                                            attr='path',
+                                                                            ctx=Load()),
+                                                                        attr='sep',
+                                                                        ctx=Load())],
+                                                                keywords=[])])]),
+                                            body=[
+                                                Raise(
+                                                    exc=Call(
+                                                        func=Name(id='ValueError', ctx=Load()),
+                                                        args=[
+                                                            Call(
+                                                                func=Attribute(
+                                                                    value=Constant(value='Invalid file path detected: {}'),
+                                                                    attr='format',
+                                                                    ctx=Load()),
+                                                                args=[
+                                                                    Name(id='member', ctx=Load())],
+                                                                keywords=[])],
+                                                        keywords=[]))],
+                                            orelse=[])],
+                                    orelse=[]),
+                                Expr(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='z', ctx=Load()),
+                                            attr='extractall',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='path', ctx=Load())],
+                                        keywords=[]))])],
+                    decorator_list=[])],
+            decorator_list=[])],
+    type_ignores=[])

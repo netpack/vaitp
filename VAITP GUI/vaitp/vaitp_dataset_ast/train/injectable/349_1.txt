@@ -1,0 +1,109 @@
+Module(
+    body=[
+        ImportFrom(
+            module='flask',
+            names=[
+                alias(name='Flask'),
+                alias(name='request'),
+                alias(name='abort')],
+            level=0),
+        ImportFrom(
+            module='flask_socketio',
+            names=[
+                alias(name='SocketIO')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='app', ctx=Store())],
+            value=Call(
+                func=Name(id='Flask', ctx=Load()),
+                args=[
+                    Name(id='__name__', ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='socketio', ctx=Store())],
+            value=Call(
+                func=Name(id='SocketIO', ctx=Load()),
+                args=[
+                    Name(id='app', ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='ALLOWED_ORIGINS', ctx=Store())],
+            value=List(
+                elts=[
+                    Constant(value='http://yourtrusteddomain.com')],
+                ctx=Load())),
+        FunctionDef(
+            name='handle_connect',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='origin', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='request', ctx=Load()),
+                                attr='headers',
+                                ctx=Load()),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='Origin')],
+                        keywords=[])),
+                If(
+                    test=Compare(
+                        left=Name(id='origin', ctx=Load()),
+                        ops=[
+                            NotIn()],
+                        comparators=[
+                            Name(id='ALLOWED_ORIGINS', ctx=Load())]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='abort', ctx=Load()),
+                                args=[
+                                    Constant(value=403)],
+                                keywords=[]))],
+                    orelse=[]),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Client connected')],
+                        keywords=[]))],
+            decorator_list=[
+                Call(
+                    func=Attribute(
+                        value=Name(id='socketio', ctx=Load()),
+                        attr='on',
+                        ctx=Load()),
+                    args=[
+                        Constant(value='connect')],
+                    keywords=[])]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='socketio', ctx=Load()),
+                            attr='run',
+                            ctx=Load()),
+                        args=[
+                            Name(id='app', ctx=Load())],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

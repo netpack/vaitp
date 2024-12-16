@@ -1,0 +1,7 @@
+```python
+# Example payload to exploit the vulnerability
+# This payload calls the vulnerable contract method that uses sqrt with side effects
+
+contract = VulnerableContract()
+contract.calculate_sqrt_with_side_effects()  # This would cause self.num to be incremented twice
+```

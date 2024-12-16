@@ -1,0 +1,27 @@
+Module(
+    body=[
+        FunctionDef(
+            name='create_folder',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='folder_name')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='folder_path', ctx=Store())],
+                    value=BinOp(
+                        left=Constant(value='/path/to/folders/'),
+                        op=Add(),
+                        right=Name(id='folder_name', ctx=Load())))],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='create_folder', ctx=Load()),
+                args=[
+                    Constant(value="<script>alert('XSS');</script>")],
+                keywords=[]))],
+    type_ignores=[])

@@ -36,4 +36,5 @@ vm.login(dev_user)    # Should succeed
 vm.login(guest_user)  # Should fail
 
 # Only admin can execute code
-vm.execute_code(admin_user, 'print
+vm.execute_code(admin_user, 'print("Admin executing code - Should work")')
+vm.execute_code(guest_user, 'print("Guest executing code - Should fail")')

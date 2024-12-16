@@ -1,0 +1,80 @@
+Module(
+    body=[
+        ClassDef(
+            name='KeyParser',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='parse_key',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='key_data')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='expected_length', ctx=Store())],
+                            value=Constant(value=10)),
+                        Try(
+                            body=[
+                                If(
+                                    test=Compare(
+                                        left=Call(
+                                            func=Name(id='len', ctx=Load()),
+                                            args=[
+                                                Name(id='key_data', ctx=Load())],
+                                            keywords=[]),
+                                        ops=[
+                                            Lt()],
+                                        comparators=[
+                                            Name(id='expected_length', ctx=Load())]),
+                                    body=[
+                                        Raise(
+                                            exc=Call(
+                                                func=Name(id='ValueError', ctx=Load()),
+                                                args=[
+                                                    Constant(value='Key field too short')],
+                                                keywords=[]))],
+                                    orelse=[])],
+                            handlers=[
+                                ExceptHandler(
+                                    type=Name(id='ValueError', ctx=Load()),
+                                    name='e',
+                                    body=[
+                                        Expr(
+                                            value=Call(
+                                                func=Name(id='print', ctx=Load()),
+                                                args=[
+                                                    JoinedStr(
+                                                        values=[
+                                                            Constant(value='Error parsing key: '),
+                                                            FormattedValue(
+                                                                value=Name(id='e', ctx=Load()),
+                                                                conversion=-1)])],
+                                                keywords=[]))])],
+                            orelse=[],
+                            finalbody=[])],
+                    decorator_list=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='parser', ctx=Store())],
+            value=Call(
+                func=Name(id='KeyParser', ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='parser', ctx=Load()),
+                    attr='parse_key',
+                    ctx=Load()),
+                args=[
+                    Constant(value='short_key_data')],
+                keywords=[]))],
+    type_ignores=[])

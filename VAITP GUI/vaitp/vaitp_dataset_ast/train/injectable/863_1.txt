@@ -1,0 +1,69 @@
+Module(
+    body=[
+        FunctionDef(
+            name='safe_execute_script',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='user_input')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='escaped_input', ctx=Store())],
+                    value=Call(
+                        func=Name(id='escape_user_input', ctx=Load()),
+                        args=[
+                            Name(id='user_input', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='execute_safe_script', ctx=Load()),
+                        args=[
+                            Name(id='escaped_input', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='escape_user_input',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='user_input')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='user_input', ctx=Load()),
+                                    attr='replace',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='{{'),
+                                    Constant(value="{{ '{{'")],
+                                keywords=[]),
+                            attr='replace',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='}}'),
+                            Constant(value='}} }}')],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='execute_safe_script',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='script')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Pass()],
+            decorator_list=[])],
+    type_ignores=[])

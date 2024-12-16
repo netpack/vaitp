@@ -32,3 +32,4 @@ class SecureConsumer(oic.consumer.Consumer):
 
     def verify_id_token(self, id_token):
         # Implement actual verification logic here
+        print('vaitp example')

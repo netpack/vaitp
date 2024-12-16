@@ -1,0 +1,125 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='zipfile')]),
+        Import(
+            names=[
+                alias(name='os')]),
+        FunctionDef(
+            name='extract_zip',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='zip_filepath'),
+                    arg(arg='extract_dir')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Try(
+                    body=[
+                        With(
+                            items=[
+                                withitem(
+                                    context_expr=Call(
+                                        func=Attribute(
+                                            value=Name(id='zipfile', ctx=Load()),
+                                            attr='ZipFile',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='zip_filepath', ctx=Load()),
+                                            Constant(value='r')],
+                                        keywords=[]),
+                                    optional_vars=Name(id='zf', ctx=Store()))],
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='zf', ctx=Load()),
+                                            attr='extractall',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='extract_dir', ctx=Load())],
+                                        keywords=[]))])],
+                    handlers=[
+                        ExceptHandler(
+                            type=Attribute(
+                                value=Name(id='zipfile', ctx=Load()),
+                                attr='BadZipFile',
+                                ctx=Load()),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            Constant(value='Invalid zip file.')],
+                                        keywords=[]))]),
+                        ExceptHandler(
+                            type=Name(id='Exception', ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    Constant(value='An error occurred: '),
+                                                    FormattedValue(
+                                                        value=Name(id='e', ctx=Load()),
+                                                        conversion=-1)])],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='zip_filepath', ctx=Store())],
+            value=Constant(value='malicious.zip')),
+        Assign(
+            targets=[
+                Name(id='extract_dir', ctx=Store())],
+            value=Constant(value='/tmp')),
+        With(
+            items=[
+                withitem(
+                    context_expr=Call(
+                        func=Attribute(
+                            value=Name(id='zipfile', ctx=Load()),
+                            attr='ZipFile',
+                            ctx=Load()),
+                        args=[
+                            Name(id='zip_filepath', ctx=Load()),
+                            Constant(value='w')],
+                        keywords=[]),
+                    optional_vars=Name(id='zf', ctx=Store()))],
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='zf', ctx=Load()),
+                            attr='writestr',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='test.txt'),
+                            Constant(value='This is a test file.')],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='zf', ctx=Load()),
+                            attr='writestr',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='../secret/sensitive.txt'),
+                            Constant(value='This is sensitive information.')],
+                        keywords=[]))]),
+        Expr(
+            value=Call(
+                func=Name(id='extract_zip', ctx=Load()),
+                args=[
+                    Name(id='zip_filepath', ctx=Load()),
+                    Name(id='extract_dir', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

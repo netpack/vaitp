@@ -1,0 +1,78 @@
+Module(
+    body=[
+        Assign(
+            targets=[
+                Name(id='state', ctx=Store())],
+            value=Dict(
+                keys=[
+                    Constant(value='value')],
+                values=[
+                    Constant(value=0)])),
+        FunctionDef(
+            name='side_effect_function',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                AugAssign(
+                    target=Subscript(
+                        value=Name(id='state', ctx=Load()),
+                        slice=Constant(value='value'),
+                        ctx=Store()),
+                    op=Add(),
+                    value=Constant(value=1)),
+                Return(
+                    value=Subscript(
+                        value=Name(id='state', ctx=Load()),
+                        slice=Constant(value='value'),
+                        ctx=Load()))],
+            decorator_list=[]),
+        FunctionDef(
+            name='safe_expression',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='arg1'),
+                    arg(arg='arg2')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=BinOp(
+                        left=Name(id='arg1', ctx=Load()),
+                        op=Add(),
+                        right=Name(id='arg2', ctx=Load())))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='result', ctx=Store())],
+            value=Call(
+                func=Name(id='unsafe_add', ctx=Load()),
+                args=[
+                    Call(
+                        func=Name(id='side_effect_function', ctx=Load()),
+                        args=[],
+                        keywords=[]),
+                    Constant(value=5)],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='side_effect_result', ctx=Store())],
+            value=Call(
+                func=Name(id='side_effect_function', ctx=Load()),
+                args=[],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='result', ctx=Store())],
+            value=Call(
+                func=Name(id='safe_expression', ctx=Load()),
+                args=[
+                    Name(id='side_effect_result', ctx=Load()),
+                    Constant(value=5)],
+                keywords=[]))],
+    type_ignores=[])

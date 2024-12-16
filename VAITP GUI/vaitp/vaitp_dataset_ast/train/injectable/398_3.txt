@@ -1,0 +1,29 @@
+Module(
+    body=[
+        FunctionDef(
+            name='safe_copy_contract',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(
+                        arg='salt',
+                        annotation=Name(id='uint256', ctx=Load()))],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                AnnAssign(
+                    target=Name(id='cached_salt', ctx=Store()),
+                    annotation=Name(id='uint256', ctx=Load()),
+                    value=Name(id='salt', ctx=Load()),
+                    simple=1),
+                Expr(
+                    value=Call(
+                        func=Name(id='create_copy_of', ctx=Load()),
+                        args=[
+                            Name(id='my_contract', ctx=Load()),
+                            Name(id='cached_salt', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[
+                Name(id='public', ctx=Load())])],
+    type_ignores=[])

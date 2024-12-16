@@ -1,0 +1,50 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='urllib.parse')]),
+        Import(
+            names=[
+                alias(name='os')]),
+        FunctionDef(
+            name='execute_script',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='encoded_script_path')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='script_path', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='urllib', ctx=Load()),
+                                attr='parse',
+                                ctx=Load()),
+                            attr='unquote',
+                            ctx=Load()),
+                        args=[
+                            Name(id='encoded_script_path', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='exec', ctx=Load()),
+                        args=[
+                            Call(
+                                func=Attribute(
+                                    value=Call(
+                                        func=Name(id='open', ctx=Load()),
+                                        args=[
+                                            Name(id='script_path', ctx=Load())],
+                                        keywords=[]),
+                                    attr='read',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[])],
+                        keywords=[]))],
+            decorator_list=[])],
+    type_ignores=[])

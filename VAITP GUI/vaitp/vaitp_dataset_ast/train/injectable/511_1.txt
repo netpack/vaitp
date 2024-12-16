@@ -1,0 +1,222 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='ast')]),
+        FunctionDef(
+            name='safe_eval',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='expression')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='allowed_nodes', ctx=Store())],
+                    value=Set(
+                        elts=[
+                            Attribute(
+                                value=Name(id='ast', ctx=Load()),
+                                attr='Expression',
+                                ctx=Load()),
+                            Attribute(
+                                value=Name(id='ast', ctx=Load()),
+                                attr='BinOp',
+                                ctx=Load()),
+                            Attribute(
+                                value=Name(id='ast', ctx=Load()),
+                                attr='UnaryOp',
+                                ctx=Load()),
+                            Attribute(
+                                value=Name(id='ast', ctx=Load()),
+                                attr='Num',
+                                ctx=Load()),
+                            Attribute(
+                                value=Name(id='ast', ctx=Load()),
+                                attr='Str',
+                                ctx=Load()),
+                            Attribute(
+                                value=Name(id='ast', ctx=Load()),
+                                attr='Name',
+                                ctx=Load()),
+                            Attribute(
+                                value=Name(id='ast', ctx=Load()),
+                                attr='Load',
+                                ctx=Load()),
+                            Attribute(
+                                value=Name(id='ast', ctx=Load()),
+                                attr='Add',
+                                ctx=Load()),
+                            Attribute(
+                                value=Name(id='ast', ctx=Load()),
+                                attr='Sub',
+                                ctx=Load()),
+                            Attribute(
+                                value=Name(id='ast', ctx=Load()),
+                                attr='Mult',
+                                ctx=Load()),
+                            Attribute(
+                                value=Name(id='ast', ctx=Load()),
+                                attr='Div',
+                                ctx=Load()),
+                            Attribute(
+                                value=Name(id='ast', ctx=Load()),
+                                attr='Mod',
+                                ctx=Load()),
+                            Attribute(
+                                value=Name(id='ast', ctx=Load()),
+                                attr='Pow',
+                                ctx=Load()),
+                            Attribute(
+                                value=Name(id='ast', ctx=Load()),
+                                attr='BitXor',
+                                ctx=Load()),
+                            Attribute(
+                                value=Name(id='ast', ctx=Load()),
+                                attr='USub',
+                                ctx=Load()),
+                            Attribute(
+                                value=Name(id='ast', ctx=Load()),
+                                attr='UAdd',
+                                ctx=Load()),
+                            Attribute(
+                                value=Name(id='ast', ctx=Load()),
+                                attr='Compare',
+                                ctx=Load()),
+                            Attribute(
+                                value=Name(id='ast', ctx=Load()),
+                                attr='Eq',
+                                ctx=Load()),
+                            Attribute(
+                                value=Name(id='ast', ctx=Load()),
+                                attr='NotEq',
+                                ctx=Load()),
+                            Attribute(
+                                value=Name(id='ast', ctx=Load()),
+                                attr='Lt',
+                                ctx=Load()),
+                            Attribute(
+                                value=Name(id='ast', ctx=Load()),
+                                attr='LtE',
+                                ctx=Load()),
+                            Attribute(
+                                value=Name(id='ast', ctx=Load()),
+                                attr='Gt',
+                                ctx=Load()),
+                            Attribute(
+                                value=Name(id='ast', ctx=Load()),
+                                attr='GtE',
+                                ctx=Load()),
+                            Attribute(
+                                value=Name(id='ast', ctx=Load()),
+                                attr='BoolOp',
+                                ctx=Load()),
+                            Attribute(
+                                value=Name(id='ast', ctx=Load()),
+                                attr='And',
+                                ctx=Load()),
+                            Attribute(
+                                value=Name(id='ast', ctx=Load()),
+                                attr='Or',
+                                ctx=Load())])),
+                FunctionDef(
+                    name='_check_node',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='node')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        If(
+                            test=Compare(
+                                left=Call(
+                                    func=Name(id='type', ctx=Load()),
+                                    args=[
+                                        Name(id='node', ctx=Load())],
+                                    keywords=[]),
+                                ops=[
+                                    NotIn()],
+                                comparators=[
+                                    Name(id='allowed_nodes', ctx=Load())]),
+                            body=[
+                                Raise(
+                                    exc=Call(
+                                        func=Name(id='ValueError', ctx=Load()),
+                                        args=[
+                                            Constant(value='Disallowed expression')],
+                                        keywords=[]))],
+                            orelse=[])],
+                    decorator_list=[]),
+                Assign(
+                    targets=[
+                        Name(id='tree', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='ast', ctx=Load()),
+                            attr='parse',
+                            ctx=Load()),
+                        args=[
+                            Name(id='expression', ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='mode',
+                                value=Constant(value='eval'))])),
+                For(
+                    target=Name(id='node', ctx=Store()),
+                    iter=Call(
+                        func=Attribute(
+                            value=Name(id='ast', ctx=Load()),
+                            attr='walk',
+                            ctx=Load()),
+                        args=[
+                            Name(id='tree', ctx=Load())],
+                        keywords=[]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='_check_node', ctx=Load()),
+                                args=[
+                                    Name(id='node', ctx=Load())],
+                                keywords=[]))],
+                    orelse=[]),
+                Return(
+                    value=Call(
+                        func=Name(id='eval', ctx=Load()),
+                        args=[
+                            Call(
+                                func=Name(id='compile', ctx=Load()),
+                                args=[
+                                    Name(id='tree', ctx=Load())],
+                                keywords=[
+                                    keyword(
+                                        arg='filename',
+                                        value=Constant(value='')),
+                                    keyword(
+                                        arg='mode',
+                                        value=Constant(value='eval'))])],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='user_input', ctx=Store())],
+            value=Constant(value='2 + 2')),
+        Assign(
+            targets=[
+                Name(id='result', ctx=Store())],
+            value=Call(
+                func=Name(id='safe_eval', ctx=Load()),
+                args=[
+                    Name(id='user_input', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='result', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

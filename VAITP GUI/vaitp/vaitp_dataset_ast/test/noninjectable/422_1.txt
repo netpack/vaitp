@@ -1,0 +1,92 @@
+Module(
+    body=[
+        ImportFrom(
+            module='flask',
+            names=[
+                alias(name='Flask'),
+                alias(name='request')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='app', ctx=Store())],
+            value=Call(
+                func=Name(id='Flask', ctx=Load()),
+                args=[
+                    Name(id='__name__', ctx=Load())],
+                keywords=[])),
+        FunctionDef(
+            name='upload_file',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Compare(
+                        left=Constant(value='file'),
+                        ops=[
+                            NotIn()],
+                        comparators=[
+                            Attribute(
+                                value=Name(id='request', ctx=Load()),
+                                attr='files',
+                                ctx=Load())]),
+                    body=[
+                        Return(
+                            value=Tuple(
+                                elts=[
+                                    Constant(value='No file part'),
+                                    Constant(value=400)],
+                                ctx=Load()))],
+                    orelse=[]),
+                Assign(
+                    targets=[
+                        Name(id='file', ctx=Store())],
+                    value=Subscript(
+                        value=Attribute(
+                            value=Name(id='request', ctx=Load()),
+                            attr='files',
+                            ctx=Load()),
+                        slice=Constant(value='file'),
+                        ctx=Load())),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='file', ctx=Load()),
+                            attr='save',
+                            ctx=Load()),
+                        args=[
+                            JoinedStr(
+                                values=[
+                                    Constant(value='uploads/'),
+                                    FormattedValue(
+                                        value=Attribute(
+                                            value=Name(id='file', ctx=Load()),
+                                            attr='filename',
+                                            ctx=Load()),
+                                        conversion=-1)])],
+                        keywords=[])),
+                Return(
+                    value=Tuple(
+                        elts=[
+                            Constant(value='File uploaded successfully'),
+                            Constant(value=200)],
+                        ctx=Load()))],
+            decorator_list=[
+                Call(
+                    func=Attribute(
+                        value=Name(id='app', ctx=Load()),
+                        attr='route',
+                        ctx=Load()),
+                    args=[
+                        Constant(value='/upload')],
+                    keywords=[
+                        keyword(
+                            arg='methods',
+                            value=List(
+                                elts=[
+                                    Constant(value='POST')],
+                                ctx=Load()))])])],
+    type_ignores=[])

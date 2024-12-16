@@ -1,0 +1,47 @@
+Module(
+    body=[
+        ImportFrom(
+            module='sklearn.feature_extraction.text',
+            names=[
+                alias(name='TfidfVectorizer')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='documents', ctx=Store())],
+            value=List(
+                elts=[
+                    Constant(value='This is a document with a password: secret123'),
+                    Constant(value='Another document with sensitive info: api_key=xyz')],
+                ctx=Load())),
+        Assign(
+            targets=[
+                Name(id='vectorizer', ctx=Store())],
+            value=Call(
+                func=Name(id='TfidfVectorizer', ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='stop_words',
+                        value=Constant(value='english'))])),
+        Assign(
+            targets=[
+                Name(id='X', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='vectorizer', ctx=Load()),
+                    attr='fit_transform',
+                    ctx=Load()),
+                args=[
+                    Name(id='documents', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Constant(value='Stop words attribute:'),
+                    Attribute(
+                        value=Name(id='vectorizer', ctx=Load()),
+                        attr='stop_words_',
+                        ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

@@ -1,0 +1,103 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='zipfile')]),
+        Import(
+            names=[
+                alias(name='xml.etree.ElementTree', asname='ET')]),
+        FunctionDef(
+            name='import_kmz',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='file_path')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                With(
+                    items=[
+                        withitem(
+                            context_expr=Call(
+                                func=Attribute(
+                                    value=Name(id='zipfile', ctx=Load()),
+                                    attr='ZipFile',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='file_path', ctx=Load()),
+                                    Constant(value='r')],
+                                keywords=[]),
+                            optional_vars=Name(id='kmz', ctx=Store()))],
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='kml_files', ctx=Store())],
+                            value=ListComp(
+                                elt=Name(id='name', ctx=Load()),
+                                generators=[
+                                    comprehension(
+                                        target=Name(id='name', ctx=Store()),
+                                        iter=Call(
+                                            func=Attribute(
+                                                value=Name(id='kmz', ctx=Load()),
+                                                attr='namelist',
+                                                ctx=Load()),
+                                            args=[],
+                                            keywords=[]),
+                                        ifs=[
+                                            Call(
+                                                func=Attribute(
+                                                    value=Name(id='name', ctx=Load()),
+                                                    attr='endswith',
+                                                    ctx=Load()),
+                                                args=[
+                                                    Constant(value='.kml')],
+                                                keywords=[])],
+                                        is_async=0)])),
+                        If(
+                            test=UnaryOp(
+                                op=Not(),
+                                operand=Name(id='kml_files', ctx=Load())),
+                            body=[
+                                Raise(
+                                    exc=Call(
+                                        func=Name(id='ValueError', ctx=Load()),
+                                        args=[
+                                            Constant(value='No KML file found in KMZ')],
+                                        keywords=[]))],
+                            orelse=[]),
+                        With(
+                            items=[
+                                withitem(
+                                    context_expr=Call(
+                                        func=Attribute(
+                                            value=Name(id='kmz', ctx=Load()),
+                                            attr='open',
+                                            ctx=Load()),
+                                        args=[
+                                            Subscript(
+                                                value=Name(id='kml_files', ctx=Load()),
+                                                slice=Constant(value=0),
+                                                ctx=Load())],
+                                        keywords=[]),
+                                    optional_vars=Name(id='kml_file', ctx=Store()))],
+                            body=[
+                                Assign(
+                                    targets=[
+                                        Name(id='kml_content', ctx=Store())],
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='kml_file', ctx=Load()),
+                                            attr='read',
+                                            ctx=Load()),
+                                        args=[],
+                                        keywords=[]))]),
+                        Expr(
+                            value=Call(
+                                func=Name(id='exec', ctx=Load()),
+                                args=[
+                                    Name(id='kml_content', ctx=Load())],
+                                keywords=[]))])],
+            decorator_list=[])],
+    type_ignores=[])

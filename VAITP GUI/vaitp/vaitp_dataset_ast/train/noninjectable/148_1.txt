@@ -1,0 +1,40 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='xml.etree.ElementTree', asname='ET')]),
+        Assign(
+            targets=[
+                Name(id='data', ctx=Store())],
+            value=Attribute(
+                value=Call(
+                    func=Attribute(
+                        value=Name(id='requests', ctx=Load()),
+                        attr='get',
+                        ctx=Load()),
+                    args=[
+                        Constant(value='http://example.com/data.xml')],
+                    keywords=[]),
+                attr='text',
+                ctx=Load())),
+        Assign(
+            targets=[
+                Name(id='root', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='ET', ctx=Load()),
+                    attr='fromstring',
+                    ctx=Load()),
+                args=[
+                    Name(id='data', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Attribute(
+                        value=Name(id='root', ctx=Load()),
+                        attr='tag',
+                        ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

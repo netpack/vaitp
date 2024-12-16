@@ -1,0 +1,85 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='sqlite3')]),
+        FunctionDef(
+            name='get_user_details',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='username')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='connection', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='sqlite3', ctx=Load()),
+                            attr='connect',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='example.db')],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='cursor', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='connection', ctx=Load()),
+                            attr='cursor',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='query', ctx=Store())],
+                    value=JoinedStr(
+                        values=[
+                            Constant(value="SELECT * FROM users WHERE username = '"),
+                            FormattedValue(
+                                value=Name(id='username', ctx=Load()),
+                                conversion=-1),
+                            Constant(value="'")])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='cursor', ctx=Load()),
+                            attr='execute',
+                            ctx=Load()),
+                        args=[
+                            Name(id='query', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='results', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='cursor', ctx=Load()),
+                            attr='fetchall',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='cursor', ctx=Load()),
+                            attr='close',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='connection', ctx=Load()),
+                            attr='close',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Return(
+                    value=Name(id='results', ctx=Load()))],
+            decorator_list=[])],
+    type_ignores=[])

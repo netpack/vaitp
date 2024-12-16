@@ -1,0 +1,111 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='ctypes')]),
+        FunctionDef(
+            name='set_vcpu_affinity',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='vcpu_id'),
+                    arg(arg='cpumap')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Compare(
+                        left=Call(
+                            func=Name(id='len', ctx=Load()),
+                            args=[
+                                Name(id='cpumap', ctx=Load())],
+                            keywords=[]),
+                        ops=[
+                            NotEq()],
+                        comparators=[
+                            Name(id='expected_length', ctx=Load())]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Invalid cpumap length')],
+                                keywords=[]))],
+                    orelse=[]),
+                If(
+                    test=UnaryOp(
+                        op=Not(),
+                        operand=Call(
+                            func=Name(id='all', ctx=Load()),
+                            args=[
+                                GeneratorExp(
+                                    elt=Compare(
+                                        left=Name(id='c', ctx=Load()),
+                                        ops=[
+                                            In()],
+                                        comparators=[
+                                            Constant(value='01')]),
+                                    generators=[
+                                        comprehension(
+                                            target=Name(id='c', ctx=Store()),
+                                            iter=Name(id='cpumap', ctx=Load()),
+                                            ifs=[],
+                                            is_async=0)])],
+                            keywords=[])),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Invalid cpumap format')],
+                                keywords=[]))],
+                    orelse=[]),
+                Assign(
+                    targets=[
+                        Name(id='result', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='libc', ctx=Load()),
+                            attr='xc_vcpu_setaffinity',
+                            ctx=Load()),
+                        args=[
+                            Name(id='vcpu_id', ctx=Load()),
+                            Name(id='cpumap', ctx=Load())],
+                        keywords=[])),
+                If(
+                    test=Compare(
+                        left=Name(id='result', ctx=Load()),
+                        ops=[
+                            NotEq()],
+                        comparators=[
+                            Constant(value=0)]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='RuntimeError', ctx=Load()),
+                                args=[
+                                    Constant(value='Failed to set VCPU affinity')],
+                                keywords=[]))],
+                    orelse=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='expected_length', ctx=Store())],
+            value=Constant(value=8)),
+        Assign(
+            targets=[
+                Name(id='vcpu_id', ctx=Store())],
+            value=Constant(value=0)),
+        Assign(
+            targets=[
+                Name(id='cpumap', ctx=Store())],
+            value=Constant(value='11000000')),
+        Expr(
+            value=Call(
+                func=Name(id='set_vcpu_affinity', ctx=Load()),
+                args=[
+                    Name(id='vcpu_id', ctx=Load()),
+                    Name(id='cpumap', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

@@ -1,0 +1,114 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='ast')]),
+        Import(
+            names=[
+                alias(name='subprocess')]),
+        ClassDef(
+            name='SafeREPLTool',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='_run',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='code')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Try(
+                            body=[
+                                Assign(
+                                    targets=[
+                                        Name(id='tree', ctx=Store())],
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='ast', ctx=Load()),
+                                            attr='parse',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='code', ctx=Load())],
+                                        keywords=[
+                                            keyword(
+                                                arg='mode',
+                                                value=Constant(value='eval'))])),
+                                Assign(
+                                    targets=[
+                                        Name(id='compiled_code', ctx=Store())],
+                                    value=Call(
+                                        func=Name(id='compile', ctx=Load()),
+                                        args=[
+                                            Name(id='tree', ctx=Load())],
+                                        keywords=[
+                                            keyword(
+                                                arg='filename',
+                                                value=Constant(value='<ast>')),
+                                            keyword(
+                                                arg='mode',
+                                                value=Constant(value='eval'))])),
+                                Assign(
+                                    targets=[
+                                        Name(id='result', ctx=Store())],
+                                    value=Call(
+                                        func=Name(id='eval', ctx=Load()),
+                                        args=[
+                                            Name(id='compiled_code', ctx=Load()),
+                                            Dict(
+                                                keys=[
+                                                    Constant(value='__builtins__')],
+                                                values=[
+                                                    Dict(keys=[], values=[])])],
+                                        keywords=[])),
+                                Return(
+                                    value=Name(id='result', ctx=Load()))],
+                            handlers=[
+                                ExceptHandler(
+                                    type=Name(id='Exception', ctx=Load()),
+                                    name='e',
+                                    body=[
+                                        Return(
+                                            value=JoinedStr(
+                                                values=[
+                                                    Constant(value='Error: '),
+                                                    FormattedValue(
+                                                        value=Call(
+                                                            func=Name(id='str', ctx=Load()),
+                                                            args=[
+                                                                Name(id='e', ctx=Load())],
+                                                            keywords=[]),
+                                                        conversion=-1)]))])],
+                            orelse=[],
+                            finalbody=[])],
+                    decorator_list=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='tool', ctx=Store())],
+            value=Call(
+                func=Name(id='SafeREPLTool', ctx=Load()),
+                args=[],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='result', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='tool', ctx=Load()),
+                    attr='_run',
+                    ctx=Load()),
+                args=[
+                    Constant(value='1 + 1')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='result', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

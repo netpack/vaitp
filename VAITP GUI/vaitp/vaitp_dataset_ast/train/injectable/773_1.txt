@@ -1,0 +1,87 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        ImportFrom(
+            module='aiohttp',
+            names=[
+                alias(name='web')],
+            level=0),
+        Assign(
+            targets=[
+                Subscript(
+                    value=Attribute(
+                        value=Name(id='os', ctx=Load()),
+                        attr='environ',
+                        ctx=Load()),
+                    slice=Constant(value='AIOHTTP_NO_EXTENSIONS'),
+                    ctx=Store())],
+            value=Constant(value='1')),
+        AsyncFunctionDef(
+            name='handle',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='request')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='web', ctx=Load()),
+                            attr='Response',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[
+                            keyword(
+                                arg='text',
+                                value=Constant(value='Hello, world'))]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='app', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='web', ctx=Load()),
+                    attr='Application',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='app', ctx=Load()),
+                        attr='router',
+                        ctx=Load()),
+                    attr='add_get',
+                    ctx=Load()),
+                args=[
+                    Constant(value='/'),
+                    Name(id='handle', ctx=Load())],
+                keywords=[])),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='web', ctx=Load()),
+                            attr='run_app',
+                            ctx=Load()),
+                        args=[
+                            Name(id='app', ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='port',
+                                value=Constant(value=8080))]))],
+            orelse=[])],
+    type_ignores=[])

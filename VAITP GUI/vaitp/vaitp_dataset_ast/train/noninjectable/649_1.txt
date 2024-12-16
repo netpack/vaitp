@@ -1,0 +1,78 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='pickle')]),
+        FunctionDef(
+            name='load_metadata',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='metadata')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='pickle', ctx=Load()),
+                            attr='loads',
+                            ctx=Load()),
+                        args=[
+                            Name(id='metadata', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='save_metadata',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='metadata')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='pickle', ctx=Load()),
+                            attr='dumps',
+                            ctx=Load()),
+                        args=[
+                            Name(id='metadata', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='metadata_to_save', ctx=Store())],
+            value=Dict(
+                keys=[
+                    Constant(value='key'),
+                    Constant(value='another_key')],
+                values=[
+                    Constant(value='value'),
+                    Constant(value=123)])),
+        Assign(
+            targets=[
+                Name(id='serialized_metadata', ctx=Store())],
+            value=Call(
+                func=Name(id='save_metadata', ctx=Load()),
+                args=[
+                    Name(id='metadata_to_save', ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='loaded_metadata', ctx=Store())],
+            value=Call(
+                func=Name(id='load_metadata', ctx=Load()),
+                args=[
+                    Name(id='serialized_metadata', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='loaded_metadata', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

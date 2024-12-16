@@ -1,0 +1,104 @@
+Module(
+    body=[
+        FunctionDef(
+            name='join_organization',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='invite_link'),
+                    arg(arg='user_id')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Call(
+                        func=Name(id='is_valid_invite', ctx=Load()),
+                        args=[
+                            Name(id='invite_link', ctx=Load())],
+                        keywords=[]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='add_user_to_organization', ctx=Load()),
+                                args=[
+                                    Name(id='invite_link', ctx=Load()),
+                                    Name(id='user_id', ctx=Load())],
+                                keywords=[]))],
+                    orelse=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Invalid invite link')],
+                                keywords=[]))])],
+            decorator_list=[]),
+        FunctionDef(
+            name='exploit_vulnerability',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='invite_link'),
+                    arg(arg='user_id')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='join_organization', ctx=Load()),
+                        args=[
+                            Name(id='invite_link', ctx=Load()),
+                            Name(id='user_id', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='join_organization_fixed',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='invite_link'),
+                    arg(arg='user_id')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=BoolOp(
+                        op=And(),
+                        values=[
+                            Call(
+                                func=Name(id='is_valid_invite', ctx=Load()),
+                                args=[
+                                    Name(id='invite_link', ctx=Load())],
+                                keywords=[]),
+                            UnaryOp(
+                                op=Not(),
+                                operand=Call(
+                                    func=Name(id='has_invite_been_used', ctx=Load()),
+                                    args=[
+                                        Name(id='invite_link', ctx=Load())],
+                                    keywords=[]))]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='add_user_to_organization', ctx=Load()),
+                                args=[
+                                    Name(id='invite_link', ctx=Load()),
+                                    Name(id='user_id', ctx=Load())],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Name(id='mark_invite_as_used', ctx=Load()),
+                                args=[
+                                    Name(id='invite_link', ctx=Load())],
+                                keywords=[]))],
+                    orelse=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Invalid or already used invite link')],
+                                keywords=[]))])],
+            decorator_list=[])],
+    type_ignores=[])

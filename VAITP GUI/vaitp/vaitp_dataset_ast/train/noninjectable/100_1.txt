@@ -1,0 +1,28 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='zipfile')]),
+        With(
+            items=[
+                withitem(
+                    context_expr=Call(
+                        func=Attribute(
+                            value=Name(id='zipfile', ctx=Load()),
+                            attr='ZipFile',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='zipbomb.zip'),
+                            Constant(value='r')],
+                        keywords=[]),
+                    optional_vars=Name(id='zf', ctx=Store()))],
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='zf', ctx=Load()),
+                            attr='extractall',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]))])],
+    type_ignores=[])

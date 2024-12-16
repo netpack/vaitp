@@ -1,0 +1,73 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='secrets')]),
+        Import(
+            names=[
+                alias(name='string')]),
+        FunctionDef(
+            name='generate_nonce',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='length')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[
+                    Constant(value=8)]),
+            body=[
+                Expr(
+                    value=Constant(value='Generate a nonce using a cryptographically secure random generator.')),
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Constant(value=''),
+                            attr='join',
+                            ctx=Load()),
+                        args=[
+                            GeneratorExp(
+                                elt=Call(
+                                    func=Attribute(
+                                        value=Name(id='secrets', ctx=Load()),
+                                        attr='choice',
+                                        ctx=Load()),
+                                    args=[
+                                        BinOp(
+                                            left=Attribute(
+                                                value=Name(id='string', ctx=Load()),
+                                                attr='ascii_letters',
+                                                ctx=Load()),
+                                            op=Add(),
+                                            right=Attribute(
+                                                value=Name(id='string', ctx=Load()),
+                                                attr='digits',
+                                                ctx=Load()))],
+                                    keywords=[]),
+                                generators=[
+                                    comprehension(
+                                        target=Name(id='_', ctx=Store()),
+                                        iter=Call(
+                                            func=Name(id='range', ctx=Load()),
+                                            args=[
+                                                Name(id='length', ctx=Load())],
+                                            keywords=[]),
+                                        ifs=[],
+                                        is_async=0)])],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='nonce', ctx=Store())],
+            value=Call(
+                func=Name(id='generate_nonce', ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Constant(value='Nonce:'),
+                    Name(id='nonce', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

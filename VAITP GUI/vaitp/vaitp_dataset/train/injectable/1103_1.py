@@ -1,28 +1,33 @@
-import pyo3
+import weakref
+import threading
 
-# Example demonstrating safe handling of weak references to avoid use-after-free
-from pyo3 import prelude::*;
-from pyo3::types::PyWeak;
+class MyObject:
+    def __init__(self, data):
+        self.data = data
 
-#[pyclass]
-struct MyStruct {
-    value: String,
-}
+def worker(weak_ref):
+    obj = weak_ref()
+    if obj:
+        # Accessing the object after the original is potentially gone, 
+        # This simulates a use-after-free scenario but the weak reference is properly checked
+        print(f"Thread: {threading.current_thread().name}, Data: {obj.data}")
+    else:
+        print(f"Thread: {threading.current_thread().name}, Object is gone.")
 
-#[pymethods]
-impl MyStruct {
-    #[new]
-    fn new(value: String) -> Self {
-        MyStruct { value }
-    }
 
-    fn get_value(&self, py: Python) -> PyResult<String> {
-        // Safely handle weak reference
-        let weak_ref = PyWeak::new(py, &self.value);
-        if let Some(str_ref) = weak_ref.upgrade() {
-            Ok(str_ref.to_string())
-        } else {
-            Err(pyo3::exceptions::PyReferenceError::new_err("Weak reference is no longer valid"))
-        }
-    }
-}
+if __name__ == "__main__":
+    my_object = MyObject("Hello, world!")
+    weak_ref = weakref.ref(my_object)
+    
+    threads = []
+    for i in range(5):
+      thread = threading.Thread(target=worker, args=(weak_ref,), name=f"Thread-{i}")
+      threads.append(thread)
+      thread.start()
+
+    del my_object
+    
+    for thread in threads:
+        thread.join()
+    
+    print("Done")

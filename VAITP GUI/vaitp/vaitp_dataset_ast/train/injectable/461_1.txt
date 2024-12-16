@@ -1,0 +1,170 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='uvicorn')]),
+        Import(
+            names=[
+                alias(name='urllib.parse')]),
+        FunctionDef(
+            name='sanitize_input',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='scope')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='safe_scope', ctx=Store())],
+                    value=Dict(keys=[], values=[])),
+                For(
+                    target=Tuple(
+                        elts=[
+                            Name(id='key', ctx=Store()),
+                            Name(id='value', ctx=Store())],
+                        ctx=Store()),
+                    iter=Call(
+                        func=Attribute(
+                            value=Name(id='scope', ctx=Load()),
+                            attr='items',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]),
+                    body=[
+                        If(
+                            test=Call(
+                                func=Name(id='isinstance', ctx=Load()),
+                                args=[
+                                    Name(id='value', ctx=Load()),
+                                    Name(id='str', ctx=Load())],
+                                keywords=[]),
+                            body=[
+                                Assign(
+                                    targets=[
+                                        Subscript(
+                                            value=Name(id='safe_scope', ctx=Load()),
+                                            slice=Name(id='key', ctx=Load()),
+                                            ctx=Store())],
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Attribute(
+                                                value=Name(id='urllib', ctx=Load()),
+                                                attr='parse',
+                                                ctx=Load()),
+                                            attr='quote',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='value', ctx=Load())],
+                                        keywords=[]))],
+                            orelse=[
+                                Assign(
+                                    targets=[
+                                        Subscript(
+                                            value=Name(id='safe_scope', ctx=Load()),
+                                            slice=Name(id='key', ctx=Load()),
+                                            ctx=Store())],
+                                    value=Name(id='value', ctx=Load()))])],
+                    orelse=[]),
+                Return(
+                    value=Name(id='safe_scope', ctx=Load()))],
+            decorator_list=[]),
+        AsyncFunctionDef(
+            name='app',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='scope'),
+                    arg(arg='receive'),
+                    arg(arg='send')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='safe_scope', ctx=Store())],
+                    value=Call(
+                        func=Name(id='sanitize_input', ctx=Load()),
+                        args=[
+                            Name(id='scope', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Name(id='safe_scope', ctx=Load())],
+                        keywords=[])),
+                Assert(
+                    test=Compare(
+                        left=Subscript(
+                            value=Name(id='scope', ctx=Load()),
+                            slice=Constant(value='type'),
+                            ctx=Load()),
+                        ops=[
+                            Eq()],
+                        comparators=[
+                            Constant(value='http')])),
+                Expr(
+                    value=Await(
+                        value=Call(
+                            func=Name(id='send', ctx=Load()),
+                            args=[
+                                Dict(
+                                    keys=[
+                                        Constant(value='type'),
+                                        Constant(value='status'),
+                                        Constant(value='headers')],
+                                    values=[
+                                        Constant(value='http.response.start'),
+                                        Constant(value=200),
+                                        List(
+                                            elts=[
+                                                List(
+                                                    elts=[
+                                                        Constant(value=b'Content-Type'),
+                                                        Constant(value=b'text/plain')],
+                                                    ctx=Load())],
+                                            ctx=Load())])],
+                            keywords=[]))),
+                Expr(
+                    value=Await(
+                        value=Call(
+                            func=Name(id='send', ctx=Load()),
+                            args=[
+                                Dict(
+                                    keys=[
+                                        Constant(value='type'),
+                                        Constant(value='body')],
+                                    values=[
+                                        Constant(value='http.response.body'),
+                                        Constant(value=b'Hello, world!')])],
+                            keywords=[])))],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='uvicorn', ctx=Load()),
+                            attr='run',
+                            ctx=Load()),
+                        args=[
+                            Name(id='app', ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='host',
+                                value=Constant(value='127.0.0.1')),
+                            keyword(
+                                arg='port',
+                                value=Constant(value=8000))]))],
+            orelse=[])],
+    type_ignores=[])

@@ -1,0 +1,41 @@
+Module(
+    body=[
+        FunctionDef(
+            name='save_user_input',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='user_input')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='document', ctx=Store())],
+                    value=Dict(
+                        keys=[
+                            Constant(value='content')],
+                        values=[
+                            Name(id='user_input', ctx=Load())])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='database', ctx=Load()),
+                            attr='save',
+                            ctx=Load()),
+                        args=[
+                            Name(id='document', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='user_input', ctx=Store())],
+            value=Constant(value='<script>alert("XSS")</script><p>This is a malicious input.</p>')),
+        Expr(
+            value=Call(
+                func=Name(id='save_user_input', ctx=Load()),
+                args=[
+                    Name(id='user_input', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

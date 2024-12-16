@@ -1,0 +1,64 @@
+Module(
+    body=[
+        FunctionDef(
+            name='read_object',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='self'),
+                    arg(arg='object_id')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Try(
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='obj', ctx=Store())],
+                            value=Subscript(
+                                value=Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='objects',
+                                    ctx=Load()),
+                                slice=Name(id='object_id', ctx=Load()),
+                                ctx=Load())),
+                        If(
+                            test=Compare(
+                                left=Name(id='obj', ctx=Load()),
+                                ops=[
+                                    Is()],
+                                comparators=[
+                                    Constant(value=None)]),
+                            body=[
+                                Raise(
+                                    exc=Call(
+                                        func=Name(id='ValueError', ctx=Load()),
+                                        args=[
+                                            Constant(value='Object not found or malformed PDF.')],
+                                        keywords=[]))],
+                            orelse=[]),
+                        Return(
+                            value=Name(id='obj', ctx=Load()))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='Exception', ctx=Load()),
+                            name='e',
+                            body=[
+                                Raise(
+                                    exc=Call(
+                                        func=Name(id='ValueError', ctx=Load()),
+                                        args=[
+                                            BinOp(
+                                                left=Constant(value='An error occurred while reading the PDF object: '),
+                                                op=Add(),
+                                                right=Call(
+                                                    func=Name(id='str', ctx=Load()),
+                                                    args=[
+                                                        Name(id='e', ctx=Load())],
+                                                    keywords=[]))],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[])],
+    type_ignores=[])

@@ -1,0 +1,111 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='time')]),
+        ClassDef(
+            name='Server',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='used_nonces',
+                                    ctx=Store())],
+                            value=Dict(keys=[], values=[]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='verify_request',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='request')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='nonce', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='request', ctx=Load()),
+                                    attr='get',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='nonce')],
+                                keywords=[])),
+                        Assign(
+                            targets=[
+                                Name(id='current_time', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='time', ctx=Load()),
+                                    attr='time',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[])),
+                        If(
+                            test=Compare(
+                                left=Name(id='nonce', ctx=Load()),
+                                ops=[
+                                    In()],
+                                comparators=[
+                                    Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='used_nonces',
+                                        ctx=Load())]),
+                            body=[
+                                Assign(
+                                    targets=[
+                                        Name(id='nonce_time', ctx=Store())],
+                                    value=Subscript(
+                                        value=Attribute(
+                                            value=Name(id='self', ctx=Load()),
+                                            attr='used_nonces',
+                                            ctx=Load()),
+                                        slice=Name(id='nonce', ctx=Load()),
+                                        ctx=Load())),
+                                If(
+                                    test=Compare(
+                                        left=BinOp(
+                                            left=Name(id='current_time', ctx=Load()),
+                                            op=Sub(),
+                                            right=Name(id='nonce_time', ctx=Load())),
+                                        ops=[
+                                            Lt()],
+                                        comparators=[
+                                            Constant(value=300)]),
+                                    body=[
+                                        Return(
+                                            value=Constant(value=False))],
+                                    orelse=[])],
+                            orelse=[]),
+                        Assign(
+                            targets=[
+                                Subscript(
+                                    value=Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='used_nonces',
+                                        ctx=Load()),
+                                    slice=Name(id='nonce', ctx=Load()),
+                                    ctx=Store())],
+                            value=Name(id='current_time', ctx=Load())),
+                        Return(
+                            value=Constant(value=True))],
+                    decorator_list=[])],
+            decorator_list=[])],
+    type_ignores=[])

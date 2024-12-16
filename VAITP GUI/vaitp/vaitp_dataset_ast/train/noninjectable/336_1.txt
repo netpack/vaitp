@@ -1,0 +1,61 @@
+Module(
+    body=[
+        FunctionDef(
+            name='handle_authenticate_header',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='header')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Call(
+                        func=Attribute(
+                            value=Name(id='header', ctx=Load()),
+                            attr='startswith',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='Basic')],
+                        keywords=[]),
+                    body=[
+                        Pass()],
+                    orelse=[
+                        If(
+                            test=Call(
+                                func=Attribute(
+                                    value=Name(id='header', ctx=Load()),
+                                    attr='startswith',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='Bearer')],
+                                keywords=[]),
+                            body=[
+                                Pass()],
+                            orelse=[])]),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Processing header:'),
+                            Name(id='header', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='header', ctx=Store())],
+            value=BinOp(
+                left=Constant(value='WWW-Authenticate: '),
+                op=Add(),
+                right=BinOp(
+                    left=Constant(value='\xa0'),
+                    op=Mult(),
+                    right=Constant(value=1000)))),
+        Expr(
+            value=Call(
+                func=Name(id='handle_authenticate_header', ctx=Load()),
+                args=[
+                    Name(id='header', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

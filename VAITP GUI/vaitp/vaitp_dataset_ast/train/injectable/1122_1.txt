@@ -1,0 +1,67 @@
+Module(
+    body=[
+        ImportFrom(
+            module='django.utils.html',
+            names=[
+                alias(name='escape')],
+            level=0),
+        ImportFrom(
+            module='django',
+            names=[
+                alias(name='template')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='register', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='template', ctx=Load()),
+                    attr='Library',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        FunctionDef(
+            name='safe_break_long_headers',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='value')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='escaped_value', ctx=Store())],
+                    value=Call(
+                        func=Name(id='escape', ctx=Load()),
+                        args=[
+                            Name(id='value', ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Constant(value='<br>'),
+                            attr='join',
+                            ctx=Load()),
+                        args=[
+                            Call(
+                                func=Attribute(
+                                    value=Name(id='escaped_value', ctx=Load()),
+                                    attr='splitlines',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[])],
+                        keywords=[]))],
+            decorator_list=[
+                Call(
+                    func=Attribute(
+                        value=Name(id='register', ctx=Load()),
+                        attr='filter',
+                        ctx=Load()),
+                    args=[],
+                    keywords=[
+                        keyword(
+                            arg='is_safe',
+                            value=Constant(value=True))])])],
+    type_ignores=[])

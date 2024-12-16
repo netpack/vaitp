@@ -1,0 +1,84 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='ast')]),
+        ClassDef(
+            name='SafeCalculator',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='calculate',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='expression')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Try(
+                            body=[
+                                Assign(
+                                    targets=[
+                                        Name(id='result', ctx=Store())],
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='ast', ctx=Load()),
+                                            attr='literal_eval',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='expression', ctx=Load())],
+                                        keywords=[])),
+                                Return(
+                                    value=Name(id='result', ctx=Load()))],
+                            handlers=[
+                                ExceptHandler(
+                                    type=Tuple(
+                                        elts=[
+                                            Name(id='ValueError', ctx=Load()),
+                                            Name(id='SyntaxError', ctx=Load())],
+                                        ctx=Load()),
+                                    body=[
+                                        Return(
+                                            value=Constant(value='Invalid expression'))])],
+                            orelse=[],
+                            finalbody=[])],
+                    decorator_list=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='calculator', ctx=Store())],
+            value=Call(
+                func=Name(id='SafeCalculator', ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Call(
+                        func=Attribute(
+                            value=Name(id='calculator', ctx=Load()),
+                            attr='calculate',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='2 + 2')],
+                        keywords=[])],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Call(
+                        func=Attribute(
+                            value=Name(id='calculator', ctx=Load()),
+                            attr='calculate',
+                            ctx=Load()),
+                        args=[
+                            Constant(value="__import__('os').system('ls')")],
+                        keywords=[])],
+                keywords=[]))],
+    type_ignores=[])

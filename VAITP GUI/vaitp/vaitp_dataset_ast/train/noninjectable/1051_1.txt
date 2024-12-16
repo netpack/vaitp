@@ -1,0 +1,63 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='gradio', asname='gr')]),
+        Import(
+            names=[
+                alias(name='requests')]),
+        FunctionDef(
+            name='fetch_url',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='url')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='response', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='requests', ctx=Load()),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Name(id='url', ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=Attribute(
+                        value=Name(id='response', ctx=Load()),
+                        attr='text',
+                        ctx=Load()))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='iface', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='gr', ctx=Load()),
+                    attr='Interface',
+                    ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='fn',
+                        value=Name(id='fetch_url', ctx=Load())),
+                    keyword(
+                        arg='inputs',
+                        value=Constant(value='text')),
+                    keyword(
+                        arg='outputs',
+                        value=Constant(value='text'))])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='iface', ctx=Load()),
+                    attr='launch',
+                    ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

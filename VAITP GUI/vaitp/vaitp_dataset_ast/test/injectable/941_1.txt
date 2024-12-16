@@ -1,0 +1,126 @@
+Module(
+    body=[
+        ImportFrom(
+            module='PIL',
+            names=[
+                alias(name='Image'),
+                alias(name='ImageDraw'),
+                alias(name='ImageFont')],
+            level=0),
+        FunctionDef(
+            name='safe_draw_text',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='image'),
+                    arg(arg='text'),
+                    arg(arg='position'),
+                    arg(arg='font'),
+                    arg(arg='max_length')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[
+                    Constant(value=100)]),
+            body=[
+                If(
+                    test=Compare(
+                        left=Call(
+                            func=Name(id='len', ctx=Load()),
+                            args=[
+                                Name(id='text', ctx=Load())],
+                            keywords=[]),
+                        ops=[
+                            Gt()],
+                        comparators=[
+                            Name(id='max_length', ctx=Load())]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Text length exceeds maximum allowed length.')],
+                                keywords=[]))],
+                    orelse=[]),
+                Assign(
+                    targets=[
+                        Name(id='draw', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='ImageDraw', ctx=Load()),
+                            attr='Draw',
+                            ctx=Load()),
+                        args=[
+                            Name(id='image', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='draw', ctx=Load()),
+                            attr='text',
+                            ctx=Load()),
+                        args=[
+                            Name(id='position', ctx=Load()),
+                            Name(id='text', ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='font',
+                                value=Name(id='font', ctx=Load()))]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='image', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='Image', ctx=Load()),
+                    attr='new',
+                    ctx=Load()),
+                args=[
+                    Constant(value='RGB'),
+                    Tuple(
+                        elts=[
+                            Constant(value=200),
+                            Constant(value=100)],
+                        ctx=Load())],
+                keywords=[
+                    keyword(
+                        arg='color',
+                        value=Constant(value='white'))])),
+        Assign(
+            targets=[
+                Name(id='font', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='ImageFont', ctx=Load()),
+                    attr='load_default',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Try(
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='safe_draw_text', ctx=Load()),
+                        args=[
+                            Name(id='image', ctx=Load()),
+                            Constant(value='This is a safe text'),
+                            Tuple(
+                                elts=[
+                                    Constant(value=10),
+                                    Constant(value=10)],
+                                ctx=Load()),
+                            Name(id='font', ctx=Load())],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ValueError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

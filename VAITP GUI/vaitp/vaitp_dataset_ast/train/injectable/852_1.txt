@@ -1,0 +1,128 @@
+Module(
+    body=[
+        FunctionDef(
+            name='safe_execute_script',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='user'),
+                    arg(arg='script'),
+                    arg(arg='allowed_scripts')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=UnaryOp(
+                        op=Not(),
+                        operand=Call(
+                            func=Attribute(
+                                value=Name(id='user', ctx=Load()),
+                                attr='has_permission',
+                                ctx=Load()),
+                            args=[
+                                Constant(value='execute_scripts')],
+                            keywords=[])),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='PermissionError', ctx=Load()),
+                                args=[
+                                    Constant(value='User  does not have permission to execute scripts.')],
+                                keywords=[]))],
+                    orelse=[]),
+                If(
+                    test=Compare(
+                        left=Name(id='script', ctx=Load()),
+                        ops=[
+                            NotIn()],
+                        comparators=[
+                            Name(id='allowed_scripts', ctx=Load())]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Script execution is not allowed.')],
+                                keywords=[]))],
+                    orelse=[]),
+                Try(
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='exec', ctx=Load()),
+                                args=[
+                                    Name(id='script', ctx=Load())],
+                                keywords=[]))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='Exception', ctx=Load()),
+                            name='e',
+                            body=[
+                                Raise(
+                                    exc=Call(
+                                        func=Name(id='RuntimeError', ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    Constant(value='Script execution failed: '),
+                                                    FormattedValue(
+                                                        value=Name(id='e', ctx=Load()),
+                                                        conversion=-1)])],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='allowed_scripts', ctx=Store())],
+            value=List(
+                elts=[
+                    Constant(value='print("Hello, world!")'),
+                    Constant(value='x = 5\nprint(x * 2)')],
+                ctx=Load())),
+        Assign(
+            targets=[
+                Name(id='user', ctx=Store())],
+            value=Call(
+                func=Name(id='get_current_user', ctx=Load()),
+                args=[],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='user_input_script', ctx=Store())],
+            value=Constant(value='print("Injected code")')),
+        Try(
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='safe_execute_script', ctx=Load()),
+                        args=[
+                            Name(id='user', ctx=Load()),
+                            Name(id='user_input_script', ctx=Load()),
+                            Name(id='allowed_scripts', ctx=Load())],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Tuple(
+                        elts=[
+                            Name(id='PermissionError', ctx=Load()),
+                            Name(id='ValueError', ctx=Load()),
+                            Name(id='RuntimeError', ctx=Load())],
+                        ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            Constant(value='Error: '),
+                                            FormattedValue(
+                                                value=Name(id='e', ctx=Load()),
+                                                conversion=-1)])],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

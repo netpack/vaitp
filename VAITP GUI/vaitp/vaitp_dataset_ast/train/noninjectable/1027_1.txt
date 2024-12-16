@@ -1,0 +1,123 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='logging')]),
+        ImportFrom(
+            module='snowflake.connector',
+            names=[
+                alias(name='connect')],
+            level=0),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='logging', ctx=Load()),
+                    attr='basicConfig',
+                    ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='level',
+                        value=Attribute(
+                            value=Name(id='logging', ctx=Load()),
+                            attr='DEBUG',
+                            ctx=Load()))])),
+        Assign(
+            targets=[
+                Name(id='logger', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='logging', ctx=Load()),
+                    attr='getLogger',
+                    ctx=Load()),
+                args=[
+                    Constant(value='snowflake.connector')],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='user', ctx=Store())],
+            value=Constant(value='your_username')),
+        Assign(
+            targets=[
+                Name(id='password', ctx=Store())],
+            value=Constant(value='your_password')),
+        Assign(
+            targets=[
+                Name(id='account', ctx=Store())],
+            value=Constant(value='your_account')),
+        Assign(
+            targets=[
+                Name(id='passcode', ctx=Store())],
+            value=Constant(value='your_duo_passcode')),
+        Assign(
+            targets=[
+                Name(id='conn', ctx=Store())],
+            value=Call(
+                func=Name(id='connect', ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='user',
+                        value=Name(id='user', ctx=Load())),
+                    keyword(
+                        arg='password',
+                        value=Name(id='password', ctx=Load())),
+                    keyword(
+                        arg='account',
+                        value=Name(id='account', ctx=Load())),
+                    keyword(
+                        arg='passcode',
+                        value=Name(id='passcode', ctx=Load()))])),
+        Assign(
+            targets=[
+                Name(id='cursor', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='conn', ctx=Load()),
+                    attr='cursor',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Try(
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='cursor', ctx=Load()),
+                            attr='execute',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='SELECT CURRENT_VERSION()')],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Call(
+                                func=Attribute(
+                                    value=Name(id='cursor', ctx=Load()),
+                                    attr='fetchone',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[])],
+                        keywords=[]))],
+            handlers=[],
+            orelse=[],
+            finalbody=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='cursor', ctx=Load()),
+                            attr='close',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='conn', ctx=Load()),
+                            attr='close',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]))])],
+    type_ignores=[])

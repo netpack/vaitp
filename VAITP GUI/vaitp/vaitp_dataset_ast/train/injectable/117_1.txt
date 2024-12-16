@@ -1,0 +1,96 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='sys')]),
+        FunctionDef(
+            name='safe_decode_escape',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='input_string')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Try(
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='decoded_string', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='input_string', ctx=Load()),
+                                            attr='encode',
+                                            ctx=Load()),
+                                        args=[
+                                            Constant(value='utf-8')],
+                                        keywords=[]),
+                                    attr='decode',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='unicode_escape')],
+                                keywords=[])),
+                        Return(
+                            value=Name(id='decoded_string', ctx=Load()))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Tuple(
+                                elts=[
+                                    Name(id='UnicodeDecodeError', ctx=Load()),
+                                    Name(id='OverflowError', ctx=Load())],
+                                ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            Constant(value='Error decoding string:'),
+                                            Name(id='e', ctx=Load())],
+                                        keywords=[])),
+                                Return(
+                                    value=Constant(value=None))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='input_string', ctx=Store())],
+                    value=Constant(value='some_string_with_escape_sequences')),
+                Assign(
+                    targets=[
+                        Name(id='result', ctx=Store())],
+                    value=Call(
+                        func=Name(id='safe_decode_escape', ctx=Load()),
+                        args=[
+                            Name(id='input_string', ctx=Load())],
+                        keywords=[])),
+                If(
+                    test=Compare(
+                        left=Name(id='result', ctx=Load()),
+                        ops=[
+                            IsNot()],
+                        comparators=[
+                            Constant(value=None)]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Decoded string:'),
+                                    Name(id='result', ctx=Load())],
+                                keywords=[]))],
+                    orelse=[])],
+            orelse=[])],
+    type_ignores=[])

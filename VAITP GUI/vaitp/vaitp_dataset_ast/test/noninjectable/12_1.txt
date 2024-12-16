@@ -1,0 +1,71 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='plistlib')]),
+        FunctionDef(
+            name='parse_plist',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='xml_string')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Constant(value='\n    Parse a plist XML string into a Python object.\n    ')),
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='plistlib', ctx=Load()),
+                            attr='loads',
+                            ctx=Load()),
+                        args=[
+                            Call(
+                                func=Attribute(
+                                    value=Name(id='xml_string', ctx=Load()),
+                                    attr='encode',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='utf-8')],
+                                keywords=[])],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='xml_string', ctx=Store())],
+            value=Constant(value='\n<?xml version="1.0" encoding="UTF-8"?>\n<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">\n<plist version="1.0">\n    <dict>\n        <key>name</key>\n        <string>John Doe</string>\n        <key> occupation</key>\n        <string>Developer</string>\n    </dict>\n</plist>\n')),
+        Assign(
+            targets=[
+                Name(id='data', ctx=Store())],
+            value=Call(
+                func=Name(id='parse_plist', ctx=Load()),
+                args=[
+                    Name(id='xml_string', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='data', ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='malicious_xml_string', ctx=Store())],
+            value=Constant(value='\n<?xml version="1.0" encoding="UTF-8"?>\n<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">\n<!ENTITY xxe SYSTEM "file:///etc/passwd">\n<plist version="1.0">\n    <dict>\n        <key>name</key>\n        <string>&xxe;</string>\n    </dict>\n</plist>\n')),
+        Assign(
+            targets=[
+                Name(id='data', ctx=Store())],
+            value=Call(
+                func=Name(id='parse_plist', ctx=Load()),
+                args=[
+                    Name(id='malicious_xml_string', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='data', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

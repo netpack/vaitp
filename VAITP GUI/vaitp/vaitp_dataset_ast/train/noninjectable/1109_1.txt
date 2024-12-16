@@ -1,0 +1,106 @@
+Module(
+    body=[
+        ImportFrom(
+            module='cryptography.hazmat.backends',
+            names=[
+                alias(name='default_backend')],
+            level=0),
+        ImportFrom(
+            module='cryptography.hazmat.primitives',
+            names=[
+                alias(name='serialization')],
+            level=0),
+        ImportFrom(
+            module='cryptography.hazmat.primitives.asymmetric',
+            names=[
+                alias(name='rsa')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='private_key', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='rsa', ctx=Load()),
+                    attr='generate_private_key',
+                    ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='public_exponent',
+                        value=Constant(value=65537)),
+                    keyword(
+                        arg='key_size',
+                        value=Constant(value=2048)),
+                    keyword(
+                        arg='backend',
+                        value=Call(
+                            func=Name(id='default_backend', ctx=Load()),
+                            args=[],
+                            keywords=[]))])),
+        Assign(
+            targets=[
+                Name(id='mismatched_public_key', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='rsa', ctx=Load()),
+                            attr='generate_private_key',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[
+                            keyword(
+                                arg='public_exponent',
+                                value=Constant(value=65537)),
+                            keyword(
+                                arg='key_size',
+                                value=Constant(value=2048)),
+                            keyword(
+                                arg='backend',
+                                value=Call(
+                                    func=Name(id='default_backend', ctx=Load()),
+                                    args=[],
+                                    keywords=[]))]),
+                    attr='public_key',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        ImportFrom(
+            module='cryptography.hazmat.primitives.serialization',
+            names=[
+                alias(name='pkcs12')],
+            level=0),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='pkcs12', ctx=Load()),
+                    attr='serialize_key_and_certificates',
+                    ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='name',
+                        value=Constant(value=b'test')),
+                    keyword(
+                        arg='key',
+                        value=Name(id='private_key', ctx=Load())),
+                    keyword(
+                        arg='cert',
+                        value=Name(id='mismatched_public_key', ctx=Load())),
+                    keyword(
+                        arg='encryption_algorithm',
+                        value=Call(
+                            func=Attribute(
+                                value=Call(
+                                    func=Attribute(
+                                        value=Name(id='pkcs12', ctx=Load()),
+                                        attr='encryption_builder',
+                                        ctx=Load()),
+                                    args=[],
+                                    keywords=[]),
+                                attr='hmac_hash',
+                                ctx=Load()),
+                            args=[
+                                Constant(value=b'password')],
+                            keywords=[]))]))],
+    type_ignores=[])

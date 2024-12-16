@@ -1,0 +1,56 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='zipfile')]),
+        Import(
+            names=[
+                alias(name='os')]),
+        FunctionDef(
+            name='_extract_packages_archive',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='archive_path'),
+                    arg(arg='extract_dir')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                With(
+                    items=[
+                        withitem(
+                            context_expr=Call(
+                                func=Attribute(
+                                    value=Name(id='zipfile', ctx=Load()),
+                                    attr='ZipFile',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='archive_path', ctx=Load()),
+                                    Constant(value='r')],
+                                keywords=[]),
+                            optional_vars=Name(id='zip_ref', ctx=Store()))],
+                    body=[
+                        For(
+                            target=Name(id='file_info', ctx=Store()),
+                            iter=Call(
+                                func=Attribute(
+                                    value=Name(id='zip_ref', ctx=Load()),
+                                    attr='infolist',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[]),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='zip_ref', ctx=Load()),
+                                            attr='extract',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='file_info', ctx=Load()),
+                                            Name(id='extract_dir', ctx=Load())],
+                                        keywords=[]))],
+                            orelse=[])])],
+            decorator_list=[])],
+    type_ignores=[])

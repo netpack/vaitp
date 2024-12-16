@@ -1,0 +1,33 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='tensorflow', asname='tf')]),
+        Assign(
+            targets=[
+                Name(id='tensor', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='tf', ctx=Load()),
+                        attr='raw_ops',
+                        ctx=Load()),
+                    attr='ImmutableConst',
+                    ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='value',
+                        value=List(
+                            elts=[
+                                Constant(value=1),
+                                Constant(value=2),
+                                Constant(value=3)],
+                            ctx=Load())),
+                    keyword(
+                        arg='dtype',
+                        value=Attribute(
+                            value=Name(id='tf', ctx=Load()),
+                            attr='resource',
+                            ctx=Load()))]))],
+    type_ignores=[])

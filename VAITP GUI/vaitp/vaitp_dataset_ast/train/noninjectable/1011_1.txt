@@ -1,0 +1,63 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='subprocess')]),
+        FunctionDef(
+            name='vulnerable_exec',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='command'),
+                    arg(arg='metadata')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='command_to_run', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='command', ctx=Load()),
+                            attr='format',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[
+                            keyword(
+                                value=Name(id='metadata', ctx=Load()))])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='subprocess', ctx=Load()),
+                            attr='run',
+                            ctx=Load()),
+                        args=[
+                            Name(id='command_to_run', ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='shell',
+                                value=Constant(value=True))]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='metadata', ctx=Store())],
+            value=Dict(
+                keys=[
+                    Constant(value='filepath'),
+                    Constant(value='title')],
+                values=[
+                    Constant(value='example.mp4'),
+                    Constant(value='example title with & special chars')])),
+        Assign(
+            targets=[
+                Name(id='command', ctx=Store())],
+            value=Constant(value='echo {title} > {filepath}')),
+        Expr(
+            value=Call(
+                func=Name(id='vulnerable_exec', ctx=Load()),
+                args=[
+                    Name(id='command', ctx=Load()),
+                    Name(id='metadata', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

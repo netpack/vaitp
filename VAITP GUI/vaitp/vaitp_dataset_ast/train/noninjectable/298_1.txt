@@ -1,0 +1,43 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='json')]),
+        Import(
+            names=[
+                alias(name='democritus_strings')]),
+        FunctionDef(
+            name='load_json',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='data')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='exec', ctx=Load()),
+                        args=[
+                            Call(
+                                func=Attribute(
+                                    value=Name(id='democritus_strings', ctx=Load()),
+                                    attr='some_function',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='data', ctx=Load())],
+                                keywords=[])],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='json_data', ctx=Store())],
+            value=Constant(value='{"key": "value"}')),
+        Expr(
+            value=Call(
+                func=Name(id='load_json', ctx=Load()),
+                args=[
+                    Name(id='json_data', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

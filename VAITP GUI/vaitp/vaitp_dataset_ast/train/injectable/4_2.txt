@@ -1,0 +1,173 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='socket')]),
+        Import(
+            names=[
+                alias(name='ssl')]),
+        Assign(
+            targets=[
+                Name(id='sock', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='socket', ctx=Load()),
+                    attr='socket',
+                    ctx=Load()),
+                args=[
+                    Attribute(
+                        value=Name(id='socket', ctx=Load()),
+                        attr='AF_INET',
+                        ctx=Load()),
+                    Attribute(
+                        value=Name(id='socket', ctx=Load()),
+                        attr='SOCK_STREAM',
+                        ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='server_address', ctx=Store())],
+            value=Tuple(
+                elts=[
+                    Constant(value='localhost'),
+                    Constant(value=10023)],
+                ctx=Load())),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='sock', ctx=Load()),
+                    attr='bind',
+                    ctx=Load()),
+                args=[
+                    Name(id='server_address', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='sock', ctx=Load()),
+                    attr='listen',
+                    ctx=Load()),
+                args=[
+                    Constant(value=1)],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='context', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='ssl', ctx=Load()),
+                    attr='create_default_context',
+                    ctx=Load()),
+                args=[
+                    Attribute(
+                        value=Attribute(
+                            value=Name(id='ssl', ctx=Load()),
+                            attr='Purpose',
+                            ctx=Load()),
+                        attr='CLIENT_AUTH',
+                        ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='context', ctx=Load()),
+                    attr='load_cert_chain',
+                    ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='certfile',
+                        value=Constant(value='server.crt')),
+                    keyword(
+                        arg='keyfile',
+                        value=Constant(value='server.key'))])),
+        Assign(
+            targets=[
+                Attribute(
+                    value=Name(id='context', ctx=Load()),
+                    attr='verify_mode',
+                    ctx=Store())],
+            value=Attribute(
+                value=Name(id='ssl', ctx=Load()),
+                attr='CERT_REQUIRED',
+                ctx=Load())),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='context', ctx=Load()),
+                    attr='load_verify_locations',
+                    ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='cafile',
+                        value=Constant(value='client.crt'))])),
+        Assign(
+            targets=[
+                Tuple(
+                    elts=[
+                        Name(id='connection', ctx=Store()),
+                        Name(id='client_address', ctx=Store())],
+                    ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='sock', ctx=Load()),
+                    attr='accept',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='secure_sock', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='context', ctx=Load()),
+                    attr='wrap_socket',
+                    ctx=Load()),
+                args=[
+                    Name(id='connection', ctx=Load())],
+                keywords=[
+                    keyword(
+                        arg='server_side',
+                        value=Constant(value=True))])),
+        If(
+            test=Attribute(
+                value=Name(id='secure_sock', ctx=Load()),
+                attr='connected',
+                ctx=Load()),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='data', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='secure_sock', ctx=Load()),
+                            attr='recv',
+                            ctx=Load()),
+                        args=[
+                            Constant(value=1024)],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Name(id='data', ctx=Load())],
+                        keywords=[]))],
+            orelse=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='connection', ctx=Load()),
+                            attr='close',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]))]),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='secure_sock', ctx=Load()),
+                    attr='close',
+                    ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

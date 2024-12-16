@@ -1,0 +1,79 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='re')]),
+        Assign(
+            targets=[
+                Name(id='url_pattern', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='re', ctx=Load()),
+                    attr='compile',
+                    ctx=Load()),
+                args=[
+                    Constant(value='(?:(?:https?://|www\\.)[^\\s/$.?#].[^\\s]*)'),
+                    Attribute(
+                        value=Name(id='re', ctx=Load()),
+                        attr='IGNORECASE',
+                        ctx=Load())],
+                keywords=[])),
+        FunctionDef(
+            name='is_valid_url',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='url')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Name(id='bool', ctx=Load()),
+                        args=[
+                            Call(
+                                func=Attribute(
+                                    value=Name(id='url_pattern', ctx=Load()),
+                                    attr='match',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='url', ctx=Load())],
+                                keywords=[])],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='test_urls', ctx=Store())],
+            value=List(
+                elts=[
+                    Constant(value='http://example.com'),
+                    Constant(value='https://www.example.com'),
+                    Constant(value='www.example.com'),
+                    Constant(value='example.com'),
+                    Constant(value='invalid_url')],
+                ctx=Load())),
+        For(
+            target=Name(id='url', ctx=Store()),
+            iter=Name(id='test_urls', ctx=Load()),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            JoinedStr(
+                                values=[
+                                    FormattedValue(
+                                        value=Name(id='url', ctx=Load()),
+                                        conversion=-1),
+                                    Constant(value=': '),
+                                    FormattedValue(
+                                        value=Call(
+                                            func=Name(id='is_valid_url', ctx=Load()),
+                                            args=[
+                                                Name(id='url', ctx=Load())],
+                                            keywords=[]),
+                                        conversion=-1)])],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

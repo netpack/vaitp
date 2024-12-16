@@ -1,0 +1,51 @@
+Module(
+    body=[
+        FunctionDef(
+            name='safe_insert',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='query')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=BoolOp(
+                        op=Or(),
+                        values=[
+                            Compare(
+                                left=Constant(value='eval('),
+                                ops=[
+                                    In()],
+                                comparators=[
+                                    Name(id='query', ctx=Load())]),
+                            Compare(
+                                left=Constant(value='exec('),
+                                ops=[
+                                    In()],
+                                comparators=[
+                                    Name(id='query', ctx=Load())])]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Unsafe query detected!')],
+                                keywords=[]))],
+                    orelse=[]),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Executing safe insert query:'),
+                            Name(id='query', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='safe_insert', ctx=Load()),
+                args=[
+                    Constant(value="INSERT INTO list_items (name) VALUES ('item1')")],
+                keywords=[]))],
+    type_ignores=[])

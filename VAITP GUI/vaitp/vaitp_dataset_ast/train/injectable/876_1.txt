@@ -1,0 +1,299 @@
+Module(
+    body=[
+        ImportFrom(
+            module='flask',
+            names=[
+                alias(name='Flask'),
+                alias(name='request'),
+                alias(name='jsonify')],
+            level=0),
+        ImportFrom(
+            module='flask_security',
+            names=[
+                alias(name='Security'),
+                alias(name='SQLAlchemyUserDatastore'),
+                alias(name='UserMixin'),
+                alias(name='RoleMixin')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='app', ctx=Store())],
+            value=Call(
+                func=Name(id='Flask', ctx=Load()),
+                args=[
+                    Name(id='__name__', ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Subscript(
+                    value=Attribute(
+                        value=Name(id='app', ctx=Load()),
+                        attr='config',
+                        ctx=Load()),
+                    slice=Constant(value='SECURITY_TOKEN_MAX_AGE'),
+                    ctx=Store())],
+            value=Constant(value=0)),
+        Assign(
+            targets=[
+                Subscript(
+                    value=Attribute(
+                        value=Name(id='app', ctx=Load()),
+                        attr='config',
+                        ctx=Load()),
+                    slice=Constant(value='SECRET_KEY'),
+                    ctx=Store())],
+            value=Constant(value='super-secret')),
+        Assign(
+            targets=[
+                Subscript(
+                    value=Attribute(
+                        value=Name(id='app', ctx=Load()),
+                        attr='config',
+                        ctx=Load()),
+                    slice=Constant(value='SQLALCHEMY_DATABASE_URI'),
+                    ctx=Store())],
+            value=Constant(value='sqlite:///app.db')),
+        ClassDef(
+            name='Role',
+            bases=[
+                Attribute(
+                    value=Name(id='db', ctx=Load()),
+                    attr='Model',
+                    ctx=Load()),
+                Name(id='RoleMixin', ctx=Load())],
+            keywords=[],
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='id', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='db', ctx=Load()),
+                            attr='Column',
+                            ctx=Load()),
+                        args=[
+                            Call(
+                                func=Attribute(
+                                    value=Name(id='db', ctx=Load()),
+                                    attr='Integer',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[])],
+                        keywords=[
+                            keyword(
+                                arg='primary_key',
+                                value=Constant(value=True))])),
+                Assign(
+                    targets=[
+                        Name(id='name', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='db', ctx=Load()),
+                            attr='Column',
+                            ctx=Load()),
+                        args=[
+                            Call(
+                                func=Attribute(
+                                    value=Name(id='db', ctx=Load()),
+                                    attr='String',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[
+                                    keyword(
+                                        arg='length',
+                                        value=Constant(value=80))])],
+                        keywords=[
+                            keyword(
+                                arg='unique',
+                                value=Constant(value=True))]))],
+            decorator_list=[]),
+        ClassDef(
+            name='User',
+            bases=[
+                Attribute(
+                    value=Name(id='db', ctx=Load()),
+                    attr='Model',
+                    ctx=Load()),
+                Name(id='UserMixin', ctx=Load())],
+            keywords=[],
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='id', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='db', ctx=Load()),
+                            attr='Column',
+                            ctx=Load()),
+                        args=[
+                            Call(
+                                func=Attribute(
+                                    value=Name(id='db', ctx=Load()),
+                                    attr='Integer',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[])],
+                        keywords=[
+                            keyword(
+                                arg='primary_key',
+                                value=Constant(value=True))])),
+                Assign(
+                    targets=[
+                        Name(id='email', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='db', ctx=Load()),
+                            attr='Column',
+                            ctx=Load()),
+                        args=[
+                            Call(
+                                func=Attribute(
+                                    value=Name(id='db', ctx=Load()),
+                                    attr='String',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[
+                                    keyword(
+                                        arg='length',
+                                        value=Constant(value=255))])],
+                        keywords=[
+                            keyword(
+                                arg='unique',
+                                value=Constant(value=True))])),
+                Assign(
+                    targets=[
+                        Name(id='password', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='db', ctx=Load()),
+                            attr='Column',
+                            ctx=Load()),
+                        args=[
+                            Call(
+                                func=Attribute(
+                                    value=Name(id='db', ctx=Load()),
+                                    attr='String',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[
+                                    keyword(
+                                        arg='length',
+                                        value=Constant(value=255))])],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='user_datastore', ctx=Store())],
+            value=Call(
+                func=Name(id='SQLAlchemyUserDatastore', ctx=Load()),
+                args=[
+                    Name(id='db', ctx=Load()),
+                    Name(id='User', ctx=Load()),
+                    Name(id='Role', ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='security', ctx=Store())],
+            value=Call(
+                func=Name(id='Security', ctx=Load()),
+                args=[
+                    Name(id='app', ctx=Load()),
+                    Name(id='user_datastore', ctx=Load())],
+                keywords=[])),
+        FunctionDef(
+            name='login',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Compare(
+                        left=Attribute(
+                            value=Name(id='request', ctx=Load()),
+                            attr='method',
+                            ctx=Load()),
+                        ops=[
+                            Eq()],
+                        comparators=[
+                            Constant(value='POST')]),
+                    body=[
+                        Pass()],
+                    orelse=[]),
+                Return(
+                    value=Call(
+                        func=Name(id='jsonify', ctx=Load()),
+                        args=[
+                            Dict(
+                                keys=[
+                                    Constant(value='message')],
+                                values=[
+                                    Constant(value='Login page')])],
+                        keywords=[]))],
+            decorator_list=[
+                Call(
+                    func=Attribute(
+                        value=Name(id='app', ctx=Load()),
+                        attr='route',
+                        ctx=Load()),
+                    args=[
+                        Constant(value='/login')],
+                    keywords=[
+                        keyword(
+                            arg='methods',
+                            value=List(
+                                elts=[
+                                    Constant(value='GET'),
+                                    Constant(value='POST')],
+                                ctx=Load()))])]),
+        FunctionDef(
+            name='change',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Compare(
+                        left=Attribute(
+                            value=Name(id='request', ctx=Load()),
+                            attr='method',
+                            ctx=Load()),
+                        ops=[
+                            Eq()],
+                        comparators=[
+                            Constant(value='POST')]),
+                    body=[
+                        Pass()],
+                    orelse=[]),
+                Return(
+                    value=Call(
+                        func=Name(id='jsonify', ctx=Load()),
+                        args=[
+                            Dict(
+                                keys=[
+                                    Constant(value='message')],
+                                values=[
+                                    Constant(value='Change page')])],
+                        keywords=[]))],
+            decorator_list=[
+                Call(
+                    func=Attribute(
+                        value=Name(id='app', ctx=Load()),
+                        attr='route',
+                        ctx=Load()),
+                    args=[
+                        Constant(value='/change')],
+                    keywords=[
+                        keyword(
+                            arg='methods',
+                            value=List(
+                                elts=[
+                                    Constant(value='GET'),
+                                    Constant(value='POST')],
+                                ctx=Load()))])])],
+    type_ignores=[])

@@ -1,0 +1,60 @@
+Module(
+    body=[
+        Assign(
+            targets=[
+                Name(id='array_size', ctx=Store())],
+            value=Constant(value=10)),
+        Assign(
+            targets=[
+                Name(id='my_array', ctx=Store())],
+            value=BinOp(
+                left=List(
+                    elts=[
+                        Constant(value=0)],
+                    ctx=Load()),
+                op=Mult(),
+                right=Name(id='array_size', ctx=Load()))),
+        FunctionDef(
+            name='access_array_fixed',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(
+                        arg='index',
+                        annotation=Name(id='int', ctx=Load()))],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Compare(
+                        left=Name(id='index', ctx=Load()),
+                        ops=[
+                            Lt()],
+                        comparators=[
+                            Constant(value=0)]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Index must be a non-negative integer.')],
+                                keywords=[]))],
+                    orelse=[]),
+                Return(
+                    value=Subscript(
+                        value=Name(id='my_array', ctx=Load()),
+                        slice=Name(id='index', ctx=Load()),
+                        ctx=Load()))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='value', ctx=Store())],
+            value=Call(
+                func=Name(id='access_array', ctx=Load()),
+                args=[
+                    UnaryOp(
+                        op=USub(),
+                        operand=Constant(value=1))],
+                keywords=[]))],
+    type_ignores=[])

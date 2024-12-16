@@ -1,0 +1,12 @@
+#!/bin/bash
+PROJ_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/.."
+
+# This requires GNU binutils (e.g. brew install binutils).
+
+/usr/local/opt/binutils/bin/gobjdump -t $PROJ_DIR/build/lib*/_ast${1}.*.so \
+    | grep ' g ' \
+    | grep -v UND \
+    | sed 's/.* _//' \
+    | grep -v PyInit__ast \
+    | grep 'Py' \
+    > "exported_symbols${1}.txt"

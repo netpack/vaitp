@@ -1,0 +1,33 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='xdg.Menu')]),
+        Import(
+            names=[
+                alias(name='os')]),
+        Assign(
+            targets=[
+                Subscript(
+                    value=Attribute(
+                        value=Name(id='os', ctx=Load()),
+                        attr='environ',
+                        ctx=Load()),
+                    slice=Constant(value='XDG_CONFIG_DIRS'),
+                    ctx=Store())],
+            value=Constant(value='/path/to/malicious/menu/file')),
+        Assign(
+            targets=[
+                Name(id='menu', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='xdg', ctx=Load()),
+                        attr='Menu',
+                        ctx=Load()),
+                    attr='parse',
+                    ctx=Load()),
+                args=[
+                    Constant(value='malicious.menu')],
+                keywords=[]))],
+    type_ignores=[])

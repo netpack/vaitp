@@ -1,0 +1,68 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='httplib')]),
+        Assign(
+            targets=[
+                Name(id='conn', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='httplib', ctx=Load()),
+                    attr='HTTPConnection',
+                    ctx=Load()),
+                args=[
+                    Constant(value='localhost'),
+                    Constant(value=8000)],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='host_header', ctx=Store())],
+            value=Constant(value='localhost')),
+        If(
+            test=Compare(
+                left=Call(
+                    func=Name(id='len', ctx=Load()),
+                    args=[
+                        Name(id='host_header', ctx=Load())],
+                    keywords=[]),
+                ops=[
+                    Lt()],
+                comparators=[
+                    Constant(value=256)]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='conn', ctx=Load()),
+                            attr='request',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='GET'),
+                            Constant(value='/')],
+                        keywords=[
+                            keyword(
+                                arg='headers',
+                                value=Dict(
+                                    keys=[
+                                        Constant(value='Host')],
+                                    values=[
+                                        Name(id='host_header', ctx=Load())]))]))],
+            orelse=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Error: Host header is too long')],
+                        keywords=[]))]),
+        Assign(
+            targets=[
+                Name(id='response', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='conn', ctx=Load()),
+                    attr='getresponse',
+                    ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

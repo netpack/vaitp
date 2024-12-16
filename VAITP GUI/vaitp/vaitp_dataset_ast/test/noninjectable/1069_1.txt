@@ -1,0 +1,77 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='json')]),
+        Import(
+            names=[
+                alias(name='os')]),
+        ImportFrom(
+            module='processing_utils',
+            names=[
+                alias(name='move_files_to_cache')],
+            level=0),
+        FunctionDef(
+            name='postprocess',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='user_input')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='parsed_json', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='json', ctx=Load()),
+                            attr='loads',
+                            ctx=Load()),
+                        args=[
+                            Name(id='user_input', ctx=Load())],
+                        keywords=[])),
+                If(
+                    test=BoolOp(
+                        op=And(),
+                        values=[
+                            Call(
+                                func=Name(id='isinstance', ctx=Load()),
+                                args=[
+                                    Name(id='parsed_json', ctx=Load()),
+                                    Name(id='dict', ctx=Load())],
+                                keywords=[]),
+                            Compare(
+                                left=Constant(value='path'),
+                                ops=[
+                                    In()],
+                                comparators=[
+                                    Name(id='parsed_json', ctx=Load())])]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='file_path', ctx=Store())],
+                            value=Subscript(
+                                value=Name(id='parsed_json', ctx=Load()),
+                                slice=Constant(value='path'),
+                                ctx=Load())),
+                        Expr(
+                            value=Call(
+                                func=Name(id='move_files_to_cache', ctx=Load()),
+                                args=[
+                                    Name(id='file_path', ctx=Load())],
+                                keywords=[]))],
+                    orelse=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='user_input', ctx=Store())],
+            value=Constant(value='{"path": "/etc/passwd"}')),
+        Expr(
+            value=Call(
+                func=Name(id='postprocess', ctx=Load()),
+                args=[
+                    Name(id='user_input', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

@@ -1,0 +1,27 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='tarfile')]),
+        Assign(
+            targets=[
+                Name(id='tar', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='tarfile', ctx=Load()),
+                    attr='TarFile',
+                    ctx=Load()),
+                args=[
+                    Constant(value='example.tar'),
+                    Constant(value='w')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='tar', ctx=Load()),
+                    attr='add',
+                    ctx=Load()),
+                args=[
+                    Constant(value='../etc/passwd')],
+                keywords=[]))],
+    type_ignores=[])

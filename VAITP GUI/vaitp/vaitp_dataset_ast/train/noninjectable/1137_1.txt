@@ -1,0 +1,47 @@
+Module(
+    body=[
+        FunctionDef(
+            name='execute_query',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='db_connection'),
+                    arg(arg='query')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Compare(
+                        left=Constant(value='INSERT'),
+                        ops=[
+                            In()],
+                        comparators=[
+                            Name(id='query', ctx=Load())]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='eval', ctx=Load()),
+                                args=[
+                                    Name(id='query', ctx=Load())],
+                                keywords=[]))],
+                    orelse=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Invalid query type')],
+                                keywords=[]))])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='conn', ctx=Store())],
+            value=Constant(value=None)),
+        Expr(
+            value=Call(
+                func=Name(id='execute_query', ctx=Load()),
+                args=[
+                    Name(id='conn', ctx=Load()),
+                    Constant(value="INSERT INTO users (name) VALUES ('Alice'); os.system('whoami')")],
+                keywords=[]))],
+    type_ignores=[])

@@ -1,0 +1,62 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='re')]),
+        ImportFrom(
+            module='flask',
+            names=[
+                alias(name='Markup')],
+            level=0),
+        FunctionDef(
+            name='sanitize_input',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='user_input')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='sanitized_input', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='re', ctx=Load()),
+                            attr='sub',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='<.*?>'),
+                            Constant(value=''),
+                            Name(id='user_input', ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=Name(id='sanitized_input', ctx=Load()))],
+            decorator_list=[]),
+        FunctionDef(
+            name='render_notebook_content',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='user_input')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='safe_input', ctx=Store())],
+                    value=Call(
+                        func=Name(id='sanitize_input', ctx=Load()),
+                        args=[
+                            Name(id='user_input', ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=Call(
+                        func=Name(id='Markup', ctx=Load()),
+                        args=[
+                            Name(id='safe_input', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[])],
+    type_ignores=[])

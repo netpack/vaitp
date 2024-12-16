@@ -1,0 +1,63 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='json')]),
+        FunctionDef(
+            name='load_config_vulnerable',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='config_path')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                With(
+                    items=[
+                        withitem(
+                            context_expr=Call(
+                                func=Name(id='open', ctx=Load()),
+                                args=[
+                                    Name(id='config_path', ctx=Load()),
+                                    Constant(value='r')],
+                                keywords=[]),
+                            optional_vars=Name(id='config_file', ctx=Store()))],
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='config_data', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='json', ctx=Load()),
+                                    attr='load',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='config_file', ctx=Load())],
+                                keywords=[])),
+                        If(
+                            test=Compare(
+                                left=Constant(value='execute'),
+                                ops=[
+                                    In()],
+                                comparators=[
+                                    Name(id='config_data', ctx=Load())]),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='exec', ctx=Load()),
+                                        args=[
+                                            Subscript(
+                                                value=Name(id='config_data', ctx=Load()),
+                                                slice=Constant(value='execute'),
+                                                ctx=Load())],
+                                        keywords=[]))],
+                            orelse=[])])],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='load_config_vulnerable', ctx=Load()),
+                args=[
+                    Constant(value='path/to/config.json')],
+                keywords=[]))],
+    type_ignores=[])

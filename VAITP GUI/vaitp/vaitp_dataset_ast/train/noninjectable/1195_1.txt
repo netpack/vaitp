@@ -1,0 +1,36 @@
+Module(
+    body=[
+        ImportFrom(
+            module='lxml.html.clean',
+            names=[
+                alias(name='Cleaner')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='cleaner', ctx=Store())],
+            value=Call(
+                func=Name(id='Cleaner', ctx=Load()),
+                args=[],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='html_input', ctx=Store())],
+            value=Constant(value="\n<div>\n    <style>\n        /* This is a CSS comment */\n    </style>\n    <script>alert('XSS');</script>\n    <svg><text>Malicious SVG content</text></svg>\n    <math><msup><mi>x</mi><mn>2</mn></msup></math>\n    <noscript>This should not be rendered</noscript>\n    <p>Safe content</p>\n</div>\n")),
+        Assign(
+            targets=[
+                Name(id='cleaned_html', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='cleaner', ctx=Load()),
+                    attr='clean_html',
+                    ctx=Load()),
+                args=[
+                    Name(id='html_input', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='cleaned_html', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

@@ -1,0 +1,46 @@
+Module(
+    body=[
+        FunctionDef(
+            name='secure_function',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='size')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Compare(
+                        left=Name(id='size', ctx=Load()),
+                        ops=[
+                            LtE()],
+                        comparators=[
+                            Constant(value=0)]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Size must be a positive integer')],
+                                keywords=[]))],
+                    orelse=[]),
+                Assign(
+                    targets=[
+                        Name(id='buffer', ctx=Store())],
+                    value=BinOp(
+                        left=List(
+                            elts=[
+                                Constant(value=0)],
+                            ctx=Load()),
+                        op=Mult(),
+                        right=Name(id='size', ctx=Load()))),
+                Assign(
+                    targets=[
+                        Subscript(
+                            value=Name(id='buffer', ctx=Load()),
+                            slice=Constant(value=0),
+                            ctx=Store())],
+                    value=Constant(value=1))],
+            decorator_list=[])],
+    type_ignores=[])

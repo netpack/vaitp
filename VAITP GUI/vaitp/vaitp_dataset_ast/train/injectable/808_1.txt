@@ -1,0 +1,109 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='requests')]),
+        ImportFrom(
+            module='django.core.exceptions',
+            names=[
+                alias(name='ValidationError')],
+            level=0),
+        ImportFrom(
+            module='django.db',
+            names=[
+                alias(name='models')],
+            level=0),
+        ClassDef(
+            name='SafeURLField',
+            bases=[
+                Attribute(
+                    value=Name(id='models', ctx=Load()),
+                    attr='URLField',
+                    ctx=Load())],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='verify_exists',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='value')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Try(
+                            body=[
+                                Assign(
+                                    targets=[
+                                        Name(id='response', ctx=Store())],
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='requests', ctx=Load()),
+                                            attr='head',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='value', ctx=Load())],
+                                        keywords=[
+                                            keyword(
+                                                arg='timeout',
+                                                value=Constant(value=5))])),
+                                If(
+                                    test=Compare(
+                                        left=Attribute(
+                                            value=Name(id='response', ctx=Load()),
+                                            attr='status_code',
+                                            ctx=Load()),
+                                        ops=[
+                                            NotEq()],
+                                        comparators=[
+                                            Constant(value=200)]),
+                                    body=[
+                                        Raise(
+                                            exc=Call(
+                                                func=Name(id='ValidationError', ctx=Load()),
+                                                args=[
+                                                    JoinedStr(
+                                                        values=[
+                                                            Constant(value='URL does not exist: '),
+                                                            FormattedValue(
+                                                                value=Name(id='value', ctx=Load()),
+                                                                conversion=-1)])],
+                                                keywords=[]))],
+                                    orelse=[])],
+                            handlers=[
+                                ExceptHandler(
+                                    type=Attribute(
+                                        value=Attribute(
+                                            value=Name(id='requests', ctx=Load()),
+                                            attr='exceptions',
+                                            ctx=Load()),
+                                        attr='RequestException',
+                                        ctx=Load()),
+                                    name='e',
+                                    body=[
+                                        Raise(
+                                            exc=Call(
+                                                func=Name(id='ValidationError', ctx=Load()),
+                                                args=[
+                                                    JoinedStr(
+                                                        values=[
+                                                            Constant(value='Invalid URL: '),
+                                                            FormattedValue(
+                                                                value=Name(id='value', ctx=Load()),
+                                                                conversion=-1),
+                                                            Constant(value=' - '),
+                                                            FormattedValue(
+                                                                value=Call(
+                                                                    func=Name(id='str', ctx=Load()),
+                                                                    args=[
+                                                                        Name(id='e', ctx=Load())],
+                                                                    keywords=[]),
+                                                                conversion=-1)])],
+                                                keywords=[]))])],
+                            orelse=[],
+                            finalbody=[])],
+                    decorator_list=[])],
+            decorator_list=[])],
+    type_ignores=[])

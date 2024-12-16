@@ -1,0 +1,74 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        FunctionDef(
+            name='vulnerable_symlink',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='target'),
+                    arg(arg='link_name')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='os', ctx=Load()),
+                            attr='symlink',
+                            ctx=Load()),
+                        args=[
+                            Name(id='target', ctx=Load()),
+                            Name(id='link_name', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='attacker_controlled_target', ctx=Store())],
+                    value=Constant(value='C:\\path\\to\\target')),
+                Assign(
+                    targets=[
+                        Name(id='attacker_controlled_link_name', ctx=Store())],
+                    value=Constant(value='C:\\path\\to\\very_long_link_name_that_exceeds_the_buffer_limit')),
+                Try(
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='vulnerable_symlink', ctx=Load()),
+                                args=[
+                                    Name(id='attacker_controlled_target', ctx=Load()),
+                                    Name(id='attacker_controlled_link_name', ctx=Load())],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Symlink created successfully.')],
+                                keywords=[]))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='Exception', ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            Constant(value='Error creating symlink:'),
+                                            Name(id='e', ctx=Load())],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[])],
+            orelse=[])],
+    type_ignores=[])

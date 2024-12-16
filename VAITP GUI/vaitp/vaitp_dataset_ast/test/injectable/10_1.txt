@@ -1,0 +1,87 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='urllib.parse')]),
+        FunctionDef(
+            name='is_blocked',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='url')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='blocked_hosts', ctx=Store())],
+                    value=List(
+                        elts=[
+                            Constant(value='example.com'),
+                            Constant(value='badguy.net')],
+                        ctx=Load())),
+                Assign(
+                    targets=[
+                        Name(id='parsed_url', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='urllib', ctx=Load()),
+                                attr='parse',
+                                ctx=Load()),
+                            attr='urlparse',
+                            ctx=Load()),
+                        args=[
+                            Call(
+                                func=Attribute(
+                                    value=Name(id='url', ctx=Load()),
+                                    attr='strip',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[])],
+                        keywords=[])),
+                If(
+                    test=Compare(
+                        left=Attribute(
+                            value=Name(id='parsed_url', ctx=Load()),
+                            attr='netloc',
+                            ctx=Load()),
+                        ops=[
+                            In()],
+                        comparators=[
+                            Name(id='blocked_hosts', ctx=Load())]),
+                    body=[
+                        Return(
+                            value=Constant(value=True))],
+                    orelse=[]),
+                Return(
+                    value=Constant(value=False))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='url', ctx=Store())],
+            value=Constant(value='\x0bhttps://example.com')),
+        If(
+            test=UnaryOp(
+                op=Not(),
+                operand=Call(
+                    func=Name(id='is_blocked', ctx=Load()),
+                    args=[
+                        Name(id='url', ctx=Load())],
+                    keywords=[])),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='URL is not blocked')],
+                        keywords=[]))],
+            orelse=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='URL is blocked')],
+                        keywords=[]))])],
+    type_ignores=[])

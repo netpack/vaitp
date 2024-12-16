@@ -1,0 +1,343 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='pylibmc')]),
+        ImportFrom(
+            module='cryptography.fernet',
+            names=[
+                alias(name='Fernet')],
+            level=0),
+        ClassDef(
+            name='SecureMemcacheMiddleware',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='app'),
+                            arg(arg='encryption_key')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='app',
+                                    ctx=Store())],
+                            value=Name(id='app', ctx=Load())),
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='encryption_key',
+                                    ctx=Store())],
+                            value=Name(id='encryption_key', ctx=Load())),
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='memcache_client',
+                                    ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='pylibmc', ctx=Load()),
+                                    attr='Client',
+                                    ctx=Load()),
+                                args=[
+                                    List(
+                                        elts=[
+                                            Constant(value='127.0.0.1:11211')],
+                                        ctx=Load())],
+                                keywords=[
+                                    keyword(
+                                        arg='binary',
+                                        value=Constant(value=True))]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='encrypt',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='data')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='fernet', ctx=Store())],
+                            value=Call(
+                                func=Name(id='Fernet', ctx=Load()),
+                                args=[
+                                    Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='encryption_key',
+                                        ctx=Load())],
+                                keywords=[])),
+                        Return(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='fernet', ctx=Load()),
+                                    attr='encrypt',
+                                    ctx=Load()),
+                                args=[
+                                    Call(
+                                        func=Attribute(
+                                            value=Name(id='data', ctx=Load()),
+                                            attr='encode',
+                                            ctx=Load()),
+                                        args=[],
+                                        keywords=[])],
+                                keywords=[]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='decrypt',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='encrypted_data')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='fernet', ctx=Store())],
+                            value=Call(
+                                func=Name(id='Fernet', ctx=Load()),
+                                args=[
+                                    Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='encryption_key',
+                                        ctx=Load())],
+                                keywords=[])),
+                        Return(
+                            value=Call(
+                                func=Attribute(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='fernet', ctx=Load()),
+                                            attr='decrypt',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='encrypted_data', ctx=Load())],
+                                        keywords=[]),
+                                    attr='decode',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='__call__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='environ'),
+                            arg(arg='start_response')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='encrypted_data', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='memcache_client',
+                                        ctx=Load()),
+                                    attr='get',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='sensitive_key')],
+                                keywords=[])),
+                        If(
+                            test=Name(id='encrypted_data', ctx=Load()),
+                            body=[
+                                Assign(
+                                    targets=[
+                                        Name(id='sensitive_data', ctx=Store())],
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='self', ctx=Load()),
+                                            attr='decrypt',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='encrypted_data', ctx=Load())],
+                                        keywords=[])),
+                                Assign(
+                                    targets=[
+                                        Subscript(
+                                            value=Name(id='environ', ctx=Load()),
+                                            slice=Constant(value='sensitive_data'),
+                                            ctx=Store())],
+                                    value=Name(id='sensitive_data', ctx=Load()))],
+                            orelse=[
+                                Assign(
+                                    targets=[
+                                        Subscript(
+                                            value=Name(id='environ', ctx=Load()),
+                                            slice=Constant(value='sensitive_data'),
+                                            ctx=Store())],
+                                    value=Constant(value='No data found'))]),
+                        Return(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='app',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='environ', ctx=Load()),
+                                    Name(id='start_response', ctx=Load())],
+                                keywords=[]))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        FunctionDef(
+            name='simple_app',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='environ'),
+                    arg(arg='start_response')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='sensitive_data', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='environ', ctx=Load()),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='sensitive_data'),
+                            Constant(value='No sensitive data')],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='response_body', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=JoinedStr(
+                                values=[
+                                    Constant(value='Sensitive Data: '),
+                                    FormattedValue(
+                                        value=Name(id='sensitive_data', ctx=Load()),
+                                        conversion=-1)]),
+                            attr='encode',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='utf-8')],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='status', ctx=Store())],
+                    value=Constant(value='200 OK')),
+                Assign(
+                    targets=[
+                        Name(id='headers', ctx=Store())],
+                    value=List(
+                        elts=[
+                            Tuple(
+                                elts=[
+                                    Constant(value='Content-Type'),
+                                    Constant(value='text/plain')],
+                                ctx=Load()),
+                            Tuple(
+                                elts=[
+                                    Constant(value='Content-Length'),
+                                    Call(
+                                        func=Name(id='str', ctx=Load()),
+                                        args=[
+                                            Call(
+                                                func=Name(id='len', ctx=Load()),
+                                                args=[
+                                                    Name(id='response_body', ctx=Load())],
+                                                keywords=[])],
+                                        keywords=[])],
+                                ctx=Load())],
+                        ctx=Load())),
+                Expr(
+                    value=Call(
+                        func=Name(id='start_response', ctx=Load()),
+                        args=[
+                            Name(id='status', ctx=Load()),
+                            Name(id='headers', ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=List(
+                        elts=[
+                            Name(id='response_body', ctx=Load())],
+                        ctx=Load()))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='key', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='Fernet', ctx=Load()),
+                    attr='generate_key',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='app', ctx=Store())],
+            value=Call(
+                func=Name(id='SecureMemcacheMiddleware', ctx=Load()),
+                args=[
+                    Name(id='simple_app', ctx=Load()),
+                    Name(id='key', ctx=Load())],
+                keywords=[])),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                ImportFrom(
+                    module='wsgiref.simple_server',
+                    names=[
+                        alias(name='make_server')],
+                    level=0),
+                Assign(
+                    targets=[
+                        Name(id='server', ctx=Store())],
+                    value=Call(
+                        func=Name(id='make_server', ctx=Load()),
+                        args=[
+                            Constant(value='localhost'),
+                            Constant(value=8000),
+                            Name(id='app', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Serving on http://localhost:8000...')],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='server', ctx=Load()),
+                            attr='serve_forever',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

@@ -1,0 +1,37 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='re')]),
+        FunctionDef(
+            name='get_file_transfer_type',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='input_string')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='pattern', ctx=Store())],
+                    value=Constant(value='^(?:(?:https?|s?ftp):\\/\\/)?(?:[^\\/\\s]+(?::[^\\/\\s]+)?@)?(?:www\\.)?([^:\\/\\s]+)(?::(\\d+))?([^\\/\\s]*)?$')),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='re', ctx=Load()),
+                                    attr='compile',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='pattern', ctx=Load())],
+                                keywords=[]),
+                            attr='match',
+                            ctx=Load()),
+                        args=[
+                            Name(id='input_string', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[])],
+    type_ignores=[])

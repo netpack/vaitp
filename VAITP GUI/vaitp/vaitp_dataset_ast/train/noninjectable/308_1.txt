@@ -1,0 +1,70 @@
+Module(
+    body=[
+        ImportFrom(
+            module='starlette.applications',
+            names=[
+                alias(name='Starlette')],
+            level=0),
+        ImportFrom(
+            module='starlette.responses',
+            names=[
+                alias(name='JSONResponse')],
+            level=0),
+        ImportFrom(
+            module='starlette.routing',
+            names=[
+                alias(name='Route')],
+            level=0),
+        AsyncFunctionDef(
+            name='handle_request',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='request')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='form', ctx=Store())],
+                    value=Await(
+                        value=Call(
+                            func=Attribute(
+                                value=Name(id='request', ctx=Load()),
+                                attr='form',
+                                ctx=Load()),
+                            args=[],
+                            keywords=[]))),
+                Return(
+                    value=Call(
+                        func=Name(id='JSONResponse', ctx=Load()),
+                        args=[
+                            Dict(
+                                keys=[
+                                    Constant(value='message'),
+                                    Constant(value='data')],
+                                values=[
+                                    Constant(value='Form received'),
+                                    Name(id='form', ctx=Load())])],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='app', ctx=Store())],
+            value=Call(
+                func=Name(id='Starlette', ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='routes',
+                        value=List(
+                            elts=[
+                                Call(
+                                    func=Name(id='Route', ctx=Load()),
+                                    args=[
+                                        Constant(value='/'),
+                                        Name(id='handle_request', ctx=Load())],
+                                    keywords=[])],
+                            ctx=Load()))]))],
+    type_ignores=[])

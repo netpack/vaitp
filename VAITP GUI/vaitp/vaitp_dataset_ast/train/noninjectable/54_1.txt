@@ -1,0 +1,157 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='urllib.request')]),
+        Assign(
+            targets=[
+                Name(id='password_mgr', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='urllib', ctx=Load()),
+                        attr='request',
+                        ctx=Load()),
+                    attr='HTTPPasswordMgrWithDefaultRealm',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='password_mgr', ctx=Load()),
+                    attr='add_password',
+                    ctx=Load()),
+                args=[
+                    Constant(value=None),
+                    Constant(value='http://example.com'),
+                    Constant(value='username'),
+                    Constant(value='password')],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='auth_handler', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='urllib', ctx=Load()),
+                        attr='request',
+                        ctx=Load()),
+                    attr='HTTPBasicAuthHandler',
+                    ctx=Load()),
+                args=[
+                    Name(id='password_mgr', ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='opener', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='urllib', ctx=Load()),
+                        attr='request',
+                        ctx=Load()),
+                    attr='build_opener',
+                    ctx=Load()),
+                args=[
+                    Name(id='auth_handler', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='urllib', ctx=Load()),
+                        attr='request',
+                        ctx=Load()),
+                    attr='install_opener',
+                    ctx=Load()),
+                args=[
+                    Name(id='opener', ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='url', ctx=Store())],
+            value=Constant(value='http://malicious-server.com/')),
+        Assign(
+            targets=[
+                Name(id='request', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='urllib', ctx=Load()),
+                        attr='request',
+                        ctx=Load()),
+                    attr='Request',
+                    ctx=Load()),
+                args=[
+                    Name(id='url', ctx=Load())],
+                keywords=[])),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='response', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='urllib', ctx=Load()),
+                                attr='request',
+                                ctx=Load()),
+                            attr='urlopen',
+                            ctx=Load()),
+                        args=[
+                            Name(id='request', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Call(
+                                func=Attribute(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='response', ctx=Load()),
+                                            attr='read',
+                                            ctx=Load()),
+                                        args=[],
+                                        keywords=[]),
+                                    attr='decode',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[])],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Attribute(
+                        value=Attribute(
+                            value=Name(id='urllib', ctx=Load()),
+                            attr='error',
+                            ctx=Load()),
+                        attr='HTTPError',
+                        ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            Constant(value='Error: '),
+                                            FormattedValue(
+                                                value=Attribute(
+                                                    value=Name(id='e', ctx=Load()),
+                                                    attr='code',
+                                                    ctx=Load()),
+                                                conversion=-1),
+                                            Constant(value=' '),
+                                            FormattedValue(
+                                                value=Attribute(
+                                                    value=Name(id='e', ctx=Load()),
+                                                    attr='reason',
+                                                    ctx=Load()),
+                                                conversion=-1)])],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

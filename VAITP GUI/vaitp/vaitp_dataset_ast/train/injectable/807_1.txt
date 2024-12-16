@@ -1,0 +1,42 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        Import(
+            names=[
+                alias(name='ctypes')]),
+        Assign(
+            targets=[
+                Name(id='dll_path', ctx=Store())],
+            value=Constant(value='C:\\Program Files\\Rapid7\\Insight Agent\\python3.dll')),
+        If(
+            test=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='os', ctx=Load()),
+                        attr='path',
+                        ctx=Load()),
+                    attr='exists',
+                    ctx=Load()),
+                args=[
+                    Name(id='dll_path', ctx=Load())],
+                keywords=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='ctypes', ctx=Load()),
+                            attr='CDLL',
+                            ctx=Load()),
+                        args=[
+                            Name(id='dll_path', ctx=Load())],
+                        keywords=[]))],
+            orelse=[
+                Raise(
+                    exc=Call(
+                        func=Name(id='FileNotFoundError', ctx=Load()),
+                        args=[
+                            Constant(value='The specified DLL does not exist.')],
+                        keywords=[]))])],
+    type_ignores=[])

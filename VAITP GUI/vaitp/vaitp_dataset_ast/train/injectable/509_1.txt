@@ -1,0 +1,167 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='pickle')]),
+        ClassDef(
+            name='SafeUnpickler',
+            bases=[
+                Attribute(
+                    value=Name(id='pickle', ctx=Load()),
+                    attr='Unpickler',
+                    ctx=Load())],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='find_class',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='module'),
+                            arg(arg='name')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        If(
+                            test=BoolOp(
+                                op=And(),
+                                values=[
+                                    Compare(
+                                        left=Name(id='module', ctx=Load()),
+                                        ops=[
+                                            Eq()],
+                                        comparators=[
+                                            Constant(value='safe_module')]),
+                                    Compare(
+                                        left=Name(id='name', ctx=Load()),
+                                        ops=[
+                                            In()],
+                                        comparators=[
+                                            List(
+                                                elts=[
+                                                    Constant(value='SafeClass1'),
+                                                    Constant(value='SafeClass2')],
+                                                ctx=Load())])]),
+                            body=[
+                                Return(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Call(
+                                                func=Name(id='super', ctx=Load()),
+                                                args=[],
+                                                keywords=[]),
+                                            attr='find_class',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='module', ctx=Load()),
+                                            Name(id='name', ctx=Load())],
+                                        keywords=[]))],
+                            orelse=[]),
+                        Raise(
+                            exc=Call(
+                                func=Attribute(
+                                    value=Name(id='pickle', ctx=Load()),
+                                    attr='UnpicklingError',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='Unauthorized unpickling attempt!')],
+                                keywords=[]))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        FunctionDef(
+            name='safe_load_pickle',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='data')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Call(
+                                func=Name(id='SafeUnpickler', ctx=Load()),
+                                args=[
+                                    Call(
+                                        func=Attribute(
+                                            value=Name(id='io', ctx=Load()),
+                                            attr='BytesIO',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='data', ctx=Load())],
+                                        keywords=[])],
+                                keywords=[]),
+                            attr='load',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                With(
+                    items=[
+                        withitem(
+                            context_expr=Call(
+                                func=Name(id='open', ctx=Load()),
+                                args=[
+                                    Constant(value='safe_data.pkl'),
+                                    Constant(value='rb')],
+                                keywords=[]),
+                            optional_vars=Name(id='f', ctx=Store()))],
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='data', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='f', ctx=Load()),
+                                    attr='read',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[])),
+                        Try(
+                            body=[
+                                Assign(
+                                    targets=[
+                                        Name(id='obj', ctx=Store())],
+                                    value=Call(
+                                        func=Name(id='safe_load_pickle', ctx=Load()),
+                                        args=[
+                                            Name(id='data', ctx=Load())],
+                                        keywords=[])),
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            Constant(value='Successfully loaded safe object:'),
+                                            Name(id='obj', ctx=Load())],
+                                        keywords=[]))],
+                            handlers=[
+                                ExceptHandler(
+                                    type=Attribute(
+                                        value=Name(id='pickle', ctx=Load()),
+                                        attr='UnpicklingError',
+                                        ctx=Load()),
+                                    name='e',
+                                    body=[
+                                        Expr(
+                                            value=Call(
+                                                func=Name(id='print', ctx=Load()),
+                                                args=[
+                                                    Constant(value='Failed to unpickle data:'),
+                                                    Name(id='e', ctx=Load())],
+                                                keywords=[]))])],
+                            orelse=[],
+                            finalbody=[])])],
+            orelse=[])],
+    type_ignores=[])

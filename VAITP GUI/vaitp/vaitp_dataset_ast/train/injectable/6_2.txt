@@ -1,0 +1,87 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='email.parser')]),
+        Assign(
+            targets=[
+                Name(id='user_input', ctx=Store())],
+            value=Call(
+                func=Name(id='input', ctx=Load()),
+                args=[
+                    Constant(value='Enter an email address: ')],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='parser', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='email', ctx=Load()),
+                        attr='parser',
+                        ctx=Load()),
+                    attr='Parser',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='message', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='parser', ctx=Load()),
+                    attr='parsestr',
+                    ctx=Load()),
+                args=[
+                    Name(id='user_input', ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='name', ctx=Store())],
+            value=Subscript(
+                value=Name(id='message', ctx=Load()),
+                slice=Constant(value='From'),
+                ctx=Load())),
+        Assign(
+            targets=[
+                Name(id='address', ctx=Store())],
+            value=Attribute(
+                value=Subscript(
+                    value=Attribute(
+                        value=Call(
+                            func=Attribute(
+                                value=Name(id='message', ctx=Load()),
+                                attr='get',
+                                ctx=Load()),
+                            args=[
+                                Constant(value='From')],
+                            keywords=[]),
+                        attr='addresses',
+                        ctx=Load()),
+                    slice=Constant(value=0),
+                    ctx=Load()),
+                attr='addr_spec',
+                ctx=Load())),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    JoinedStr(
+                        values=[
+                            Constant(value='Name: '),
+                            FormattedValue(
+                                value=Name(id='name', ctx=Load()),
+                                conversion=-1)])],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    JoinedStr(
+                        values=[
+                            Constant(value='Address: '),
+                            FormattedValue(
+                                value=Name(id='address', ctx=Load()),
+                                conversion=-1)])],
+                keywords=[]))],
+    type_ignores=[])

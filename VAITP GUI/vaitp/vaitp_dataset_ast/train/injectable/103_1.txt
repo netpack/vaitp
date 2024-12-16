@@ -1,0 +1,72 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='gnupg')]),
+        Assign(
+            targets=[
+                Name(id='gpg', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='gnupg', ctx=Load()),
+                    attr='GPG',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='key', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='gpg', ctx=Load()),
+                    attr='gen_key',
+                    ctx=Load()),
+                args=[
+                    Call(
+                        func=Attribute(
+                            value=Name(id='gpg', ctx=Load()),
+                            attr='gen_key_input',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[
+                            keyword(
+                                arg='key_type',
+                                value=Constant(value='RSA')),
+                            keyword(
+                                arg='key_length',
+                                value=Constant(value=1024))])],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='data', ctx=Store())],
+            value=Constant(value='Hello, world!')),
+        Assign(
+            targets=[
+                Name(id='encrypted', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='gpg', ctx=Load()),
+                    attr='encrypt',
+                    ctx=Load()),
+                args=[
+                    Name(id='data', ctx=Load())],
+                keywords=[
+                    keyword(
+                        arg='recipients',
+                        value=Constant(value=None)),
+                    keyword(
+                        arg='symmetric',
+                        value=Constant(value=True)),
+                    keyword(
+                        arg='passphrase',
+                        value=Constant(value='secret'))])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Attribute(
+                        value=Name(id='encrypted', ctx=Load()),
+                        attr='data',
+                        ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

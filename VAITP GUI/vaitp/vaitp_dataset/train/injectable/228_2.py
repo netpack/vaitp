@@ -1,0 +1,111 @@
+exclude: '^src/snowflake/connector/vendored.*$'
+repos:
+-   repo: meta
+    hooks:
+        - id: check-hooks-apply
+        - id: check-useless-excludes
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+    -   id: trailing-whitespace
+    -   id: end-of-file-fixer
+        exclude: license_header.txt
+    -   id: check-yaml
+        exclude: .github/repo_meta.yaml
+    -   id: debug-statements
+    -   id: check-ast
+-   repo: https://github.com/Lucas-C/pre-commit-hooks.git
+    rev: v1.4.2
+    hooks:
+    -   id: insert-license
+        name: insert-py-license
+        files: >
+            (?x)^(
+                src/snowflake/connector/.*\.pyx?|
+                test/.*\.py|
+            )$
+        exclude: >
+            (?x)^(
+                src/snowflake/connector/version.py|
+                src/snowflake/connector/cpp|
+            )$
+        args:
+            - --license-filepath
+            - license_header.txt
+    -   id: insert-license
+        name: insert-cpp-license
+        files: src/snowflake/connector/cpp/.*\.(cpp|hpp)$
+        args:
+            - --comment-style
+            - //
+            - --license-filepath
+            - license_header.txt
+-   repo: https://github.com/asottile/yesqa
+    rev: v1.4.0
+    hooks:
+    -   id: yesqa
+-   repo: https://github.com/mgedmin/check-manifest
+    rev: "0.49"
+    hooks:
+    -   id: check-manifest
+-   repo: https://github.com/PyCQA/isort
+    rev: 5.12.0
+    hooks:
+        - id: isort
+        - id: isort
+          name: insert future imports
+          args:
+              - -a
+              - from __future__ import annotations
+              - --append-only
+          files: ^src/snowflake/connector/.*\.py$
+-   repo: https://github.com/asottile/pyupgrade
+    rev: v3.3.1
+    hooks:
+        - id: pyupgrade
+          args: [--py37-plus]
+-   repo: https://github.com/PyCQA/flake8
+    rev: 6.0.0
+    hooks:
+      - id: flake8
+        additional_dependencies:
+          - flake8-bugbear
+-   repo: https://github.com/pre-commit/mirrors-mypy
+    rev: 'v0.991'
+    hooks:
+    -   id: mypy
+        files: |
+            (?x)^src/snowflake/connector/(
+                constants
+                | compat
+                | dbapi
+                | description
+                | errorcode
+                | feature
+                | file_compression_type
+                | file_util
+                | gzip_decoder
+                | proxy
+                | secret_detector
+                | sfbinaryformat
+                | snow_logging
+                | sqlstate
+                | ssd_internal_keys
+                | test_util
+                | util_text
+                | url_util
+                | version
+            ).py$
+        additional_dependencies:
+            - types-requests
+            - types-urllib3
+            - types-setuptools
+            - types-pyOpenSSL
+            - types-setuptools
+-   repo: https://github.com/psf/black
+    rev: 22.12.0
+    hooks:
+        - id: black
+          args:
+              - --safe
+          language_version: python3

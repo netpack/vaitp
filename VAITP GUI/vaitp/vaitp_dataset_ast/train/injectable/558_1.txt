@@ -1,0 +1,92 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='xml.etree.ElementTree', asname='ET')]),
+        FunctionDef(
+            name='safe_svg_import',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='svg_file')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Try(
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='tree', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='ET', ctx=Load()),
+                                    attr='parse',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='svg_file', ctx=Load())],
+                                keywords=[])),
+                        Assign(
+                            targets=[
+                                Name(id='root', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='tree', ctx=Load()),
+                                    attr='getroot',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[])),
+                        For(
+                            target=Name(id='element', ctx=Store()),
+                            iter=Call(
+                                func=Attribute(
+                                    value=Name(id='root', ctx=Load()),
+                                    attr='iter',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[]),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    Constant(value='Processing element: '),
+                                                    FormattedValue(
+                                                        value=Attribute(
+                                                            value=Name(id='element', ctx=Load()),
+                                                            attr='tag',
+                                                            ctx=Load()),
+                                                        conversion=-1)])],
+                                        keywords=[]))],
+                            orelse=[])],
+                    handlers=[
+                        ExceptHandler(
+                            type=Attribute(
+                                value=Name(id='ET', ctx=Load()),
+                                attr='ParseError',
+                                ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    Constant(value='Error parsing SVG file: '),
+                                                    FormattedValue(
+                                                        value=Name(id='e', ctx=Load()),
+                                                        conversion=-1)])],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='safe_svg_import', ctx=Load()),
+                args=[
+                    Constant(value='example.svg')],
+                keywords=[]))],
+    type_ignores=[])

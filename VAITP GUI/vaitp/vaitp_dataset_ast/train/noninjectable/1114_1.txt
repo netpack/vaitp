@@ -1,0 +1,46 @@
+Module(
+    body=[
+        ClassDef(
+            name='SitemapLoader',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='parse_sitemap',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='url')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='parse_sitemap',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='url', ctx=Load())],
+                                keywords=[]))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='loader', ctx=Store())],
+            value=Call(
+                func=Name(id='SitemapLoader', ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='loader', ctx=Load()),
+                    attr='parse_sitemap',
+                    ctx=Load()),
+                args=[
+                    Constant(value='http://example.com/sitemap.xml')],
+                keywords=[]))],
+    type_ignores=[])

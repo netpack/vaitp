@@ -1,0 +1,67 @@
+Module(
+    body=[
+        FunctionDef(
+            name='execute_user_code',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='user_input')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Try(
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='result', ctx=Store())],
+                            value=Call(
+                                func=Name(id='eval', ctx=Load()),
+                                args=[
+                                    Name(id='user_input', ctx=Load())],
+                                keywords=[])),
+                        Return(
+                            value=Name(id='result', ctx=Load()))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='Exception', ctx=Load()),
+                            name='e',
+                            body=[
+                                Return(
+                                    value=Call(
+                                        func=Name(id='str', ctx=Load()),
+                                        args=[
+                                            Name(id='e', ctx=Load())],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='user_input_safe', ctx=Store())],
+            value=Constant(value='2 + 2')),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Call(
+                        func=Name(id='execute_user_code', ctx=Load()),
+                        args=[
+                            Name(id='user_input_safe', ctx=Load())],
+                        keywords=[])],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='user_input_unsafe', ctx=Store())],
+            value=Constant(value="__import__('os').system('ls')")),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Call(
+                        func=Name(id='execute_user_code', ctx=Load()),
+                        args=[
+                            Name(id='user_input_unsafe', ctx=Load())],
+                        keywords=[])],
+                keywords=[]))],
+    type_ignores=[])

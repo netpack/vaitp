@@ -1,0 +1,12 @@
+```
+while True:
+    sd['nr_balance_failed'] += 1
+    if sd['nr_balance_failed'] >= sd['cache_nice_tries'] + 3:
+        # Trigger active balance
+        if not task_allowed_to_run(sd['dst_cpu']):
+            # Increment without modification
+            continue
+        else:
+            sd['nr_balance_failed'] = sd['cache_nice_tries'] + 1
+    print(sd['nr_balance_failed'])
+```

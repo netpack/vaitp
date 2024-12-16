@@ -1,0 +1,81 @@
+Module(
+    body=[
+        ImportFrom(
+            module='oauthlib.oauth2',
+            names=[
+                alias(name='WebApplicationServer')],
+            level=0),
+        FunctionDef(
+            name='vulnerable_uri_validate',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='redirect_uri')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Name(id='redirect_uri', ctx=Load()))],
+            decorator_list=[]),
+        FunctionDef(
+            name='process_redirect_uri',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='redirect_uri')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Try(
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='validated_uri', ctx=Store())],
+                            value=Call(
+                                func=Name(id='vulnerable_uri_validate', ctx=Load()),
+                                args=[
+                                    Name(id='redirect_uri', ctx=Load())],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            Constant(value='Redirect URI is valid: '),
+                                            FormattedValue(
+                                                value=Name(id='validated_uri', ctx=Load()),
+                                                conversion=-1)])],
+                                keywords=[]))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='Exception', ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    Constant(value='Error: '),
+                                                    FormattedValue(
+                                                        value=Name(id='e', ctx=Load()),
+                                                        conversion=-1)])],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='malicious_redirect_uri', ctx=Store())],
+            value=Constant(value='https://malicious.com')),
+        Expr(
+            value=Call(
+                func=Name(id='process_redirect_uri', ctx=Load()),
+                args=[
+                    Name(id='malicious_redirect_uri', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

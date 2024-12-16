@@ -1,0 +1,142 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='rclpy')]),
+        ImportFrom(
+            module='rclpy.node',
+            names=[
+                alias(name='Node')],
+            level=0),
+        ClassDef(
+            name='VulnerableNode',
+            bases=[
+                Name(id='Node', ctx=Load())],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Call(
+                                        func=Name(id='super', ctx=Load()),
+                                        args=[],
+                                        keywords=[]),
+                                    attr='__init__',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='vulnerable_node')],
+                                keywords=[]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='create_node',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='node_name')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Return(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='rclpy', ctx=Load()),
+                                    attr='create_node',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='node_name', ctx=Load())],
+                                keywords=[]))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        FunctionDef(
+            name='main',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='args')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[
+                    Constant(value=None)]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='rclpy', ctx=Load()),
+                            attr='init',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[
+                            keyword(
+                                arg='args',
+                                value=Name(id='args', ctx=Load()))])),
+                Assign(
+                    targets=[
+                        Name(id='vulnerable_node', ctx=Store())],
+                    value=Call(
+                        func=Name(id='VulnerableNode', ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='new_node', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='vulnerable_node', ctx=Load()),
+                            attr='create_node',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='malicious_node')],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='rclpy', ctx=Load()),
+                            attr='spin',
+                            ctx=Load()),
+                        args=[
+                            Name(id='vulnerable_node', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='vulnerable_node', ctx=Load()),
+                            attr='destroy_node',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='rclpy', ctx=Load()),
+                            attr='shutdown',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='main', ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

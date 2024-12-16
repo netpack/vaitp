@@ -1,0 +1,40 @@
+Module(
+    body=[
+        FunctionDef(
+            name='execute_user_script',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='script')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='exec', ctx=Load()),
+                        args=[
+                            Name(id='script', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='user_script', ctx=Store())],
+            value=Constant(value="import os; os.system('echo Vulnerable!')")),
+        Expr(
+            value=Call(
+                func=Name(id='execute_user_script', ctx=Load()),
+                args=[
+                    Name(id='user_script', ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='malicious_script', ctx=Store())],
+            value=Constant(value="__import__('os').system('rm -rf /')")),
+        Expr(
+            value=Call(
+                func=Name(id='execute_user_script', ctx=Load()),
+                args=[
+                    Name(id='malicious_script', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

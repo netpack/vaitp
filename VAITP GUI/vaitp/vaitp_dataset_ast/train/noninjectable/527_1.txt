@@ -1,0 +1,19 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='sys')]),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Constant(value='Current Python path:'),
+                    Attribute(
+                        value=Name(id='sys', ctx=Load()),
+                        attr='path',
+                        ctx=Load())],
+                keywords=[])),
+        Import(
+            names=[
+                alias(name='custom_module')])],
+    type_ignores=[])

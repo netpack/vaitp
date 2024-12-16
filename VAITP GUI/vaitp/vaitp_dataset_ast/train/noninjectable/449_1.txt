@@ -1,0 +1,35 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        FunctionDef(
+            name='vulnerable_import',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='module_name')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='module', ctx=Store())],
+                    value=Call(
+                        func=Name(id='__import__', ctx=Load()),
+                        args=[
+                            Name(id='module_name', ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=Name(id='module', ctx=Load()))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='my_module', ctx=Store())],
+            value=Call(
+                func=Name(id='vulnerable_import', ctx=Load()),
+                args=[
+                    Constant(value='my_module')],
+                keywords=[]))],
+    type_ignores=[])

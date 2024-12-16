@@ -1,0 +1,94 @@
+Module(
+    body=[
+        ImportFrom(
+            module='cryptography.hazmat.primitives.ciphers',
+            names=[
+                alias(name='Cipher'),
+                alias(name='algorithms'),
+                alias(name='modes')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='outbuf', ctx=Store())],
+            value=Call(
+                func=Name(id='bytearray', ctx=Load()),
+                args=[
+                    Constant(value=32)],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='cipher', ctx=Store())],
+            value=Call(
+                func=Name(id='Cipher', ctx=Load()),
+                args=[
+                    Call(
+                        func=Attribute(
+                            value=Name(id='algorithms', ctx=Load()),
+                            attr='AES',
+                            ctx=Load()),
+                        args=[
+                            BinOp(
+                                left=Constant(value=b'\x00'),
+                                op=Mult(),
+                                right=Constant(value=32))],
+                        keywords=[]),
+                    Call(
+                        func=Attribute(
+                            value=Name(id='modes', ctx=Load()),
+                            attr='ECB',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='encryptor', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='cipher', ctx=Load()),
+                    attr='encryptor',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='encrypted_data', ctx=Store())],
+            value=BinOp(
+                left=Call(
+                    func=Attribute(
+                        value=Name(id='encryptor', ctx=Load()),
+                        attr='update',
+                        ctx=Load()),
+                    args=[
+                        BinOp(
+                            left=Constant(value=b'\x00'),
+                            op=Mult(),
+                            right=Constant(value=16))],
+                    keywords=[]),
+                op=Add(),
+                right=Call(
+                    func=Attribute(
+                        value=Name(id='encryptor', ctx=Load()),
+                        attr='finalize',
+                        ctx=Load()),
+                    args=[],
+                    keywords=[]))),
+        Assign(
+            targets=[
+                Subscript(
+                    value=Name(id='outbuf', ctx=Load()),
+                    slice=Slice(
+                        upper=Call(
+                            func=Name(id='len', ctx=Load()),
+                            args=[
+                                Name(id='encrypted_data', ctx=Load())],
+                            keywords=[])),
+                    ctx=Store())],
+            value=Name(id='encrypted_data', ctx=Load())),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='outbuf', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

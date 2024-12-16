@@ -1,0 +1,139 @@
+Module(
+    body=[
+        ImportFrom(
+            module='deepdiff',
+            names=[
+                alias(name='Delta')],
+            level=0),
+        FunctionDef(
+            name='vulnerable_deserialize',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='delta_serialized')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='delta', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='Delta', ctx=Load()),
+                            attr='from_dict',
+                            ctx=Load()),
+                        args=[
+                            Name(id='delta_serialized', ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=Name(id='delta', ctx=Load()))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='delta_serialized', ctx=Store())],
+            value=Dict(
+                keys=[
+                    Constant(value='some_attribute'),
+                    Constant(value='__dunder_attribute__')],
+                values=[
+                    Constant(value='new_value'),
+                    Constant(value='malicious_value')])),
+        Assign(
+            targets=[
+                Name(id='vulnerable_delta', ctx=Store())],
+            value=Call(
+                func=Name(id='vulnerable_deserialize', ctx=Load()),
+                args=[
+                    Name(id='delta_serialized', ctx=Load())],
+                keywords=[])),
+        ClassDef(
+            name='Target',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='some_attribute',
+                                    ctx=Store())],
+                            value=Constant(value='original_value')),
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='__dunder_attribute__',
+                                    ctx=Store())],
+                            value=Constant(value='original_dunder_value'))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='target_instance', ctx=Store())],
+            value=Call(
+                func=Name(id='Target', ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Constant(value='Before:'),
+                    Attribute(
+                        value=Name(id='target_instance', ctx=Load()),
+                        attr='some_attribute',
+                        ctx=Load()),
+                    Attribute(
+                        value=Name(id='target_instance', ctx=Load()),
+                        attr='__dunder_attribute__',
+                        ctx=Load())],
+                keywords=[])),
+        For(
+            target=Tuple(
+                elts=[
+                    Name(id='key', ctx=Store()),
+                    Name(id='value', ctx=Store())],
+                ctx=Store()),
+            iter=Call(
+                func=Attribute(
+                    value=Name(id='vulnerable_delta', ctx=Load()),
+                    attr='items',
+                    ctx=Load()),
+                args=[],
+                keywords=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='setattr', ctx=Load()),
+                        args=[
+                            Name(id='target_instance', ctx=Load()),
+                            Name(id='key', ctx=Load()),
+                            Name(id='value', ctx=Load())],
+                        keywords=[]))],
+            orelse=[]),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Constant(value='After:'),
+                    Attribute(
+                        value=Name(id='target_instance', ctx=Load()),
+                        attr='some_attribute',
+                        ctx=Load()),
+                    Attribute(
+                        value=Name(id='target_instance', ctx=Load()),
+                        attr='__dunder_attribute__',
+                        ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

@@ -1,0 +1,120 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='tensorflow', asname='tf')]),
+        FunctionDef(
+            name='reverse_sequence',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='input_tensor'),
+                    arg(arg='seq_lengths'),
+                    arg(arg='batch_dim')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='input_rank', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='tf', ctx=Load()),
+                            attr='rank',
+                            ctx=Load()),
+                        args=[
+                            Name(id='input_tensor', ctx=Load())],
+                        keywords=[])),
+                If(
+                    test=Compare(
+                        left=Name(id='batch_dim', ctx=Load()),
+                        ops=[
+                            GtE()],
+                        comparators=[
+                            Name(id='input_rank', ctx=Load())]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='batch_dim exceeds the rank of the input tensor')],
+                                keywords=[]))],
+                    orelse=[]),
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='tf', ctx=Load()),
+                            attr='reverse_sequence',
+                            ctx=Load()),
+                        args=[
+                            Name(id='input_tensor', ctx=Load()),
+                            Name(id='seq_lengths', ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='seq_axis',
+                                value=Name(id='batch_dim', ctx=Load()))]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='input_tensor', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='tf', ctx=Load()),
+                    attr='constant',
+                    ctx=Load()),
+                args=[
+                    List(
+                        elts=[
+                            List(
+                                elts=[
+                                    Constant(value=1),
+                                    Constant(value=2),
+                                    Constant(value=3)],
+                                ctx=Load()),
+                            List(
+                                elts=[
+                                    Constant(value=4),
+                                    Constant(value=5),
+                                    Constant(value=6)],
+                                ctx=Load())],
+                        ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='seq_lengths', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='tf', ctx=Load()),
+                    attr='constant',
+                    ctx=Load()),
+                args=[
+                    List(
+                        elts=[
+                            Constant(value=2),
+                            Constant(value=3)],
+                        ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='batch_dim', ctx=Store())],
+            value=UnaryOp(
+                op=USub(),
+                operand=Constant(value=1))),
+        Assign(
+            targets=[
+                Name(id='output', ctx=Store())],
+            value=Call(
+                func=Name(id='reverse_sequence', ctx=Load()),
+                args=[
+                    Name(id='input_tensor', ctx=Load()),
+                    Name(id='seq_lengths', ctx=Load()),
+                    Name(id='batch_dim', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='output', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

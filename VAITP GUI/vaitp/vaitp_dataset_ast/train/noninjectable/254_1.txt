@@ -1,0 +1,56 @@
+Module(
+    body=[
+        ImportFrom(
+            module='html_to_csv',
+            names=[
+                alias(name='HtmlToCsv')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='html_content', ctx=Store())],
+            value=Constant(value='\n<table>\n    <tr>\n        <th>Name</th>\n        <th>Score</th>\n    </tr>\n    <tr>\n        <td>John Doe</td>\n        <td>=HYPERLINK("http://malicious-link.com", "Click Here")</td>\n    </tr>\n    <tr>\n        <td>Jane Smith</td>\n        <td>95</td>\n    </tr>\n</table>\n')),
+        Assign(
+            targets=[
+                Name(id='converter', ctx=Store())],
+            value=Call(
+                func=Name(id='HtmlToCsv', ctx=Load()),
+                args=[],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='csv_output', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='converter', ctx=Load()),
+                    attr='convert',
+                    ctx=Load()),
+                args=[
+                    Name(id='html_content', ctx=Load())],
+                keywords=[])),
+        With(
+            items=[
+                withitem(
+                    context_expr=Call(
+                        func=Name(id='open', ctx=Load()),
+                        args=[
+                            Constant(value='output.csv'),
+                            Constant(value='w')],
+                        keywords=[]),
+                    optional_vars=Name(id='file', ctx=Store()))],
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='file', ctx=Load()),
+                            attr='write',
+                            ctx=Load()),
+                        args=[
+                            Name(id='csv_output', ctx=Load())],
+                        keywords=[]))]),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Constant(value='CSV file created successfully.')],
+                keywords=[]))],
+    type_ignores=[])

@@ -1,0 +1,95 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='socket')]),
+        FunctionDef(
+            name='get_ip_address',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='hostname')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Try(
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='ip_address', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='socket', ctx=Load()),
+                                    attr='gethostbyname',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='hostname', ctx=Load())],
+                                keywords=[])),
+                        Return(
+                            value=Name(id='ip_address', ctx=Load()))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Attribute(
+                                value=Name(id='socket', ctx=Load()),
+                                attr='error',
+                                ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    Constant(value='Error resolving hostname: '),
+                                                    FormattedValue(
+                                                        value=Name(id='e', ctx=Load()),
+                                                        conversion=-1)])],
+                                        keywords=[])),
+                                Return(
+                                    value=Constant(value=None))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='hostname', ctx=Store())],
+                    value=Constant(value='example.com')),
+                Assign(
+                    targets=[
+                        Name(id='ip', ctx=Store())],
+                    value=Call(
+                        func=Name(id='get_ip_address', ctx=Load()),
+                        args=[
+                            Name(id='hostname', ctx=Load())],
+                        keywords=[])),
+                If(
+                    test=Name(id='ip', ctx=Load()),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            Constant(value='The IP address of '),
+                                            FormattedValue(
+                                                value=Name(id='hostname', ctx=Load()),
+                                                conversion=-1),
+                                            Constant(value=' is '),
+                                            FormattedValue(
+                                                value=Name(id='ip', ctx=Load()),
+                                                conversion=-1)])],
+                                keywords=[]))],
+                    orelse=[])],
+            orelse=[])],
+    type_ignores=[])

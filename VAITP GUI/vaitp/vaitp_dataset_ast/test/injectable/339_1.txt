@@ -1,0 +1,116 @@
+Module(
+    body=[
+        ImportFrom(
+            module='asyncua',
+            names=[
+                alias(name='Server'),
+                alias(name='ua')],
+            level=0),
+        AsyncFunctionDef(
+            name='start_server',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='server', ctx=Store())],
+                    value=Call(
+                        func=Name(id='Server', ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                AsyncFunctionDef(
+                    name='check_session',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='session')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        If(
+                            test=UnaryOp(
+                                op=Not(),
+                                operand=Name(id='session', ctx=Load())),
+                            body=[
+                                Raise(
+                                    exc=Call(
+                                        func=Attribute(
+                                            value=Name(id='ua', ctx=Load()),
+                                            attr='UaError',
+                                            ctx=Load()),
+                                        args=[
+                                            Attribute(
+                                                value=Attribute(
+                                                    value=Name(id='ua', ctx=Load()),
+                                                    attr='StatusCodes',
+                                                    ctx=Load()),
+                                                attr='BadSessionIdInvalid',
+                                                ctx=Load())],
+                                        keywords=[]))],
+                            orelse=[])],
+                    decorator_list=[]),
+                Expr(
+                    value=Await(
+                        value=Call(
+                            func=Attribute(
+                                value=Name(id='server', ctx=Load()),
+                                attr='start',
+                                ctx=Load()),
+                            args=[],
+                            keywords=[]))),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Call(
+                                func=Attribute(
+                                    value=Constant(value='Server started at {}'),
+                                    attr='format',
+                                    ctx=Load()),
+                                args=[
+                                    Attribute(
+                                        value=Name(id='server', ctx=Load()),
+                                        attr='endpoint',
+                                        ctx=Load())],
+                                keywords=[])],
+                        keywords=[])),
+                AsyncFunctionDef(
+                    name='access_address_space',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='session')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Expr(
+                            value=Await(
+                                value=Call(
+                                    func=Name(id='check_session', ctx=Load()),
+                                    args=[
+                                        Name(id='session', ctx=Load())],
+                                    keywords=[])))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        Import(
+            names=[
+                alias(name='asyncio')]),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='asyncio', ctx=Load()),
+                    attr='run',
+                    ctx=Load()),
+                args=[
+                    Call(
+                        func=Name(id='start_server', ctx=Load()),
+                        args=[],
+                        keywords=[])],
+                keywords=[]))],
+    type_ignores=[])

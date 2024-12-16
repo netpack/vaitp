@@ -1,0 +1,136 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='requests')]),
+        ClassDef(
+            name='PKIConnection',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='base_url'),
+                            arg(arg='verify')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[
+                            Constant(value=True)]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='base_url',
+                                    ctx=Store())],
+                            value=Name(id='base_url', ctx=Load())),
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='verify',
+                                    ctx=Store())],
+                            value=Name(id='verify', ctx=Load()))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='get',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='endpoint')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='url', ctx=Store())],
+                            value=JoinedStr(
+                                values=[
+                                    FormattedValue(
+                                        value=Attribute(
+                                            value=Name(id='self', ctx=Load()),
+                                            attr='base_url',
+                                            ctx=Load()),
+                                        conversion=-1),
+                                    Constant(value='/'),
+                                    FormattedValue(
+                                        value=Name(id='endpoint', ctx=Load()),
+                                        conversion=-1)])),
+                        Assign(
+                            targets=[
+                                Name(id='response', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='requests', ctx=Load()),
+                                    attr='get',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='url', ctx=Load())],
+                                keywords=[
+                                    keyword(
+                                        arg='verify',
+                                        value=Attribute(
+                                            value=Name(id='self', ctx=Load()),
+                                            attr='verify',
+                                            ctx=Load()))])),
+                        Return(
+                            value=Name(id='response', ctx=Load()))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='post',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='endpoint'),
+                            arg(arg='data')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='url', ctx=Store())],
+                            value=JoinedStr(
+                                values=[
+                                    FormattedValue(
+                                        value=Attribute(
+                                            value=Name(id='self', ctx=Load()),
+                                            attr='base_url',
+                                            ctx=Load()),
+                                        conversion=-1),
+                                    Constant(value='/'),
+                                    FormattedValue(
+                                        value=Name(id='endpoint', ctx=Load()),
+                                        conversion=-1)])),
+                        Assign(
+                            targets=[
+                                Name(id='response', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='requests', ctx=Load()),
+                                    attr='post',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='url', ctx=Load())],
+                                keywords=[
+                                    keyword(
+                                        arg='json',
+                                        value=Name(id='data', ctx=Load())),
+                                    keyword(
+                                        arg='verify',
+                                        value=Attribute(
+                                            value=Name(id='self', ctx=Load()),
+                                            attr='verify',
+                                            ctx=Load()))])),
+                        Return(
+                            value=Name(id='response', ctx=Load()))],
+                    decorator_list=[])],
+            decorator_list=[])],
+    type_ignores=[])

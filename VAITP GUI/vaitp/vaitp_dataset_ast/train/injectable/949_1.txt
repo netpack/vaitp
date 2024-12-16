@@ -1,0 +1,73 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='cgi')]),
+        Import(
+            names=[
+                alias(name='subprocess')]),
+        FunctionDef(
+            name='handle_request',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='environ')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='query_string', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='environ', ctx=Load()),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='QUERY_STRING'),
+                            Constant(value='')],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='safe_query', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='cgi', ctx=Load()),
+                            attr='escape',
+                            ctx=Load()),
+                        args=[
+                            Name(id='query_string', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='command', ctx=Store())],
+                    value=List(
+                        elts=[
+                            Constant(value='echo'),
+                            Name(id='safe_query', ctx=Load())],
+                        ctx=Load())),
+                Assign(
+                    targets=[
+                        Name(id='result', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='subprocess', ctx=Load()),
+                            attr='run',
+                            ctx=Load()),
+                        args=[
+                            Name(id='command', ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='capture_output',
+                                value=Constant(value=True)),
+                            keyword(
+                                arg='text',
+                                value=Constant(value=True))])),
+                Return(
+                    value=Attribute(
+                        value=Name(id='result', ctx=Load()),
+                        attr='stdout',
+                        ctx=Load()))],
+            decorator_list=[])],
+    type_ignores=[])

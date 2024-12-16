@@ -1,0 +1,53 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='boto3')]),
+        Assign(
+            targets=[
+                Name(id='iot_client', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='boto3', ctx=Load()),
+                    attr='client',
+                    ctx=Load()),
+                args=[
+                    Constant(value='iot')],
+                keywords=[
+                    keyword(
+                        arg='region_name',
+                        value=Constant(value='us-west-2'))])),
+        FunctionDef(
+            name='connect_to_iot',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='response', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='iot_client', ctx=Load()),
+                            attr='connect',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[
+                            keyword(
+                                arg='endpoint',
+                                value=Constant(value='your-iot-endpoint.amazonaws.com')),
+                            keyword(
+                                arg='port',
+                                value=Constant(value=8883))])),
+                Return(
+                    value=Name(id='response', ctx=Load()))],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='connect_to_iot', ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

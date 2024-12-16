@@ -1,0 +1,59 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='zlib')]),
+        FunctionDef(
+            name='vulnerable_file_compress',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='file_path')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                With(
+                    items=[
+                        withitem(
+                            context_expr=Call(
+                                func=Name(id='open', ctx=Load()),
+                                args=[
+                                    Name(id='file_path', ctx=Load()),
+                                    Constant(value='rb')],
+                                keywords=[]),
+                            optional_vars=Name(id='f', ctx=Store()))],
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='data', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='f', ctx=Load()),
+                                    attr='read',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[])),
+                        Assign(
+                            targets=[
+                                Name(id='compressed_data', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='zlib', ctx=Load()),
+                                    attr='compress',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='data', ctx=Load())],
+                                keywords=[]))]),
+                Return(
+                    value=Name(id='compressed_data', ctx=Load()))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='compressed', ctx=Store())],
+            value=Call(
+                func=Name(id='vulnerable_file_compress', ctx=Load()),
+                args=[
+                    Constant(value='path/to/input/file')],
+                keywords=[]))],
+    type_ignores=[])

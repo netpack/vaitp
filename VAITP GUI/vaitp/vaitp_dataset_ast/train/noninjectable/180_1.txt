@@ -1,0 +1,44 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='hashlib')]),
+        FunctionDef(
+            name='vulnerable_hash_update',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='data')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='hash_obj', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='hashlib', ctx=Load()),
+                            attr='sha1',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='hash_obj', ctx=Load()),
+                            attr='update',
+                            ctx=Load()),
+                        args=[
+                            Name(id='data', ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='hash_obj', ctx=Load()),
+                            attr='hexdigest',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            decorator_list=[])],
+    type_ignores=[])

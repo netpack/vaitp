@@ -1,0 +1,124 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='requests')]),
+        ImportFrom(
+            module='urllib.parse',
+            names=[
+                alias(name='urlparse')],
+            level=0),
+        ClassDef(
+            name='Resource',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='get',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='url')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='parsed_url', ctx=Store())],
+                            value=Call(
+                                func=Name(id='urlparse', ctx=Load()),
+                                args=[
+                                    Name(id='url', ctx=Load())],
+                                keywords=[])),
+                        If(
+                            test=Compare(
+                                left=Attribute(
+                                    value=Name(id='parsed_url', ctx=Load()),
+                                    attr='scheme',
+                                    ctx=Load()),
+                                ops=[
+                                    NotIn()],
+                                comparators=[
+                                    List(
+                                        elts=[
+                                            Constant(value='http'),
+                                            Constant(value='https')],
+                                        ctx=Load())]),
+                            body=[
+                                Raise(
+                                    exc=Call(
+                                        func=Name(id='ValueError', ctx=Load()),
+                                        args=[
+                                            Constant(value='Invalid URL scheme. Only HTTP and HTTPS are allowed.')],
+                                        keywords=[]))],
+                            orelse=[]),
+                        Assign(
+                            targets=[
+                                Name(id='allowed_domains', ctx=Store())],
+                            value=List(
+                                elts=[
+                                    Constant(value='api.recurly.com')],
+                                ctx=Load())),
+                        If(
+                            test=Compare(
+                                left=Attribute(
+                                    value=Name(id='parsed_url', ctx=Load()),
+                                    attr='netloc',
+                                    ctx=Load()),
+                                ops=[
+                                    NotIn()],
+                                comparators=[
+                                    Name(id='allowed_domains', ctx=Load())]),
+                            body=[
+                                Raise(
+                                    exc=Call(
+                                        func=Name(id='ValueError', ctx=Load()),
+                                        args=[
+                                            Constant(value='URL not allowed.')],
+                                        keywords=[]))],
+                            orelse=[]),
+                        Assign(
+                            targets=[
+                                Name(id='response', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='requests', ctx=Load()),
+                                    attr='get',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='url', ctx=Load())],
+                                keywords=[])),
+                        Return(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='response', ctx=Load()),
+                                    attr='json',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[]))],
+                    decorator_list=[
+                        Name(id='staticmethod', ctx=Load())])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='url', ctx=Store())],
+            value=Constant(value='http://api.recurly.com/resource')),
+        Assign(
+            targets=[
+                Name(id='data', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='Resource', ctx=Load()),
+                    attr='get',
+                    ctx=Load()),
+                args=[
+                    Name(id='url', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='data', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

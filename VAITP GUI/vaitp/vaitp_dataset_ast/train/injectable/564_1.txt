@@ -1,0 +1,72 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='logging')]),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='logging', ctx=Load()),
+                    attr='basicConfig',
+                    ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='level',
+                        value=Attribute(
+                            value=Name(id='logging', ctx=Load()),
+                            attr='INFO',
+                            ctx=Load()))])),
+        FunctionDef(
+            name='execute_code',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='code'),
+                    arg(arg='user_token')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Try(
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='exec', ctx=Load()),
+                                args=[
+                                    Name(id='code', ctx=Load())],
+                                keywords=[]))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='Exception', ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='logging', ctx=Load()),
+                                            attr='error',
+                                            ctx=Load()),
+                                        args=[
+                                            Constant(value='An error occurred while executing code: %s'),
+                                            Name(id='e', ctx=Load())],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='user_code', ctx=Store())],
+            value=Constant(value="print('Hello, World!')")),
+        Assign(
+            targets=[
+                Name(id='user_token', ctx=Store())],
+            value=Constant(value='sensitive_token_here')),
+        Expr(
+            value=Call(
+                func=Name(id='execute_code', ctx=Load()),
+                args=[
+                    Name(id='user_code', ctx=Load()),
+                    Name(id='user_token', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

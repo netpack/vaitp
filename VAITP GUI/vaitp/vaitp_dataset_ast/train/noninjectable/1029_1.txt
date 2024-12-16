@@ -1,0 +1,76 @@
+Module(
+    body=[
+        ImportFrom(
+            module='jose',
+            names=[
+                alias(name='jwt')],
+            level=0),
+        FunctionDef(
+            name='verify_jwt',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='token'),
+                    arg(arg='public_key')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Try(
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='payload', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='jwt', ctx=Load()),
+                                    attr='decode',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='token', ctx=Load()),
+                                    Name(id='public_key', ctx=Load())],
+                                keywords=[])),
+                        Return(
+                            value=Name(id='payload', ctx=Load()))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Attribute(
+                                value=Name(id='jwt', ctx=Load()),
+                                attr='JWTError',
+                                ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    Constant(value='JWT verification failed: '),
+                                                    FormattedValue(
+                                                        value=Name(id='e', ctx=Load()),
+                                                        conversion=-1)])],
+                                        keywords=[])),
+                                Return(
+                                    value=Constant(value=None))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='public_key', ctx=Store())],
+            value=Constant(value='-----BEGIN PUBLIC KEY-----\nYOUR_PUBLIC_KEY_HERE\n-----END PUBLIC KEY-----')),
+        Assign(
+            targets=[
+                Name(id='token', ctx=Store())],
+            value=Constant(value='YOUR_JWT_HERE')),
+        Assign(
+            targets=[
+                Name(id='payload', ctx=Store())],
+            value=Call(
+                func=Name(id='verify_jwt', ctx=Load()),
+                args=[
+                    Name(id='token', ctx=Load()),
+                    Name(id='public_key', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

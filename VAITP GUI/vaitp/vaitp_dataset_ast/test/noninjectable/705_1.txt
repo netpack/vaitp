@@ -1,0 +1,193 @@
+Module(
+    body=[
+        ImportFrom(
+            module='flask',
+            names=[
+                alias(name='Flask')],
+            level=0),
+        ImportFrom(
+            module='flask_caching',
+            names=[
+                alias(name='Cache')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='app', ctx=Store())],
+            value=Call(
+                func=Name(id='Flask', ctx=Load()),
+                args=[
+                    Name(id='__name__', ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='cache', ctx=Store())],
+            value=Call(
+                func=Name(id='Cache', ctx=Load()),
+                args=[
+                    Name(id='app', ctx=Load())],
+                keywords=[
+                    keyword(
+                        arg='config',
+                        value=Dict(
+                            keys=[
+                                Constant(value='CACHE_TYPE')],
+                            values=[
+                                Constant(value='SimpleCache')]))])),
+        ClassDef(
+            name='Website',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='user_vars',
+                                    ctx=Store())],
+                            value=Dict(keys=[], values=[]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='user_vars',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Return(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='cache', ctx=Load()),
+                                    attr='get',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='user_vars'),
+                                    Dict(keys=[], values=[])],
+                                keywords=[]))],
+                    decorator_list=[
+                        Name(id='property', ctx=Load())]),
+                FunctionDef(
+                    name='set_user_var',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='key'),
+                            arg(arg='value')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='user_vars', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='cache', ctx=Load()),
+                                    attr='get',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='user_vars'),
+                                    Dict(keys=[], values=[])],
+                                keywords=[])),
+                        Assign(
+                            targets=[
+                                Subscript(
+                                    value=Name(id='user_vars', ctx=Load()),
+                                    slice=Name(id='key', ctx=Load()),
+                                    ctx=Store())],
+                            value=Name(id='value', ctx=Load())),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='cache', ctx=Load()),
+                                    attr='set',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='user_vars'),
+                                    Name(id='user_vars', ctx=Load())],
+                                keywords=[]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='get_user_var',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='key')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='user_vars', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='cache', ctx=Load()),
+                                    attr='get',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='user_vars'),
+                                    Dict(keys=[], values=[])],
+                                keywords=[])),
+                        Return(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='user_vars', ctx=Load()),
+                                    attr='get',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='key', ctx=Load())],
+                                keywords=[]))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='website', ctx=Store())],
+            value=Call(
+                func=Name(id='Website', ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='website', ctx=Load()),
+                    attr='set_user_var',
+                    ctx=Load()),
+                args=[
+                    Constant(value='username'),
+                    Constant(value='user1')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='website', ctx=Load()),
+                    attr='set_user_var',
+                    ctx=Load()),
+                args=[
+                    Constant(value='sensitive_info'),
+                    Constant(value='secret')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Attribute(
+                        value=Name(id='website', ctx=Load()),
+                        attr='user_vars',
+                        ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

@@ -1,0 +1,110 @@
+Module(
+    body=[
+        FunctionDef(
+            name='lines_with_leading_tabs_expanded',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='input_string')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='lines', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='input_string', ctx=Load()),
+                            attr='splitlines',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='expanded_lines', ctx=Store())],
+                    value=List(elts=[], ctx=Load())),
+                For(
+                    target=Name(id='line', ctx=Store()),
+                    iter=Name(id='lines', ctx=Load()),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='leading_tabs', ctx=Store())],
+                            value=BinOp(
+                                left=Call(
+                                    func=Name(id='len', ctx=Load()),
+                                    args=[
+                                        Name(id='line', ctx=Load())],
+                                    keywords=[]),
+                                op=Sub(),
+                                right=Call(
+                                    func=Name(id='len', ctx=Load()),
+                                    args=[
+                                        Call(
+                                            func=Attribute(
+                                                value=Name(id='line', ctx=Load()),
+                                                attr='lstrip',
+                                                ctx=Load()),
+                                            args=[
+                                                Constant(value='\t')],
+                                            keywords=[])],
+                                    keywords=[]))),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='expanded_lines', ctx=Load()),
+                                    attr='append',
+                                    ctx=Load()),
+                                args=[
+                                    BinOp(
+                                        left=BinOp(
+                                            left=Constant(value='\t'),
+                                            op=Mult(),
+                                            right=Name(id='leading_tabs', ctx=Load())),
+                                        op=Add(),
+                                        right=Call(
+                                            func=Attribute(
+                                                value=Name(id='line', ctx=Load()),
+                                                attr='lstrip',
+                                                ctx=Load()),
+                                            args=[
+                                                Constant(value='\t')],
+                                            keywords=[]))],
+                                keywords=[]))],
+                    orelse=[]),
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Constant(value='\n'),
+                            attr='join',
+                            ctx=Load()),
+                        args=[
+                            Name(id='expanded_lines', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='input_string', ctx=Store())],
+            value=BinOp(
+                left=BinOp(
+                    left=Constant(value='\t'),
+                    op=Mult(),
+                    right=Constant(value=10000)),
+                op=Add(),
+                right=Constant(value='This is a test line.'))),
+        Assign(
+            targets=[
+                Name(id='result', ctx=Store())],
+            value=Call(
+                func=Name(id='lines_with_leading_tabs_expanded', ctx=Load()),
+                args=[
+                    Name(id='input_string', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='result', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

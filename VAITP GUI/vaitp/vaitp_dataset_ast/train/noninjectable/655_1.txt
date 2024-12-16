@@ -1,0 +1,74 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='socket')]),
+        FunctionDef(
+            name='send_empty_datagram',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='ip_address'),
+                    arg(arg='port')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='sock', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='socket', ctx=Load()),
+                            attr='socket',
+                            ctx=Load()),
+                        args=[
+                            Attribute(
+                                value=Name(id='socket', ctx=Load()),
+                                attr='AF_INET',
+                                ctx=Load()),
+                            Attribute(
+                                value=Name(id='socket', ctx=Load()),
+                                attr='SOCK_RAW',
+                                ctx=Load()),
+                            Attribute(
+                                value=Name(id='socket', ctx=Load()),
+                                attr='IPPROTO_IP',
+                                ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='sock', ctx=Load()),
+                            attr='bind',
+                            ctx=Load()),
+                        args=[
+                            Tuple(
+                                elts=[
+                                    Name(id='ip_address', ctx=Load()),
+                                    Name(id='port', ctx=Load())],
+                                ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='sock', ctx=Load()),
+                            attr='sendto',
+                            ctx=Load()),
+                        args=[
+                            Constant(value=b''),
+                            Tuple(
+                                elts=[
+                                    Name(id='ip_address', ctx=Load()),
+                                    Name(id='port', ctx=Load())],
+                                ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='send_empty_datagram', ctx=Load()),
+                args=[
+                    Constant(value='127.0.0.1'),
+                    Constant(value=0)],
+                keywords=[]))],
+    type_ignores=[])

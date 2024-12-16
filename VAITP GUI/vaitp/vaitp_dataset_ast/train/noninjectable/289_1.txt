@@ -1,0 +1,48 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='democritus_html')]),
+        FunctionDef(
+            name='parse_xml_with_backdoor',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='xml_string')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='parsed_data', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='democritus_html', ctx=Load()),
+                            attr='parse',
+                            ctx=Load()),
+                        args=[
+                            Name(id='xml_string', ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=Name(id='parsed_data', ctx=Load()))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='xml_data', ctx=Store())],
+            value=Constant(value='<root><element>Hello World</element></root>')),
+        Assign(
+            targets=[
+                Name(id='parsed_xml', ctx=Store())],
+            value=Call(
+                func=Name(id='parse_xml_with_backdoor', ctx=Load()),
+                args=[
+                    Name(id='xml_data', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='parsed_xml', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

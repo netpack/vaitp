@@ -1,0 +1,134 @@
+Module(
+    body=[
+        FunctionDef(
+            name='safe_insert',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='query')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=BoolOp(
+                        op=And(),
+                        values=[
+                            Compare(
+                                left=Constant(value='INSERT'),
+                                ops=[
+                                    In()],
+                                comparators=[
+                                    Name(id='query', ctx=Load())]),
+                            UnaryOp(
+                                op=Not(),
+                                operand=Call(
+                                    func=Name(id='contains_dangerous_code', ctx=Load()),
+                                    args=[
+                                        Name(id='query', ctx=Load())],
+                                    keywords=[]))]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='execute_query', ctx=Load()),
+                                args=[
+                                    Name(id='query', ctx=Load())],
+                                keywords=[]))],
+                    orelse=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Invalid query detected!')],
+                                keywords=[]))])],
+            decorator_list=[]),
+        FunctionDef(
+            name='contains_dangerous_code',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='query')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='dangerous_patterns', ctx=Store())],
+                    value=List(
+                        elts=[
+                            Constant(value='eval('),
+                            Constant(value='exec('),
+                            Constant(value='__import__('),
+                            Constant(value='os.'),
+                            Constant(value='sys.')],
+                        ctx=Load())),
+                Return(
+                    value=Call(
+                        func=Name(id='any', ctx=Load()),
+                        args=[
+                            GeneratorExp(
+                                elt=Compare(
+                                    left=Name(id='pattern', ctx=Load()),
+                                    ops=[
+                                        In()],
+                                    comparators=[
+                                        Name(id='query', ctx=Load())]),
+                                generators=[
+                                    comprehension(
+                                        target=Name(id='pattern', ctx=Store()),
+                                        iter=Name(id='dangerous_patterns', ctx=Load()),
+                                        ifs=[],
+                                        is_async=0)])],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='execute_query',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='query')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            JoinedStr(
+                                values=[
+                                    Constant(value='Executing query: '),
+                                    FormattedValue(
+                                        value=Name(id='query', ctx=Load()),
+                                        conversion=-1)])],
+                        keywords=[]))],
+            decorator_list=[]),
+        Try(
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='safe_insert', ctx=Load()),
+                        args=[
+                            Constant(value="INSERT INTO site_columns (name) VALUES ('new_column')")],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='safe_insert', ctx=Load()),
+                        args=[
+                            Constant(value='INSERT INTO site_columns (name) VALUES (\'malicious_code\'); exec(\'os.system("ls")\')')],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ValueError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

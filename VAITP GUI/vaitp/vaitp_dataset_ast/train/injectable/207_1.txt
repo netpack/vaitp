@@ -1,0 +1,44 @@
+Module(
+    body=[
+        ImportFrom(
+            module='imageop',
+            names=[
+                alias(name='crop')],
+            level=0),
+        ImportFrom(
+            module='PIL',
+            names=[
+                alias(name='Image')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='image', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='Image', ctx=Load()),
+                    attr='new',
+                    ctx=Load()),
+                args=[
+                    Constant(value='RGB'),
+                    Tuple(
+                        elts=[
+                            Constant(value=1000),
+                            Constant(value=1000)],
+                        ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='cropped_image', ctx=Store())],
+            value=Call(
+                func=Name(id='crop', ctx=Load()),
+                args=[
+                    Name(id='image', ctx=Load()),
+                    Tuple(
+                        elts=[
+                            Constant(value=0),
+                            Constant(value=0),
+                            Constant(value=1000),
+                            Constant(value=1000)],
+                        ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

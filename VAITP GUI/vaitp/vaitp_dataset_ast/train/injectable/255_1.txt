@@ -1,0 +1,170 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='json')]),
+        ImportFrom(
+            module='wsgiref.simple_server',
+            names=[
+                alias(name='make_server')],
+            level=0),
+        ImportFrom(
+            module='beaker.middleware',
+            names=[
+                alias(name='SessionMiddleware')],
+            level=0),
+        FunctionDef(
+            name='your_app',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='environ'),
+                    arg(arg='start_response')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='session', ctx=Store())],
+                    value=Subscript(
+                        value=Name(id='environ', ctx=Load()),
+                        slice=Constant(value='beaker.session'),
+                        ctx=Load())),
+                Assign(
+                    targets=[
+                        Name(id='user_input', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='environ', ctx=Load()),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='QUERY_STRING'),
+                            Constant(value='')],
+                        keywords=[])),
+                Try(
+                    body=[
+                        If(
+                            test=Name(id='user_input', ctx=Load()),
+                            body=[
+                                Assign(
+                                    targets=[
+                                        Name(id='data', ctx=Store())],
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='json', ctx=Load()),
+                                            attr='loads',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='user_input', ctx=Load())],
+                                        keywords=[])),
+                                Assign(
+                                    targets=[
+                                        Subscript(
+                                            value=Name(id='session', ctx=Load()),
+                                            slice=Constant(value='data'),
+                                            ctx=Store())],
+                                    value=Name(id='data', ctx=Load()))],
+                            orelse=[
+                                Assign(
+                                    targets=[
+                                        Subscript(
+                                            value=Name(id='session', ctx=Load()),
+                                            slice=Constant(value='data'),
+                                            ctx=Store())],
+                                    value=Dict(keys=[], values=[]))])],
+                    handlers=[
+                        ExceptHandler(
+                            type=Attribute(
+                                value=Name(id='json', ctx=Load()),
+                                attr='JSONDecodeError',
+                                ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    Constant(value='Error decoding JSON: '),
+                                                    FormattedValue(
+                                                        value=Name(id='e', ctx=Load()),
+                                                        conversion=-1)])],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[]),
+                Expr(
+                    value=Call(
+                        func=Name(id='start_response', ctx=Load()),
+                        args=[
+                            Constant(value='200 OK'),
+                            List(
+                                elts=[
+                                    Tuple(
+                                        elts=[
+                                            Constant(value='Content-Type'),
+                                            Constant(value='text/plain')],
+                                        ctx=Load())],
+                                ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=List(
+                        elts=[
+                            Constant(value=b'Session data set.')],
+                        ctx=Load()))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='session_opts', ctx=Store())],
+            value=Dict(
+                keys=[
+                    Constant(value='session.type'),
+                    Constant(value='session.auto')],
+                values=[
+                    Constant(value='file'),
+                    Constant(value=True)])),
+        Assign(
+            targets=[
+                Name(id='app', ctx=Store())],
+            value=Call(
+                func=Name(id='SessionMiddleware', ctx=Load()),
+                args=[
+                    Name(id='your_app', ctx=Load()),
+                    Name(id='session_opts', ctx=Load())],
+                keywords=[])),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='server', ctx=Store())],
+                    value=Call(
+                        func=Name(id='make_server', ctx=Load()),
+                        args=[
+                            Constant(value='localhost'),
+                            Constant(value=8080),
+                            Name(id='app', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Serving on http://localhost:8080...')],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='server', ctx=Load()),
+                            attr='serve_forever',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

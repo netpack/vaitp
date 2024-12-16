@@ -1,0 +1,33 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='jw.util')]),
+        Assign(
+            targets=[
+                Name(id='yaml_config', ctx=Store())],
+            value=Constant(value='\ntest: "Hello, world!"\n')),
+        Assign(
+            targets=[
+                Name(id='config', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='jw', ctx=Load()),
+                        attr='util',
+                        ctx=Load()),
+                    attr='FromString',
+                    ctx=Load()),
+                args=[
+                    Name(id='yaml_config', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Subscript(
+                        value=Name(id='config', ctx=Load()),
+                        slice=Constant(value='test'),
+                        ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

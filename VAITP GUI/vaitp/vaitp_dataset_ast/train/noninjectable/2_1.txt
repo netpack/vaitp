@@ -1,0 +1,94 @@
+Module(
+    body=[
+        ImportFrom(
+            module='cryptography.hazmat.primitives.ciphers',
+            names=[
+                alias(name='Cipher'),
+                alias(name='algorithms'),
+                alias(name='modes')],
+            level=0),
+        ImportFrom(
+            module='cryptography.hazmat.backends',
+            names=[
+                alias(name='default_backend')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='cipher', ctx=Store())],
+            value=Call(
+                func=Name(id='Cipher', ctx=Load()),
+                args=[
+                    Call(
+                        func=Attribute(
+                            value=Name(id='algorithms', ctx=Load()),
+                            attr='AES',
+                            ctx=Load()),
+                        args=[
+                            BinOp(
+                                left=Constant(value=b'\x00'),
+                                op=Mult(),
+                                right=Constant(value=16))],
+                        keywords=[]),
+                    Call(
+                        func=Attribute(
+                            value=Name(id='modes', ctx=Load()),
+                            attr='CBC',
+                            ctx=Load()),
+                        args=[
+                            BinOp(
+                                left=Constant(value=b'\x00'),
+                                op=Mult(),
+                                right=Constant(value=16))],
+                        keywords=[])],
+                keywords=[
+                    keyword(
+                        arg='backend',
+                        value=Call(
+                            func=Name(id='default_backend', ctx=Load()),
+                            args=[],
+                            keywords=[]))])),
+        Assign(
+            targets=[
+                Name(id='encryptor', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='cipher', ctx=Load()),
+                    attr='encryptor',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='immutable_data', ctx=Store())],
+            value=Constant(value=b'Hello, World!')),
+        Assign(
+            targets=[
+                Name(id='mutable_buffer', ctx=Store())],
+            value=Call(
+                func=Name(id='bytearray', ctx=Load()),
+                args=[
+                    Constant(value=16)],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='encryptor', ctx=Load()),
+                    attr='update_into',
+                    ctx=Load()),
+                args=[
+                    Name(id='immutable_data', ctx=Load()),
+                    Name(id='mutable_buffer', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='mutable_buffer', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='immutable_data', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

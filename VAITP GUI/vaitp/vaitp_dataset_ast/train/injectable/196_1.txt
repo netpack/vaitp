@@ -1,0 +1,104 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='sys')]),
+        Import(
+            names=[
+                alias(name='os')]),
+        Assign(
+            targets=[
+                Name(id='malicious_file', ctx=Store())],
+            value=Constant(value='malicious.py')),
+        With(
+            items=[
+                withitem(
+                    context_expr=Call(
+                        func=Name(id='open', ctx=Load()),
+                        args=[
+                            Name(id='malicious_file', ctx=Load()),
+                            Constant(value='w')],
+                        keywords=[]),
+                    optional_vars=Name(id='f', ctx=Store()))],
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='f', ctx=Load()),
+                            attr='write',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='print("Malicious code executed!")\n')],
+                        keywords=[]))]),
+        Assign(
+            targets=[
+                Subscript(
+                    value=Attribute(
+                        value=Name(id='sys', ctx=Load()),
+                        attr='argv',
+                        ctx=Load()),
+                    slice=Constant(value=0),
+                    ctx=Store())],
+            value=Constant(value='malicious')),
+        Assign(
+            targets=[
+                Attribute(
+                    value=Name(id='sys', ctx=Load()),
+                    attr='path',
+                    ctx=Store())],
+            value=ListComp(
+                elt=Name(id='p', ctx=Load()),
+                generators=[
+                    comprehension(
+                        target=Name(id='p', ctx=Store()),
+                        iter=Attribute(
+                            value=Name(id='sys', ctx=Load()),
+                            attr='path',
+                            ctx=Load()),
+                        ifs=[
+                            Compare(
+                                left=Name(id='p', ctx=Load()),
+                                ops=[
+                                    NotEq()],
+                                comparators=[
+                                    Constant(value='')])],
+                        is_async=0)])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='sys', ctx=Load()),
+                        attr='path',
+                        ctx=Load()),
+                    attr='insert',
+                    ctx=Load()),
+                args=[
+                    Constant(value=0),
+                    Constant(value='')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='os', ctx=Load()),
+                    attr='execv',
+                    ctx=Load()),
+                args=[
+                    Attribute(
+                        value=Name(id='sys', ctx=Load()),
+                        attr='executable',
+                        ctx=Load()),
+                    BinOp(
+                        left=List(
+                            elts=[
+                                Attribute(
+                                    value=Name(id='sys', ctx=Load()),
+                                    attr='executable',
+                                    ctx=Load())],
+                            ctx=Load()),
+                        op=Add(),
+                        right=Attribute(
+                            value=Name(id='sys', ctx=Load()),
+                            attr='argv',
+                            ctx=Load()))],
+                keywords=[]))],
+    type_ignores=[])

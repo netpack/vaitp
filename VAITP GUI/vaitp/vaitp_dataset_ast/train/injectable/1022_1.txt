@@ -1,0 +1,97 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='mimetypes')]),
+        ImportFrom(
+            module='notebook.utils',
+            names=[
+                alias(name='is_valid_mime_type')],
+            level=0),
+        FunctionDef(
+            name='safe_mime_type',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='file_path')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Tuple(
+                            elts=[
+                                Name(id='mime_type', ctx=Store()),
+                                Name(id='_', ctx=Store())],
+                            ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='mimetypes', ctx=Load()),
+                            attr='guess_type',
+                            ctx=Load()),
+                        args=[
+                            Name(id='file_path', ctx=Load())],
+                        keywords=[])),
+                If(
+                    test=UnaryOp(
+                        op=Not(),
+                        operand=Call(
+                            func=Name(id='is_valid_mime_type', ctx=Load()),
+                            args=[
+                                Name(id='mime_type', ctx=Load())],
+                            keywords=[])),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Invalid MIME type detected.')],
+                                keywords=[]))],
+                    orelse=[]),
+                Return(
+                    value=Name(id='mime_type', ctx=Load()))],
+            decorator_list=[]),
+        FunctionDef(
+            name='handle_uploaded_file',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='file')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Try(
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='mime_type', ctx=Store())],
+                            value=Call(
+                                func=Name(id='safe_mime_type', ctx=Load()),
+                                args=[
+                                    Attribute(
+                                        value=Name(id='file', ctx=Load()),
+                                        attr='filename',
+                                        ctx=Load())],
+                                keywords=[]))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='ValueError', ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    Constant(value='Error: '),
+                                                    FormattedValue(
+                                                        value=Name(id='e', ctx=Load()),
+                                                        conversion=-1)])],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[])],
+    type_ignores=[])

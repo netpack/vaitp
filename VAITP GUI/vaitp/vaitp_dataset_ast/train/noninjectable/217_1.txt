@@ -1,0 +1,15 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='democritus_strings')]),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='democritus_strings', ctx=Load()),
+                    attr='process_strings',
+                    ctx=Load()),
+                args=[
+                    Constant(value="__import__('os').system('ls -l')")],
+                keywords=[]))],
+    type_ignores=[])

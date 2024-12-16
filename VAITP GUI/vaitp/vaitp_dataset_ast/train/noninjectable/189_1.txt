@@ -1,0 +1,50 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='CGIHTTPServer')]),
+        Assign(
+            targets=[
+                Name(id='server', ctx=Store())],
+            value=Attribute(
+                value=Name(id='CGIHTTPServer', ctx=Load()),
+                attr='CGIHTTPRequestHandler',
+                ctx=Load())),
+        Assign(
+            targets=[
+                Attribute(
+                    value=Name(id='server', ctx=Load()),
+                    attr='cgi_directories',
+                    ctx=Store())],
+            value=List(
+                elts=[
+                    Constant(value='/cgi-bin')],
+                ctx=Load())),
+        Assign(
+            targets=[
+                Name(id='httpd', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='CGIHTTPServer', ctx=Load()),
+                        attr='BaseHTTPServer',
+                        ctx=Load()),
+                    attr='HTTPServer',
+                    ctx=Load()),
+                args=[
+                    Tuple(
+                        elts=[
+                            Constant(value=''),
+                            Constant(value=8000)],
+                        ctx=Load()),
+                    Name(id='server', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='httpd', ctx=Load()),
+                    attr='serve_forever',
+                    ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

@@ -1,0 +1,94 @@
+Module(
+    body=[
+        ImportFrom(
+            module='PIL',
+            names=[
+                alias(name='Image')],
+            level=0),
+        FunctionDef(
+            name='process_image',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='image_path')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Try(
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='img', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='Image', ctx=Load()),
+                                    attr='open',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='image_path', ctx=Load())],
+                                keywords=[])),
+                        Assign(
+                            targets=[
+                                Tuple(
+                                    elts=[
+                                        Name(id='width', ctx=Store()),
+                                        Name(id='height', ctx=Store())],
+                                    ctx=Store())],
+                            value=Attribute(
+                                value=Name(id='img', ctx=Load()),
+                                attr='size',
+                                ctx=Load())),
+                        If(
+                            test=BoolOp(
+                                op=Or(),
+                                values=[
+                                    Compare(
+                                        left=Name(id='width', ctx=Load()),
+                                        ops=[
+                                            Gt()],
+                                        comparators=[
+                                            Constant(value=10000)]),
+                                    Compare(
+                                        left=Name(id='height', ctx=Load()),
+                                        ops=[
+                                            Gt()],
+                                        comparators=[
+                                            Constant(value=10000)])]),
+                            body=[
+                                Raise(
+                                    exc=Call(
+                                        func=Name(id='ValueError', ctx=Load()),
+                                        args=[
+                                            Constant(value='Image size is too large')],
+                                        keywords=[]))],
+                            orelse=[]),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='img', ctx=Load()),
+                                    attr='save',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='output.png')],
+                                keywords=[]))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='IOError', ctx=Load()),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            Constant(value='Error: Unable to open image file')],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='process_image', ctx=Load()),
+                args=[
+                    Constant(value='valid_image_file.png')],
+                keywords=[]))],
+    type_ignores=[])

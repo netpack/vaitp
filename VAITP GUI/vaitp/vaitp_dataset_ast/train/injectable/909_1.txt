@@ -1,0 +1,146 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='scrapy')]),
+        ImportFrom(
+            module='w3lib.http',
+            names=[
+                alias(name='basic_auth_header')],
+            level=0),
+        ClassDef(
+            name='MySpider',
+            bases=[
+                Attribute(
+                    value=Name(id='scrapy', ctx=Load()),
+                    attr='Spider',
+                    ctx=Load())],
+            keywords=[],
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='name', ctx=Store())],
+                    value=Constant(value='my_spider')),
+                Assign(
+                    targets=[
+                        Name(id='http_user', ctx=Store())],
+                    value=Constant(value='your_username')),
+                Assign(
+                    targets=[
+                        Name(id='http_pass', ctx=Store())],
+                    value=Constant(value='your_password')),
+                Assign(
+                    targets=[
+                        Name(id='http_auth_domain', ctx=Store())],
+                    value=List(
+                        elts=[
+                            Constant(value='example.com')],
+                        ctx=Load())),
+                FunctionDef(
+                    name='start_requests',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='urls', ctx=Store())],
+                            value=List(
+                                elts=[
+                                    Constant(value='http://example.com'),
+                                    Constant(value='http://anotherdomain.com')],
+                                ctx=Load())),
+                        For(
+                            target=Name(id='url', ctx=Store()),
+                            iter=Name(id='urls', ctx=Load()),
+                            body=[
+                                If(
+                                    test=Call(
+                                        func=Attribute(
+                                            value=Name(id='self', ctx=Load()),
+                                            attr='is_auth_domain',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='url', ctx=Load())],
+                                        keywords=[]),
+                                    body=[
+                                        Expr(
+                                            value=Yield(
+                                                value=Call(
+                                                    func=Attribute(
+                                                        value=Name(id='scrapy', ctx=Load()),
+                                                        attr='Request',
+                                                        ctx=Load()),
+                                                    args=[
+                                                        Name(id='url', ctx=Load())],
+                                                    keywords=[
+                                                        keyword(
+                                                            arg='headers',
+                                                            value=Dict(
+                                                                keys=[
+                                                                    Constant(value='Authorization')],
+                                                                values=[
+                                                                    Call(
+                                                                        func=Name(id='basic_auth_header', ctx=Load()),
+                                                                        args=[
+                                                                            Attribute(
+                                                                                value=Name(id='self', ctx=Load()),
+                                                                                attr='http_user',
+                                                                                ctx=Load()),
+                                                                            Attribute(
+                                                                                value=Name(id='self', ctx=Load()),
+                                                                                attr='http_pass',
+                                                                                ctx=Load())],
+                                                                        keywords=[])]))])))],
+                                    orelse=[
+                                        Expr(
+                                            value=Yield(
+                                                value=Call(
+                                                    func=Attribute(
+                                                        value=Name(id='scrapy', ctx=Load()),
+                                                        attr='Request',
+                                                        ctx=Load()),
+                                                    args=[
+                                                        Name(id='url', ctx=Load())],
+                                                    keywords=[])))])],
+                            orelse=[])],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='is_auth_domain',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='url')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Return(
+                            value=Call(
+                                func=Name(id='any', ctx=Load()),
+                                args=[
+                                    GeneratorExp(
+                                        elt=Compare(
+                                            left=Name(id='domain', ctx=Load()),
+                                            ops=[
+                                                In()],
+                                            comparators=[
+                                                Name(id='url', ctx=Load())]),
+                                        generators=[
+                                            comprehension(
+                                                target=Name(id='domain', ctx=Store()),
+                                                iter=Attribute(
+                                                    value=Name(id='self', ctx=Load()),
+                                                    attr='http_auth_domain',
+                                                    ctx=Load()),
+                                                ifs=[],
+                                                is_async=0)])],
+                                keywords=[]))],
+                    decorator_list=[])],
+            decorator_list=[])],
+    type_ignores=[])

@@ -1,0 +1,51 @@
+Module(
+    body=[
+        ImportFrom(
+            module='zope.component',
+            names=[
+                alias(name='getUtility')],
+            level=0),
+        ImportFrom(
+            module='myapp.templates',
+            names=[
+                alias(name='TemplateManager')],
+            level=0),
+        FunctionDef(
+            name='render_template',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='template_id')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='template_manager', ctx=Store())],
+                    value=Call(
+                        func=Name(id='getUtility', ctx=Load()),
+                        args=[
+                            Name(id='TemplateManager', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='template', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='template_manager', ctx=Load()),
+                            attr='get_template',
+                            ctx=Load()),
+                        args=[
+                            Name(id='template_id', ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='template', ctx=Load()),
+                            attr='render',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            decorator_list=[])],
+    type_ignores=[])

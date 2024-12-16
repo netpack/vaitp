@@ -1,0 +1,111 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='ssl')]),
+        Import(
+            names=[
+                alias(name='socket')]),
+        Assign(
+            targets=[
+                Name(id='host', ctx=Store())],
+            value=Constant(value='example.com')),
+        Assign(
+            targets=[
+                Name(id='port', ctx=Store())],
+            value=Constant(value=443)),
+        Assign(
+            targets=[
+                Name(id='context', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='ssl', ctx=Load()),
+                    attr='create_default_context',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='context', ctx=Load()),
+                    attr='set_ciphers',
+                    ctx=Load()),
+                args=[
+                    Constant(value='DEFAULT:!3DES')],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='sock', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='socket', ctx=Load()),
+                    attr='create_connection',
+                    ctx=Load()),
+                args=[
+                    Tuple(
+                        elts=[
+                            Name(id='host', ctx=Load()),
+                            Name(id='port', ctx=Load())],
+                        ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='ssock', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='context', ctx=Load()),
+                    attr='wrap_socket',
+                    ctx=Load()),
+                args=[
+                    Name(id='sock', ctx=Load())],
+                keywords=[
+                    keyword(
+                        arg='server_hostname',
+                        value=Name(id='host', ctx=Load()))])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Call(
+                        func=Attribute(
+                            value=Name(id='ssock', ctx=Load()),
+                            attr='cipher',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='ssock', ctx=Load()),
+                    attr='sendall',
+                    ctx=Load()),
+                args=[
+                    Constant(value=b'GET / HTTP/1.0\r\nHost: example.com\r\n\r\n')],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='data', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='ssock', ctx=Load()),
+                    attr='recv',
+                    ctx=Load()),
+                args=[
+                    Constant(value=1024)],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='data', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='ssock', ctx=Load()),
+                    attr='close',
+                    ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

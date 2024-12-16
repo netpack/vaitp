@@ -1,0 +1,50 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='python_libnmap')]),
+        Assign(
+            targets=[
+                Name(id='nmap', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='python_libnmap', ctx=Load()),
+                    attr='Nmap',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='user_input', ctx=Store())],
+            value=Call(
+                func=Name(id='input', ctx=Load()),
+                args=[
+                    Constant(value='Enter a command: ')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='nmap', ctx=Load()),
+                    attr='scan',
+                    ctx=Load()),
+                args=[
+                    Name(id='user_input', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='nmap', ctx=Load()),
+                    attr='scan',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Attribute(
+                        value=Name(id='nmap', ctx=Load()),
+                        attr='scan_result',
+                        ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

@@ -1,0 +1,145 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='tensorflow', asname='tf')]),
+        Assign(
+            targets=[
+                Name(id='input_tensor', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='tf', ctx=Load()),
+                    attr='constant',
+                    ctx=Load()),
+                args=[
+                    List(
+                        elts=[
+                            Constant(value=1),
+                            Constant(value=2),
+                            Constant(value=3)],
+                        ctx=Load())],
+                keywords=[
+                    keyword(
+                        arg='dtype',
+                        value=Attribute(
+                            value=Name(id='tf', ctx=Load()),
+                            attr='qint8',
+                            ctx=Load()))])),
+        Assign(
+            targets=[
+                Name(id='scale', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='tf', ctx=Load()),
+                    attr='constant',
+                    ctx=Load()),
+                args=[
+                    List(
+                        elts=[
+                            Constant(value=1.0)],
+                        ctx=Load())],
+                keywords=[
+                    keyword(
+                        arg='dtype',
+                        value=Attribute(
+                            value=Name(id='tf', ctx=Load()),
+                            attr='float32',
+                            ctx=Load()))])),
+        Assign(
+            targets=[
+                Name(id='offset', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='tf', ctx=Load()),
+                    attr='constant',
+                    ctx=Load()),
+                args=[
+                    List(
+                        elts=[
+                            Constant(value=0.0)],
+                        ctx=Load())],
+                keywords=[
+                    keyword(
+                        arg='dtype',
+                        value=Attribute(
+                            value=Name(id='tf', ctx=Load()),
+                            attr='float32',
+                            ctx=Load()))])),
+        Assign(
+            targets=[
+                Name(id='mean', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='tf', ctx=Load()),
+                    attr='constant',
+                    ctx=Load()),
+                args=[
+                    List(
+                        elts=[
+                            Constant(value=1.0)],
+                        ctx=Load())],
+                keywords=[
+                    keyword(
+                        arg='dtype',
+                        value=Attribute(
+                            value=Name(id='tf', ctx=Load()),
+                            attr='float32',
+                            ctx=Load()))])),
+        Assign(
+            targets=[
+                Name(id='variance', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='tf', ctx=Load()),
+                    attr='constant',
+                    ctx=Load()),
+                args=[
+                    List(
+                        elts=[
+                            Constant(value=0.0)],
+                        ctx=Load())],
+                keywords=[
+                    keyword(
+                        arg='dtype',
+                        value=Attribute(
+                            value=Name(id='tf', ctx=Load()),
+                            attr='float32',
+                            ctx=Load()))])),
+        Assign(
+            targets=[
+                Name(id='result', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='tf', ctx=Load()),
+                        attr='raw_ops',
+                        ctx=Load()),
+                    attr='QuantizedBatchNormWithGlobalNormalization',
+                    ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='input',
+                        value=Name(id='input_tensor', ctx=Load())),
+                    keyword(
+                        arg='scale',
+                        value=Name(id='scale', ctx=Load())),
+                    keyword(
+                        arg='offset',
+                        value=Name(id='offset', ctx=Load())),
+                    keyword(
+                        arg='mean',
+                        value=Name(id='mean', ctx=Load())),
+                    keyword(
+                        arg='variance',
+                        value=Name(id='variance', ctx=Load())),
+                    keyword(
+                        arg='epsilon',
+                        value=Constant(value=1e-05))])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='result', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

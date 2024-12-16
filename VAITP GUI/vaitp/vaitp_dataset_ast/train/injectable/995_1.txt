@@ -1,0 +1,103 @@
+Module(
+    body=[
+        ImportFrom(
+            module='mod_python',
+            names=[
+                alias(name='apache')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='ALLOWED_MODULES', ctx=Store())],
+            value=List(
+                elts=[
+                    Constant(value='safe_module')],
+                ctx=Load())),
+        FunctionDef(
+            name='handler',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='req')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='module_name', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='req', ctx=Load()),
+                                attr='args',
+                                ctx=Load()),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='module'),
+                            Constant(value='')],
+                        keywords=[])),
+                If(
+                    test=Compare(
+                        left=Name(id='module_name', ctx=Load()),
+                        ops=[
+                            NotIn()],
+                        comparators=[
+                            Name(id='ALLOWED_MODULES', ctx=Load())]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='req', ctx=Load()),
+                                    attr='write',
+                                    ctx=Load()),
+                                args=[
+                                    Call(
+                                        func=Attribute(
+                                            value=Constant(value='Access denied to module: {}'),
+                                            attr='format',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='module_name', ctx=Load())],
+                                        keywords=[])],
+                                keywords=[])),
+                        Return(
+                            value=Attribute(
+                                value=Name(id='apache', ctx=Load()),
+                                attr='HTTP_FORBIDDEN',
+                                ctx=Load()))],
+                    orelse=[]),
+                Assign(
+                    targets=[
+                        Name(id='mod', ctx=Store())],
+                    value=Call(
+                        func=Name(id='__import__', ctx=Load()),
+                        args=[
+                            Name(id='module_name', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='result', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='mod', ctx=Load()),
+                            attr='safe_function',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='req', ctx=Load()),
+                            attr='write',
+                            ctx=Load()),
+                        args=[
+                            Name(id='result', ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=Attribute(
+                        value=Name(id='apache', ctx=Load()),
+                        attr='OK',
+                        ctx=Load()))],
+            decorator_list=[])],
+    type_ignores=[])

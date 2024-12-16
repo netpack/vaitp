@@ -1,0 +1,55 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        FunctionDef(
+            name='execute_macro',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='macro_path')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            JoinedStr(
+                                values=[
+                                    Constant(value='Executing macro from: '),
+                                    FormattedValue(
+                                        value=Name(id='macro_path', ctx=Load()),
+                                        conversion=-1)])],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='open_document_and_execute_macro',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='doc_path')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='macro_path', ctx=Store())],
+                    value=Name(id='doc_path', ctx=Load())),
+                Expr(
+                    value=Call(
+                        func=Name(id='execute_macro', ctx=Load()),
+                        args=[
+                            Name(id='macro_path', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='open_document_and_execute_macro', ctx=Load()),
+                args=[
+                    Constant(value='../some/unsafe/path/to/macro.py')],
+                keywords=[]))],
+    type_ignores=[])

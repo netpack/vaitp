@@ -1,0 +1,161 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        ImportFrom(
+            module='django.http',
+            names=[
+                alias(name='HttpResponse'),
+                alias(name='Http404')],
+            level=0),
+        ImportFrom(
+            module='django.views.decorators.http',
+            names=[
+                alias(name='require_http_methods')],
+            level=0),
+        ImportFrom(
+            module='django.conf',
+            names=[
+                alias(name='settings')],
+            level=0),
+        FunctionDef(
+            name='safe_view',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='request')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='file_path', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='request', ctx=Load()),
+                                attr='GET',
+                                ctx=Load()),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='file_path')],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='safe_base_path', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='path',
+                                ctx=Load()),
+                            attr='join',
+                            ctx=Load()),
+                        args=[
+                            Attribute(
+                                value=Name(id='settings', ctx=Load()),
+                                attr='BASE_DIR',
+                                ctx=Load()),
+                            Constant(value='safe_directory')],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='full_path', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='path',
+                                ctx=Load()),
+                            attr='normpath',
+                            ctx=Load()),
+                        args=[
+                            Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='os', ctx=Load()),
+                                        attr='path',
+                                        ctx=Load()),
+                                    attr='join',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='safe_base_path', ctx=Load()),
+                                    Name(id='file_path', ctx=Load())],
+                                keywords=[])],
+                        keywords=[])),
+                If(
+                    test=UnaryOp(
+                        op=Not(),
+                        operand=Call(
+                            func=Attribute(
+                                value=Name(id='full_path', ctx=Load()),
+                                attr='startswith',
+                                ctx=Load()),
+                            args=[
+                                Name(id='safe_base_path', ctx=Load())],
+                            keywords=[])),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='Http404', ctx=Load()),
+                                args=[
+                                    Constant(value='File not found')],
+                                keywords=[]))],
+                    orelse=[]),
+                Try(
+                    body=[
+                        With(
+                            items=[
+                                withitem(
+                                    context_expr=Call(
+                                        func=Name(id='open', ctx=Load()),
+                                        args=[
+                                            Name(id='full_path', ctx=Load()),
+                                            Constant(value='r')],
+                                        keywords=[]),
+                                    optional_vars=Name(id='file', ctx=Store()))],
+                            body=[
+                                Assign(
+                                    targets=[
+                                        Name(id='file_data', ctx=Store())],
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='file', ctx=Load()),
+                                            attr='read',
+                                            ctx=Load()),
+                                        args=[],
+                                        keywords=[]))]),
+                        Return(
+                            value=Call(
+                                func=Name(id='HttpResponse', ctx=Load()),
+                                args=[
+                                    Name(id='file_data', ctx=Load())],
+                                keywords=[
+                                    keyword(
+                                        arg='content_type',
+                                        value=Constant(value='text/plain'))]))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='IOError', ctx=Load()),
+                            body=[
+                                Raise(
+                                    exc=Call(
+                                        func=Name(id='Http404', ctx=Load()),
+                                        args=[
+                                            Constant(value='File not found')],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[
+                Call(
+                    func=Name(id='require_http_methods', ctx=Load()),
+                    args=[
+                        List(
+                            elts=[
+                                Constant(value='GET')],
+                            ctx=Load())],
+                    keywords=[])])],
+    type_ignores=[])

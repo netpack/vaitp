@@ -1,0 +1,106 @@
+Module(
+    body=[
+        FunctionDef(
+            name='secure_execute_script',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='script')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='allowed_commands', ctx=Store())],
+                    value=List(
+                        elts=[
+                            Constant(value='draw_line'),
+                            Constant(value='draw_circle'),
+                            Constant(value='set_color')],
+                        ctx=Load())),
+                For(
+                    target=Name(id='command', ctx=Store()),
+                    iter=Call(
+                        func=Attribute(
+                            value=Name(id='script', ctx=Load()),
+                            attr='split',
+                            ctx=Load()),
+                        args=[
+                            Constant(value=';')],
+                        keywords=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='command', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='command', ctx=Load()),
+                                    attr='strip',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[])),
+                        If(
+                            test=Compare(
+                                left=Subscript(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='command', ctx=Load()),
+                                            attr='split',
+                                            ctx=Load()),
+                                        args=[
+                                            Constant(value='(')],
+                                        keywords=[]),
+                                    slice=Constant(value=0),
+                                    ctx=Load()),
+                                ops=[
+                                    NotIn()],
+                                comparators=[
+                                    Name(id='allowed_commands', ctx=Load())]),
+                            body=[
+                                Raise(
+                                    exc=Call(
+                                        func=Name(id='ValueError', ctx=Load()),
+                                        args=[
+                                            BinOp(
+                                                left=Constant(value='Unauthorized command detected: '),
+                                                op=Add(),
+                                                right=Name(id='command', ctx=Load()))],
+                                        keywords=[]))],
+                            orelse=[])],
+                    orelse=[]),
+                Expr(
+                    value=Call(
+                        func=Name(id='exec', ctx=Load()),
+                        args=[
+                            Name(id='script', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Try(
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='secure_execute_script', ctx=Load()),
+                        args=[
+                            Constant(value="draw_line(0, 0, 100, 100); set_color('red');")],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='secure_execute_script', ctx=Load()),
+                        args=[
+                            Constant(value="os.system('rm -rf /')")],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ValueError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

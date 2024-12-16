@@ -1,0 +1,44 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='openapi_client')]),
+        Assign(
+            targets=[
+                Name(id='client', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='openapi_client', ctx=Load()),
+                        attr='Client',
+                        ctx=Load()),
+                    attr='from_url',
+                    ctx=Load()),
+                args=[
+                    Constant(value='https://example.com/trusted_openapi.json')],
+                keywords=[])),
+        If(
+            test=Call(
+                func=Attribute(
+                    value=Name(id='client', ctx=Load()),
+                    attr='validate_code',
+                    ctx=Load()),
+                args=[],
+                keywords=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='client', ctx=Load()),
+                            attr='execute',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            orelse=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Invalid code, refusing to execute')],
+                        keywords=[]))])],
+    type_ignores=[])

@@ -1,0 +1,213 @@
+Module(
+    body=[
+        ImportFrom(
+            module='http.server',
+            names=[
+                alias(name='BaseHTTPRequestHandler'),
+                alias(name='HTTPServer')],
+            level=0),
+        ClassDef(
+            name='MyRequestHandler',
+            bases=[
+                Name(id='BaseHTTPRequestHandler', ctx=Load())],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='do_POST',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='content_length', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='headers',
+                                        ctx=Load()),
+                                    attr='get',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='Content-Length')],
+                                keywords=[])),
+                        Assign(
+                            targets=[
+                                Name(id='transfer_encoding', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='headers',
+                                        ctx=Load()),
+                                    attr='get',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='Transfer-Encoding')],
+                                keywords=[])),
+                        If(
+                            test=BoolOp(
+                                op=And(),
+                                values=[
+                                    Name(id='transfer_encoding', ctx=Load()),
+                                    Compare(
+                                        left=Call(
+                                            func=Attribute(
+                                                value=Name(id='transfer_encoding', ctx=Load()),
+                                                attr='lower',
+                                                ctx=Load()),
+                                            args=[],
+                                            keywords=[]),
+                                        ops=[
+                                            Eq()],
+                                        comparators=[
+                                            Constant(value='chunked')])]),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='self', ctx=Load()),
+                                            attr='handle_chunked_request',
+                                            ctx=Load()),
+                                        args=[],
+                                        keywords=[]))],
+                            orelse=[
+                                If(
+                                    test=Compare(
+                                        left=Name(id='content_length', ctx=Load()),
+                                        ops=[
+                                            IsNot()],
+                                        comparators=[
+                                            Constant(value=None)]),
+                                    body=[
+                                        Expr(
+                                            value=Call(
+                                                func=Attribute(
+                                                    value=Name(id='self', ctx=Load()),
+                                                    attr='handle_content_length_request',
+                                                    ctx=Load()),
+                                                args=[
+                                                    Call(
+                                                        func=Name(id='int', ctx=Load()),
+                                                        args=[
+                                                            Name(id='content_length', ctx=Load())],
+                                                        keywords=[])],
+                                                keywords=[]))],
+                                    orelse=[
+                                        Expr(
+                                            value=Call(
+                                                func=Attribute(
+                                                    value=Name(id='self', ctx=Load()),
+                                                    attr='send_response',
+                                                    ctx=Load()),
+                                                args=[
+                                                    Constant(value=400)],
+                                                keywords=[])),
+                                        Expr(
+                                            value=Call(
+                                                func=Attribute(
+                                                    value=Name(id='self', ctx=Load()),
+                                                    attr='end_headers',
+                                                    ctx=Load()),
+                                                args=[],
+                                                keywords=[])),
+                                        Expr(
+                                            value=Call(
+                                                func=Attribute(
+                                                    value=Attribute(
+                                                        value=Name(id='self', ctx=Load()),
+                                                        attr='wfile',
+                                                        ctx=Load()),
+                                                    attr='write',
+                                                    ctx=Load()),
+                                                args=[
+                                                    Constant(value=b'Bad Request: Missing Content-Length or Transfer-Encoding')],
+                                                keywords=[]))])])],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='handle_chunked_request',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Pass()],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='handle_content_length_request',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='content_length')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Pass()],
+                    decorator_list=[])],
+            decorator_list=[]),
+        FunctionDef(
+            name='run',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='server_class'),
+                    arg(arg='handler_class'),
+                    arg(arg='port')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[
+                    Name(id='HTTPServer', ctx=Load()),
+                    Name(id='MyRequestHandler', ctx=Load()),
+                    Constant(value=8000)]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='server_address', ctx=Store())],
+                    value=Tuple(
+                        elts=[
+                            Constant(value=''),
+                            Name(id='port', ctx=Load())],
+                        ctx=Load())),
+                Assign(
+                    targets=[
+                        Name(id='httpd', ctx=Store())],
+                    value=Call(
+                        func=Name(id='server_class', ctx=Load()),
+                        args=[
+                            Name(id='server_address', ctx=Load()),
+                            Name(id='handler_class', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='httpd', ctx=Load()),
+                            attr='serve_forever',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='run', ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

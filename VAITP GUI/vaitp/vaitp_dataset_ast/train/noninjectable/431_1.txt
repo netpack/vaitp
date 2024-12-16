@@ -1,0 +1,62 @@
+Module(
+    body=[
+        ClassDef(
+            name='TokenValidator',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='token_store')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='token_store',
+                                    ctx=Store())],
+                            value=Name(id='token_store', ctx=Load()))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='validate_token',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='token')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='stored_token', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='token_store',
+                                        ctx=Load()),
+                                    attr='get',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='token', ctx=Load())],
+                                keywords=[])),
+                        If(
+                            test=Name(id='stored_token', ctx=Load()),
+                            body=[
+                                Return(
+                                    value=Constant(value=True))],
+                            orelse=[]),
+                        Return(
+                            value=Constant(value=False))],
+                    decorator_list=[])],
+            decorator_list=[])],
+    type_ignores=[])

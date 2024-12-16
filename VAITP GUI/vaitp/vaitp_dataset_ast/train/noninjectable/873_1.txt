@@ -1,0 +1,38 @@
+Module(
+    body=[
+        ImportFrom(
+            module='fastapi',
+            names=[
+                alias(name='FastAPI')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='app', ctx=Store())],
+            value=Call(
+                func=Name(id='FastAPI', ctx=Load()),
+                args=[],
+                keywords=[])),
+        AsyncFunctionDef(
+            name='create_item',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(
+                        arg='item',
+                        annotation=Name(id='dict', ctx=Load()))],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Name(id='item', ctx=Load()))],
+            decorator_list=[
+                Call(
+                    func=Attribute(
+                        value=Name(id='app', ctx=Load()),
+                        attr='post',
+                        ctx=Load()),
+                    args=[
+                        Constant(value='/items/')],
+                    keywords=[])])],
+    type_ignores=[])

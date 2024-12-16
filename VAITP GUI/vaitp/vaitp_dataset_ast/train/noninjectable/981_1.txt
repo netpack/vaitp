@@ -1,0 +1,40 @@
+Module(
+    body=[
+        FunctionDef(
+            name='unsafe_render',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='title')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=JoinedStr(
+                        values=[
+                            Constant(value='<div>'),
+                            FormattedValue(
+                                value=Name(id='title', ctx=Load()),
+                                conversion=-1),
+                            Constant(value='</div>')]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='user_input', ctx=Store())],
+            value=Constant(value="<script>alert('XSS');</script>")),
+        Assign(
+            targets=[
+                Name(id='output', ctx=Store())],
+            value=Call(
+                func=Name(id='unsafe_render', ctx=Load()),
+                args=[
+                    Name(id='user_input', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='output', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

@@ -1,0 +1,53 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='email.utils')]),
+        Assign(
+            targets=[
+                Name(id='malicious_input', ctx=Store())],
+            value=BinOp(
+                left=BinOp(
+                    left=Constant(value='A'),
+                    op=Mult(),
+                    right=BinOp(
+                        left=Constant(value=10),
+                        op=Pow(),
+                        right=Constant(value=6))),
+                op=Add(),
+                right=Constant(value='@example.com'))),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='result', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='email', ctx=Load()),
+                                attr='utils',
+                                ctx=Load()),
+                            attr='parseaddr',
+                            ctx=Load()),
+                        args=[
+                            Name(id='malicious_input', ctx=Load())],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='RecursionError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            Constant(value='RecursionError: '),
+                                            FormattedValue(
+                                                value=Name(id='e', ctx=Load()),
+                                                conversion=-1)])],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

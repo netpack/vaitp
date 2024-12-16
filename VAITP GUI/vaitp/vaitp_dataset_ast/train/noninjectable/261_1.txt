@@ -1,0 +1,80 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='validators')]),
+        FunctionDef(
+            name='check_domain',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='domain')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Try(
+                    body=[
+                        If(
+                            test=Call(
+                                func=Attribute(
+                                    value=Name(id='validators', ctx=Load()),
+                                    attr='domain',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='domain', ctx=Load())],
+                                keywords=[]),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    FormattedValue(
+                                                        value=Name(id='domain', ctx=Load()),
+                                                        conversion=-1),
+                                                    Constant(value=' is a valid domain.')])],
+                                        keywords=[]))],
+                            orelse=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    FormattedValue(
+                                                        value=Name(id='domain', ctx=Load()),
+                                                        conversion=-1),
+                                                    Constant(value=' is not a valid domain.')])],
+                                        keywords=[]))])],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='Exception', ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    Constant(value='An error occurred: '),
+                                                    FormattedValue(
+                                                        value=Name(id='e', ctx=Load()),
+                                                        conversion=-1)])],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='crafted_domain', ctx=Store())],
+            value=Constant(value='example..com')),
+        Expr(
+            value=Call(
+                func=Name(id='check_domain', ctx=Load()),
+                args=[
+                    Name(id='crafted_domain', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

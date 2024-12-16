@@ -1,0 +1,68 @@
+Module(
+    body=[
+        FunctionDef(
+            name='safe_insert_query',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='query')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=BoolOp(
+                        op=Or(),
+                        values=[
+                            Compare(
+                                left=Constant(value='eval'),
+                                ops=[
+                                    In()],
+                                comparators=[
+                                    Name(id='query', ctx=Load())]),
+                            Compare(
+                                left=Constant(value='exec'),
+                                ops=[
+                                    In()],
+                                comparators=[
+                                    Name(id='query', ctx=Load())])]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Unsafe query detected!')],
+                                keywords=[]))],
+                    orelse=[]),
+                Expr(
+                    value=Call(
+                        func=Name(id='execute_query', ctx=Load()),
+                        args=[
+                            Name(id='query', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='execute_query',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='query')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Executing query:'),
+                            Name(id='query', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='safe_insert_query', ctx=Load()),
+                args=[
+                    Constant(value="INSERT INTO my_table (column) VALUES ('safe_value')")],
+                keywords=[]))],
+    type_ignores=[])

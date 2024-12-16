@@ -1,0 +1,66 @@
+Module(
+    body=[
+        ImportFrom(
+            module='lxml',
+            names=[
+                alias(name='etree')],
+            level=0),
+        FunctionDef(
+            name='parse_xml_secure',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='xml_input')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='parser', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='etree', ctx=Load()),
+                            attr='XMLParser',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[
+                            keyword(
+                                arg='no_network',
+                                value=Constant(value=True)),
+                            keyword(
+                                arg='resolve_entities',
+                                value=Constant(value=False))])),
+                Assign(
+                    targets=[
+                        Name(id='tree', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='etree', ctx=Load()),
+                            attr='fromstring',
+                            ctx=Load()),
+                        args=[
+                            Name(id='xml_input', ctx=Load()),
+                            Name(id='parser', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Attribute(
+                                value=Name(id='tree', ctx=Load()),
+                                attr='tag',
+                                ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='xml_input', ctx=Store())],
+            value=Constant(value='\n<!DOCTYPE root [\n<!ENTITY read SYSTEM "file:///etc/passwd">\n]>\n<root>&read;</root>\n')),
+        Expr(
+            value=Call(
+                func=Name(id='parse_xml_secure', ctx=Load()),
+                args=[
+                    Name(id='xml_input', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

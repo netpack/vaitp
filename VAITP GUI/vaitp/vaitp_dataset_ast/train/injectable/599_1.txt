@@ -1,0 +1,75 @@
+Module(
+    body=[
+        FunctionDef(
+            name='vulnerable_function',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='user_input')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='template', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Constant(value='User  input: {}'),
+                            attr='format',
+                            ctx=Load()),
+                        args=[
+                            Name(id='user_input', ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=Name(id='template', ctx=Load()))],
+            decorator_list=[]),
+        FunctionDef(
+            name='safe_function',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='user_input')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='sanitized_input', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Call(
+                                func=Attribute(
+                                    value=Call(
+                                        func=Name(id='str', ctx=Load()),
+                                        args=[
+                                            Name(id='user_input', ctx=Load())],
+                                        keywords=[]),
+                                    attr='replace',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='<'),
+                                    Constant(value='&lt;')],
+                                keywords=[]),
+                            attr='replace',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='>'),
+                            Constant(value='&gt;')],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='template', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Constant(value='User  input: {}'),
+                            attr='format',
+                            ctx=Load()),
+                        args=[
+                            Name(id='sanitized_input', ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=Name(id='template', ctx=Load()))],
+            decorator_list=[])],
+    type_ignores=[])

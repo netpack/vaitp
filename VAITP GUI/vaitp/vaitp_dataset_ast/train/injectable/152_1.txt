@@ -1,0 +1,44 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='SimpleHTTPServer')]),
+        Import(
+            names=[
+                alias(name='SocketServer')]),
+        Assign(
+            targets=[
+                Name(id='PORT', ctx=Store())],
+            value=Constant(value=8000)),
+        Assign(
+            targets=[
+                Name(id='Handler', ctx=Store())],
+            value=Attribute(
+                value=Name(id='SimpleHTTPServer', ctx=Load()),
+                attr='SimpleHTTPRequestHandler',
+                ctx=Load())),
+        Assign(
+            targets=[
+                Name(id='httpd', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='SocketServer', ctx=Load()),
+                    attr='TCPServer',
+                    ctx=Load()),
+                args=[
+                    Tuple(
+                        elts=[
+                            Constant(value=''),
+                            Name(id='PORT', ctx=Load())],
+                        ctx=Load()),
+                    Name(id='Handler', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='httpd', ctx=Load()),
+                    attr='serve_forever',
+                    ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

@@ -1,0 +1,637 @@
+Module(
+    body=[
+        FunctionDef(
+            name='check_access',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='model_name'),
+                    arg(arg='field_name'),
+                    arg(arg='operation'),
+                    arg(arg='user')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Constant(value="\n    Simulates access control logic for a Many2Many field, preventing unauthorized modifications.\n\n    Args:\n        model_name (str): The name of the model being accessed.\n        field_name (str): The name of the Many2Many field.\n        operation (str): The operation being performed ('create', 'write', 'delete', 'copy').\n        user (dict): Dictionary representing the current user, with a 'groups' key representing their assigned roles or groups.\n\n    Returns:\n        bool: True if access is allowed, False otherwise.\n    ")),
+                If(
+                    test=BoolOp(
+                        op=And(),
+                        values=[
+                            Compare(
+                                left=Name(id='model_name', ctx=Load()),
+                                ops=[
+                                    Eq()],
+                                comparators=[
+                                    Constant(value='res.user')]),
+                            Compare(
+                                left=Name(id='field_name', ctx=Load()),
+                                ops=[
+                                    Eq()],
+                                comparators=[
+                                    Constant(value='groups')])]),
+                    body=[
+                        If(
+                            test=Compare(
+                                left=Call(
+                                    func=Attribute(
+                                        value=Name(id='user', ctx=Load()),
+                                        attr='get',
+                                        ctx=Load()),
+                                    args=[
+                                        Constant(value='groups')],
+                                    keywords=[]),
+                                ops=[
+                                    Eq()],
+                                comparators=[
+                                    List(
+                                        elts=[
+                                            Constant(value='admin')],
+                                        ctx=Load())]),
+                            body=[
+                                Return(
+                                    value=Constant(value=True))],
+                            orelse=[
+                                Return(
+                                    value=Constant(value=False))])],
+                    orelse=[]),
+                Return(
+                    value=Constant(value=True))],
+            decorator_list=[]),
+        FunctionDef(
+            name='create_record',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='model_name'),
+                    arg(arg='data'),
+                    arg(arg='user')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=UnaryOp(
+                        op=Not(),
+                        operand=Call(
+                            func=Name(id='check_access', ctx=Load()),
+                            args=[
+                                Name(id='model_name', ctx=Load()),
+                                Constant(value='groups'),
+                                Constant(value='create'),
+                                Name(id='user', ctx=Load())],
+                            keywords=[])),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='Exception', ctx=Load()),
+                                args=[
+                                    Constant(value='Access Denied, User not authorized')],
+                                keywords=[]))],
+                    orelse=[]),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            JoinedStr(
+                                values=[
+                                    Constant(value='Creating record for '),
+                                    FormattedValue(
+                                        value=Name(id='model_name', ctx=Load()),
+                                        conversion=-1),
+                                    Constant(value=' with data '),
+                                    FormattedValue(
+                                        value=Name(id='data', ctx=Load()),
+                                        conversion=-1)])],
+                        keywords=[])),
+                Return(
+                    value=Dict(
+                        keys=[
+                            Name(id='model_name', ctx=Load())],
+                        values=[
+                            Name(id='data', ctx=Load())]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='write_record',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='model_name'),
+                    arg(arg='record_id'),
+                    arg(arg='data'),
+                    arg(arg='user')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=UnaryOp(
+                        op=Not(),
+                        operand=Call(
+                            func=Name(id='check_access', ctx=Load()),
+                            args=[
+                                Name(id='model_name', ctx=Load()),
+                                Constant(value='groups'),
+                                Constant(value='write'),
+                                Name(id='user', ctx=Load())],
+                            keywords=[])),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='Exception', ctx=Load()),
+                                args=[
+                                    Constant(value='Access Denied, User not authorized')],
+                                keywords=[]))],
+                    orelse=[]),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            JoinedStr(
+                                values=[
+                                    Constant(value='Writing record '),
+                                    FormattedValue(
+                                        value=Name(id='record_id', ctx=Load()),
+                                        conversion=-1),
+                                    Constant(value=' of '),
+                                    FormattedValue(
+                                        value=Name(id='model_name', ctx=Load()),
+                                        conversion=-1),
+                                    Constant(value=' with data '),
+                                    FormattedValue(
+                                        value=Name(id='data', ctx=Load()),
+                                        conversion=-1)])],
+                        keywords=[])),
+                Return(
+                    value=Dict(
+                        keys=[
+                            Name(id='model_name', ctx=Load())],
+                        values=[
+                            Dict(
+                                keys=[
+                                    Name(id='record_id', ctx=Load())],
+                                values=[
+                                    Name(id='data', ctx=Load())])]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='delete_record',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='model_name'),
+                    arg(arg='record_id'),
+                    arg(arg='user')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=UnaryOp(
+                        op=Not(),
+                        operand=Call(
+                            func=Name(id='check_access', ctx=Load()),
+                            args=[
+                                Name(id='model_name', ctx=Load()),
+                                Constant(value='groups'),
+                                Constant(value='delete'),
+                                Name(id='user', ctx=Load())],
+                            keywords=[])),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='Exception', ctx=Load()),
+                                args=[
+                                    Constant(value='Access Denied, User not authorized')],
+                                keywords=[]))],
+                    orelse=[]),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            JoinedStr(
+                                values=[
+                                    Constant(value='Deleting record '),
+                                    FormattedValue(
+                                        value=Name(id='record_id', ctx=Load()),
+                                        conversion=-1),
+                                    Constant(value=' of '),
+                                    FormattedValue(
+                                        value=Name(id='model_name', ctx=Load()),
+                                        conversion=-1)])],
+                        keywords=[])),
+                Return(
+                    value=Dict(
+                        keys=[
+                            Name(id='model_name', ctx=Load())],
+                        values=[
+                            Name(id='record_id', ctx=Load())]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='copy_record',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='model_name'),
+                    arg(arg='record_id'),
+                    arg(arg='user')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=UnaryOp(
+                        op=Not(),
+                        operand=Call(
+                            func=Name(id='check_access', ctx=Load()),
+                            args=[
+                                Name(id='model_name', ctx=Load()),
+                                Constant(value='groups'),
+                                Constant(value='copy'),
+                                Name(id='user', ctx=Load())],
+                            keywords=[])),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='Exception', ctx=Load()),
+                                args=[
+                                    Constant(value='Access Denied, User not authorized')],
+                                keywords=[]))],
+                    orelse=[]),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            JoinedStr(
+                                values=[
+                                    Constant(value='Copying record '),
+                                    FormattedValue(
+                                        value=Name(id='record_id', ctx=Load()),
+                                        conversion=-1),
+                                    Constant(value=' of '),
+                                    FormattedValue(
+                                        value=Name(id='model_name', ctx=Load()),
+                                        conversion=-1)])],
+                        keywords=[])),
+                Return(
+                    value=Dict(
+                        keys=[
+                            Name(id='model_name', ctx=Load())],
+                        values=[
+                            Name(id='record_id', ctx=Load())]))],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='admin_user', ctx=Store())],
+                    value=Dict(
+                        keys=[
+                            Constant(value='id'),
+                            Constant(value='groups')],
+                        values=[
+                            Constant(value=1),
+                            List(
+                                elts=[
+                                    Constant(value='admin')],
+                                ctx=Load())])),
+                Assign(
+                    targets=[
+                        Name(id='regular_user', ctx=Store())],
+                    value=Dict(
+                        keys=[
+                            Constant(value='id'),
+                            Constant(value='groups')],
+                        values=[
+                            Constant(value=2),
+                            List(
+                                elts=[
+                                    Constant(value='user')],
+                                ctx=Load())])),
+                Try(
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='create_record', ctx=Load()),
+                                args=[
+                                    Constant(value='res.user'),
+                                    Dict(
+                                        keys=[
+                                            Constant(value='name'),
+                                            Constant(value='groups')],
+                                        values=[
+                                            Constant(value='test_user'),
+                                            List(
+                                                elts=[
+                                                    Constant(value=1)],
+                                                ctx=Load())]),
+                                    Name(id='admin_user', ctx=Load())],
+                                keywords=[]))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='Exception', ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            Name(id='e', ctx=Load())],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[]),
+                Try(
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='write_record', ctx=Load()),
+                                args=[
+                                    Constant(value='res.user'),
+                                    Constant(value=1),
+                                    Dict(
+                                        keys=[
+                                            Constant(value='groups')],
+                                        values=[
+                                            List(
+                                                elts=[
+                                                    Constant(value=2)],
+                                                ctx=Load())]),
+                                    Name(id='admin_user', ctx=Load())],
+                                keywords=[]))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='Exception', ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            Name(id='e', ctx=Load())],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[]),
+                Try(
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='delete_record', ctx=Load()),
+                                args=[
+                                    Constant(value='res.user'),
+                                    Constant(value=1),
+                                    Name(id='admin_user', ctx=Load())],
+                                keywords=[]))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='Exception', ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            Name(id='e', ctx=Load())],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[]),
+                Try(
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='copy_record', ctx=Load()),
+                                args=[
+                                    Constant(value='res.user'),
+                                    Constant(value=1),
+                                    Name(id='admin_user', ctx=Load())],
+                                keywords=[]))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='Exception', ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            Name(id='e', ctx=Load())],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[]),
+                Try(
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='create_record', ctx=Load()),
+                                args=[
+                                    Constant(value='res.user'),
+                                    Dict(
+                                        keys=[
+                                            Constant(value='name'),
+                                            Constant(value='groups')],
+                                        values=[
+                                            Constant(value='test_user'),
+                                            List(
+                                                elts=[
+                                                    Constant(value=1)],
+                                                ctx=Load())]),
+                                    Name(id='regular_user', ctx=Load())],
+                                keywords=[]))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='Exception', ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            Name(id='e', ctx=Load())],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[]),
+                Try(
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='write_record', ctx=Load()),
+                                args=[
+                                    Constant(value='res.user'),
+                                    Constant(value=1),
+                                    Dict(
+                                        keys=[
+                                            Constant(value='groups')],
+                                        values=[
+                                            List(
+                                                elts=[
+                                                    Constant(value=2)],
+                                                ctx=Load())]),
+                                    Name(id='regular_user', ctx=Load())],
+                                keywords=[]))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='Exception', ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            Name(id='e', ctx=Load())],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[]),
+                Try(
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='delete_record', ctx=Load()),
+                                args=[
+                                    Constant(value='res.user'),
+                                    Constant(value=1),
+                                    Name(id='regular_user', ctx=Load())],
+                                keywords=[]))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='Exception', ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            Name(id='e', ctx=Load())],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[]),
+                Try(
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='copy_record', ctx=Load()),
+                                args=[
+                                    Constant(value='res.user'),
+                                    Constant(value=1),
+                                    Name(id='regular_user', ctx=Load())],
+                                keywords=[]))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='Exception', ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            Name(id='e', ctx=Load())],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[]),
+                Try(
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='create_record', ctx=Load()),
+                                args=[
+                                    Constant(value='res.partner'),
+                                    Dict(
+                                        keys=[
+                                            Constant(value='name')],
+                                        values=[
+                                            Constant(value='test_partner')]),
+                                    Name(id='regular_user', ctx=Load())],
+                                keywords=[]))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='Exception', ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            Name(id='e', ctx=Load())],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[]),
+                Try(
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='write_record', ctx=Load()),
+                                args=[
+                                    Constant(value='res.partner'),
+                                    Constant(value=1),
+                                    Dict(
+                                        keys=[
+                                            Constant(value='name')],
+                                        values=[
+                                            Constant(value='updated_name')]),
+                                    Name(id='regular_user', ctx=Load())],
+                                keywords=[]))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='Exception', ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            Name(id='e', ctx=Load())],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[]),
+                Try(
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='delete_record', ctx=Load()),
+                                args=[
+                                    Constant(value='res.partner'),
+                                    Constant(value=1),
+                                    Name(id='regular_user', ctx=Load())],
+                                keywords=[]))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='Exception', ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            Name(id='e', ctx=Load())],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[]),
+                Try(
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='copy_record', ctx=Load()),
+                                args=[
+                                    Constant(value='res.partner'),
+                                    Constant(value=1),
+                                    Name(id='regular_user', ctx=Load())],
+                                keywords=[]))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='Exception', ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            Name(id='e', ctx=Load())],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[])],
+            orelse=[])],
+    type_ignores=[])

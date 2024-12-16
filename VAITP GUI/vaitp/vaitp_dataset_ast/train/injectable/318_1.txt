@@ -1,0 +1,49 @@
+Module(
+    body=[
+        FunctionDef(
+            name='decode_typecode',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='typecode')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Compare(
+                        left=Name(id='typecode', ctx=Load()),
+                        ops=[
+                            Eq()],
+                        comparators=[
+                            Constant(value='s')]),
+                    body=[
+                        Return(
+                            value=Constant(value='string'))],
+                    orelse=[
+                        If(
+                            test=Compare(
+                                left=Name(id='typecode', ctx=Load()),
+                                ops=[
+                                    Eq()],
+                                comparators=[
+                                    Constant(value='i')]),
+                            body=[
+                                Return(
+                                    value=Constant(value='integer'))],
+                            orelse=[
+                                Raise(
+                                    exc=Call(
+                                        func=Name(id='ValueError', ctx=Load()),
+                                        args=[
+                                            Call(
+                                                func=Attribute(
+                                                    value=Constant(value='Unrecognized typecode: {}'),
+                                                    attr='format',
+                                                    ctx=Load()),
+                                                args=[
+                                                    Name(id='typecode', ctx=Load())],
+                                                keywords=[])],
+                                        keywords=[]))])])],
+            decorator_list=[])],
+    type_ignores=[])

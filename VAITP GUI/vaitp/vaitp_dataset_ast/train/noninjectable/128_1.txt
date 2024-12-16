@@ -1,0 +1,123 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='xml.parsers.expat')]),
+        Assign(
+            targets=[
+                Name(id='parser', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Attribute(
+                            value=Name(id='xml', ctx=Load()),
+                            attr='parsers',
+                            ctx=Load()),
+                        attr='expat',
+                        ctx=Load()),
+                    attr='ParserCreate',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        FunctionDef(
+            name='start_element',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='name'),
+                    arg(arg='attrs')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Start element:'),
+                            Name(id='name', ctx=Load()),
+                            Name(id='attrs', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='end_element',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='name')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='End element:'),
+                            Name(id='name', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='char_data',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='data')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Character data:'),
+                            Call(
+                                func=Name(id='repr', ctx=Load()),
+                                args=[
+                                    Name(id='data', ctx=Load())],
+                                keywords=[])],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Attribute(
+                    value=Name(id='parser', ctx=Load()),
+                    attr='StartElementHandler',
+                    ctx=Store())],
+            value=Name(id='start_element', ctx=Load())),
+        Assign(
+            targets=[
+                Attribute(
+                    value=Name(id='parser', ctx=Load()),
+                    attr='EndElementHandler',
+                    ctx=Store())],
+            value=Name(id='end_element', ctx=Load())),
+        Assign(
+            targets=[
+                Attribute(
+                    value=Name(id='parser', ctx=Load()),
+                    attr='CharacterDataHandler',
+                    ctx=Store())],
+            value=Name(id='char_data', ctx=Load())),
+        With(
+            items=[
+                withitem(
+                    context_expr=Call(
+                        func=Name(id='open', ctx=Load()),
+                        args=[
+                            Constant(value='example.xml'),
+                            Constant(value='rb')],
+                        keywords=[]),
+                    optional_vars=Name(id='f', ctx=Store()))],
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='parser', ctx=Load()),
+                            attr='ParseFile',
+                            ctx=Load()),
+                        args=[
+                            Name(id='f', ctx=Load())],
+                        keywords=[]))])],
+    type_ignores=[])

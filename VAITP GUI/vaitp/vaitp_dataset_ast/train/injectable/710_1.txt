@@ -1,0 +1,112 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='crypt')]),
+        FunctionDef(
+            name='set_root_password',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='new_password')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='hashed_password', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='crypt', ctx=Load()),
+                            attr='crypt',
+                            ctx=Load()),
+                        args=[
+                            Name(id='new_password', ctx=Load()),
+                            Call(
+                                func=Attribute(
+                                    value=Name(id='crypt', ctx=Load()),
+                                    attr='mksalt',
+                                    ctx=Load()),
+                                args=[
+                                    Attribute(
+                                        value=Name(id='crypt', ctx=Load()),
+                                        attr='METHOD_SHA512',
+                                        ctx=Load())],
+                                keywords=[])],
+                        keywords=[])),
+                With(
+                    items=[
+                        withitem(
+                            context_expr=Call(
+                                func=Name(id='open', ctx=Load()),
+                                args=[
+                                    Constant(value='/etc/shadow'),
+                                    Constant(value='r')],
+                                keywords=[]),
+                            optional_vars=Name(id='f', ctx=Store()))],
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='lines', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='f', ctx=Load()),
+                                    attr='readlines',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[]))]),
+                With(
+                    items=[
+                        withitem(
+                            context_expr=Call(
+                                func=Name(id='open', ctx=Load()),
+                                args=[
+                                    Constant(value='/etc/shadow'),
+                                    Constant(value='w')],
+                                keywords=[]),
+                            optional_vars=Name(id='f', ctx=Store()))],
+                    body=[
+                        For(
+                            target=Name(id='line', ctx=Store()),
+                            iter=Name(id='lines', ctx=Load()),
+                            body=[
+                                If(
+                                    test=Call(
+                                        func=Attribute(
+                                            value=Name(id='line', ctx=Load()),
+                                            attr='startswith',
+                                            ctx=Load()),
+                                        args=[
+                                            Constant(value='root:')],
+                                        keywords=[]),
+                                    body=[
+                                        Assign(
+                                            targets=[
+                                                Name(id='line', ctx=Store())],
+                                            value=JoinedStr(
+                                                values=[
+                                                    Constant(value='root:'),
+                                                    FormattedValue(
+                                                        value=Name(id='hashed_password', ctx=Load()),
+                                                        conversion=-1),
+                                                    Constant(value=':')]))],
+                                    orelse=[]),
+                                Expr(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='f', ctx=Load()),
+                                            attr='write',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='line', ctx=Load())],
+                                        keywords=[]))],
+                            orelse=[])])],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='set_root_password', ctx=Load()),
+                args=[
+                    Constant(value='SecureP@ssw0rd!')],
+                keywords=[]))],
+    type_ignores=[])

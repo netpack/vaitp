@@ -1,0 +1,65 @@
+Module(
+    body=[
+        ImportFrom(
+            module='asyncua',
+            names=[
+                alias(name='Server')],
+            level=0),
+        AsyncFunctionDef(
+            name='start_server',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='server', ctx=Store())],
+                    value=Call(
+                        func=Name(id='Server', ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Expr(
+                    value=Await(
+                        value=Call(
+                            func=Attribute(
+                                value=Name(id='server', ctx=Load()),
+                                attr='start',
+                                ctx=Load()),
+                            args=[],
+                            keywords=[]))),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Call(
+                                func=Attribute(
+                                    value=Constant(value='Server started at {}'),
+                                    attr='format',
+                                    ctx=Load()),
+                                args=[
+                                    Attribute(
+                                        value=Name(id='server', ctx=Load()),
+                                        attr='endpoint',
+                                        ctx=Load())],
+                                keywords=[])],
+                        keywords=[]))],
+            decorator_list=[]),
+        Import(
+            names=[
+                alias(name='asyncio')]),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='asyncio', ctx=Load()),
+                    attr='run',
+                    ctx=Load()),
+                args=[
+                    Call(
+                        func=Name(id='start_server', ctx=Load()),
+                        args=[],
+                        keywords=[])],
+                keywords=[]))],
+    type_ignores=[])

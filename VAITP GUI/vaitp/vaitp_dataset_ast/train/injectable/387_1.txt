@@ -1,0 +1,97 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='pydash')]),
+        FunctionDef(
+            name='secure_function',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='obj'),
+                    arg(arg='method_path')],
+                vararg=arg(arg='args'),
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=BoolOp(
+                        op=Or(),
+                        values=[
+                            UnaryOp(
+                                op=Not(),
+                                operand=Call(
+                                    func=Name(id='isinstance', ctx=Load()),
+                                    args=[
+                                        Name(id='method_path', ctx=Load()),
+                                        Name(id='str', ctx=Load())],
+                                    keywords=[])),
+                            Compare(
+                                left=Constant(value=';'),
+                                ops=[
+                                    In()],
+                                comparators=[
+                                    Name(id='method_path', ctx=Load())])]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Invalid method path')],
+                                keywords=[]))],
+                    orelse=[]),
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='pydash', ctx=Load()),
+                                attr='objects',
+                                ctx=Load()),
+                            attr='invoke',
+                            ctx=Load()),
+                        args=[
+                            Name(id='obj', ctx=Load()),
+                            Name(id='method_path', ctx=Load()),
+                            Starred(
+                                value=Name(id='args', ctx=Load()),
+                                ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='data', ctx=Store())],
+            value=Dict(
+                keys=[
+                    Constant(value='user')],
+                values=[
+                    Dict(
+                        keys=[
+                            Constant(value='name')],
+                        values=[
+                            Constant(value='Alice')])])),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='result', ctx=Store())],
+                    value=Call(
+                        func=Name(id='secure_function', ctx=Load()),
+                        args=[
+                            Name(id='data', ctx=Load()),
+                            Constant(value='user.name; os.system("echo vulnerable")')],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ValueError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

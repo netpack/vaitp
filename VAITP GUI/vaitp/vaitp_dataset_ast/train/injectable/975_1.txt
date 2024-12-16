@@ -1,0 +1,126 @@
+Module(
+    body=[
+        ImportFrom(
+            module='mod_python',
+            names=[
+                alias(name='apache')],
+            level=0),
+        FunctionDef(
+            name='handler',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='req')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Try(
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='query_string', ctx=Store())],
+                            value=Attribute(
+                                value=Name(id='req', ctx=Load()),
+                                attr='args',
+                                ctx=Load())),
+                        If(
+                            test=UnaryOp(
+                                op=Not(),
+                                operand=Name(id='query_string', ctx=Load())),
+                            body=[
+                                Raise(
+                                    exc=Call(
+                                        func=Name(id='ValueError', ctx=Load()),
+                                        args=[
+                                            Constant(value='Empty query string')],
+                                        keywords=[]))],
+                            orelse=[]),
+                        Assign(
+                            targets=[
+                                Name(id='max_length', ctx=Store())],
+                            value=Constant(value=1024)),
+                        If(
+                            test=Compare(
+                                left=Call(
+                                    func=Name(id='len', ctx=Load()),
+                                    args=[
+                                        Name(id='query_string', ctx=Load())],
+                                    keywords=[]),
+                                ops=[
+                                    Gt()],
+                                comparators=[
+                                    Name(id='max_length', ctx=Load())]),
+                            body=[
+                                Raise(
+                                    exc=Call(
+                                        func=Name(id='ValueError', ctx=Load()),
+                                        args=[
+                                            Constant(value='Query string too long')],
+                                        keywords=[]))],
+                            orelse=[]),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='req', ctx=Load()),
+                                    attr='write',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='Query string processed successfully.')],
+                                keywords=[]))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='Exception', ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='req', ctx=Load()),
+                                            attr='log_error',
+                                            ctx=Load()),
+                                        args=[
+                                            Call(
+                                                func=Attribute(
+                                                    value=Constant(value='Error processing request: {}'),
+                                                    attr='format',
+                                                    ctx=Load()),
+                                                args=[
+                                                    Name(id='e', ctx=Load())],
+                                                keywords=[])],
+                                        keywords=[])),
+                                Assign(
+                                    targets=[
+                                        Attribute(
+                                            value=Name(id='req', ctx=Load()),
+                                            attr='status',
+                                            ctx=Store())],
+                                    value=Attribute(
+                                        value=Name(id='apache', ctx=Load()),
+                                        attr='HTTP_BAD_REQUEST',
+                                        ctx=Load())),
+                                Expr(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='req', ctx=Load()),
+                                            attr='write',
+                                            ctx=Load()),
+                                        args=[
+                                            Call(
+                                                func=Attribute(
+                                                    value=Constant(value='Bad Request: {}'),
+                                                    attr='format',
+                                                    ctx=Load()),
+                                                args=[
+                                                    Name(id='e', ctx=Load())],
+                                                keywords=[])],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[]),
+                Return(
+                    value=Attribute(
+                        value=Name(id='apache', ctx=Load()),
+                        attr='OK',
+                        ctx=Load()))],
+            decorator_list=[])],
+    type_ignores=[])

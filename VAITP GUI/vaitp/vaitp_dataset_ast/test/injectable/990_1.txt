@@ -1,0 +1,116 @@
+Module(
+    body=[
+        FunctionDef(
+            name='vulnerable_concat',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(
+                        arg='a',
+                        annotation=Name(id='bytes', ctx=Load())),
+                    arg(
+                        arg='b',
+                        annotation=Name(id='bytes', ctx=Load()))],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Name(id='concat', ctx=Load()),
+                        args=[
+                            Name(id='a', ctx=Load()),
+                            Name(id='b', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[
+                Name(id='public', ctx=Load()),
+                Name(id='pure', ctx=Load())],
+            returns=Name(id='bytes', ctx=Load())),
+        FunctionDef(
+            name='safe_concat',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(
+                        arg='a',
+                        annotation=Name(id='bytes', ctx=Load())),
+                    arg(
+                        arg='b',
+                        annotation=Name(id='bytes', ctx=Load()))],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                AnnAssign(
+                    target=Name(id='total_length', ctx=Store()),
+                    annotation=Name(id='uint256', ctx=Load()),
+                    value=BinOp(
+                        left=Call(
+                            func=Name(id='len', ctx=Load()),
+                            args=[
+                                Name(id='a', ctx=Load())],
+                            keywords=[]),
+                        op=Add(),
+                        right=Call(
+                            func=Name(id='len', ctx=Load()),
+                            args=[
+                                Name(id='b', ctx=Load())],
+                            keywords=[])),
+                    simple=1),
+                Assert(
+                    test=Compare(
+                        left=Name(id='total_length', ctx=Load()),
+                        ops=[
+                            LtE()],
+                        comparators=[
+                            Name(id='MAX_BUFFER_SIZE', ctx=Load())]),
+                    msg=Constant(value='Buffer overflow risk')),
+                AnnAssign(
+                    target=Name(id='result', ctx=Store()),
+                    annotation=Name(id='bytes', ctx=Load()),
+                    value=Call(
+                        func=Name(id='empty', ctx=Load()),
+                        args=[
+                            Name(id='bytes', ctx=Load()),
+                            Name(id='total_length', ctx=Load())],
+                        keywords=[]),
+                    simple=1),
+                Expr(
+                    value=Call(
+                        func=Name(id='copy_bytes', ctx=Load()),
+                        args=[
+                            Name(id='result', ctx=Load()),
+                            Constant(value=0),
+                            Name(id='a', ctx=Load()),
+                            Constant(value=0),
+                            Call(
+                                func=Name(id='len', ctx=Load()),
+                                args=[
+                                    Name(id='a', ctx=Load())],
+                                keywords=[])],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='copy_bytes', ctx=Load()),
+                        args=[
+                            Name(id='result', ctx=Load()),
+                            Call(
+                                func=Name(id='len', ctx=Load()),
+                                args=[
+                                    Name(id='a', ctx=Load())],
+                                keywords=[]),
+                            Name(id='b', ctx=Load()),
+                            Constant(value=0),
+                            Call(
+                                func=Name(id='len', ctx=Load()),
+                                args=[
+                                    Name(id='b', ctx=Load())],
+                                keywords=[])],
+                        keywords=[])),
+                Return(
+                    value=Name(id='result', ctx=Load()))],
+            decorator_list=[
+                Name(id='public', ctx=Load()),
+                Name(id='pure', ctx=Load())],
+            returns=Name(id='bytes', ctx=Load()))],
+    type_ignores=[])

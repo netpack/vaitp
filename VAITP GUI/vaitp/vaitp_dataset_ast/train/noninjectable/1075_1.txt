@@ -1,0 +1,51 @@
+Module(
+    body=[
+        ImportFrom(
+            module='urllib.parse',
+            names=[
+                alias(name='urlparse'),
+                alias(name='urlsplit')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='url', ctx=Store())],
+            value=Constant(value='http://[not-an-ipv6]:8080/path')),
+        Assign(
+            targets=[
+                Name(id='parsed_url', ctx=Store())],
+            value=Call(
+                func=Name(id='urlparse', ctx=Load()),
+                args=[
+                    Name(id='url', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Constant(value='Parsed URL:'),
+                    Name(id='parsed_url', ctx=Load())],
+                keywords=[])),
+        If(
+            test=Attribute(
+                value=Name(id='parsed_url', ctx=Load()),
+                attr='hostname',
+                ctx=Load()),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Hostname:'),
+                            Attribute(
+                                value=Name(id='parsed_url', ctx=Load()),
+                                attr='hostname',
+                                ctx=Load())],
+                        keywords=[]))],
+            orelse=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='No valid hostname found.')],
+                        keywords=[]))])],
+    type_ignores=[])

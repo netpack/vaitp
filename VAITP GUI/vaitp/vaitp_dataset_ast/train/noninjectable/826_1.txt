@@ -1,0 +1,94 @@
+Module(
+    body=[
+        FunctionDef(
+            name='get_users',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='password_filter', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='request', ctx=Load()),
+                                attr='args',
+                                ctx=Load()),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='password')],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='users', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='User', ctx=Load()),
+                                        attr='query',
+                                        ctx=Load()),
+                                    attr='filter',
+                                    ctx=Load()),
+                                args=[
+                                    Call(
+                                        func=Attribute(
+                                            value=Attribute(
+                                                value=Name(id='User', ctx=Load()),
+                                                attr='password_hash',
+                                                ctx=Load()),
+                                            attr='like',
+                                            ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    Constant(value='%'),
+                                                    FormattedValue(
+                                                        value=Name(id='password_filter', ctx=Load()),
+                                                        conversion=-1),
+                                                    Constant(value='%')])],
+                                        keywords=[])],
+                                keywords=[]),
+                            attr='all',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Return(
+                    value=Call(
+                        func=Name(id='jsonify', ctx=Load()),
+                        args=[
+                            ListComp(
+                                elt=Attribute(
+                                    value=Name(id='user', ctx=Load()),
+                                    attr='username',
+                                    ctx=Load()),
+                                generators=[
+                                    comprehension(
+                                        target=Name(id='user', ctx=Store()),
+                                        iter=Name(id='users', ctx=Load()),
+                                        ifs=[],
+                                        is_async=0)])],
+                        keywords=[]))],
+            decorator_list=[
+                Call(
+                    func=Attribute(
+                        value=Name(id='app', ctx=Load()),
+                        attr='route',
+                        ctx=Load()),
+                    args=[
+                        Constant(value='/users')],
+                    keywords=[
+                        keyword(
+                            arg='methods',
+                            value=List(
+                                elts=[
+                                    Constant(value='GET')],
+                                ctx=Load()))]),
+                Name(id='admin_required', ctx=Load())])],
+    type_ignores=[])

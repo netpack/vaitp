@@ -1,0 +1,55 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='eventlet')]),
+        FunctionDef(
+            name='vulnerable_eventlet_function',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                FunctionDef(
+                    name='worker',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Worker function is running')],
+                                keywords=[]))],
+                    decorator_list=[]),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='eventlet', ctx=Load()),
+                            attr='spawn',
+                            ctx=Load()),
+                        args=[
+                            Name(id='worker', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='eventlet', ctx=Load()),
+                            attr='sleep',
+                            ctx=Load()),
+                        args=[
+                            Constant(value=1)],
+                        keywords=[]))],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='vulnerable_eventlet_function', ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

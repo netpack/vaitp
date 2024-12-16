@@ -1,0 +1,54 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='xml.etree.ElementTree', asname='ET')]),
+        FunctionDef(
+            name='parse_xml',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='xml_string')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='tree', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='ET', ctx=Load()),
+                            attr='fromstring',
+                            ctx=Load()),
+                        args=[
+                            Name(id='xml_string', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Attribute(
+                                value=Call(
+                                    func=Attribute(
+                                        value=Name(id='tree', ctx=Load()),
+                                        attr='find',
+                                        ctx=Load()),
+                                    args=[
+                                        Constant(value='data')],
+                                    keywords=[]),
+                                attr='text',
+                                ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='xml_data', ctx=Store())],
+            value=Constant(value='\n<!DOCTYPE data [\n<!ENTITY test SYSTEM "file:///etc/passwd">\n]>\n<data>&test;</data>\n')),
+        Expr(
+            value=Call(
+                func=Name(id='parse_xml', ctx=Load()),
+                args=[
+                    Name(id='xml_data', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

@@ -1,0 +1,127 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        Import(
+            names=[
+                alias(name='subprocess')]),
+        Import(
+            names=[
+                alias(name='sys')]),
+        Import(
+            names=[
+                alias(name='venv')]),
+        FunctionDef(
+            name='create_virtualenv',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='env_dir')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='path',
+                                ctx=Load()),
+                            attr='exists',
+                            ctx=Load()),
+                        args=[
+                            Name(id='env_dir', ctx=Load())],
+                        keywords=[]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='FileExistsError', ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            Constant(value='Directory '),
+                                            FormattedValue(
+                                                value=Name(id='env_dir', ctx=Load()),
+                                                conversion=-1),
+                                            Constant(value=' already exists.')])],
+                                keywords=[]))],
+                    orelse=[]),
+                Assign(
+                    targets=[
+                        Name(id='builder', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='venv', ctx=Load()),
+                            attr='EnvBuilder',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[
+                            keyword(
+                                arg='with_pip',
+                                value=Constant(value=True))])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='builder', ctx=Load()),
+                            attr='create',
+                            ctx=Load()),
+                        args=[
+                            Name(id='env_dir', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='env_directory', ctx=Store())],
+                    value=Constant(value='myenv')),
+                Expr(
+                    value=Call(
+                        func=Name(id='create_virtualenv', ctx=Load()),
+                        args=[
+                            Name(id='env_directory', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='activate_script', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='path',
+                                ctx=Load()),
+                            attr='join',
+                            ctx=Load()),
+                        args=[
+                            Name(id='env_directory', ctx=Load()),
+                            Constant(value='bin'),
+                            Constant(value='activate')],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='subprocess', ctx=Load()),
+                            attr='run',
+                            ctx=Load()),
+                        args=[
+                            List(
+                                elts=[
+                                    Attribute(
+                                        value=Name(id='sys', ctx=Load()),
+                                        attr='executable',
+                                        ctx=Load()),
+                                    Constant(value='-m'),
+                                    Constant(value='venv'),
+                                    Name(id='activate_script', ctx=Load())],
+                                ctx=Load())],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

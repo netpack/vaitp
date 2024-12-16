@@ -1,0 +1,64 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='docx')]),
+        Assign(
+            targets=[
+                Name(id='malicious_doc', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='docx', ctx=Load()),
+                    attr='Document',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='malicious_doc', ctx=Load()),
+                    attr='add_paragraph',
+                    ctx=Load()),
+                args=[
+                    Constant(value='<?xml version="1.0"?>\n    <!DOCTYPE root [\n        <!ENTITY xxe SYSTEM "file:///etc/passwd">\n    ]>\n    <root>\n        <data>&xxe;</data>\n    </root>')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='malicious_doc', ctx=Load()),
+                    attr='save',
+                    ctx=Load()),
+                args=[
+                    Constant(value='malicious.docx')],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='doc', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='docx', ctx=Load()),
+                    attr='Document',
+                    ctx=Load()),
+                args=[
+                    Constant(value='malicious.docx')],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='content', ctx=Store())],
+            value=Attribute(
+                value=Subscript(
+                    value=Attribute(
+                        value=Name(id='doc', ctx=Load()),
+                        attr='paragraphs',
+                        ctx=Load()),
+                    slice=Constant(value=0),
+                    ctx=Load()),
+                attr='text',
+                ctx=Load())),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='content', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

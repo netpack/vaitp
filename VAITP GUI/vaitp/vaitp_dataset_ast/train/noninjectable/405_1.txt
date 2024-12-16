@@ -1,0 +1,63 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='gradio', asname='gr')]),
+        FunctionDef(
+            name='read_file',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='file_path')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                With(
+                    items=[
+                        withitem(
+                            context_expr=Call(
+                                func=Name(id='open', ctx=Load()),
+                                args=[
+                                    Name(id='file_path', ctx=Load()),
+                                    Constant(value='r')],
+                                keywords=[]),
+                            optional_vars=Name(id='file', ctx=Store()))],
+                    body=[
+                        Return(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='file', ctx=Load()),
+                                    attr='read',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[]))])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='iface', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='gr', ctx=Load()),
+                    attr='Interface',
+                    ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='fn',
+                        value=Name(id='read_file', ctx=Load())),
+                    keyword(
+                        arg='inputs',
+                        value=Constant(value='text')),
+                    keyword(
+                        arg='outputs',
+                        value=Constant(value='text'))])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='iface', ctx=Load()),
+                    attr='launch',
+                    ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

@@ -1,0 +1,41 @@
+Module(
+    body=[
+        FunctionDef(
+            name='vulnerable_function',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='user_input')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='template', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Constant(value='User  input: {}'),
+                            attr='format',
+                            ctx=Load()),
+                        args=[
+                            Name(id='user_input', ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=Name(id='template', ctx=Load()))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='malicious_input', ctx=Store())],
+            value=Constant(value="__import__('os').popen('cat /etc/passwd').read()")),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Call(
+                        func=Name(id='vulnerable_function', ctx=Load()),
+                        args=[
+                            Name(id='malicious_input', ctx=Load())],
+                        keywords=[])],
+                keywords=[]))],
+    type_ignores=[])

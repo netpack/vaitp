@@ -1,0 +1,112 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='re')]),
+        FunctionDef(
+            name='sanitize_input',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='user_input')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='re', ctx=Load()),
+                            attr='sub',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='[^\\w\\s]'),
+                            Constant(value=''),
+                            Name(id='user_input', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='login',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='username'),
+                    arg(arg='password')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='sanitized_username', ctx=Store())],
+                    value=Call(
+                        func=Name(id='sanitize_input', ctx=Load()),
+                        args=[
+                            Name(id='username', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='sanitized_password', ctx=Store())],
+                    value=Call(
+                        func=Name(id='sanitize_input', ctx=Load()),
+                        args=[
+                            Name(id='password', ctx=Load())],
+                        keywords=[])),
+                If(
+                    test=Call(
+                        func=Name(id='authenticate', ctx=Load()),
+                        args=[
+                            Name(id='sanitized_username', ctx=Load()),
+                            Name(id='sanitized_password', ctx=Load())],
+                        keywords=[]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Login successful!')],
+                                keywords=[]))],
+                    orelse=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Invalid credentials.')],
+                                keywords=[]))])],
+            decorator_list=[]),
+        FunctionDef(
+            name='authenticate',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='username'),
+                    arg(arg='password')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=BoolOp(
+                        op=And(),
+                        values=[
+                            Compare(
+                                left=Name(id='username', ctx=Load()),
+                                ops=[
+                                    Eq()],
+                                comparators=[
+                                    Constant(value='validUser ')]),
+                            Compare(
+                                left=Name(id='password', ctx=Load()),
+                                ops=[
+                                    Eq()],
+                                comparators=[
+                                    Constant(value='validPass')])]))],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='login', ctx=Load()),
+                args=[
+                    Constant(value='validUser '),
+                    Constant(value='validPass')],
+                keywords=[]))],
+    type_ignores=[])

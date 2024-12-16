@@ -1,0 +1,25 @@
+Module(
+    body=[
+        FunctionDef(
+            name='parse_feed',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='uri')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            JoinedStr(
+                                values=[
+                                    Constant(value='Parsing feed from '),
+                                    FormattedValue(
+                                        value=Name(id='uri', ctx=Load()),
+                                        conversion=-1)])],
+                        keywords=[]))],
+            decorator_list=[])],
+    type_ignores=[])

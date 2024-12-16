@@ -1,0 +1,168 @@
+Module(
+    body=[
+        ImportFrom(
+            module='django.contrib.auth',
+            names=[
+                alias(name='authenticate')],
+            level=0),
+        ImportFrom(
+            module='django.http',
+            names=[
+                alias(name='HttpResponse')],
+            level=0),
+        FunctionDef(
+            name='login',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='request')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='username', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='request', ctx=Load()),
+                                attr='POST',
+                                ctx=Load()),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='username')],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='password', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='request', ctx=Load()),
+                                attr='POST',
+                                ctx=Load()),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='password')],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='user', ctx=Store())],
+                    value=Call(
+                        func=Name(id='authenticate', ctx=Load()),
+                        args=[
+                            Name(id='request', ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='username',
+                                value=Name(id='username', ctx=Load())),
+                            keyword(
+                                arg='password',
+                                value=Name(id='password', ctx=Load()))])),
+                If(
+                    test=Compare(
+                        left=Name(id='user', ctx=Load()),
+                        ops=[
+                            Is()],
+                        comparators=[
+                            Constant(value=None)]),
+                    body=[
+                        ImportFrom(
+                            module='django.contrib.auth.models',
+                            names=[
+                                alias(name='User')],
+                            level=0),
+                        Try(
+                            body=[
+                                Assign(
+                                    targets=[
+                                        Name(id='user', ctx=Store())],
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Attribute(
+                                                value=Name(id='User', ctx=Load()),
+                                                attr='objects',
+                                                ctx=Load()),
+                                            attr='get',
+                                            ctx=Load()),
+                                        args=[],
+                                        keywords=[
+                                            keyword(
+                                                arg='username',
+                                                value=Name(id='username', ctx=Load()))])),
+                                If(
+                                    test=Call(
+                                        func=Attribute(
+                                            value=Name(id='user', ctx=Load()),
+                                            attr='check_password',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='password', ctx=Load())],
+                                        keywords=[]),
+                                    body=[
+                                        Assign(
+                                            targets=[
+                                                Subscript(
+                                                    value=Attribute(
+                                                        value=Name(id='request', ctx=Load()),
+                                                        attr='session',
+                                                        ctx=Load()),
+                                                    slice=Constant(value='user_id'),
+                                                    ctx=Store())],
+                                            value=Attribute(
+                                                value=Name(id='user', ctx=Load()),
+                                                attr='id',
+                                                ctx=Load())),
+                                        Return(
+                                            value=Call(
+                                                func=Name(id='HttpResponse', ctx=Load()),
+                                                args=[
+                                                    Constant(value='Logged in successfully (vulnerable)')],
+                                                keywords=[]))],
+                                    orelse=[
+                                        Return(
+                                            value=Call(
+                                                func=Name(id='HttpResponse', ctx=Load()),
+                                                args=[
+                                                    Constant(value='Invalid credentials')],
+                                                keywords=[]))])],
+                            handlers=[
+                                ExceptHandler(
+                                    type=Attribute(
+                                        value=Name(id='User', ctx=Load()),
+                                        attr='DoesNotExist',
+                                        ctx=Load()),
+                                    body=[
+                                        Return(
+                                            value=Call(
+                                                func=Name(id='HttpResponse', ctx=Load()),
+                                                args=[
+                                                    Constant(value='Invalid credentials')],
+                                                keywords=[]))])],
+                            orelse=[],
+                            finalbody=[])],
+                    orelse=[
+                        Assign(
+                            targets=[
+                                Subscript(
+                                    value=Attribute(
+                                        value=Name(id='request', ctx=Load()),
+                                        attr='session',
+                                        ctx=Load()),
+                                    slice=Constant(value='user_id'),
+                                    ctx=Store())],
+                            value=Attribute(
+                                value=Name(id='user', ctx=Load()),
+                                attr='id',
+                                ctx=Load())),
+                        Return(
+                            value=Call(
+                                func=Name(id='HttpResponse', ctx=Load()),
+                                args=[
+                                    Constant(value='Logged in successfully (secure)')],
+                                keywords=[]))])],
+            decorator_list=[])],
+    type_ignores=[])

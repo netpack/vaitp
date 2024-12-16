@@ -1,0 +1,38 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='pickle')]),
+        FunctionDef(
+            name='load_pickle',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='data')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='pickle', ctx=Load()),
+                            attr='loads',
+                            ctx=Load()),
+                        args=[
+                            Name(id='data', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='malicious_data', ctx=Store())],
+            value=Constant(value=b'(C__main__\nMaliciousClass\nq\x00)\n.')),
+        Assign(
+            targets=[
+                Name(id='loaded_data', ctx=Store())],
+            value=Call(
+                func=Name(id='load_pickle', ctx=Load()),
+                args=[
+                    Name(id='malicious_data', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

@@ -1,0 +1,37 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='pybluemonday')]),
+        Assign(
+            targets=[
+                Name(id='policy', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='pybluemonday', ctx=Load()),
+                    attr='StrictPolicy',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='input', ctx=Store())],
+            value=Constant(value='<select><option>option1</option><option>option2</option><style>/* malicious CSS */</style></select>')),
+        Assign(
+            targets=[
+                Name(id='sanitized', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='policy', ctx=Load()),
+                    attr='sanitize',
+                    ctx=Load()),
+                args=[
+                    Name(id='input', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='sanitized', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

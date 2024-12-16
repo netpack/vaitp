@@ -1,0 +1,60 @@
+Module(
+    body=[
+        ClassDef(
+            name='Calculator',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='calculate',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='expression')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Return(
+                            value=Call(
+                                func=Name(id='eval', ctx=Load()),
+                                args=[
+                                    Name(id='expression', ctx=Load())],
+                                keywords=[]))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='calculator', ctx=Store())],
+            value=Call(
+                func=Name(id='Calculator', ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Call(
+                        func=Attribute(
+                            value=Name(id='calculator', ctx=Load()),
+                            attr='calculate',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='2 + 2')],
+                        keywords=[])],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Call(
+                        func=Attribute(
+                            value=Name(id='calculator', ctx=Load()),
+                            attr='calculate',
+                            ctx=Load()),
+                        args=[
+                            Constant(value="__import__('os').system('ls')")],
+                        keywords=[])],
+                keywords=[]))],
+    type_ignores=[])

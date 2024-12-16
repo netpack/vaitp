@@ -1,0 +1,57 @@
+Module(
+    body=[
+        ImportFrom(
+            module='django.db',
+            names=[
+                alias(name='models')],
+            level=0),
+        ClassDef(
+            name='Media',
+            bases=[
+                Attribute(
+                    value=Name(id='models', ctx=Load()),
+                    attr='Model',
+                    ctx=Load())],
+            keywords=[],
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='file', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='models', ctx=Load()),
+                            attr='FileField',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                FunctionDef(
+                    name='save',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        vararg=arg(arg='args'),
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        kwarg=arg(arg='kwargs'),
+                        defaults=[]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Call(
+                                        func=Name(id='super', ctx=Load()),
+                                        args=[],
+                                        keywords=[]),
+                                    attr='save',
+                                    ctx=Load()),
+                                args=[
+                                    Starred(
+                                        value=Name(id='args', ctx=Load()),
+                                        ctx=Load())],
+                                keywords=[
+                                    keyword(
+                                        value=Name(id='kwargs', ctx=Load()))]))],
+                    decorator_list=[])],
+            decorator_list=[])],
+    type_ignores=[])

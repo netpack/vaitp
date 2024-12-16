@@ -1,0 +1,46 @@
+Module(
+    body=[
+        ImportFrom(
+            module='urllib.parse',
+            names=[
+                alias(name='urlparse'),
+                alias(name='urljoin')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='base_url', ctx=Store())],
+            value=Constant(value='http://example.com')),
+        Assign(
+            targets=[
+                Name(id='location_header', ctx=Store())],
+            value=Constant(value='//attacker.com/path')),
+        Assign(
+            targets=[
+                Name(id='parsed_location', ctx=Store())],
+            value=Call(
+                func=Name(id='urlparse', ctx=Load()),
+                args=[
+                    Name(id='location_header', ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='normalized_location', ctx=Store())],
+            value=Call(
+                func=Name(id='urljoin', ctx=Load()),
+                args=[
+                    Name(id='base_url', ctx=Load()),
+                    Call(
+                        func=Attribute(
+                            value=Name(id='parsed_location', ctx=Load()),
+                            attr='geturl',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='normalized_location', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

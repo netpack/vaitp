@@ -1,0 +1,141 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        Import(
+            names=[
+                alias(name='yaml')]),
+        FunctionDef(
+            name='export_pipeline',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='pipeline'),
+                    arg(arg='output_format')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[
+                    Constant(value='yaml')]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='s3_credentials', ctx=Store())],
+                    value=Call(
+                        func=Name(id='get_s3_credentials_from_secret', ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='export_data', ctx=Store())],
+                    value=Dict(
+                        keys=[
+                            Constant(value='pipeline'),
+                            Constant(value='s3_credentials_id')],
+                        values=[
+                            Name(id='pipeline', ctx=Load()),
+                            Subscript(
+                                value=Name(id='s3_credentials', ctx=Load()),
+                                slice=Constant(value='id'),
+                                ctx=Load())])),
+                If(
+                    test=Compare(
+                        left=Name(id='output_format', ctx=Load()),
+                        ops=[
+                            Eq()],
+                        comparators=[
+                            Constant(value='yaml')]),
+                    body=[
+                        With(
+                            items=[
+                                withitem(
+                                    context_expr=Call(
+                                        func=Name(id='open', ctx=Load()),
+                                        args=[
+                                            Constant(value='pipeline_export.yaml'),
+                                            Constant(value='w')],
+                                        keywords=[]),
+                                    optional_vars=Name(id='file', ctx=Store()))],
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='yaml', ctx=Load()),
+                                            attr='dump',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='export_data', ctx=Load()),
+                                            Name(id='file', ctx=Load())],
+                                        keywords=[]))])],
+                    orelse=[
+                        If(
+                            test=Compare(
+                                left=Name(id='output_format', ctx=Load()),
+                                ops=[
+                                    Eq()],
+                                comparators=[
+                                    Constant(value='python_dsl')]),
+                            body=[
+                                With(
+                                    items=[
+                                        withitem(
+                                            context_expr=Call(
+                                                func=Name(id='open', ctx=Load()),
+                                                args=[
+                                                    Constant(value='pipeline_export.py'),
+                                                    Constant(value='w')],
+                                                keywords=[]),
+                                            optional_vars=Name(id='file', ctx=Store()))],
+                                    body=[
+                                        Expr(
+                                            value=Call(
+                                                func=Attribute(
+                                                    value=Name(id='file', ctx=Load()),
+                                                    attr='write',
+                                                    ctx=Load()),
+                                                args=[
+                                                    JoinedStr(
+                                                        values=[
+                                                            Constant(value='pipeline = '),
+                                                            FormattedValue(
+                                                                value=Name(id='pipeline', ctx=Load()),
+                                                                conversion=-1),
+                                                            Constant(value='\n')])],
+                                                keywords=[])),
+                                        Expr(
+                                            value=Call(
+                                                func=Attribute(
+                                                    value=Name(id='file', ctx=Load()),
+                                                    attr='write',
+                                                    ctx=Load()),
+                                                args=[
+                                                    JoinedStr(
+                                                        values=[
+                                                            Constant(value="s3_credentials_id = '"),
+                                                            FormattedValue(
+                                                                value=Subscript(
+                                                                    value=Name(id='s3_credentials', ctx=Load()),
+                                                                    slice=Constant(value='id'),
+                                                                    ctx=Load()),
+                                                                conversion=-1),
+                                                            Constant(value="'\n")])],
+                                                keywords=[]))])],
+                            orelse=[])])],
+            decorator_list=[]),
+        FunctionDef(
+            name='get_s3_credentials_from_secret',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Dict(
+                        keys=[
+                            Constant(value='id')],
+                        values=[
+                            Constant(value='s3-credentials-secret-id')]))],
+            decorator_list=[])],
+    type_ignores=[])

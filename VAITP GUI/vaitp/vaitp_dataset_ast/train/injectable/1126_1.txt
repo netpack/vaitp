@@ -1,0 +1,112 @@
+Module(
+    body=[
+        ImportFrom(
+            module='urllib.parse',
+            names=[
+                alias(name='urlparse'),
+                alias(name='urljoin')],
+            level=0),
+        FunctionDef(
+            name='get_redirect_url',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='base_url'),
+                    arg(arg='redirect_url')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='base_parsed', ctx=Store())],
+                    value=Call(
+                        func=Name(id='urlparse', ctx=Load()),
+                        args=[
+                            Name(id='base_url', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='redirect_parsed', ctx=Store())],
+                    value=Call(
+                        func=Name(id='urlparse', ctx=Load()),
+                        args=[
+                            Name(id='redirect_url', ctx=Load())],
+                        keywords=[])),
+                If(
+                    test=BoolOp(
+                        op=And(),
+                        values=[
+                            Compare(
+                                left=Attribute(
+                                    value=Name(id='redirect_parsed', ctx=Load()),
+                                    attr='scheme',
+                                    ctx=Load()),
+                                ops=[
+                                    In()],
+                                comparators=[
+                                    List(
+                                        elts=[
+                                            Constant(value='http'),
+                                            Constant(value='https')],
+                                        ctx=Load())]),
+                            Compare(
+                                left=Attribute(
+                                    value=Name(id='redirect_parsed', ctx=Load()),
+                                    attr='netloc',
+                                    ctx=Load()),
+                                ops=[
+                                    NotEq()],
+                                comparators=[
+                                    Attribute(
+                                        value=Name(id='base_parsed', ctx=Load()),
+                                        attr='netloc',
+                                        ctx=Load())])]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Invalid redirect URL')],
+                                keywords=[]))],
+                    orelse=[]),
+                Return(
+                    value=Call(
+                        func=Name(id='urljoin', ctx=Load()),
+                        args=[
+                            Name(id='base_url', ctx=Load()),
+                            Name(id='redirect_url', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='safe_redirect', ctx=Store())],
+                    value=Call(
+                        func=Name(id='get_redirect_url', ctx=Load()),
+                        args=[
+                            Constant(value='https://example.com/dashboard'),
+                            Constant(value='/home')],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Redirecting to:'),
+                            Name(id='safe_redirect', ctx=Load())],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ValueError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

@@ -1,0 +1,112 @@
+Module(
+    body=[
+        FunctionDef(
+            name='resolve_axis',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='axis'),
+                    arg(arg='tensor_shape')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Compare(
+                        left=Name(id='axis', ctx=Load()),
+                        ops=[
+                            Lt()],
+                        comparators=[
+                            Constant(value=0)]),
+                    body=[
+                        AugAssign(
+                            target=Name(id='axis', ctx=Store()),
+                            op=Add(),
+                            value=Call(
+                                func=Name(id='len', ctx=Load()),
+                                args=[
+                                    Name(id='tensor_shape', ctx=Load())],
+                                keywords=[]))],
+                    orelse=[]),
+                If(
+                    test=BoolOp(
+                        op=Or(),
+                        values=[
+                            Compare(
+                                left=Name(id='axis', ctx=Load()),
+                                ops=[
+                                    Lt()],
+                                comparators=[
+                                    Constant(value=0)]),
+                            Compare(
+                                left=Name(id='axis', ctx=Load()),
+                                ops=[
+                                    GtE()],
+                                comparators=[
+                                    Call(
+                                        func=Name(id='len', ctx=Load()),
+                                        args=[
+                                            Name(id='tensor_shape', ctx=Load())],
+                                        keywords=[])])]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='IndexError', ctx=Load()),
+                                args=[
+                                    Constant(value='Axis index out of bounds')],
+                                keywords=[]))],
+                    orelse=[]),
+                Return(
+                    value=Name(id='axis', ctx=Load()))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='tensor_shape', ctx=Store())],
+            value=List(
+                elts=[
+                    Constant(value=3),
+                    Constant(value=4),
+                    Constant(value=5)],
+                ctx=Load())),
+        Assign(
+            targets=[
+                Name(id='axis', ctx=Store())],
+            value=UnaryOp(
+                op=USub(),
+                operand=Constant(value=1))),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='resolved_axis', ctx=Store())],
+                    value=Call(
+                        func=Name(id='resolve_axis', ctx=Load()),
+                        args=[
+                            Name(id='axis', ctx=Load()),
+                            Name(id='tensor_shape', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            JoinedStr(
+                                values=[
+                                    Constant(value='Resolved axis: '),
+                                    FormattedValue(
+                                        value=Name(id='resolved_axis', ctx=Load()),
+                                        conversion=-1)])],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='IndexError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

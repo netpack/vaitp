@@ -1,0 +1,58 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='democritus_strings')]),
+        FunctionDef(
+            name='potentially_dangerous_function',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='input_string')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='democritus_strings', ctx=Load()),
+                            attr='execute',
+                            ctx=Load()),
+                        args=[
+                            Name(id='input_string', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='user_input', ctx=Store())],
+                    value=Call(
+                        func=Name(id='input', ctx=Load()),
+                        args=[
+                            Constant(value='Enter a string to process: ')],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='result', ctx=Store())],
+                    value=Call(
+                        func=Name(id='potentially_dangerous_function', ctx=Load()),
+                        args=[
+                            Name(id='user_input', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Processed output:'),
+                            Name(id='result', ctx=Load())],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

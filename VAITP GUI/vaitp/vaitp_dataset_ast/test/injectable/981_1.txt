@@ -1,0 +1,193 @@
+Module(
+    body=[
+        ImportFrom(
+            module='Products.CMFCore.utils',
+            names=[
+                alias(name='getToolByName')],
+            level=0),
+        ImportFrom(
+            module='Products.Five.browser.pagetemplatefile',
+            names=[
+                alias(name='ViewPageTemplateFile')],
+            level=0),
+        ImportFrom(
+            module='plone.api',
+            names=[
+                alias(name='portal')],
+            level=0),
+        ImportFrom(
+            module='plone.dexterity.content',
+            names=[
+                alias(name='Item')],
+            level=0),
+        ImportFrom(
+            module='plone.supermodel',
+            names=[
+                alias(name='model')],
+            level=0),
+        ImportFrom(
+            module='zope',
+            names=[
+                alias(name='schema')],
+            level=0),
+        ImportFrom(
+            module='zope.interface',
+            names=[
+                alias(name='alsoProvides')],
+            level=0),
+        ImportFrom(
+            module='zope.publisher.interfaces.browser',
+            names=[
+                alias(name='IDefaultBrowserLayer')],
+            level=0),
+        ImportFrom(
+            module='zope.schema',
+            names=[
+                alias(name='TextLine')],
+            level=0),
+        ClassDef(
+            name='IMyContent',
+            bases=[
+                Attribute(
+                    value=Name(id='model', ctx=Load()),
+                    attr='Schema',
+                    ctx=Load())],
+            keywords=[],
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='title', ctx=Store())],
+                    value=Call(
+                        func=Name(id='TextLine', ctx=Load()),
+                        args=[],
+                        keywords=[
+                            keyword(
+                                arg='title',
+                                value=Constant(value='Title', kind='u')),
+                            keyword(
+                                arg='required',
+                                value=Constant(value=True))]))],
+            decorator_list=[]),
+        ClassDef(
+            name='MyContent',
+            bases=[
+                Name(id='Item', ctx=Load())],
+            keywords=[],
+            body=[
+                Pass()],
+            decorator_list=[]),
+        ClassDef(
+            name='MyView',
+            bases=[],
+            keywords=[],
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='template', ctx=Store())],
+                    value=Call(
+                        func=Name(id='ViewPageTemplateFile', ctx=Load()),
+                        args=[
+                            Constant(value='my_template.pt')],
+                        keywords=[])),
+                FunctionDef(
+                    name='__call__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='safe_title', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='escape_html',
+                                    ctx=Load()),
+                                args=[
+                                    Attribute(
+                                        value=Attribute(
+                                            value=Name(id='self', ctx=Load()),
+                                            attr='context',
+                                            ctx=Load()),
+                                        attr='title',
+                                        ctx=Load())],
+                                keywords=[])),
+                        Return(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='template',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[
+                                    keyword(
+                                        arg='safe_title',
+                                        value=Name(id='safe_title', ctx=Load()))]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='escape_html',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='text')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Return(
+                            value=Call(
+                                func=Attribute(
+                                    value=Constant(value=''),
+                                    attr='join',
+                                    ctx=Load()),
+                                args=[
+                                    GeneratorExp(
+                                        elt=IfExp(
+                                            test=BoolOp(
+                                                op=Or(),
+                                                values=[
+                                                    Call(
+                                                        func=Attribute(
+                                                            value=Name(id='c', ctx=Load()),
+                                                            attr='isalnum',
+                                                            ctx=Load()),
+                                                        args=[],
+                                                        keywords=[]),
+                                                    Compare(
+                                                        left=Name(id='c', ctx=Load()),
+                                                        ops=[
+                                                            In()],
+                                                        comparators=[
+                                                            Tuple(
+                                                                elts=[
+                                                                    Constant(value=' '),
+                                                                    Constant(value='-'),
+                                                                    Constant(value='_')],
+                                                                ctx=Load())])]),
+                                            body=Name(id='c', ctx=Load()),
+                                            orelse=JoinedStr(
+                                                values=[
+                                                    Constant(value='&#'),
+                                                    FormattedValue(
+                                                        value=Call(
+                                                            func=Name(id='ord', ctx=Load()),
+                                                            args=[
+                                                                Name(id='c', ctx=Load())],
+                                                            keywords=[]),
+                                                        conversion=-1),
+                                                    Constant(value=';')])),
+                                        generators=[
+                                            comprehension(
+                                                target=Name(id='c', ctx=Store()),
+                                                iter=Name(id='text', ctx=Load()),
+                                                ifs=[],
+                                                is_async=0)])],
+                                keywords=[]))],
+                    decorator_list=[
+                        Name(id='staticmethod', ctx=Load())])],
+            decorator_list=[])],
+    type_ignores=[])

@@ -1,0 +1,54 @@
+Module(
+    body=[
+        ImportFrom(
+            module='nicegui',
+            names=[
+                alias(name='ui')],
+            level=0),
+        FunctionDef(
+            name='serve_resource',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='key'),
+                    arg(arg='path')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='ui', ctx=Load()),
+                            attr='send_file',
+                            ctx=Load()),
+                        args=[
+                            JoinedStr(
+                                values=[
+                                    Constant(value='resources/'),
+                                    FormattedValue(
+                                        value=Name(id='key', ctx=Load()),
+                                        conversion=-1),
+                                    Constant(value='/'),
+                                    FormattedValue(
+                                        value=Name(id='path', ctx=Load()),
+                                        conversion=-1)])],
+                        keywords=[]))],
+            decorator_list=[
+                Call(
+                    func=Attribute(
+                        value=Name(id='ui', ctx=Load()),
+                        attr='route',
+                        ctx=Load()),
+                    args=[
+                        Constant(value='/_nicegui/{__version__}/resources/{key}/{path:path}')],
+                    keywords=[])]),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='ui', ctx=Load()),
+                    attr='run',
+                    ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

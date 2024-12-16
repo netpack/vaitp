@@ -1,0 +1,571 @@
+Module(
+    body=[
+        ImportFrom(
+            module='elasticapm',
+            names=[
+                alias(name='Client')],
+            level=0),
+        Import(
+            names=[
+                alias(name='re')]),
+        ImportFrom(
+            module='urllib.parse',
+            names=[
+                alias(name='urlparse')],
+            level=0),
+        Import(
+            names=[
+                alias(name='logging')]),
+        ImportFrom(
+            module='typing',
+            names=[
+                alias(name='Optional')],
+            level=0),
+        ClassDef(
+            name='SecureAPMClient',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(
+                                arg='service_name',
+                                annotation=Name(id='str', ctx=Load())),
+                            arg(
+                                arg='allowed_proxy_domains',
+                                annotation=Name(id='list', ctx=Load()))],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[
+                            Constant(value=None)]),
+                    body=[
+                        Expr(
+                            value=Constant(value='\n        Initialize secure APM client with a whitelist of allowed proxy domains\n        ')),
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='service_name',
+                                    ctx=Store())],
+                            value=Name(id='service_name', ctx=Load())),
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='allowed_proxy_domains',
+                                    ctx=Store())],
+                            value=BoolOp(
+                                op=Or(),
+                                values=[
+                                    Name(id='allowed_proxy_domains', ctx=Load()),
+                                    List(elts=[], ctx=Load())])),
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='logger',
+                                    ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='logging', ctx=Load()),
+                                    attr='getLogger',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='__name__', ctx=Load())],
+                                keywords=[])),
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='apm_client',
+                                    ctx=Store())],
+                            value=Call(
+                                func=Name(id='Client', ctx=Load()),
+                                args=[],
+                                keywords=[
+                                    keyword(
+                                        arg='service_name',
+                                        value=Name(id='service_name', ctx=Load())),
+                                    keyword(
+                                        arg='server_url',
+                                        value=Constant(value='http://localhost:8200'))]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='validate_proxy_url',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(
+                                arg='proxy_url',
+                                annotation=Name(id='str', ctx=Load()))],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Expr(
+                            value=Constant(value='\n        Validate proxy URL against security requirements\n        ')),
+                        Try(
+                            body=[
+                                Assign(
+                                    targets=[
+                                        Name(id='parsed', ctx=Store())],
+                                    value=Call(
+                                        func=Name(id='urlparse', ctx=Load()),
+                                        args=[
+                                            Name(id='proxy_url', ctx=Load())],
+                                        keywords=[])),
+                                If(
+                                    test=UnaryOp(
+                                        op=Not(),
+                                        operand=Call(
+                                            func=Name(id='all', ctx=Load()),
+                                            args=[
+                                                List(
+                                                    elts=[
+                                                        Attribute(
+                                                            value=Name(id='parsed', ctx=Load()),
+                                                            attr='scheme',
+                                                            ctx=Load()),
+                                                        Attribute(
+                                                            value=Name(id='parsed', ctx=Load()),
+                                                            attr='netloc',
+                                                            ctx=Load())],
+                                                    ctx=Load())],
+                                            keywords=[])),
+                                    body=[
+                                        Return(
+                                            value=Constant(value=False))],
+                                    orelse=[]),
+                                If(
+                                    test=Compare(
+                                        left=Attribute(
+                                            value=Name(id='parsed', ctx=Load()),
+                                            attr='scheme',
+                                            ctx=Load()),
+                                        ops=[
+                                            NotIn()],
+                                        comparators=[
+                                            List(
+                                                elts=[
+                                                    Constant(value='http'),
+                                                    Constant(value='https')],
+                                                ctx=Load())]),
+                                    body=[
+                                        Return(
+                                            value=Constant(value=False))],
+                                    orelse=[]),
+                                Assign(
+                                    targets=[
+                                        Name(id='domain', ctx=Store())],
+                                    value=Subscript(
+                                        value=Call(
+                                            func=Attribute(
+                                                value=Attribute(
+                                                    value=Name(id='parsed', ctx=Load()),
+                                                    attr='netloc',
+                                                    ctx=Load()),
+                                                attr='split',
+                                                ctx=Load()),
+                                            args=[
+                                                Constant(value=':')],
+                                            keywords=[]),
+                                        slice=Constant(value=0),
+                                        ctx=Load())),
+                                If(
+                                    test=Compare(
+                                        left=Name(id='domain', ctx=Load()),
+                                        ops=[
+                                            NotIn()],
+                                        comparators=[
+                                            Attribute(
+                                                value=Name(id='self', ctx=Load()),
+                                                attr='allowed_proxy_domains',
+                                                ctx=Load())]),
+                                    body=[
+                                        Expr(
+                                            value=Call(
+                                                func=Attribute(
+                                                    value=Attribute(
+                                                        value=Name(id='self', ctx=Load()),
+                                                        attr='logger',
+                                                        ctx=Load()),
+                                                    attr='warning',
+                                                    ctx=Load()),
+                                                args=[
+                                                    JoinedStr(
+                                                        values=[
+                                                            Constant(value='Attempted use of non-whitelisted proxy domain: '),
+                                                            FormattedValue(
+                                                                value=Name(id='domain', ctx=Load()),
+                                                                conversion=-1)])],
+                                                keywords=[])),
+                                        Return(
+                                            value=Constant(value=False))],
+                                    orelse=[]),
+                                If(
+                                    test=Call(
+                                        func=Attribute(
+                                            value=Name(id='re', ctx=Load()),
+                                            attr='search',
+                                            ctx=Load()),
+                                        args=[
+                                            Constant(value='[\\s<>\\\'"]'),
+                                            Name(id='proxy_url', ctx=Load())],
+                                        keywords=[]),
+                                    body=[
+                                        Return(
+                                            value=Constant(value=False))],
+                                    orelse=[]),
+                                Return(
+                                    value=Constant(value=True))],
+                            handlers=[
+                                ExceptHandler(
+                                    type=Name(id='Exception', ctx=Load()),
+                                    name='e',
+                                    body=[
+                                        Expr(
+                                            value=Call(
+                                                func=Attribute(
+                                                    value=Attribute(
+                                                        value=Name(id='self', ctx=Load()),
+                                                        attr='logger',
+                                                        ctx=Load()),
+                                                    attr='error',
+                                                    ctx=Load()),
+                                                args=[
+                                                    JoinedStr(
+                                                        values=[
+                                                            Constant(value='Error validating proxy URL: '),
+                                                            FormattedValue(
+                                                                value=Call(
+                                                                    func=Name(id='str', ctx=Load()),
+                                                                    args=[
+                                                                        Name(id='e', ctx=Load())],
+                                                                    keywords=[]),
+                                                                conversion=-1)])],
+                                                keywords=[])),
+                                        Return(
+                                            value=Constant(value=False))])],
+                            orelse=[],
+                            finalbody=[])],
+                    decorator_list=[],
+                    returns=Name(id='bool', ctx=Load())),
+                FunctionDef(
+                    name='set_proxy',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(
+                                arg='proxy_url',
+                                annotation=Subscript(
+                                    value=Name(id='Optional', ctx=Load()),
+                                    slice=Name(id='str', ctx=Load()),
+                                    ctx=Load()))],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Expr(
+                            value=Constant(value='\n        Securely set the proxy for the APM client\n        ')),
+                        If(
+                            test=Compare(
+                                left=Name(id='proxy_url', ctx=Load()),
+                                ops=[
+                                    Is()],
+                                comparators=[
+                                    Constant(value=None)]),
+                            body=[
+                                Assign(
+                                    targets=[
+                                        Attribute(
+                                            value=Attribute(
+                                                value=Attribute(
+                                                    value=Name(id='self', ctx=Load()),
+                                                    attr='apm_client',
+                                                    ctx=Load()),
+                                                attr='config',
+                                                ctx=Load()),
+                                            attr='proxy',
+                                            ctx=Store())],
+                                    value=Constant(value=None)),
+                                Return(
+                                    value=Constant(value=True))],
+                            orelse=[]),
+                        If(
+                            test=Call(
+                                func=Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='validate_proxy_url',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='proxy_url', ctx=Load())],
+                                keywords=[]),
+                            body=[
+                                Try(
+                                    body=[
+                                        Assign(
+                                            targets=[
+                                                Attribute(
+                                                    value=Attribute(
+                                                        value=Attribute(
+                                                            value=Name(id='self', ctx=Load()),
+                                                            attr='apm_client',
+                                                            ctx=Load()),
+                                                        attr='config',
+                                                        ctx=Load()),
+                                                    attr='proxy',
+                                                    ctx=Store())],
+                                            value=Name(id='proxy_url', ctx=Load())),
+                                        Expr(
+                                            value=Call(
+                                                func=Attribute(
+                                                    value=Attribute(
+                                                        value=Name(id='self', ctx=Load()),
+                                                        attr='logger',
+                                                        ctx=Load()),
+                                                    attr='info',
+                                                    ctx=Load()),
+                                                args=[
+                                                    JoinedStr(
+                                                        values=[
+                                                            Constant(value='Successfully set proxy to: '),
+                                                            FormattedValue(
+                                                                value=Name(id='proxy_url', ctx=Load()),
+                                                                conversion=-1)])],
+                                                keywords=[])),
+                                        Return(
+                                            value=Constant(value=True))],
+                                    handlers=[
+                                        ExceptHandler(
+                                            type=Name(id='Exception', ctx=Load()),
+                                            name='e',
+                                            body=[
+                                                Expr(
+                                                    value=Call(
+                                                        func=Attribute(
+                                                            value=Attribute(
+                                                                value=Name(id='self', ctx=Load()),
+                                                                attr='logger',
+                                                                ctx=Load()),
+                                                            attr='error',
+                                                            ctx=Load()),
+                                                        args=[
+                                                            JoinedStr(
+                                                                values=[
+                                                                    Constant(value='Failed to set proxy: '),
+                                                                    FormattedValue(
+                                                                        value=Call(
+                                                                            func=Name(id='str', ctx=Load()),
+                                                                            args=[
+                                                                                Name(id='e', ctx=Load())],
+                                                                            keywords=[]),
+                                                                        conversion=-1)])],
+                                                        keywords=[])),
+                                                Return(
+                                                    value=Constant(value=False))])],
+                                    orelse=[],
+                                    finalbody=[])],
+                            orelse=[]),
+                        Return(
+                            value=Constant(value=False))],
+                    decorator_list=[],
+                    returns=Name(id='bool', ctx=Load()))],
+            decorator_list=[]),
+        FunctionDef(
+            name='handle_request',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='environ'),
+                    arg(arg='start_response')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Constant(value='\n    Secure request handler with proper proxy validation\n    ')),
+                Assign(
+                    targets=[
+                        Name(id='allowed_proxies', ctx=Store())],
+                    value=List(
+                        elts=[
+                            Constant(value='internal-proxy.company.com'),
+                            Constant(value='backup-proxy.company.com')],
+                        ctx=Load())),
+                Assign(
+                    targets=[
+                        Name(id='secure_client', ctx=Store())],
+                    value=Call(
+                        func=Name(id='SecureAPMClient', ctx=Load()),
+                        args=[],
+                        keywords=[
+                            keyword(
+                                arg='service_name',
+                                value=Constant(value='my_secure_service')),
+                            keyword(
+                                arg='allowed_proxy_domains',
+                                value=Name(id='allowed_proxies', ctx=Load()))])),
+                Assign(
+                    targets=[
+                        Name(id='proxy_header', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='environ', ctx=Load()),
+                                    attr='get',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='HTTP_PROXY'),
+                                    Constant(value='')],
+                                keywords=[]),
+                            attr='strip',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                If(
+                    test=Name(id='proxy_header', ctx=Load()),
+                    body=[
+                        If(
+                            test=UnaryOp(
+                                op=Not(),
+                                operand=Call(
+                                    func=Attribute(
+                                        value=Name(id='secure_client', ctx=Load()),
+                                        attr='set_proxy',
+                                        ctx=Load()),
+                                    args=[
+                                        Name(id='proxy_header', ctx=Load())],
+                                    keywords=[])),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='logging', ctx=Load()),
+                                            attr='warning',
+                                            ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    Constant(value='Rejected invalid proxy configuration attempt: '),
+                                                    FormattedValue(
+                                                        value=Name(id='proxy_header', ctx=Load()),
+                                                        conversion=-1)])],
+                                        keywords=[])),
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='start_response', ctx=Load()),
+                                        args=[
+                                            Constant(value='400 Bad Request'),
+                                            List(
+                                                elts=[
+                                                    Tuple(
+                                                        elts=[
+                                                            Constant(value='Content-Type'),
+                                                            Constant(value='text/plain')],
+                                                        ctx=Load())],
+                                                ctx=Load())],
+                                        keywords=[])),
+                                Return(
+                                    value=List(
+                                        elts=[
+                                            Constant(value=b'Invalid proxy configuration')],
+                                        ctx=Load()))],
+                            orelse=[])],
+                    orelse=[]),
+                Expr(
+                    value=Call(
+                        func=Name(id='start_response', ctx=Load()),
+                        args=[
+                            Constant(value='200 OK'),
+                            List(
+                                elts=[
+                                    Tuple(
+                                        elts=[
+                                            Constant(value='Content-Type'),
+                                            Constant(value='text/plain')],
+                                        ctx=Load())],
+                                ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=List(
+                        elts=[
+                            Constant(value=b'Request processed successfully')],
+                        ctx=Load()))],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='logging', ctx=Load()),
+                            attr='basicConfig',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[
+                            keyword(
+                                arg='level',
+                                value=Attribute(
+                                    value=Name(id='logging', ctx=Load()),
+                                    attr='INFO',
+                                    ctx=Load())),
+                            keyword(
+                                arg='format',
+                                value=Constant(value='%(asctime)s - %(name)s - %(levelname)s - %(message)s'))])),
+                ImportFrom(
+                    module='wsgiref.simple_server',
+                    names=[
+                        alias(name='make_server')],
+                    level=0),
+                Try(
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='server', ctx=Store())],
+                            value=Call(
+                                func=Name(id='make_server', ctx=Load()),
+                                args=[
+                                    Constant(value='localhost'),
+                                    Constant(value=8000),
+                                    Name(id='handle_request', ctx=Load())],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Starting secure server on port 8 ,000...')],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='server', ctx=Load()),
+                                    attr='serve_forever',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[]))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='KeyboardInterrupt', ctx=Load()),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            Constant(value='Stopping server...')],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[])],
+            orelse=[])],
+    type_ignores=[])

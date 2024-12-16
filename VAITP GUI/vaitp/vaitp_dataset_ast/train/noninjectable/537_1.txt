@@ -1,0 +1,60 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='py_mini_racer')]),
+        Assign(
+            targets=[
+                Name(id='context', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='py_mini_racer', ctx=Load()),
+                    attr='MiniRacer',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        FunctionDef(
+            name='unsafe_execute',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='js_code')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='context', ctx=Load()),
+                            attr='eval',
+                            ctx=Load()),
+                        args=[
+                            Name(id='js_code', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='user_input', ctx=Store())],
+            value=BinOp(
+                left=Constant(value="console.log('Hello, World!');"),
+                op=Add(),
+                right=BinOp(
+                    left=Constant(value='A'),
+                    op=Mult(),
+                    right=Constant(value=10000)))),
+        Assign(
+            targets=[
+                Name(id='result', ctx=Store())],
+            value=Call(
+                func=Name(id='unsafe_execute', ctx=Load()),
+                args=[
+                    Name(id='user_input', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='result', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

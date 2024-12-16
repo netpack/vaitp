@@ -1,0 +1,73 @@
+Module(
+    body=[
+        ImportFrom(
+            module='cryptography.fernet',
+            names=[
+                alias(name='Fernet')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='key', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='Fernet', ctx=Load()),
+                    attr='generate_key',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='cipher', ctx=Store())],
+            value=Call(
+                func=Name(id='Fernet', ctx=Load()),
+                args=[
+                    Name(id='key', ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='large_message', ctx=Store())],
+            value=BinOp(
+                left=Constant(value=b'A'),
+                op=Mult(),
+                right=BinOp(
+                    left=Constant(value=10),
+                    op=Pow(),
+                    right=Constant(value=9)))),
+        Assign(
+            targets=[
+                Name(id='MAX_SIZE', ctx=Store())],
+            value=BinOp(
+                left=Constant(value=2),
+                op=Pow(),
+                right=Constant(value=20))),
+        If(
+            test=Compare(
+                left=Call(
+                    func=Name(id='len', ctx=Load()),
+                    args=[
+                        Name(id='large_message', ctx=Load())],
+                    keywords=[]),
+                ops=[
+                    Gt()],
+                comparators=[
+                    Name(id='MAX_SIZE', ctx=Load())]),
+            body=[
+                Raise(
+                    exc=Call(
+                        func=Name(id='ValueError', ctx=Load()),
+                        args=[
+                            Constant(value='Message is too large to encrypt')],
+                        keywords=[]))],
+            orelse=[]),
+        Assign(
+            targets=[
+                Name(id='ciphertext', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='cipher', ctx=Load()),
+                    attr='encrypt',
+                    ctx=Load()),
+                args=[
+                    Name(id='large_message', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

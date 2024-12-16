@@ -1,0 +1,75 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='sys')]),
+        Import(
+            names=[
+                alias(name='os')]),
+        Assign(
+            targets=[
+                Name(id='original_sys_path', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='sys', ctx=Load()),
+                        attr='path',
+                        ctx=Load()),
+                    attr='copy',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Assign(
+            targets=[
+                Attribute(
+                    value=Name(id='sys', ctx=Load()),
+                    attr='path',
+                    ctx=Store())],
+            value=ListComp(
+                elt=Name(id='p', ctx=Load()),
+                generators=[
+                    comprehension(
+                        target=Name(id='p', ctx=Store()),
+                        iter=Attribute(
+                            value=Name(id='sys', ctx=Load()),
+                            attr='path',
+                            ctx=Load()),
+                        ifs=[
+                            Compare(
+                                left=Name(id='p', ctx=Load()),
+                                ops=[
+                                    NotEq()],
+                                comparators=[
+                                    Call(
+                                        func=Attribute(
+                                            value=Name(id='os', ctx=Load()),
+                                            attr='getcwd',
+                                            ctx=Load()),
+                                        args=[],
+                                        keywords=[])])],
+                        is_async=0)])),
+        Try(
+            body=[
+                Import(
+                    names=[
+                        alias(name='your_module')])],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ImportError', ctx=Load()),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Module not found or import failed.')],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[]),
+        Assign(
+            targets=[
+                Attribute(
+                    value=Name(id='sys', ctx=Load()),
+                    attr='path',
+                    ctx=Store())],
+            value=Name(id='original_sys_path', ctx=Load()))],
+    type_ignores=[])

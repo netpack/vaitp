@@ -1,0 +1,60 @@
+Module(
+    body=[
+        FunctionDef(
+            name='process_fli_data',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(
+                        arg='data',
+                        annotation=Name(id='bytes', ctx=Load()))],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='MAX_SIZE', ctx=Store())],
+                    value=Constant(value=1024)),
+                If(
+                    test=Compare(
+                        left=Call(
+                            func=Name(id='len', ctx=Load()),
+                            args=[
+                                Name(id='data', ctx=Load())],
+                            keywords=[]),
+                        ops=[
+                            Gt()],
+                        comparators=[
+                            Name(id='MAX_SIZE', ctx=Load())]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='FLI data exceeds maximum allowed size.')],
+                                keywords=[]))],
+                    orelse=[]),
+                Assign(
+                    targets=[
+                        Name(id='buffer', ctx=Store())],
+                    value=Call(
+                        func=Name(id='bytearray', ctx=Load()),
+                        args=[
+                            Name(id='MAX_SIZE', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Subscript(
+                            value=Name(id='buffer', ctx=Load()),
+                            slice=Slice(
+                                upper=Call(
+                                    func=Name(id='len', ctx=Load()),
+                                    args=[
+                                        Name(id='data', ctx=Load())],
+                                    keywords=[])),
+                            ctx=Store())],
+                    value=Name(id='data', ctx=Load()))],
+            decorator_list=[],
+            returns=Constant(value=None))],
+    type_ignores=[])

@@ -1,0 +1,204 @@
+Module(
+    body=[
+        ImportFrom(
+            module='oic',
+            names=[
+                alias(name='oic')],
+            level=0),
+        ImportFrom(
+            module='oic.oauth2',
+            names=[
+                alias(name='Client')],
+            level=0),
+        ImportFrom(
+            module='oic.utils.keyio',
+            names=[
+                alias(name='KeyJar')],
+            level=0),
+        ImportFrom(
+            module='oic.utils.authn',
+            names=[
+                alias(name='ClientSecretBasic')],
+            level=0),
+        ImportFrom(
+            module='oic.utils.time_util',
+            names=[
+                alias(name='utc_now')],
+            level=0),
+        ClassDef(
+            name='SecureConsumer',
+            bases=[
+                Attribute(
+                    value=Attribute(
+                        value=Name(id='oic', ctx=Load()),
+                        attr='consumer',
+                        ctx=Load()),
+                    attr='Consumer',
+                    ctx=Load())],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='parse_authz',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='authz_response')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        If(
+                            test=Compare(
+                                left=Constant(value='alg'),
+                                ops=[
+                                    NotIn()],
+                                comparators=[
+                                    Subscript(
+                                        value=Name(id='authz_response', ctx=Load()),
+                                        slice=Constant(value='id_token'),
+                                        ctx=Load())]),
+                            body=[
+                                Raise(
+                                    exc=Call(
+                                        func=Name(id='ValueError', ctx=Load()),
+                                        args=[
+                                            Constant(value="Missing 'alg' in IdToken")],
+                                        keywords=[]))],
+                            orelse=[]),
+                        Assign(
+                            targets=[
+                                Name(id='expected_alg', ctx=Store())],
+                            value=Constant(value='RS256')),
+                        If(
+                            test=Compare(
+                                left=Subscript(
+                                    value=Subscript(
+                                        value=Name(id='authz_response', ctx=Load()),
+                                        slice=Constant(value='id_token'),
+                                        ctx=Load()),
+                                    slice=Constant(value='alg'),
+                                    ctx=Load()),
+                                ops=[
+                                    NotEq()],
+                                comparators=[
+                                    Name(id='expected_alg', ctx=Load())]),
+                            body=[
+                                Raise(
+                                    exc=Call(
+                                        func=Name(id='ValueError', ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    Constant(value='Unexpected IdToken signature algorithm: '),
+                                                    FormattedValue(
+                                                        value=Subscript(
+                                                            value=Subscript(
+                                                                value=Name(id='authz_response', ctx=Load()),
+                                                                slice=Constant(value='id_token'),
+                                                                ctx=Load()),
+                                                            slice=Constant(value='alg'),
+                                                            ctx=Load()),
+                                                        conversion=-1)])],
+                                        keywords=[]))],
+                            orelse=[]),
+                        If(
+                            test=Compare(
+                                left=Subscript(
+                                    value=Subscript(
+                                        value=Name(id='authz_response', ctx=Load()),
+                                        slice=Constant(value='id_token'),
+                                        ctx=Load()),
+                                    slice=Constant(value='alg'),
+                                    ctx=Load()),
+                                ops=[
+                                    Eq()],
+                                comparators=[
+                                    Constant(value='none')]),
+                            body=[
+                                Raise(
+                                    exc=Call(
+                                        func=Name(id='ValueError', ctx=Load()),
+                                        args=[
+                                            Constant(value="IdToken signature algorithm 'none' is not allowed")],
+                                        keywords=[]))],
+                            orelse=[]),
+                        Assign(
+                            targets=[
+                                Name(id='id_token', ctx=Store())],
+                            value=Subscript(
+                                value=Name(id='authz_response', ctx=Load()),
+                                slice=Constant(value='id_token'),
+                                ctx=Load())),
+                        If(
+                            test=UnaryOp(
+                                op=Not(),
+                                operand=Call(
+                                    func=Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='verify_id_token',
+                                        ctx=Load()),
+                                    args=[
+                                        Name(id='id_token', ctx=Load())],
+                                    keywords=[])),
+                            body=[
+                                Raise(
+                                    exc=Call(
+                                        func=Name(id='ValueError', ctx=Load()),
+                                        args=[
+                                            Constant(value='IdToken verification failed')],
+                                        keywords=[]))],
+                            orelse=[]),
+                        If(
+                            test=Compare(
+                                left=Constant(value='iat'),
+                                ops=[
+                                    In()],
+                                comparators=[
+                                    Name(id='id_token', ctx=Load())]),
+                            body=[
+                                If(
+                                    test=Compare(
+                                        left=Subscript(
+                                            value=Name(id='id_token', ctx=Load()),
+                                            slice=Constant(value='iat'),
+                                            ctx=Load()),
+                                        ops=[
+                                            Gt()],
+                                        comparators=[
+                                            Call(
+                                                func=Name(id='utc_now', ctx=Load()),
+                                                args=[],
+                                                keywords=[])]),
+                                    body=[
+                                        Raise(
+                                            exc=Call(
+                                                func=Name(id='ValueError', ctx=Load()),
+                                                args=[
+                                                    Constant(value='iat claim is in the future')],
+                                                keywords=[]))],
+                                    orelse=[])],
+                            orelse=[]),
+                        Return(
+                            value=Name(id='id_token', ctx=Load()))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='verify_id_token',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='id_token')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='vaitp example')],
+                                keywords=[]))],
+                    decorator_list=[])],
+            decorator_list=[])],
+    type_ignores=[])

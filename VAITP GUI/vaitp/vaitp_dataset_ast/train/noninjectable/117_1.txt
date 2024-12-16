@@ -1,0 +1,83 @@
+Module(
+    body=[
+        FunctionDef(
+            name='vulnerable_decode_escape',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='input_string')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='input_string', ctx=Load()),
+                                    attr='encode',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='utf-8')],
+                                keywords=[]),
+                            attr='decode',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='unicode_escape')],
+                        keywords=[]))],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='input_string', ctx=Store())],
+                    value=BinOp(
+                        left=Constant(value='some_string_with_escape_sequences'),
+                        op=Add(),
+                        right=BinOp(
+                            left=Constant(value='\x7f'),
+                            op=Mult(),
+                            right=BinOp(
+                                left=Constant(value=2),
+                                op=Pow(),
+                                right=Constant(value=31))))),
+                Try(
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='result', ctx=Store())],
+                            value=Call(
+                                func=Name(id='vulnerable_decode_escape', ctx=Load()),
+                                args=[
+                                    Name(id='input_string', ctx=Load())],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Decoded string:'),
+                                    Name(id='result', ctx=Load())],
+                                keywords=[]))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='Exception', ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            Constant(value='Error:'),
+                                            Name(id='e', ctx=Load())],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[])],
+            orelse=[])],
+    type_ignores=[])

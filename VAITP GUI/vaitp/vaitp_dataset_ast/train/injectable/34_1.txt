@@ -1,0 +1,179 @@
+Module(
+    body=[
+        ImportFrom(
+            module='http.server',
+            names=[
+                alias(name='BaseHTTPRequestHandler'),
+                alias(name='HTTPServer')],
+            level=0),
+        ImportFrom(
+            module='urllib.parse',
+            names=[
+                alias(name='urlsplit'),
+                alias(name='urlunsplit')],
+            level=0),
+        ClassDef(
+            name='SafeRedirectHandler',
+            bases=[
+                Name(id='BaseHTTPRequestHandler', ctx=Load())],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='do_GET',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='path', ctx=Store())],
+                            value=Attribute(
+                                value=Name(id='self', ctx=Load()),
+                                attr='path',
+                                ctx=Load())),
+                        Assign(
+                            targets=[
+                                Name(id='path', ctx=Store())],
+                            value=Call(
+                                func=Name(id='urlunsplit', ctx=Load()),
+                                args=[
+                                    Tuple(
+                                        elts=[
+                                            Constant(value=''),
+                                            Constant(value=''),
+                                            Starred(
+                                                value=Subscript(
+                                                    value=Call(
+                                                        func=Name(id='urlsplit', ctx=Load()),
+                                                        args=[
+                                                            Name(id='path', ctx=Load())],
+                                                        keywords=[]),
+                                                    slice=Slice(
+                                                        lower=Constant(value=2)),
+                                                    ctx=Load()),
+                                                ctx=Load())],
+                                        ctx=Load())],
+                                keywords=[])),
+                        If(
+                            test=UnaryOp(
+                                op=Not(),
+                                operand=Call(
+                                    func=Attribute(
+                                        value=Name(id='path', ctx=Load()),
+                                        attr='startswith',
+                                        ctx=Load()),
+                                    args=[
+                                        Constant(value='/')],
+                                    keywords=[])),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='self', ctx=Load()),
+                                            attr='send_response',
+                                            ctx=Load()),
+                                        args=[
+                                            Constant(value=400)],
+                                        keywords=[])),
+                                Expr(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='self', ctx=Load()),
+                                            attr='end_headers',
+                                            ctx=Load()),
+                                        args=[],
+                                        keywords=[])),
+                                Expr(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Attribute(
+                                                value=Name(id='self', ctx=Load()),
+                                                attr='wfile',
+                                                ctx=Load()),
+                                            attr='write',
+                                            ctx=Load()),
+                                        args=[
+                                            Constant(value=b'Bad request')],
+                                        keywords=[])),
+                                Return()],
+                            orelse=[]),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='send_response',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value=302)],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='send_header',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='Location'),
+                                    Name(id='path', ctx=Load())],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='end_headers',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[]))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        FunctionDef(
+            name='run_server',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='server_address', ctx=Store())],
+                    value=Tuple(
+                        elts=[
+                            Constant(value=''),
+                            Constant(value=8000)],
+                        ctx=Load())),
+                Assign(
+                    targets=[
+                        Name(id='httpd', ctx=Store())],
+                    value=Call(
+                        func=Name(id='HTTPServer', ctx=Load()),
+                        args=[
+                            Name(id='server_address', ctx=Load()),
+                            Name(id='SafeRedirectHandler', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Starting server...')],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='httpd', ctx=Load()),
+                            attr='serve_forever',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='run_server', ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

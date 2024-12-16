@@ -1,0 +1,59 @@
+Module(
+    body=[
+        ImportFrom(
+            module='waitress',
+            names=[
+                alias(name='serve')],
+            level=0),
+        FunctionDef(
+            name='app',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='environ'),
+                    arg(arg='start_response')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='status', ctx=Store())],
+                    value=Constant(value='200 OK')),
+                Assign(
+                    targets=[
+                        Name(id='headers', ctx=Store())],
+                    value=List(
+                        elts=[
+                            Tuple(
+                                elts=[
+                                    Constant(value='Content-type'),
+                                    Constant(value='text/plain')],
+                                ctx=Load())],
+                        ctx=Load())),
+                Expr(
+                    value=Call(
+                        func=Name(id='start_response', ctx=Load()),
+                        args=[
+                            Name(id='status', ctx=Load()),
+                            Name(id='headers', ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=List(
+                        elts=[
+                            Constant(value=b'Hello, World!')],
+                        ctx=Load()))],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='serve', ctx=Load()),
+                args=[
+                    Name(id='app', ctx=Load())],
+                keywords=[
+                    keyword(
+                        arg='host',
+                        value=Constant(value='0.0.0.0')),
+                    keyword(
+                        arg='port',
+                        value=Constant(value=8080))]))],
+    type_ignores=[])

@@ -1,0 +1,96 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='smtplib')]),
+        Import(
+            names=[
+                alias(name='ssl')]),
+        FunctionDef(
+            name='send_email',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='smtp_server'),
+                    arg(arg='port'),
+                    arg(arg='sender_email'),
+                    arg(arg='receiver_email'),
+                    arg(arg='message'),
+                    arg(arg='use_tls')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[
+                    Constant(value=True)]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='context', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='ssl', ctx=Load()),
+                            attr='create_default_context',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                With(
+                    items=[
+                        withitem(
+                            context_expr=Call(
+                                func=Attribute(
+                                    value=Name(id='smtplib', ctx=Load()),
+                                    attr='SMTP',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='smtp_server', ctx=Load()),
+                                    Name(id='port', ctx=Load())],
+                                keywords=[]),
+                            optional_vars=Name(id='server', ctx=Store()))],
+                    body=[
+                        If(
+                            test=Name(id='use_tls', ctx=Load()),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='server', ctx=Load()),
+                                            attr='starttls',
+                                            ctx=Load()),
+                                        args=[],
+                                        keywords=[
+                                            keyword(
+                                                arg='context',
+                                                value=Name(id='context', ctx=Load()))]))],
+                            orelse=[]),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='server', ctx=Load()),
+                                    attr='login',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='sender_email', ctx=Load()),
+                                    Constant(value='your_password')],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='server', ctx=Load()),
+                                    attr='sendmail',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='sender_email', ctx=Load()),
+                                    Name(id='receiver_email', ctx=Load()),
+                                    Name(id='message', ctx=Load())],
+                                keywords=[]))])],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='send_email', ctx=Load()),
+                args=[
+                    Constant(value='smtp.example.com'),
+                    Constant(value=587),
+                    Constant(value='sender@example.com'),
+                    Constant(value='receiver@example.com'),
+                    Constant(value='Test message')],
+                keywords=[]))],
+    type_ignores=[])

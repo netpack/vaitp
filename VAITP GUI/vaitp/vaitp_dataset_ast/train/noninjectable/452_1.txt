@@ -1,0 +1,150 @@
+Module(
+    body=[
+        ClassDef(
+            name='Validator',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='validators')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='validators',
+                                    ctx=Store())],
+                            value=Name(id='validators', ctx=Load()))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='validate',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='value')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        For(
+                            target=Name(id='validator', ctx=Store()),
+                            iter=Attribute(
+                                value=Name(id='self', ctx=Load()),
+                                attr='validators',
+                                ctx=Load()),
+                            body=[
+                                If(
+                                    test=UnaryOp(
+                                        op=Not(),
+                                        operand=Call(
+                                            func=Name(id='validator', ctx=Load()),
+                                            args=[
+                                                Name(id='value', ctx=Load())],
+                                            keywords=[])),
+                                    body=[
+                                        Return(
+                                            value=Constant(value=False))],
+                                    orelse=[])],
+                            orelse=[]),
+                        Return(
+                            value=Constant(value=True))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        FunctionDef(
+            name='is_positive',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='value')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Compare(
+                        left=Name(id='value', ctx=Load()),
+                        ops=[
+                            Gt()],
+                        comparators=[
+                            Constant(value=0)]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='is_even',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='value')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Compare(
+                        left=BinOp(
+                            left=Name(id='value', ctx=Load()),
+                            op=Mod(),
+                            right=Constant(value=2)),
+                        ops=[
+                            Eq()],
+                        comparators=[
+                            Constant(value=0)]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='validators', ctx=Store())],
+            value=Call(
+                func=Name(id='Validator', ctx=Load()),
+                args=[
+                    List(
+                        elts=[
+                            Name(id='is_positive', ctx=Load()),
+                            Name(id='is_even', ctx=Load())],
+                        ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='value', ctx=Store())],
+            value=Constant(value=3)),
+        If(
+            test=Call(
+                func=Attribute(
+                    value=Name(id='validators', ctx=Load()),
+                    attr='validate',
+                    ctx=Load()),
+                args=[
+                    Name(id='value', ctx=Load())],
+                keywords=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            JoinedStr(
+                                values=[
+                                    FormattedValue(
+                                        value=Name(id='value', ctx=Load()),
+                                        conversion=-1),
+                                    Constant(value=' is valid')])],
+                        keywords=[]))],
+            orelse=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            JoinedStr(
+                                values=[
+                                    FormattedValue(
+                                        value=Name(id='value', ctx=Load()),
+                                        conversion=-1),
+                                    Constant(value=' is invalid')])],
+                        keywords=[]))])],
+    type_ignores=[])

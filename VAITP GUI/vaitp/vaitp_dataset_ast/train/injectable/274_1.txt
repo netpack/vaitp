@@ -1,0 +1,41 @@
+Module(
+    body=[
+        Try(
+            body=[
+                Import(
+                    names=[
+                        alias(name='democritus_hypothesis')])],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ImportError', ctx=Load()),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Vulnerable package not found.')],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[]),
+        FunctionDef(
+            name='safe_function',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='This is a safe function.')],
+                        keywords=[]))],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='safe_function', ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

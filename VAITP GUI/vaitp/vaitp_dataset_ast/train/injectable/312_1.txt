@@ -1,0 +1,78 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='re')]),
+        Assign(
+            targets=[
+                Name(id='blacklisted_urls', ctx=Store())],
+            value=List(
+                elts=[
+                    Constant(value='badurl.com'),
+                    Constant(value='malicious.com')],
+                ctx=Load())),
+        Assign(
+            targets=[
+                Name(id='filter_token', ctx=Store())],
+            value=Constant(value='!filter')),
+        FunctionDef(
+            name='moderate_message',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='message')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Compare(
+                        left=Name(id='filter_token', ctx=Load()),
+                        ops=[
+                            In()],
+                        comparators=[
+                            Name(id='message', ctx=Load())]),
+                    body=[
+                        Return(
+                            value=Constant(value='Message blocked due to filter token.'))],
+                    orelse=[]),
+                If(
+                    test=Call(
+                        func=Name(id='any', ctx=Load()),
+                        args=[
+                            GeneratorExp(
+                                elt=Compare(
+                                    left=Name(id='url', ctx=Load()),
+                                    ops=[
+                                        In()],
+                                    comparators=[
+                                        Name(id='message', ctx=Load())]),
+                                generators=[
+                                    comprehension(
+                                        target=Name(id='url', ctx=Store()),
+                                        iter=Name(id='blacklisted_urls', ctx=Load()),
+                                        ifs=[],
+                                        is_async=0)])],
+                        keywords=[]),
+                    body=[
+                        Return(
+                            value=Constant(value='Message blocked due to blacklisted URL.'))],
+                    orelse=[]),
+                Return(
+                    value=Constant(value='Message allowed.'))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='user_message', ctx=Store())],
+            value=Constant(value='Check this out: https://goodurl.com !filter')),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Call(
+                        func=Name(id='moderate_message', ctx=Load()),
+                        args=[
+                            Name(id='user_message', ctx=Load())],
+                        keywords=[])],
+                keywords=[]))],
+    type_ignores=[])

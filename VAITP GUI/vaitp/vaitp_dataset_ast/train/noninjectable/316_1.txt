@@ -1,0 +1,43 @@
+Module(
+    body=[
+        ImportFrom(
+            module='democritus_networking',
+            names=[
+                alias(name='some_function')],
+            level=0),
+        FunctionDef(
+            name='get_ip_address',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='hostname')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='some_function', ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='hostname', ctx=Store())],
+                    value=Constant(value='example.com')),
+                Expr(
+                    value=Call(
+                        func=Name(id='get_ip_address', ctx=Load()),
+                        args=[
+                            Name(id='hostname', ctx=Load())],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

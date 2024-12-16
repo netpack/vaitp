@@ -1,0 +1,62 @@
+Module(
+    body=[
+        ImportFrom(
+            module='PIL',
+            names=[
+                alias(name='Image')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='image', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='Image', ctx=Load()),
+                    attr='open',
+                    ctx=Load()),
+                args=[
+                    Constant(value='image.jpg')],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='new_size', ctx=Store())],
+            value=Tuple(
+                elts=[
+                    Constant(value=10000000),
+                    Constant(value=10000000)],
+                ctx=Load())),
+        Assign(
+            targets=[
+                Name(id='new_image', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='Image', ctx=Load()),
+                    attr='new',
+                    ctx=Load()),
+                args=[
+                    Constant(value='RGB'),
+                    Name(id='new_size', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='new_image', ctx=Load()),
+                    attr='paste',
+                    ctx=Load()),
+                args=[
+                    Name(id='image', ctx=Load()),
+                    Tuple(
+                        elts=[
+                            Constant(value=0),
+                            Constant(value=0)],
+                        ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='new_image', ctx=Load()),
+                    attr='save',
+                    ctx=Load()),
+                args=[
+                    Constant(value='new_image.jpg')],
+                keywords=[]))],
+    type_ignores=[])

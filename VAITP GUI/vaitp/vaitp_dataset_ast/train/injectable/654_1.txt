@@ -1,0 +1,99 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='tensorflow', asname='tf')]),
+        Assign(
+            targets=[
+                Name(id='non_numeric_tensor', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='tf', ctx=Load()),
+                    attr='constant',
+                    ctx=Load()),
+                args=[
+                    List(
+                        elts=[
+                            Constant(value='a'),
+                            Constant(value='b'),
+                            Constant(value='c')],
+                        ctx=Load())],
+                keywords=[])),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='result', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='tf', ctx=Load()),
+                            attr='add',
+                            ctx=Load()),
+                        args=[
+                            Name(id='non_numeric_tensor', ctx=Load()),
+                            Constant(value=1)],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='Exception', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            Constant(value='Error encountered: '),
+                                            FormattedValue(
+                                                value=Name(id='e', ctx=Load()),
+                                                conversion=-1)])],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[]),
+        Assign(
+            targets=[
+                Name(id='numeric_tensor', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='tf', ctx=Load()),
+                    attr='constant',
+                    ctx=Load()),
+                args=[
+                    List(
+                        elts=[
+                            Constant(value=1.0),
+                            Constant(value=2.0),
+                            Constant(value=3.0)],
+                        ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='result_fixed', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='tf', ctx=Load()),
+                    attr='add',
+                    ctx=Load()),
+                args=[
+                    Name(id='numeric_tensor', ctx=Load()),
+                    Constant(value=1)],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    JoinedStr(
+                        values=[
+                            Constant(value='Fixed result: '),
+                            FormattedValue(
+                                value=Call(
+                                    func=Attribute(
+                                        value=Name(id='result_fixed', ctx=Load()),
+                                        attr='numpy',
+                                        ctx=Load()),
+                                    args=[],
+                                    keywords=[]),
+                                conversion=-1)])],
+                keywords=[]))],
+    type_ignores=[])

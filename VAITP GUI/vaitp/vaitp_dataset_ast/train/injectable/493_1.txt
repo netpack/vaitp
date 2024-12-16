@@ -1,0 +1,48 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        Import(
+            names=[
+                alias(name='sys')]),
+        Assign(
+            targets=[
+                Name(id='safe_directory', ctx=Store())],
+            value=Constant(value='/usr/lib/python3/dist-packages')),
+        Assign(
+            targets=[
+                Attribute(
+                    value=Name(id='sys', ctx=Load()),
+                    attr='path',
+                    ctx=Store())],
+            value=BinOp(
+                left=List(
+                    elts=[
+                        Name(id='safe_directory', ctx=Load())],
+                    ctx=Load()),
+                op=Add(),
+                right=ListComp(
+                    elt=Name(id='p', ctx=Load()),
+                    generators=[
+                        comprehension(
+                            target=Name(id='p', ctx=Store()),
+                            iter=Attribute(
+                                value=Name(id='sys', ctx=Load()),
+                                attr='path',
+                                ctx=Load()),
+                            ifs=[
+                                Compare(
+                                    left=Name(id='p', ctx=Load()),
+                                    ops=[
+                                        NotEq()],
+                                    comparators=[
+                                        Call(
+                                            func=Attribute(
+                                                value=Name(id='os', ctx=Load()),
+                                                attr='getcwd',
+                                                ctx=Load()),
+                                            args=[],
+                                            keywords=[])])],
+                            is_async=0)])))],
+    type_ignores=[])

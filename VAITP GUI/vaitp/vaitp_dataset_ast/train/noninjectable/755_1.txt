@@ -1,0 +1,45 @@
+Module(
+    body=[
+        FunctionDef(
+            name='some_graphql_resolver',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Try(
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='This is a sensitive error message that should not be exposed.')],
+                                keywords=[]))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='Exception', ctx=Load()),
+                            name='e',
+                            body=[
+                                Return(
+                                    value=Dict(
+                                        keys=[
+                                            Constant(value='errors')],
+                                        values=[
+                                            List(
+                                                elts=[
+                                                    Dict(
+                                                        keys=[
+                                                            Constant(value='message')],
+                                                        values=[
+                                                            Call(
+                                                                func=Name(id='str', ctx=Load()),
+                                                                args=[
+                                                                    Name(id='e', ctx=Load())],
+                                                                keywords=[])])],
+                                                ctx=Load())]))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[])],
+    type_ignores=[])

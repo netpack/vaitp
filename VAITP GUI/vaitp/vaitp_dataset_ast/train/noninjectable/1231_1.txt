@@ -1,0 +1,79 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='zipfile')]),
+        ImportFrom(
+            module='pathlib',
+            names=[
+                alias(name='Path')],
+            level=0),
+        FunctionDef(
+            name='vulnerable_process_zip',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='zip_path')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                With(
+                    items=[
+                        withitem(
+                            context_expr=Call(
+                                func=Attribute(
+                                    value=Name(id='zipfile', ctx=Load()),
+                                    attr='ZipFile',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='zip_path', ctx=Load())],
+                                keywords=[]),
+                            optional_vars=Name(id='z', ctx=Store()))],
+                    body=[
+                        For(
+                            target=Name(id='file_info', ctx=Store()),
+                            iter=Call(
+                                func=Attribute(
+                                    value=Name(id='z', ctx=Load()),
+                                    attr='infolist',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[]),
+                            body=[
+                                Assign(
+                                    targets=[
+                                        Name(id='path', ctx=Store())],
+                                    value=Call(
+                                        func=Name(id='Path', ctx=Load()),
+                                        args=[
+                                            Attribute(
+                                                value=Name(id='file_info', ctx=Load()),
+                                                attr='filename',
+                                                ctx=Load())],
+                                        keywords=[])),
+                                Assign(
+                                    targets=[
+                                        Name(id='new_path', ctx=Store())],
+                                    value=BinOp(
+                                        left=Call(
+                                            func=Name(id='Path', ctx=Load()),
+                                            args=[
+                                                Constant(value='/some/base/path')],
+                                            keywords=[]),
+                                        op=Div(),
+                                        right=Name(id='path', ctx=Load()))),
+                                While(
+                                    test=Constant(value=True),
+                                    body=[
+                                        Pass()],
+                                    orelse=[])],
+                            orelse=[])])],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='vulnerable_process_zip', ctx=Load()),
+                args=[
+                    Constant(value='path/to/vulnerable_zip_file.zip')],
+                keywords=[]))],
+    type_ignores=[])

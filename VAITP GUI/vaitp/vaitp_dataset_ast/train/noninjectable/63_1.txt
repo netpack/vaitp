@@ -1,0 +1,132 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='importlib')]),
+        Import(
+            names=[
+                alias(name='sys')]),
+        FunctionDef(
+            name='load_module',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='module_name')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Try(
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='spec', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='importlib', ctx=Load()),
+                                        attr='util',
+                                        ctx=Load()),
+                                    attr='find_spec',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='module_name', ctx=Load())],
+                                keywords=[])),
+                        If(
+                            test=Compare(
+                                left=Name(id='spec', ctx=Load()),
+                                ops=[
+                                    IsNot()],
+                                comparators=[
+                                    Constant(value=None)]),
+                            body=[
+                                Assign(
+                                    targets=[
+                                        Name(id='module', ctx=Store())],
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Attribute(
+                                                value=Name(id='importlib', ctx=Load()),
+                                                attr='util',
+                                                ctx=Load()),
+                                            attr='module_from_spec',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='spec', ctx=Load())],
+                                        keywords=[])),
+                                Expr(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Attribute(
+                                                value=Name(id='spec', ctx=Load()),
+                                                attr='loader',
+                                                ctx=Load()),
+                                            attr='load_module',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='module', ctx=Load())],
+                                        keywords=[])),
+                                Return(
+                                    value=Name(id='module', ctx=Load()))],
+                            orelse=[
+                                Raise(
+                                    exc=Call(
+                                        func=Name(id='ImportError', ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    Constant(value='Module '),
+                                                    FormattedValue(
+                                                        value=Name(id='module_name', ctx=Load()),
+                                                        conversion=-1),
+                                                    Constant(value=' not found.')])],
+                                        keywords=[]))])],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='Exception', ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    Constant(value='Error loading module '),
+                                                    FormattedValue(
+                                                        value=Name(id='module_name', ctx=Load()),
+                                                        conversion=-1),
+                                                    Constant(value=': '),
+                                                    FormattedValue(
+                                                        value=Name(id='e', ctx=Load()),
+                                                        conversion=-1)])],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='module_name', ctx=Store())],
+                    value=Subscript(
+                        value=Attribute(
+                            value=Name(id='sys', ctx=Load()),
+                            attr='argv',
+                            ctx=Load()),
+                        slice=Constant(value=1),
+                        ctx=Load())),
+                Expr(
+                    value=Call(
+                        func=Name(id='load_module', ctx=Load()),
+                        args=[
+                            Name(id='module_name', ctx=Load())],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

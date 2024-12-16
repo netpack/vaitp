@@ -1,0 +1,86 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        Import(
+            names=[
+                alias(name='stat')]),
+        Assign(
+            targets=[
+                Name(id='script_directory', ctx=Store())],
+            value=Constant(value='/path/to/spss/scripts')),
+        FunctionDef(
+            name='secure_script_permissions',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='directory')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                For(
+                    target=Tuple(
+                        elts=[
+                            Name(id='root', ctx=Store()),
+                            Name(id='dirs', ctx=Store()),
+                            Name(id='files', ctx=Store())],
+                        ctx=Store()),
+                    iter=Call(
+                        func=Attribute(
+                            value=Name(id='os', ctx=Load()),
+                            attr='walk',
+                            ctx=Load()),
+                        args=[
+                            Name(id='directory', ctx=Load())],
+                        keywords=[]),
+                    body=[
+                        For(
+                            target=Name(id='file', ctx=Store()),
+                            iter=Name(id='files', ctx=Load()),
+                            body=[
+                                Assign(
+                                    targets=[
+                                        Name(id='file_path', ctx=Store())],
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Attribute(
+                                                value=Name(id='os', ctx=Load()),
+                                                attr='path',
+                                                ctx=Load()),
+                                            attr='join',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='root', ctx=Load()),
+                                            Name(id='file', ctx=Load())],
+                                        keywords=[])),
+                                Expr(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='os', ctx=Load()),
+                                            attr='chmod',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='file_path', ctx=Load()),
+                                            BinOp(
+                                                left=Attribute(
+                                                    value=Name(id='stat', ctx=Load()),
+                                                    attr='S_IRUSR',
+                                                    ctx=Load()),
+                                                op=BitOr(),
+                                                right=Attribute(
+                                                    value=Name(id='stat', ctx=Load()),
+                                                    attr='S_IXUSR',
+                                                    ctx=Load()))],
+                                        keywords=[]))],
+                            orelse=[])],
+                    orelse=[])],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='secure_script_permissions', ctx=Load()),
+                args=[
+                    Name(id='script_directory', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

@@ -1,0 +1,58 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='subprocess')]),
+        FunctionDef(
+            name='run_rdf_tool',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='tool_name')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='allowed_tools', ctx=Store())],
+                    value=List(
+                        elts=[
+                            Constant(value='safe_tool1'),
+                            Constant(value='safe_tool2'),
+                            Constant(value='safe_tool3')],
+                        ctx=Load())),
+                If(
+                    test=Compare(
+                        left=Name(id='tool_name', ctx=Load()),
+                        ops=[
+                            NotIn()],
+                        comparators=[
+                            Name(id='allowed_tools', ctx=Load())]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Unauthorized tool name.')],
+                                keywords=[]))],
+                    orelse=[]),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='subprocess', ctx=Load()),
+                            attr='run',
+                            ctx=Load()),
+                        args=[
+                            List(
+                                elts=[
+                                    Constant(value='python'),
+                                    Constant(value='-m'),
+                                    Name(id='tool_name', ctx=Load())],
+                                ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='cwd',
+                                value=Constant(value='/path/to/safe/directory'))]))],
+            decorator_list=[])],
+    type_ignores=[])

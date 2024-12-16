@@ -1,0 +1,54 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='tarfile')]),
+        With(
+            items=[
+                withitem(
+                    context_expr=Call(
+                        func=Name(id='open', ctx=Load()),
+                        args=[
+                            Constant(value='malicious.tar'),
+                            Constant(value='wb')],
+                        keywords=[]),
+                    optional_vars=Name(id='f', ctx=Store()))],
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='f', ctx=Load()),
+                            attr='write',
+                            ctx=Load()),
+                        args=[
+                            Constant(value=b'')],
+                        keywords=[]))]),
+        With(
+            items=[
+                withitem(
+                    context_expr=Call(
+                        func=Attribute(
+                            value=Name(id='tarfile', ctx=Load()),
+                            attr='open',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='malicious.tar'),
+                            Constant(value='r')],
+                        keywords=[]),
+                    optional_vars=Name(id='tar', ctx=Store()))],
+            body=[
+                For(
+                    target=Name(id='member', ctx=Store()),
+                    iter=Name(id='tar', ctx=Load()),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Attribute(
+                                        value=Name(id='member', ctx=Load()),
+                                        attr='name',
+                                        ctx=Load())],
+                                keywords=[]))],
+                    orelse=[])])],
+    type_ignores=[])

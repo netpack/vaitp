@@ -1,0 +1,95 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='requests')]),
+        FunctionDef(
+            name='download_file',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='url'),
+                    arg(arg='destination')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='response', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='requests', ctx=Load()),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Name(id='url', ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='verify',
+                                value=Constant(value=True))])),
+                If(
+                    test=Compare(
+                        left=Attribute(
+                            value=Name(id='response', ctx=Load()),
+                            attr='status_code',
+                            ctx=Load()),
+                        ops=[
+                            Eq()],
+                        comparators=[
+                            Constant(value=200)]),
+                    body=[
+                        With(
+                            items=[
+                                withitem(
+                                    context_expr=Call(
+                                        func=Name(id='open', ctx=Load()),
+                                        args=[
+                                            Name(id='destination', ctx=Load()),
+                                            Constant(value='wb')],
+                                        keywords=[]),
+                                    optional_vars=Name(id='f', ctx=Store()))],
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='f', ctx=Load()),
+                                            attr='write',
+                                            ctx=Load()),
+                                        args=[
+                                            Attribute(
+                                                value=Name(id='response', ctx=Load()),
+                                                attr='content',
+                                                ctx=Load())],
+                                        keywords=[]))])],
+                    orelse=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            Constant(value='Failed to download file: '),
+                                            FormattedValue(
+                                                value=Attribute(
+                                                    value=Name(id='response', ctx=Load()),
+                                                    attr='status_code',
+                                                    ctx=Load()),
+                                                conversion=-1)])],
+                                keywords=[]))])],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='download_file', ctx=Load()),
+                args=[
+                    Constant(value='https://example.com/deployUtil.py'),
+                    Constant(value='deployUtil.py')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='download_file', ctx=Load()),
+                args=[
+                    Constant(value='https://example.com/vds_bootstrap.py'),
+                    Constant(value='vds_bootstrap.py')],
+                keywords=[]))],
+    type_ignores=[])

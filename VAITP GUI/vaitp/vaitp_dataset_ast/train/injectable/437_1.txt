@@ -1,0 +1,21 @@
+Module(
+    body=[
+        ImportFrom(
+            module='cookiecutter.main',
+            names=[
+                alias(name='cookiecutter')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='checkout', ctx=Store())],
+            value=Constant(value='--config=alias.checkout=--')),
+        Expr(
+            value=Call(
+                func=Name(id='cookiecutter', ctx=Load()),
+                args=[
+                    Constant(value='some valid hg repository')],
+                keywords=[
+                    keyword(
+                        arg='checkout',
+                        value=Name(id='checkout', ctx=Load()))]))],
+    type_ignores=[])

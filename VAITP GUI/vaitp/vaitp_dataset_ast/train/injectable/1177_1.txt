@@ -1,0 +1,171 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='hashlib')]),
+        Import(
+            names=[
+                alias(name='requests')]),
+        Import(
+            names=[
+                alias(name='os')]),
+        FunctionDef(
+            name='download_frp_client',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='url'),
+                    arg(arg='expected_checksum')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='response', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='requests', ctx=Load()),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Name(id='url', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='binary_path', ctx=Store())],
+                    value=Constant(value='frp_client')),
+                With(
+                    items=[
+                        withitem(
+                            context_expr=Call(
+                                func=Name(id='open', ctx=Load()),
+                                args=[
+                                    Name(id='binary_path', ctx=Load()),
+                                    Constant(value='wb')],
+                                keywords=[]),
+                            optional_vars=Name(id='file', ctx=Store()))],
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='file', ctx=Load()),
+                                    attr='write',
+                                    ctx=Load()),
+                                args=[
+                                    Attribute(
+                                        value=Name(id='response', ctx=Load()),
+                                        attr='content',
+                                        ctx=Load())],
+                                keywords=[]))]),
+                Assign(
+                    targets=[
+                        Name(id='sha256_hash', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='hashlib', ctx=Load()),
+                            attr='sha256',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                With(
+                    items=[
+                        withitem(
+                            context_expr=Call(
+                                func=Name(id='open', ctx=Load()),
+                                args=[
+                                    Name(id='binary_path', ctx=Load()),
+                                    Constant(value='rb')],
+                                keywords=[]),
+                            optional_vars=Name(id='f', ctx=Store()))],
+                    body=[
+                        For(
+                            target=Name(id='byte_block', ctx=Store()),
+                            iter=Call(
+                                func=Name(id='iter', ctx=Load()),
+                                args=[
+                                    Lambda(
+                                        args=arguments(
+                                            posonlyargs=[],
+                                            args=[],
+                                            kwonlyargs=[],
+                                            kw_defaults=[],
+                                            defaults=[]),
+                                        body=Call(
+                                            func=Attribute(
+                                                value=Name(id='f', ctx=Load()),
+                                                attr='read',
+                                                ctx=Load()),
+                                            args=[
+                                                Constant(value=4096)],
+                                            keywords=[])),
+                                    Constant(value=b'')],
+                                keywords=[]),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='sha256_hash', ctx=Load()),
+                                            attr='update',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='byte_block', ctx=Load())],
+                                        keywords=[]))],
+                            orelse=[])]),
+                Assign(
+                    targets=[
+                        Name(id='actual_checksum', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='sha256_hash', ctx=Load()),
+                            attr='hexdigest',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                If(
+                    test=Compare(
+                        left=Name(id='actual_checksum', ctx=Load()),
+                        ops=[
+                            NotEq()],
+                        comparators=[
+                            Name(id='expected_checksum', ctx=Load())]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='os', ctx=Load()),
+                                    attr='remove',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='binary_path', ctx=Load())],
+                                keywords=[])),
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Checksum verification failed. The file may be tampered with.')],
+                                keywords=[]))],
+                    orelse=[]),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='FRP client downloaded and verified successfully.')],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='url', ctx=Store())],
+            value=Constant(value='https://example.com/path/to/frp_client')),
+        Assign(
+            targets=[
+                Name(id='expected_checksum', ctx=Store())],
+            value=Constant(value='expected_sha256_checksum_here')),
+        Expr(
+            value=Call(
+                func=Name(id='download_frp_client', ctx=Load()),
+                args=[
+                    Name(id='url', ctx=Load()),
+                    Name(id='expected_checksum', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

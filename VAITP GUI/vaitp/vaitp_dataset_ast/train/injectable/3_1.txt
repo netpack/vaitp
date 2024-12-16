@@ -1,0 +1,35 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        Assign(
+            targets=[
+                Name(id='DATABASES', ctx=Store())],
+            value=Dict(
+                keys=[
+                    Constant(value='postgresql_db')],
+                values=[
+                    Dict(
+                        keys=[
+                            Constant(value='ENGINE'),
+                            Constant(value='NAME'),
+                            Constant(value='USER'),
+                            Constant(value='PASSWORD'),
+                            Constant(value='HOST'),
+                            Constant(value='PORT')],
+                        values=[
+                            Constant(value='django.db.backends.postgresql'),
+                            Constant(value='quickdb'),
+                            Constant(value='sonarsource'),
+                            Call(
+                                func=Attribute(
+                                    value=Name(id='os', ctx=Load()),
+                                    attr='getenv',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='DB_PASSWORD')],
+                                keywords=[]),
+                            Constant(value='localhost'),
+                            Constant(value='5432')])]))],
+    type_ignores=[])

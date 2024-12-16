@@ -1,0 +1,135 @@
+Module(
+    body=[
+        ImportFrom(
+            module='mod_python',
+            names=[
+                alias(name='apache')],
+            level=0),
+        FunctionDef(
+            name='handler',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='req')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Try(
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='query_string', ctx=Store())],
+                            value=Attribute(
+                                value=Name(id='req', ctx=Load()),
+                                attr='args',
+                                ctx=Load())),
+                        If(
+                            test=UnaryOp(
+                                op=Not(),
+                                operand=Call(
+                                    func=Name(id='is_valid_query_string', ctx=Load()),
+                                    args=[
+                                        Name(id='query_string', ctx=Load())],
+                                    keywords=[])),
+                            body=[
+                                Raise(
+                                    exc=Call(
+                                        func=Name(id='ValueError', ctx=Load()),
+                                        args=[
+                                            Constant(value='Invalid query string')],
+                                        keywords=[]))],
+                            orelse=[]),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='req', ctx=Load()),
+                                    attr='write',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='Query string processed successfully.')],
+                                keywords=[]))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='Exception', ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='req', ctx=Load()),
+                                            attr='log_error',
+                                            ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    Constant(value='Error processing request: '),
+                                                    FormattedValue(
+                                                        value=Call(
+                                                            func=Name(id='str', ctx=Load()),
+                                                            args=[
+                                                                Name(id='e', ctx=Load())],
+                                                            keywords=[]),
+                                                        conversion=-1)])],
+                                        keywords=[])),
+                                Assign(
+                                    targets=[
+                                        Attribute(
+                                            value=Name(id='req', ctx=Load()),
+                                            attr='status',
+                                            ctx=Store())],
+                                    value=Attribute(
+                                        value=Name(id='apache', ctx=Load()),
+                                        attr='HTTP_INTERNAL_SERVER_ERROR',
+                                        ctx=Load())),
+                                Expr(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='req', ctx=Load()),
+                                            attr='write',
+                                            ctx=Load()),
+                                        args=[
+                                            Constant(value='Internal Server Error')],
+                                        keywords=[])),
+                                Return(
+                                    value=Attribute(
+                                        value=Name(id='apache', ctx=Load()),
+                                        attr='DONE',
+                                        ctx=Load()))])],
+                    orelse=[],
+                    finalbody=[]),
+                Return(
+                    value=Attribute(
+                        value=Name(id='apache', ctx=Load()),
+                        attr='OK',
+                        ctx=Load()))],
+            decorator_list=[]),
+        FunctionDef(
+            name='is_valid_query_string',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='query_string')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Compare(
+                        left=Call(
+                            func=Name(id='len', ctx=Load()),
+                            args=[
+                                Name(id='query_string', ctx=Load())],
+                            keywords=[]),
+                        ops=[
+                            Gt()],
+                        comparators=[
+                            Constant(value=1000)]),
+                    body=[
+                        Return(
+                            value=Constant(value=False))],
+                    orelse=[]),
+                Return(
+                    value=Constant(value=True))],
+            decorator_list=[])],
+    type_ignores=[])

@@ -1,0 +1,165 @@
+<?xml version="1.1" encoding="UTF-8"?>
+
+<!--
+ * See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+-->
+
+<xwikidoc version="1.5" reference="XWiki.AdminFieldsDisplaySheet" locale="">
+  <web>XWiki</web>
+  <name>AdminFieldsDisplaySheet</name>
+  <language/>
+  <defaultLanguage/>
+  <translation>0</translation>
+  <creator>xwiki:XWiki.Admin</creator>
+  <parent>XWiki.AdminSheet</parent>
+  <author>xwiki:XWiki.Admin</author>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <version>1.1</version>
+  <title>AdminFieldsDisplaySheet</title>
+  <comment/>
+  <minorEdit>false</minorEdit>
+  <syntaxId>xwiki/2.0</syntaxId>
+  <hidden>true</hidden>
+  <content>{{velocity output="false"}}
+#macro (__displayXProperty $prop)
+  #set ($title = $services.localization.render($prop.name))
+  #if ($title == $prop.name)
+    #set ($title = $prop.prettyName)
+  #end
+  #if ($services.localization.get("${obj.xWikiClass.name}_${prop.name}"))
+    #set ($title = $services.localization.render("${obj.xWikiClass.name}_${prop.name}"))
+  #end
+  #set ($hint = $services.localization.render("${obj.xWikiClass.name}_${prop.name}.hint"))
+  #if ($hint == "${obj.xWikiClass.name}_${prop.name}.hint")
+    #set($hint = $NULL)
+  #end
+  &lt;dt&gt;
+  #set ($out = $configDoc.display($prop.name, 'edit', $obj).replaceAll('(^..html.*?}})|(../html..$)', ''))
+  #set ($newId = "${configClassName}_${obj.number}_${prop.name}")
+  &lt;label#if ($out.matches("(?s).*id=['""]${newId}['""].*")) for="${newId}"#end class="$prop.name"&gt;##
+  #if ($out.indexOf('type=''checkbox''') != -1 &amp;&amp; $out.indexOf('class="xwiki-form-listclass"') == -1)
+    $out ##
+    #set ($out = '')
+  #end
+  $title
+  #if ($prop.name == 'skin')
+    #set ($skin = $xwiki.skin)
+    &lt;span class="buttonwrapper"&gt;&lt;a href="$xwiki.getURL($skin, 'edit')"#if ($skin.indexOf('.') &lt; 0) class="hidden"#end&gt;$services.localization.render('admin.customize')&lt;/a&gt;&lt;/span&gt;
+  #end
+  #if ($prop.name == 'colorTheme')
+    #if ($editor == 'globaladmin')
+      #set ($colorThemeName = $xwiki.getXWikiPreference('colorTheme'))
+    #else
+      #set ($colorThemeName = $xwiki.getSpacePreference('colorTheme'))
+      #set ($wikiColorTheme = $xwiki.getDocument($xwiki.getXWikiPreference('colorTheme')))
+      #if (!$wikiColorTheme.isNew())
+        #set ($colorThemeHint = $services.localization.render('admin.colortheme.wikiSetting', ["&lt;a href='$wikiColorTheme.getURL()'&gt;$wikiColorTheme.plainTitle&lt;/a&gt;"]))
+      #end
+    #end
+    #if ($xwiki.exists($services.model.createDocumentReference('', 'FlamingoThemes', 'WebHome')))
+      #set ($colorThemeHint = "$!{colorThemeHint} &lt;strong&gt;&lt;a href=""$xwiki.getURL($services.model.createDocumentReference('', 'FlamingoThemes', 'WebHome'))""&gt;$services.localization.render('admin.colortheme.manage')&lt;/a&gt;&lt;/strong&gt;")
+    #elseif ($xwiki.exists($services.model.createDocumentReference('', 'ColorThemes', 'WebHome')))
+      #set ($colorThemeHint = "$!{colorThemeHint} &lt;strong&gt;&lt;a href=""$xwiki.getURL($services.model.createDocumentReference('', 'ColorThemes', 'WebHome'))""&gt;$services.localization.render('admin.colortheme.manage')&lt;/a&gt;&lt;/strong&gt;")
+    #end
+    &lt;span class="buttonwrapper"&gt;&lt;a href="$xwiki.getURL($colorThemeName, 'edit')"#if ($colorThemeName.indexOf('.') &lt; 0) class="hidden"#end&gt;$services.localization.render('admin.customize')&lt;/a&gt;&lt;/span&gt;
+  #end
+  &lt;/label&gt;
+  #if ($hint)&lt;span class="xHint"&gt;$hint&lt;/span&gt;#end
+  &lt;/dt&gt;
+  #if ($out != '')
+    &lt;dd&gt;$out&lt;/dd&gt;
+  #else
+    ## We always display a dd element to avoid having a last dt element alone, which would lead to an invalid html.
+    &lt;dd class="hidden"&gt;&lt;/dd&gt;
+  #end
+  #if ($prop.name == 'colorTheme' &amp;&amp; $colorThemeHint)
+    &lt;dd class="xHint"&gt;$colorThemeHint&lt;/dd&gt;
+  #end
+#end
+{{/velocity}}
+
+{{velocity}}
+### Sheet used to generically display the XWikiPreferences object fields in the administration sheets.
+### Input variables:
+### - $params (mandatory): list of properties to display and their associated sections
+### - $paramDoc (optional): document object which contains the $paramClass
+### - $paramClass (optional): name of the xclass type for the xobject from which to read/save from
+### - $objectPolicy (since 14.10) (optional): the update policy to use when saving the form
+#if ("$!section" != '')
+  ## clean="false" due to bug #XWIKI-4122 - the &lt;legend&gt; element is dropped.
+  {{html clean="false"}}
+  #if ("$!paramDoc" != '')
+    #set($configDoc = $paramDoc)
+  #else
+    #set($configDoc = $doc)
+  #end
+  #if ("$!paramClass" != '')
+    #set($configClassName = $paramClass)
+    #set($formId = "${section.toLowerCase()}_${configClassName}")
+  #else
+    #set($configClassName = 'XWiki.XWikiPreferences')
+    #set($formId = $section.toLowerCase())
+  #end
+  &lt;form id="$escapetool.xml($formId)" method="post"
+      action="$escapetool.xml($xwiki.getURL($configDoc, 'saveandcontinue'))"
+      onsubmit="cancelCancelEdit()"
+      class="xform"&gt;
+    #set($obj = $configDoc.getObject($configClassName))
+    #foreach ($entry in $params.entrySet())
+      #set ($fields = $entry.value)
+      &lt;fieldset class="$escapetool.xml($entry.key)"&gt;
+      ## If there is only one section, don't display the legend
+      #if ($params.size() &gt; 1)
+        &lt;legend&gt;$services.localization.render("admin.$entry.key")&lt;/legend&gt;
+      #end
+      #if ($fields.size() &gt; 0)
+        &lt;dl&gt;
+      #end
+      #foreach ($field in $fields)
+        #set ($prop = $obj.xWikiClass.get($field))
+        #if ($prop)
+          #__displayXProperty($prop)
+        #elseif ($field.html)
+          $field.html
+        #end
+      #end
+      #if ($fields.size() &gt; 0)
+        &lt;/dl&gt;
+      #end
+      &lt;/fieldset&gt;
+    #end
+    &lt;div class="hidden"&gt;
+      &lt;input type="hidden" name="form_token" value="$!{services.csrf.getToken()}" /&gt;
+      &lt;input type="hidden" name="xcontinue" value="$xwiki.getURL($currentDoc, 'admin', "editor=${escapetool.url(${editor})}&amp;amp;section=${escapetool.url(${section})}&amp;amp;space=${escapetool.url(${currentSpace})}")" /&gt;
+      &lt;input type="hidden" name="xredirect" value="$xwiki.getURL($currentDoc, 'admin', "editor=${escapetool.url(${editor})}&amp;amp;section=${escapetool.url(${section})}&amp;amp;space=${escapetool.url(${currentSpace})}")" /&gt;
+      &lt;input type="hidden" name="classname" value="$escapetool.xml($configClassName)" /&gt;
+      #if ("$!objectPolicy" != '')
+      &lt;input type="hidden" name="objectPolicy" value="$escapetool.xml($objectPolicy)" /&gt;
+      #end
+    &lt;/div&gt;
+    &lt;div class="bottombuttons"&gt;
+      &lt;p class="admin-buttons"&gt;
+        &lt;span class="buttonwrapper"&gt;&lt;input class="button" type="submit" name="formactionsac" value="$services.localization.render('admin.save')" /&gt;&lt;/span&gt;
+      &lt;/p&gt;
+    &lt;/div&gt; ## bottombuttons
+  &lt;/form&gt;
+  {{/html}}
+#end
+{{/velocity}}</content>
+</xwikidoc>

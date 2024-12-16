@@ -1,0 +1,105 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='tensorflow', asname='tf')]),
+        FunctionDef(
+            name='safe_py_func',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='token')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=BoolOp(
+                        op=Or(),
+                        values=[
+                            UnaryOp(
+                                op=Not(),
+                                operand=Call(
+                                    func=Name(id='isinstance', ctx=Load()),
+                                    args=[
+                                        Name(id='token', ctx=Load()),
+                                        Name(id='bytes', ctx=Load())],
+                                    keywords=[])),
+                            UnaryOp(
+                                op=Not(),
+                                operand=Call(
+                                    func=Attribute(
+                                        value=Name(id='token', ctx=Load()),
+                                        attr='decode',
+                                        ctx=Load()),
+                                    args=[
+                                        Constant(value='utf-8')],
+                                    keywords=[
+                                        keyword(
+                                            arg='errors',
+                                            value=Constant(value='ignore'))]))]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Input token must be a valid UTF-8 bytestring.')],
+                                keywords=[]))],
+                    orelse=[]),
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='tf', ctx=Load()),
+                                attr='raw_ops',
+                                ctx=Load()),
+                            attr='PyFunc',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[
+                            keyword(
+                                arg='func',
+                                value=Constant(value='your_function')),
+                            keyword(
+                                arg='inp',
+                                value=List(
+                                    elts=[
+                                        Name(id='token', ctx=Load())],
+                                    ctx=Load())),
+                            keyword(
+                                arg='Tout',
+                                value=Attribute(
+                                    value=Name(id='tf', ctx=Load()),
+                                    attr='float32',
+                                    ctx=Load()))]))],
+            decorator_list=[]),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='result', ctx=Store())],
+                    value=Call(
+                        func=Name(id='safe_py_func', ctx=Load()),
+                        args=[
+                            Constant(value=b'valid_utf8_token')],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Name(id='result', ctx=Load())],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ValueError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

@@ -1,0 +1,96 @@
+Module(
+    body=[
+        ImportFrom(
+            module='fastecdsa',
+            names=[
+                alias(name='curve'),
+                alias(name='ecdsa')],
+            level=0),
+        FunctionDef(
+            name='safe_curvemath_mul',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='point'),
+                    arg(arg='scalar')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=BoolOp(
+                        op=Or(),
+                        values=[
+                            Compare(
+                                left=Name(id='point', ctx=Load()),
+                                ops=[
+                                    Is()],
+                                comparators=[
+                                    Constant(value=None)]),
+                            Compare(
+                                left=Name(id='scalar', ctx=Load()),
+                                ops=[
+                                    Is()],
+                                comparators=[
+                                    Constant(value=None)])]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Point and scalar must not be None')],
+                                keywords=[]))],
+                    orelse=[]),
+                Return(
+                    value=BinOp(
+                        left=Name(id='point', ctx=Load()),
+                        op=Mult(),
+                        right=Name(id='scalar', ctx=Load())))],
+            decorator_list=[]),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='G', ctx=Store())],
+                    value=Attribute(
+                        value=Attribute(
+                            value=Name(id='curve', ctx=Load()),
+                            attr='P256',
+                            ctx=Load()),
+                        attr='G',
+                        ctx=Load())),
+                Assign(
+                    targets=[
+                        Name(id='k', ctx=Store())],
+                    value=Constant(value=123456789)),
+                Assign(
+                    targets=[
+                        Name(id='result', ctx=Store())],
+                    value=Call(
+                        func=Name(id='safe_curvemath_mul', ctx=Load()),
+                        args=[
+                            Name(id='G', ctx=Load()),
+                            Name(id='k', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Result:'),
+                            Name(id='result', ctx=Load())],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='Exception', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Error:'),
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

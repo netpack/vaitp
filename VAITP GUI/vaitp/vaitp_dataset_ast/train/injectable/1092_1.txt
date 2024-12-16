@@ -1,0 +1,83 @@
+Module(
+    body=[
+        ImportFrom(
+            module='azure.identity',
+            names=[
+                alias(name='DefaultAzureCredential')],
+            level=0),
+        ImportFrom(
+            module='azure.core.exceptions',
+            names=[
+                alias(name='AzureError')],
+            level=0),
+        FunctionDef(
+            name='authenticate_user',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Try(
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='credential', ctx=Store())],
+                            value=Call(
+                                func=Name(id='DefaultAzureCredential', ctx=Load()),
+                                args=[],
+                                keywords=[])),
+                        Assign(
+                            targets=[
+                                Name(id='token', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='credential', ctx=Load()),
+                                    attr='get_token',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='https://management.azure.com/.default')],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Authentication successful, token acquired.')],
+                                keywords=[])),
+                        Return(
+                            value=Name(id='token', ctx=Load()))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='AzureError', ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    Constant(value='Authentication failed: '),
+                                                    FormattedValue(
+                                                        value=Name(id='e', ctx=Load()),
+                                                        conversion=-1)])],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='authenticate_user', ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

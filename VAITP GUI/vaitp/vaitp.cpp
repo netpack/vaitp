@@ -14,7 +14,6 @@
 #include <QDesktopServices>
 #include <QTimer>
 #include <QPlainTextEdit>
-#include <memory>
 #include <QScrollBar>
 
 int vaitp_loaded=0;
@@ -34,6 +33,15 @@ QTimer* typingTimer;
 int currentCharacterIndex;
 QString animatedText;
 QTextOption textOption;
+
+// Define source path
+#ifdef Q_OS_MAC
+    QString basepath = "../../../../../"; //this is needed to account for vaitp.app/Content/MacOS/ structure in MacOS
+#elif defined(Q_OS_LINUX)
+    QString basepath = "../../"; //TODO: Review this path under GNU/Linux
+#else
+    QString basepath = "..\..\"; //TODO: Review this path under Windows
+#endif
 
 // Slot to type next character
 void VAITP::typeNextCharacter() {
@@ -81,7 +89,7 @@ VAITP::VAITP(QWidget *parent)
 //    textOption.setAlignment(Qt::AlignCenter);
 //    ui->txt_output_sh1->document()->setDefaultTextOption(textOption);
 
-    QString lineToCenter = "Welcome to VAITP! v1.1 [SecurePythonGPT edition sponsored by the Sword team @ Sword AI Challenge '23 Porto - Portugal!]";
+    QString lineToCenter = "Welcome to VAITP! v1.2 Beta [with MacOS deployment!]";
 
     // Calculate the number of spaces needed to center the line
     int totalWidth = ui->txt_output_sh1->viewport()->width();
@@ -101,7 +109,14 @@ VAITP::VAITP(QWidget *parent)
     if(!db.isOpen()){
         qDebug()<<"Opening db...";
         db=QSqlDatabase::addDatabase("QSQLITE");
-        db.setDatabaseName("../vaitp/vaitp.db");
+        QString dbpath = "vaitp.db";
+        dbpath = basepath+"vaitp.db";
+        if (!QFile::exists(dbpath)) {
+            qDebug() << "Failed to find db in:" << dbpath;
+            ui->txt_vaitp_log_path->setText("Failed to find db in: "+dbpath);
+        }
+
+        db.setDatabaseName(dbpath);
         db.open();
 
     }
@@ -650,7 +665,7 @@ void VAITP::patchInjection(QString pyfile, bool isChained, QStringList patchList
             outputfilename = pyfile.replace(".py","")+"_temp_"+QString::number(chainNum)+".py";
             tempFiles.append(outputfilename);
         } else {
-            QRegExp re("_temp_[0-9]*");
+            QRegularExpression re("_temp_[0-9]*");
             outputfilename = pyfile.replace(".py","").replace(re,"")+"_injectedChain_"+as+".py";
 
         }
@@ -791,7 +806,7 @@ void VAITP::on_bt_attack_clicked()
      } else {
 
 
-           QString command("python");
+           QString command("python3");
 
 
 
@@ -1537,7 +1552,7 @@ void VAITP::on_bt_load_py_src_folder_clicked()
 {
     QFileDialog dialog(this);
     dialog.setViewMode(QFileDialog::Detail);
-    dialog.setFileMode(QFileDialog::DirectoryOnly);
+    dialog.setFileMode(QFileDialog::Directory);
     QString fileName = QFileDialog::getExistingDirectory(this, tr("Open a directory to scan all python files"), "/home/");
     ui->txt_py_src_folder->setText(fileName);
 }
@@ -1739,7 +1754,7 @@ void VAITP::on_actionExport_PDF_report_triggered()
     QPrinter printer(QPrinter::HighResolution);
     QString fileName = ui->txt_vaitp_log_path->text()+"/VAITP_EXPORT_LOG_"+now+".pdf";
     printer.setOutputFormat(QPrinter::PdfFormat);
-    printer.setPaperSize(QPrinter::A4);
+    printer.setPageSize(QPageSize::A4);
     printer.setPageMargins(QMarginsF(15,15,15,15));
     printer.setOutputFileName(fileName);
 

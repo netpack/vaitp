@@ -1,0 +1,742 @@
+Module(
+    body=[
+        ClassDef(
+            name='ModelStorage',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='model_name')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='model_name',
+                                    ctx=Store())],
+                            value=Name(id='model_name', ctx=Load())),
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='data',
+                                    ctx=Store())],
+                            value=Dict(keys=[], values=[]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='create',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='values'),
+                            arg(arg='user_id')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='new_id', ctx=Store())],
+                            value=BinOp(
+                                left=Call(
+                                    func=Name(id='len', ctx=Load()),
+                                    args=[
+                                        Attribute(
+                                            value=Name(id='self', ctx=Load()),
+                                            attr='data',
+                                            ctx=Load())],
+                                    keywords=[]),
+                                op=Add(),
+                                right=Constant(value=1))),
+                        Assign(
+                            targets=[
+                                Subscript(
+                                    value=Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='data',
+                                        ctx=Load()),
+                                    slice=Name(id='new_id', ctx=Load()),
+                                    ctx=Store())],
+                            value=Name(id='values', ctx=Load())),
+                        Return(
+                            value=Name(id='new_id', ctx=Load()))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='read',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='ids'),
+                            arg(arg='fields'),
+                            arg(arg='user_id')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='results', ctx=Store())],
+                            value=List(elts=[], ctx=Load())),
+                        For(
+                            target=Name(id='record_id', ctx=Store()),
+                            iter=Name(id='ids', ctx=Load()),
+                            body=[
+                                If(
+                                    test=Compare(
+                                        left=Name(id='record_id', ctx=Load()),
+                                        ops=[
+                                            In()],
+                                        comparators=[
+                                            Attribute(
+                                                value=Name(id='self', ctx=Load()),
+                                                attr='data',
+                                                ctx=Load())]),
+                                    body=[
+                                        Expr(
+                                            value=Call(
+                                                func=Attribute(
+                                                    value=Name(id='results', ctx=Load()),
+                                                    attr='append',
+                                                    ctx=Load()),
+                                                args=[
+                                                    DictComp(
+                                                        key=Name(id='field', ctx=Load()),
+                                                        value=Call(
+                                                            func=Attribute(
+                                                                value=Subscript(
+                                                                    value=Attribute(
+                                                                        value=Name(id='self', ctx=Load()),
+                                                                        attr='data',
+                                                                        ctx=Load()),
+                                                                    slice=Name(id='record_id', ctx=Load()),
+                                                                    ctx=Load()),
+                                                                attr='get',
+                                                                ctx=Load()),
+                                                            args=[
+                                                                Name(id='field', ctx=Load())],
+                                                            keywords=[]),
+                                                        generators=[
+                                                            comprehension(
+                                                                target=Name(id='field', ctx=Store()),
+                                                                iter=Name(id='fields', ctx=Load()),
+                                                                ifs=[],
+                                                                is_async=0)])],
+                                                keywords=[]))],
+                                    orelse=[
+                                        Expr(
+                                            value=Call(
+                                                func=Attribute(
+                                                    value=Name(id='results', ctx=Load()),
+                                                    attr='append',
+                                                    ctx=Load()),
+                                                args=[
+                                                    Constant(value=None)],
+                                                keywords=[]))])],
+                            orelse=[]),
+                        Return(
+                            value=Name(id='results', ctx=Load()))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='write',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='ids'),
+                            arg(arg='values'),
+                            arg(arg='user_id')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        For(
+                            target=Name(id='record_id', ctx=Store()),
+                            iter=Name(id='ids', ctx=Load()),
+                            body=[
+                                If(
+                                    test=Compare(
+                                        left=Name(id='record_id', ctx=Load()),
+                                        ops=[
+                                            In()],
+                                        comparators=[
+                                            Attribute(
+                                                value=Name(id='self', ctx=Load()),
+                                                attr='data',
+                                                ctx=Load())]),
+                                    body=[
+                                        Expr(
+                                            value=Call(
+                                                func=Attribute(
+                                                    value=Subscript(
+                                                        value=Attribute(
+                                                            value=Name(id='self', ctx=Load()),
+                                                            attr='data',
+                                                            ctx=Load()),
+                                                        slice=Name(id='record_id', ctx=Load()),
+                                                        ctx=Load()),
+                                                    attr='update',
+                                                    ctx=Load()),
+                                                args=[
+                                                    Name(id='values', ctx=Load())],
+                                                keywords=[]))],
+                                    orelse=[])],
+                            orelse=[]),
+                        Return(
+                            value=Constant(value=True))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='delete',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='ids'),
+                            arg(arg='user_id')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        For(
+                            target=Name(id='record_id', ctx=Store()),
+                            iter=Name(id='ids', ctx=Load()),
+                            body=[
+                                If(
+                                    test=Compare(
+                                        left=Name(id='record_id', ctx=Load()),
+                                        ops=[
+                                            In()],
+                                        comparators=[
+                                            Attribute(
+                                                value=Name(id='self', ctx=Load()),
+                                                attr='data',
+                                                ctx=Load())]),
+                                    body=[
+                                        Delete(
+                                            targets=[
+                                                Subscript(
+                                                    value=Attribute(
+                                                        value=Name(id='self', ctx=Load()),
+                                                        attr='data',
+                                                        ctx=Load()),
+                                                    slice=Name(id='record_id', ctx=Load()),
+                                                    ctx=Del())])],
+                                    orelse=[])],
+                            orelse=[]),
+                        Return(
+                            value=Constant(value=True))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='copy',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='ids'),
+                            arg(arg='default_values'),
+                            arg(arg='user_id')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='new_ids', ctx=Store())],
+                            value=List(elts=[], ctx=Load())),
+                        For(
+                            target=Name(id='record_id', ctx=Store()),
+                            iter=Name(id='ids', ctx=Load()),
+                            body=[
+                                If(
+                                    test=Compare(
+                                        left=Name(id='record_id', ctx=Load()),
+                                        ops=[
+                                            In()],
+                                        comparators=[
+                                            Attribute(
+                                                value=Name(id='self', ctx=Load()),
+                                                attr='data',
+                                                ctx=Load())]),
+                                    body=[
+                                        Assign(
+                                            targets=[
+                                                Name(id='new_id', ctx=Store())],
+                                            value=BinOp(
+                                                left=Call(
+                                                    func=Name(id='len', ctx=Load()),
+                                                    args=[
+                                                        Attribute(
+                                                            value=Name(id='self', ctx=Load()),
+                                                            attr='data',
+                                                            ctx=Load())],
+                                                    keywords=[]),
+                                                op=Add(),
+                                                right=Constant(value=1))),
+                                        Assign(
+                                            targets=[
+                                                Name(id='new_record', ctx=Store())],
+                                            value=Call(
+                                                func=Attribute(
+                                                    value=Subscript(
+                                                        value=Attribute(
+                                                            value=Name(id='self', ctx=Load()),
+                                                            attr='data',
+                                                            ctx=Load()),
+                                                        slice=Name(id='record_id', ctx=Load()),
+                                                        ctx=Load()),
+                                                    attr='copy',
+                                                    ctx=Load()),
+                                                args=[],
+                                                keywords=[])),
+                                        Expr(
+                                            value=Call(
+                                                func=Attribute(
+                                                    value=Name(id='new_record', ctx=Load()),
+                                                    attr='update',
+                                                    ctx=Load()),
+                                                args=[
+                                                    Name(id='default_values', ctx=Load())],
+                                                keywords=[])),
+                                        Assign(
+                                            targets=[
+                                                Subscript(
+                                                    value=Attribute(
+                                                        value=Name(id='self', ctx=Load()),
+                                                        attr='data',
+                                                        ctx=Load()),
+                                                    slice=Name(id='new_id', ctx=Load()),
+                                                    ctx=Store())],
+                                            value=Name(id='new_record', ctx=Load())),
+                                        Expr(
+                                            value=Call(
+                                                func=Attribute(
+                                                    value=Name(id='new_ids', ctx=Load()),
+                                                    attr='append',
+                                                    ctx=Load()),
+                                                args=[
+                                                    Name(id='new_id', ctx=Load())],
+                                                keywords=[]))],
+                                    orelse=[])],
+                            orelse=[]),
+                        Return(
+                            value=Name(id='new_ids', ctx=Load()))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        ClassDef(
+            name='User',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='user_id'),
+                            arg(arg='name'),
+                            arg(arg='groups')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[
+                            Constant(value=None)]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='id',
+                                    ctx=Store())],
+                            value=Name(id='user_id', ctx=Load())),
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='name',
+                                    ctx=Store())],
+                            value=Name(id='name', ctx=Load())),
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='groups',
+                                    ctx=Store())],
+                            value=IfExp(
+                                test=Name(id='groups', ctx=Load()),
+                                body=Name(id='groups', ctx=Load()),
+                                orelse=List(elts=[], ctx=Load())))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        ClassDef(
+            name='Group',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='group_id'),
+                            arg(arg='name')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='id',
+                                    ctx=Store())],
+                            value=Name(id='group_id', ctx=Load())),
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='name',
+                                    ctx=Store())],
+                            value=Name(id='name', ctx=Load()))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        ClassDef(
+            name='Model',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='model_storage')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='storage',
+                                    ctx=Store())],
+                            value=Name(id='model_storage', ctx=Load()))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='create',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='values'),
+                            arg(arg='user_id')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Return(
+                            value=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='storage',
+                                        ctx=Load()),
+                                    attr='create',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='values', ctx=Load()),
+                                    Name(id='user_id', ctx=Load())],
+                                keywords=[]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='read',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='ids'),
+                            arg(arg='fields'),
+                            arg(arg='user_id')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Return(
+                            value=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='storage',
+                                        ctx=Load()),
+                                    attr='read',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='ids', ctx=Load()),
+                                    Name(id='fields', ctx=Load()),
+                                    Name(id='user_id', ctx=Load())],
+                                keywords=[]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='write',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='ids'),
+                            arg(arg='values'),
+                            arg(arg='user_id')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Return(
+                            value=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='storage',
+                                        ctx=Load()),
+                                    attr='write',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='ids', ctx=Load()),
+                                    Name(id='values', ctx=Load()),
+                                    Name(id='user_id', ctx=Load())],
+                                keywords=[]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='delete',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='ids'),
+                            arg(arg='user_id')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Return(
+                            value=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='storage',
+                                        ctx=Load()),
+                                    attr='delete',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='ids', ctx=Load()),
+                                    Name(id='user_id', ctx=Load())],
+                                keywords=[]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='copy',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='ids'),
+                            arg(arg='default_values'),
+                            arg(arg='user_id')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Return(
+                            value=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='storage',
+                                        ctx=Load()),
+                                    attr='copy',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='ids', ctx=Load()),
+                                    Name(id='default_values', ctx=Load()),
+                                    Name(id='user_id', ctx=Load())],
+                                keywords=[]))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='user_storage', ctx=Store())],
+            value=Call(
+                func=Name(id='ModelStorage', ctx=Load()),
+                args=[
+                    Constant(value='user')],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='group_storage', ctx=Store())],
+            value=Call(
+                func=Name(id='ModelStorage', ctx=Load()),
+                args=[
+                    Constant(value='group')],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='user_group_storage', ctx=Store())],
+            value=Call(
+                func=Name(id='ModelStorage', ctx=Load()),
+                args=[
+                    Constant(value='user_group')],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='user_model', ctx=Store())],
+            value=Call(
+                func=Name(id='Model', ctx=Load()),
+                args=[
+                    Name(id='user_storage', ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='group_model', ctx=Store())],
+            value=Call(
+                func=Name(id='Model', ctx=Load()),
+                args=[
+                    Name(id='group_storage', ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='user_group_model', ctx=Store())],
+            value=Call(
+                func=Name(id='Model', ctx=Load()),
+                args=[
+                    Name(id='user_group_storage', ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='user1_id', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='user_model', ctx=Load()),
+                    attr='create',
+                    ctx=Load()),
+                args=[
+                    Dict(
+                        keys=[
+                            Constant(value='name')],
+                        values=[
+                            Constant(value='user1')]),
+                    Constant(value=1)],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='user2_id', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='user_model', ctx=Load()),
+                    attr='create',
+                    ctx=Load()),
+                args=[
+                    Dict(
+                        keys=[
+                            Constant(value='name')],
+                        values=[
+                            Constant(value='user2')]),
+                    Constant(value=1)],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='group1_id', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='group_model', ctx=Load()),
+                    attr='create',
+                    ctx=Load()),
+                args=[
+                    Dict(
+                        keys=[
+                            Constant(value='name')],
+                        values=[
+                            Constant(value='group1')]),
+                    Constant(value=1)],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='group2_id', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='group_model', ctx=Load()),
+                    attr='create',
+                    ctx=Load()),
+                args=[
+                    Dict(
+                        keys=[
+                            Constant(value='name')],
+                        values=[
+                            Constant(value='group2')]),
+                    Constant(value=1)],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='user_group_model', ctx=Load()),
+                    attr='create',
+                    ctx=Load()),
+                args=[
+                    Dict(
+                        keys=[
+                            Constant(value='user'),
+                            Constant(value='group')],
+                        values=[
+                            Name(id='user1_id', ctx=Load()),
+                            Name(id='group1_id', ctx=Load())]),
+                    Constant(value=1)],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='user_group_model', ctx=Load()),
+                    attr='write',
+                    ctx=Load()),
+                args=[
+                    List(
+                        elts=[
+                            Constant(value=1)],
+                        ctx=Load()),
+                    Dict(
+                        keys=[
+                            Constant(value='group')],
+                        values=[
+                            Name(id='group2_id', ctx=Load())]),
+                    Name(id='user2_id', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Constant(value='User Groups after manipulation: '),
+                    Call(
+                        func=Attribute(
+                            value=Name(id='user_group_model', ctx=Load()),
+                            attr='read',
+                            ctx=Load()),
+                        args=[
+                            List(
+                                elts=[
+                                    Constant(value=1)],
+                                ctx=Load()),
+                            List(
+                                elts=[
+                                    Constant(value='user'),
+                                    Constant(value='group')],
+                                ctx=Load()),
+                            Name(id='user2_id', ctx=Load())],
+                        keywords=[])],
+                keywords=[]))],
+    type_ignores=[])

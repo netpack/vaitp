@@ -1,0 +1,161 @@
+Module(
+    body=[
+        ImportFrom(
+            module='twisted.web.client',
+            names=[
+                alias(name='Agent')],
+            level=0),
+        ImportFrom(
+            module='twisted.web.http',
+            names=[
+                alias(name='ResponseDone')],
+            level=0),
+        ImportFrom(
+            module='twisted.internet',
+            names=[
+                alias(name='reactor')],
+            level=0),
+        ImportFrom(
+            module='twisted.internet.ssl',
+            names=[
+                alias(name='ClientContextFactory'),
+                alias(name='DefaultOpenSSLContextFactory')],
+            level=0),
+        ClassDef(
+            name='MyAgent',
+            bases=[
+                Name(id='Agent', ctx=Load())],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='reactor'),
+                            arg(arg='trustRoot')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Call(
+                                        func=Name(id='super', ctx=Load()),
+                                        args=[
+                                            Name(id='MyAgent', ctx=Load()),
+                                            Name(id='self', ctx=Load())],
+                                        keywords=[]),
+                                    attr='__init__',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='reactor', ctx=Load()),
+                                    Name(id='trustRoot', ctx=Load())],
+                                keywords=[]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='get',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='url')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='d', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='request',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value=b'GET'),
+                                    Name(id='url', ctx=Load())],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='d', ctx=Load()),
+                                    attr='addCallback',
+                                    ctx=Load()),
+                                args=[
+                                    Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='handle_response',
+                                        ctx=Load())],
+                                keywords=[])),
+                        Return(
+                            value=Name(id='d', ctx=Load()))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='handle_response',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='response')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Response received:'),
+                                    Name(id='response', ctx=Load())],
+                                keywords=[])),
+                        Return(
+                            value=Name(id='response', ctx=Load()))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        ImportFrom(
+            module='twisted.internet.ssl',
+            names=[
+                alias(name='DefaultOpenSSLContextFactory')],
+            level=0),
+        ImportFrom(
+            module='twisted.internet.ssl',
+            names=[
+                alias(name='TrustRoot')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='trust_root', ctx=Store())],
+            value=Call(
+                func=Name(id='TrustRoot', ctx=Load()),
+                args=[],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='agent', ctx=Store())],
+            value=Call(
+                func=Name(id='MyAgent', ctx=Load()),
+                args=[
+                    Name(id='reactor', ctx=Load()),
+                    Name(id='trust_root', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='agent', ctx=Load()),
+                    attr='get',
+                    ctx=Load()),
+                args=[
+                    Constant(value='https://trusted-server.com/resource')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='reactor', ctx=Load()),
+                    attr='run',
+                    ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

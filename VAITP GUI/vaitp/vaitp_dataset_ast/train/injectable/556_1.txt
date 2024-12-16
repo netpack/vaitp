@@ -1,0 +1,93 @@
+Module(
+    body=[
+        ClassDef(
+            name='SafeExecutor',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='allowed_globals')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[
+                            Constant(value=None)]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='allowed_globals',
+                                    ctx=Store())],
+                            value=BoolOp(
+                                op=Or(),
+                                values=[
+                                    Name(id='allowed_globals', ctx=Load()),
+                                    Dict(keys=[], values=[])]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='safe_exec',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='code'),
+                            arg(arg='local_vars')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[
+                            Constant(value=None)]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='exec', ctx=Load()),
+                                args=[
+                                    Name(id='code', ctx=Load()),
+                                    Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='allowed_globals',
+                                        ctx=Load()),
+                                    Name(id='local_vars', ctx=Load())],
+                                keywords=[]))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='safe_globals', ctx=Store())],
+            value=Dict(
+                keys=[
+                    Constant(value='__builtins__')],
+                values=[
+                    Dict(
+                        keys=[
+                            Constant(value='print')],
+                        values=[
+                            Name(id='print', ctx=Load())])])),
+        Assign(
+            targets=[
+                Name(id='executor', ctx=Store())],
+            value=Call(
+                func=Name(id='SafeExecutor', ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='allowed_globals',
+                        value=Name(id='safe_globals', ctx=Load()))])),
+        Assign(
+            targets=[
+                Name(id='safe_code', ctx=Store())],
+            value=Constant(value="print('Hello, safe world!')")),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='executor', ctx=Load()),
+                    attr='safe_exec',
+                    ctx=Load()),
+                args=[
+                    Name(id='safe_code', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

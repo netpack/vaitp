@@ -1,0 +1,140 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='AccessControl')]),
+        ClassDef(
+            name='SafeFormatter',
+            bases=[
+                Attribute(
+                    value=Name(id='string', ctx=Load()),
+                    attr='Formatter',
+                    ctx=Load())],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='get_value',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='key'),
+                            arg(arg='args'),
+                            arg(arg='kwargs')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        If(
+                            test=Call(
+                                func=Name(id='isinstance', ctx=Load()),
+                                args=[
+                                    Name(id='key', ctx=Load()),
+                                    Name(id='str', ctx=Load())],
+                                keywords=[]),
+                            body=[
+                                Return(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='kwargs', ctx=Load()),
+                                            attr='get',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='key', ctx=Load()),
+                                            Constant(value=None)],
+                                        keywords=[]))],
+                            orelse=[]),
+                        Return(
+                            value=Call(
+                                func=Attribute(
+                                    value=Call(
+                                        func=Name(id='super', ctx=Load()),
+                                        args=[],
+                                        keywords=[]),
+                                    attr='get_value',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='key', ctx=Load()),
+                                    Name(id='args', ctx=Load()),
+                                    Name(id='kwargs', ctx=Load())],
+                                keywords=[]))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        FunctionDef(
+            name='safe_format_map',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='format_string'),
+                    arg(arg='mapping')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='formatter', ctx=Store())],
+                    value=Call(
+                        func=Name(id='SafeFormatter', ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='formatter', ctx=Load()),
+                            attr='vformat',
+                            ctx=Load()),
+                        args=[
+                            Name(id='format_string', ctx=Load()),
+                            Tuple(elts=[], ctx=Load()),
+                            Name(id='mapping', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='user_input', ctx=Store())],
+                    value=Constant(value='{user_attr}')),
+                Assign(
+                    targets=[
+                        Name(id='context', ctx=Store())],
+                    value=Dict(
+                        keys=[
+                            Constant(value='user_attr')],
+                        values=[
+                            Constant(value='Sensitive data')])),
+                Assign(
+                    targets=[
+                        Name(id='result', ctx=Store())],
+                    value=Call(
+                        func=Name(id='safe_format_map', ctx=Load()),
+                        args=[
+                            Name(id='user_input', ctx=Load()),
+                            Name(id='context', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Name(id='result', ctx=Load())],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='Exception', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            Constant(value='Error: '),
+                                            FormattedValue(
+                                                value=Name(id='e', ctx=Load()),
+                                                conversion=-1)])],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

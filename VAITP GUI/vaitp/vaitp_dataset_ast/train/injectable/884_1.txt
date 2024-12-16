@@ -1,0 +1,66 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        Import(
+            names=[
+                alias(name='shutil')]),
+        Assign(
+            targets=[
+                Name(id='original_docker_compose_path', ctx=Store())],
+            value=Constant(value='/path/to/original/docker-compose.yml')),
+        Assign(
+            targets=[
+                Name(id='protected_docker_compose_path', ctx=Store())],
+            value=Constant(value='/path/to/protected/docker-compose.yml')),
+        FunctionDef(
+            name='protect_docker_compose',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='path',
+                                ctx=Load()),
+                            attr='exists',
+                            ctx=Load()),
+                        args=[
+                            Name(id='original_docker_compose_path', ctx=Load())],
+                        keywords=[]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='shutil', ctx=Load()),
+                                    attr='copy',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='original_docker_compose_path', ctx=Load()),
+                                    Name(id='protected_docker_compose_path', ctx=Load())],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='os', ctx=Load()),
+                                    attr='chmod',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='protected_docker_compose_path', ctx=Load()),
+                                    Constant(value=292)],
+                                keywords=[]))],
+                    orelse=[])],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='protect_docker_compose', ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

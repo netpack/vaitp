@@ -1,0 +1,78 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='democritus_strings')]),
+        FunctionDef(
+            name='vulnerable_netstring_encode',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='data')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Constant(value='Encodes data as a netstring using a potentially compromised library.')),
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='democritus_strings', ctx=Load()),
+                            attr='encode',
+                            ctx=Load()),
+                        args=[
+                            Name(id='data', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='vulnerable_netstring_decode',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='netstring')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Constant(value='Decodes a netstring using a potentially compromised library.')),
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='democritus_strings', ctx=Load()),
+                            attr='decode',
+                            ctx=Load()),
+                        args=[
+                            Name(id='netstring', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='encoded', ctx=Store())],
+            value=Call(
+                func=Name(id='vulnerable_netstring_encode', ctx=Load()),
+                args=[
+                    Constant(value='Hello, World!')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='encoded', ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='decoded', ctx=Store())],
+            value=Call(
+                func=Name(id='vulnerable_netstring_decode', ctx=Load()),
+                args=[
+                    Name(id='encoded', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='decoded', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])
