@@ -1,0 +1,55 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='ujson')]),
+        FunctionDef(
+            name='unsafe_encode',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='data'),
+                    arg(arg='indent')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='ujson', ctx=Load()),
+                            attr='dumps',
+                            ctx=Load()),
+                        args=[
+                            Name(id='data', ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='indent',
+                                value=Name(id='indent', ctx=Load()))]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='data', ctx=Store())],
+            value=Dict(
+                keys=[
+                    Constant(value='key')],
+                values=[
+                    Constant(value='value')])),
+        Assign(
+            targets=[
+                Name(id='encoded_data', ctx=Store())],
+            value=Call(
+                func=Name(id='unsafe_encode', ctx=Load()),
+                args=[
+                    Name(id='data', ctx=Load())],
+                keywords=[
+                    keyword(
+                        arg='indent',
+                        value=Constant(value=1000))])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='encoded_data', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

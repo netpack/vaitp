@@ -1,0 +1,135 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='threading')]),
+        ClassDef(
+            name='PasswordChecker',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='lock',
+                                    ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='threading', ctx=Load()),
+                                    attr='Lock',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='check_password',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='password')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        With(
+                            items=[
+                                withitem(
+                                    context_expr=Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='lock',
+                                        ctx=Load()))],
+                            body=[
+                                Return(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='self', ctx=Load()),
+                                            attr='_password_checker_logic',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='password', ctx=Load())],
+                                        keywords=[]))])],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='_password_checker_logic',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='password')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Return(
+                            value=Compare(
+                                left=Call(
+                                    func=Name(id='len', ctx=Load()),
+                                    args=[
+                                        Name(id='password', ctx=Load())],
+                                    keywords=[]),
+                                ops=[
+                                    GtE()],
+                                comparators=[
+                                    Constant(value=8)]))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='password_checker', ctx=Store())],
+            value=Call(
+                func=Name(id='PasswordChecker', ctx=Load()),
+                args=[],
+                keywords=[])),
+        FunctionDef(
+            name='check_user_password',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='password')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Call(
+                        func=Attribute(
+                            value=Name(id='password_checker', ctx=Load()),
+                            attr='check_password',
+                            ctx=Load()),
+                        args=[
+                            Name(id='password', ctx=Load())],
+                        keywords=[]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Password is strong.')],
+                                keywords=[]))],
+                    orelse=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Password is weak.')],
+                                keywords=[]))])],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='check_user_password', ctx=Load()),
+                args=[
+                    Constant(value='example_password')],
+                keywords=[]))],
+    type_ignores=[])

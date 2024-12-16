@@ -1,0 +1,146 @@
+Module(
+    body=[
+        ImportFrom(
+            module='flask',
+            names=[
+                alias(name='Flask'),
+                alias(name='request'),
+                alias(name='jsonify')],
+            level=0),
+        Import(
+            names=[
+                alias(name='os')]),
+        Assign(
+            targets=[
+                Name(id='app', ctx=Store())],
+            value=Call(
+                func=Name(id='Flask', ctx=Load()),
+                args=[
+                    Name(id='__name__', ctx=Load())],
+                keywords=[])),
+        FunctionDef(
+            name='typeahead',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='query', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='request', ctx=Load()),
+                                attr='args',
+                                ctx=Load()),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='query'),
+                            Constant(value='')],
+                        keywords=[])),
+                Try(
+                    body=[
+                        With(
+                            items=[
+                                withitem(
+                                    context_expr=Call(
+                                        func=Name(id='open', ctx=Load()),
+                                        args=[
+                                            Call(
+                                                func=Attribute(
+                                                    value=Attribute(
+                                                        value=Name(id='os', ctx=Load()),
+                                                        attr='path',
+                                                        ctx=Load()),
+                                                    attr='join',
+                                                    ctx=Load()),
+                                                args=[
+                                                    Constant(value='/some/base/path'),
+                                                    Name(id='query', ctx=Load())],
+                                                keywords=[]),
+                                            Constant(value='r')],
+                                        keywords=[]),
+                                    optional_vars=Name(id='f', ctx=Store()))],
+                            body=[
+                                Assign(
+                                    targets=[
+                                        Name(id='data', ctx=Store())],
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='f', ctx=Load()),
+                                            attr='read',
+                                            ctx=Load()),
+                                        args=[],
+                                        keywords=[]))]),
+                        Return(
+                            value=Call(
+                                func=Name(id='jsonify', ctx=Load()),
+                                args=[
+                                    Dict(
+                                        keys=[
+                                            Constant(value='results')],
+                                        values=[
+                                            Name(id='data', ctx=Load())])],
+                                keywords=[]))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='Exception', ctx=Load()),
+                            name='e',
+                            body=[
+                                Return(
+                                    value=Tuple(
+                                        elts=[
+                                            Call(
+                                                func=Name(id='jsonify', ctx=Load()),
+                                                args=[
+                                                    Dict(
+                                                        keys=[
+                                                            Constant(value='error')],
+                                                        values=[
+                                                            Call(
+                                                                func=Name(id='str', ctx=Load()),
+                                                                args=[
+                                                                    Name(id='e', ctx=Load())],
+                                                                keywords=[])])],
+                                                keywords=[]),
+                                            Constant(value=400)],
+                                        ctx=Load()))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[
+                Call(
+                    func=Attribute(
+                        value=Name(id='app', ctx=Load()),
+                        attr='route',
+                        ctx=Load()),
+                    args=[
+                        Constant(value='/typeahead')],
+                    keywords=[
+                        keyword(
+                            arg='methods',
+                            value=List(
+                                elts=[
+                                    Constant(value='GET')],
+                                ctx=Load()))])]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='app', ctx=Load()),
+                            attr='run',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

@@ -1,0 +1,44 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='yaml')]),
+        FunctionDef(
+            name='safe_load_yaml',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='yaml_string')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='yaml', ctx=Load()),
+                            attr='safe_load',
+                            ctx=Load()),
+                        args=[
+                            Name(id='yaml_string', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='yaml_model', ctx=Store())],
+            value=Constant(value='\n!<tag:keras.io:layer>\nclass_name: Dense\nconfig:\n  units: 32\n  activation: relu\n')),
+        Assign(
+            targets=[
+                Name(id='model_config', ctx=Store())],
+            value=Call(
+                func=Name(id='safe_load_yaml', ctx=Load()),
+                args=[
+                    Name(id='yaml_model', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='model_config', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

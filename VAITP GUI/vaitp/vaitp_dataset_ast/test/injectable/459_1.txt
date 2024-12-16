@@ -1,0 +1,131 @@
+Module(
+    body=[
+        ClassDef(
+            name='UnauthorizedAccessError',
+            bases=[
+                Name(id='Exception', ctx=Load())],
+            keywords=[],
+            body=[
+                Expr(
+                    value=Constant(value='Exception raised for unauthorized access attempts.')),
+                Pass()],
+            decorator_list=[]),
+        FunctionDef(
+            name='handle_request',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='request')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=UnaryOp(
+                        op=Not(),
+                        operand=Call(
+                            func=Name(id='is_authenticated', ctx=Load()),
+                            args=[
+                                Name(id='request', ctx=Load())],
+                            keywords=[])),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='UnauthorizedAccessError', ctx=Load()),
+                                args=[
+                                    Constant(value='User  is not authenticated')],
+                                keywords=[]))],
+                    orelse=[]),
+                Expr(
+                    value=Call(
+                        func=Name(id='process_request', ctx=Load()),
+                        args=[
+                            Name(id='request', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='is_authenticated',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='request')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Compare(
+                        left=Constant(value='auth_token'),
+                        ops=[
+                            In()],
+                        comparators=[
+                            Name(id='request', ctx=Load())]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='process_request',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='request')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            JoinedStr(
+                                values=[
+                                    Constant(value='Processing request: '),
+                                    FormattedValue(
+                                        value=Name(id='request', ctx=Load()),
+                                        conversion=-1)])],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='request_with_auth', ctx=Store())],
+            value=Dict(
+                keys=[
+                    Constant(value='data'),
+                    Constant(value='auth_token')],
+                values=[
+                    Constant(value='Sample request data'),
+                    Constant(value='valid_token')])),
+        Expr(
+            value=Call(
+                func=Name(id='handle_request', ctx=Load()),
+                args=[
+                    Name(id='request_with_auth', ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='request_without_auth', ctx=Store())],
+            value=Dict(
+                keys=[
+                    Constant(value='data')],
+                values=[
+                    Constant(value='Sample request data')])),
+        Try(
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='handle_request', ctx=Load()),
+                        args=[
+                            Name(id='request_without_auth', ctx=Load())],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='UnauthorizedAccessError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

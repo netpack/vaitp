@@ -1,0 +1,112 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        ClassDef(
+            name='Hoverfly',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='responses_body_files_path')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='Cfg',
+                                    ctx=Store())],
+                            value=Dict(
+                                keys=[
+                                    Constant(value='ResponsesBodyFilesPath')],
+                                values=[
+                                    Name(id='responses_body_files_path', ctx=Load())]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='create_simulation',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='file_path')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='final_path', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='os', ctx=Load()),
+                                        attr='path',
+                                        ctx=Load()),
+                                    attr='join',
+                                    ctx=Load()),
+                                args=[
+                                    Subscript(
+                                        value=Attribute(
+                                            value=Name(id='self', ctx=Load()),
+                                            attr='Cfg',
+                                            ctx=Load()),
+                                        slice=Constant(value='ResponsesBodyFilesPath'),
+                                        ctx=Load()),
+                                    Name(id='file_path', ctx=Load())],
+                                keywords=[])),
+                        With(
+                            items=[
+                                withitem(
+                                    context_expr=Call(
+                                        func=Name(id='open', ctx=Load()),
+                                        args=[
+                                            Name(id='final_path', ctx=Load()),
+                                            Constant(value='r')],
+                                        keywords=[]),
+                                    optional_vars=Name(id='file', ctx=Store()))],
+                            body=[
+                                Return(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='file', ctx=Load()),
+                                            attr='read',
+                                            ctx=Load()),
+                                        args=[],
+                                        keywords=[]))])],
+                    decorator_list=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='hoverfly', ctx=Store())],
+            value=Call(
+                func=Name(id='Hoverfly', ctx=Load()),
+                args=[
+                    Constant(value='/allowed/path')],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='content', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='hoverfly', ctx=Load()),
+                    attr='create_simulation',
+                    ctx=Load()),
+                args=[
+                    Constant(value='../etc/passwd')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='content', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

@@ -1,0 +1,114 @@
+Module(
+    body=[
+        ImportFrom(
+            module='ZODB',
+            names=[
+                alias(name='FileStorage'),
+                alias(name='DB')],
+            level=0),
+        ImportFrom(
+            module='ZEO',
+            names=[
+                alias(name='ClientStorage')],
+            level=0),
+        Import(
+            names=[
+                alias(name='ZODB')]),
+        ClassDef(
+            name='SecureZEOClientStorage',
+            bases=[
+                Name(id='ClientStorage', ctx=Load())],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        vararg=arg(arg='args'),
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        kwarg=arg(arg='kwargs'),
+                        defaults=[]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Call(
+                                        func=Name(id='super', ctx=Load()),
+                                        args=[],
+                                        keywords=[]),
+                                    attr='__init__',
+                                    ctx=Load()),
+                                args=[
+                                    Starred(
+                                        value=Name(id='args', ctx=Load()),
+                                        ctx=Load())],
+                                keywords=[
+                                    keyword(
+                                        value=Name(id='kwargs', ctx=Load()))]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='check_request',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='request')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        If(
+                            test=UnaryOp(
+                                op=Not(),
+                                operand=Call(
+                                    func=Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='is_valid_request',
+                                        ctx=Load()),
+                                    args=[
+                                        Name(id='request', ctx=Load())],
+                                    keywords=[])),
+                            body=[
+                                Raise(
+                                    exc=Call(
+                                        func=Name(id='ValueError', ctx=Load()),
+                                        args=[
+                                            Constant(value='Invalid request detected!')],
+                                        keywords=[]))],
+                            orelse=[])],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='is_valid_request',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='request')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Return(
+                            value=Constant(value=True))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='storage', ctx=Store())],
+            value=Call(
+                func=Name(id='SecureZEOClientStorage', ctx=Load()),
+                args=[
+                    Constant(value='localhost:8100')],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='db', ctx=Store())],
+            value=Call(
+                func=Name(id='DB', ctx=Load()),
+                args=[
+                    Name(id='storage', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

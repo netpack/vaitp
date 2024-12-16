@@ -1,0 +1,120 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='tensorflow', asname='tf')]),
+        FunctionDef(
+            name='vulnerable_poisson_loss',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='y_true'),
+                    arg(arg='y_pred')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Attribute(
+                                    value=Name(id='tf', ctx=Load()),
+                                    attr='keras',
+                                    ctx=Load()),
+                                attr='losses',
+                                ctx=Load()),
+                            attr='poisson',
+                            ctx=Load()),
+                        args=[
+                            Name(id='y_true', ctx=Load()),
+                            Name(id='y_pred', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='y_true', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='tf', ctx=Load()),
+                        attr='random',
+                        ctx=Load()),
+                    attr='uniform',
+                    ctx=Load()),
+                args=[
+                    Tuple(
+                        elts=[
+                            Constant(value=100000),
+                            Constant(value=100000)],
+                        ctx=Load())],
+                keywords=[
+                    keyword(
+                        arg='minval',
+                        value=Constant(value=0)),
+                    keyword(
+                        arg='maxval',
+                        value=Constant(value=10))])),
+        Assign(
+            targets=[
+                Name(id='y_pred', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='tf', ctx=Load()),
+                        attr='random',
+                        ctx=Load()),
+                    attr='uniform',
+                    ctx=Load()),
+                args=[
+                    Tuple(
+                        elts=[
+                            Constant(value=100000),
+                            Constant(value=100000)],
+                        ctx=Load())],
+                keywords=[
+                    keyword(
+                        arg='minval',
+                        value=Constant(value=0)),
+                    keyword(
+                        arg='maxval',
+                        value=Constant(value=10))])),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='loss', ctx=Store())],
+                    value=Call(
+                        func=Name(id='vulnerable_poisson_loss', ctx=Load()),
+                        args=[
+                            Name(id='y_true', ctx=Load()),
+                            Name(id='y_pred', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Loss:'),
+                            Call(
+                                func=Attribute(
+                                    value=Name(id='loss', ctx=Load()),
+                                    attr='numpy',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[])],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='Exception', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Error:'),
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

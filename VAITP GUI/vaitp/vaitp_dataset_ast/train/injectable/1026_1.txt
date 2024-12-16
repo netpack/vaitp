@@ -1,0 +1,68 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='urllib.parse')]),
+        ImportFrom(
+            module='notebook.utils',
+            names=[
+                alias(name='url_path_join')],
+            level=0),
+        FunctionDef(
+            name='safe_folder_name',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='folder_name')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='urllib', ctx=Load()),
+                                attr='parse',
+                                ctx=Load()),
+                            attr='quote',
+                            ctx=Load()),
+                        args=[
+                            Name(id='folder_name', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='create_folder',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='folder_name')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='safe_name', ctx=Store())],
+                    value=Call(
+                        func=Name(id='safe_folder_name', ctx=Load()),
+                        args=[
+                            Name(id='folder_name', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='folder_path', ctx=Store())],
+                    value=Call(
+                        func=Name(id='url_path_join', ctx=Load()),
+                        args=[
+                            Constant(value='/path/to/folders'),
+                            Name(id='safe_name', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='create_folder', ctx=Load()),
+                args=[
+                    Constant(value="<script>alert('XSS');</script>")],
+                keywords=[]))],
+    type_ignores=[])

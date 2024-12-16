@@ -1,0 +1,32 @@
+Module(
+    body=[
+        ImportFrom(
+            module='setuptools',
+            names=[
+                alias(name='setup'),
+                alias(name='find_packages')],
+            level=0),
+        Expr(
+            value=Call(
+                func=Name(id='setup', ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='name',
+                        value=Constant(value='d8s-asns')),
+                    keyword(
+                        arg='version',
+                        value=Constant(value='0.1.0')),
+                    keyword(
+                        arg='packages',
+                        value=Call(
+                            func=Name(id='find_packages', ctx=Load()),
+                            args=[],
+                            keywords=[])),
+                    keyword(
+                        arg='install_requires',
+                        value=List(
+                            elts=[
+                                Constant(value='democritus-csv')],
+                            ctx=Load()))]))],
+    type_ignores=[])

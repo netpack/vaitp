@@ -1,0 +1,102 @@
+Module(
+    body=[
+        FunctionDef(
+            name='secure_eval',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='user_input')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=UnaryOp(
+                        op=Not(),
+                        operand=Call(
+                            func=Name(id='is_safe_input', ctx=Load()),
+                            args=[
+                                Name(id='user_input', ctx=Load())],
+                            keywords=[])),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Unsafe input detected')],
+                                keywords=[]))],
+                    orelse=[]),
+                Return(
+                    value=Call(
+                        func=Name(id='process_input', ctx=Load()),
+                        args=[
+                            Name(id='user_input', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='is_safe_input',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='user_input')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='user_input', ctx=Load()),
+                            attr='isalnum',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='process_input',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='user_input')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            JoinedStr(
+                                values=[
+                                    Constant(value='Processing safe input: '),
+                                    FormattedValue(
+                                        value=Name(id='user_input', ctx=Load()),
+                                        conversion=-1)])],
+                        keywords=[]))],
+            decorator_list=[]),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='user_input', ctx=Store())],
+                    value=Constant(value='exampleCommand')),
+                Expr(
+                    value=Call(
+                        func=Name(id='secure_eval', ctx=Load()),
+                        args=[
+                            Name(id='user_input', ctx=Load())],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ValueError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

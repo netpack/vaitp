@@ -1,0 +1,150 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        ImportFrom(
+            module='flask',
+            names=[
+                alias(name='Flask'),
+                alias(name='request'),
+                alias(name='abort')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='app', ctx=Store())],
+            value=Call(
+                func=Name(id='Flask', ctx=Load()),
+                args=[
+                    Name(id='__name__', ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='SAFE_DIRECTORY', ctx=Store())],
+            value=Constant(value='/path/to/safe/directory')),
+        FunctionDef(
+            name='get_file',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='requested_file', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='request', ctx=Load()),
+                                attr='args',
+                                ctx=Load()),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='file')],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='safe_path', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='path',
+                                ctx=Load()),
+                            attr='normpath',
+                            ctx=Load()),
+                        args=[
+                            Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='os', ctx=Load()),
+                                        attr='path',
+                                        ctx=Load()),
+                                    attr='join',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='SAFE_DIRECTORY', ctx=Load()),
+                                    Name(id='requested_file', ctx=Load())],
+                                keywords=[])],
+                        keywords=[])),
+                If(
+                    test=UnaryOp(
+                        op=Not(),
+                        operand=Call(
+                            func=Attribute(
+                                value=Name(id='safe_path', ctx=Load()),
+                                attr='startswith',
+                                ctx=Load()),
+                            args=[
+                                Name(id='SAFE_DIRECTORY', ctx=Load())],
+                            keywords=[])),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='abort', ctx=Load()),
+                                args=[
+                                    Constant(value=403)],
+                                keywords=[]))],
+                    orelse=[]),
+                If(
+                    test=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='path',
+                                ctx=Load()),
+                            attr='isfile',
+                            ctx=Load()),
+                        args=[
+                            Name(id='safe_path', ctx=Load())],
+                        keywords=[]),
+                    body=[
+                        Return(
+                            value=Call(
+                                func=Name(id='send_file', ctx=Load()),
+                                args=[
+                                    Name(id='safe_path', ctx=Load())],
+                                keywords=[]))],
+                    orelse=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='abort', ctx=Load()),
+                                args=[
+                                    Constant(value=404)],
+                                keywords=[]))])],
+            decorator_list=[
+                Call(
+                    func=Attribute(
+                        value=Name(id='app', ctx=Load()),
+                        attr='route',
+                        ctx=Load()),
+                    args=[
+                        Constant(value='/api/get_file')],
+                    keywords=[
+                        keyword(
+                            arg='methods',
+                            value=List(
+                                elts=[
+                                    Constant(value='GET')],
+                                ctx=Load()))])]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='app', ctx=Load()),
+                            attr='run',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

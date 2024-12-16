@@ -1,0 +1,122 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='logging')]),
+        FunctionDef(
+            name='mask_password',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='password')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Compare(
+                        left=Constant(value='"'),
+                        ops=[
+                            In()],
+                        comparators=[
+                            Name(id='password', ctx=Load())]),
+                    body=[
+                        Return(
+                            value=BinOp(
+                                left=Subscript(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='password', ctx=Load()),
+                                            attr='split',
+                                            ctx=Load()),
+                                        args=[
+                                            Constant(value='"')],
+                                        keywords=[]),
+                                    slice=Constant(value=0),
+                                    ctx=Load()),
+                                op=Add(),
+                                right=BinOp(
+                                    left=Constant(value='*'),
+                                    op=Mult(),
+                                    right=BinOp(
+                                        left=Call(
+                                            func=Name(id='len', ctx=Load()),
+                                            args=[
+                                                Name(id='password', ctx=Load())],
+                                            keywords=[]),
+                                        op=Sub(),
+                                        right=Call(
+                                            func=Name(id='len', ctx=Load()),
+                                            args=[
+                                                Subscript(
+                                                    value=Call(
+                                                        func=Attribute(
+                                                            value=Name(id='password', ctx=Load()),
+                                                            attr='split',
+                                                            ctx=Load()),
+                                                        args=[
+                                                            Constant(value='"')],
+                                                        keywords=[]),
+                                                    slice=Constant(value=0),
+                                                    ctx=Load())],
+                                            keywords=[])))))],
+                    orelse=[
+                        Return(
+                            value=BinOp(
+                                left=Constant(value='*'),
+                                op=Add(),
+                                right=Subscript(
+                                    value=Name(id='password', ctx=Load()),
+                                    slice=Slice(
+                                        lower=Constant(value=1)),
+                                    ctx=Load())))])],
+            decorator_list=[]),
+        FunctionDef(
+            name='log_credentials',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='username'),
+                    arg(arg='password')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='logging', ctx=Load()),
+                            attr='debug',
+                            ctx=Load()),
+                        args=[
+                            JoinedStr(
+                                values=[
+                                    Constant(value='Username: '),
+                                    FormattedValue(
+                                        value=Name(id='username', ctx=Load()),
+                                        conversion=-1),
+                                    Constant(value=', Password: '),
+                                    FormattedValue(
+                                        value=Call(
+                                            func=Name(id='mask_password', ctx=Load()),
+                                            args=[
+                                                Name(id='password', ctx=Load())],
+                                            keywords=[]),
+                                        conversion=-1)])],
+                        keywords=[]))],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='log_credentials', ctx=Load()),
+                args=[
+                    Constant(value='user1'),
+                    Constant(value='mypassword"secret')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='log_credentials', ctx=Load()),
+                args=[
+                    Constant(value='user2'),
+                    Constant(value='mypassword')],
+                keywords=[]))],
+    type_ignores=[])

@@ -1,0 +1,60 @@
+Module(
+    body=[
+        ImportFrom(
+            module='cryptography.hazmat.backends',
+            names=[
+                alias(name='default_backend')],
+            level=0),
+        ImportFrom(
+            module='cryptography.hazmat.primitives',
+            names=[
+                alias(name='serialization')],
+            level=0),
+        FunctionDef(
+            name='load_pkcs7_certificates',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='data')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='certificates', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='serialization', ctx=Load()),
+                            attr='load_pem_pkcs7_certificates',
+                            ctx=Load()),
+                        args=[
+                            Name(id='data', ctx=Load()),
+                            Call(
+                                func=Name(id='default_backend', ctx=Load()),
+                                args=[],
+                                keywords=[])],
+                        keywords=[])),
+                Return(
+                    value=Name(id='certificates', ctx=Load()))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='pem_data', ctx=Store())],
+            value=Constant(value=b'-----BEGIN PKCS7-----\n...\n-----END PKCS7-----')),
+        Assign(
+            targets=[
+                Name(id='certs', ctx=Store())],
+            value=Call(
+                func=Name(id='load_pkcs7_certificates', ctx=Load()),
+                args=[
+                    Name(id='pem_data', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Constant(value='Certificates loaded:'),
+                    Name(id='certs', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

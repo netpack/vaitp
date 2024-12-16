@@ -1,0 +1,38 @@
+Module(
+    body=[
+        Assign(
+            targets=[
+                Name(id='get_name', ctx=Store())],
+            value=Subscript(
+                value=Attribute(
+                    value=Name(id='sys', ctx=Load()),
+                    attr='argv',
+                    ctx=Load()),
+                slice=Constant(value=2),
+                ctx=Load())),
+        Assign(
+            targets=[
+                Name(id='file_with_path', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='os', ctx=Load()),
+                        attr='path',
+                        ctx=Load()),
+                    attr='join',
+                    ctx=Load()),
+                args=[
+                    Name(id='local_dir', ctx=Load()),
+                    Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='path',
+                                ctx=Load()),
+                            attr='basename',
+                            ctx=Load()),
+                        args=[
+                            Name(id='get_name', ctx=Load())],
+                        keywords=[])],
+                keywords=[]))],
+    type_ignores=[])

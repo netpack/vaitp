@@ -1,0 +1,114 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        FunctionDef(
+            name='sanitize_package_name',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='package_name')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='path',
+                                ctx=Load()),
+                            attr='basename',
+                            ctx=Load()),
+                        args=[
+                            Name(id='package_name', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='get_package_hook',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='package_name')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='sanitized_package_name', ctx=Store())],
+                    value=Call(
+                        func=Name(id='sanitize_package_name', ctx=Load()),
+                        args=[
+                            Name(id='package_name', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='hook_path', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='path',
+                                ctx=Load()),
+                            attr='join',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='/usr/share/apport/package-hooks/'),
+                            BinOp(
+                                left=Name(id='sanitized_package_name', ctx=Load()),
+                                op=Add(),
+                                right=Constant(value='.py'))],
+                        keywords=[])),
+                If(
+                    test=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='path',
+                                ctx=Load()),
+                            attr='isfile',
+                            ctx=Load()),
+                        args=[
+                            Name(id='hook_path', ctx=Load())],
+                        keywords=[]),
+                    body=[
+                        With(
+                            items=[
+                                withitem(
+                                    context_expr=Call(
+                                        func=Name(id='open', ctx=Load()),
+                                        args=[
+                                            Name(id='hook_path', ctx=Load())],
+                                        keywords=[]),
+                                    optional_vars=Name(id='hook_file', ctx=Store()))],
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='exec', ctx=Load()),
+                                        args=[
+                                            Call(
+                                                func=Attribute(
+                                                    value=Name(id='hook_file', ctx=Load()),
+                                                    attr='read',
+                                                    ctx=Load()),
+                                                args=[],
+                                                keywords=[])],
+                                        keywords=[]))])],
+                    orelse=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='FileNotFoundError', ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            Constant(value='Hook file for package '),
+                                            FormattedValue(
+                                                value=Name(id='sanitized_package_name', ctx=Load()),
+                                                conversion=-1),
+                                            Constant(value=' not found.')])],
+                                keywords=[]))])],
+            decorator_list=[])],
+    type_ignores=[])

@@ -1,0 +1,94 @@
+Module(
+    body=[
+        ImportFrom(
+            module='Cheetah.Template',
+            names=[
+                alias(name='Template')],
+            level=0),
+        FunctionDef(
+            name='render_template',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='template_string')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                kwarg=arg(arg='context'),
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='safe_context', ctx=Store())],
+                    value=DictComp(
+                        key=Name(id='key', ctx=Load()),
+                        value=Call(
+                            func=Name(id='str', ctx=Load()),
+                            args=[
+                                Name(id='value', ctx=Load())],
+                            keywords=[]),
+                        generators=[
+                            comprehension(
+                                target=Tuple(
+                                    elts=[
+                                        Name(id='key', ctx=Store()),
+                                        Name(id='value', ctx=Store())],
+                                    ctx=Store()),
+                                iter=Call(
+                                    func=Attribute(
+                                        value=Name(id='context', ctx=Load()),
+                                        attr='items',
+                                        ctx=Load()),
+                                    args=[],
+                                    keywords=[]),
+                                ifs=[],
+                                is_async=0)])),
+                Assign(
+                    targets=[
+                        Name(id='template', ctx=Store())],
+                    value=Call(
+                        func=Name(id='Template', ctx=Load()),
+                        args=[
+                            Name(id='template_string', ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='searchList',
+                                value=List(
+                                    elts=[
+                                        Name(id='safe_context', ctx=Load())],
+                                    ctx=Load()))])),
+                Return(
+                    value=Call(
+                        func=Name(id='str', ctx=Load()),
+                        args=[
+                            Name(id='template', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='template_string', ctx=Store())],
+            value=Constant(value='Hello, $name!')),
+        Assign(
+            targets=[
+                Name(id='context', ctx=Store())],
+            value=Dict(
+                keys=[
+                    Constant(value='name')],
+                values=[
+                    Constant(value='World')])),
+        Assign(
+            targets=[
+                Name(id='output', ctx=Store())],
+            value=Call(
+                func=Name(id='render_template', ctx=Load()),
+                args=[
+                    Name(id='template_string', ctx=Load())],
+                keywords=[
+                    keyword(
+                        value=Name(id='context', ctx=Load()))])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='output', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

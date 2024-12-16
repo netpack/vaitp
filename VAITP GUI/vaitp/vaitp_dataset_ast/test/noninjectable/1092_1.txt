@@ -1,0 +1,65 @@
+Module(
+    body=[
+        ImportFrom(
+            module='azure.identity',
+            names=[
+                alias(name='ClientSecretCredential')],
+            level=0),
+        FunctionDef(
+            name='authenticate_user',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='client_id'),
+                    arg(arg='client_secret'),
+                    arg(arg='tenant_id')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='credential', ctx=Store())],
+                    value=Call(
+                        func=Name(id='ClientSecretCredential', ctx=Load()),
+                        args=[
+                            Name(id='tenant_id', ctx=Load()),
+                            Name(id='client_id', ctx=Load()),
+                            Name(id='client_secret', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='token', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='credential', ctx=Load()),
+                            attr='get_token',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='https://management.azure.com/.default')],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Token acquired without proper validation.')],
+                        keywords=[]))],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='authenticate_user', ctx=Load()),
+                        args=[
+                            Constant(value='your-client-id'),
+                            Constant(value='your-client-secret'),
+                            Constant(value='your-tenant-id')],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

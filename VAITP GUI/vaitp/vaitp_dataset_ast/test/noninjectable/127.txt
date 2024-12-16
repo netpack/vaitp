@@ -1,0 +1,43 @@
+Module(
+    body=[
+        FunctionDef(
+            name='reverse',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='arr'),
+                    arg(arg='n')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                For(
+                    target=Name(id='i', ctx=Store()),
+                    iter=Call(
+                        func=Name(id='range', ctx=Load()),
+                        args=[
+                            BinOp(
+                                left=Name(id='n', ctx=Load()),
+                                op=Div(),
+                                right=Constant(value=2))],
+                        keywords=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Subscript(
+                                    value=Name(id='arr', ctx=Load()),
+                                    slice=Name(id='i', ctx=Load()),
+                                    ctx=Store())],
+                            value=Subscript(
+                                value=Name(id='arr', ctx=Load()),
+                                slice=BinOp(
+                                    left=BinOp(
+                                        left=Name(id='n', ctx=Load()),
+                                        op=Sub(),
+                                        right=Name(id='i', ctx=Load())),
+                                    op=Sub(),
+                                    right=Constant(value=1)),
+                                ctx=Load()))],
+                    orelse=[])],
+            decorator_list=[])],
+    type_ignores=[])

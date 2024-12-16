@@ -1,0 +1,49 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='tensorflow', asname='tf')]),
+        Assign(
+            targets=[
+                Name(id='quantized_tensor', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='tf', ctx=Load()),
+                        attr='quantization',
+                        ctx=Load()),
+                    attr='quantize',
+                    ctx=Load()),
+                args=[
+                    Call(
+                        func=Attribute(
+                            value=Name(id='tf', ctx=Load()),
+                            attr='constant',
+                            ctx=Load()),
+                        args=[
+                            List(
+                                elts=[
+                                    Constant(value=1.0),
+                                    Constant(value=2.0)],
+                                ctx=Load())],
+                        keywords=[])],
+                keywords=[
+                    keyword(
+                        arg='min_range',
+                        value=Constant(value=0.0)),
+                    keyword(
+                        arg='max_range',
+                        value=Constant(value=3.0)),
+                    keyword(
+                        arg='T',
+                        value=Attribute(
+                            value=Name(id='tf', ctx=Load()),
+                            attr='quint8',
+                            ctx=Load()))])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='quantized_tensor', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

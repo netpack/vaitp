@@ -1,0 +1,23 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        Try(
+            body=[
+                Import(
+                    names=[
+                        alias(name='your_module')])],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ImportError', ctx=Load()),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Module not found or import failed.')],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

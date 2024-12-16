@@ -1,0 +1,92 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='subprocess')]),
+        Import(
+            names=[
+                alias(name='shlex')]),
+        FunctionDef(
+            name='safe_execute',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='command')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='allowed_commands', ctx=Store())],
+                    value=List(
+                        elts=[
+                            Constant(value='command1'),
+                            Constant(value='command2'),
+                            Constant(value='command3')],
+                        ctx=Load())),
+                Assign(
+                    targets=[
+                        Name(id='command_parts', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='shlex', ctx=Load()),
+                            attr='split',
+                            ctx=Load()),
+                        args=[
+                            Name(id='command', ctx=Load())],
+                        keywords=[])),
+                If(
+                    test=Compare(
+                        left=Subscript(
+                            value=Name(id='command_parts', ctx=Load()),
+                            slice=Constant(value=0),
+                            ctx=Load()),
+                        ops=[
+                            In()],
+                        comparators=[
+                            Name(id='allowed_commands', ctx=Load())]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='subprocess', ctx=Load()),
+                                    attr='run',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='command_parts', ctx=Load())],
+                                keywords=[]))],
+                    orelse=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Unauthorized command execution attempt detected.')],
+                                keywords=[]))])],
+            decorator_list=[]),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='user_input', ctx=Store())],
+                    value=Constant(value='command1')),
+                Expr(
+                    value=Call(
+                        func=Name(id='safe_execute', ctx=Load()),
+                        args=[
+                            Name(id='user_input', ctx=Load())],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ValueError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

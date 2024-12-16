@@ -1,0 +1,89 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='awscrt')]),
+        Import(
+            names=[
+                alias(name='awscrt.io')]),
+        Assign(
+            targets=[
+                Name(id='custom_ca_cert_pem', ctx=Store())],
+            value=Constant(value='\n-----BEGIN CERTIFICATE-----\nMIIDXTCCAkWgAwIBAgIJALa1fFQGZ1eHMA0GCSqGSIb3DQEBCwUAMEUxCzAJBgNV\n...\n-----END CERTIFICATE-----\n')),
+        Assign(
+            targets=[
+                Name(id='custom_ca_key_pem', ctx=Store())],
+            value=Constant(value='\n-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEArhI8l...\n-----END PRIVATE KEY-----\n')),
+        Assign(
+            targets=[
+                Name(id='custom_ca', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='awscrt', ctx=Load()),
+                        attr='io',
+                        ctx=Load()),
+                    attr='CertificateAuthority',
+                    ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='cert_pem',
+                        value=Name(id='custom_ca_cert_pem', ctx=Load())),
+                    keyword(
+                        arg='key_pem',
+                        value=Name(id='custom_ca_key_pem', ctx=Load()))])),
+        Assign(
+            targets=[
+                Name(id='tls_context', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='awscrt', ctx=Load()),
+                        attr='io',
+                        ctx=Load()),
+                    attr='ClientTlsContext',
+                    ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='alpn',
+                        value=List(
+                            elts=[
+                                Constant(value='h2'),
+                                Constant(value='http/1.1')],
+                            ctx=Load())),
+                    keyword(
+                        arg='certificate_authorities',
+                        value=List(
+                            elts=[
+                                Name(id='custom_ca', ctx=Load())],
+                            ctx=Load()))])),
+        Assign(
+            targets=[
+                Name(id='connection', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='awscrt', ctx=Load()),
+                        attr='io',
+                        ctx=Load()),
+                    attr='TlsConnection',
+                    ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='tls_context',
+                        value=Name(id='tls_context', ctx=Load()))])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='connection', ctx=Load()),
+                    attr='connect',
+                    ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='server_name',
+                        value=Constant(value='example.com'))]))],
+    type_ignores=[])

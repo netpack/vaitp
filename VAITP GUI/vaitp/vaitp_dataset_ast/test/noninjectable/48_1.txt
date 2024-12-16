@@ -1,0 +1,57 @@
+Module(
+    body=[
+        ImportFrom(
+            module='PIL',
+            names=[
+                alias(name='Image')],
+            level=0),
+        FunctionDef(
+            name='vulnerable_function',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='image_data')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='img', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='Image', ctx=Load()),
+                            attr='frombytes',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='L'),
+                            Tuple(
+                                elts=[
+                                    Constant(value=100),
+                                    Constant(value=100)],
+                                ctx=Load()),
+                            Name(id='image_data', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='img', ctx=Load()),
+                            attr='show',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='malicious_image_data', ctx=Store())],
+            value=BinOp(
+                left=Constant(value=b'\x00'),
+                op=Mult(),
+                right=Constant(value=10000))),
+        Expr(
+            value=Call(
+                func=Name(id='vulnerable_function', ctx=Load()),
+                args=[
+                    Name(id='malicious_image_data', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

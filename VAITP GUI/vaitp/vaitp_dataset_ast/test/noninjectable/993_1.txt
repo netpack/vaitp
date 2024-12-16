@@ -1,0 +1,80 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='sys')]),
+        Import(
+            names=[
+                alias(name='os')]),
+        FunctionDef(
+            name='vulnerable_import',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='module_name')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='tmp_path', ctx=Store())],
+                    value=Constant(value='/tmp')),
+                If(
+                    test=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='path',
+                                ctx=Load()),
+                            attr='isdir',
+                            ctx=Load()),
+                        args=[
+                            Name(id='tmp_path', ctx=Load())],
+                        keywords=[]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='sys', ctx=Load()),
+                                        attr='path',
+                                        ctx=Load()),
+                                    attr='insert',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value=0),
+                                    Name(id='tmp_path', ctx=Load())],
+                                keywords=[]))],
+                    orelse=[]),
+                Assign(
+                    targets=[
+                        Name(id='module', ctx=Store())],
+                    value=Call(
+                        func=Name(id='__import__', ctx=Load()),
+                        args=[
+                            Name(id='module_name', ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=Name(id='module', ctx=Load()))],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='module_name', ctx=Store())],
+                    value=Constant(value='malicious_module')),
+                Expr(
+                    value=Call(
+                        func=Name(id='vulnerable_import', ctx=Load()),
+                        args=[
+                            Name(id='module_name', ctx=Load())],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

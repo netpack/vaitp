@@ -1,0 +1,21 @@
+Module(
+    body=[
+        Assign(
+            targets=[
+                Name(id='my_list', ctx=Store())],
+            value=List(
+                elts=[
+                    Constant(value=4),
+                    Constant(value=7),
+                    Constant(value=0),
+                    Constant(value=3)],
+                ctx=Load())),
+        Assign(
+            targets=[
+                Name(id='my_iter', ctx=Store())],
+            value=Call(
+                func=Name(id='iter', ctx=Load()),
+                args=[
+                    Name(id='my_list', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

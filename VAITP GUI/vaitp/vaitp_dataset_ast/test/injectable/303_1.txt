@@ -1,0 +1,129 @@
+Module(
+    body=[
+        ClassDef(
+            name='SafeHtmlRenderer',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='content')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='content',
+                                    ctx=Store())],
+                            value=Name(id='content', ctx=Load()))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='render',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Return(
+                            value=JoinedStr(
+                                values=[
+                                    Constant(value='<div>'),
+                                    FormattedValue(
+                                        value=Call(
+                                            func=Attribute(
+                                                value=Name(id='self', ctx=Load()),
+                                                attr='escape_html',
+                                                ctx=Load()),
+                                            args=[
+                                                Attribute(
+                                                    value=Name(id='self', ctx=Load()),
+                                                    attr='content',
+                                                    ctx=Load())],
+                                            keywords=[]),
+                                        conversion=-1),
+                                    Constant(value='</div>')]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='escape_html',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='text')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='escape_table', ctx=Store())],
+                            value=Dict(
+                                keys=[
+                                    Constant(value='&'),
+                                    Constant(value='<'),
+                                    Constant(value='>'),
+                                    Constant(value='"'),
+                                    Constant(value="'")],
+                                values=[
+                                    Constant(value='&amp;'),
+                                    Constant(value='&lt;'),
+                                    Constant(value='&gt;'),
+                                    Constant(value='&quot;'),
+                                    Constant(value='&#x27;')])),
+                        Return(
+                            value=Call(
+                                func=Attribute(
+                                    value=Constant(value=''),
+                                    attr='join',
+                                    ctx=Load()),
+                                args=[
+                                    GeneratorExp(
+                                        elt=Call(
+                                            func=Attribute(
+                                                value=Name(id='escape_table', ctx=Load()),
+                                                attr='get',
+                                                ctx=Load()),
+                                            args=[
+                                                Name(id='c', ctx=Load()),
+                                                Name(id='c', ctx=Load())],
+                                            keywords=[]),
+                                        generators=[
+                                            comprehension(
+                                                target=Name(id='c', ctx=Store()),
+                                                iter=Name(id='text', ctx=Load()),
+                                                ifs=[],
+                                                is_async=0)])],
+                                keywords=[]))],
+                    decorator_list=[
+                        Name(id='staticmethod', ctx=Load())])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='renderer', ctx=Store())],
+            value=Call(
+                func=Name(id='SafeHtmlRenderer', ctx=Load()),
+                args=[
+                    Constant(value="<script>alert('This is a test');</script>")],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Call(
+                        func=Attribute(
+                            value=Name(id='renderer', ctx=Load()),
+                            attr='render',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])],
+                keywords=[]))],
+    type_ignores=[])

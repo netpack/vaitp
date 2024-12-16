@@ -1,0 +1,140 @@
+Module(
+    body=[
+        ImportFrom(
+            module='flask',
+            names=[
+                alias(name='Flask'),
+                alias(name='request'),
+                alias(name='jsonify')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='app', ctx=Store())],
+            value=Call(
+                func=Name(id='Flask', ctx=Load()),
+                args=[
+                    Name(id='__name__', ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='users', ctx=Store())],
+            value=Dict(
+                keys=[
+                    Constant(value=1),
+                    Constant(value=2)],
+                values=[
+                    Dict(
+                        keys=[
+                            Constant(value='name'),
+                            Constant(value='email')],
+                        values=[
+                            Constant(value='Alice'),
+                            Constant(value='alice@example.com')]),
+                    Dict(
+                        keys=[
+                            Constant(value='name'),
+                            Constant(value='email')],
+                        values=[
+                            Constant(value='Bob'),
+                            Constant(value='bob@example.com')])])),
+        FunctionDef(
+            name='get_user_info',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='user_id', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='request', ctx=Load()),
+                                attr='args',
+                                ctx=Load()),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='id')],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='user_info', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='users', ctx=Load()),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Call(
+                                func=Name(id='int', ctx=Load()),
+                                args=[
+                                    Name(id='user_id', ctx=Load())],
+                                keywords=[])],
+                        keywords=[])),
+                If(
+                    test=Name(id='user_info', ctx=Load()),
+                    body=[
+                        Return(
+                            value=Call(
+                                func=Name(id='jsonify', ctx=Load()),
+                                args=[
+                                    Name(id='user_info', ctx=Load())],
+                                keywords=[]))],
+                    orelse=[
+                        Return(
+                            value=Tuple(
+                                elts=[
+                                    Call(
+                                        func=Name(id='jsonify', ctx=Load()),
+                                        args=[
+                                            Dict(
+                                                keys=[
+                                                    Constant(value='error')],
+                                                values=[
+                                                    Constant(value='User  not found')])],
+                                        keywords=[]),
+                                    Constant(value=404)],
+                                ctx=Load()))])],
+            decorator_list=[
+                Call(
+                    func=Attribute(
+                        value=Name(id='app', ctx=Load()),
+                        attr='route',
+                        ctx=Load()),
+                    args=[
+                        Constant(value='/api/myapp/index/user/info')],
+                    keywords=[
+                        keyword(
+                            arg='methods',
+                            value=List(
+                                elts=[
+                                    Constant(value='GET')],
+                                ctx=Load()))])]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='app', ctx=Load()),
+                            attr='run',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[
+                            keyword(
+                                arg='host',
+                                value=Constant(value='0.0.0.0')),
+                            keyword(
+                                arg='port',
+                                value=Constant(value=5000))]))],
+            orelse=[])],
+    type_ignores=[])

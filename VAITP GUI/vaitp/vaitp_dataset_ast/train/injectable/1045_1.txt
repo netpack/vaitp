@@ -1,0 +1,125 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='hmac')]),
+        Import(
+            names=[
+                alias(name='time')]),
+        FunctionDef(
+            name='constant_time_compare',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='val1'),
+                    arg(arg='val2')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Compare(
+                        left=Call(
+                            func=Name(id='len', ctx=Load()),
+                            args=[
+                                Name(id='val1', ctx=Load())],
+                            keywords=[]),
+                        ops=[
+                            NotEq()],
+                        comparators=[
+                            Call(
+                                func=Name(id='len', ctx=Load()),
+                                args=[
+                                    Name(id='val2', ctx=Load())],
+                                keywords=[])]),
+                    body=[
+                        Return(
+                            value=Constant(value=False))],
+                    orelse=[]),
+                Assign(
+                    targets=[
+                        Name(id='result', ctx=Store())],
+                    value=Constant(value=0)),
+                For(
+                    target=Tuple(
+                        elts=[
+                            Name(id='x', ctx=Store()),
+                            Name(id='y', ctx=Store())],
+                        ctx=Store()),
+                    iter=Call(
+                        func=Name(id='zip', ctx=Load()),
+                        args=[
+                            Name(id='val1', ctx=Load()),
+                            Name(id='val2', ctx=Load())],
+                        keywords=[]),
+                    body=[
+                        AugAssign(
+                            target=Name(id='result', ctx=Store()),
+                            op=BitOr(),
+                            value=BinOp(
+                                left=Name(id='x', ctx=Load()),
+                                op=BitXor(),
+                                right=Name(id='y', ctx=Load())))],
+                    orelse=[]),
+                Return(
+                    value=Compare(
+                        left=Name(id='result', ctx=Load()),
+                        ops=[
+                            Eq()],
+                        comparators=[
+                            Constant(value=0)]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='analytics_dashboard',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='user_hash'),
+                    arg(arg='stored_hash')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='time', ctx=Load()),
+                            attr='sleep',
+                            ctx=Load()),
+                        args=[
+                            Constant(value=0.1)],
+                        keywords=[])),
+                If(
+                    test=Call(
+                        func=Name(id='constant_time_compare', ctx=Load()),
+                        args=[
+                            Name(id='user_hash', ctx=Load()),
+                            Name(id='stored_hash', ctx=Load())],
+                        keywords=[]),
+                    body=[
+                        Return(
+                            value=Constant(value='Access Granted'))],
+                    orelse=[
+                        Return(
+                            value=Constant(value='Access Denied'))])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='stored_hash', ctx=Store())],
+            value=Constant(value=b'secret_hash')),
+        Assign(
+            targets=[
+                Name(id='user_hash', ctx=Store())],
+            value=Constant(value=b'user_provided_hash')),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Call(
+                        func=Name(id='analytics_dashboard', ctx=Load()),
+                        args=[
+                            Name(id='user_hash', ctx=Load()),
+                            Name(id='stored_hash', ctx=Load())],
+                        keywords=[])],
+                keywords=[]))],
+    type_ignores=[])

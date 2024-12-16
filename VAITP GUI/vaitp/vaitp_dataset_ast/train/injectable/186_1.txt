@@ -1,0 +1,85 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='hashlib')]),
+        Import(
+            names=[
+                alias(name='os')]),
+        FunctionDef(
+            name='generate_secure_hash_with_salt',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='user_input')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='salt', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='os', ctx=Load()),
+                            attr='urandom',
+                            ctx=Load()),
+                        args=[
+                            Constant(value=16)],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='data_to_hash', ctx=Store())],
+                    value=BinOp(
+                        left=Name(id='salt', ctx=Load()),
+                        op=Add(),
+                        right=Call(
+                            func=Attribute(
+                                value=Name(id='user_input', ctx=Load()),
+                                attr='encode',
+                                ctx=Load()),
+                            args=[],
+                            keywords=[]))),
+                Return(
+                    value=Tuple(
+                        elts=[
+                            Call(
+                                func=Attribute(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='hashlib', ctx=Load()),
+                                            attr='sha256',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='data_to_hash', ctx=Load())],
+                                        keywords=[]),
+                                    attr='hexdigest',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[]),
+                            Name(id='salt', ctx=Load())],
+                        ctx=Load()))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='user_input', ctx=Store())],
+            value=Constant(value='sensitive_data')),
+        Assign(
+            targets=[
+                Tuple(
+                    elts=[
+                        Name(id='hashed_value', ctx=Store()),
+                        Name(id='used_salt', ctx=Store())],
+                    ctx=Store())],
+            value=Call(
+                func=Name(id='generate_secure_hash_with_salt', ctx=Load()),
+                args=[
+                    Name(id='user_input', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='hashed_value', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

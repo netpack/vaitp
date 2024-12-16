@@ -1,0 +1,30 @@
+Module(
+    body=[
+        FunctionDef(
+            name='store_user_input',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='user_input')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='data_store', ctx=Store())],
+                    value=Dict(keys=[], values=[])),
+                For(
+                    target=Name(id='item', ctx=Store()),
+                    iter=Name(id='user_input', ctx=Load()),
+                    body=[
+                        Assign(
+                            targets=[
+                                Subscript(
+                                    value=Name(id='data_store', ctx=Load()),
+                                    slice=Name(id='item', ctx=Load()),
+                                    ctx=Store())],
+                            value=Constant(value='some value'))],
+                    orelse=[])],
+            decorator_list=[])],
+    type_ignores=[])

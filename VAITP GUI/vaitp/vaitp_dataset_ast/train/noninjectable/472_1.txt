@@ -1,0 +1,88 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        Import(
+            names=[
+                alias(name='sys')]),
+        FunctionDef(
+            name='load_plugin',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='plugin_name')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='sys', ctx=Load()),
+                                attr='path',
+                                ctx=Load()),
+                            attr='append',
+                            ctx=Load()),
+                        args=[
+                            Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='os', ctx=Load()),
+                                        attr='path',
+                                        ctx=Load()),
+                                    attr='join',
+                                    ctx=Load()),
+                                args=[
+                                    Call(
+                                        func=Attribute(
+                                            value=Name(id='os', ctx=Load()),
+                                            attr='getcwd',
+                                            ctx=Load()),
+                                        args=[],
+                                        keywords=[]),
+                                    Constant(value='plugins')],
+                                keywords=[])],
+                        keywords=[])),
+                Try(
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='plugin', ctx=Store())],
+                            value=Call(
+                                func=Name(id='__import__', ctx=Load()),
+                                args=[
+                                    Name(id='plugin_name', ctx=Load())],
+                                keywords=[])),
+                        Return(
+                            value=Name(id='plugin', ctx=Load()))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='ImportError', ctx=Load()),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    Constant(value='Failed to load plugin: '),
+                                                    FormattedValue(
+                                                        value=Name(id='plugin_name', ctx=Load()),
+                                                        conversion=-1)])],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='plugin_name', ctx=Store())],
+            value=Constant(value='malicious_plugin')),
+        Expr(
+            value=Call(
+                func=Name(id='load_plugin', ctx=Load()),
+                args=[
+                    Name(id='plugin_name', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

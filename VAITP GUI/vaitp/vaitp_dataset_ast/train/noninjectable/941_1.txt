@@ -1,0 +1,93 @@
+Module(
+    body=[
+        ImportFrom(
+            module='PIL',
+            names=[
+                alias(name='Image'),
+                alias(name='ImageDraw'),
+                alias(name='ImageFont')],
+            level=0),
+        FunctionDef(
+            name='vulnerable_draw_text',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='image'),
+                    arg(arg='text'),
+                    arg(arg='position'),
+                    arg(arg='font')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='draw', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='ImageDraw', ctx=Load()),
+                            attr='Draw',
+                            ctx=Load()),
+                        args=[
+                            Name(id='image', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='draw', ctx=Load()),
+                            attr='text',
+                            ctx=Load()),
+                        args=[
+                            Name(id='position', ctx=Load()),
+                            Name(id='text', ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='font',
+                                value=Name(id='font', ctx=Load()))]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='image', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='Image', ctx=Load()),
+                    attr='new',
+                    ctx=Load()),
+                args=[
+                    Constant(value='RGB'),
+                    Tuple(
+                        elts=[
+                            Constant(value=200),
+                            Constant(value=100)],
+                        ctx=Load())],
+                keywords=[
+                    keyword(
+                        arg='color',
+                        value=Constant(value='white'))])),
+        Assign(
+            targets=[
+                Name(id='font', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='ImageFont', ctx=Load()),
+                    attr='load_default',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='vulnerable_draw_text', ctx=Load()),
+                args=[
+                    Name(id='image', ctx=Load()),
+                    BinOp(
+                        left=Constant(value='A'),
+                        op=Mult(),
+                        right=Constant(value=10000)),
+                    Tuple(
+                        elts=[
+                            Constant(value=10),
+                            Constant(value=10)],
+                        ctx=Load()),
+                    Name(id='font', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

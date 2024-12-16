@@ -1,0 +1,84 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='PyPDF2')]),
+        FunctionDef(
+            name='read_pdf_with_vulnerability',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='file_path')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                With(
+                    items=[
+                        withitem(
+                            context_expr=Call(
+                                func=Name(id='open', ctx=Load()),
+                                args=[
+                                    Name(id='file_path', ctx=Load()),
+                                    Constant(value='rb')],
+                                keywords=[]),
+                            optional_vars=Name(id='file', ctx=Store()))],
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='reader', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='PyPDF2', ctx=Load()),
+                                    attr='PdfReader',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='file', ctx=Load())],
+                                keywords=[])),
+                        For(
+                            target=Name(id='page', ctx=Store()),
+                            iter=Attribute(
+                                value=Name(id='reader', ctx=Load()),
+                                attr='pages',
+                                ctx=Load()),
+                            body=[
+                                Assign(
+                                    targets=[
+                                        Name(id='content_stream', ctx=Store())],
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='page', ctx=Load()),
+                                            attr='get_contents',
+                                            ctx=Load()),
+                                        args=[],
+                                        keywords=[])),
+                                For(
+                                    target=Name(id='obj', ctx=Store()),
+                                    iter=Name(id='content_stream', ctx=Load()),
+                                    body=[
+                                        If(
+                                            test=Compare(
+                                                left=Name(id='obj', ctx=Load()),
+                                                ops=[
+                                                    Eq()],
+                                                comparators=[
+                                                    Constant(value=b'EI')]),
+                                            body=[
+                                                Break()],
+                                            orelse=[]),
+                                        Expr(
+                                            value=Call(
+                                                func=Name(id='print', ctx=Load()),
+                                                args=[
+                                                    Name(id='obj', ctx=Load())],
+                                                keywords=[]))],
+                                    orelse=[])],
+                            orelse=[])])],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='read_pdf_with_vulnerability', ctx=Load()),
+                args=[
+                    Constant(value='vulnerable_example.pdf')],
+                keywords=[]))],
+    type_ignores=[])

@@ -1,0 +1,85 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        FunctionDef(
+            name='vulnerable_console_module',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='console_module_file', ctx=Store())],
+                    value=Constant(value='/config/ConsoleModuleUnlock.txt')),
+                Assign(
+                    targets=[
+                        Name(id='admin_tool_file', ctx=Store())],
+                    value=Constant(value='/config/admin/admintool.xml')),
+                If(
+                    test=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='path',
+                                ctx=Load()),
+                            attr='exists',
+                            ctx=Load()),
+                        args=[
+                            Name(id='console_module_file', ctx=Load())],
+                        keywords=[]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Console module unlocked. Executing arbitrary code is allowed.')],
+                                keywords=[]))],
+                    orelse=[]),
+                With(
+                    items=[
+                        withitem(
+                            context_expr=Call(
+                                func=Name(id='open', ctx=Load()),
+                                args=[
+                                    Name(id='admin_tool_file', ctx=Load()),
+                                    Constant(value='r')],
+                                keywords=[]),
+                            optional_vars=Name(id='file', ctx=Store()))],
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='content', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='file', ctx=Load()),
+                                    attr='read',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[])),
+                        If(
+                            test=Compare(
+                                left=Constant(value='<ConsoleModule enabled="true">'),
+                                ops=[
+                                    In()],
+                                comparators=[
+                                    Name(id='content', ctx=Load())]),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            Constant(value='Console module is enabled. Arbitrary code execution can occur.')],
+                                        keywords=[]))],
+                            orelse=[])])],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='vulnerable_console_module', ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

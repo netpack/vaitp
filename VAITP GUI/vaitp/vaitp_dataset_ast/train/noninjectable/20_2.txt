@@ -1,0 +1,36 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='_sha3')]),
+        Assign(
+            targets=[
+                Name(id='h', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='_sha3', ctx=Load()),
+                    attr='sha3_224',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='h', ctx=Load()),
+                    attr='update',
+                    ctx=Load()),
+                args=[
+                    BinOp(
+                        left=Constant(value=b'\x00'),
+                        op=Mult(),
+                        right=Constant(value=4294967296))],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='h', ctx=Load()),
+                    attr='digest',
+                    ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

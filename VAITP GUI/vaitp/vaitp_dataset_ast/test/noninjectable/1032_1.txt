@@ -1,0 +1,66 @@
+Module(
+    body=[
+        ImportFrom(
+            module='jinja2',
+            names=[
+                alias(name='Environment')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='env', ctx=Store())],
+            value=Call(
+                func=Name(id='Environment', ctx=Load()),
+                args=[],
+                keywords=[])),
+        FunctionDef(
+            name='render_chat_template',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='user_input')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='template', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='env', ctx=Load()),
+                            attr='from_string',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='User  says: {{ user_input }}')],
+                        keywords=[])),
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='template', ctx=Load()),
+                            attr='render',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[
+                            keyword(
+                                arg='user_input',
+                                value=Name(id='user_input', ctx=Load()))]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='unsafe_input', ctx=Store())],
+            value=Constant(value="__import__('os').system('ls')")),
+        Assign(
+            targets=[
+                Name(id='output', ctx=Store())],
+            value=Call(
+                func=Name(id='render_chat_template', ctx=Load()),
+                args=[
+                    Name(id='unsafe_input', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='output', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

@@ -1,0 +1,174 @@
+Module(
+    body=[
+        ImportFrom(
+            module='fastapi',
+            names=[
+                alias(name='FastAPI'),
+                alias(name='Request')],
+            level=0),
+        ImportFrom(
+            module='fastapi.middleware.cors',
+            names=[
+                alias(name='CORSMiddleware')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='app', ctx=Store())],
+            value=Call(
+                func=Name(id='FastAPI', ctx=Load()),
+                args=[],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='allowed_origins', ctx=Store())],
+            value=List(
+                elts=[
+                    Constant(value='https://your-allowed-origin.com')],
+                ctx=Load())),
+        ClassDef(
+            name='CustomCORSMiddleware',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='app'),
+                            arg(arg='allowed_origins')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='app',
+                                    ctx=Store())],
+                            value=Name(id='app', ctx=Load())),
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='allowed_origins',
+                                    ctx=Store())],
+                            value=Name(id='allowed_origins', ctx=Load()))],
+                    decorator_list=[]),
+                AsyncFunctionDef(
+                    name='__call__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(
+                                arg='request',
+                                annotation=Name(id='Request', ctx=Load())),
+                            arg(arg='call_next')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='origin', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='request', ctx=Load()),
+                                        attr='headers',
+                                        ctx=Load()),
+                                    attr='get',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='origin')],
+                                keywords=[])),
+                        If(
+                            test=Compare(
+                                left=Name(id='origin', ctx=Load()),
+                                ops=[
+                                    In()],
+                                comparators=[
+                                    Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='allowed_origins',
+                                        ctx=Load())]),
+                            body=[
+                                Assign(
+                                    targets=[
+                                        Name(id='response', ctx=Store())],
+                                    value=Await(
+                                        value=Call(
+                                            func=Name(id='call_next', ctx=Load()),
+                                            args=[
+                                                Name(id='request', ctx=Load())],
+                                            keywords=[]))),
+                                Assign(
+                                    targets=[
+                                        Subscript(
+                                            value=Attribute(
+                                                value=Name(id='response', ctx=Load()),
+                                                attr='headers',
+                                                ctx=Load()),
+                                            slice=Constant(value='Access-Control-Allow-Origin'),
+                                            ctx=Store())],
+                                    value=Name(id='origin', ctx=Load())),
+                                Return(
+                                    value=Name(id='response', ctx=Load()))],
+                            orelse=[
+                                Return(
+                                    value=Call(
+                                        func=Name(id='JSONResponse', ctx=Load()),
+                                        args=[],
+                                        keywords=[
+                                            keyword(
+                                                arg='status_code',
+                                                value=Constant(value=403)),
+                                            keyword(
+                                                arg='content',
+                                                value=Dict(
+                                                    keys=[
+                                                        Constant(value='detail')],
+                                                    values=[
+                                                        Constant(value='CORS origin not allowed')]))]))])],
+                    decorator_list=[])],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='app', ctx=Load()),
+                    attr='add_middleware',
+                    ctx=Load()),
+                args=[
+                    Name(id='CustomCORSMiddleware', ctx=Load())],
+                keywords=[
+                    keyword(
+                        arg='allowed_origins',
+                        value=Name(id='allowed_origins', ctx=Load()))])),
+        AsyncFunctionDef(
+            name='read_root',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Dict(
+                        keys=[
+                            Constant(value='Hello')],
+                        values=[
+                            Constant(value='World')]))],
+            decorator_list=[
+                Call(
+                    func=Attribute(
+                        value=Name(id='app', ctx=Load()),
+                        attr='get',
+                        ctx=Load()),
+                    args=[
+                        Constant(value='/')],
+                    keywords=[])])],
+    type_ignores=[])

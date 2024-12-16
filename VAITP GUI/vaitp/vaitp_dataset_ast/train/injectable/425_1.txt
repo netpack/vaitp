@@ -1,0 +1,35 @@
+Module(
+    body=[
+        FunctionDef(
+            name='access_terminal',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='user')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=UnaryOp(
+                        op=Not(),
+                        operand=Attribute(
+                            value=Name(id='user', ctx=Load()),
+                            attr='is_authenticated',
+                            ctx=Load())),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='PermissionError', ctx=Load()),
+                                args=[
+                                    Constant(value='User  must be authenticated to access the terminal.')],
+                                keywords=[]))],
+                    orelse=[]),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Accessing terminal...')],
+                        keywords=[]))],
+            decorator_list=[])],
+    type_ignores=[])

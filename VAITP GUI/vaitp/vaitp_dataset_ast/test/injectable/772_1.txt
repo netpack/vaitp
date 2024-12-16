@@ -1,0 +1,62 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='hashlib')]),
+        FunctionDef(
+            name='secure_hash',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='data')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='hashlib', ctx=Load()),
+                                    attr='sha256',
+                                    ctx=Load()),
+                                args=[
+                                    Call(
+                                        func=Attribute(
+                                            value=Name(id='data', ctx=Load()),
+                                            attr='encode',
+                                            ctx=Load()),
+                                        args=[],
+                                        keywords=[])],
+                                keywords=[]),
+                            attr='hexdigest',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='data_to_hash', ctx=Store())],
+                    value=Constant(value='example_data')),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Secure hash:'),
+                            Call(
+                                func=Name(id='secure_hash', ctx=Load()),
+                                args=[
+                                    Name(id='data_to_hash', ctx=Load())],
+                                keywords=[])],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

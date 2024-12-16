@@ -1,0 +1,124 @@
+Module(
+    body=[
+        ImportFrom(
+            module='bottle',
+            names=[
+                alias(name='Bottle'),
+                alias(name='request'),
+                alias(name='response')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='app', ctx=Store())],
+            value=Call(
+                func=Name(id='Bottle', ctx=Load()),
+                args=[],
+                keywords=[])),
+        FunctionDef(
+            name='example',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='param1', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='request', ctx=Load()),
+                                attr='query',
+                                ctx=Load()),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='param1')],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='param2', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='request', ctx=Load()),
+                                attr='query',
+                                ctx=Load()),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='param2')],
+                        keywords=[])),
+                If(
+                    test=BoolOp(
+                        op=Or(),
+                        values=[
+                            Compare(
+                                left=Name(id='param1', ctx=Load()),
+                                ops=[
+                                    Is()],
+                                comparators=[
+                                    Constant(value=None)]),
+                            Compare(
+                                left=Name(id='param2', ctx=Load()),
+                                ops=[
+                                    Is()],
+                                comparators=[
+                                    Constant(value=None)])]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='response', ctx=Load()),
+                                    attr='status',
+                                    ctx=Store())],
+                            value=Constant(value=400)),
+                        Return(
+                            value=Constant(value='Missing parameters'))],
+                    orelse=[]),
+                Return(
+                    value=JoinedStr(
+                        values=[
+                            Constant(value='Param1: '),
+                            FormattedValue(
+                                value=Name(id='param1', ctx=Load()),
+                                conversion=-1),
+                            Constant(value=', Param2: '),
+                            FormattedValue(
+                                value=Name(id='param2', ctx=Load()),
+                                conversion=-1)]))],
+            decorator_list=[
+                Call(
+                    func=Attribute(
+                        value=Name(id='app', ctx=Load()),
+                        attr='route',
+                        ctx=Load()),
+                    args=[
+                        Constant(value='/example')],
+                    keywords=[])]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='app', ctx=Load()),
+                            attr='run',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[
+                            keyword(
+                                arg='host',
+                                value=Constant(value='localhost')),
+                            keyword(
+                                arg='port',
+                                value=Constant(value=8080))]))],
+            orelse=[])],
+    type_ignores=[])

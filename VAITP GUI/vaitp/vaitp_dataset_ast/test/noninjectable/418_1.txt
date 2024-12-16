@@ -1,0 +1,22 @@
+Module(
+    body=[
+        FunctionDef(
+            name='_is_jailbreak',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='input_data')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='exec', ctx=Load()),
+                        args=[
+                            Name(id='input_data', ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=Constant(value=True))],
+            decorator_list=[])],
+    type_ignores=[])

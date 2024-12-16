@@ -1,0 +1,105 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        Import(
+            names=[
+                alias(name='subprocess')]),
+        FunctionDef(
+            name='vulnerable_execute',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='command')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='env', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='environ',
+                                ctx=Load()),
+                            attr='copy',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Subscript(
+                            value=Name(id='env', ctx=Load()),
+                            slice=Constant(value='PATH'),
+                            ctx=Store())],
+                    value=Constant(value='/usr/local/bin:/usr/bin:/bin')),
+                Assign(
+                    targets=[
+                        Name(id='result', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='subprocess', ctx=Load()),
+                            attr='run',
+                            ctx=Load()),
+                        args=[
+                            Name(id='command', ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='shell',
+                                value=Constant(value=True)),
+                            keyword(
+                                arg='env',
+                                value=Name(id='env', ctx=Load())),
+                            keyword(
+                                arg='capture_output',
+                                value=Constant(value=True)),
+                            keyword(
+                                arg='text',
+                                value=Constant(value=True))])),
+                Return(
+                    value=Tuple(
+                        elts=[
+                            Attribute(
+                                value=Name(id='result', ctx=Load()),
+                                attr='stdout',
+                                ctx=Load()),
+                            Attribute(
+                                value=Name(id='result', ctx=Load()),
+                                attr='stderr',
+                                ctx=Load())],
+                        ctx=Load()))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='command', ctx=Store())],
+            value=Constant(value='whoami')),
+        Assign(
+            targets=[
+                Tuple(
+                    elts=[
+                        Name(id='stdout', ctx=Store()),
+                        Name(id='stderr', ctx=Store())],
+                    ctx=Store())],
+            value=Call(
+                func=Name(id='vulnerable_execute', ctx=Load()),
+                args=[
+                    Name(id='command', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Constant(value='Output:'),
+                    Name(id='stdout', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Constant(value='Error:'),
+                    Name(id='stderr', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

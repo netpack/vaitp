@@ -1,0 +1,63 @@
+Module(
+    body=[
+        ImportFrom(
+            module='piccolo.engine',
+            names=[
+                alias(name='Engine')],
+            level=0),
+        ImportFrom(
+            module='piccolo.table',
+            names=[
+                alias(name='Table')],
+            level=0),
+        ImportFrom(
+            module='piccolo.columns',
+            names=[
+                alias(name='Varchar'),
+                alias(name='File')],
+            level=0),
+        ClassDef(
+            name='MediaFile',
+            bases=[
+                Name(id='Table', ctx=Load())],
+            keywords=[],
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='title', ctx=Store())],
+                    value=Call(
+                        func=Name(id='Varchar', ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='file', ctx=Store())],
+                    value=Call(
+                        func=Name(id='File', ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='upload_file',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='file')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='save_file', ctx=Load()),
+                        args=[
+                            Name(id='file', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='upload_file', ctx=Load()),
+                args=[
+                    Name(id='uploaded_svg_file', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

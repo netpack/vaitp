@@ -1,0 +1,38 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='sys')]),
+        Assign(
+            targets=[
+                Name(id='module_name', ctx=Store())],
+            value=Constant(value='malicious')),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='imported_module', ctx=Store())],
+                    value=Call(
+                        func=Name(id='__import__', ctx=Load()),
+                        args=[
+                            Name(id='module_name', ctx=Load())],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ImportError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            Constant(value='Error importing module: '),
+                                            FormattedValue(
+                                                value=Name(id='e', ctx=Load()),
+                                                conversion=-1)])],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

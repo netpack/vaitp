@@ -1,0 +1,76 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        FunctionDef(
+            name='insecure_install_directory',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='directory')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='os', ctx=Load()),
+                            attr='makedirs',
+                            ctx=Load()),
+                        args=[
+                            Name(id='directory', ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='exist_ok',
+                                value=Constant(value=True))])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='os', ctx=Load()),
+                            attr='chmod',
+                            ctx=Load()),
+                        args=[
+                            Name(id='directory', ctx=Load()),
+                            Constant(value=511)],
+                        keywords=[])),
+                With(
+                    items=[
+                        withitem(
+                            context_expr=Call(
+                                func=Name(id='open', ctx=Load()),
+                                args=[
+                                    Call(
+                                        func=Attribute(
+                                            value=Attribute(
+                                                value=Name(id='os', ctx=Load()),
+                                                attr='path',
+                                                ctx=Load()),
+                                            attr='join',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='directory', ctx=Load()),
+                                            Constant(value='sample_file.txt')],
+                                        keywords=[]),
+                                    Constant(value='w')],
+                                keywords=[]),
+                            optional_vars=Name(id='f', ctx=Store()))],
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='f', ctx=Load()),
+                                    attr='write',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='This is a sample file.')],
+                                keywords=[]))])],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='insecure_install_directory', ctx=Load()),
+                args=[
+                    Constant(value='/path/to/install/directory')],
+                keywords=[]))],
+    type_ignores=[])

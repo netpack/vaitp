@@ -1,0 +1,36 @@
+Module(
+    body=[
+        ImportFrom(
+            module='django.http',
+            names=[
+                alias(name='HttpResponseForbidden')],
+            level=0),
+        ImportFrom(
+            module='rest_framework',
+            names=[
+                alias(name='status')],
+            level=0),
+        FunctionDef(
+            name='authenticate',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='request')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=UnaryOp(
+                        op=Not(),
+                        operand=Name(id='user', ctx=Load())),
+                    body=[
+                        Return(
+                            value=Call(
+                                func=Name(id='HttpResponseForbidden', ctx=Load()),
+                                args=[
+                                    Constant(value='Authentication failed')],
+                                keywords=[]))],
+                    orelse=[])],
+            decorator_list=[])],
+    type_ignores=[])

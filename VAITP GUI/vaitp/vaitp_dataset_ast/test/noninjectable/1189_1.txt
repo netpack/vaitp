@@ -1,0 +1,52 @@
+Module(
+    body=[
+        FunctionDef(
+            name='delete_access_rule',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='rules'),
+                    arg(arg='rule_id')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Delete(
+                    targets=[
+                        Subscript(
+                            value=Name(id='rules', ctx=Load()),
+                            slice=Name(id='rule_id', ctx=Load()),
+                            ctx=Del())]),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            JoinedStr(
+                                values=[
+                                    Constant(value='Access rule with ID '),
+                                    FormattedValue(
+                                        value=Name(id='rule_id', ctx=Load()),
+                                        conversion=-1),
+                                    Constant(value=' has been deleted.')])],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='access_rules', ctx=Store())],
+            value=Dict(
+                keys=[
+                    Constant(value='rule1'),
+                    Constant(value='rule2'),
+                    Constant(value='rule3')],
+                values=[
+                    Constant(value='Application Credential 1'),
+                    Constant(value='Application Credential 2'),
+                    Constant(value='No Application Credential')])),
+        Expr(
+            value=Call(
+                func=Name(id='delete_access_rule', ctx=Load()),
+                args=[
+                    Name(id='access_rules', ctx=Load()),
+                    Constant(value='non_existing_rule')],
+                keywords=[]))],
+    type_ignores=[])

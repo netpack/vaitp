@@ -1,0 +1,54 @@
+Module(
+    body=[
+        FunctionDef(
+            name='safe_extract32',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(
+                        arg='b',
+                        annotation=Name(id='bytes', ctx=Load())),
+                    arg(
+                        arg='start',
+                        annotation=Name(id='int', ctx=Load()))],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assert(
+                    test=BoolOp(
+                        op=And(),
+                        values=[
+                            Compare(
+                                left=Name(id='start', ctx=Load()),
+                                ops=[
+                                    GtE()],
+                                comparators=[
+                                    Constant(value=0)]),
+                            Compare(
+                                left=BinOp(
+                                    left=Name(id='start', ctx=Load()),
+                                    op=Add(),
+                                    right=Constant(value=32)),
+                                ops=[
+                                    LtE()],
+                                comparators=[
+                                    Call(
+                                        func=Name(id='len', ctx=Load()),
+                                        args=[
+                                            Name(id='b', ctx=Load())],
+                                        keywords=[])])]),
+                    msg=Constant(value='Invalid start index')),
+                Return(
+                    value=Subscript(
+                        value=Name(id='b', ctx=Load()),
+                        slice=Slice(
+                            lower=Name(id='start', ctx=Load()),
+                            upper=BinOp(
+                                left=Name(id='start', ctx=Load()),
+                                op=Add(),
+                                right=Constant(value=32))),
+                        ctx=Load()))],
+            decorator_list=[],
+            returns=Name(id='bytes', ctx=Load()))],
+    type_ignores=[])

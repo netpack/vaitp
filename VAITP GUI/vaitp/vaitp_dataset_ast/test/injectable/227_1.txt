@@ -1,0 +1,90 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='python_libnmap')]),
+        Import(
+            names=[
+                alias(name='re')]),
+        FunctionDef(
+            name='is_valid_command',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='command')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='pattern', ctx=Store())],
+                    value=Constant(value='^[a-zA-Z0-9\\s\\-]+$')),
+                Return(
+                    value=Compare(
+                        left=Call(
+                            func=Attribute(
+                                value=Name(id='re', ctx=Load()),
+                                attr='match',
+                                ctx=Load()),
+                            args=[
+                                Name(id='pattern', ctx=Load()),
+                                Name(id='command', ctx=Load())],
+                            keywords=[]),
+                        ops=[
+                            IsNot()],
+                        comparators=[
+                            Constant(value=None)]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='nmap', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='python_libnmap', ctx=Load()),
+                    attr='Nmap',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='user_input', ctx=Store())],
+            value=Call(
+                func=Name(id='input', ctx=Load()),
+                args=[
+                    Constant(value='Enter a command: ')],
+                keywords=[])),
+        If(
+            test=Call(
+                func=Name(id='is_valid_command', ctx=Load()),
+                args=[
+                    Name(id='user_input', ctx=Load())],
+                keywords=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='nmap', ctx=Load()),
+                            attr='scan',
+                            ctx=Load()),
+                        args=[
+                            Name(id='user_input', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Scan results:'),
+                            Attribute(
+                                value=Name(id='nmap', ctx=Load()),
+                                attr='scan_result',
+                                ctx=Load())],
+                        keywords=[]))],
+            orelse=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Invalid command. Please enter a valid command.')],
+                        keywords=[]))])],
+    type_ignores=[])

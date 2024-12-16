@@ -1,0 +1,79 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='bleach')]),
+        FunctionDef(
+            name='sanitize_html_input',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='user_input')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='allowed_tags', ctx=Store())],
+                    value=List(
+                        elts=[
+                            Constant(value='p'),
+                            Constant(value='b'),
+                            Constant(value='i'),
+                            Constant(value='u'),
+                            Constant(value='strong'),
+                            Constant(value='em'),
+                            Constant(value='a')],
+                        ctx=Load())),
+                Assign(
+                    targets=[
+                        Name(id='allowed_attributes', ctx=Store())],
+                    value=Dict(
+                        keys=[
+                            Constant(value='a')],
+                        values=[
+                            List(
+                                elts=[
+                                    Constant(value='href'),
+                                    Constant(value='title')],
+                                ctx=Load())])),
+                Assign(
+                    targets=[
+                        Name(id='sanitized_input', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='bleach', ctx=Load()),
+                            attr='clean',
+                            ctx=Load()),
+                        args=[
+                            Name(id='user_input', ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='tags',
+                                value=Name(id='allowed_tags', ctx=Load())),
+                            keyword(
+                                arg='attributes',
+                                value=Name(id='allowed_attributes', ctx=Load()))])),
+                Return(
+                    value=Name(id='sanitized_input', ctx=Load()))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='user_input', ctx=Store())],
+            value=Constant(value='<script>alert("XSS")</script><p>This is a <a href="http://example.com" title="Example">link</a>.</p>')),
+        Assign(
+            targets=[
+                Name(id='safe_input', ctx=Store())],
+            value=Call(
+                func=Name(id='sanitize_html_input', ctx=Load()),
+                args=[
+                    Name(id='user_input', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='safe_input', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

@@ -1,0 +1,160 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='untangle')]),
+        Import(
+            names=[
+                alias(name='re')]),
+        FunctionDef(
+            name='is_valid_xml',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='xml_data')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=UnaryOp(
+                        op=Not(),
+                        operand=Call(
+                            func=Name(id='isinstance', ctx=Load()),
+                            args=[
+                                Name(id='xml_data', ctx=Load()),
+                                Name(id='str', ctx=Load())],
+                            keywords=[])),
+                    body=[
+                        Return(
+                            value=Constant(value=False))],
+                    orelse=[]),
+                If(
+                    test=Call(
+                        func=Attribute(
+                            value=Name(id='re', ctx=Load()),
+                            attr='search',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='<!ENTITY\\s+\\w+\\s+<!ENTITY'),
+                            Name(id='xml_data', ctx=Load())],
+                        keywords=[]),
+                    body=[
+                        Return(
+                            value=Constant(value=False))],
+                    orelse=[]),
+                Return(
+                    value=Constant(value=True))],
+            decorator_list=[]),
+        FunctionDef(
+            name='process_xml',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='xml_data')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=UnaryOp(
+                        op=Not(),
+                        operand=Call(
+                            func=Name(id='is_valid_xml', ctx=Load()),
+                            args=[
+                                Name(id='xml_data', ctx=Load())],
+                            keywords=[])),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Invalid XML data')],
+                                keywords=[]))],
+                    orelse=[]),
+                Try(
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='obj', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='untangle', ctx=Load()),
+                                    attr='parse',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='xml_data', ctx=Load())],
+                                keywords=[])),
+                        Return(
+                            value=Name(id='obj', ctx=Load()))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='Exception', ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    Constant(value='Error processing XML: '),
+                                                    FormattedValue(
+                                                        value=Name(id='e', ctx=Load()),
+                                                        conversion=-1)])],
+                                        keywords=[])),
+                                Return(
+                                    value=Constant(value=None))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='xml_input', ctx=Store())],
+            value=Constant(value='\n<root>\n    <element>Some data</element>\n</root>\n')),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='parsed_object', ctx=Store())],
+                    value=Call(
+                        func=Name(id='process_xml', ctx=Load()),
+                        args=[
+                            Name(id='xml_input', ctx=Load())],
+                        keywords=[])),
+                If(
+                    test=Name(id='parsed_object', ctx=Load()),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='XML processed successfully:')],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='parsed_object', ctx=Load())],
+                                keywords=[]))],
+                    orelse=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Failed to process XML.')],
+                                keywords=[]))])],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ValueError', ctx=Load()),
+                    name='ve',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='ve', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

@@ -1,0 +1,59 @@
+Module(
+    body=[
+        ImportFrom(
+            module='jinja2',
+            names=[
+                alias(name='Environment'),
+                alias(name='FileSystemLoader'),
+                alias(name='select_autoescape')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='env', ctx=Store())],
+            value=Call(
+                func=Name(id='Environment', ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='loader',
+                        value=Call(
+                            func=Name(id='FileSystemLoader', ctx=Load()),
+                            args=[
+                                Constant(value='templates')],
+                            keywords=[])),
+                    keyword(
+                        arg='autoescape',
+                        value=Call(
+                            func=Name(id='select_autoescape', ctx=Load()),
+                            args=[
+                                List(
+                                    elts=[
+                                        Constant(value='html'),
+                                        Constant(value='xml')],
+                                    ctx=Load())],
+                            keywords=[]))])),
+        Assign(
+            targets=[
+                Name(id='template', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='env', ctx=Load()),
+                    attr='get_template',
+                    ctx=Load()),
+                args=[
+                    Constant(value='example_template.html')],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='output', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='template', ctx=Load()),
+                    attr='render',
+                    ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='user_input',
+                        value=Name(id='safe_user_input', ctx=Load()))]))],
+    type_ignores=[])

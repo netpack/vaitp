@@ -1,0 +1,56 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='json')]),
+        ClassDef(
+            name='SagemakerLLM',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='complete',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='response')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Try(
+                            body=[
+                                Assign(
+                                    targets=[
+                                        Name(id='result', ctx=Store())],
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='json', ctx=Load()),
+                                            attr='loads',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='response', ctx=Load())],
+                                        keywords=[]))],
+                            handlers=[
+                                ExceptHandler(
+                                    type=Attribute(
+                                        value=Name(id='json', ctx=Load()),
+                                        attr='JSONDecodeError',
+                                        ctx=Load()),
+                                    name='e',
+                                    body=[
+                                        Raise(
+                                            exc=Call(
+                                                func=Name(id='ValueError', ctx=Load()),
+                                                args=[
+                                                    Constant(value='Invalid JSON response')],
+                                                keywords=[]),
+                                            cause=Name(id='e', ctx=Load()))])],
+                            orelse=[],
+                            finalbody=[]),
+                        Return(
+                            value=Name(id='result', ctx=Load()))],
+                    decorator_list=[])],
+            decorator_list=[])],
+    type_ignores=[])

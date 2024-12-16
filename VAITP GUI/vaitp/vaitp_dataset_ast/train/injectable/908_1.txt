@@ -1,0 +1,152 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='tensorflow', asname='tf')]),
+        FunctionDef(
+            name='safe_draw_bounding_boxes',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='boxes'),
+                    arg(arg='image'),
+                    arg(arg='colors')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Compare(
+                        left=Subscript(
+                            value=Attribute(
+                                value=Name(id='boxes', ctx=Load()),
+                                attr='shape',
+                                ctx=Load()),
+                            slice=UnaryOp(
+                                op=USub(),
+                                operand=Constant(value=1)),
+                            ctx=Load()),
+                        ops=[
+                            NotEq()],
+                        comparators=[
+                            Constant(value=4)]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='The last dimension of boxes must be 4.')],
+                                keywords=[]))],
+                    orelse=[]),
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='tf', ctx=Load()),
+                                attr='raw_ops',
+                                ctx=Load()),
+                            attr='DrawBoundingBoxesV2',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[
+                            keyword(
+                                arg='boxes',
+                                value=Name(id='boxes', ctx=Load())),
+                            keyword(
+                                arg='image',
+                                value=Name(id='image', ctx=Load())),
+                            keyword(
+                                arg='colors',
+                                value=Name(id='colors', ctx=Load()))]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='boxes', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='tf', ctx=Load()),
+                    attr='constant',
+                    ctx=Load()),
+                args=[
+                    List(
+                        elts=[
+                            List(
+                                elts=[
+                                    Constant(value=0.1),
+                                    Constant(value=0.2),
+                                    Constant(value=0.5),
+                                    Constant(value=0.5)],
+                                ctx=Load()),
+                            List(
+                                elts=[
+                                    Constant(value=0.3),
+                                    Constant(value=0.3),
+                                    Constant(value=0.6),
+                                    Constant(value=0.6)],
+                                ctx=Load())],
+                        ctx=Load())],
+                keywords=[
+                    keyword(
+                        arg='dtype',
+                        value=Attribute(
+                            value=Name(id='tf', ctx=Load()),
+                            attr='float32',
+                            ctx=Load()))])),
+        Assign(
+            targets=[
+                Name(id='image', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='tf', ctx=Load()),
+                    attr='zeros',
+                    ctx=Load()),
+                args=[
+                    List(
+                        elts=[
+                            Constant(value=100),
+                            Constant(value=100),
+                            Constant(value=3)],
+                        ctx=Load())],
+                keywords=[
+                    keyword(
+                        arg='dtype',
+                        value=Attribute(
+                            value=Name(id='tf', ctx=Load()),
+                            attr='float32',
+                            ctx=Load()))])),
+        Assign(
+            targets=[
+                Name(id='colors', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='tf', ctx=Load()),
+                    attr='constant',
+                    ctx=Load()),
+                args=[
+                    List(
+                        elts=[
+                            List(
+                                elts=[
+                                    Constant(value=1.0),
+                                    Constant(value=0.0),
+                                    Constant(value=0.0)],
+                                ctx=Load())],
+                        ctx=Load())],
+                keywords=[
+                    keyword(
+                        arg='dtype',
+                        value=Attribute(
+                            value=Name(id='tf', ctx=Load()),
+                            attr='float32',
+                            ctx=Load()))])),
+        Assign(
+            targets=[
+                Name(id='output_image', ctx=Store())],
+            value=Call(
+                func=Name(id='safe_draw_bounding_boxes', ctx=Load()),
+                args=[
+                    Name(id='boxes', ctx=Load()),
+                    Name(id='image', ctx=Load()),
+                    Name(id='colors', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

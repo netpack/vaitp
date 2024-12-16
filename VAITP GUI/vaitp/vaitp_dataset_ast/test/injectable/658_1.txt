@@ -1,0 +1,124 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='json')]),
+        Import(
+            names=[
+                alias(name='dbus')]),
+        ClassDef(
+            name='FirewallConfig',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Pass()],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='set_config',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='config_data')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Try(
+                            body=[
+                                Assign(
+                                    targets=[
+                                        Name(id='config', ctx=Store())],
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='json', ctx=Load()),
+                                            attr='loads',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='config_data', ctx=Load())],
+                                        keywords=[]))],
+                            handlers=[
+                                ExceptHandler(
+                                    type=Attribute(
+                                        value=Name(id='json', ctx=Load()),
+                                        attr='JSONDecodeError',
+                                        ctx=Load()),
+                                    name='e',
+                                    body=[
+                                        Expr(
+                                            value=Call(
+                                                func=Name(id='print', ctx=Load()),
+                                                args=[
+                                                    JoinedStr(
+                                                        values=[
+                                                            Constant(value='Invalid configuration data: '),
+                                                            FormattedValue(
+                                                                value=Name(id='e', ctx=Load()),
+                                                                conversion=-1)])],
+                                                keywords=[]))])],
+                            orelse=[],
+                            finalbody=[])],
+                    decorator_list=[])],
+            decorator_list=[]),
+        FunctionDef(
+            name='main',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='bus', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='dbus', ctx=Load()),
+                            attr='SystemBus',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='obj', ctx=Store())],
+                    value=Call(
+                        func=Name(id='FirewallConfig', ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='bus', ctx=Load()),
+                            attr='export',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='/com/example/FirewallConfig'),
+                            Name(id='obj', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='main', ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

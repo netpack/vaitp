@@ -1,0 +1,117 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='argparse')]),
+        Import(
+            names=[
+                alias(name='sqlfluff')]),
+        FunctionDef(
+            name='main',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='parser', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='argparse', ctx=Load()),
+                            attr='ArgumentParser',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[
+                            keyword(
+                                arg='description',
+                                value=Constant(value='Run SQLFluff with secure library path handling.'))])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='parser', ctx=Load()),
+                            attr='add_argument',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='--library-path')],
+                        keywords=[
+                            keyword(
+                                arg='default',
+                                value=Constant(value='none')),
+                            keyword(
+                                arg='help',
+                                value=Constant(value='Path to custom libraries for SQLFluff macros.'))])),
+                Assign(
+                    targets=[
+                        Name(id='args', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='parser', ctx=Load()),
+                            attr='parse_args',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                If(
+                    test=Compare(
+                        left=Attribute(
+                            value=Name(id='args', ctx=Load()),
+                            attr='library_path',
+                            ctx=Load()),
+                        ops=[
+                            NotEq()],
+                        comparators=[
+                            Constant(value='none')]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Warning: Using a custom library path can introduce security vulnerabilities.')],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value="Setting library_path to 'none' for safety.")],
+                                keywords=[])),
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='args', ctx=Load()),
+                                    attr='library_path',
+                                    ctx=Store())],
+                            value=Constant(value='none'))],
+                    orelse=[]),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='sqlfluff', ctx=Load()),
+                            attr='lint',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='your_sql_file.sql')],
+                        keywords=[
+                            keyword(
+                                arg='library_path',
+                                value=Attribute(
+                                    value=Name(id='args', ctx=Load()),
+                                    attr='library_path',
+                                    ctx=Load()))]))],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='main', ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

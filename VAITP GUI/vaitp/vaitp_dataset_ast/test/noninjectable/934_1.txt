@@ -1,0 +1,78 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='uuid')]),
+        FunctionDef(
+            name='local_uuid',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='deterministic'),
+                    arg(arg='namespace')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[
+                    Constant(value=False),
+                    Constant(value=None)]),
+            body=[
+                If(
+                    test=BoolOp(
+                        op=And(),
+                        values=[
+                            Name(id='deterministic', ctx=Load()),
+                            Compare(
+                                left=Name(id='namespace', ctx=Load()),
+                                ops=[
+                                    IsNot()],
+                                comparators=[
+                                    Constant(value=None)])]),
+                    body=[
+                        Return(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='uuid', ctx=Load()),
+                                    attr='uuid5',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='namespace', ctx=Load()),
+                                    Constant(value='deterministic_string')],
+                                keywords=[]))],
+                    orelse=[
+                        Return(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='uuid', ctx=Load()),
+                                    attr='uuid4',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[]))])],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Call(
+                                func=Name(id='local_uuid', ctx=Load()),
+                                args=[],
+                                keywords=[
+                                    keyword(
+                                        arg='deterministic',
+                                        value=Constant(value=True)),
+                                    keyword(
+                                        arg='namespace',
+                                        value=Attribute(
+                                            value=Name(id='uuid', ctx=Load()),
+                                            attr='NAMESPACE_DNS',
+                                            ctx=Load()))])],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

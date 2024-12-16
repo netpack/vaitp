@@ -1,0 +1,125 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='logging')]),
+        ImportFrom(
+            module='oslo_middleware',
+            names=[
+                alias(name='catch_error')],
+            level=0),
+        ClassDef(
+            name='SecureCatchError',
+            bases=[
+                Attribute(
+                    value=Name(id='catch_error', ctx=Load()),
+                    attr='CatchError',
+                    ctx=Load())],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        vararg=arg(arg='args'),
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        kwarg=arg(arg='kwargs'),
+                        defaults=[]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Call(
+                                        func=Name(id='super', ctx=Load()),
+                                        args=[
+                                            Name(id='SecureCatchError', ctx=Load()),
+                                            Name(id='self', ctx=Load())],
+                                        keywords=[]),
+                                    attr='__init__',
+                                    ctx=Load()),
+                                args=[
+                                    Starred(
+                                        value=Name(id='args', ctx=Load()),
+                                        ctx=Load())],
+                                keywords=[
+                                    keyword(
+                                        value=Name(id='kwargs', ctx=Load()))]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='__call__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='environ'),
+                            arg(arg='start_response')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Try(
+                            body=[
+                                Return(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Call(
+                                                func=Name(id='super', ctx=Load()),
+                                                args=[
+                                                    Name(id='SecureCatchError', ctx=Load()),
+                                                    Name(id='self', ctx=Load())],
+                                                keywords=[]),
+                                            attr='__call__',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='environ', ctx=Load()),
+                                            Name(id='start_response', ctx=Load())],
+                                        keywords=[]))],
+                            handlers=[
+                                ExceptHandler(
+                                    type=Name(id='Exception', ctx=Load()),
+                                    name='e',
+                                    body=[
+                                        Expr(
+                                            value=Call(
+                                                func=Attribute(
+                                                    value=Name(id='logging', ctx=Load()),
+                                                    attr='error',
+                                                    ctx=Load()),
+                                                args=[
+                                                    Constant(value='An error occurred: %s'),
+                                                    Call(
+                                                        func=Name(id='str', ctx=Load()),
+                                                        args=[
+                                                            Name(id='e', ctx=Load())],
+                                                        keywords=[])],
+                                                keywords=[
+                                                    keyword(
+                                                        arg='exc_info',
+                                                        value=Constant(value=True))])),
+                                        Expr(
+                                            value=Call(
+                                                func=Name(id='start_response', ctx=Load()),
+                                                args=[
+                                                    Constant(value='500 Internal Server Error'),
+                                                    List(
+                                                        elts=[
+                                                            Tuple(
+                                                                elts=[
+                                                                    Constant(value='Content-Type'),
+                                                                    Constant(value='text/plain')],
+                                                                ctx=Load())],
+                                                        ctx=Load())],
+                                                keywords=[])),
+                                        Return(
+                                            value=List(
+                                                elts=[
+                                                    Constant(value=b'An internal error occurred. Please try again later.')],
+                                                ctx=Load()))])],
+                            orelse=[],
+                            finalbody=[])],
+                    decorator_list=[])],
+            decorator_list=[])],
+    type_ignores=[])

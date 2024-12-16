@@ -1,0 +1,214 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='ast')]),
+        Import(
+            names=[
+                alias(name='traceback')]),
+        FunctionDef(
+            name='safe_eval',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='expr')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='allowed_nodes', ctx=Store())],
+                    value=Set(
+                        elts=[
+                            Attribute(
+                                value=Name(id='ast', ctx=Load()),
+                                attr='Expression',
+                                ctx=Load()),
+                            Attribute(
+                                value=Name(id='ast', ctx=Load()),
+                                attr='Num',
+                                ctx=Load()),
+                            Attribute(
+                                value=Name(id='ast', ctx=Load()),
+                                attr='Str',
+                                ctx=Load()),
+                            Attribute(
+                                value=Name(id='ast', ctx=Load()),
+                                attr='List',
+                                ctx=Load()),
+                            Attribute(
+                                value=Name(id='ast', ctx=Load()),
+                                attr='Tuple',
+                                ctx=Load()),
+                            Attribute(
+                                value=Name(id='ast', ctx=Load()),
+                                attr='Dict',
+                                ctx=Load()),
+                            Attribute(
+                                value=Name(id='ast', ctx=Load()),
+                                attr='Name',
+                                ctx=Load()),
+                            Attribute(
+                                value=Name(id='ast', ctx=Load()),
+                                attr='Load',
+                                ctx=Load()),
+                            Attribute(
+                                value=Name(id='ast', ctx=Load()),
+                                attr='BinOp',
+                                ctx=Load()),
+                            Attribute(
+                                value=Name(id='ast', ctx=Load()),
+                                attr='UnaryOp',
+                                ctx=Load()),
+                            Attribute(
+                                value=Name(id='ast', ctx=Load()),
+                                attr='Compare',
+                                ctx=Load()),
+                            Attribute(
+                                value=Name(id='ast', ctx=Load()),
+                                attr='BoolOp',
+                                ctx=Load()),
+                            Attribute(
+                                value=Name(id='ast', ctx=Load()),
+                                attr='IfExp',
+                                ctx=Load()),
+                            Attribute(
+                                value=Name(id='ast', ctx=Load()),
+                                attr='Call',
+                                ctx=Load())])),
+                ClassDef(
+                    name='SafeEvalVisitor',
+                    bases=[
+                        Attribute(
+                            value=Name(id='ast', ctx=Load()),
+                            attr='NodeVisitor',
+                            ctx=Load())],
+                    keywords=[],
+                    body=[
+                        FunctionDef(
+                            name='visit',
+                            args=arguments(
+                                posonlyargs=[],
+                                args=[
+                                    arg(arg='self'),
+                                    arg(arg='node')],
+                                kwonlyargs=[],
+                                kw_defaults=[],
+                                defaults=[]),
+                            body=[
+                                If(
+                                    test=Compare(
+                                        left=Call(
+                                            func=Name(id='type', ctx=Load()),
+                                            args=[
+                                                Name(id='node', ctx=Load())],
+                                            keywords=[]),
+                                        ops=[
+                                            NotIn()],
+                                        comparators=[
+                                            Name(id='allowed_nodes', ctx=Load())]),
+                                    body=[
+                                        Raise(
+                                            exc=Call(
+                                                func=Name(id='ValueError', ctx=Load()),
+                                                args=[
+                                                    Constant(value='Unsafe operation detected')],
+                                                keywords=[]))],
+                                    orelse=[]),
+                                Return(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='self', ctx=Load()),
+                                            attr='generic_visit',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='node', ctx=Load())],
+                                        keywords=[]))],
+                            decorator_list=[])],
+                    decorator_list=[]),
+                Assign(
+                    targets=[
+                        Name(id='tree', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='ast', ctx=Load()),
+                            attr='parse',
+                            ctx=Load()),
+                        args=[
+                            Name(id='expr', ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='mode',
+                                value=Constant(value='eval'))])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Call(
+                                func=Name(id='SafeEvalVisitor', ctx=Load()),
+                                args=[],
+                                keywords=[]),
+                            attr='visit',
+                            ctx=Load()),
+                        args=[
+                            Name(id='tree', ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=Call(
+                        func=Name(id='eval', ctx=Load()),
+                        args=[
+                            Call(
+                                func=Name(id='compile', ctx=Load()),
+                                args=[
+                                    Name(id='tree', ctx=Load())],
+                                keywords=[
+                                    keyword(
+                                        arg='filename',
+                                        value=Constant(value='<ast>')),
+                                    keyword(
+                                        arg='mode',
+                                        value=Constant(value='eval'))])],
+                        keywords=[]))],
+            decorator_list=[]),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='user_input', ctx=Store())],
+                    value=Constant(value='2 + 2')),
+                Assign(
+                    targets=[
+                        Name(id='result', ctx=Store())],
+                    value=Call(
+                        func=Name(id='safe_eval', ctx=Load()),
+                        args=[
+                            Name(id='user_input', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Result:'),
+                            Name(id='result', ctx=Load())],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='Exception', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Error:'),
+                                    Call(
+                                        func=Attribute(
+                                            value=Name(id='traceback', ctx=Load()),
+                                            attr='format_exc',
+                                            ctx=Load()),
+                                        args=[],
+                                        keywords=[])],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

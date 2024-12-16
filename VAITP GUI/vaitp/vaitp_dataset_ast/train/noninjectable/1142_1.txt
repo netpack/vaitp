@@ -1,0 +1,48 @@
+Module(
+    body=[
+        ImportFrom(
+            module='jwcrypto',
+            names=[
+                alias(name='jwt')],
+            level=0),
+        FunctionDef(
+            name='process_jwe_token',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='token')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='jwe', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='jwt', ctx=Load()),
+                            attr='JWE',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='jwe', ctx=Load()),
+                            attr='deserialize',
+                            ctx=Load()),
+                        args=[
+                            Name(id='token', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='malicious_token', ctx=Store())],
+            value=Constant(value='...')),
+        Expr(
+            value=Call(
+                func=Name(id='process_jwe_token', ctx=Load()),
+                args=[
+                    Name(id='malicious_token', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

@@ -1,0 +1,39 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        FunctionDef(
+            name='setup_wifi',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='os', ctx=Load()),
+                            attr='system',
+                            ctx=Load()),
+                        args=[
+                            Constant(value="iwconfig wlan0 essid 'MyNetwork'")],
+                        keywords=[]))],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='setup_wifi', ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

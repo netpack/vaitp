@@ -1,0 +1,9 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='sys')]),
+        Import(
+            names=[
+                alias(name='malicious')])],
+    type_ignores=[])

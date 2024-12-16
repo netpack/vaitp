@@ -1,0 +1,45 @@
+Module(
+    body=[
+        FunctionDef(
+            name='op_user',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='user'),
+                    arg(arg='channel')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='channel', ctx=Load()),
+                            attr='op',
+                            ctx=Load()),
+                        args=[
+                            Name(id='user', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='voice_user',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='user'),
+                    arg(arg='channel')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='channel', ctx=Load()),
+                            attr='voice',
+                            ctx=Load()),
+                        args=[
+                            Name(id='user', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[])],
+    type_ignores=[])

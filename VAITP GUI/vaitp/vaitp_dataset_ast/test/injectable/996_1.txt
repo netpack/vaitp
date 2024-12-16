@@ -1,0 +1,122 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='xml.etree.ElementTree', asname='ET')]),
+        ImportFrom(
+            module='xmlsec',
+            names=[
+                alias(name='SignatureContext'),
+                alias(name='Template'),
+                alias(name='Transform'),
+                alias(name='Key')],
+            level=0),
+        FunctionDef(
+            name='validate_saml_response',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='saml_response')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='root', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='ET', ctx=Load()),
+                            attr='fromstring',
+                            ctx=Load()),
+                        args=[
+                            Name(id='saml_response', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='canonicalized_xml', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='ET', ctx=Load()),
+                            attr='tostring',
+                            ctx=Load()),
+                        args=[
+                            Name(id='root', ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='method',
+                                value=Constant(value='xml')),
+                            keyword(
+                                arg='encoding',
+                                value=Constant(value='utf-8'))])),
+                Assign(
+                    targets=[
+                        Name(id='key', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='Key', ctx=Load()),
+                            attr='from_file',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='path/to/public_key.pem'),
+                            Attribute(
+                                value=Attribute(
+                                    value=Name(id='xmlsec', ctx=Load()),
+                                    attr='KeyFormat',
+                                    ctx=Load()),
+                                attr='PEM',
+                                ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='signature_context', ctx=Store())],
+                    value=Call(
+                        func=Name(id='SignatureContext', ctx=Load()),
+                        args=[
+                            Name(id='key', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='signature_template', ctx=Store())],
+                    value=Call(
+                        func=Name(id='Template', ctx=Load()),
+                        args=[
+                            Name(id='root', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='signature_context', ctx=Load()),
+                            attr='verify',
+                            ctx=Load()),
+                        args=[
+                            Name(id='signature_template', ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=Constant(value=True))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='saml_response', ctx=Store())],
+            value=Constant(value='<samlp:Response ...>...</samlp:Response>')),
+        If(
+            test=Call(
+                func=Name(id='validate_saml_response', ctx=Load()),
+                args=[
+                    Name(id='saml_response', ctx=Load())],
+                keywords=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='SAML response is valid and signature is verified.')],
+                        keywords=[]))],
+            orelse=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Invalid SAML response or signature.')],
+                        keywords=[]))])],
+    type_ignores=[])

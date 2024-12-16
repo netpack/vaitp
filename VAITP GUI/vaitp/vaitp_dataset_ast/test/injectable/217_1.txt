@@ -1,0 +1,19 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='democritus_strings')]),
+        Assign(
+            targets=[
+                Name(id='safe_input', ctx=Store())],
+            value=Constant(value='Hello, World!')),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='democritus_strings', ctx=Load()),
+                    attr='process_strings',
+                    ctx=Load()),
+                args=[
+                    Name(id='safe_input', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

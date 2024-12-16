@@ -1,0 +1,155 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='logging')]),
+        FunctionDef(
+            name='parse_multipart',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='data'),
+                    arg(arg='boundary')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Constant(value='\n    Parses multipart data, addressing potential excessive logging.\n    ')),
+                Assign(
+                    targets=[
+                        Name(id='parts', ctx=Store())],
+                    value=List(elts=[], ctx=Load())),
+                Assign(
+                    targets=[
+                        Name(id='boundary_len', ctx=Store())],
+                    value=Call(
+                        func=Name(id='len', ctx=Load()),
+                        args=[
+                            Name(id='boundary', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='start_index', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='data', ctx=Load()),
+                            attr='find',
+                            ctx=Load()),
+                        args=[
+                            BinOp(
+                                left=Constant(value=b'--'),
+                                op=Add(),
+                                right=Name(id='boundary', ctx=Load()))],
+                        keywords=[])),
+                If(
+                    test=Compare(
+                        left=Name(id='start_index', ctx=Load()),
+                        ops=[
+                            Eq()],
+                        comparators=[
+                            UnaryOp(
+                                op=USub(),
+                                operand=Constant(value=1))]),
+                    body=[
+                        Return(
+                            value=List(elts=[], ctx=Load()))],
+                    orelse=[]),
+                Assign(
+                    targets=[
+                        Name(id='data', ctx=Store())],
+                    value=Subscript(
+                        value=Name(id='data', ctx=Load()),
+                        slice=Slice(
+                            lower=Name(id='start_index', ctx=Load())),
+                        ctx=Load())),
+                While(
+                    test=Constant(value=True),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='next_boundary_index', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='data', ctx=Load()),
+                                    attr='find',
+                                    ctx=Load()),
+                                args=[
+                                    BinOp(
+                                        left=Constant(value=b'--'),
+                                        op=Add(),
+                                        right=Name(id='boundary', ctx=Load()))],
+                                keywords=[])),
+                        If(
+                            test=Compare(
+                                left=Name(id='next_boundary_index', ctx=Load()),
+                                ops=[
+                                    Eq()],
+                                comparators=[
+                                    UnaryOp(
+                                        op=USub(),
+                                        operand=Constant(value=1))]),
+                            body=[
+                                Break()],
+                            orelse=[]),
+                        Assign(
+                            targets=[
+                                Name(id='part_data', ctx=Store())],
+                            value=Subscript(
+                                value=Name(id='data', ctx=Load()),
+                                slice=Slice(
+                                    upper=Name(id='next_boundary_index', ctx=Load())),
+                                ctx=Load())),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='parts', ctx=Load()),
+                                    attr='append',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='part_data', ctx=Load())],
+                                keywords=[])),
+                        Assign(
+                            targets=[
+                                Name(id='end_index', ctx=Store())],
+                            value=BinOp(
+                                left=BinOp(
+                                    left=Name(id='next_boundary_index', ctx=Load()),
+                                    op=Add(),
+                                    right=Name(id='boundary_len', ctx=Load())),
+                                op=Add(),
+                                right=Constant(value=2))),
+                        If(
+                            test=Compare(
+                                left=Call(
+                                    func=Attribute(
+                                        value=Subscript(
+                                            value=Name(id='data', ctx=Load()),
+                                            slice=Slice(
+                                                lower=Name(id='end_index', ctx=Load())),
+                                            ctx=Load()),
+                                        attr='strip',
+                                        ctx=Load()),
+                                    args=[
+                                        Constant(value=b'\r\n')],
+                                    keywords=[]),
+                                ops=[
+                                    Eq()],
+                                comparators=[
+                                    Constant(value=b'')]),
+                            body=[
+                                Break()],
+                            orelse=[
+                                Assign(
+                                    targets=[
+                                        Name(id='data', ctx=Store())],
+                                    value=Subscript(
+                                        value=Name(id='data', ctx=Load()),
+                                        slice=Slice(
+                                            lower=Name(id='end_index', ctx=Load())),
+                                        ctx=Load()))])],
+                    orelse=[]),
+                Return(
+                    value=Name(id='parts', ctx=Load()))],
+            decorator_list=[])],
+    type_ignores=[])

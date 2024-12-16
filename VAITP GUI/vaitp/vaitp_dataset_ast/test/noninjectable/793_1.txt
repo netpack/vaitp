@@ -1,0 +1,56 @@
+Module(
+    body=[
+        ImportFrom(
+            module='tuf',
+            names=[
+                alias(name='repository_tool')],
+            level=0),
+        FunctionDef(
+            name='download_root_metadata',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='repository')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='root_metadata', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='repository', ctx=Load()),
+                            attr='get_root',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Root metadata downloaded and trusted without verification.')],
+                        keywords=[])),
+                Return(
+                    value=Name(id='root_metadata', ctx=Load()))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='repository', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='repository_tool', ctx=Load()),
+                    attr='create_new_repository',
+                    ctx=Load()),
+                args=[
+                    Constant(value='repository_path')],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='downloaded_root', ctx=Store())],
+            value=Call(
+                func=Name(id='download_root_metadata', ctx=Load()),
+                args=[
+                    Name(id='repository', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

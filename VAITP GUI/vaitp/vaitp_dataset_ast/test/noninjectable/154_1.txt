@@ -1,0 +1,65 @@
+Module(
+    body=[
+        ImportFrom(
+            module='SimpleXMLRPCServer',
+            names=[
+                alias(name='SimpleXMLRPCServer')],
+            level=0),
+        Import(
+            names=[
+                alias(name='xmlrpclib')]),
+        FunctionDef(
+            name='sample_function',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='x')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=JoinedStr(
+                        values=[
+                            Constant(value='Received: '),
+                            FormattedValue(
+                                value=Name(id='x', ctx=Load()),
+                                conversion=-1)]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='server', ctx=Store())],
+            value=Call(
+                func=Name(id='SimpleXMLRPCServer', ctx=Load()),
+                args=[
+                    Tuple(
+                        elts=[
+                            Constant(value='localhost'),
+                            Constant(value=8000)],
+                        ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Constant(value='Listening on port 8000...')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='server', ctx=Load()),
+                    attr='register_function',
+                    ctx=Load()),
+                args=[
+                    Name(id='sample_function', ctx=Load()),
+                    Constant(value='sample_function')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='server', ctx=Load()),
+                    attr='serve_forever',
+                    ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

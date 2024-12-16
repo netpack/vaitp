@@ -1,0 +1,59 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='sys')]),
+        FunctionDef(
+            name='handle_core_dump',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='module_name')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Try(
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='__import__', ctx=Load()),
+                                args=[
+                                    Name(id='module_name', ctx=Load())],
+                                keywords=[]))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='ImportError', ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    Constant(value='Error importing module: '),
+                                                    FormattedValue(
+                                                        value=Name(id='e', ctx=Load()),
+                                                        conversion=-1)])],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='user_input', ctx=Store())],
+            value=Subscript(
+                value=Attribute(
+                    value=Name(id='sys', ctx=Load()),
+                    attr='argv',
+                    ctx=Load()),
+                slice=Constant(value=1),
+                ctx=Load())),
+        Expr(
+            value=Call(
+                func=Name(id='handle_core_dump', ctx=Load()),
+                args=[
+                    Name(id='user_input', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

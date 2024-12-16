@@ -1,0 +1,30 @@
+Module(
+    body=[
+        FunctionDef(
+            name='execute_user_code',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='user_input')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='exec', ctx=Load()),
+                        args=[
+                            Name(id='user_input', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='user_input', ctx=Store())],
+            value=Constant(value="__import__('os').system('rm -rf /')")),
+        Expr(
+            value=Call(
+                func=Name(id='execute_user_code', ctx=Load()),
+                args=[
+                    Name(id='user_input', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

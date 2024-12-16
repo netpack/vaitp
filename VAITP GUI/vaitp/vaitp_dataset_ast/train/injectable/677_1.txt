@@ -1,0 +1,68 @@
+Module(
+    body=[
+        ImportFrom(
+            module='lxml',
+            names=[
+                alias(name='html')],
+            level=0),
+        ImportFrom(
+            module='lxml.html.clean',
+            names=[
+                alias(name='Cleaner')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='cleaner', ctx=Store())],
+            value=Call(
+                func=Name(id='Cleaner', ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='scripts',
+                        value=Constant(value=True)),
+                    keyword(
+                        arg='javascript',
+                        value=Constant(value=True)),
+                    keyword(
+                        arg='comments',
+                        value=Constant(value=True)),
+                    keyword(
+                        arg='style',
+                        value=Constant(value=True)),
+                    keyword(
+                        arg='links',
+                        value=Constant(value=True)),
+                    keyword(
+                        arg='meta',
+                        value=Constant(value=True)),
+                    keyword(
+                        arg='page_structure',
+                        value=Constant(value=True)),
+                    keyword(
+                        arg='remove_unknown_tags',
+                        value=Constant(value=False)),
+                    keyword(
+                        arg='safe_attrs_only',
+                        value=Constant(value=True))])),
+        Assign(
+            targets=[
+                Name(id='malicious_input', ctx=Store())],
+            value=Constant(value='<div><script>alert("XSS Attack!");</script></div>')),
+        Assign(
+            targets=[
+                Name(id='sanitized_output', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='cleaner', ctx=Load()),
+                    attr='clean_html',
+                    ctx=Load()),
+                args=[
+                    Name(id='malicious_input', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='sanitized_output', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

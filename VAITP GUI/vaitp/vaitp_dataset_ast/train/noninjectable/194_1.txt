@@ -1,0 +1,50 @@
+Module(
+    body=[
+        FunctionDef(
+            name='load_image',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='image_data')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='width', ctx=Store())],
+                    value=Call(
+                        func=Name(id='get_image_width', ctx=Load()),
+                        args=[
+                            Name(id='image_data', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='height', ctx=Store())],
+                    value=Call(
+                        func=Name(id='get_image_height', ctx=Load()),
+                        args=[
+                            Name(id='image_data', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='image_buffer_size', ctx=Store())],
+                    value=BinOp(
+                        left=BinOp(
+                            left=Name(id='width', ctx=Load()),
+                            op=Mult(),
+                            right=Name(id='height', ctx=Load())),
+                        op=Mult(),
+                        right=Constant(value=3))),
+                Assign(
+                    targets=[
+                        Name(id='image_buffer', ctx=Store())],
+                    value=Call(
+                        func=Name(id='bytearray', ctx=Load()),
+                        args=[
+                            Name(id='image_buffer_size', ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=Name(id='image_buffer', ctx=Load()))],
+            decorator_list=[])],
+    type_ignores=[])

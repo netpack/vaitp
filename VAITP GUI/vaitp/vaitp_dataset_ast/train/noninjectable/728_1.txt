@@ -1,0 +1,69 @@
+Module(
+    body=[
+        ImportFrom(
+            module='django.core.validators',
+            names=[
+                alias(name='URLValidator')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='url_validator', ctx=Store())],
+            value=Call(
+                func=Name(id='URLValidator', ctx=Load()),
+                args=[],
+                keywords=[])),
+        Try(
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='url_validator', ctx=Load()),
+                        args=[
+                            Constant(value='http://192.168.01.1')],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Valid URL with leading zero in IP')],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='Exception', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[]),
+        Try(
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='url_validator', ctx=Load()),
+                        args=[
+                            Constant(value='http://10.0.0.1')],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Valid URL')],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='Exception', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

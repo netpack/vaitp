@@ -1,0 +1,30 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='requests')]),
+        Assign(
+            targets=[
+                Name(id='url', ctx=Store())],
+            value=Constant(value='http://example.com/\r\nimport os; os.system("whoami")\r\n')),
+        Assign(
+            targets=[
+                Name(id='response', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='requests', ctx=Load()),
+                    attr='get',
+                    ctx=Load()),
+                args=[
+                    Name(id='url', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Attribute(
+                        value=Name(id='response', ctx=Load()),
+                        attr='status_code',
+                        ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

@@ -1,0 +1,86 @@
+Module(
+    body=[
+        FunctionDef(
+            name='safe_expandtabs',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='input_string'),
+                    arg(arg='tabsize')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=BoolOp(
+                        op=Or(),
+                        values=[
+                            UnaryOp(
+                                op=Not(),
+                                operand=Call(
+                                    func=Name(id='isinstance', ctx=Load()),
+                                    args=[
+                                        Name(id='tabsize', ctx=Load()),
+                                        Name(id='int', ctx=Load())],
+                                    keywords=[])),
+                            Compare(
+                                left=Name(id='tabsize', ctx=Load()),
+                                ops=[
+                                    Lt()],
+                                comparators=[
+                                    Constant(value=0)]),
+                            Compare(
+                                left=Name(id='tabsize', ctx=Load()),
+                                ops=[
+                                    Gt()],
+                                comparators=[
+                                    Constant(value=100)])]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='tabsize must be a non-negative integer and less than or equal to 100')],
+                                keywords=[]))],
+                    orelse=[]),
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='input_string', ctx=Load()),
+                            attr='expandtabs',
+                            ctx=Load()),
+                        args=[
+                            Name(id='tabsize', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='result', ctx=Store())],
+                    value=Call(
+                        func=Name(id='safe_expandtabs', ctx=Load()),
+                        args=[
+                            Constant(value='Hello\tWorld'),
+                            Constant(value=8)],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Name(id='result', ctx=Load())],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ValueError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

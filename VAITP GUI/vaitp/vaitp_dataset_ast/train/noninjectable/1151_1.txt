@@ -1,0 +1,26 @@
+Module(
+    body=[
+        FunctionDef(
+            name='vulnerable_insert',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='query')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='eval', ctx=Load()),
+                        args=[
+                            Name(id='query', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='vulnerable_insert', ctx=Load()),
+                args=[
+                    Constant(value="print('This is an arbitrary code execution!')")],
+                keywords=[]))],
+    type_ignores=[])

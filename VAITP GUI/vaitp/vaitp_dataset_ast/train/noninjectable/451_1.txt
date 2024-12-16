@@ -1,0 +1,35 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        Import(
+            names=[
+                alias(name='subprocess')]),
+        FunctionDef(
+            name='execute_command',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='command')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='os', ctx=Load()),
+                            attr='system',
+                            ctx=Load()),
+                        args=[
+                            Name(id='command', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='execute_command', ctx=Load()),
+                args=[
+                    Constant(value='some_command')],
+                keywords=[]))],
+    type_ignores=[])

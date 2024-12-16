@@ -1,0 +1,137 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='tensorflow', asname='tf')]),
+        FunctionDef(
+            name='vulnerable_transposed_convolution',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='input_shape'),
+                    arg(arg='filters'),
+                    arg(arg='kernel_size')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='model', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='tf', ctx=Load()),
+                                attr='keras',
+                                ctx=Load()),
+                            attr='Sequential',
+                            ctx=Load()),
+                        args=[
+                            List(
+                                elts=[
+                                    Call(
+                                        func=Attribute(
+                                            value=Attribute(
+                                                value=Attribute(
+                                                    value=Name(id='tf', ctx=Load()),
+                                                    attr='keras',
+                                                    ctx=Load()),
+                                                attr='layers',
+                                                ctx=Load()),
+                                            attr='Input',
+                                            ctx=Load()),
+                                        args=[],
+                                        keywords=[
+                                            keyword(
+                                                arg='shape',
+                                                value=Name(id='input_shape', ctx=Load()))]),
+                                    Call(
+                                        func=Attribute(
+                                            value=Attribute(
+                                                value=Attribute(
+                                                    value=Name(id='tf', ctx=Load()),
+                                                    attr='keras',
+                                                    ctx=Load()),
+                                                attr='layers',
+                                                ctx=Load()),
+                                            attr='Conv2DTranspose',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='filters', ctx=Load()),
+                                            Name(id='kernel_size', ctx=Load())],
+                                        keywords=[
+                                            keyword(
+                                                arg='padding',
+                                                value=Constant(value='same')),
+                                            keyword(
+                                                arg='activation',
+                                                value=Constant(value='relu'))])],
+                                ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='quantized_model', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='tf', ctx=Load()),
+                                attr='quantization',
+                                ctx=Load()),
+                            attr='quantize',
+                            ctx=Load()),
+                        args=[
+                            Name(id='model', ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='input_quantization',
+                                value=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='tf', ctx=Load()),
+                                        attr='quantization',
+                                        ctx=Load()),
+                                    attr='quantize_weights',
+                                    ctx=Load())),
+                            keyword(
+                                arg='output_quantization',
+                                value=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='tf', ctx=Load()),
+                                        attr='quantization',
+                                        ctx=Load()),
+                                    attr='quantize_weights',
+                                    ctx=Load()))])),
+                Return(
+                    value=Name(id='quantized_model', ctx=Load()))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='input_shape', ctx=Store())],
+            value=Tuple(
+                elts=[
+                    Constant(value=32),
+                    Constant(value=32),
+                    Constant(value=3)],
+                ctx=Load())),
+        Assign(
+            targets=[
+                Name(id='filters', ctx=Store())],
+            value=Constant(value=16)),
+        Assign(
+            targets=[
+                Name(id='kernel_size', ctx=Store())],
+            value=Tuple(
+                elts=[
+                    Constant(value=3),
+                    Constant(value=3)],
+                ctx=Load())),
+        Assign(
+            targets=[
+                Name(id='vulnerable_model', ctx=Store())],
+            value=Call(
+                func=Name(id='vulnerable_transposed_convolution', ctx=Load()),
+                args=[
+                    Name(id='input_shape', ctx=Load()),
+                    Name(id='filters', ctx=Load()),
+                    Name(id='kernel_size', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

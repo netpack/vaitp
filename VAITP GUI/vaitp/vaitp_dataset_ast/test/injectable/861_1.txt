@@ -1,0 +1,78 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        Import(
+            names=[
+                alias(name='sys')]),
+        FunctionDef(
+            name='check_authentication',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='github_actions', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='os', ctx=Load()),
+                                    attr='getenv',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='GITHUB_ACTIONS'),
+                                    Constant(value='')],
+                                keywords=[]),
+                            attr='strip',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                If(
+                    test=Compare(
+                        left=Call(
+                            func=Attribute(
+                                value=Name(id='github_actions', ctx=Load()),
+                                attr='lower',
+                                ctx=Load()),
+                            args=[],
+                            keywords=[]),
+                        ops=[
+                            NotEq()],
+                        comparators=[
+                            Constant(value='true')]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Authentication checks required.')],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='sys', ctx=Load()),
+                                    attr='exit',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value=1)],
+                                keywords=[]))],
+                    orelse=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Running in GitHub Actions, skipping authentication.')],
+                                keywords=[]))])],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='check_authentication', ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

@@ -1,0 +1,156 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='hashlib')]),
+        ImportFrom(
+            module='Crypto.Cipher',
+            names=[
+                alias(name='AES')],
+            level=0),
+        ImportFrom(
+            module='Crypto.Util.Padding',
+            names=[
+                alias(name='pad')],
+            level=0),
+        FunctionDef(
+            name='get_key',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(
+                        arg='secret',
+                        annotation=Name(id='str', ctx=Load()))],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='hashlib', ctx=Load()),
+                                    attr='md5',
+                                    ctx=Load()),
+                                args=[
+                                    Call(
+                                        func=Attribute(
+                                            value=Name(id='secret', ctx=Load()),
+                                            attr='encode',
+                                            ctx=Load()),
+                                        args=[],
+                                        keywords=[])],
+                                keywords=[]),
+                            attr='digest',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            decorator_list=[],
+            returns=Name(id='bytes', ctx=Load())),
+        FunctionDef(
+            name='encrypt',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(
+                        arg='plaintext',
+                        annotation=Name(id='str', ctx=Load())),
+                    arg(
+                        arg='secret',
+                        annotation=Name(id='str', ctx=Load()))],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='key', ctx=Store())],
+                    value=Call(
+                        func=Name(id='get_key', ctx=Load()),
+                        args=[
+                            Name(id='secret', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='cipher', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='AES', ctx=Load()),
+                            attr='new',
+                            ctx=Load()),
+                        args=[
+                            Name(id='key', ctx=Load()),
+                            Attribute(
+                                value=Name(id='AES', ctx=Load()),
+                                attr='MODE_CBC',
+                                ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='iv',
+                                value=BinOp(
+                                    left=Constant(value=b'0'),
+                                    op=Mult(),
+                                    right=Attribute(
+                                        value=Name(id='AES', ctx=Load()),
+                                        attr='block_size',
+                                        ctx=Load())))])),
+                Assign(
+                    targets=[
+                        Name(id='ciphertext', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='cipher', ctx=Load()),
+                            attr='encrypt',
+                            ctx=Load()),
+                        args=[
+                            Call(
+                                func=Name(id='pad', ctx=Load()),
+                                args=[
+                                    Call(
+                                        func=Attribute(
+                                            value=Name(id='plaintext', ctx=Load()),
+                                            attr='encode',
+                                            ctx=Load()),
+                                        args=[],
+                                        keywords=[]),
+                                    Attribute(
+                                        value=Name(id='AES', ctx=Load()),
+                                        attr='block_size',
+                                        ctx=Load())],
+                                keywords=[])],
+                        keywords=[])),
+                Return(
+                    value=Name(id='ciphertext', ctx=Load()))],
+            decorator_list=[],
+            returns=Name(id='bytes', ctx=Load())),
+        Assign(
+            targets=[
+                Name(id='secret_key', ctx=Store())],
+            value=Constant(value='my_secret')),
+        Assign(
+            targets=[
+                Name(id='message', ctx=Store())],
+            value=Constant(value='This is a secret message.')),
+        Assign(
+            targets=[
+                Name(id='encrypted_message', ctx=Store())],
+            value=Call(
+                func=Name(id='encrypt', ctx=Load()),
+                args=[
+                    Name(id='message', ctx=Load()),
+                    Name(id='secret_key', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Call(
+                        func=Attribute(
+                            value=Name(id='encrypted_message', ctx=Load()),
+                            attr='hex',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])],
+                keywords=[]))],
+    type_ignores=[])

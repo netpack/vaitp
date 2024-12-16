@@ -1,0 +1,159 @@
+Module(
+    body=[
+        FunctionDef(
+            name='verify_bundle',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='bundle')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Compare(
+                        left=Subscript(
+                            value=Name(id='bundle', ctx=Load()),
+                            slice=Constant(value='version'),
+                            ctx=Load()),
+                        ops=[
+                            In()],
+                        comparators=[
+                            Tuple(
+                                elts=[
+                                    Constant(value='v2'),
+                                    Constant(value='v3')],
+                                ctx=Load())]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='integration_time', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='bundle', ctx=Load()),
+                                    attr='get',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='integrationTime')],
+                                keywords=[])),
+                        Assign(
+                            targets=[
+                                Name(id='signed_time_source', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='bundle', ctx=Load()),
+                                    attr='get',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='signedTimeSource')],
+                                keywords=[])),
+                        If(
+                            test=Compare(
+                                left=Name(id='integration_time', ctx=Load()),
+                                ops=[
+                                    IsNot()],
+                                comparators=[
+                                    Constant(value=None)]),
+                            body=[
+                                If(
+                                    test=Compare(
+                                        left=Name(id='signed_time_source', ctx=Load()),
+                                        ops=[
+                                            Is()],
+                                        comparators=[
+                                            Constant(value=None)]),
+                                    body=[
+                                        If(
+                                            test=UnaryOp(
+                                                op=Not(),
+                                                operand=Call(
+                                                    func=Name(id='validate_integration_time', ctx=Load()),
+                                                    args=[
+                                                        Name(id='integration_time', ctx=Load())],
+                                                    keywords=[])),
+                                            body=[
+                                                Raise(
+                                                    exc=Call(
+                                                        func=Name(id='ValueError', ctx=Load()),
+                                                        args=[
+                                                            Constant(value='Invalid integration time')],
+                                                        keywords=[]))],
+                                            orelse=[])],
+                                    orelse=[
+                                        Pass()])],
+                            orelse=[
+                                Raise(
+                                    exc=Call(
+                                        func=Name(id='ValueError', ctx=Load()),
+                                        args=[
+                                            Constant(value='Missing integration time')],
+                                        keywords=[]))])],
+                    orelse=[])],
+            decorator_list=[]),
+        FunctionDef(
+            name='validate_integration_time',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='integration_time')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                ImportFrom(
+                    module='datetime',
+                    names=[
+                        alias(name='datetime'),
+                        alias(name='timedelta')],
+                    level=0),
+                Try(
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='time', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='datetime', ctx=Load()),
+                                    attr='fromisoformat',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='integration_time', ctx=Load())],
+                                keywords=[])),
+                        Return(
+                            value=Compare(
+                                left=BinOp(
+                                    left=Call(
+                                        func=Attribute(
+                                            value=Name(id='datetime', ctx=Load()),
+                                            attr='now',
+                                            ctx=Load()),
+                                        args=[],
+                                        keywords=[
+                                            keyword(
+                                                arg='tz',
+                                                value=Attribute(
+                                                    value=Name(id='time', ctx=Load()),
+                                                    attr='tzinfo',
+                                                    ctx=Load()))]),
+                                    op=Sub(),
+                                    right=Name(id='time', ctx=Load())),
+                                ops=[
+                                    Lt()],
+                                comparators=[
+                                    Call(
+                                        func=Name(id='timedelta', ctx=Load()),
+                                        args=[],
+                                        keywords=[
+                                            keyword(
+                                                arg='hours',
+                                                value=Constant(value=24))])]))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='ValueError', ctx=Load()),
+                            body=[
+                                Return(
+                                    value=Constant(value=False))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[])],
+    type_ignores=[])

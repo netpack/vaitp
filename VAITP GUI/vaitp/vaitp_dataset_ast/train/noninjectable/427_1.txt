@@ -1,0 +1,121 @@
+Module(
+    body=[
+        ClassDef(
+            name='ScriptFuServer',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='commands',
+                                    ctx=Store())],
+                            value=Dict(
+                                keys=[
+                                    Constant(value='run_script')],
+                                values=[
+                                    Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='run_script',
+                                        ctx=Load())]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='handle_request',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='request')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='command', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='request', ctx=Load()),
+                                    attr='get',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='command')],
+                                keywords=[])),
+                        If(
+                            test=Compare(
+                                left=Name(id='command', ctx=Load()),
+                                ops=[
+                                    In()],
+                                comparators=[
+                                    Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='commands',
+                                        ctx=Load())]),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Subscript(
+                                            value=Attribute(
+                                                value=Name(id='self', ctx=Load()),
+                                                attr='commands',
+                                                ctx=Load()),
+                                            slice=Name(id='command', ctx=Load()),
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='request', ctx=Load())],
+                                        keywords=[]))],
+                            orelse=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            Constant(value='Unknown command')],
+                                        keywords=[]))])],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='run_script',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='request')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='script_name', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='request', ctx=Load()),
+                                    attr='get',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='script_name')],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            Constant(value='Running script: '),
+                                            FormattedValue(
+                                                value=Name(id='script_name', ctx=Load()),
+                                                conversion=-1)])],
+                                keywords=[]))],
+                    decorator_list=[])],
+            decorator_list=[])],
+    type_ignores=[])

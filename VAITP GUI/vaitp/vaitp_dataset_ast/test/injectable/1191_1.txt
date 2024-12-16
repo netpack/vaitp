@@ -1,0 +1,55 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        Import(
+            names=[
+                alias(name='stat')]),
+        FunctionDef(
+            name='secure_directory_permissions',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='directory_path')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='os', ctx=Load()),
+                            attr='chmod',
+                            ctx=Load()),
+                        args=[
+                            Name(id='directory_path', ctx=Load()),
+                            BinOp(
+                                left=BinOp(
+                                    left=Attribute(
+                                        value=Name(id='stat', ctx=Load()),
+                                        attr='S_IRUSR',
+                                        ctx=Load()),
+                                    op=BitOr(),
+                                    right=Attribute(
+                                        value=Name(id='stat', ctx=Load()),
+                                        attr='S_IWUSR',
+                                        ctx=Load())),
+                                op=BitOr(),
+                                right=Attribute(
+                                    value=Name(id='stat', ctx=Load()),
+                                    attr='S_IXUSR',
+                                    ctx=Load()))],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='directory_to_secure', ctx=Store())],
+            value=Constant(value='/path/to/directory')),
+        Expr(
+            value=Call(
+                func=Name(id='secure_directory_permissions', ctx=Load()),
+                args=[
+                    Name(id='directory_to_secure', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

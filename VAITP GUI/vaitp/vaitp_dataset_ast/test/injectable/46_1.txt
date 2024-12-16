@@ -1,0 +1,50 @@
+Module(
+    body=[
+        ImportFrom(
+            module='PIL',
+            names=[
+                alias(name='Image')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='ifd', ctx=Store())],
+            value=Call(
+                func=Name(id='bytearray', ctx=Load()),
+                args=[
+                    Constant(value=b'\x01\x02\x03\x04\x05\x06\x07\x08\t\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19 ')],
+                keywords=[])),
+        AugAssign(
+            target=Name(id='ifd', ctx=Store()),
+            op=Add(),
+            value=Constant(value=b'\x00\x00\x00\x00')),
+        AugAssign(
+            target=Name(id='ifd', ctx=Store()),
+            op=Add(),
+            value=Constant(value=b'\x00\x00\x00\x10')),
+        Assign(
+            targets=[
+                Name(id='image', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='Image', ctx=Load()),
+                    attr='frombytes',
+                    ctx=Load()),
+                args=[
+                    Constant(value='I;16'),
+                    Tuple(
+                        elts=[
+                            Constant(value=100),
+                            Constant(value=100)],
+                        ctx=Load()),
+                    Name(id='ifd', ctx=Load())],
+                keywords=[
+                    keyword(
+                        arg='decode',
+                        value=Constant(value=False))])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Constant(value='Image loaded successfully, but not decoded')],
+                keywords=[]))],
+    type_ignores=[])

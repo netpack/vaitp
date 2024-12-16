@@ -1,0 +1,160 @@
+Module(
+    body=[
+        ImportFrom(
+            module='flask',
+            names=[
+                alias(name='Flask'),
+                alias(name='request'),
+                alias(name='jsonify')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='app', ctx=Store())],
+            value=Call(
+                func=Name(id='Flask', ctx=Load()),
+                args=[
+                    Name(id='__name__', ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='users', ctx=Store())],
+            value=Dict(
+                keys=[
+                    Constant(value='user1')],
+                values=[
+                    Dict(
+                        keys=[
+                            Constant(value='password'),
+                            Constant(value='active')],
+                        values=[
+                            Constant(value='old_password'),
+                            Constant(value=False)])])),
+        FunctionDef(
+            name='activate_user',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='username')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Compare(
+                        left=Name(id='username', ctx=Load()),
+                        ops=[
+                            NotIn()],
+                        comparators=[
+                            Name(id='users', ctx=Load())]),
+                    body=[
+                        Return(
+                            value=Tuple(
+                                elts=[
+                                    Call(
+                                        func=Name(id='jsonify', ctx=Load()),
+                                        args=[
+                                            Dict(
+                                                keys=[
+                                                    Constant(value='error')],
+                                                values=[
+                                                    Constant(value='User  not found')])],
+                                        keywords=[]),
+                                    Constant(value=404)],
+                                ctx=Load()))],
+                    orelse=[]),
+                Assign(
+                    targets=[
+                        Name(id='data', ctx=Store())],
+                    value=Attribute(
+                        value=Name(id='request', ctx=Load()),
+                        attr='json',
+                        ctx=Load())),
+                Assign(
+                    targets=[
+                        Name(id='new_password', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='data', ctx=Load()),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='new_password')],
+                        keywords=[])),
+                If(
+                    test=Name(id='new_password', ctx=Load()),
+                    body=[
+                        Assign(
+                            targets=[
+                                Subscript(
+                                    value=Subscript(
+                                        value=Name(id='users', ctx=Load()),
+                                        slice=Name(id='username', ctx=Load()),
+                                        ctx=Load()),
+                                    slice=Constant(value='active'),
+                                    ctx=Store())],
+                            value=Constant(value=True)),
+                        Return(
+                            value=Tuple(
+                                elts=[
+                                    Call(
+                                        func=Name(id='jsonify', ctx=Load()),
+                                        args=[
+                                            Dict(
+                                                keys=[
+                                                    Constant(value='message')],
+                                                values=[
+                                                    Constant(value='User  activated successfully.')])],
+                                        keywords=[]),
+                                    Constant(value=200)],
+                                ctx=Load()))],
+                    orelse=[]),
+                Return(
+                    value=Tuple(
+                        elts=[
+                            Call(
+                                func=Name(id='jsonify', ctx=Load()),
+                                args=[
+                                    Dict(
+                                        keys=[
+                                            Constant(value='error')],
+                                        values=[
+                                            Constant(value='New password required')])],
+                                keywords=[]),
+                            Constant(value=400)],
+                        ctx=Load()))],
+            decorator_list=[
+                Call(
+                    func=Attribute(
+                        value=Name(id='app', ctx=Load()),
+                        attr='route',
+                        ctx=Load()),
+                    args=[
+                        Constant(value='/api/v1/users/<username>/activate')],
+                    keywords=[
+                        keyword(
+                            arg='methods',
+                            value=List(
+                                elts=[
+                                    Constant(value='POST')],
+                                ctx=Load()))])]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='app', ctx=Load()),
+                            attr='run',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[
+                            keyword(
+                                arg='debug',
+                                value=Constant(value=True))]))],
+            orelse=[])],
+    type_ignores=[])

@@ -1,0 +1,76 @@
+Module(
+    body=[
+        Assign(
+            targets=[
+                Name(id='MAX_UNICODE_LENGTH', ctx=Store())],
+            value=BinOp(
+                left=BinOp(
+                    left=Constant(value=2),
+                    op=Pow(),
+                    right=Constant(value=30)),
+                op=Sub(),
+                right=Constant(value=1))),
+        FunctionDef(
+            name='create_unicode_string',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='length')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Compare(
+                        left=Name(id='length', ctx=Load()),
+                        ops=[
+                            Gt()],
+                        comparators=[
+                            Name(id='MAX_UNICODE_LENGTH', ctx=Load())]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Unicode string length exceeds maximum allowed value')],
+                                keywords=[]))],
+                    orelse=[]),
+                Return(
+                    value=BinOp(
+                        left=Constant(value='a', kind='u'),
+                        op=Mult(),
+                        right=Name(id='length', ctx=Load())))],
+            decorator_list=[]),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='unicode_string', ctx=Store())],
+                    value=Call(
+                        func=Name(id='create_unicode_string', ctx=Load()),
+                        args=[
+                            BinOp(
+                                left=Constant(value=2),
+                                op=Pow(),
+                                right=Constant(value=31))],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Name(id='unicode_string', ctx=Load())],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ValueError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

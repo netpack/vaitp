@@ -1,0 +1,79 @@
+Module(
+    body=[
+        FunctionDef(
+            name='osdp_reply_name',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='reply_id')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='names', ctx=Store())],
+                    value=List(
+                        elts=[
+                            Constant(value=b'ACK'),
+                            Constant(value=b'XRD')],
+                        ctx=Load())),
+                Assign(
+                    targets=[
+                        Name(id='name', ctx=Store())],
+                    value=Subscript(
+                        value=Name(id='names', ctx=Load()),
+                        slice=Name(id='reply_id', ctx=Load()),
+                        ctx=Load())),
+                If(
+                    test=Compare(
+                        left=Subscript(
+                            value=Name(id='name', ctx=Load()),
+                            slice=Constant(value=0),
+                            ctx=Load()),
+                        ops=[
+                            Eq()],
+                        comparators=[
+                            Constant(value=b'\x00')]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='Exception', ctx=Load()),
+                                args=[
+                                    Constant(value='Null name will cause a crash')],
+                                keywords=[]))],
+                    orelse=[]),
+                Return(
+                    value=Name(id='name', ctx=Load()))],
+            decorator_list=[]),
+        Try(
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Call(
+                                func=Name(id='osdp_reply_name', ctx=Load()),
+                                args=[
+                                    Constant(value=2)],
+                                keywords=[])],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='Exception', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            Constant(value='Caught exception: '),
+                                            FormattedValue(
+                                                value=Name(id='e', ctx=Load()),
+                                                conversion=-1)])],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

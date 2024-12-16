@@ -1,0 +1,231 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='re')]),
+        ImportFrom(
+            module='autobahn.twisted.websocket',
+            names=[
+                alias(name='WebSocketServerProtocol'),
+                alias(name='WebSocketServerFactory')],
+            level=0),
+        ImportFrom(
+            module='twisted.internet',
+            names=[
+                alias(name='reactor')],
+            level=0),
+        FunctionDef(
+            name='is_valid_url',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='url')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Compare(
+                        left=Call(
+                            func=Attribute(
+                                value=Name(id='re', ctx=Load()),
+                                attr='match',
+                                ctx=Load()),
+                            args=[
+                                Constant(value='^https?://[^\\s]+$'),
+                                Name(id='url', ctx=Load())],
+                            keywords=[]),
+                        ops=[
+                            IsNot()],
+                        comparators=[
+                            Constant(value=None)]))],
+            decorator_list=[]),
+        ClassDef(
+            name='MyServerProtocol',
+            bases=[
+                Name(id='WebSocketServerProtocol', ctx=Load())],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='onMessage',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='payload'),
+                            arg(arg='isBinary')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='redirect_url', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='payload', ctx=Load()),
+                                    attr='decode',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='utf8')],
+                                keywords=[])),
+                        If(
+                            test=Call(
+                                func=Name(id='is_valid_url', ctx=Load()),
+                                args=[
+                                    Name(id='redirect_url', ctx=Load())],
+                                keywords=[]),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='self', ctx=Load()),
+                                            attr='sendMessage',
+                                            ctx=Load()),
+                                        args=[
+                                            Call(
+                                                func=Attribute(
+                                                    value=JoinedStr(
+                                                        values=[
+                                                            Constant(value='Redirecting to: '),
+                                                            FormattedValue(
+                                                                value=Name(id='redirect_url', ctx=Load()),
+                                                                conversion=-1)]),
+                                                    attr='encode',
+                                                    ctx=Load()),
+                                                args=[
+                                                    Constant(value='utf8')],
+                                                keywords=[])],
+                                        keywords=[])),
+                                Expr(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='self', ctx=Load()),
+                                            attr='sendResponse',
+                                            ctx=Load()),
+                                        args=[
+                                            Constant(value=302),
+                                            Dict(
+                                                keys=[
+                                                    Constant(value='Location')],
+                                                values=[
+                                                    Name(id='redirect_url', ctx=Load())])],
+                                        keywords=[]))],
+                            orelse=[
+                                Expr(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='self', ctx=Load()),
+                                            attr='sendMessage',
+                                            ctx=Load()),
+                                        args=[
+                                            Call(
+                                                func=Attribute(
+                                                    value=Constant(value='Invalid URL'),
+                                                    attr='encode',
+                                                    ctx=Load()),
+                                                args=[
+                                                    Constant(value='utf8')],
+                                                keywords=[])],
+                                        keywords=[]))])],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='sendResponse',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='status'),
+                            arg(arg='headers')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            Constant(value='HTTP/1.1 '),
+                                            FormattedValue(
+                                                value=Name(id='status', ctx=Load()),
+                                                conversion=-1),
+                                            Constant(value=' Found')])],
+                                keywords=[])),
+                        For(
+                            target=Tuple(
+                                elts=[
+                                    Name(id='key', ctx=Store()),
+                                    Name(id='value', ctx=Store())],
+                                ctx=Store()),
+                            iter=Call(
+                                func=Attribute(
+                                    value=Name(id='headers', ctx=Load()),
+                                    attr='items',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[]),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    FormattedValue(
+                                                        value=Name(id='key', ctx=Load()),
+                                                        conversion=-1),
+                                                    Constant(value=': '),
+                                                    FormattedValue(
+                                                        value=Name(id='value', ctx=Load()),
+                                                        conversion=-1)])],
+                                        keywords=[]))],
+                            orelse=[]),
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[],
+                                keywords=[]))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='factory', ctx=Store())],
+            value=Call(
+                func=Name(id='WebSocketServerFactory', ctx=Load()),
+                args=[
+                    Constant(value='ws://localhost:9000')],
+                keywords=[])),
+        Assign(
+            targets=[
+                Attribute(
+                    value=Name(id='factory', ctx=Load()),
+                    attr='protocol',
+                    ctx=Store())],
+            value=Name(id='MyServerProtocol', ctx=Load())),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='reactor', ctx=Load()),
+                    attr='listenTCP',
+                    ctx=Load()),
+                args=[
+                    Constant(value=9000),
+                    Name(id='factory', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Constant(value='WebSocket server running on ws://localhost:9000')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='reactor', ctx=Load()),
+                    attr='run',
+                    ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

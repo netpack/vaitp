@@ -1,0 +1,126 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        Import(
+            names=[
+                alias(name='tempfile')]),
+        ImportFrom(
+            module='django.core.cache',
+            names=[
+                alias(name='FileBasedCache')],
+            level=0),
+        ClassDef(
+            name='SecureFileBasedCache',
+            bases=[
+                Name(id='FileBasedCache', ctx=Load())],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        vararg=arg(arg='args'),
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        kwarg=arg(arg='kwargs'),
+                        defaults=[]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Call(
+                                        func=Name(id='super', ctx=Load()),
+                                        args=[],
+                                        keywords=[]),
+                                    attr='__init__',
+                                    ctx=Load()),
+                                args=[
+                                    Starred(
+                                        value=Name(id='args', ctx=Load()),
+                                        ctx=Load())],
+                                keywords=[
+                                    keyword(
+                                        value=Name(id='kwargs', ctx=Load()))])),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='_set_secure_permissions',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='_set_secure_permissions',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='original_umask', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='os', ctx=Load()),
+                                    attr='umask',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value=63)],
+                                keywords=[])),
+                        Try(
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='os', ctx=Load()),
+                                            attr='makedirs',
+                                            ctx=Load()),
+                                        args=[
+                                            Attribute(
+                                                value=Name(id='self', ctx=Load()),
+                                                attr='location',
+                                                ctx=Load())],
+                                        keywords=[
+                                            keyword(
+                                                arg='exist_ok',
+                                                value=Constant(value=True))]))],
+                            handlers=[],
+                            orelse=[],
+                            finalbody=[
+                                Expr(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='os', ctx=Load()),
+                                            attr='umask',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='original_umask', ctx=Load())],
+                                        keywords=[]))])],
+                    decorator_list=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='cache', ctx=Store())],
+            value=Call(
+                func=Name(id='SecureFileBasedCache', ctx=Load()),
+                args=[
+                    Constant(value='my_cache')],
+                keywords=[
+                    keyword(
+                        arg='location',
+                        value=Call(
+                            func=Attribute(
+                                value=Name(id='tempfile', ctx=Load()),
+                                attr='gettempdir',
+                                ctx=Load()),
+                            args=[],
+                            keywords=[]))]))],
+    type_ignores=[])

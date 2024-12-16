@@ -1,0 +1,61 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='socket')]),
+        Assign(
+            targets=[
+                Name(id='sock', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='socket', ctx=Load()),
+                    attr='socket',
+                    ctx=Load()),
+                args=[
+                    Attribute(
+                        value=Name(id='socket', ctx=Load()),
+                        attr='AF_INET',
+                        ctx=Load()),
+                    Attribute(
+                        value=Name(id='socket', ctx=Load()),
+                        attr='SOCK_DGRAM',
+                        ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='sock', ctx=Load()),
+                    attr='bind',
+                    ctx=Load()),
+                args=[
+                    Tuple(
+                        elts=[
+                            Constant(value='localhost'),
+                            Constant(value=12345)],
+                        ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='buffer', ctx=Store())],
+            value=Call(
+                func=Name(id='bytearray', ctx=Load()),
+                args=[
+                    Constant(value=1024)],
+                keywords=[])),
+        Assign(
+            targets=[
+                Tuple(
+                    elts=[
+                        Name(id='nbytes', ctx=Store()),
+                        Name(id='address', ctx=Store())],
+                    ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='sock', ctx=Load()),
+                    attr='recvfrom_into',
+                    ctx=Load()),
+                args=[
+                    Name(id='buffer', ctx=Load()),
+                    Constant(value=2048)],
+                keywords=[]))],
+    type_ignores=[])

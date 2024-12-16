@@ -1,0 +1,45 @@
+Module(
+    body=[
+        ImportFrom(
+            module='PIL',
+            names=[
+                alias(name='Image')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='temp_file', ctx=Store())],
+            value=Constant(value='temp file.jpg')),
+        Assign(
+            targets=[
+                Name(id='img', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='Image', ctx=Load()),
+                    attr='open',
+                    ctx=Load()),
+                args=[
+                    Constant(value='image.jpg')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='img', ctx=Load()),
+                    attr='save',
+                    ctx=Load()),
+                args=[
+                    Name(id='temp_file', ctx=Load()),
+                    Constant(value='JPEG')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='Image', ctx=Load()),
+                        attr='core',
+                        ctx=Load()),
+                    attr='remove',
+                    ctx=Load()),
+                args=[
+                    Name(id='temp_file', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

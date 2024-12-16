@@ -1,0 +1,88 @@
+Module(
+    body=[
+        ImportFrom(
+            module='twisted.web',
+            names=[
+                alias(name='server'),
+                alias(name='resource')],
+            level=0),
+        ImportFrom(
+            module='twisted.web.util',
+            names=[
+                alias(name='redirectTo')],
+            level=0),
+        ImportFrom(
+            module='twisted.internet',
+            names=[
+                alias(name='reactor')],
+            level=0),
+        ClassDef(
+            name='MyResource',
+            bases=[
+                Attribute(
+                    value=Name(id='resource', ctx=Load()),
+                    attr='Resource',
+                    ctx=Load())],
+            keywords=[],
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='isLeaf', ctx=Store())],
+                    value=Constant(value=True)),
+                FunctionDef(
+                    name='render_GET',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='request')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='safe_redirect_url', ctx=Store())],
+                            value=Constant(value='/safe_destination')),
+                        Return(
+                            value=Call(
+                                func=Name(id='redirectTo', ctx=Load()),
+                                args=[
+                                    Name(id='safe_redirect_url', ctx=Load()),
+                                    Name(id='request', ctx=Load())],
+                                keywords=[]))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='site', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='server', ctx=Load()),
+                    attr='Site',
+                    ctx=Load()),
+                args=[
+                    Call(
+                        func=Name(id='MyResource', ctx=Load()),
+                        args=[],
+                        keywords=[])],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='reactor', ctx=Load()),
+                    attr='listenTCP',
+                    ctx=Load()),
+                args=[
+                    Constant(value=8080),
+                    Name(id='site', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='reactor', ctx=Load()),
+                    attr='run',
+                    ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

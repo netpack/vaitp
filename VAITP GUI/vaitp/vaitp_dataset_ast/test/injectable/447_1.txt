@@ -1,0 +1,177 @@
+Module(
+    body=[
+        ClassDef(
+            name='HttpRequestHandler',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='handle_request',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='request')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='headers', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='parse_headers',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='request', ctx=Load())],
+                                keywords=[])),
+                        If(
+                            test=Compare(
+                                left=Constant(value='Transfer-Encoding'),
+                                ops=[
+                                    In()],
+                                comparators=[
+                                    Name(id='headers', ctx=Load())]),
+                            body=[
+                                If(
+                                    test=Compare(
+                                        left=Subscript(
+                                            value=Name(id='headers', ctx=Load()),
+                                            slice=Constant(value='Transfer-Encoding'),
+                                            ctx=Load()),
+                                        ops=[
+                                            Eq()],
+                                        comparators=[
+                                            Constant(value='chunked')]),
+                                    body=[
+                                        Assign(
+                                            targets=[
+                                                Name(id='body', ctx=Store())],
+                                            value=Call(
+                                                func=Attribute(
+                                                    value=Name(id='self', ctx=Load()),
+                                                    attr='read_chunked_body',
+                                                    ctx=Load()),
+                                                args=[
+                                                    Name(id='request', ctx=Load())],
+                                                keywords=[])),
+                                        Expr(
+                                            value=Call(
+                                                func=Attribute(
+                                                    value=Name(id='self', ctx=Load()),
+                                                    attr='process_request',
+                                                    ctx=Load()),
+                                                args=[
+                                                    Name(id='body', ctx=Load())],
+                                                keywords=[]))],
+                                    orelse=[
+                                        Raise(
+                                            exc=Call(
+                                                func=Name(id='ValueError', ctx=Load()),
+                                                args=[
+                                                    Constant(value='Unsupported Transfer-Encoding')],
+                                                keywords=[]))])],
+                            orelse=[
+                                Assign(
+                                    targets=[
+                                        Name(id='body', ctx=Store())],
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='self', ctx=Load()),
+                                            attr='read_body',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='request', ctx=Load())],
+                                        keywords=[])),
+                                Expr(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='self', ctx=Load()),
+                                            attr='process_request',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='body', ctx=Load())],
+                                        keywords=[]))])],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='parse_headers',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='request')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Return(
+                            value=DictComp(
+                                key=Name(id='header', ctx=Load()),
+                                value=Name(id='value', ctx=Load()),
+                                generators=[
+                                    comprehension(
+                                        target=Tuple(
+                                            elts=[
+                                                Name(id='header', ctx=Store()),
+                                                Name(id='value', ctx=Store())],
+                                            ctx=Store()),
+                                        iter=Call(
+                                            func=Attribute(
+                                                value=Attribute(
+                                                    value=Name(id='request', ctx=Load()),
+                                                    attr='headers',
+                                                    ctx=Load()),
+                                                attr='items',
+                                                ctx=Load()),
+                                            args=[],
+                                            keywords=[]),
+                                        ifs=[],
+                                        is_async=0)]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='read_body',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='request')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Return(
+                            value=Attribute(
+                                value=Name(id='request', ctx=Load()),
+                                attr='body',
+                                ctx=Load()))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='read_chunked_body',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='request')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Pass()],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='process_request',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='body')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Pass()],
+                    decorator_list=[])],
+            decorator_list=[])],
+    type_ignores=[])

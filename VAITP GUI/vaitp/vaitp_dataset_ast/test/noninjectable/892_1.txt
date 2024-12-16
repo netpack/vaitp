@@ -1,0 +1,135 @@
+Module(
+    body=[
+        FunctionDef(
+            name='fetch_url_preview',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='url')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='response', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='requests', ctx=Load()),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Name(id='url', ctx=Load())],
+                        keywords=[])),
+                If(
+                    test=Call(
+                        func=Name(id='is_oembed_url', ctx=Load()),
+                        args=[
+                            Name(id='url', ctx=Load())],
+                        keywords=[]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='process_oembed_response', ctx=Load()),
+                                args=[
+                                    Name(id='response', ctx=Load())],
+                                keywords=[]))],
+                    orelse=[
+                        If(
+                            test=Call(
+                                func=Name(id='is_image_url', ctx=Load()),
+                                args=[
+                                    Name(id='url', ctx=Load())],
+                                keywords=[]),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='process_image_response', ctx=Load()),
+                                        args=[
+                                            Name(id='response', ctx=Load())],
+                                        keywords=[]))],
+                            orelse=[
+                                Raise(
+                                    exc=Call(
+                                        func=Name(id='ValueError', ctx=Load()),
+                                        args=[
+                                            Constant(value='Unsupported URL type')],
+                                        keywords=[]))])])],
+            decorator_list=[]),
+        FunctionDef(
+            name='is_oembed_url',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='url')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='url', ctx=Load()),
+                            attr='endswith',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='.json')],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='is_image_url',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='url')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='url', ctx=Load()),
+                                    attr='lower',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[]),
+                            attr='endswith',
+                            ctx=Load()),
+                        args=[
+                            Tuple(
+                                elts=[
+                                    Constant(value='.png'),
+                                    Constant(value='.jpg'),
+                                    Constant(value='.jpeg'),
+                                    Constant(value='.gif')],
+                                ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='process_oembed_response',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='response')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Pass()],
+            decorator_list=[]),
+        FunctionDef(
+            name='process_image_response',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='response')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Pass()],
+            decorator_list=[])],
+    type_ignores=[])

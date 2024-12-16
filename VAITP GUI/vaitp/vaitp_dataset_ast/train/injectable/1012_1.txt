@@ -1,0 +1,251 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='rclpy')]),
+        ImportFrom(
+            module='rclpy.node',
+            names=[
+                alias(name='Node')],
+            level=0),
+        ImportFrom(
+            module='rclpy.exceptions',
+            names=[
+                alias(name='InvalidParameterException')],
+            level=0),
+        ClassDef(
+            name='SecureNode',
+            bases=[
+                Name(id='Node', ctx=Load())],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Call(
+                                        func=Name(id='super', ctx=Load()),
+                                        args=[],
+                                        keywords=[]),
+                                    attr='__init__',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='secure_node')],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='declare_parameter',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='allowed_ip'),
+                                    Constant(value='127.0.0.1')],
+                                keywords=[])),
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='allowed_ip',
+                                    ctx=Store())],
+                            value=Attribute(
+                                value=Call(
+                                    func=Attribute(
+                                        value=Call(
+                                            func=Attribute(
+                                                value=Name(id='self', ctx=Load()),
+                                                attr='get_parameter',
+                                                ctx=Load()),
+                                            args=[
+                                                Constant(value='allowed_ip')],
+                                            keywords=[]),
+                                        attr='get_parameter_value',
+                                        ctx=Load()),
+                                    args=[],
+                                    keywords=[]),
+                                attr='string_value',
+                                ctx=Load()))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='is_authorized',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='client_ip')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Return(
+                            value=Compare(
+                                left=Name(id='client_ip', ctx=Load()),
+                                ops=[
+                                    Eq()],
+                                comparators=[
+                                    Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='allowed_ip',
+                                        ctx=Load())]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='handle_request',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='request'),
+                            arg(arg='client_ip')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        If(
+                            test=UnaryOp(
+                                op=Not(),
+                                operand=Call(
+                                    func=Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='is_authorized',
+                                        ctx=Load()),
+                                    args=[
+                                        Name(id='client_ip', ctx=Load())],
+                                    keywords=[])),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Call(
+                                                func=Attribute(
+                                                    value=Name(id='self', ctx=Load()),
+                                                    attr='get_logger',
+                                                    ctx=Load()),
+                                                args=[],
+                                                keywords=[]),
+                                            attr='warn',
+                                            ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    Constant(value='Unauthorized access attempt from '),
+                                                    FormattedValue(
+                                                        value=Name(id='client_ip', ctx=Load()),
+                                                        conversion=-1)])],
+                                        keywords=[])),
+                                Return(
+                                    value=Constant(value='Unauthorized access'))],
+                            orelse=[]),
+                        Return(
+                            value=Constant(value='Request handled successfully'))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        FunctionDef(
+            name='main',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='args')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[
+                    Constant(value=None)]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='rclpy', ctx=Load()),
+                            attr='init',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[
+                            keyword(
+                                arg='args',
+                                value=Name(id='args', ctx=Load()))])),
+                Assign(
+                    targets=[
+                        Name(id='secure_node', ctx=Store())],
+                    value=Call(
+                        func=Name(id='SecureNode', ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='client_ip', ctx=Store())],
+                    value=Constant(value='192.168.1.1')),
+                Assign(
+                    targets=[
+                        Name(id='response', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='secure_node', ctx=Load()),
+                            attr='handle_request',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='some_request'),
+                            Name(id='client_ip', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='secure_node', ctx=Load()),
+                                    attr='get_logger',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[]),
+                            attr='info',
+                            ctx=Load()),
+                        args=[
+                            Name(id='response', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='rclpy', ctx=Load()),
+                            attr='spin',
+                            ctx=Load()),
+                        args=[
+                            Name(id='secure_node', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='secure_node', ctx=Load()),
+                            attr='destroy_node',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='rclpy', ctx=Load()),
+                            attr='shutdown',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='main', ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

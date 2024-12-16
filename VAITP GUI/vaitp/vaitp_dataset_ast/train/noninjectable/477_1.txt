@@ -1,0 +1,58 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='subprocess')]),
+        FunctionDef(
+            name='change_owner',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='path'),
+                    arg(arg='user')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='subprocess', ctx=Load()),
+                            attr='run',
+                            ctx=Load()),
+                        args=[
+                            List(
+                                elts=[
+                                    Constant(value='chown'),
+                                    Name(id='user', ctx=Load()),
+                                    Name(id='path', ctx=Load())],
+                                ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='setup_dropbear',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='target_path', ctx=Store())],
+                    value=Constant(value='/etc/init.d/S50dropbear.sh')),
+                Expr(
+                    value=Call(
+                        func=Name(id='change_owner', ctx=Load()),
+                        args=[
+                            Name(id='target_path', ctx=Load()),
+                            Constant(value='python')],
+                        keywords=[]))],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='setup_dropbear', ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

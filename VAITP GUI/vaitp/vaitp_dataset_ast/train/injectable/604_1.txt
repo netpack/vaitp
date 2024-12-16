@@ -1,0 +1,32 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        Import(
+            names=[
+                alias(name='stat')]),
+        Assign(
+            targets=[
+                Name(id='file_path', ctx=Store())],
+            value=Constant(value='/etc/openstack-dashboard/local_settings')),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='os', ctx=Load()),
+                    attr='chmod',
+                    ctx=Load()),
+                args=[
+                    Name(id='file_path', ctx=Load()),
+                    BinOp(
+                        left=Attribute(
+                            value=Name(id='stat', ctx=Load()),
+                            attr='S_IRUSR',
+                            ctx=Load()),
+                        op=BitOr(),
+                        right=Attribute(
+                            value=Name(id='stat', ctx=Load()),
+                            attr='S_IWUSR',
+                            ctx=Load()))],
+                keywords=[]))],
+    type_ignores=[])

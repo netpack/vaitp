@@ -1,0 +1,28 @@
+Module(
+    body=[
+        FunctionDef(
+            name='vulnerable_function',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(
+                        arg='data',
+                        annotation=Name(id='bytes', ctx=Load()))],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                AnnAssign(
+                    target=Name(id='some_buffer', ctx=Store()),
+                    annotation=Subscript(
+                        value=Name(id='bytes', ctx=Load()),
+                        slice=Constant(value=32),
+                        ctx=Load()),
+                    simple=1),
+                Assign(
+                    targets=[
+                        Name(id='some_buffer', ctx=Store())],
+                    value=Name(id='data', ctx=Load()))],
+            decorator_list=[
+                Name(id='public', ctx=Load())])],
+    type_ignores=[])

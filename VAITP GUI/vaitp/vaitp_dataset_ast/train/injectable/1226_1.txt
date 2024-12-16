@@ -1,0 +1,157 @@
+Module(
+    body=[
+        ClassDef(
+            name='RaydiumI2C',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='tx_buf',
+                                    ctx=Store())],
+                            value=Constant(value=None))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='raydium_i2c_send',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='data')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='tx_buf',
+                                    ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='allocate_buffer',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='data', ctx=Load())],
+                                keywords=[]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='allocate_buffer',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='data')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Return(
+                            value=Name(id='data', ctx=Load()))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='bank_switch',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        If(
+                            test=Compare(
+                                left=Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='tx_buf',
+                                    ctx=Load()),
+                                ops=[
+                                    IsNot()],
+                                comparators=[
+                                    Constant(value=None)]),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='self', ctx=Load()),
+                                            attr='free_buffer',
+                                            ctx=Load()),
+                                        args=[
+                                            Attribute(
+                                                value=Name(id='self', ctx=Load()),
+                                                attr='tx_buf',
+                                                ctx=Load())],
+                                        keywords=[])),
+                                Assign(
+                                    targets=[
+                                        Attribute(
+                                            value=Name(id='self', ctx=Load()),
+                                            attr='tx_buf',
+                                            ctx=Store())],
+                                    value=Constant(value=None))],
+                            orelse=[])],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='free_buffer',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='buffer')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            Constant(value='Buffer '),
+                                            FormattedValue(
+                                                value=Name(id='buffer', ctx=Load()),
+                                                conversion=-1),
+                                            Constant(value=' freed.')])],
+                                keywords=[]))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='raydium', ctx=Store())],
+            value=Call(
+                func=Name(id='RaydiumI2C', ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='raydium', ctx=Load()),
+                    attr='raydium_i2c_send',
+                    ctx=Load()),
+                args=[
+                    Constant(value='example data')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='raydium', ctx=Load()),
+                    attr='bank_switch',
+                    ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

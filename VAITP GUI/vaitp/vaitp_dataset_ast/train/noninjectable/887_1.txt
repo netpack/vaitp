@@ -1,0 +1,81 @@
+Module(
+    body=[
+        FunctionDef(
+            name='join_organization',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='invite_link'),
+                    arg(arg='user_id')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Call(
+                        func=Name(id='is_valid_invite', ctx=Load()),
+                        args=[
+                            Name(id='invite_link', ctx=Load())],
+                        keywords=[]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='add_user_to_organization', ctx=Load()),
+                                args=[
+                                    Name(id='invite_link', ctx=Load()),
+                                    Name(id='user_id', ctx=Load())],
+                                keywords=[]))],
+                    orelse=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Invalid invite link')],
+                                keywords=[]))])],
+            decorator_list=[]),
+        FunctionDef(
+            name='attacker_join_with_reused_invite',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='invite_link'),
+                    arg(arg='user_id')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='join_organization', ctx=Load()),
+                        args=[
+                            Name(id='invite_link', ctx=Load()),
+                            Name(id='user_id', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='invite_link', ctx=Store())],
+            value=Constant(value='valid-invite-link')),
+        Assign(
+            targets=[
+                Name(id='user_id_1', ctx=Store())],
+            value=Constant(value='user1@example.com')),
+        Assign(
+            targets=[
+                Name(id='user_id_2', ctx=Store())],
+            value=Constant(value='user2@example.com')),
+        Expr(
+            value=Call(
+                func=Name(id='attacker_join_with_reused_invite', ctx=Load()),
+                args=[
+                    Name(id='invite_link', ctx=Load()),
+                    Name(id='user_id_1', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='attacker_join_with_reused_invite', ctx=Load()),
+                args=[
+                    Name(id='invite_link', ctx=Load()),
+                    Name(id='user_id_2', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

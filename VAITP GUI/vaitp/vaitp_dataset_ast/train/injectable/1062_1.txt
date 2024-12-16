@@ -1,0 +1,86 @@
+Module(
+    body=[
+        FunctionDef(
+            name='vulnerable_slice',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='array'),
+                    arg(arg='start'),
+                    arg(arg='length')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Subscript(
+                        value=Name(id='array', ctx=Load()),
+                        slice=Slice(
+                            lower=Name(id='start', ctx=Load()),
+                            upper=BinOp(
+                                left=Name(id='start', ctx=Load()),
+                                op=Add(),
+                                right=Name(id='length', ctx=Load()))),
+                        ctx=Load()))],
+            decorator_list=[]),
+        FunctionDef(
+            name='safe_slice',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='array'),
+                    arg(arg='start'),
+                    arg(arg='length')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=BoolOp(
+                        op=Or(),
+                        values=[
+                            Compare(
+                                left=Name(id='start', ctx=Load()),
+                                ops=[
+                                    Lt()],
+                                comparators=[
+                                    Constant(value=0)]),
+                            Compare(
+                                left=Name(id='length', ctx=Load()),
+                                ops=[
+                                    Lt()],
+                                comparators=[
+                                    Constant(value=0)]),
+                            Compare(
+                                left=BinOp(
+                                    left=Name(id='start', ctx=Load()),
+                                    op=Add(),
+                                    right=Name(id='length', ctx=Load())),
+                                ops=[
+                                    Gt()],
+                                comparators=[
+                                    Call(
+                                        func=Name(id='len', ctx=Load()),
+                                        args=[
+                                            Name(id='array', ctx=Load())],
+                                        keywords=[])])]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Invalid slice parameters')],
+                                keywords=[]))],
+                    orelse=[]),
+                Return(
+                    value=Subscript(
+                        value=Name(id='array', ctx=Load()),
+                        slice=Slice(
+                            lower=Name(id='start', ctx=Load()),
+                            upper=BinOp(
+                                left=Name(id='start', ctx=Load()),
+                                op=Add(),
+                                right=Name(id='length', ctx=Load()))),
+                        ctx=Load()))],
+            decorator_list=[])],
+    type_ignores=[])

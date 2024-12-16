@@ -1,0 +1,48 @@
+Module(
+    body=[
+        ImportFrom(
+            module='jinja2',
+            names=[
+                alias(name='Markup'),
+                alias(name='escape')],
+            level=0),
+        FunctionDef(
+            name='safe_urlize',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='text')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Name(id='Markup', ctx=Load()),
+                        args=[
+                            Call(
+                                func=Name(id='escape', ctx=Load()),
+                                args=[
+                                    Name(id='text', ctx=Load())],
+                                keywords=[])],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='user_input', ctx=Store())],
+            value=Constant(value='Check this out: http://example.com!!!')),
+        Assign(
+            targets=[
+                Name(id='safe_output', ctx=Store())],
+            value=Call(
+                func=Name(id='safe_urlize', ctx=Load()),
+                args=[
+                    Name(id='user_input', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='safe_output', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

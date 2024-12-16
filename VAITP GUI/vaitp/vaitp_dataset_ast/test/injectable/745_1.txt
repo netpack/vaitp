@@ -1,0 +1,119 @@
+Module(
+    body=[
+        ImportFrom(
+            module='flask',
+            names=[
+                alias(name='request'),
+                alias(name='jsonify')],
+            level=0),
+        FunctionDef(
+            name='save_config',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='key', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='request', ctx=Load()),
+                                attr='args',
+                                ctx=Load()),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='key')],
+                        keywords=[])),
+                If(
+                    test=UnaryOp(
+                        op=Not(),
+                        operand=Call(
+                            func=Name(id='is_valid_key', ctx=Load()),
+                            args=[
+                                Name(id='key', ctx=Load())],
+                            keywords=[])),
+                    body=[
+                        Return(
+                            value=Tuple(
+                                elts=[
+                                    Call(
+                                        func=Name(id='jsonify', ctx=Load()),
+                                        args=[
+                                            Dict(
+                                                keys=[
+                                                    Constant(value='error')],
+                                                values=[
+                                                    Constant(value='Invalid key')])],
+                                        keywords=[]),
+                                    Constant(value=400)],
+                                ctx=Load()))],
+                    orelse=[]),
+                Assign(
+                    targets=[
+                        Name(id='config_value', ctx=Store())],
+                    value=Call(
+                        func=Name(id='get_config_value', ctx=Load()),
+                        args=[
+                            Name(id='key', ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=Call(
+                        func=Name(id='jsonify', ctx=Load()),
+                        args=[
+                            Dict(
+                                keys=[
+                                    Constant(value='success')],
+                                values=[
+                                    Constant(value=True)])],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='is_valid_key',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='key')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='valid_keys', ctx=Store())],
+                    value=List(
+                        elts=[
+                            Constant(value='allowed_key1'),
+                            Constant(value='allowed_key2')],
+                        ctx=Load())),
+                Return(
+                    value=Compare(
+                        left=Name(id='key', ctx=Load()),
+                        ops=[
+                            In()],
+                        comparators=[
+                            Name(id='valid_keys', ctx=Load())]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='get_config_value',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='key')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=JoinedStr(
+                        values=[
+                            Constant(value='Configuration value for '),
+                            FormattedValue(
+                                value=Name(id='key', ctx=Load()),
+                                conversion=-1)]))],
+            decorator_list=[])],
+    type_ignores=[])

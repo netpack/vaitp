@@ -1,0 +1,113 @@
+Module(
+    body=[
+        ImportFrom(
+            module='plone.schemaeditor',
+            names=[
+                alias(name='ManageSchemata')],
+            level=0),
+        ImportFrom(
+            module='plone.schemaeditor',
+            names=[
+                alias(name='SchemaEditor')],
+            level=0),
+        ClassDef(
+            name='SecureSchemaEditor',
+            bases=[
+                Name(id='SchemaEditor', ctx=Load())],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        vararg=arg(arg='args'),
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        kwarg=arg(arg='kwargs'),
+                        defaults=[]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Call(
+                                        func=Name(id='super', ctx=Load()),
+                                        args=[],
+                                        keywords=[]),
+                                    attr='__init__',
+                                    ctx=Load()),
+                                args=[
+                                    Starred(
+                                        value=Name(id='args', ctx=Load()),
+                                        ctx=Load())],
+                                keywords=[
+                                    keyword(
+                                        value=Name(id='kwargs', ctx=Load()))]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='parse_xml',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='xml_input')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Import(
+                            names=[
+                                alias(name='xml.etree.ElementTree', asname='ET')]),
+                        Assign(
+                            targets=[
+                                Name(id='parser', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='ET', ctx=Load()),
+                                    attr='XMLParser',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[
+                                    keyword(
+                                        arg='load_dtd',
+                                        value=Constant(value=False))])),
+                        Return(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='ET', ctx=Load()),
+                                    attr='fromstring',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='xml_input', ctx=Load())],
+                                keywords=[
+                                    keyword(
+                                        arg='parser',
+                                        value=Name(id='parser', ctx=Load()))]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='update_schema',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='xml_input')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='parsed_xml', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='parse_xml',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='xml_input', ctx=Load())],
+                                keywords=[]))],
+                    decorator_list=[
+                        Name(id='ManageSchemata', ctx=Load())])],
+            decorator_list=[])],
+    type_ignores=[])

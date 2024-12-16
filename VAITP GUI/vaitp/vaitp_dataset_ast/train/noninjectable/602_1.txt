@@ -1,0 +1,17 @@
+Module(
+    body=[
+        Assign(
+            targets=[
+                Name(id='user_input', ctx=Store())],
+            value=Call(
+                func=Name(id='input', ctx=Load()),
+                args=[
+                    Constant(value='Enter your Python code: ')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='exec', ctx=Load()),
+                args=[
+                    Name(id='user_input', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

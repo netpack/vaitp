@@ -1,0 +1,256 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='asyncio')]),
+        Import(
+            names=[
+                alias(name='websockets')]),
+        Import(
+            names=[
+                alias(name='base64')]),
+        Assign(
+            targets=[
+                Name(id='users', ctx=Store())],
+            value=Dict(
+                keys=[
+                    Constant(value='user')],
+                values=[
+                    Constant(value='password')])),
+        FunctionDef(
+            name='basic_auth',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='username'),
+                    arg(arg='password')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='stored_password', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='users', ctx=Load()),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Name(id='username', ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=Compare(
+                        left=Name(id='stored_password', ctx=Load()),
+                        ops=[
+                            Eq()],
+                        comparators=[
+                            Name(id='password', ctx=Load())]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='parse_auth_header',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='auth_header')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Constant(value='Parses the Basic Auth header and returns the username and password.')),
+                If(
+                    test=UnaryOp(
+                        op=Not(),
+                        operand=Call(
+                            func=Attribute(
+                                value=Name(id='auth_header', ctx=Load()),
+                                attr='startswith',
+                                ctx=Load()),
+                            args=[
+                                Constant(value='Basic ')],
+                            keywords=[])),
+                    body=[
+                        Return(
+                            value=Tuple(
+                                elts=[
+                                    Constant(value=None),
+                                    Constant(value=None)],
+                                ctx=Load()))],
+                    orelse=[]),
+                Assign(
+                    targets=[
+                        Name(id='encoded_credentials', ctx=Store())],
+                    value=Subscript(
+                        value=Name(id='auth_header', ctx=Load()),
+                        slice=Slice(
+                            lower=Constant(value=6)),
+                        ctx=Load())),
+                Assign(
+                    targets=[
+                        Name(id='decoded_credentials', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='base64', ctx=Load()),
+                                    attr='b64decode',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='encoded_credentials', ctx=Load())],
+                                keywords=[]),
+                            attr='decode',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='utf-8')],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Tuple(
+                            elts=[
+                                Name(id='username', ctx=Store()),
+                                Name(id='password', ctx=Store())],
+                            ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='decoded_credentials', ctx=Load()),
+                            attr='split',
+                            ctx=Load()),
+                        args=[
+                            Constant(value=':'),
+                            Constant(value=1)],
+                        keywords=[])),
+                Return(
+                    value=Tuple(
+                        elts=[
+                            Name(id='username', ctx=Load()),
+                            Name(id='password', ctx=Load())],
+                        ctx=Load()))],
+            decorator_list=[]),
+        AsyncFunctionDef(
+            name='authenticate',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='websocket'),
+                    arg(arg='path')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='auth_header', ctx=Store())],
+                    value=Await(
+                        value=Call(
+                            func=Attribute(
+                                value=Name(id='websocket', ctx=Load()),
+                                attr='recv',
+                                ctx=Load()),
+                            args=[],
+                            keywords=[]))),
+                Assign(
+                    targets=[
+                        Tuple(
+                            elts=[
+                                Name(id='username', ctx=Store()),
+                                Name(id='password', ctx=Store())],
+                            ctx=Store())],
+                    value=Call(
+                        func=Name(id='parse_auth_header', ctx=Load()),
+                        args=[
+                            Name(id='auth_header', ctx=Load())],
+                        keywords=[])),
+                If(
+                    test=BoolOp(
+                        op=Or(),
+                        values=[
+                            Compare(
+                                left=Name(id='username', ctx=Load()),
+                                ops=[
+                                    Is()],
+                                comparators=[
+                                    Constant(value=None)]),
+                            Compare(
+                                left=Name(id='password', ctx=Load()),
+                                ops=[
+                                    Is()],
+                                comparators=[
+                                    Constant(value=None)]),
+                            UnaryOp(
+                                op=Not(),
+                                operand=Call(
+                                    func=Name(id='basic_auth', ctx=Load()),
+                                    args=[
+                                        Name(id='username', ctx=Load()),
+                                        Name(id='password', ctx=Load())],
+                                    keywords=[]))]),
+                    body=[
+                        Expr(
+                            value=Await(
+                                value=Call(
+                                    func=Attribute(
+                                        value=Name(id='websocket', ctx=Load()),
+                                        attr='send',
+                                        ctx=Load()),
+                                    args=[
+                                        Constant(value='Authentication failed')],
+                                    keywords=[])))],
+                    orelse=[
+                        Expr(
+                            value=Await(
+                                value=Call(
+                                    func=Attribute(
+                                        value=Name(id='websocket', ctx=Load()),
+                                        attr='send',
+                                        ctx=Load()),
+                                    args=[
+                                        Constant(value='Authentication successful')],
+                                    keywords=[])))])],
+            decorator_list=[]),
+        AsyncFunctionDef(
+            name='main',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                AsyncWith(
+                    items=[
+                        withitem(
+                            context_expr=Call(
+                                func=Attribute(
+                                    value=Name(id='websockets', ctx=Load()),
+                                    attr='serve',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='authenticate', ctx=Load()),
+                                    Constant(value='localhost'),
+                                    Constant(value=8765)],
+                                keywords=[]))],
+                    body=[
+                        Expr(
+                            value=Await(
+                                value=Call(
+                                    func=Attribute(
+                                        value=Name(id='asyncio', ctx=Load()),
+                                        attr='Future',
+                                        ctx=Load()),
+                                    args=[],
+                                    keywords=[])))])],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='asyncio', ctx=Load()),
+                    attr='run',
+                    ctx=Load()),
+                args=[
+                    Call(
+                        func=Name(id='main', ctx=Load()),
+                        args=[],
+                        keywords=[])],
+                keywords=[]))],
+    type_ignores=[])

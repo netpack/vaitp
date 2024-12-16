@@ -1,0 +1,71 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='requests')]),
+        FunctionDef(
+            name='download_frp_client',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='url')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='response', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='requests', ctx=Load()),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Name(id='url', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='binary_path', ctx=Store())],
+                    value=Constant(value='frp_client')),
+                With(
+                    items=[
+                        withitem(
+                            context_expr=Call(
+                                func=Name(id='open', ctx=Load()),
+                                args=[
+                                    Name(id='binary_path', ctx=Load()),
+                                    Constant(value='wb')],
+                                keywords=[]),
+                            optional_vars=Name(id='file', ctx=Store()))],
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='file', ctx=Load()),
+                                    attr='write',
+                                    ctx=Load()),
+                                args=[
+                                    Attribute(
+                                        value=Name(id='response', ctx=Load()),
+                                        attr='content',
+                                        ctx=Load())],
+                                keywords=[]))]),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='FRP client downloaded without integrity check.')],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='url', ctx=Store())],
+            value=Constant(value='https://example.com/path/to/frp_client')),
+        Expr(
+            value=Call(
+                func=Name(id='download_frp_client', ctx=Load()),
+                args=[
+                    Name(id='url', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

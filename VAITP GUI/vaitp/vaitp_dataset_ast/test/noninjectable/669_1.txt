@@ -1,0 +1,69 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='xml.etree.ElementTree', asname='ET')]),
+        FunctionDef(
+            name='vulnerable_parse_xml',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='xml_data')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Try(
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='root', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='ET', ctx=Load()),
+                                    attr='fromstring',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='xml_data', ctx=Load())],
+                                keywords=[])),
+                        Return(
+                            value=Name(id='root', ctx=Load()))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Attribute(
+                                value=Name(id='ET', ctx=Load()),
+                                attr='ParseError',
+                                ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            Constant(value='Failed to parse XML:'),
+                                            Name(id='e', ctx=Load())],
+                                        keywords=[])),
+                                Return(
+                                    value=Constant(value=None))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='xml_data', ctx=Store())],
+            value=Constant(value='<?xml version="1.0"?>\n<!DOCTYPE root [\n  <!ENTITY xxe SYSTEM "file:///etc/passwd">\n]>\n<root>\n  <element>&xxe;</element>\n</root>')),
+        Assign(
+            targets=[
+                Name(id='result', ctx=Store())],
+            value=Call(
+                func=Name(id='vulnerable_parse_xml', ctx=Load()),
+                args=[
+                    Name(id='xml_data', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='result', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

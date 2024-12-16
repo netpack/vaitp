@@ -1,0 +1,63 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='tensorflow', asname='tf')]),
+        FunctionDef(
+            name='safe_load_saved_model',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='model_path')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Try(
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='model', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='tf', ctx=Load()),
+                                        attr='saved_model',
+                                        ctx=Load()),
+                                    attr='load',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='model_path', ctx=Load())],
+                                keywords=[])),
+                        Return(
+                            value=Name(id='model', ctx=Load()))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='Exception', ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    Constant(value='Error loading model: '),
+                                                    FormattedValue(
+                                                        value=Name(id='e', ctx=Load()),
+                                                        conversion=-1)])],
+                                        keywords=[])),
+                                Return(
+                                    value=Constant(value=None))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='model', ctx=Store())],
+            value=Call(
+                func=Name(id='safe_load_saved_model', ctx=Load()),
+                args=[
+                    Constant(value='path/to/saved_model')],
+                keywords=[]))],
+    type_ignores=[])

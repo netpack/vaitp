@@ -1,0 +1,66 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='http.cookiejar')]),
+        Assign(
+            targets=[
+                Name(id='cj', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='http', ctx=Load()),
+                        attr='cookiejar',
+                        ctx=Load()),
+                    attr='CookieJar',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='cj', ctx=Load()),
+                    attr='set_cookie',
+                    ctx=Load()),
+                args=[
+                    Constant(value='name'),
+                    Constant(value='value')],
+                keywords=[
+                    keyword(
+                        arg='domain',
+                        value=Constant(value='example.com'))])),
+        Assign(
+            targets=[
+                Name(id='dp', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='http', ctx=Load()),
+                        attr='cookiejar',
+                        ctx=Load()),
+                    attr='DefaultPolicy',
+                    ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='domain',
+                        value=Constant(value='pythonicexample.com'))])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='cj', ctx=Load()),
+                    attr='set_policy',
+                    ctx=Load()),
+                args=[
+                    Name(id='dp', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='cj', ctx=Load()),
+                    attr='load',
+                    ctx=Load()),
+                args=[
+                    Constant(value='http://attacker.pythonicexample.com')],
+                keywords=[]))],
+    type_ignores=[])

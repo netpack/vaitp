@@ -1,0 +1,350 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='tarfile')]),
+        Import(
+            names=[
+                alias(name='os')]),
+        ImportFrom(
+            module='thefuck.utils',
+            names=[
+                alias(name='for_app')],
+            level=0),
+        ImportFrom(
+            module='thefuck.shells',
+            names=[
+                alias(name='shell')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='tar_extensions', ctx=Store())],
+            value=Tuple(
+                elts=[
+                    Constant(value='.tar'),
+                    Constant(value='.tar.Z'),
+                    Constant(value='.tar.bz2'),
+                    Constant(value='.tar.gz'),
+                    Constant(value='.tar.lz'),
+                    Constant(value='.tar.lzma'),
+                    Constant(value='.tar.xz'),
+                    Constant(value='.taz'),
+                    Constant(value='.tb2'),
+                    Constant(value='.tbz'),
+                    Constant(value='.tbz2'),
+                    Constant(value='.tgz'),
+                    Constant(value='.tlz'),
+                    Constant(value='.txz'),
+                    Constant(value='.tz')],
+                ctx=Load())),
+        FunctionDef(
+            name='_is_tar_extract',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='cmd')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Compare(
+                        left=Constant(value='--extract'),
+                        ops=[
+                            In()],
+                        comparators=[
+                            Name(id='cmd', ctx=Load())]),
+                    body=[
+                        Return(
+                            value=Constant(value=True))],
+                    orelse=[]),
+                Assign(
+                    targets=[
+                        Name(id='cmd', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='cmd', ctx=Load()),
+                            attr='split',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Return(
+                    value=BoolOp(
+                        op=And(),
+                        values=[
+                            Compare(
+                                left=Call(
+                                    func=Name(id='len', ctx=Load()),
+                                    args=[
+                                        Name(id='cmd', ctx=Load())],
+                                    keywords=[]),
+                                ops=[
+                                    Gt()],
+                                comparators=[
+                                    Constant(value=1)]),
+                            Compare(
+                                left=Constant(value='x'),
+                                ops=[
+                                    In()],
+                                comparators=[
+                                    Subscript(
+                                        value=Name(id='cmd', ctx=Load()),
+                                        slice=Constant(value=1),
+                                        ctx=Load())])]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='_tar_file',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='cmd')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                For(
+                    target=Name(id='c', ctx=Store()),
+                    iter=Name(id='cmd', ctx=Load()),
+                    body=[
+                        For(
+                            target=Name(id='ext', ctx=Store()),
+                            iter=Name(id='tar_extensions', ctx=Load()),
+                            body=[
+                                If(
+                                    test=Call(
+                                        func=Attribute(
+                                            value=Name(id='c', ctx=Load()),
+                                            attr='endswith',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='ext', ctx=Load())],
+                                        keywords=[]),
+                                    body=[
+                                        Return(
+                                            value=Tuple(
+                                                elts=[
+                                                    Name(id='c', ctx=Load()),
+                                                    Subscript(
+                                                        value=Name(id='c', ctx=Load()),
+                                                        slice=Slice(
+                                                            lower=Constant(value=0),
+                                                            upper=BinOp(
+                                                                left=Call(
+                                                                    func=Name(id='len', ctx=Load()),
+                                                                    args=[
+                                                                        Name(id='c', ctx=Load())],
+                                                                    keywords=[]),
+                                                                op=Sub(),
+                                                                right=Call(
+                                                                    func=Name(id='len', ctx=Load()),
+                                                                    args=[
+                                                                        Name(id='ext', ctx=Load())],
+                                                                    keywords=[]))),
+                                                        ctx=Load())],
+                                                ctx=Load()))],
+                                    orelse=[])],
+                            orelse=[])],
+                    orelse=[])],
+            decorator_list=[]),
+        FunctionDef(
+            name='match',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='command')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=BoolOp(
+                        op=And(),
+                        values=[
+                            Compare(
+                                left=Constant(value='-C'),
+                                ops=[
+                                    NotIn()],
+                                comparators=[
+                                    Attribute(
+                                        value=Name(id='command', ctx=Load()),
+                                        attr='script',
+                                        ctx=Load())]),
+                            Call(
+                                func=Name(id='_is_tar_extract', ctx=Load()),
+                                args=[
+                                    Attribute(
+                                        value=Name(id='command', ctx=Load()),
+                                        attr='script',
+                                        ctx=Load())],
+                                keywords=[]),
+                            Compare(
+                                left=Call(
+                                    func=Name(id='_tar_file', ctx=Load()),
+                                    args=[
+                                        Attribute(
+                                            value=Name(id='command', ctx=Load()),
+                                            attr='script_parts',
+                                            ctx=Load())],
+                                    keywords=[]),
+                                ops=[
+                                    IsNot()],
+                                comparators=[
+                                    Constant(value=None)])]))],
+            decorator_list=[
+                Call(
+                    func=Name(id='for_app', ctx=Load()),
+                    args=[
+                        Constant(value='tar')],
+                    keywords=[])]),
+        FunctionDef(
+            name='get_new_command',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='command')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='dir', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='shell', ctx=Load()),
+                            attr='quote',
+                            ctx=Load()),
+                        args=[
+                            Subscript(
+                                value=Call(
+                                    func=Name(id='_tar_file', ctx=Load()),
+                                    args=[
+                                        Attribute(
+                                            value=Name(id='command', ctx=Load()),
+                                            attr='script_parts',
+                                            ctx=Load())],
+                                    keywords=[]),
+                                slice=Constant(value=1),
+                                ctx=Load())],
+                        keywords=[])),
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='shell', ctx=Load()),
+                                    attr='and_',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='mkdir -p {dir}'),
+                                    Constant(value='{cmd} -C {dir}')],
+                                keywords=[]),
+                            attr='format',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[
+                            keyword(
+                                arg='dir',
+                                value=Name(id='dir', ctx=Load())),
+                            keyword(
+                                arg='cmd',
+                                value=Attribute(
+                                    value=Name(id='command', ctx=Load()),
+                                    attr='script',
+                                    ctx=Load()))]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='side_effect',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='old_cmd'),
+                    arg(arg='command')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                With(
+                    items=[
+                        withitem(
+                            context_expr=Call(
+                                func=Attribute(
+                                    value=Name(id='tarfile', ctx=Load()),
+                                    attr='TarFile',
+                                    ctx=Load()),
+                                args=[
+                                    Subscript(
+                                        value=Call(
+                                            func=Name(id='_tar_file', ctx=Load()),
+                                            args=[
+                                                Attribute(
+                                                    value=Name(id='old_cmd', ctx=Load()),
+                                                    attr='script_parts',
+                                                    ctx=Load())],
+                                            keywords=[]),
+                                        slice=Constant(value=0),
+                                        ctx=Load())],
+                                keywords=[]),
+                            optional_vars=Name(id='archive', ctx=Store()))],
+                    body=[
+                        For(
+                            target=Name(id='file', ctx=Store()),
+                            iter=Call(
+                                func=Attribute(
+                                    value=Name(id='archive', ctx=Load()),
+                                    attr='getnames',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[]),
+                            body=[
+                                If(
+                                    test=UnaryOp(
+                                        op=Not(),
+                                        operand=Call(
+                                            func=Attribute(
+                                                value=Call(
+                                                    func=Attribute(
+                                                        value=Attribute(
+                                                            value=Name(id='os', ctx=Load()),
+                                                            attr='path',
+                                                            ctx=Load()),
+                                                        attr='abspath',
+                                                        ctx=Load()),
+                                                    args=[
+                                                        Name(id='file', ctx=Load())],
+                                                    keywords=[]),
+                                                attr='startswith',
+                                                ctx=Load()),
+                                            args=[
+                                                Call(
+                                                    func=Attribute(
+                                                        value=Name(id='os', ctx=Load()),
+                                                        attr='getcwd',
+                                                        ctx=Load()),
+                                                    args=[],
+                                                    keywords=[])],
+                                            keywords=[])),
+                                    body=[
+                                        Continue()],
+                                    orelse=[]),
+                                Try(
+                                    body=[
+                                        Expr(
+                                            value=Call(
+                                                func=Attribute(
+                                                    value=Name(id='os', ctx=Load()),
+                                                    attr='remove',
+                                                    ctx=Load()),
+                                                args=[
+                                                    Name(id='file', ctx=Load())],
+                                                keywords=[]))],
+                                    handlers=[
+                                        ExceptHandler(
+                                            type=Name(id='OSError', ctx=Load()),
+                                            body=[
+                                                Pass()])],
+                                    orelse=[],
+                                    finalbody=[])],
+                            orelse=[])])],
+            decorator_list=[])],
+    type_ignores=[])

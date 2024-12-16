@@ -1,0 +1,83 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='feedparser')]),
+        Import(
+            names=[
+                alias(name='xml.sax.saxutils', asname='saxutils')]),
+        FunctionDef(
+            name='safe_parse',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='feed_url')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='parser', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='feedparser', ctx=Load()),
+                            attr='parse',
+                            ctx=Load()),
+                        args=[
+                            Name(id='feed_url', ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='etag',
+                                value=Constant(value=None)),
+                            keyword(
+                                arg='modified',
+                                value=Constant(value=None)),
+                            keyword(
+                                arg='handler',
+                                value=Constant(value=None))])),
+                If(
+                    test=Compare(
+                        left=Constant(value='<!ENTITY'),
+                        ops=[
+                            In()],
+                        comparators=[
+                            Attribute(
+                                value=Name(id='parser', ctx=Load()),
+                                attr='raw_data',
+                                ctx=Load())]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Potentially dangerous XML ENTITY declaration detected.')],
+                                keywords=[]))],
+                    orelse=[]),
+                Return(
+                    value=Name(id='parser', ctx=Load()))],
+            decorator_list=[]),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='feed', ctx=Store())],
+                    value=Call(
+                        func=Name(id='safe_parse', ctx=Load()),
+                        args=[
+                            Constant(value='http://example.com/feed')],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ValueError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

@@ -1,0 +1,131 @@
+Module(
+    body=[
+        ImportFrom(
+            module='ecdsa',
+            names=[
+                alias(name='SigningKey'),
+                alias(name='VerifyingKey'),
+                alias(name='NIST256p')],
+            level=0),
+        FunctionDef(
+            name='generate_signing_key',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='SigningKey', ctx=Load()),
+                            attr='generate',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[
+                            keyword(
+                                arg='curve',
+                                value=Name(id='NIST256p', ctx=Load()))]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='sign_message',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='signing_key'),
+                    arg(arg='message')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='signing_key', ctx=Load()),
+                            attr='sign',
+                            ctx=Load()),
+                        args=[
+                            Name(id='message', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='verify_signature',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='verifying_key'),
+                    arg(arg='message'),
+                    arg(arg='signature')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='verifying_key', ctx=Load()),
+                            attr='verify',
+                            ctx=Load()),
+                        args=[
+                            Name(id='signature', ctx=Load()),
+                            Name(id='message', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='message', ctx=Store())],
+                    value=Constant(value=b'Secure message')),
+                Assign(
+                    targets=[
+                        Name(id='signing_key', ctx=Store())],
+                    value=Call(
+                        func=Name(id='generate_signing_key', ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='verifying_key', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='signing_key', ctx=Load()),
+                            attr='get_verifying_key',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='signature', ctx=Store())],
+                    value=Call(
+                        func=Name(id='sign_message', ctx=Load()),
+                        args=[
+                            Name(id='signing_key', ctx=Load()),
+                            Name(id='message', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='is_valid', ctx=Store())],
+                    value=Call(
+                        func=Name(id='verify_signature', ctx=Load()),
+                        args=[
+                            Name(id='verifying_key', ctx=Load()),
+                            Name(id='message', ctx=Load()),
+                            Name(id='signature', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Signature valid:'),
+                            Name(id='is_valid', ctx=Load())],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

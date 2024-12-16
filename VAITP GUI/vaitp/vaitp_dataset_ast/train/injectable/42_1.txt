@@ -1,0 +1,102 @@
+Module(
+    body=[
+        ImportFrom(
+            module='PIL',
+            names=[
+                alias(name='Image')],
+            level=0),
+        ImportFrom(
+            module='io',
+            names=[
+                alias(name='BytesIO')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='blp_data', ctx=Store())],
+            value=Constant(value=b'BLP\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x01')),
+        AugAssign(
+            target=Name(id='blp_data', ctx=Store()),
+            op=Add(),
+            value=BinOp(
+                left=Constant(value=b'\x00'),
+                op=Mult(),
+                right=BinOp(
+                    left=BinOp(
+                        left=Constant(value=2),
+                        op=Pow(),
+                        right=Constant(value=32)),
+                    op=Sub(),
+                    right=Call(
+                        func=Name(id='len', ctx=Load()),
+                        args=[
+                            Name(id='blp_data', ctx=Load())],
+                        keywords=[])))),
+        With(
+            items=[
+                withitem(
+                    context_expr=Call(
+                        func=Name(id='BytesIO', ctx=Load()),
+                        args=[
+                            Name(id='blp_data', ctx=Load())],
+                        keywords=[]),
+                    optional_vars=Name(id='f', ctx=Store()))],
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='img', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='Image', ctx=Load()),
+                            attr='open',
+                            ctx=Load()),
+                        args=[
+                            Name(id='f', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='img', ctx=Load()),
+                            attr='load',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                If(
+                    test=Compare(
+                        left=BinOp(
+                            left=Subscript(
+                                value=Attribute(
+                                    value=Name(id='img', ctx=Load()),
+                                    attr='size',
+                                    ctx=Load()),
+                                slice=Constant(value=0),
+                                ctx=Load()),
+                            op=Mult(),
+                            right=Subscript(
+                                value=Attribute(
+                                    value=Name(id='img', ctx=Load()),
+                                    attr='size',
+                                    ctx=Load()),
+                                slice=Constant(value=1),
+                                ctx=Load())),
+                        ops=[
+                            Gt()],
+                        comparators=[
+                            BinOp(
+                                left=Constant(value=1024),
+                                op=Mult(),
+                                right=Constant(value=1024))]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Image is too large')],
+                                keywords=[]))],
+                    orelse=[]),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Image is safe to process')],
+                        keywords=[]))])],
+    type_ignores=[])

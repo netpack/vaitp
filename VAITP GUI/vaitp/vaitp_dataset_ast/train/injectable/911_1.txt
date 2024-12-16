@@ -1,0 +1,121 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        FunctionDef(
+            name='safe_read_file',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='base_directory'),
+                    arg(arg='user_input_path')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='normalized_path', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='path',
+                                ctx=Load()),
+                            attr='normpath',
+                            ctx=Load()),
+                        args=[
+                            Name(id='user_input_path', ctx=Load())],
+                        keywords=[])),
+                If(
+                    test=UnaryOp(
+                        op=Not(),
+                        operand=Call(
+                            func=Attribute(
+                                value=Name(id='normalized_path', ctx=Load()),
+                                attr='startswith',
+                                ctx=Load()),
+                            args=[
+                                BinOp(
+                                    left=Call(
+                                        func=Attribute(
+                                            value=Attribute(
+                                                value=Name(id='os', ctx=Load()),
+                                                attr='path',
+                                                ctx=Load()),
+                                            attr='normpath',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='base_directory', ctx=Load())],
+                                        keywords=[]),
+                                    op=Add(),
+                                    right=Attribute(
+                                        value=Name(id='os', ctx=Load()),
+                                        attr='sep',
+                                        ctx=Load()))],
+                            keywords=[])),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Attempted Path Traversal Detected!')],
+                                keywords=[]))],
+                    orelse=[]),
+                Assign(
+                    targets=[
+                        Name(id='full_path', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='path',
+                                ctx=Load()),
+                            attr='join',
+                            ctx=Load()),
+                        args=[
+                            Name(id='base_directory', ctx=Load()),
+                            Name(id='normalized_path', ctx=Load())],
+                        keywords=[])),
+                If(
+                    test=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='path',
+                                ctx=Load()),
+                            attr='isfile',
+                            ctx=Load()),
+                        args=[
+                            Name(id='full_path', ctx=Load())],
+                        keywords=[]),
+                    body=[
+                        With(
+                            items=[
+                                withitem(
+                                    context_expr=Call(
+                                        func=Name(id='open', ctx=Load()),
+                                        args=[
+                                            Name(id='full_path', ctx=Load()),
+                                            Constant(value='r')],
+                                        keywords=[]),
+                                    optional_vars=Name(id='file', ctx=Store()))],
+                            body=[
+                                Return(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='file', ctx=Load()),
+                                            attr='read',
+                                            ctx=Load()),
+                                        args=[],
+                                        keywords=[]))])],
+                    orelse=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='FileNotFoundError', ctx=Load()),
+                                args=[
+                                    Constant(value='File not found.')],
+                                keywords=[]))])],
+            decorator_list=[])],
+    type_ignores=[])

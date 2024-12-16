@@ -1,0 +1,83 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='ssl')]),
+        Import(
+            names=[
+                alias(name='urllib.request')]),
+        Assign(
+            targets=[
+                Name(id='server_url', ctx=Store())],
+            value=Constant(value='https://example.com/api')),
+        Assign(
+            targets=[
+                Name(id='ssl_context', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='ssl', ctx=Load()),
+                    attr='create_default_context',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Assign(
+            targets=[
+                Attribute(
+                    value=Name(id='ssl_context', ctx=Load()),
+                    attr='check_hostname',
+                    ctx=Store())],
+            value=Constant(value=True)),
+        Assign(
+            targets=[
+                Attribute(
+                    value=Name(id='ssl_context', ctx=Load()),
+                    attr='verify_mode',
+                    ctx=Store())],
+            value=Attribute(
+                value=Name(id='ssl', ctx=Load()),
+                attr='CERT_REQUIRED',
+                ctx=Load())),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='ssl_context', ctx=Load()),
+                    attr='load_default_certs',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        With(
+            items=[
+                withitem(
+                    context_expr=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='urllib', ctx=Load()),
+                                attr='request',
+                                ctx=Load()),
+                            attr='urlopen',
+                            ctx=Load()),
+                        args=[
+                            Name(id='server_url', ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='context',
+                                value=Name(id='ssl_context', ctx=Load()))]),
+                    optional_vars=Name(id='response', ctx=Store()))],
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='data', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='response', ctx=Load()),
+                            attr='read',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Name(id='data', ctx=Load())],
+                        keywords=[]))])],
+    type_ignores=[])

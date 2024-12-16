@@ -1,0 +1,48 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='frappe')]),
+        FunctionDef(
+            name='vulnerable_get_list',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='doctype'),
+                    arg(arg='fields'),
+                    arg(arg='filters'),
+                    arg(arg='limit')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[
+                    Constant(value=None),
+                    Constant(value=None),
+                    Constant(value=None)]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='frappe', ctx=Load()),
+                            attr='get_list',
+                            ctx=Load()),
+                        args=[
+                            Name(id='doctype', ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='fields',
+                                value=Name(id='fields', ctx=Load())),
+                            keyword(
+                                arg='filters',
+                                value=Name(id='filters', ctx=Load())),
+                            keyword(
+                                arg='limit',
+                                value=Name(id='limit', ctx=Load()))]))],
+            decorator_list=[
+                Call(
+                    func=Attribute(
+                        value=Name(id='frappe', ctx=Load()),
+                        attr='whitelist',
+                        ctx=Load()),
+                    args=[],
+                    keywords=[])])],
+    type_ignores=[])

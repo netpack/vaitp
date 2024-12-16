@@ -1,0 +1,94 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='ssl')]),
+        Import(
+            names=[
+                alias(name='socket')]),
+        FunctionDef(
+            name='create_ssl_connection',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='hostname'),
+                    arg(arg='port')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='context', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='ssl', ctx=Load()),
+                            attr='create_default_context',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='conn', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='context', ctx=Load()),
+                            attr='wrap_socket',
+                            ctx=Load()),
+                        args=[
+                            Call(
+                                func=Attribute(
+                                    value=Name(id='socket', ctx=Load()),
+                                    attr='socket',
+                                    ctx=Load()),
+                                args=[
+                                    Attribute(
+                                        value=Name(id='socket', ctx=Load()),
+                                        attr='AF_INET',
+                                        ctx=Load())],
+                                keywords=[])],
+                        keywords=[
+                            keyword(
+                                arg='server_hostname',
+                                value=Name(id='hostname', ctx=Load()))])),
+                Try(
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='conn', ctx=Load()),
+                                    attr='connect',
+                                    ctx=Load()),
+                                args=[
+                                    Tuple(
+                                        elts=[
+                                            Name(id='hostname', ctx=Load()),
+                                            Name(id='port', ctx=Load())],
+                                        ctx=Load())],
+                                keywords=[]))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Attribute(
+                                value=Name(id='ssl', ctx=Load()),
+                                attr='SSLError',
+                                ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    Constant(value='SSL error: '),
+                                                    FormattedValue(
+                                                        value=Name(id='e', ctx=Load()),
+                                                        conversion=-1)])],
+                                        keywords=[])),
+                                Raise()])],
+                    orelse=[],
+                    finalbody=[]),
+                Return(
+                    value=Name(id='conn', ctx=Load()))],
+            decorator_list=[])],
+    type_ignores=[])

@@ -1,0 +1,85 @@
+Module(
+    body=[
+        FunctionDef(
+            name='function_one',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='txt_file')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='var', ctx=Store())],
+                    value=Call(
+                        func=Name(id='checksomething', ctx=Load()),
+                        args=[
+                            Name(id='txt_file', ctx=Load())],
+                        keywords=[])),
+                If(
+                    test=Name(id='var', ctx=Load()),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='var2', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='os', ctx=Load()),
+                                        attr='path',
+                                        ctx=Load()),
+                                    attr='join',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='local_dir', ctx=Load()),
+                                    Call(
+                                        func=Attribute(
+                                            value=Attribute(
+                                                value=Name(id='os', ctx=Load()),
+                                                attr='path',
+                                                ctx=Load()),
+                                            attr='basename',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='txt_file', ctx=Load())],
+                                        keywords=[])],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='os', ctx=Load()),
+                                    attr='system',
+                                    ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            Constant(value='ls '),
+                                            FormattedValue(
+                                                value=Name(id='var2', ctx=Load()),
+                                                conversion=-1)])],
+                                keywords=[]))],
+                    orelse=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='some vaitp error')],
+                                keywords=[]))])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='f_name', ctx=Store())],
+            value=Call(
+                func=Name(id='input_raw', ctx=Load()),
+                args=[
+                    Constant(value='Enter your text file:')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='function_one', ctx=Load()),
+                args=[
+                    Name(id='f_name', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

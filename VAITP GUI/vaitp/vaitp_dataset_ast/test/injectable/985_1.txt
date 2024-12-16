@@ -1,0 +1,117 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        FunctionDef(
+            name='safe_walk',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='top')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Constant(value='A generator that safely walks a directory tree without hitting the recursion limit.')),
+                Assign(
+                    targets=[
+                        Name(id='stack', ctx=Store())],
+                    value=List(
+                        elts=[
+                            Name(id='top', ctx=Load())],
+                        ctx=Load())),
+                While(
+                    test=Name(id='stack', ctx=Load()),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='current_dir', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='stack', ctx=Load()),
+                                    attr='pop',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[])),
+                        Try(
+                            body=[
+                                For(
+                                    target=Name(id='entry', ctx=Store()),
+                                    iter=Call(
+                                        func=Attribute(
+                                            value=Name(id='os', ctx=Load()),
+                                            attr='listdir',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='current_dir', ctx=Load())],
+                                        keywords=[]),
+                                    body=[
+                                        Assign(
+                                            targets=[
+                                                Name(id='full_path', ctx=Store())],
+                                            value=Call(
+                                                func=Attribute(
+                                                    value=Attribute(
+                                                        value=Name(id='os', ctx=Load()),
+                                                        attr='path',
+                                                        ctx=Load()),
+                                                    attr='join',
+                                                    ctx=Load()),
+                                                args=[
+                                                    Name(id='current_dir', ctx=Load()),
+                                                    Name(id='entry', ctx=Load())],
+                                                keywords=[])),
+                                        If(
+                                            test=Call(
+                                                func=Attribute(
+                                                    value=Attribute(
+                                                        value=Name(id='os', ctx=Load()),
+                                                        attr='path',
+                                                        ctx=Load()),
+                                                    attr='isdir',
+                                                    ctx=Load()),
+                                                args=[
+                                                    Name(id='full_path', ctx=Load())],
+                                                keywords=[]),
+                                            body=[
+                                                Expr(
+                                                    value=Call(
+                                                        func=Attribute(
+                                                            value=Name(id='stack', ctx=Load()),
+                                                            attr='append',
+                                                            ctx=Load()),
+                                                        args=[
+                                                            Name(id='full_path', ctx=Load())],
+                                                        keywords=[]))],
+                                            orelse=[]),
+                                        Expr(
+                                            value=Yield(
+                                                value=Name(id='full_path', ctx=Load())))],
+                                    orelse=[])],
+                            handlers=[
+                                ExceptHandler(
+                                    type=Name(id='PermissionError', ctx=Load()),
+                                    body=[
+                                        Continue()])],
+                            orelse=[],
+                            finalbody=[])],
+                    orelse=[])],
+            decorator_list=[]),
+        For(
+            target=Name(id='path', ctx=Store()),
+            iter=Call(
+                func=Name(id='safe_walk', ctx=Load()),
+                args=[
+                    Constant(value='/path/to/scan')],
+                keywords=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Name(id='path', ctx=Load())],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

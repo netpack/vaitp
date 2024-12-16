@@ -1,0 +1,145 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='pickle')]),
+        Import(
+            names=[
+                alias(name='sqlalchemy')]),
+        FunctionDef(
+            name='safe_load',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='data')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='allowed_classes', ctx=Store())],
+                    value=Tuple(
+                        elts=[
+                            Name(id='dict', ctx=Load()),
+                            Name(id='list', ctx=Load()),
+                            Name(id='str', ctx=Load()),
+                            Name(id='int', ctx=Load()),
+                            Name(id='float', ctx=Load()),
+                            Name(id='bool', ctx=Load())],
+                        ctx=Load())),
+                Assign(
+                    targets=[
+                        Name(id='obj', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='pickle', ctx=Load()),
+                            attr='loads',
+                            ctx=Load()),
+                        args=[
+                            Name(id='data', ctx=Load())],
+                        keywords=[])),
+                If(
+                    test=UnaryOp(
+                        op=Not(),
+                        operand=Call(
+                            func=Name(id='isinstance', ctx=Load()),
+                            args=[
+                                Name(id='obj', ctx=Load()),
+                                Name(id='allowed_classes', ctx=Load())],
+                            keywords=[])),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Unsafe object type detected!')],
+                                keywords=[]))],
+                    orelse=[]),
+                Return(
+                    value=Name(id='obj', ctx=Load()))],
+            decorator_list=[]),
+        FunctionDef(
+            name='persist_safe_object',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='obj')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='safe_data', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='pickle', ctx=Load()),
+                            attr='dumps',
+                            ctx=Load()),
+                        args=[
+                            Name(id='obj', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='new_entry', ctx=Store())],
+                    value=Call(
+                        func=Name(id='YourModel', ctx=Load()),
+                        args=[],
+                        keywords=[
+                            keyword(
+                                arg='data',
+                                value=Name(id='safe_data', ctx=Load()))])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='session', ctx=Load()),
+                            attr='add',
+                            ctx=Load()),
+                        args=[
+                            Name(id='new_entry', ctx=Load())],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='session', ctx=Load()),
+                            attr='commit',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            decorator_list=[]),
+        Try(
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='user_input', ctx=Store())],
+                    value=Dict(
+                        keys=[
+                            Constant(value='key')],
+                        values=[
+                            Constant(value='value')])),
+                Expr(
+                    value=Call(
+                        func=Name(id='persist_safe_object', ctx=Load()),
+                        args=[
+                            Name(id='user_input', ctx=Load())],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='Exception', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            Constant(value='Error: '),
+                                            FormattedValue(
+                                                value=Name(id='e', ctx=Load()),
+                                                conversion=-1)])],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

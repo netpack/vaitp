@@ -1,0 +1,31 @@
+Module(
+    body=[
+        FunctionDef(
+            name='format_columns',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='columns')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='formatted_columns', ctx=Store())],
+                    value=ListComp(
+                        elt=Call(
+                            func=Name(id='str', ctx=Load()),
+                            args=[
+                                Name(id='column', ctx=Load())],
+                            keywords=[]),
+                        generators=[
+                            comprehension(
+                                target=Name(id='column', ctx=Store()),
+                                iter=Name(id='columns', ctx=Load()),
+                                ifs=[],
+                                is_async=0)])),
+                Return(
+                    value=Name(id='formatted_columns', ctx=Load()))],
+            decorator_list=[])],
+    type_ignores=[])

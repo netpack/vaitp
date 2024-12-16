@@ -1,0 +1,134 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='re')]),
+        FunctionDef(
+            name='sanitize_input',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='username')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Call(
+                        func=Attribute(
+                            value=Name(id='re', ctx=Load()),
+                            attr='search',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='[^a-zA-Z0-9_\\-]'),
+                            Name(id='username', ctx=Load())],
+                        keywords=[]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Invalid username: contains malicious characters.')],
+                                keywords=[]))],
+                    orelse=[]),
+                Return(
+                    value=Name(id='username', ctx=Load()))],
+            decorator_list=[]),
+        FunctionDef(
+            name='login',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='username')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='sanitized_username', ctx=Store())],
+                    value=Call(
+                        func=Name(id='sanitize_input', ctx=Load()),
+                        args=[
+                            Name(id='username', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='command', ctx=Store())],
+                    value=JoinedStr(
+                        values=[
+                            Constant(value="wrongpass '"),
+                            FormattedValue(
+                                value=Name(id='sanitized_username', ctx=Load()),
+                                conversion=-1),
+                            Constant(value="'")])),
+                Import(
+                    names=[
+                        alias(name='subprocess')]),
+                Assign(
+                    targets=[
+                        Name(id='result', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='subprocess', ctx=Load()),
+                            attr='run',
+                            ctx=Load()),
+                        args=[
+                            Name(id='command', ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='shell',
+                                value=Constant(value=True)),
+                            keyword(
+                                arg='capture_output',
+                                value=Constant(value=True)),
+                            keyword(
+                                arg='text',
+                                value=Constant(value=True))])),
+                If(
+                    test=Compare(
+                        left=Attribute(
+                            value=Name(id='result', ctx=Load()),
+                            attr='returncode',
+                            ctx=Load()),
+                        ops=[
+                            Eq()],
+                        comparators=[
+                            Constant(value=0)]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Login successful.')],
+                                keywords=[]))],
+                    orelse=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Login failed.')],
+                                keywords=[]))])],
+            decorator_list=[]),
+        Try(
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='login', ctx=Load()),
+                        args=[
+                            Constant(value='- a')],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ValueError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

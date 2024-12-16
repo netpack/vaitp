@@ -1,0 +1,74 @@
+Module(
+    body=[
+        ImportFrom(
+            module='scapy.all',
+            names=[
+                alias(name='*')],
+            level=0),
+        ClassDef(
+            name='VulnerableRADIUSAttrPacketListField',
+            bases=[
+                Name(id='RADIUSAttrPacketListField', ctx=Load())],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='getfield',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='pkt'),
+                            arg(arg='s')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Return(
+                            value=Call(
+                                func=Attribute(
+                                    value=Call(
+                                        func=Name(id='super', ctx=Load()),
+                                        args=[],
+                                        keywords=[]),
+                                    attr='getfield',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='pkt', ctx=Load()),
+                                    Name(id='s', ctx=Load())],
+                                keywords=[]))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        ClassDef(
+            name='VulnerableRADIUSPacket',
+            bases=[
+                Name(id='RADIUS', ctx=Load())],
+            keywords=[],
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='attrs', ctx=Store())],
+                    value=Call(
+                        func=Name(id='VulnerableRADIUSAttrPacketListField', ctx=Load()),
+                        args=[
+                            Constant(value='attrs'),
+                            Constant(value=None)],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='malformed_packet', ctx=Store())],
+            value=Call(
+                func=Name(id='VulnerableRADIUSPacket', ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='attrs',
+                        value=List(
+                            elts=[
+                                Tuple(
+                                    elts=[
+                                        Constant(value='Malformed-Attribute'),
+                                        Constant(value='test_user')],
+                                    ctx=Load())],
+                            ctx=Load()))]))],
+    type_ignores=[])

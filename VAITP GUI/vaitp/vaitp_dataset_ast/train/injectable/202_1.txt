@@ -1,0 +1,159 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='hashlib')]),
+        ClassDef(
+            name='SafeHash',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='hasher',
+                                    ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='hashlib', ctx=Load()),
+                                    attr='sha256',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[])),
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='total_length',
+                                    ctx=Store())],
+                            value=Constant(value=0))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='update',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='data')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='data_length', ctx=Store())],
+                            value=Call(
+                                func=Name(id='len', ctx=Load()),
+                                args=[
+                                    Name(id='data', ctx=Load())],
+                                keywords=[])),
+                        If(
+                            test=Compare(
+                                left=BinOp(
+                                    left=Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='total_length',
+                                        ctx=Load()),
+                                    op=Add(),
+                                    right=Name(id='data_length', ctx=Load())),
+                                ops=[
+                                    Gt()],
+                                comparators=[
+                                    BinOp(
+                                        left=BinOp(
+                                            left=Constant(value=2),
+                                            op=Pow(),
+                                            right=Constant(value=63)),
+                                        op=Sub(),
+                                        right=Constant(value=1))]),
+                            body=[
+                                Raise(
+                                    exc=Call(
+                                        func=Name(id='ValueError', ctx=Load()),
+                                        args=[
+                                            Constant(value='Data length exceeds the maximum allowed limit.')],
+                                        keywords=[]))],
+                            orelse=[]),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='hasher',
+                                        ctx=Load()),
+                                    attr='update',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='data', ctx=Load())],
+                                keywords=[])),
+                        AugAssign(
+                            target=Attribute(
+                                value=Name(id='self', ctx=Load()),
+                                attr='total_length',
+                                ctx=Store()),
+                            op=Add(),
+                            value=Name(id='data_length', ctx=Load()))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='digest',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Return(
+                            value=Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='hasher',
+                                        ctx=Load()),
+                                    attr='digest',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[]))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='safe_hash', ctx=Store())],
+            value=Call(
+                func=Name(id='SafeHash', ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='safe_hash', ctx=Load()),
+                    attr='update',
+                    ctx=Load()),
+                args=[
+                    Constant(value=b'some data')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Call(
+                        func=Attribute(
+                            value=Name(id='safe_hash', ctx=Load()),
+                            attr='digest',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])],
+                keywords=[]))],
+    type_ignores=[])

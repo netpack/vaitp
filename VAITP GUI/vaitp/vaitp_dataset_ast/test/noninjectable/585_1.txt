@@ -1,0 +1,110 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='sys')]),
+        Import(
+            names=[
+                alias(name='code')]),
+        FunctionDef(
+            name='serve_hg',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='repository_name')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='print', ctx=Load()),
+                        args=[
+                            JoinedStr(
+                                values=[
+                                    Constant(value='Serving repository: '),
+                                    FormattedValue(
+                                        value=Name(id='repository_name', ctx=Load()),
+                                        conversion=-1)])],
+                        keywords=[])),
+                If(
+                    test=Compare(
+                        left=Name(id='repository_name', ctx=Load()),
+                        ops=[
+                            Eq()],
+                        comparators=[
+                            Constant(value='--debugger')]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='code', ctx=Load()),
+                                    attr='interact',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[
+                                    keyword(
+                                        arg='local',
+                                        value=Call(
+                                            func=Name(id='locals', ctx=Load()),
+                                            args=[],
+                                            keywords=[]))]))],
+                    orelse=[])],
+            decorator_list=[]),
+        If(
+            test=Compare(
+                left=Name(id='__name__', ctx=Load()),
+                ops=[
+                    Eq()],
+                comparators=[
+                    Constant(value='__main__')]),
+            body=[
+                If(
+                    test=Compare(
+                        left=Call(
+                            func=Name(id='len', ctx=Load()),
+                            args=[
+                                Attribute(
+                                    value=Name(id='sys', ctx=Load()),
+                                    attr='argv',
+                                    ctx=Load())],
+                            keywords=[]),
+                        ops=[
+                            NotEq()],
+                        comparators=[
+                            Constant(value=2)]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Constant(value='Usage: python serve_hg.py <repository_name>')],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='sys', ctx=Load()),
+                                    attr='exit',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value=1)],
+                                keywords=[]))],
+                    orelse=[]),
+                Assign(
+                    targets=[
+                        Name(id='repo_name', ctx=Store())],
+                    value=Subscript(
+                        value=Attribute(
+                            value=Name(id='sys', ctx=Load()),
+                            attr='argv',
+                            ctx=Load()),
+                        slice=Constant(value=1),
+                        ctx=Load())),
+                Expr(
+                    value=Call(
+                        func=Name(id='serve_hg', ctx=Load()),
+                        args=[
+                            Name(id='repo_name', ctx=Load())],
+                        keywords=[]))],
+            orelse=[])],
+    type_ignores=[])

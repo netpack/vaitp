@@ -1,0 +1,96 @@
+Module(
+    body=[
+        ImportFrom(
+            module='piccolo.engine',
+            names=[
+                alias(name='Engine')],
+            level=0),
+        ImportFrom(
+            module='piccolo.table',
+            names=[
+                alias(name='Table')],
+            level=0),
+        ImportFrom(
+            module='piccolo.columns',
+            names=[
+                alias(name='Varchar'),
+                alias(name='Boolean'),
+                alias(name='File')],
+            level=0),
+        ClassDef(
+            name='MediaFile',
+            bases=[
+                Name(id='Table', ctx=Load())],
+            keywords=[],
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='title', ctx=Store())],
+                    value=Call(
+                        func=Name(id='Varchar', ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='is_svg_allowed', ctx=Store())],
+                    value=Call(
+                        func=Name(id='Boolean', ctx=Load()),
+                        args=[],
+                        keywords=[
+                            keyword(
+                                arg='default',
+                                value=Constant(value=False))]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='upload_file',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='file')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='file', ctx=Load()),
+                                attr='filename',
+                                ctx=Load()),
+                            attr='endswith',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='.svg')],
+                        keywords=[]),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='SVG files are not allowed for upload.')],
+                                keywords=[]))],
+                    orelse=[])],
+            decorator_list=[]),
+        Try(
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='upload_file', ctx=Load()),
+                        args=[
+                            Name(id='uploaded_file', ctx=Load())],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ValueError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

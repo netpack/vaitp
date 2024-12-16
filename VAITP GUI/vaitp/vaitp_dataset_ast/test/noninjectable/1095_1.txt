@@ -1,0 +1,66 @@
+Module(
+    body=[
+        FunctionDef(
+            name='login',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='username'),
+                    arg(arg='password')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='exec', ctx=Load()),
+                        args=[
+                            JoinedStr(
+                                values=[
+                                    Constant(value="if authenticate('"),
+                                    FormattedValue(
+                                        value=Name(id='username', ctx=Load()),
+                                        conversion=-1),
+                                    Constant(value="', '"),
+                                    FormattedValue(
+                                        value=Name(id='password', ctx=Load()),
+                                        conversion=-1),
+                                    Constant(value="'): print('Login successful!') else: print('Invalid credentials.')")])],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='authenticate',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='username'),
+                    arg(arg='password')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=BoolOp(
+                        op=And(),
+                        values=[
+                            Compare(
+                                left=Name(id='username', ctx=Load()),
+                                ops=[
+                                    Eq()],
+                                comparators=[
+                                    Constant(value='validUser')]),
+                            Compare(
+                                left=Name(id='password', ctx=Load()),
+                                ops=[
+                                    Eq()],
+                                comparators=[
+                                    Constant(value='validPass')])]))],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='login', ctx=Load()),
+                args=[
+                    Constant(value='validUser'),
+                    Constant(value='validPass')],
+                keywords=[]))],
+    type_ignores=[])

@@ -1,0 +1,168 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='re')]),
+        ImportFrom(
+            module='urllib.parse',
+            names=[
+                alias(name='urlparse')],
+            level=0),
+        ClassDef(
+            name='SafeSpotipy',
+            bases=[],
+            keywords=[],
+            body=[
+                FunctionDef(
+                    name='__init__',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='base_url',
+                                    ctx=Store())],
+                            value=Constant(value='https://api.spotify.com/v1'))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='safe_track',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='track_id')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        If(
+                            test=UnaryOp(
+                                op=Not(),
+                                operand=Call(
+                                    func=Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='is_safe',
+                                        ctx=Load()),
+                                    args=[
+                                        Name(id='track_id', ctx=Load())],
+                                    keywords=[])),
+                            body=[
+                                Raise(
+                                    exc=Call(
+                                        func=Name(id='ValueError', ctx=Load()),
+                                        args=[
+                                            Constant(value='Invalid track ID')],
+                                        keywords=[]))],
+                            orelse=[]),
+                        Assign(
+                            targets=[
+                                Name(id='url', ctx=Store())],
+                            value=JoinedStr(
+                                values=[
+                                    FormattedValue(
+                                        value=Attribute(
+                                            value=Name(id='self', ctx=Load()),
+                                            attr='base_url',
+                                            ctx=Load()),
+                                        conversion=-1),
+                                    Constant(value='/tracks/'),
+                                    FormattedValue(
+                                        value=Name(id='track_id', ctx=Load()),
+                                        conversion=-1)])),
+                        Return(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='self', ctx=Load()),
+                                    attr='make_request',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='url', ctx=Load())],
+                                keywords=[]))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='is_safe',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='path')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Return(
+                            value=UnaryOp(
+                                op=Not(),
+                                operand=Call(
+                                    func=Attribute(
+                                        value=Name(id='re', ctx=Load()),
+                                        attr='search',
+                                        ctx=Load()),
+                                    args=[
+                                        Constant(value='\\.\\.'),
+                                        Name(id='path', ctx=Load())],
+                                    keywords=[])))],
+                    decorator_list=[]),
+                FunctionDef(
+                    name='make_request',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='url')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    JoinedStr(
+                                        values=[
+                                            Constant(value='Making request to: '),
+                                            FormattedValue(
+                                                value=Name(id='url', ctx=Load()),
+                                                conversion=-1)])],
+                                keywords=[]))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='spotipy', ctx=Store())],
+            value=Call(
+                func=Name(id='SafeSpotipy', ctx=Load()),
+                args=[],
+                keywords=[])),
+        Try(
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='spotipy', ctx=Load()),
+                            attr='safe_track',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='track_id_here')],
+                        keywords=[]))],
+            handlers=[
+                ExceptHandler(
+                    type=Name(id='ValueError', ctx=Load()),
+                    name='e',
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='print', ctx=Load()),
+                                args=[
+                                    Name(id='e', ctx=Load())],
+                                keywords=[]))])],
+            orelse=[],
+            finalbody=[])],
+    type_ignores=[])

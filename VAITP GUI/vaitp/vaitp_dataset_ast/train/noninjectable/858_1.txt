@@ -1,0 +1,110 @@
+Module(
+    body=[
+        FunctionDef(
+            name='process_push_rule',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='push_rule')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                If(
+                    test=Compare(
+                        left=Constant(value='event_match'),
+                        ops=[
+                            In()],
+                        comparators=[
+                            Name(id='push_rule', ctx=Load())]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='pattern', ctx=Store())],
+                            value=Subscript(
+                                value=Name(id='push_rule', ctx=Load()),
+                                slice=Constant(value='event_match'),
+                                ctx=Load())),
+                        Expr(
+                            value=Call(
+                                func=Name(id='match_events', ctx=Load()),
+                                args=[
+                                    Name(id='pattern', ctx=Load())],
+                                keywords=[]))],
+                    orelse=[])],
+            decorator_list=[]),
+        FunctionDef(
+            name='match_events',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='pattern')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='events', ctx=Store())],
+                    value=Call(
+                        func=Name(id='get_events', ctx=Load()),
+                        args=[],
+                        keywords=[])),
+                For(
+                    target=Name(id='event', ctx=Store()),
+                    iter=Name(id='events', ctx=Load()),
+                    body=[
+                        If(
+                            test=Call(
+                                func=Name(id='matches_pattern', ctx=Load()),
+                                args=[
+                                    Name(id='event', ctx=Load()),
+                                    Name(id='pattern', ctx=Load())],
+                                keywords=[]),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='handle_matched_event', ctx=Load()),
+                                        args=[
+                                            Name(id='event', ctx=Load())],
+                                        keywords=[]))],
+                            orelse=[])],
+                    orelse=[])],
+            decorator_list=[]),
+        FunctionDef(
+            name='matches_pattern',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='event'),
+                    arg(arg='pattern')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Compare(
+                        left=Name(id='pattern', ctx=Load()),
+                        ops=[
+                            In()],
+                        comparators=[
+                            Subscript(
+                                value=Name(id='event', ctx=Load()),
+                                slice=Constant(value='content'),
+                                ctx=Load())]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='push_rule', ctx=Store())],
+            value=Dict(
+                keys=[
+                    Constant(value='event_match')],
+                values=[
+                    Constant(value='some*complex?pattern')])),
+        Expr(
+            value=Call(
+                func=Name(id='process_push_rule', ctx=Load()),
+                args=[
+                    Name(id='push_rule', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

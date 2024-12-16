@@ -1,0 +1,33 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        FunctionDef(
+            name='vulnerable_function',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='code')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='exec', ctx=Load()),
+                        args=[
+                            Name(id='code', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='user_input', ctx=Store())],
+            value=Constant(value="os.system('echo Vulnerable!')")),
+        Expr(
+            value=Call(
+                func=Name(id='vulnerable_function', ctx=Load()),
+                args=[
+                    Name(id='user_input', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

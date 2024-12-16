@@ -1,0 +1,208 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        Import(
+            names=[
+                alias(name='json')]),
+        Import(
+            names=[
+                alias(name='re')]),
+        FunctionDef(
+            name='validate_weather_data_source',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='data_source')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='allowed_keys', ctx=Store())],
+                    value=Set(
+                        elts=[
+                            Constant(value='name'),
+                            Constant(value='url'),
+                            Constant(value='api_key')])),
+                If(
+                    test=UnaryOp(
+                        op=Not(),
+                        operand=Call(
+                            func=Name(id='all', ctx=Load()),
+                            args=[
+                                GeneratorExp(
+                                    elt=Compare(
+                                        left=Name(id='key', ctx=Load()),
+                                        ops=[
+                                            In()],
+                                        comparators=[
+                                            Name(id='allowed_keys', ctx=Load())]),
+                                    generators=[
+                                        comprehension(
+                                            target=Name(id='key', ctx=Store()),
+                                            iter=Call(
+                                                func=Attribute(
+                                                    value=Name(id='data_source', ctx=Load()),
+                                                    attr='keys',
+                                                    ctx=Load()),
+                                                args=[],
+                                                keywords=[]),
+                                            ifs=[],
+                                            is_async=0)])],
+                            keywords=[])),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Invalid data source keys.')],
+                                keywords=[]))],
+                    orelse=[]),
+                Assign(
+                    targets=[
+                        Name(id='url_pattern', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='re', ctx=Load()),
+                            attr='compile',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='^(http|https)://[^\\s/$.?#].[^\\s]*$')],
+                        keywords=[])),
+                If(
+                    test=UnaryOp(
+                        op=Not(),
+                        operand=Call(
+                            func=Attribute(
+                                value=Name(id='url_pattern', ctx=Load()),
+                                attr='match',
+                                ctx=Load()),
+                            args=[
+                                Subscript(
+                                    value=Name(id='data_source', ctx=Load()),
+                                    slice=Constant(value='url'),
+                                    ctx=Load())],
+                            keywords=[])),
+                    body=[
+                        Raise(
+                            exc=Call(
+                                func=Name(id='ValueError', ctx=Load()),
+                                args=[
+                                    Constant(value='Invalid URL format.')],
+                                keywords=[]))],
+                    orelse=[]),
+                For(
+                    target=Tuple(
+                        elts=[
+                            Name(id='key', ctx=Store()),
+                            Name(id='value', ctx=Store())],
+                        ctx=Store()),
+                    iter=Call(
+                        func=Attribute(
+                            value=Name(id='data_source', ctx=Load()),
+                            attr='items',
+                            ctx=Load()),
+                        args=[],
+                        keywords=[]),
+                    body=[
+                        If(
+                            test=Call(
+                                func=Name(id='isinstance', ctx=Load()),
+                                args=[
+                                    Name(id='value', ctx=Load()),
+                                    Name(id='str', ctx=Load())],
+                                keywords=[]),
+                            body=[
+                                If(
+                                    test=Call(
+                                        func=Attribute(
+                                            value=Name(id='re', ctx=Load()),
+                                            attr='search',
+                                            ctx=Load()),
+                                        args=[
+                                            Constant(value='[\\(\\)\\{\\}\\[\\];]'),
+                                            Name(id='value', ctx=Load())],
+                                        keywords=[]),
+                                    body=[
+                                        Raise(
+                                            exc=Call(
+                                                func=Name(id='ValueError', ctx=Load()),
+                                                args=[
+                                                    Constant(value='Invalid characters in input.')],
+                                                keywords=[]))],
+                                    orelse=[])],
+                            orelse=[])],
+                    orelse=[]),
+                Return(
+                    value=Constant(value=True))],
+            decorator_list=[]),
+        FunctionDef(
+            name='add_new_weather_data_source',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='data_source_json')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Try(
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='data_source', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='json', ctx=Load()),
+                                    attr='loads',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='data_source_json', ctx=Load())],
+                                keywords=[])),
+                        If(
+                            test=Call(
+                                func=Name(id='validate_weather_data_source', ctx=Load()),
+                                args=[
+                                    Name(id='data_source', ctx=Load())],
+                                keywords=[]),
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            Constant(value='Weather data source added successfully.')],
+                                        keywords=[]))],
+                            orelse=[])],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='ValueError', ctx=Load()),
+                            name='e',
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Name(id='print', ctx=Load()),
+                                        args=[
+                                            JoinedStr(
+                                                values=[
+                                                    Constant(value='Error: '),
+                                                    FormattedValue(
+                                                        value=Name(id='e', ctx=Load()),
+                                                        conversion=-1)])],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='data_source_json', ctx=Store())],
+            value=Constant(value='{"python_code": "__import__(\'os\').system(\'ls\')"}')),
+        Expr(
+            value=Call(
+                func=Name(id='add_new_weather_data_source', ctx=Load()),
+                args=[
+                    Name(id='data_source_json', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

@@ -1,0 +1,57 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        Import(
+            names=[
+                alias(name='tempfile')]),
+        Import(
+            names=[
+                alias(name='stat')]),
+        Assign(
+            targets=[
+                Name(id='temp_dir', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='tempfile', ctx=Load()),
+                    attr='mkdtemp',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='os', ctx=Load()),
+                    attr='chmod',
+                    ctx=Load()),
+                args=[
+                    Name(id='temp_dir', ctx=Load()),
+                    Attribute(
+                        value=Name(id='stat', ctx=Load()),
+                        attr='S_IRWXU',
+                        ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    JoinedStr(
+                        values=[
+                            Constant(value='Temporary directory created: '),
+                            FormattedValue(
+                                value=Name(id='temp_dir', ctx=Load()),
+                                conversion=-1)])],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    JoinedStr(
+                        values=[
+                            Constant(value='Permissions set to 700 for: '),
+                            FormattedValue(
+                                value=Name(id='temp_dir', ctx=Load()),
+                                conversion=-1)])],
+                keywords=[]))],
+    type_ignores=[])

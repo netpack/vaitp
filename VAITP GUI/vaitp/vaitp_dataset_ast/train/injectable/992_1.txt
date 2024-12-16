@@ -1,0 +1,71 @@
+Module(
+    body=[
+        ImportFrom(
+            module='mod_python',
+            names=[
+                alias(name='apache')],
+            level=0),
+        FunctionDef(
+            name='handler',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='req')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='restricted_objects', ctx=Store())],
+                    value=List(
+                        elts=[
+                            Constant(value='/admin'),
+                            Constant(value='/config')],
+                        ctx=Load())),
+                Assign(
+                    targets=[
+                        Name(id='requested_url', ctx=Store())],
+                    value=Attribute(
+                        value=Name(id='req', ctx=Load()),
+                        attr='uri',
+                        ctx=Load())),
+                If(
+                    test=Compare(
+                        left=Name(id='requested_url', ctx=Load()),
+                        ops=[
+                            In()],
+                        comparators=[
+                            Name(id='restricted_objects', ctx=Load())]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='req', ctx=Load()),
+                                    attr='write',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='Access Denied')],
+                                keywords=[])),
+                        Return(
+                            value=Attribute(
+                                value=Name(id='apache', ctx=Load()),
+                                attr='HTTP_FORBIDDEN',
+                                ctx=Load()))],
+                    orelse=[]),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='req', ctx=Load()),
+                            attr='write',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='Access Granted')],
+                        keywords=[])),
+                Return(
+                    value=Attribute(
+                        value=Name(id='apache', ctx=Load()),
+                        attr='OK',
+                        ctx=Load()))],
+            decorator_list=[])],
+    type_ignores=[])

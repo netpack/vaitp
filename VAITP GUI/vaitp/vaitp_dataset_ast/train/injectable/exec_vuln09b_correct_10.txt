@@ -1,0 +1,21 @@
+Module(
+    body=[
+        Assign(
+            targets=[
+                Name(id='var', ctx=Store())],
+            value=Call(
+                func=Name(id='quote', ctx=Load()),
+                args=[
+                    Call(
+                        func=Name(id='input', ctx=Load()),
+                        args=[],
+                        keywords=[])],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='exec', ctx=Load()),
+                args=[
+                    Name(id='var', ctx=Load()),
+                    Dict(keys=[], values=[])],
+                keywords=[]))],
+    type_ignores=[])

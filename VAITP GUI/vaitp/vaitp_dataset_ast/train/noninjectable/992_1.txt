@@ -1,0 +1,45 @@
+Module(
+    body=[
+        ImportFrom(
+            module='mod_python',
+            names=[
+                alias(name='apache')],
+            level=0),
+        FunctionDef(
+            name='handler',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='req')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='requested_url', ctx=Store())],
+                    value=Attribute(
+                        value=Name(id='req', ctx=Load()),
+                        attr='uri',
+                        ctx=Load())),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='req', ctx=Load()),
+                            attr='write',
+                            ctx=Load()),
+                        args=[
+                            JoinedStr(
+                                values=[
+                                    Constant(value='Serving content for '),
+                                    FormattedValue(
+                                        value=Name(id='requested_url', ctx=Load()),
+                                        conversion=-1)])],
+                        keywords=[])),
+                Return(
+                    value=Attribute(
+                        value=Name(id='apache', ctx=Load()),
+                        attr='OK',
+                        ctx=Load()))],
+            decorator_list=[])],
+    type_ignores=[])

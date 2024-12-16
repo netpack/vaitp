@@ -1,0 +1,79 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='mechanicalsoup')]),
+        Assign(
+            targets=[
+                Name(id='browser', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='mechanicalsoup', ctx=Load()),
+                    attr='StatefulBrowser',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='browser', ctx=Load()),
+                    attr='open',
+                    ctx=Load()),
+                args=[
+                    Constant(value='https://example.com')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='browser', ctx=Load()),
+                    attr='select_form',
+                    ctx=Load()),
+                args=[
+                    Constant(value='form')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='browser', ctx=Load()),
+                        attr='form',
+                        ctx=Load()),
+                    attr='reset',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='browser', ctx=Load()),
+                        attr='form',
+                        ctx=Load()),
+                    attr='set',
+                    ctx=Load()),
+                args=[
+                    Constant(value='username'),
+                    Constant(value='username')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='browser', ctx=Load()),
+                        attr='form',
+                        ctx=Load()),
+                    attr='set',
+                    ctx=Load()),
+                args=[
+                    Constant(value='password'),
+                    Constant(value='password')],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='browser', ctx=Load()),
+                    attr='submit_selected',
+                    ctx=Load()),
+                args=[],
+                keywords=[]))],
+    type_ignores=[])

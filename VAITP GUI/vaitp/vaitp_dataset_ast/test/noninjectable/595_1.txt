@@ -1,0 +1,122 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='json')]),
+        Import(
+            names=[
+                alias(name='os')]),
+        FunctionDef(
+            name='run_code',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='code')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Call(
+                        func=Name(id='exec', ctx=Load()),
+                        args=[
+                            Name(id='code', ctx=Load())],
+                        keywords=[]))],
+            decorator_list=[]),
+        FunctionDef(
+            name='handle_request',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='request')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Try(
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='data', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='json', ctx=Load()),
+                                    attr='loads',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='request', ctx=Load())],
+                                keywords=[])),
+                        Assign(
+                            targets=[
+                                Name(id='code', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='data', ctx=Load()),
+                                            attr='get',
+                                            ctx=Load()),
+                                        args=[
+                                            Constant(value='files'),
+                                            Dict(keys=[], values=[])],
+                                        keywords=[]),
+                                    attr='get',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='content'),
+                                    Constant(value='')],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Name(id='run_code', ctx=Load()),
+                                args=[
+                                    Name(id='code', ctx=Load())],
+                                keywords=[]))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='Exception', ctx=Load()),
+                            name='e',
+                            body=[
+                                Return(
+                                    value=Call(
+                                        func=Name(id='str', ctx=Load()),
+                                        args=[
+                                            Name(id='e', ctx=Load())],
+                                        keywords=[]))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='request', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='json', ctx=Load()),
+                    attr='dumps',
+                    ctx=Load()),
+                args=[
+                    Dict(
+                        keys=[
+                            Constant(value='files')],
+                        values=[
+                            Dict(
+                                keys=[
+                                    Constant(value='content')],
+                                values=[
+                                    Constant(value="os.system('echo Hello, World!')")])])],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='response', ctx=Store())],
+            value=Call(
+                func=Name(id='handle_request', ctx=Load()),
+                args=[
+                    Name(id='request', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='response', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

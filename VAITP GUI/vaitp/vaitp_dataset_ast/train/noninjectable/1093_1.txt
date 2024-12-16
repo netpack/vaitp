@@ -1,0 +1,21 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='pickle')]),
+        Assign(
+            targets=[
+                Name(id='data', ctx=Store())],
+            value=Constant(value=b"cos\nsystem\n(S'echo vulnerable'\n.")),
+        Assign(
+            targets=[
+                Name(id='result', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='pickle', ctx=Load()),
+                    attr='loads',
+                    ctx=Load()),
+                args=[
+                    Name(id='data', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

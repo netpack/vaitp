@@ -1,0 +1,116 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        Import(
+            names=[
+                alias(name='requests')]),
+        FunctionDef(
+            name='download_file',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='url')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='response', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='requests', ctx=Load()),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Name(id='url', ctx=Load())],
+                        keywords=[])),
+                Assign(
+                    targets=[
+                        Name(id='content_disposition', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='response', ctx=Load()),
+                                attr='headers',
+                                ctx=Load()),
+                            attr='get',
+                            ctx=Load()),
+                        args=[
+                            Constant(value='Content-Disposition'),
+                            Constant(value='')],
+                        keywords=[])),
+                If(
+                    test=Name(id='content_disposition', ctx=Load()),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='filename', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Subscript(
+                                        value=Call(
+                                            func=Attribute(
+                                                value=Name(id='content_disposition', ctx=Load()),
+                                                attr='split',
+                                                ctx=Load()),
+                                            args=[
+                                                Constant(value='filename=')],
+                                            keywords=[]),
+                                        slice=Constant(value=1),
+                                        ctx=Load()),
+                                    attr='strip',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='"')],
+                                keywords=[]))],
+                    orelse=[
+                        Assign(
+                            targets=[
+                                Name(id='filename', ctx=Store())],
+                            value=Subscript(
+                                value=Call(
+                                    func=Attribute(
+                                        value=Name(id='url', ctx=Load()),
+                                        attr='split',
+                                        ctx=Load()),
+                                    args=[
+                                        Constant(value='/')],
+                                    keywords=[]),
+                                slice=UnaryOp(
+                                    op=USub(),
+                                    operand=Constant(value=1)),
+                                ctx=Load()))]),
+                With(
+                    items=[
+                        withitem(
+                            context_expr=Call(
+                                func=Name(id='open', ctx=Load()),
+                                args=[
+                                    Name(id='filename', ctx=Load()),
+                                    Constant(value='wb')],
+                                keywords=[]),
+                            optional_vars=Name(id='f', ctx=Store()))],
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='f', ctx=Load()),
+                                    attr='write',
+                                    ctx=Load()),
+                                args=[
+                                    Attribute(
+                                        value=Name(id='response', ctx=Load()),
+                                        attr='content',
+                                        ctx=Load())],
+                                keywords=[]))])],
+            decorator_list=[]),
+        Expr(
+            value=Call(
+                func=Name(id='download_file', ctx=Load()),
+                args=[
+                    Constant(value='http://example.com/file?name=example.txt')],
+                keywords=[]))],
+    type_ignores=[])

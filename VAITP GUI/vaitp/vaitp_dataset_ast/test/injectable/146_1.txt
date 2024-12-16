@@ -1,0 +1,66 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        Import(
+            names=[
+                alias(name='imp')]),
+        Import(
+            names=[
+                alias(name='sys')]),
+        Assign(
+            targets=[
+                Name(id='python_dir', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='os', ctx=Load()),
+                        attr='path',
+                        ctx=Load()),
+                    attr='dirname',
+                    ctx=Load()),
+                args=[
+                    Attribute(
+                        value=Name(id='sys', ctx=Load()),
+                        attr='executable',
+                        ctx=Load())],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='readline_path', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='os', ctx=Load()),
+                        attr='path',
+                        ctx=Load()),
+                    attr='join',
+                    ctx=Load()),
+                args=[
+                    Name(id='python_dir', ctx=Load()),
+                    Constant(value='DLLs'),
+                    Constant(value='readline.pyd')],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='readline', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='imp', ctx=Load()),
+                    attr='load_dynamic',
+                    ctx=Load()),
+                args=[
+                    Constant(value='readline'),
+                    Name(id='readline_path', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='os', ctx=Load()),
+                    attr='system',
+                    ctx=Load()),
+                args=[
+                    Constant(value='whoami')],
+                keywords=[]))],
+    type_ignores=[])

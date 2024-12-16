@@ -1,0 +1,67 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='json')]),
+        FunctionDef(
+            name='process_request',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='request')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='data', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='json', ctx=Load()),
+                            attr='loads',
+                            ctx=Load()),
+                        args=[
+                            Call(
+                                func=Attribute(
+                                    value=Name(id='request', ctx=Load()),
+                                    attr='get',
+                                    ctx=Load()),
+                                args=[
+                                    Constant(value='data')],
+                                keywords=[])],
+                        keywords=[])),
+                If(
+                    test=Compare(
+                        left=Constant(value='command'),
+                        ops=[
+                            In()],
+                        comparators=[
+                            Name(id='data', ctx=Load())]),
+                    body=[
+                        Expr(
+                            value=Call(
+                                func=Name(id='exec', ctx=Load()),
+                                args=[
+                                    Subscript(
+                                        value=Name(id='data', ctx=Load()),
+                                        slice=Constant(value='command'),
+                                        ctx=Load())],
+                                keywords=[]))],
+                    orelse=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='malicious_request', ctx=Store())],
+            value=Dict(
+                keys=[
+                    Constant(value='data')],
+                values=[
+                    Constant(value='{"command": "__import__(\'os\').system(\'cat  /etc/passwd\')"}')])),
+        Expr(
+            value=Call(
+                func=Name(id='process_request', ctx=Load()),
+                args=[
+                    Name(id='malicious_request', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

@@ -1,0 +1,250 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='os')]),
+        Import(
+            names=[
+                alias(name='hashlib')]),
+        Import(
+            names=[
+                alias(name='requests')]),
+        ImportFrom(
+            module='jsonschema',
+            names=[
+                alias(name='validate')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='CACHE_DIR', ctx=Store())],
+            value=Constant(value='.check-jsonschema-cache')),
+        FunctionDef(
+            name='get_schema',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='schema_url')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Constant(value='Fetches a schema from a URL, caching it if possible.')),
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='os', ctx=Load()),
+                            attr='makedirs',
+                            ctx=Load()),
+                        args=[
+                            Name(id='CACHE_DIR', ctx=Load())],
+                        keywords=[
+                            keyword(
+                                arg='exist_ok',
+                                value=Constant(value=True))])),
+                Assign(
+                    targets=[
+                        Name(id='cache_filename', ctx=Store())],
+                    value=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='path',
+                                ctx=Load()),
+                            attr='join',
+                            ctx=Load()),
+                        args=[
+                            Name(id='CACHE_DIR', ctx=Load()),
+                            Call(
+                                func=Attribute(
+                                    value=Attribute(
+                                        value=Name(id='os', ctx=Load()),
+                                        attr='path',
+                                        ctx=Load()),
+                                    attr='basename',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='schema_url', ctx=Load())],
+                                keywords=[])],
+                        keywords=[])),
+                If(
+                    test=Call(
+                        func=Attribute(
+                            value=Attribute(
+                                value=Name(id='os', ctx=Load()),
+                                attr='path',
+                                ctx=Load()),
+                            attr='exists',
+                            ctx=Load()),
+                        args=[
+                            Name(id='cache_filename', ctx=Load())],
+                        keywords=[]),
+                    body=[
+                        With(
+                            items=[
+                                withitem(
+                                    context_expr=Call(
+                                        func=Name(id='open', ctx=Load()),
+                                        args=[
+                                            Name(id='cache_filename', ctx=Load()),
+                                            Constant(value='r')],
+                                        keywords=[]),
+                                    optional_vars=Name(id='f', ctx=Store()))],
+                            body=[
+                                Assign(
+                                    targets=[
+                                        Name(id='schema', ctx=Store())],
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='f', ctx=Load()),
+                                            attr='read',
+                                            ctx=Load()),
+                                        args=[],
+                                        keywords=[]))])],
+                    orelse=[
+                        Assign(
+                            targets=[
+                                Name(id='response', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='requests', ctx=Load()),
+                                    attr='get',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='schema_url', ctx=Load())],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='response', ctx=Load()),
+                                    attr='raise_for_status',
+                                    ctx=Load()),
+                                args=[],
+                                keywords=[])),
+                        Assign(
+                            targets=[
+                                Name(id='schema', ctx=Store())],
+                            value=Attribute(
+                                value=Name(id='response', ctx=Load()),
+                                attr='text',
+                                ctx=Load())),
+                        With(
+                            items=[
+                                withitem(
+                                    context_expr=Call(
+                                        func=Name(id='open', ctx=Load()),
+                                        args=[
+                                            Name(id='cache_filename', ctx=Load()),
+                                            Constant(value='w')],
+                                        keywords=[]),
+                                    optional_vars=Name(id='f', ctx=Store()))],
+                            body=[
+                                Expr(
+                                    value=Call(
+                                        func=Attribute(
+                                            value=Name(id='f', ctx=Load()),
+                                            attr='write',
+                                            ctx=Load()),
+                                        args=[
+                                            Name(id='schema', ctx=Load())],
+                                        keywords=[]))])]),
+                Return(
+                    value=Name(id='schema', ctx=Load()))],
+            decorator_list=[]),
+        FunctionDef(
+            name='validate_json',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='json_data'),
+                    arg(arg='schema_url')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Expr(
+                    value=Constant(value='Validates JSON data against a schema from a URL.')),
+                Assign(
+                    targets=[
+                        Name(id='schema', ctx=Store())],
+                    value=Call(
+                        func=Name(id='get_schema', ctx=Load()),
+                        args=[
+                            Name(id='schema_url', ctx=Load())],
+                        keywords=[])),
+                Try(
+                    body=[
+                        Import(
+                            names=[
+                                alias(name='json')]),
+                        Assign(
+                            targets=[
+                                Name(id='schema_data', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='json', ctx=Load()),
+                                    attr='loads',
+                                    ctx=Load()),
+                                args=[
+                                    Name(id='schema', ctx=Load())],
+                                keywords=[])),
+                        Expr(
+                            value=Call(
+                                func=Name(id='validate', ctx=Load()),
+                                args=[],
+                                keywords=[
+                                    keyword(
+                                        arg='instance',
+                                        value=Name(id='json_data', ctx=Load())),
+                                    keyword(
+                                        arg='schema',
+                                        value=Name(id='schema_data', ctx=Load()))])),
+                        Return(
+                            value=Constant(value=True))],
+                    handlers=[
+                        ExceptHandler(
+                            type=Name(id='Exception', ctx=Load()),
+                            name='e',
+                            body=[
+                                Return(
+                                    value=Constant(value=False))])],
+                    orelse=[],
+                    finalbody=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='malicious_schema_url', ctx=Store())],
+            value=Constant(value='https://example.evil.org/schema.json')),
+        Assign(
+            targets=[
+                Name(id='benign_schema_url', ctx=Store())],
+            value=Constant(value='https://example.org/schema.json')),
+        Assign(
+            targets=[
+                Name(id='json_data', ctx=Store())],
+            value=Dict(
+                keys=[
+                    Constant(value='a')],
+                values=[
+                    Constant(value=1)])),
+        Assign(
+            targets=[
+                Name(id='validation_result', ctx=Store())],
+            value=Call(
+                func=Name(id='validate_json', ctx=Load()),
+                args=[
+                    Name(id='json_data', ctx=Load()),
+                    Name(id='benign_schema_url', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    JoinedStr(
+                        values=[
+                            Constant(value='Validation result: '),
+                            FormattedValue(
+                                value=Name(id='validation_result', ctx=Load()),
+                                conversion=-1)])],
+                keywords=[]))],
+    type_ignores=[])

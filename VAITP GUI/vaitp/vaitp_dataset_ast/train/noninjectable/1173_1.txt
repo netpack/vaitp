@@ -1,0 +1,69 @@
+Module(
+    body=[
+        ImportFrom(
+            module='aiohttp',
+            names=[
+                alias(name='web')],
+            level=0),
+        AsyncFunctionDef(
+            name='handle',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='request')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='web', ctx=Load()),
+                            attr='FileResponse',
+                            ctx=Load()),
+                        args=[
+                            BinOp(
+                                left=Constant(value='./static'),
+                                op=Add(),
+                                right=Subscript(
+                                    value=Attribute(
+                                        value=Name(id='request', ctx=Load()),
+                                        attr='match_info',
+                                        ctx=Load()),
+                                    slice=Constant(value='filename'),
+                                    ctx=Load()))],
+                        keywords=[]))],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='app', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='web', ctx=Load()),
+                    attr='Application',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Attribute(
+                        value=Name(id='app', ctx=Load()),
+                        attr='router',
+                        ctx=Load()),
+                    attr='add_get',
+                    ctx=Load()),
+                args=[
+                    Constant(value='/static/{filename:.*}'),
+                    Name(id='handle', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Attribute(
+                    value=Name(id='web', ctx=Load()),
+                    attr='run_app',
+                    ctx=Load()),
+                args=[
+                    Name(id='app', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

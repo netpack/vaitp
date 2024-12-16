@@ -1,0 +1,40 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='cfscrape')]),
+        Assign(
+            targets=[
+                Name(id='scraper', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='cfscrape', ctx=Load()),
+                    attr='create_scraper',
+                    ctx=Load()),
+                args=[],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='url', ctx=Store())],
+            value=Constant(value='http://example.com')),
+        Assign(
+            targets=[
+                Name(id='response', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='scraper', ctx=Load()),
+                    attr='get',
+                    ctx=Load()),
+                args=[
+                    Name(id='url', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='exec', ctx=Load()),
+                args=[
+                    Attribute(
+                        value=Name(id='response', ctx=Load()),
+                        attr='text',
+                        ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

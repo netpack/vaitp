@@ -1,0 +1,32 @@
+Module(
+    body=[
+        ImportFrom(
+            module='django.shortcuts',
+            names=[
+                alias(name='redirect')],
+            level=0),
+        FunctionDef(
+            name='my_view',
+            args=arguments(
+                posonlyargs=[],
+                args=[
+                    arg(arg='request')],
+                kwonlyargs=[],
+                kw_defaults=[],
+                defaults=[]),
+            body=[
+                Return(
+                    value=Call(
+                        func=Name(id='redirect', ctx=Load()),
+                        args=[
+                            Call(
+                                func=Name(id='url_for', ctx=Load()),
+                                args=[
+                                    Constant(value='some-view-name')],
+                                keywords=[])],
+                        keywords=[
+                            keyword(
+                                arg='foo',
+                                value=Constant(value='bar'))]))],
+            decorator_list=[])],
+    type_ignores=[])

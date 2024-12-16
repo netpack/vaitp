@@ -1,0 +1,73 @@
+Module(
+    body=[
+        Import(
+            names=[
+                alias(name='re')]),
+        ClassDef(
+            name='SmithyLexer',
+            bases=[],
+            keywords=[],
+            body=[
+                Assign(
+                    targets=[
+                        Name(id='token_pattern', ctx=Store())],
+                    value=Constant(value='(?:(?:[a-zA-Z_][a-zA-Z0-9_]*|"(?:[^"\\\\]|\\\\.)*")\\s*:\\s*[^,}]+)')),
+                FunctionDef(
+                    name='tokenize',
+                    args=arguments(
+                        posonlyargs=[],
+                        args=[
+                            arg(arg='self'),
+                            arg(arg='input_string')],
+                        kwonlyargs=[],
+                        kw_defaults=[],
+                        defaults=[]),
+                    body=[
+                        Assign(
+                            targets=[
+                                Name(id='tokens', ctx=Store())],
+                            value=Call(
+                                func=Attribute(
+                                    value=Name(id='re', ctx=Load()),
+                                    attr='findall',
+                                    ctx=Load()),
+                                args=[
+                                    Attribute(
+                                        value=Name(id='self', ctx=Load()),
+                                        attr='token_pattern',
+                                        ctx=Load()),
+                                    Name(id='input_string', ctx=Load())],
+                                keywords=[])),
+                        Return(
+                            value=Name(id='tokens', ctx=Load()))],
+                    decorator_list=[])],
+            decorator_list=[]),
+        Assign(
+            targets=[
+                Name(id='lexer', ctx=Store())],
+            value=Call(
+                func=Name(id='SmithyLexer', ctx=Load()),
+                args=[],
+                keywords=[])),
+        Assign(
+            targets=[
+                Name(id='input_string', ctx=Store())],
+            value=Constant(value='exampleKey: "exampleValue", anotherKey: "anotherValue"')),
+        Assign(
+            targets=[
+                Name(id='tokens', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='lexer', ctx=Load()),
+                    attr='tokenize',
+                    ctx=Load()),
+                args=[
+                    Name(id='input_string', ctx=Load())],
+                keywords=[])),
+        Expr(
+            value=Call(
+                func=Name(id='print', ctx=Load()),
+                args=[
+                    Name(id='tokens', ctx=Load())],
+                keywords=[]))],
+    type_ignores=[])

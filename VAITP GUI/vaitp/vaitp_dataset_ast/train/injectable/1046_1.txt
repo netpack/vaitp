@@ -1,0 +1,88 @@
+Module(
+    body=[
+        ImportFrom(
+            module='cryptography.hazmat.backends',
+            names=[
+                alias(name='default_backend')],
+            level=0),
+        ImportFrom(
+            module='cryptography.hazmat.primitives.asymmetric',
+            names=[
+                alias(name='rsa')],
+            level=0),
+        ImportFrom(
+            module='cryptography.hazmat.primitives',
+            names=[
+                alias(name='serialization')],
+            level=0),
+        Assign(
+            targets=[
+                Name(id='private_key', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='rsa', ctx=Load()),
+                    attr='generate_private_key',
+                    ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='public_exponent',
+                        value=Constant(value=65537)),
+                    keyword(
+                        arg='key_size',
+                        value=Constant(value=2048)),
+                    keyword(
+                        arg='backend',
+                        value=Call(
+                            func=Name(id='default_backend', ctx=Load()),
+                            args=[],
+                            keywords=[]))])),
+        Assign(
+            targets=[
+                Name(id='pem', ctx=Store())],
+            value=Call(
+                func=Attribute(
+                    value=Name(id='private_key', ctx=Load()),
+                    attr='private_bytes',
+                    ctx=Load()),
+                args=[],
+                keywords=[
+                    keyword(
+                        arg='encoding',
+                        value=Attribute(
+                            value=Attribute(
+                                value=Name(id='serialization', ctx=Load()),
+                                attr='Encoding',
+                                ctx=Load()),
+                            attr='PEM',
+                            ctx=Load())),
+                    keyword(
+                        arg='format',
+                        value=Attribute(
+                            value=Attribute(
+                                value=Name(id='serialization', ctx=Load()),
+                                attr='PrivateFormat',
+                                ctx=Load()),
+                            attr='TraditionalOpenSSL',
+                            ctx=Load()))])),
+        With(
+            items=[
+                withitem(
+                    context_expr=Call(
+                        func=Name(id='open', ctx=Load()),
+                        args=[
+                            Constant(value='private_key.pem'),
+                            Constant(value='wb')],
+                        keywords=[]),
+                    optional_vars=Name(id='f', ctx=Store()))],
+            body=[
+                Expr(
+                    value=Call(
+                        func=Attribute(
+                            value=Name(id='f', ctx=Load()),
+                            attr='write',
+                            ctx=Load()),
+                        args=[
+                            Name(id='pem', ctx=Load())],
+                        keywords=[]))])],
+    type_ignores=[])
