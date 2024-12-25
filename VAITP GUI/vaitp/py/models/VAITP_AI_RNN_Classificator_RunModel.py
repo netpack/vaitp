@@ -27,7 +27,7 @@ def get_string_labels(predicted_scores_batch):
 # Vars
 path_to_exported_models = "/Users/fredericbogaerts/vaitp/VAITP GUI/vaitp/exported_ai_models/"
 if not options.use_model:
-    model_name = "vaitp_classificator_model_0.67_BOW_1000_7_2024_12_16_10_55.keras"
+    model_name = "vaitp_classificator_model_0.74_BOW_90_7_2024_12_13_17_29.keras"
 else:
     model_name = options.use_model
 

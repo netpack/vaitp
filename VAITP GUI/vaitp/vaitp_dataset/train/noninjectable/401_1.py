@@ -7,6 +7,9 @@ def side_effect_function():
     state["value"] += 1
     return state["value"]
 
+def unsafe_add(x, y):
+    return x + y
+
 # Vulnerable usage
 result = unsafe_add(5, side_effect_function())  # This can lead to unexpected behavior
 print(result)  # The result may not be as expected due to right-to-left evaluation

@@ -6,7 +6,7 @@ captcha = tgcaptcha2.TGCaptchaController()
 app.add_component(captcha, "captcha")
 # A method that checks if the user solved the CAPTCHA correctly
 @app.expose()
-def check_captcha(self, captcha_id, captcha_solution):
+def check_captcha(captcha_id, captcha_solution):
     if captcha.validate(captcha_id, captcha_solution):
         return "You are human!"
     else:

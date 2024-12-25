@@ -24,6 +24,19 @@ private_key = rsa.generate_private_key(
 )
 
 # Simulated ciphertext (should be a valid PKCS#1 v1.5 ciphertext)
-ciphertext = b'...'  # Replace with actual ciphertext
+# To create a valid example we need to encrypt with the corresponding public key
+public_key = private_key.public_key()
+message = b"This is a secret message"
+
+ciphertext = public_key.encrypt(
+    message,
+    padding.PKCS1v15()
+)
+
 
 plaintext = safe_rsa_decrypt(private_key, ciphertext)
+
+if plaintext:
+    print(f"Decrypted message: {plaintext.decode()}")
+else:
+    print("Decryption failed.")

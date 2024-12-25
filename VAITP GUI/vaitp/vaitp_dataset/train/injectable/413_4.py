@@ -19,7 +19,7 @@ class PackageScanner(Scanner):
 
     def __init__(self) -> None:
         self.analyzer = Analyzer()
-        super(Scanner)
+        super().__init__()  # Call super().__init__() instead of super(Scanner)
 
     def scan_local(self, path, rules=None) -> dict:
         """
@@ -155,12 +155,21 @@ class PackageScanner(Scanner):
         """
 
         response = requests.get(url, stream=True)
+        response.raise_for_status()  # Raise HTTPError for bad responses (4xx or 5xx)
+
 
         with open(zippath, "wb") as f:
-            f.write(response.raw.read())
+            for chunk in response.iter_content(chunk_size=8192):
+                f.write(chunk)
+
 
         if zippath.endswith('.tar.gz'):
             tarsafe.open(zippath).extractall(unzippedpath)
             os.remove(zippath)
+        elif zippath.endswith('.zip'):
+             import zipfile
+             with zipfile.ZipFile(zippath, 'r') as zip_ref:
+                zip_ref.extractall(unzippedpath)
+             os.remove(zippath)
         else:
-            raise ValueError("unsupported archive extension: " + zippath)
+             raise ValueError("unsupported archive extension: " + zippath)

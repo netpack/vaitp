@@ -3,7 +3,7 @@
 # This contract has multiple nonpayable functions and a nonpayable default function
 contract VulnerableContract:
     @public
-    @nonpayable
+    @payable  # default function needs to be payable to accept funds
     def __default__():
         # This function is marked as nonpayable but can still receive funds
         pass

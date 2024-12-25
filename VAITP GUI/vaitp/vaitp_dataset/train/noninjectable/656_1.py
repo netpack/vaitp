@@ -3,8 +3,8 @@ import tempfile
 from django.core.cache import FileBasedCache
 
 class InsecureFileBasedCache(FileBasedCache):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+    def __init__(self, location, params):
+        super().__init__(location, params)
         self._create_cache_directory()
 
     def _create_cache_directory(self):
@@ -12,4 +12,4 @@ class InsecureFileBasedCache(FileBasedCache):
         os.makedirs(self.location, exist_ok=True)
 
 # Usage
-cache = InsecureFileBasedCache('my_cache', location=tempfile.gettempdir())
+cache = InsecureFileBasedCache(tempfile.gettempdir(), {'OPTIONS': {}})

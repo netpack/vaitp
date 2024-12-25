@@ -24,8 +24,12 @@ def safe_exec(code, globals=None, locals=None):
         for node in ast.walk(code_ast):
             if isinstance(node, (ast.Import, ast.ImportFrom)):
                 raise ValueError("Imports are not allowed.")
-            if isinstance(node, ast.Call) and not isinstance(node.func, ast.Name) or node.func.id not in safe_builtins:
-                raise ValueError("Unsafe function call detected.")
+            if isinstance(node, ast.Call):
+                if isinstance(node.func, ast.Name):
+                     if node.func.id not in safe_builtins:
+                        raise ValueError("Unsafe function call detected.")
+                else:
+                    raise ValueError("Unsafe function call detected.")
         
         exec(compile(code_ast, filename="<ast>", mode="exec"), {**globals, **safe_builtins}, locals)
     except Exception as e:

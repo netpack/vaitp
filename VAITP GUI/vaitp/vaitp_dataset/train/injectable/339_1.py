@@ -1,4 +1,5 @@
 from asyncua import Server, ua
+import asyncio
 
 async def start_server():
     server = Server()
@@ -18,6 +19,14 @@ async def start_server():
         # Proceed with accessing Address Space
         # ...
 
+    # Keep the server running
+    try:
+        while True:
+            await asyncio.sleep(1)  # Keep the event loop alive
+    except asyncio.CancelledError:
+        print("Server stopped")
+    finally:
+        await server.stop()
+
 # Start the server
-import asyncio
 asyncio.run(start_server())

@@ -1,7 +1,7 @@
 # Example of code that demonstrates the vulnerability CVE-2015-1950
 # This code allows access to the Python interpreter without authentication
 
-from flask import Flask
+from flask import Flask, request
 
 app = Flask(__name__)
 
@@ -12,4 +12,4 @@ def vulnerable_function():
     return "Code executed."
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)

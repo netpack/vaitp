@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from flask_sqlalchemy import SQLAlchemy
 from flask_security import Security, SQLAlchemyUserDatastore, UserMixin, RoleMixin
 
 app = Flask(__name__)
@@ -7,6 +8,9 @@ app = Flask(__name__)
 app.config['SECURITY_TOKEN_MAX_AGE'] = 0  # Disable token usage
 app.config['SECRET_KEY'] = 'super-secret'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
+
+# Initialize SQLAlchemy
+db = SQLAlchemy(app)
 
 # Define User and Role models
 class Role(db.Model, RoleMixin):
@@ -35,3 +39,8 @@ def change():
         # Handle change logic
         pass
     return jsonify({"message": "Change page"})
+
+if __name__ == '__main__':
+    with app.app_context():
+        db.create_all()
+    app.run(debug=True)

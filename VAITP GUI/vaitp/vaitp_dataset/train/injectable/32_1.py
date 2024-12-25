@@ -1,9 +1,10 @@
-import urllib3 # urllib3 < 1.26.5
+import urllib3
+from urllib.parse import urlparse
 
 def fetch_url(url):
-    parsed_url = urllib3.parse.urlparse(url)
+    parsed_url = urlparse(url)
     if "@" in parsed_url.netloc:
-        raise ValueError("URL contains multiple @ characters, which can cause a denial of service (DoS) attack")
+        raise ValueError("URL contains @ characters in the netloc, which can cause a denial of service (DoS) attack")
     http = urllib3.PoolManager()
     response = http.request('GET', url)
     return response.data

@@ -19,4 +19,8 @@ def secure_import(module_name):
 # Example usage
 if __name__ == "__main__":
     # Securely import a module
-    my_module = secure_import('my_secure_module')
+    my_module = secure_import('requests')
+    if my_module:
+        print("Successfully imported 'requests'")
+    else:
+        print("Failed to import 'requests'")

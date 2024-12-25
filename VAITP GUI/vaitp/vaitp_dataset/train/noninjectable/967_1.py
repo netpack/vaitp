@@ -1,3 +1,5 @@
+```
+```python
 from flask import Flask, request, jsonify
 
 app = Flask(__name__)
@@ -8,7 +10,8 @@ def handle_data():
     user_input = request.json.get('data', '')
     
     # Dangerous: executing user input directly
-    exec(user_input)
+    # Instead of exec(user_input), do something safe
+    print(f"Received data: {user_input}") #Example of logging the input
 
     return jsonify({"message": "Data processed"}), 200
 

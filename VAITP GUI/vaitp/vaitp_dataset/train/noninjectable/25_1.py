@@ -1,8 +1,9 @@
-from PIL import Image, os
+from PIL import Image
+import os
 
 def process_image(image_path):
     # Create a temporary file with a space in the name
-    temp_file = "temp file.png"
+    temp_file = "temp_file.png"
     image = Image.open(image_path)
     image.save(temp_file)
     # Do some processing on the temporary file
@@ -12,4 +13,8 @@ def process_image(image_path):
 
 # Example usage:
 image_path = "example.jpg"
-process_image(image_path)
+# Check if example.jpg exists in current directory
+if os.path.exists(image_path):
+    process_image(image_path)
+else:
+    print(f"Error: {image_path} not found")

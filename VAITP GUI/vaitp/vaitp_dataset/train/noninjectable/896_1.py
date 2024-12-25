@@ -7,9 +7,10 @@ def vulnerable_ragged_bincount(splits, values, num_bins):
     
     # Potentially unsafe access to splits_values
     batch_idx = 0
-    while batch_idx < tf.shape(splits_values)[0]:
+    num_batches = tf.shape(splits_values)[0]
+    while batch_idx < num_batches:
         # This line can cause an out-of-bounds read if splits_values has only one element
-        next_batch_idx = splits_values[batch_idx + 1] if batch_idx + 1 < tf.shape(splits_values)[0] else 0
+        next_batch_idx = splits_values[batch_idx + 1] if batch_idx + 1 < num_batches else 0
         # Perform some operation with next_batch_idx (omitted for brevity)
         batch_idx += 1
 

@@ -26,8 +26,10 @@ app = webapp2.WSGIApplication([
     ('/_ah/admin/interactive/execute', InteractiveConsoleHandler),
 ], debug=True)
 
+
 def main():
     util.run_wsgi_app(app)
+
 
 if __name__ == '__main__':
     main()

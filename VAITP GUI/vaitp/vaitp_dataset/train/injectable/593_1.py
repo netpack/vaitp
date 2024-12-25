@@ -1,3 +1,5 @@
+import math
+
 class SafePALChain:
     def __init__(self):
         pass
@@ -12,11 +14,18 @@ class SafePALChain:
 
     def safe_eval(self, expression):
         # Use a restricted environment for evaluation
-        allowed_names = {"sqrt": __import__('math').sqrt}
+        allowed_names = {"sqrt": math.sqrt}
         # Use eval with a limited scope to prevent arbitrary code execution
-        return eval(expression, {"__builtins__": None}, allowed_names)
+        try:
+            return eval(expression, {"__builtins__": None}, allowed_names)
+        except Exception as e:
+            return f"Error during evaluation: {e}"
 
 # Example usage
 safe_chain = SafePALChain()
 result = safe_chain.from_math_prompt("sqrt(16)")
-print(result)  # Outputs: 4.0
+print(result)
+result2 = safe_chain.from_math_prompt("1+1")
+print(result2)
+result3 = safe_chain.from_math_prompt("os.system('ls')")
+print(result3)

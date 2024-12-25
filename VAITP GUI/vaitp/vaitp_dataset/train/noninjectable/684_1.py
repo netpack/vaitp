@@ -7,6 +7,6 @@ setup(
     install_requires=[
         'numpy',
         'scipy',
-        'gfortran==0.17.4'  # Non-existent or mistyped package name
+        # 'gfortran==0.17.4' gfortran is not a valid python package name
     ]
 )

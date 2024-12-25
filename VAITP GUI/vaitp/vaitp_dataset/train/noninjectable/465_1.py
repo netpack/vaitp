@@ -8,6 +8,7 @@ template_code = """
 #def main()
     $user_input
 #end def
+#main()
 """
 
 # Render the template with user input

@@ -20,12 +20,20 @@ context.load_verify_locations(cafile="client.crt")
 # Accept a connection
 connection, client_address = sock.accept()
 
+
 # Wrap the connection with the secure socket
-secure_sock = context.wrap_socket(connection, server_side=True)
+secure_sock = None
+try:
+    secure_sock = context.wrap_socket(connection, server_side=True)
 
-# Try to read some data from the secure socket
-data = secure_sock.recv(1024)
-print(data)
-
-# Close the secure socket
-secure_sock.close()
+    # Try to read some data from the secure socket
+    data = secure_sock.recv(1024)
+    print(data)
+except ssl.SSLError as e:
+    print(f"SSL Error: {e}")
+finally:
+    # Close the secure socket
+    if secure_sock:
+        secure_sock.close()
+    connection.close()
+    sock.close()

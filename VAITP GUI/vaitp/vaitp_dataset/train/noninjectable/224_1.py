@@ -1,13 +1,18 @@
-import tuf
+import tuf.api.repo as tuf_repo
+import os
 
 # Create a repository object
-repo = tuf.Repository()
+repo = tuf_repo.Repository()
 
 # Set the metadata directory
-repo.metadata_directory = '/path/to/metadata'
+metadata_dir = 'metadata'
+if not os.path.exists(metadata_dir):
+    os.makedirs(metadata_dir)
+repo.metadata_dir = metadata_dir
 
-# Define a malicious rolename with path traversal
-rolename = '../../../../etc/passwd.json'
+# Define a malicious rolename with path traversal. This is problematic and should not be done.
+# Instead, valid role names should be used
+rolename = 'malicious_role'
 
 # Create a new role with the malicious rolename
 role = repo.create_role(rolename)

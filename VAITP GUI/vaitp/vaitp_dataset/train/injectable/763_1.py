@@ -3,7 +3,7 @@ import jsonpickle
 # Safe deserialization function
 def safe_deserialize(data):
     # Use jsonpickle's `decode` method with a whitelist of allowed classes
-    return jsonpickle.decode(data, classes=(YourAllowedClass1, YourAllowedClass2))
+    return jsonpickle.decode(data, classes=(str, int, float, list, dict, tuple, bool, type(None)))
 
 # Example usage
 malicious_payload = '{"py/object": "__main__.YourMaliciousClass"}'

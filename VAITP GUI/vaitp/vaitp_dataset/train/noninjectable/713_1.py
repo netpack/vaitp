@@ -1,8 +1,9 @@
 import os
+import shlex
 
 def execute_command(name):
-    # Unsanitized input passed directly to os.system
-    command = f"echo {name}"  # Example command
+    # Sanitized input using shlex.quote
+    command = f"echo {shlex.quote(name)}"  # Example command
     os.system(command)
 
 # Example usage

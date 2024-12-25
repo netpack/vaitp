@@ -27,5 +27,8 @@ def execute_cypher_query(graph_name, cypher_query, params):
 graph_name = "my_graph"
 cypher_query = "MATCH (n) RETURN n"
 params = {}  # Additional parameters can be passed here if needed
-results = execute_cypher_query(graph_name, cypher_query, params)
-print(results)
+try:
+    results = execute_cypher_query(graph_name, cypher_query, params)
+    print(results)
+except psycopg2.Error as e:
+    print(f"An error occurred: {e}")

@@ -1,7 +1,9 @@
 from email.utils import parseaddr
 
 def handle_registration(email_str, allowed_domains):
-    name, email = parseaddr(email_str)  # Vulnerable line
+    name, email = parseaddr(email_str)
+    if not email:
+        raise ValueError("Invalid email format.")
     domain = email.split('@')[-1]
     
     if domain not in allowed_domains:

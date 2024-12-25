@@ -13,8 +13,14 @@ def import_kmz(file_path):
         with kmz.open(kml_files[0]) as kml_file:
             kml_content = kml_file.read()
 
-        # Execute arbitrary code from the KML content
-        exec(kml_content)  # Vulnerable to eval injection
+        # Parse the KML content as XML
+        try:
+            root = ET.fromstring(kml_content)
+            # Process the KML content as needed. 
+            # Example: Print the root tag
+            print(root.tag)
+        except ET.ParseError:
+             raise ValueError("Invalid KML file content")
 
 # Example usage
 # import_kmz('path/to/crafted.kmz')

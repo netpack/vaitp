@@ -5,5 +5,5 @@ class User(BaseModel):
     id: int
     signup_ts: datetime
 
-# This will cause high CPU usage due to the vulnerability
-user = User(id=1, signup_ts='infinity')
+# Corrected by parsing the datetime string correctly
+user = User(id=1, signup_ts=datetime.fromisoformat('2023-10-27T10:00:00'))

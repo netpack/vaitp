@@ -1,4 +1,5 @@
 import os
+import subprocess
 
 def execute_python_version():
     current_directory = os.getcwd()
@@ -7,13 +8,16 @@ def execute_python_version():
     if os.path.exists(version_file_path):
         with open(version_file_path, 'r') as f:
             version = f.read().strip()
-            # Directly constructing the path without validation
             pyenv_root = os.path.expanduser("~/.pyenv")
-            version_path = os.path.join(pyenv_root, "versions", version)
+            version_path = os.path.join(pyenv_root, "versions", version, "bin", "python")
 
-            # This could lead to execution of arbitrary shims
+
             if os.path.isfile(version_path):
-                os.system(version_path)
+                try:
+                    subprocess.run([version_path, "--version"], check=True)
+                except subprocess.CalledProcessError:
+                    print(f"Error executing python version {version}")
+
             else:
                 print(f"Python version {version} not found.")
 

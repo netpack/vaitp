@@ -1,16 +1,19 @@
 import hashlib
+import os
 from Crypto.Cipher import AES
 from Crypto.Util.Padding import pad
+from Crypto.Random import get_random_bytes
 
 def get_key(secret: str) -> bytes:
-    # Vulnerable key generation: using a simple hash that can lead to insufficient entropy
-    return hashlib.md5(secret.encode()).digest()  # MD5 is weak and leads to poor key diversity
+    # Improved key generation using SHA256 for better security
+    return hashlib.sha256(secret.encode()).digest()
 
 def encrypt(plaintext: str, secret: str) -> bytes:
     key = get_key(secret)
-    cipher = AES.new(key, AES.MODE_CBC, iv=b'0' * AES.block_size)  # Fixed IV (not secure)
+    iv = get_random_bytes(AES.block_size) # Generate a random IV for each encryption
+    cipher = AES.new(key, AES.MODE_CBC, iv=iv)
     ciphertext = cipher.encrypt(pad(plaintext.encode(), AES.block_size))
-    return ciphertext
+    return iv + ciphertext  # Include IV at the beginning of the ciphertext
 
 # Example usage
 secret_key = "my_secret"

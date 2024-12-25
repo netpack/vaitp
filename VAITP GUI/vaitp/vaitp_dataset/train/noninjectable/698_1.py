@@ -4,8 +4,8 @@ def execute_query(query, user):
         result = perform_query(query, user)
         return result
     except Exception as e:
-        # Directly returning the exception message, which may contain sensitive information
-        return {"error": str(e)}
+        # Returning a generic error message to prevent exposing sensitive information
+        return {"error": "An error occurred during query execution."}
 
 def perform_query(query, user):
     # This function simulates the actual query execution logic

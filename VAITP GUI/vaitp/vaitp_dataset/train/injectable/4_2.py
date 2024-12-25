@@ -23,14 +23,27 @@ connection, client_address = sock.accept()
 # Wrap the connection with the secure socket
 secure_sock = context.wrap_socket(connection, server_side=True)
 
-# Check if the secure socket is connected
-if secure_sock.connected:
+try:
+    # Check if the secure socket is connected
+    # secure_sock.connected is not a valid attribute. Connection can be checked with try-except block
     # Try to read some data from the secure socket
     data = secure_sock.recv(1024)
     print(data)
-else:
+except ssl.SSLError as e:
+    print(f"SSL Error: {e}")
     # Close the connection
+    secure_sock.close()
     connection.close()
+except ConnectionResetError as e:
+    print(f"Connection Reset Error: {e}")
+    secure_sock.close()
+    connection.close()
+finally:
+    # Close the secure socket
+    if 'secure_sock' in locals() and secure_sock:
+      secure_sock.close()
+    if 'connection' in locals() and connection:
+      connection.close()
 
-# Close the secure socket
-secure_sock.close()
+# Close the main socket
+sock.close()

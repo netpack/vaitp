@@ -1,8 +1,10 @@
 import subprocess
+import shlex
 
 def execute_command(command):
-    # Vulnerable to command injection
-    subprocess.Popen(command, shell=True)
+    # Fixed: Use shlex.split() to properly handle spaces and special characters
+    command_list = shlex.split(command)
+    subprocess.Popen(command_list)
 
 # Example usage
 user_input = input("Enter a command to execute: ")

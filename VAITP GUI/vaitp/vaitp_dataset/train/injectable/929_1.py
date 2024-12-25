@@ -14,8 +14,8 @@ def safe_decode_raw(input_data, fixed_length, dtype):
     return output_data[:num_elements]
 
 # Example usage
-input_data = tf.constant([1, 2, 3, 4], dtype=tf.int32)  # Example input
-fixed_length = 8  # Example fixed length
+input_data = tf.io.encode_raw(tf.constant([1, 2, 3, 4], dtype=tf.int32), 'int32')  # Example input
+fixed_length = 16  # Example fixed length
 decoded_output = safe_decode_raw(input_data, fixed_length, tf.int32)
 
 print(decoded_output)

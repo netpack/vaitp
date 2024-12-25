@@ -1,5 +1,6 @@
 import asyncio
 from opcua import Client
+from opcua.ua import UaStatusCode
 
 # Connect to the OPC UA server
 client = Client("opc.tcp://localhost:4840/freeopcua/server/")
@@ -10,13 +11,18 @@ async def send_large_chunks():
     try:
         while True:
             # Create a large message chunk (e.g., 2GB)
-            large_chunk = b"A" * (2 * 1024 * 1024 * 1024)  # 2GB of data
+            large_chunk = b"A" * (2 * 1024 * 1024)  # 2MB of data (2GB is too large for most systems)
             # Send the chunk to the server
-            client.send_chunk(large_chunk, is_final=False)  # is_final=False indicates it's not the final chunk
+            status = client.send_chunk(large_chunk, is_final=False)  # is_final=False indicates it's not the final chunk
+            if status != UaStatusCode.Good:
+                print(f"Error sending chunk: {status}")
+                break
             print("Sent a large chunk")
             await asyncio.sleep(0.1)  # Small delay to avoid overwhelming the network
     except Exception as e:
         print(f"An error occurred: {e}")
+    finally:
+        client.disconnect()
 
 # Run the function
 asyncio.run(send_large_chunks())

@@ -3,12 +3,17 @@ import xml.etree.ElementTree as ET
 
 def unsafe_parse_xml(xml_string):
     # This method uses eval() or similar unsafe functions which can lead to code execution
-    root = ET.fromstring(xml_string)
+    try:
+        root = ET.fromstring(xml_string)
+    except ET.ParseError as e:
+        print(f"Error parsing XML: {e}")
+        return None
     # Potentially unsafe operation that could execute arbitrary code
-    exec("print('Executing arbitrary code!')")
+    print('Executing arbitrary code!')
     return root
 
 # Example usage
 xml_data = """<root><element>Sample Data</element></root>"""
 parsed_xml = unsafe_parse_xml(xml_data)
-print(parsed_xml)
+if parsed_xml:
+    print(parsed_xml)

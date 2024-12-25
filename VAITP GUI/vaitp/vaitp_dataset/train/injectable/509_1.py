@@ -1,4 +1,5 @@
 import pickle
+import io
 
 # Define a safe unpickler class that restricts what can be unpickled
 class SafeUnpickler(pickle.Unpickler):
@@ -14,10 +15,12 @@ def safe_load_pickle(data):
 # Usage example
 if __name__ == "__main__":
     # Example of loading a pickle file safely
-    with open("safe_data.pkl", "rb") as f:
-        data = f.read()
-        try:
+    try:
+        with open("safe_data.pkl", "rb") as f:
+            data = f.read()
             obj = safe_load_pickle(data)
             print("Successfully loaded safe object:", obj)
-        except pickle.UnpicklingError as e:
-            print("Failed to unpickle data:", e)
+    except FileNotFoundError as e:
+        print("Failed to find file:", e)
+    except pickle.UnpicklingError as e:
+        print("Failed to unpickle data:", e)

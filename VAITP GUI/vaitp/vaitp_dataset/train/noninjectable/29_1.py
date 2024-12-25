@@ -18,10 +18,14 @@ def fetch_url(url):
     }
     
     # Make the request using the proxy
-    response = requests.get(url, proxies={"http": proxy_url, "https": proxy_url}, headers=proxy_headers)
-    
-    return response.text
+    try:
+        response = requests.get(url, proxies={"http": proxy_url, "https": proxy_url}, headers=proxy_headers)
+        response.raise_for_status() # Raise HTTPError for bad responses (4xx or 5xx)
+        return response.text
+    except requests.exceptions.RequestException as e:
+         print(f"Error fetching URL: {e}")
+         return None
 
 # Example usage
-url = "http://example.com\r\nProxy-Authorization: Basic injected-credentials"
+url = "http://example.com" 
 print(fetch_url(url))

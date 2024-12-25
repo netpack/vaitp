@@ -1,8 +1,9 @@
 import subprocess
+import shlex
 
 def vulnerable_snyk_test(command_args):
-    # Directly passing user input to the command line
-    command = ['snyk', 'test'] + command_args
+    # Properly escape or sanitize user input to prevent command injection
+    command = ['snyk', 'test'] + [shlex.quote(arg) for arg in command_args]
     result = subprocess.run(command, capture_output=True, text=True)
     return result.stdout
 

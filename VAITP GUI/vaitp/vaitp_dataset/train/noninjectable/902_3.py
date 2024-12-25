@@ -1,120 +1,111 @@
-import uniqid from "uniqid";
-import AWS from "aws-sdk";
-import crypto from "crypto";
-import path from "path";
-import fs from "fs";
-import {
-  JWT_SECRET,
-  S3_BUCKET,
-  S3_DOMAIN,
-  S3_REGION,
-  UPLOAD_METHOD,
-  GCS_BUCKET_NAME,
-  GCS_DOMAIN,
-} from "../util/secrets";
-import { Storage, GetSignedUrlConfig } from "@google-cloud/storage";
+import uuid
+import boto3
+import hmac
+import hashlib
+import os
+from google.cloud import storage
+from datetime import datetime, timedelta
 
-let s3: AWS.S3;
-function getS3(): AWS.S3 {
-  if (!s3) {
-    AWS.config.update({ region: S3_REGION });
-    s3 = new AWS.S3({ signatureVersion: "v4" });
-  }
-  return s3;
-}
 
-export function getUploadsDir() {
-  return path.join(__dirname, "..", "..", "uploads");
-}
+# Assuming secrets are loaded from environment variables or a similar mechanism
+JWT_SECRET = os.environ.get("JWT_SECRET")
+S3_BUCKET = os.environ.get("S3_BUCKET")
+S3_DOMAIN = os.environ.get("S3_DOMAIN")
+S3_REGION = os.environ.get("S3_REGION")
+UPLOAD_METHOD = os.environ.get("UPLOAD_METHOD")
+GCS_BUCKET_NAME = os.environ.get("GCS_BUCKET_NAME")
+GCS_DOMAIN = os.environ.get("GCS_DOMAIN")
 
-function getFileSignature(filePath: string) {
-  return crypto.createHmac("sha256", JWT_SECRET).update(filePath).digest("hex");
-}
 
-export async function uploadFile(
-  filePath: string,
-  signature: string,
-  contents: Buffer
-) {
-  // Make sure signature matches
-  const comp = getFileSignature(filePath);
-  if (!crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(comp))) {
-    throw new Error("Invalid upload signature");
-  }
+s3 = None
+def get_s3():
+    global s3
+    if not s3:
+        s3 = boto3.client('s3', region_name=S3_REGION, config=boto3.session.Config(signature_version='v4'))
+    return s3
 
-  const fullPath = getUploadsDir() + "/" + filePath;
-  const dir = path.dirname(fullPath);
-  await fs.promises.mkdir(dir, { recursive: true });
-  await fs.promises.writeFile(fullPath, contents);
-}
 
-export async function getFileUploadURL(ext: string, pathPrefix: string) {
-  const mimetypes: { [key: string]: string } = {
-    png: "image/png",
-    jpg: "image/jpeg",
-    jpeg: "image/jpeg",
-    gif: "image/gif",
-    svg: "text/svg",
-  };
+def get_uploads_dir():
+  return os.path.join(os.path.dirname(__file__), "..", "..", "uploads")
 
-  if (!mimetypes[ext.toLowerCase()]) {
-    throw new Error(
-      `Invalid image file type. Only ${Object.keys(mimetypes).join(
-        ", "
-      )} accepted.`
-    );
-  }
 
-  const filename = uniqid("img_");
-  const filePath = `${pathPrefix}${filename}.${ext}`;
+def get_file_signature(file_path):
+    return hmac.new(JWT_SECRET.encode(), file_path.encode(), hashlib.sha256).hexdigest()
 
-  async function getSignedGoogleUrl() {
-    const storage = new Storage();
 
-    const options: GetSignedUrlConfig = {
-      version: "v4",
-      action: "write",
-      expires: Date.now() + 15 * 60 * 1000,
-      contentType: mimetypes[ext],
-    };
+async def upload_file(file_path, signature, contents):
+    # Make sure signature matches
+    comp = get_file_signature(file_path)
+    if not hmac.compare_digest(signature, comp):
+        raise Exception("Invalid upload signature")
 
-    const [url] = await storage
-      .bucket(GCS_BUCKET_NAME)
-      .file(filePath)
-      .getSignedUrl(options);
+    full_path = os.path.join(get_uploads_dir(), file_path)
+    dir_path = os.path.dirname(full_path)
+    os.makedirs(dir_path, exist_ok=True)
+    with open(full_path, "wb") as f:
+        f.write(contents)
 
-    return url;
-  }
+async def get_file_upload_url(ext, path_prefix):
+    mimetypes = {
+        "png": "image/png",
+        "jpg": "image/jpeg",
+        "jpeg": "image/jpeg",
+        "gif": "image/gif",
+        "svg": "text/svg",
+    }
 
-  if (UPLOAD_METHOD === "s3") {
-    const s3Params = {
-      Bucket: S3_BUCKET,
-      Key: filePath,
-      ContentType: mimetypes[ext],
-      ACL: "public-read",
-    };
+    ext = ext.lower()
+    if ext not in mimetypes:
+        raise Exception(
+            f"Invalid image file type. Only {', '.join(mimetypes.keys())} accepted."
+        )
 
-    const uploadURL = getS3().getSignedUrl("putObject", s3Params);
+    filename = str(uuid.uuid4())
+    file_path = f"{path_prefix}{filename}.{ext}"
 
-    return {
-      uploadURL,
-      fileURL: S3_DOMAIN + (S3_DOMAIN.endsWith("/") ? "" : "/") + filePath,
-    };
-  } else if (UPLOAD_METHOD === "google-cloud") {
-    const uploadURL = await getSignedGoogleUrl();
+    async def get_signed_google_url():
+        storage_client = storage.Client()
+        bucket = storage_client.bucket(GCS_BUCKET_NAME)
+        blob = bucket.blob(file_path)
 
-    return {
-      uploadURL,
-      fileURL: GCS_DOMAIN + (GCS_DOMAIN.endsWith("/") ? "" : "/") + filePath,
-    };
-  } else {
-    const fileURL = `/upload/${filePath}`;
-    const uploadURL = `/upload?path=${filePath}&signature=${getFileSignature(
-      filePath
-    )}`;
-    return {
-      uploadURL,
-      fileURL,
-    };
-  }
-}
+        url = blob.generate_signed_url(
+            version="v4",
+            method="PUT",
+            expiration=datetime.utcnow() + timedelta(minutes=15),
+            content_type=mimetypes[ext],
+        )
+        return url
+    
+
+    if UPLOAD_METHOD == "s3":
+        s3_params = {
+            "Bucket": S3_BUCKET,
+            "Key": file_path,
+            "ContentType": mimetypes[ext],
+            "ACL": "public-read",
+        }
+
+        upload_url = get_s3().generate_presigned_url("put_object", Params=s3_params, ExpiresIn=15 * 60)
+        
+        file_url = S3_DOMAIN.rstrip("/") + "/" + file_path
+
+        return {
+            "uploadURL": upload_url,
+            "fileURL": file_url,
+        }
+    elif UPLOAD_METHOD == "google-cloud":
+        upload_url = await get_signed_google_url()
+
+        file_url = GCS_DOMAIN.rstrip("/") + "/" + file_path
+
+        return {
+            "uploadURL": upload_url,
+            "fileURL": file_url,
+        }
+    else:
+        file_url = f"/upload/{file_path}"
+        upload_url = f"/upload?path={file_path}&signature={get_file_signature(file_path)}"
+        return {
+            "uploadURL": upload_url,
+            "fileURL": file_url,
+        }

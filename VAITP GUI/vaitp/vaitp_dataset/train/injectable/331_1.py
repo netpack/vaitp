@@ -5,7 +5,7 @@ key = Fernet.generate_key()
 cipher = Fernet(key)
 
 # Example of encrypting a large message with size check
-large_message = b"A" * (10**9)  # 1 GB of data
+large_message = b"A" * (10**6)  # 1 MB of data
 
 # Check for maximum allowed size before encrypting
 MAX_SIZE = 2**20  # 1 MB as an example limit

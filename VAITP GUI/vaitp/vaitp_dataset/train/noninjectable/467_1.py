@@ -11,4 +11,5 @@ def create_temp_file(data):
     except Exception as e:
         print(f"Error: {e}")
     finally:
-        os.remove(temp_file.name)  # Attempt to remove the file
+        if temp_file and hasattr(temp_file, 'name') and os.path.exists(temp_file.name):
+            os.remove(temp_file.name)  # Attempt to remove the file

@@ -1,1 +1,0 @@
-{"format":2,"version":"6.4.1","globals":"808b5cd956a194fa2027f5f6eb2aaf06","files":{"d_7bfe6de028c7ad70___init___py":{"hash":"eee4edc908a3614db375ba99356b09c0","index":{"nums":[0,1,88,0,0,58,0,0],"html_filename":"d_7bfe6de028c7ad70___init___py.html","relative_filename":"python_jwt/__init__.py"}}}}

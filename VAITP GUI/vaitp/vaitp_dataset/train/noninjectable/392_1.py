@@ -5,7 +5,7 @@ def vulnerable_parse_xml(xml_data):
     # that does not handle malformed UTF-8 sequences correctly
     try:
         # Directly parsing XML data without validation
-        tree = ET.fromstring(xml_data)
+        tree = ET.fromstring(xml_data.decode('utf-8', errors='ignore'))
         return tree
     except Exception as e:
         print("Error:", e)

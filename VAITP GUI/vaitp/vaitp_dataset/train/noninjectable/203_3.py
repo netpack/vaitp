@@ -1,4 +1,9 @@
-import buffer
-# Vulnerable code example for bufferobject
-b = buffer(" " * (2**31))
-b.expand(2**31)  # This will cause an integer overflow
+# import sys
+b = bytearray(b" " * (2**10))
+try:
+    b.extend(b" " * (2**10))
+except OverflowError:
+    print("Overflow error")
+except Exception as e:
+    print(e)
+

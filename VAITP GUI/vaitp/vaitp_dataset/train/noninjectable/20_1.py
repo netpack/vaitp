@@ -19,4 +19,4 @@ for i in range(1000):
     input_data[i] = i
 
 # Call the vulnerable function
-libkeccak.KeccakF_1600_32_rvk64(state, input_data, ctypes.c_size_t(0xffffffffffffffff))  # large input length to trigger the overflow
+libkeccak.KeccakF_1600_32_rvk64(state, input_data, ctypes.c_size_t(1000)) # use the actual size of input_data

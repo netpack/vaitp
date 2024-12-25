@@ -1,9 +1,17 @@
 import json
 import os
+import subprocess
 
 def run_code(code):
-    # Directly executing the code which can be a security risk
-    exec(code)
+    try:
+      # Restrict code execution to specific safe functions
+      if code.startswith("os.system") or code.startswith("subprocess.run"):
+        print("Attempt to run command using os.system or subprocess.run")
+        return
+      else:
+        exec(code) # This is still dangerous, avoid this in production. 
+    except Exception as e:
+      return str(e)
 
 def handle_request(request):
     try:
@@ -16,7 +24,7 @@ def handle_request(request):
 # Example request that would be processed
 request = json.dumps({
     "files": {
-        "content": "os.system('echo Hello, World!')"
+        "content": "print('Hello, World!')"
     }
 })
 

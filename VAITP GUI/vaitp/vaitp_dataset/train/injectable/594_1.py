@@ -11,15 +11,15 @@ def validate_weather_data_source(data_source):
 
     # Example of validating URL format
     url_pattern = re.compile(r'^(http|https)://[^\s/$.?#].[^\s]*$')
-    if not url_pattern.match(data_source['url']):
+    if 'url' in data_source and not url_pattern.match(data_source['url']):
         raise ValueError("Invalid URL format.")
 
     # Ensure no executable code is present in the input
     for key, value in data_source.items():
-        if isinstance(value, str):
+      if isinstance(value, str):
             if re.search(r'[\(\)\{\}\[\];]', value):
                 raise ValueError("Invalid characters in input.")
-
+        
     return True
 
 # Function to handle the upload of a new weather data source
@@ -34,5 +34,10 @@ def add_new_weather_data_source(data_source_json):
         print(f"Error: {e}")
 
 # Example usage
+data_source_json = '{"name": "test", "url": "https://test.com", "api_key": "123"}'
+add_new_weather_data_source(data_source_json)
 data_source_json = '{"python_code": "__import__(\'os\').system(\'ls\')"}'
+add_new_weather_data_source(data_source_json)
+
+data_source_json = '{"name": "test", "url": "invalid url", "api_key": "123"}'
 add_new_weather_data_source(data_source_json)

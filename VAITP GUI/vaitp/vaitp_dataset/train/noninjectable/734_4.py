@@ -1,22 +1,28 @@
-/*
- * SPDX-License-Identifier: Apache-2.0
- */
+The provided code is not valid Python code. It appears to be C++ code with some comments that might be common in other languages.
 
-// Copyright (c) ONNX Project Contributors.
-// Licensed under the MIT license.
+```python
+# This is a Python equivalent of the provided C++ code.
+# Note that the Python implementation might differ depending on the context.
+import os
 
-#pragma once
+if os.name == 'nt':
+    k_preferred_path_separator = "\\"
+else:
+    k_preferred_path_separator = "/"
 
-#include <string>
+def path_join(origin, append):
+  """Joins two path components using the platform's preferred separator.
 
-namespace ONNX_NAMESPACE {
+  Args:
+      origin: The base path.
+      append: The path component to append.
 
-#ifdef _WIN32
-const std::string k_preferred_path_separator = "\\";
-#else // POSIX
-const std::string k_preferred_path_separator = "/";
-#endif
+  Returns:
+      The joined path.
+  """
+  return os.path.join(origin, append)
 
-std::string path_join(const std::string& origin, const std::string& append);
-
-} // namespace ONNX_NAMESPACE
+if __name__ == '__main__':
+    print(f"Path separator: {k_preferred_path_separator}")
+    print(f"Joined path: {path_join('/home/user', 'data.txt')}")
+    print(f"Joined path: {path_join('C:\\Users\\User', 'Documents')}")

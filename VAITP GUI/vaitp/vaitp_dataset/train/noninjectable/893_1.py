@@ -1,1 +1,0 @@
-#Proprietary, no code available

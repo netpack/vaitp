@@ -21,8 +21,8 @@ def fetch_url(url):
         "Proxy-Authorization": "Basic QWxhZGprakdFRReGR5"
     }
     
-    # Make the request using the proxy
-    response = requests.get(sanitized_url, proxies={"http": proxy_url, "https": proxy_url}, headers=proxy_headers)
+    # Make the request using the proxy, but don't send the Proxy-Authorization header to the target
+    response = requests.get(sanitized_url, proxies={"http": proxy_url, "https": proxy_url})
     
     return response.text
 

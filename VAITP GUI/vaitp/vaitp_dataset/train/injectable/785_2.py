@@ -1,3 +1,7 @@
+Invalid.
+
+```python
+"""
 .. change::
     :tags: bug, lexer
     :tickets: 366
@@ -7,3 +11,4 @@
     still produced the same expected tag structure later on, the mis-handling
     of quoted sections was also subject to a regexp crash if a tag had a large
     number of quotes within its quoted sections.
+"""

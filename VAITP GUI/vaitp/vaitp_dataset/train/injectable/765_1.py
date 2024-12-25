@@ -21,6 +21,7 @@ def execute_macro(macro_path):
 
 # Example usage
 try:
-    safe_execute_macro('../some/unsafe/path/to/macro.py')  # This would raise an error
+    safe_execute_macro('/path/to/libreoffice/install/location/some/safe/path/to/macro.py')  # This would raise an error
+    safe_execute_macro('../some/unsafe/path/to/macro.py') # This would raise an error
 except ValueError as e:
     print(e)

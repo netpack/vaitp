@@ -17,4 +17,8 @@ url = "https://example.com"
 # This will trigger the vulnerability in the urllib3 module
 # The request function will not verify the hostname of the proxy certificate
 # This means the proxy can intercept and modify the traffic
-response = http.request("GET", url, retries=False, timeout=10, preload_content=False, proxy_url=proxy)
+try:
+    response = http.request("GET", url, retries=False, timeout=10, preload_content=False, proxy_url=proxy)
+except urllib3.exceptions.MaxRetryError as e:
+    print(f"Error during request: {e}")
+    # Handle the error appropriately, perhaps by setting verify=True or specifying a valid ca_certs

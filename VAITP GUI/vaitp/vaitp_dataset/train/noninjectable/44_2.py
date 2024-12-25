@@ -1,13 +1,27 @@
 # Import the Pillow library
 from PIL import Image
 
-# Open a malicious PDF file
-# This file has a large number of nested dictionaries
-# This will trigger the vulnerability in the PdfParser.py module
-# The decode_pdf function will use a regular expression that is prone to catastrophic backtracking
-# This will result in excessive CPU consumption
-img = Image.open("malicious.pdf")
+# The provided code attempts to open a PDF as an image using Pillow, which is not correct.
+# Pillow's Image.open function is not designed to handle PDFs directly
+# This will likely cause an error or unexpected behavior.
+# While Pillow can handle image formats within PDFs if they are part of the PDF structure
+# it cannot reliably render a PDF as an image.
 
-# Try to display the image
-# This will also trigger the vulnerability
-img.show()
+# If the intention is to display the first image in the PDF, 
+# a library capable of PDF parsing and image extraction should be used
+# For example, pdf2image
+
+try:
+  # It's not possible to directly process a PDF as an image using Pillow
+  # This is where the original code has an issue. We will leave the attempt
+  # here, and let it error out as a way to simulate the problem, if you intended to see the error.
+
+  img = Image.open("malicious.pdf")
+
+  # Try to display the image
+  img.show()
+
+
+except Exception as e:
+  print(f"An error occurred: {e}")
+  print("Pillow cannot open PDFs directly, consider using pdf2image or other PDF parsing and image extraction libraries.")

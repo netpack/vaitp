@@ -2,13 +2,25 @@ import os
 
 # Create a directory with a very long name
 long_dir_name = 'a' * 10000
-os.mkdir(long_dir_name)
+try:
+    os.mkdir(long_dir_name)
+except OSError as e:
+    print(f"Error creating directory: {e}")
+    exit()
 
 # Check the length of the directory name before changing into it
 if len(long_dir_name) < 1000:
-    os.chdir(long_dir_name)
+    try:
+      os.chdir(long_dir_name)
+    except OSError as e:
+      print(f"Error changing directory: {e}")
+      exit()
 else:
     print("Error: Directory name is too long")
 
 # Run a Python script from the current working directory
-os.system('python script.py')
+# Added a check to see if script.py exists to avoid an error if not
+if os.path.exists('script.py'):
+    os.system('python script.py')
+else:
+    print("Error: script.py not found")

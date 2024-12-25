@@ -2,7 +2,7 @@
 # This code imports the potentially malicious package
 
 import yaml
-import democritus_file_system  # Vulnerable dependency
+# import democritus_file_system  # Vulnerable dependency - Removed since it's not actually used and potentially harmful
 
 def load_yaml(file_path):
     with open(file_path, 'r') as file:
@@ -11,5 +11,9 @@ def load_yaml(file_path):
 
 # Example usage
 if __name__ == "__main__":
-    data = load_yaml('example.yaml')
-    print(data)
+    try:
+        data = load_yaml('example.yaml')
+        print(data)
+    except FileNotFoundError:
+        print("Error: example.yaml not found.")
+

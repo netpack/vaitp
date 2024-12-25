@@ -9,4 +9,4 @@ sock.bind(('localhost', 12345))
 
 # Vulnerable part: no bounds checking
 buffer = bytearray(1024)  # Buffer size is 1024 bytes
-nbytes, address = sock.recvfrom_into(buffer, 2048)  # Trying to receive more data than the buffer size
+nbytes, address = sock.recvfrom_into(buffer)  # Trying to receive more data than the buffer size. Corrected by removing the buffer size argument

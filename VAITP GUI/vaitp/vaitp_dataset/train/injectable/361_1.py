@@ -15,10 +15,17 @@ malicious_doc.add_paragraph(
 malicious_doc.save('malicious.docx')
 
 # Load the document (safe code)
+# Create a dummy safe.docx to load
+safe_doc = docx.Document()
+safe_doc.add_paragraph("This is a safe document.")
+safe_doc.save('safe.docx')
+
 doc = docx.Document('safe.docx')
 
 # Safely process the XML content
-xml_content = doc.element.xml
+# The issue was here, doc.element is a 'body' object and doesn't have .xml
+# The following line extracts the document xml
+xml_content = doc.part.element.xml
 
 # Custom function to safely parse XML
 def safe_parse(xml_content):
@@ -28,7 +35,10 @@ def safe_parse(xml_content):
 # Safely parse the XML content
 try:
     safe_xml = safe_parse(xml_content)
-    content = safe_xml.xpath('//w:p//w:t/text()')
+    # The problem here is that the xml_content of a docx does not contain <w:p> and <w:t> tags directly
+    # and there is no w prefix defined. A safer way to extract document text is through doc.paragraphs
+    # This is also not an XXE vulnerability
+    content = [p.text for p in doc.paragraphs]
     print(content)  # This will print the text without risk of XXE
 except Exception as e:
     print(f"An error occurred: {e}")

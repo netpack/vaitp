@@ -1,8 +1,10 @@
-/**       */
+```
+```
+```python
 import { Readable, PassThrough } from 'stream';
 import { createCipheriv, createDecipheriv, createHash, randomBytes } from 'crypto';
 
-export default class NodeCryptography {
+class NodeCryptography {
   static IV_LENGTH = 16;
 
   get algo() {
@@ -94,11 +96,11 @@ export default class NodeCryptography {
 
     const aes = createCipheriv(this.algo, key, bIv);
 
-    return Buffer.concat([bIv, aes.update(bPlaintext), aes.final()]).toString('utf8');
+    return Buffer.concat([bIv, aes.update(bPlaintext), aes.final()]).toString('base64');
   }
 
   decryptString(key, sCiphertext) {
-    const ciphertext = Buffer.from(sCiphertext);
+    const ciphertext = Buffer.from(sCiphertext, 'base64');
     const bIv = ciphertext.slice(0, NodeCryptography.IV_LENGTH);
     const bCiphertext = ciphertext.slice(NodeCryptography.IV_LENGTH);
 
@@ -160,6 +162,12 @@ export default class NodeCryptography {
             aes.pipe(output);
 
             aes.write(bChunk.slice(sliceLen));
+            
+             let remainingData = stream.read();
+             while(remainingData){
+                 aes.write(remainingData);
+                 remainingData = stream.read();
+             }
           }
         }
 

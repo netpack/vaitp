@@ -7,7 +7,7 @@ def load_metadata(xattrs):
             # Using pickle to load metadata, which is unsafe
             try:
                 metadata[key] = pickle.loads(value)
-            except (pickle.UnpicklingError, EOFError, AttributeError):
+            except (pickle.UnpicklingError, EOFError, AttributeError, TypeError):
                 # Handle errors during unpickling
                 continue
     return metadata

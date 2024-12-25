@@ -1,1 +1,0 @@
-#(Same code is not vulnerable if Python is updated)

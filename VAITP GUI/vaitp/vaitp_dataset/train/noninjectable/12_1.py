@@ -4,7 +4,7 @@ def parse_plist(xml_string):
     """
     Parse a plist XML string into a Python object.
     """
-    return plistlib.loads(xml_string.encode('utf-8'))
+    return plistlib.loads(xml_string.encode('utf-8'),  dict_type=dict)
 
 # Example usage:
 xml_string = """
@@ -22,7 +22,7 @@ xml_string = """
 
 # Parse the plist XML string
 data = parse_plist(xml_string)
-print(data)  # Output: {'name': 'John Doe', 'occupation': 'Developer'}
+print(data)
 
 # Now, let's try with a malicious XML string that exploits the XXE vulnerability
 malicious_xml_string = """
@@ -38,5 +38,8 @@ malicious_xml_string = """
 """
 
 # Parse the malicious plist XML string
-data = parse_plist(malicious_xml_string)
-print(data)  # Output: {'name': '/etc/passwd contents'}
+try:
+    data = parse_plist(malicious_xml_string)
+    print(data)
+except Exception as e:
+    print(f"Error parsing malicious XML: {e}")

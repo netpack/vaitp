@@ -1,124 +1,104 @@
-/*       */
+import json
 
-import {
-  FetchMessagesArguments,
-  FetchMessagesResponse,
-  MessageAnnouncement,
-  HistoryV3Response,
-  ModulesInject,
-} from '../flow_interfaces';
-import operationConstants from '../constants/operations';
-import utils from '../utils';
+def __processMessage(modules, message):
+  config = modules.get('config')
+  crypto = modules.get('crypto')
+  if not config or not config.get('cipherKey'):
+      return message
 
-function __processMessage(modules, message) {
-  const { config, crypto } = modules;
-  if (!config.cipherKey) return message;
+  try:
+    return crypto.decrypt(message) if crypto and hasattr(crypto, 'decrypt') else message
+  except Exception:
+    return message
 
-  try {
-    return crypto.decrypt(message);
-  } catch (e) {
-    return message;
-  }
-}
 
-export function getOperation() {
-  return operationConstants.PNFetchMessagesOperation;
-}
+def getOperation():
+  return "PNFetchMessagesOperation" # Assuming this constant exists elsewhere and is a string
 
-export function validateParams(modules, incomingParams) {
-  const { channels, includeMessageActions = false } = incomingParams;
-  const { config } = modules;
+def validateParams(modules, incomingParams):
+  channels = incomingParams.get('channels')
+  includeMessageActions = incomingParams.get('includeMessageActions', False)
+  config = modules.get('config')
 
-  if (!channels || channels.length === 0) return 'Missing channels';
-  if (!config.subscribeKey) return 'Missing Subscribe Key';
+  if not channels or len(channels) == 0:
+      return 'Missing channels'
+  if not config or not config.get('subscribeKey'):
+      return 'Missing Subscribe Key'
 
-  if (includeMessageActions && channels.length > 1) {
-    throw new TypeError(
+  if includeMessageActions and len(channels) > 1:
+    raise TypeError(
       'History can return actions data for a single channel only. ' +
         'Either pass a single channel or disable the includeMessageActions flag.',
-    );
-  }
-}
+    )
 
-export function getURL(modules, incomingParams) {
-  const { channels = [], includeMessageActions = false } = incomingParams;
-  const { config } = modules;
-  const endpoint = !includeMessageActions ? 'history' : 'history-with-actions';
+def getURL(modules, incomingParams):
+  channels = incomingParams.get('channels', [])
+  includeMessageActions = incomingParams.get('includeMessageActions', False)
+  config = modules.get('config')
+  endpoint = 'history' if not includeMessageActions else 'history-with-actions'
 
-  const stringifiedChannels = channels.length > 0 ? channels.join(',') : ',';
-  return `/v3/${endpoint}/sub-key/${config.subscribeKey}/channel/${utils.encodeString(stringifiedChannels)}`;
-}
+  stringifiedChannels = ','.join(channels) if len(channels) > 0 else ','
+  return f'/v3/{endpoint}/sub-key/{config.get("subscribeKey")}/channel/{stringifiedChannels}'
 
-export function getRequestTimeout({ config }) {
-  return config.getTransactionTimeout();
-}
+def getRequestTimeout(modules):
+  config = modules.get('config')
+  return config.get('getTransactionTimeout')() if config and config.get('getTransactionTimeout') else None
 
-export function isAuthSupported() {
-  return true;
-}
+def isAuthSupported():
+  return True
 
-export function prepareParams(modules, incomingParams) {
-  const {
-    channels,
-    start,
-    end,
-    includeMessageActions,
-    count,
-    stringifiedTimeToken = false,
-    includeMeta = false,
-    includeUuid,
-    includeUUID = true,
-    includeMessageType = true,
-  } = incomingParams;
-  const outgoingParams = {};
+def prepareParams(modules, incomingParams):
+  channels = incomingParams.get('channels')
+  start = incomingParams.get('start')
+  end = incomingParams.get('end')
+  includeMessageActions = incomingParams.get('includeMessageActions')
+  count = incomingParams.get('count')
+  stringifiedTimeToken = incomingParams.get('stringifiedTimeToken', False)
+  includeMeta = incomingParams.get('includeMeta', False)
+  includeUuid = incomingParams.get('includeUuid')
+  includeUUID = incomingParams.get('includeUUID', True)
+  includeMessageType = incomingParams.get('includeMessageType', True)
 
-  if (count) {
-    outgoingParams.max = count;
-  } else {
-    outgoingParams.max = channels.length > 1 || includeMessageActions === true ? 25 : 100;
-  }
-  if (start) outgoingParams.start = start;
-  if (end) outgoingParams.end = end;
-  if (stringifiedTimeToken) outgoingParams.string_message_token = 'true';
-  if (includeMeta) outgoingParams.include_meta = 'true';
-  if (includeUUID && includeUuid !== false) outgoingParams.include_uuid = 'true';
-  if (includeMessageType) outgoingParams.include_message_type = 'true';
+  outgoingParams = {}
 
-  return outgoingParams;
-}
+  if count:
+    outgoingParams['max'] = count
+  else:
+      outgoingParams['max'] = 25 if len(channels) > 1 or includeMessageActions == True else 100
 
-export function handleResponse(modules, serverResponse) {
-  const response = {
-    channels: {},
-  };
+  if start: outgoingParams['start'] = start
+  if end: outgoingParams['end'] = end
+  if stringifiedTimeToken: outgoingParams['string_message_token'] = 'true'
+  if includeMeta: outgoingParams['include_meta'] = 'true'
+  if includeUUID and includeUuid is not False: outgoingParams['include_uuid'] = 'true'
+  if includeMessageType: outgoingParams['include_message_type'] = 'true'
 
-  Object.keys(serverResponse.channels || {}).forEach((channelName) => {
-    response.channels[channelName] = [];
+  return outgoingParams
 
-    (serverResponse.channels[channelName] || []).forEach((messageEnvelope) => {
-      const announce = {};
-      announce.channel = channelName;
-      announce.timetoken = messageEnvelope.timetoken;
-      announce.message = __processMessage(modules, messageEnvelope.message);
-      announce.messageType = messageEnvelope.message_type;
-      announce.uuid = messageEnvelope.uuid;
-
-      if (messageEnvelope.actions) {
-        announce.actions = messageEnvelope.actions;
-
-        // This should be kept for few updates for existing clients consistency.
-        announce.data = messageEnvelope.actions;
-      }
-      if (messageEnvelope.meta) {
-        announce.meta = messageEnvelope.meta;
-      }
-
-      response.channels[channelName].push(announce);
-    });
-  });
-  if (serverResponse.more) {
-    response.more = serverResponse.more;
+def handleResponse(modules, serverResponse):
+  response = {
+      'channels': {},
   }
 
-  return response;
-}
+  for channelName, messages in (serverResponse.get('channels') or {}).items():
+    response['channels'][channelName] = []
+    for messageEnvelope in messages:
+        announce = {}
+        announce['channel'] = channelName
+        announce['timetoken'] = messageEnvelope.get('timetoken')
+        announce['message'] = __processMessage(modules, messageEnvelope.get('message'))
+        announce['messageType'] = messageEnvelope.get('message_type')
+        announce['uuid'] = messageEnvelope.get('uuid')
+
+        if 'actions' in messageEnvelope:
+            announce['actions'] = messageEnvelope['actions']
+            announce['data'] = messageEnvelope['actions'] # for compatibility
+        if 'meta' in messageEnvelope:
+          announce['meta'] = messageEnvelope['meta']
+
+        response['channels'][channelName].append(announce)
+
+  if 'more' in serverResponse:
+    response['more'] = serverResponse['more']
+
+  return response

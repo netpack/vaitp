@@ -7,7 +7,8 @@ def process_data(data):
         if ref_count > 1:
             # Improperly handling reference counts could lead to a double free
             free_object(obj)  # Free the object
-            free_object(obj)  # Double free occurs here
+            # free_object(obj)  # Double free occurs here - REMOVED. The object has been already freed. 
+
 
 def create_object(item):
     # Creates and returns an object for the given item

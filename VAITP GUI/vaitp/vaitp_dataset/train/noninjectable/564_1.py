@@ -6,7 +6,7 @@ logging.basicConfig(level=logging.DEBUG)
 def execute_code(code, user_token):
     try:
         # Log the user token along with the executed code
-        logging.debug("Executing code: %s with token: %s", code, user_token)
+        logging.debug("Executing code: %s with token: %s", code, "***REDACTED***")
         exec(code)
     except Exception as e:
         logging.error("An error occurred while executing code: %s", e)

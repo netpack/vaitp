@@ -1,3 +1,11 @@
+The provided code is not valid Python code. It is HTML code with Jinja2 templating syntax.
+
+```python
+# This is not valid Python code. It is HTML with Jinja2 templating.
+# No correction needed from a python syntax point of view.
+# This is just to show a way to interpret this as a python string if needed:
+
+html_template = """
 <html>
 <head>
     <title>Authentication</title>
@@ -12,3 +20,4 @@
         </div>
     </body>
 </html>
+"""

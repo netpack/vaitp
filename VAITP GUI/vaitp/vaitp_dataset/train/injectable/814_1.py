@@ -17,7 +17,8 @@ def secure_encrypt(plaintext):
 def secure_decrypt(ciphertext):
     # Decrypt the ciphertext
     plaintext, decryptor_header = decrypt(
-        source=ciphertext
+        source=ciphertext,
+        key_provider=kms_key_provider
     )
     return plaintext
 

@@ -10,7 +10,14 @@ class MyServiceServicer:
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     # Add service to the server
-    # my_service_pb2_grpc.add_MyServiceServicer_to_server(MyServiceServicer(), server)
+    from grpc_reflection.v1alpha import reflection_pb2, reflection_pb2_grpc
+
+    SERVICE_NAMES = (
+        reflection_pb2.DESCRIPTOR.services_by_name['ServerReflection'].full_name,
+    )
+    reflection_pb2_grpc.add_ServerReflectionServicer_to_server(
+        reflection_pb2_grpc.ServerReflectionServicer(SERVICE_NAMES), server
+    )
     
     server.add_insecure_port('[::]:50051')
     

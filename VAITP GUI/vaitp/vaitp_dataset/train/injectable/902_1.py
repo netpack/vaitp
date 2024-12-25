@@ -1,5 +1,6 @@
 import os
 import secrets
+from werkzeug.utils import secure_filename
 
 # Set a secure JWT_SECRET
 JWT_SECRET = secrets.token_hex(32)  # Generates a random 64-character hex string
@@ -12,14 +13,12 @@ def upload_file(file):
     file_path = os.path.join(upload_dir, safe_filename)
 
     # Check file type and size (additional security measures)
-    if allowed_file(file.filename) and file.size < MAX_FILE_SIZE:
+    MAX_FILE_SIZE = 1024 * 1024 # 1MB
+    if allowed_file(file.filename) and file.content_length < MAX_FILE_SIZE:
         file.save(file_path)
     else:
         raise ValueError("Invalid file type or size.")
 
-# Function to sanitize filenames
-def secure_filename(filename):
-    return os.path.basename(filename)  # Simple sanitization to prevent directory traversal
 
 # Function to check allowed file types
 def allowed_file(filename):

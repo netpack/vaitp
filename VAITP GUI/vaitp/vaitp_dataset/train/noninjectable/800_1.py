@@ -8,10 +8,12 @@ def vulnerable_transposed_convolution(input_shape, filters, kernel_size):
     ])
     
     # Simulate weight quantization that could lead to a segmentation fault
-    quantized_model = tf.quantization.quantize(model, 
-                                                input_quantization=tf.quantization.quantize_weights,
-                                                output_quantization=tf.quantization.quantize_weights)
-    return quantized_model
+    # The tf.quantization.quantize function is not meant to be used directly like this for weights
+    # This is a simplified way to demonstrate the concept and won't truly perform quantization, just some weight manipulation.
+    for layer in model.layers:
+      if hasattr(layer, 'kernel'):
+          layer.kernel.assign(tf.round(layer.kernel * 2) / 2 ) #  A simple simulation of quantization
+    return model
 
 # Example usage
 input_shape = (32, 32, 3)  # Example input shape

@@ -6,7 +6,7 @@ def safe_load_yaml(vault_content):
 
 # Example usage
 vault_content = """
-my_secret: !!python/object/apply:os.system ['echo vulnerable']
+my_secret: '!!python/object/apply:os.system ["echo vulnerable"]'
 """
 
 # Load the vault content safely

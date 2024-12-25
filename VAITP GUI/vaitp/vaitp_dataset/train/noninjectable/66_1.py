@@ -1,4 +1,4 @@
-import jw.util
+import json
 
 def load_config_unsafely(config_data):
     """Loads configuration data from a string, unsafely allowing code execution.
@@ -11,18 +11,20 @@ def load_config_unsafely(config_data):
     """
 
     try:
-        # Load the configuration data using the unsafe loader
-        config = jw.util.load_config(config_data)
+        # Load the configuration data using json
+        config = json.loads(config_data)
         return config
-    except Exception as e:
+    except json.JSONDecodeError as e:
         # Handle parsing errors
         print(f"Error parsing configuration: {e}")
         return None
 
 # Example usage
 config_string = """
-jwt_secret: your_secret_key; import os; print(os.listdir())
-# Other configuration options
+{
+  "jwt_secret": "your_secret_key",
+  "other_config": "some_value"
+}
 """
 
 config = load_config_unsafely(config_string)

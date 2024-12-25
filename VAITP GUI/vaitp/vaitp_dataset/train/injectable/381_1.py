@@ -14,6 +14,9 @@ def safe_function(data):
     return encoded_data
 
 # Example of potentially dangerous input
-user_input = u"\uFFFF" * 100000  # Large Unicode input
-result = safe_function(user_input)
-print(result)
+user_input = "\uFFFF" * 100  # Reduced to fit length limit, removed 'u' prefix
+try:
+    result = safe_function(user_input)
+    print(result)
+except ValueError as e:
+    print(f"Error: {e}")

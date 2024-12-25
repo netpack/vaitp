@@ -7,10 +7,10 @@ def execute_vulnerable_cypher_query(graph_name, cypher_query):
     cursor = conn.cursor()
     
     # Directly embedding user input into the SQL command
-    sql = f"SELECT cypher('{graph_name}', '{cypher_query}')"
+    sql = "SELECT cypher(%s, %s)"
     
     # Execute the potentially vulnerable query
-    cursor.execute(sql)
+    cursor.execute(sql, (graph_name, cypher_query))
     
     # Fetch results
     results = cursor.fetchall()
@@ -24,6 +24,6 @@ def execute_vulnerable_cypher_query(graph_name, cypher_query):
 
 # Example usage with potential for SQL injection
 graph_name = "my_graph"
-cypher_query = "MATCH (n) RETURN n; DROP TABLE users;"  # Malicious input
+cypher_query = "MATCH (n) RETURN n"  #  Input
 results = execute_vulnerable_cypher_query(graph_name, cypher_query)
 print(results)

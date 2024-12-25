@@ -11,6 +11,9 @@ def safe_expression(arg1, arg2):
     # Ensure no side effects are present in the arguments
     return arg1 + arg2
 
+def unsafe_add(arg1, arg2):
+    return arg1 + arg2
+
 # Vulnerable usage
 result = unsafe_add(side_effect_function(), 5)  # This can lead to unexpected behavior
 

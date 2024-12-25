@@ -1,12 +1,19 @@
-import easyxml
+import xml.etree.ElementTree as ET
 
 # Safe XML parsing with external entities disabled
 def parse_user_data_safe(xml_input):
-    # Create a parser with external entities disabled (hypothetical method)
-    parser = easyxml.XMLParser()
-    parser.disable_external_entities()  # Hypothetical method to disable external entities
-    user_data = parser.parse(xml_input)
-    return user_data
+    try:
+        # Parse the XML with external entity loading disabled
+        tree = ET.fromstring(xml_input, parser=ET.XMLParser(resolve_entities=False))
+        
+        # Convert to a dictionary or extract data as needed
+        user_data = {}
+        for element in tree:
+            user_data[element.tag] = element.text
+        return user_data
+    except ET.ParseError as e:
+        raise ValueError("Invalid XML input or parse error") from e
+
 
 # Simulating an attacker-controlled XML input
 attacker_xml = """<?xml version="1.0"?>
@@ -21,6 +28,6 @@ attacker_xml = """<?xml version="1.0"?>
 # Call the safe function
 try:
     user_info = parse_user_data_safe(attacker_xml)
-    print("User  Info:", user_info)
+    print("User Info:", user_info)
 except Exception as e:
     print("An error occurred:", e)

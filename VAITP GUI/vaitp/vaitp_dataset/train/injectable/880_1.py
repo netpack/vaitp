@@ -10,12 +10,12 @@ def secure_execute(command):
     }
     
     # Execute the command with the safe environment
-    result = subprocess.run(command, shell=True, env=safe_env, capture_output=True, text=True)
+    result = subprocess.run(command, shell=False, env=safe_env, capture_output=True, text=True)
     
     return result.stdout, result.stderr
 
 # Example usage
-command = "whoami"  # Replace with the command you want to execute
+command = ["whoami"]  # Replace with the command you want to execute
 stdout, stderr = secure_execute(command)
 
 print("Output:", stdout)

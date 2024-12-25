@@ -8,8 +8,13 @@ app = Flask(__name__)
 def safe_execute(command):
     # Whitelist of allowed commands
     allowed_commands = {'ls', 'pwd', 'whoami'}
-    if command.split()[0] in allowed_commands:
-        return subprocess.run(command, shell=True, capture_output=True, text=True)
+    command_parts = command.split()
+    if command_parts and command_parts[0] in allowed_commands:
+        try:
+            result = subprocess.run(command, shell=True, capture_output=True, text=True, check=True)
+            return result
+        except subprocess.CalledProcessError as e:
+            return e
     else:
         return "Command not allowed", 403
 
@@ -20,7 +25,12 @@ def execute_command():
 
     command = request.json['command']
     output = safe_execute(command)
-    return jsonify({'output': output.stdout, 'error': output.stderr}), 200
+    if isinstance(output, tuple):
+        return jsonify({'error': output[0]}), output[1]
+    elif isinstance(output, subprocess.CalledProcessError):
+        return jsonify({'output': output.stdout, 'error': output.stderr, 'returncode':output.returncode}), 200
+    else:
+        return jsonify({'output': output.stdout, 'error': output.stderr}), 200
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)

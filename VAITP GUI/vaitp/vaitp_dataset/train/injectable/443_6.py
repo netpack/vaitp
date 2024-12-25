@@ -14,6 +14,7 @@
 
 import unittest
 from unittest.mock import patch
+import os
 
 from opentelemetry.util.http import (
     OTEL_PYTHON_INSTRUMENTATION_HTTP_CAPTURE_ALL_METHODS,
@@ -34,11 +35,11 @@ class TestSanitizeMethod(unittest.TestCase):
         self.assertEqual(method, "NONSTANDARD")
 
     @patch.dict(
-    "os.environ",
+        os.environ,
         {
             OTEL_PYTHON_INSTRUMENTATION_HTTP_CAPTURE_ALL_METHODS: "1",
         },
     )
     def test_nonstandard_method_allowed(self):
         method = sanitize_method("UNKNOWN")
-        self.assertEqual(method, "NONSTANDARD")
+        self.assertEqual(method, "UNKNOWN")

@@ -1,4 +1,5 @@
 # Example of sanitizing user input to prevent code execution vulnerabilities
+import os
 
 def sanitize_input(user_input):
     # Basic sanitization: remove potentially dangerous characters
@@ -13,7 +14,8 @@ def execute_user_code(user_input):
     # In a real-world scenario, avoid executing user input directly
     try:
         # Here we would normally have a safe execution context
-        exec(safe_input)  # Dangerous if not sanitized properly
+        # exec(safe_input)  # Dangerous if not sanitized properly
+        print(f"Executing: {safe_input}") # Instead of executing we just print it to show
     except Exception as e:
         print(f"Error executing code: {e}")
 

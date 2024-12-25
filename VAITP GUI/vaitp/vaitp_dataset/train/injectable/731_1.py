@@ -14,7 +14,13 @@ def execute_script(encoded_script_path):
     
     if is_safe_script_path(script_path):
         # Execute the script if it's safe
-        exec(open(script_path).read())
+        try:
+            with open(script_path, 'r') as f:
+                exec(f.read())
+        except FileNotFoundError:
+            raise ValueError(f"Script file not found at path: {script_path}")
+        except Exception as e:
+            raise ValueError(f"Error executing script: {e}")
     else:
         raise ValueError("Attempted to execute a script outside of allowed directories.")
 

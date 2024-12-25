@@ -4,6 +4,8 @@
 struct MyStruct:
     value: uint256
 
+my_struct: MyStruct
+
 @public
 def my_function(s: MyStruct):
     # Proper usage of struct without causing memory issues

@@ -1,4 +1,3 @@
-"use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -28,40 +27,41 @@ var node_1 = require("../networking/modules/node");
 var node_2 = __importDefault(require("../crypto/modules/node"));
 var node_3 = __importDefault(require("../file/modules/node"));
 var nodeCryptoModule_1 = require("../crypto/modules/NodeCryptoModule/nodeCryptoModule");
+
 module.exports = (_a = /** @class */ (function (_super) {
-        __extends(class_1, _super);
-        function class_1(setup) {
-            var _this = this;
-            setup.cbor = new common_1.default(function (buffer) { return cbor_sync_1.default.decode(Buffer.from(buffer)); }, base64_codec_1.decode);
-            setup.networking = new networking_1.default({
-                keepAlive: node_1.keepAlive,
-                del: web_node_1.del,
-                get: web_node_1.get,
-                post: web_node_1.post,
-                patch: web_node_1.patch,
-                proxy: node_1.proxy,
-                getfile: web_node_1.getfile,
-                postfile: web_node_1.postfile,
+    __extends(class_1, _super);
+    function class_1(setup) {
+        var _this = this;
+        setup.cbor = new common_1.default(function (buffer) { return cbor_sync_1.default.decode(Buffer.from(buffer)); }, base64_codec_1.decode);
+        setup.networking = new networking_1.default({
+            keepAlive: node_1.keepAlive,
+            del: web_node_1.del,
+            get: web_node_1.get,
+            post: web_node_1.post,
+            patch: web_node_1.patch,
+            proxy: node_1.proxy,
+            getfile: web_node_1.getfile,
+            postfile: web_node_1.postfile,
+        });
+        setup.sdkFamily = 'Nodejs';
+        setup.PubNubFile = node_3.default;
+        setup.cryptography = new node_2.default();
+        setup.initCryptoModule = function (cryptoConfiguration) {
+            return new nodeCryptoModule_1.CryptoModule({
+                default: new nodeCryptoModule_1.LegacyCryptor({
+                    cipherKey: cryptoConfiguration.cipherKey,
+                    useRandomIVs: cryptoConfiguration.useRandomIVs,
+                }),
+                cryptors: [new nodeCryptoModule_1.AesCbcCryptor({ cipherKey: cryptoConfiguration.cipherKey })],
             });
-            setup.sdkFamily = 'Nodejs';
-            setup.PubNubFile = node_3.default;
-            setup.cryptography = new node_2.default();
-            setup.initCryptoModule = function (cryptoConfiguration) {
-                return new nodeCryptoModule_1.CryptoModule({
-                    default: new nodeCryptoModule_1.LegacyCryptor({
-                        cipherKey: cryptoConfiguration.cipherKey,
-                        useRandomIVs: cryptoConfiguration.useRandomIVs,
-                    }),
-                    cryptors: [new nodeCryptoModule_1.AesCbcCryptor({ cipherKey: cryptoConfiguration.cipherKey })],
-                });
-            };
-            if (!('ssl' in setup)) {
-                setup.ssl = true;
-            }
-            _this = _super.call(this, setup) || this;
-            return _this;
+        };
+        if (!('ssl' in setup)) {
+            setup.ssl = true;
         }
-        return class_1;
-    }(pubnub_common_1.default)),
+        _this = _super.call(this, setup) || this;
+        return _this;
+    }
+    return class_1;
+}(pubnub_common_1.default)),
     _a.CryptoModule = nodeCryptoModule_1.CryptoModule,
     _a);

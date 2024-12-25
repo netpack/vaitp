@@ -7,11 +7,15 @@ class SafeRADIUSAttrPacketListField(RADIUSAttrPacketListField):
         except Exception as e:
             # Log the error or handle it appropriately
             print(f"Error processing RADIUS attributes: {e}")
-            return None, s  # Return None to avoid infinite loops
+            return [], s  # Return an empty list to avoid infinite loops
 
 # Usage example
 class SafeRADIUSPacket(RADIUS):
-    attrs = SafeRADIUSAttrPacketListField("attrs", None)
+    fields_desc = [SafeRADIUSAttrPacketListField("attrs", None)]
+
+    def extract_padding(self, s):
+        return "", s
+
 
 # Example of creating a packet
-packet = SafeRADIUSPacket(attrs=[("User -Name", "test_user")])
+packet = SafeRADIUSPacket(attrs=[("User-Name", "test_user")])

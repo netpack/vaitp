@@ -1,174 +1,132 @@
-import { decode } from '../base64_codec';
-import CryptoJS from './hmac-sha256';
+import hashlib
+import base64
+import json
+from Crypto.Cipher import AES
+from Crypto.Util.Padding import pad, unpad
+from Crypto.Random import get_random_bytes
 
-function bufferToWordArray(b) {
-  const wa = [];
-  let i;
-  for (i = 0; i < b.length; i += 1) {
-    wa[(i / 4) | 0] |= b[i] << (24 - 8 * i);
-  }
+class Crypto:
+    def __init__(self, config):
+        self._config = config
+        self._iv = b'0123456789012345'
+        self._allowedKeyEncodings = ['hex', 'utf8', 'base64', 'binary']
+        self._allowedKeyLengths = [128, 256]
+        self._allowedModes = ['ecb', 'cbc']
+        self._defaultOptions = {
+            'encryptKey': True,
+            'keyEncoding': 'utf8',
+            'keyLength': 256,
+            'mode': 'cbc',
+        }
 
-  return CryptoJS.lib.WordArray.create(wa, b.length);
-}
+    def HMACSHA256(self, data):
+        key = self._config['secretKey'].encode('utf-8') if isinstance(self._config['secretKey'], str) else self._config['secretKey']
+        hashed = hashlib.hmac(key, data.encode('utf-8'), hashlib.sha256)
+        return base64.b64encode(hashed.digest()).decode('utf-8')
 
-export default class {
-  _config;
+    def SHA256(self, s):
+        hashed = hashlib.sha256(s.encode('utf-8'))
+        return hashed.hexdigest()
 
-  _iv;
+    def _parseOptions(self, incomingOptions):
+        options = incomingOptions or {}
+        for key, default_value in self._defaultOptions.items():
+            if key not in options:
+              options[key] = default_value
+        
 
-  _allowedKeyEncodings;
+        if options['keyEncoding'].lower() not in self._allowedKeyEncodings:
+            options['keyEncoding'] = self._defaultOptions['keyEncoding']
 
-  _allowedKeyLengths;
+        if int(options['keyLength']) not in self._allowedKeyLengths:
+            options['keyLength'] = self._defaultOptions['keyLength']
 
-  _allowedModes;
+        if options['mode'].lower() not in self._allowedModes:
+            options['mode'] = self._defaultOptions['mode']
 
-  _defaultOptions;
+        return options
 
-  constructor({ config }) {
-    this._config = config;
+    def _decodeKey(self, key, options):
+        if options['keyEncoding'] == 'base64':
+            return base64.b64decode(key)
+        if options['keyEncoding'] == 'hex':
+            return bytes.fromhex(key)
+        return key.encode('utf-8') if isinstance(key, str) else key
 
-    this._iv = '0123456789012345';
+    def _getPaddedKey(self, key, options):
+        key = self._decodeKey(key, options)
+        if options['encryptKey']:
+            return bytes.fromhex(self.SHA256(key.decode('utf-8', errors='ignore'))[:32])
+        return key
 
-    this._allowedKeyEncodings = ['hex', 'utf8', 'base64', 'binary'];
-    this._allowedKeyLengths = [128, 256];
-    this._allowedModes = ['ecb', 'cbc'];
+    def _getMode(self, options):
+        if options['mode'] == 'ecb':
+            return AES.MODE_ECB
+        return AES.MODE_CBC
 
-    this._defaultOptions = {
-      encryptKey: true,
-      keyEncoding: 'utf8',
-      keyLength: 256,
-      mode: 'cbc',
-    };
-  }
+    def _getIV(self, options):
+       return self._iv if options['mode'] == 'cbc' else None
 
-  HMACSHA256(data) {
-    const hash = CryptoJS.HmacSHA256(data, this._config.secretKey);
-    return hash.toString(CryptoJS.enc.Base64);
-  }
+    def _getRandomIV(self):
+        return get_random_bytes(16)
 
-  SHA256(s) {
-    return CryptoJS.SHA256(s).toString(CryptoJS.enc.Hex);
-  }
+    def encrypt(self, data, customCipherKey=None, options=None):
+       if 'customEncrypt' in self._config and self._config['customEncrypt']:
+         return self._config['customEncrypt'](data)
+       return self.pnEncrypt(data, customCipherKey, options)
 
-  _parseOptions(incomingOptions) {
-    // Defaults
-    const options = incomingOptions || {};
-    if (!options.hasOwnProperty('encryptKey')) options.encryptKey = this._defaultOptions.encryptKey;
-    if (!options.hasOwnProperty('keyEncoding')) options.keyEncoding = this._defaultOptions.keyEncoding;
-    if (!options.hasOwnProperty('keyLength')) options.keyLength = this._defaultOptions.keyLength;
-    if (!options.hasOwnProperty('mode')) options.mode = this._defaultOptions.mode;
+    def decrypt(self, data, customCipherKey=None, options=None):
+      if 'customDecrypt' in self._config and self._config['customDecrypt']:
+        return self._config['customDecrypt'](data)
+      return self.pnDecrypt(data, customCipherKey, options)
 
-    // Validation
-    if (this._allowedKeyEncodings.indexOf(options.keyEncoding.toLowerCase()) === -1) {
-      options.keyEncoding = this._defaultOptions.keyEncoding;
-    }
+    def pnEncrypt(self, data, customCipherKey=None, options=None):
+        if not customCipherKey and 'cipherKey' not in self._config:
+            return data
+        options = self._parseOptions(options)
+        mode = self._getMode(options)
+        cipherKey = self._getPaddedKey(customCipherKey or self._config.get('cipherKey'), options)
+        
+        data_bytes = data.encode('utf-8') if isinstance(data, str) else data
+        
+        if self._config.get('useRandomIVs', False):
+            iv = self._getRandomIV()
+            cipher = AES.new(cipherKey, mode, iv)
+            padded_data = pad(data_bytes, AES.block_size)
+            ciphertext = cipher.encrypt(padded_data)
+            return base64.b64encode(iv + ciphertext).decode('utf-8')
 
-    if (this._allowedKeyLengths.indexOf(parseInt(options.keyLength, 10)) === -1) {
-      options.keyLength = this._defaultOptions.keyLength;
-    }
+        iv = self._getIV(options)
+        cipher = AES.new(cipherKey, mode, iv)
+        padded_data = pad(data_bytes, AES.block_size)
+        ciphertext = cipher.encrypt(padded_data)
+        
+        return base64.b64encode(ciphertext).decode('utf-8')
 
-    if (this._allowedModes.indexOf(options.mode.toLowerCase()) === -1) {
-      options.mode = this._defaultOptions.mode;
-    }
 
-    return options;
-  }
-
-  _decodeKey(key, options) {
-    if (options.keyEncoding === 'base64') {
-      return CryptoJS.enc.Base64.parse(key);
-    }
-    if (options.keyEncoding === 'hex') {
-      return CryptoJS.enc.Hex.parse(key);
-    }
-    return key;
-  }
-
-  _getPaddedKey(key, options) {
-    key = this._decodeKey(key, options);
-    if (options.encryptKey) {
-      return CryptoJS.enc.Utf8.parse(this.SHA256(key).slice(0, 32));
-    }
-    return key;
-  }
-
-  _getMode(options) {
-    if (options.mode === 'ecb') {
-      return CryptoJS.mode.ECB;
-    }
-    return CryptoJS.mode.CBC;
-  }
-
-  _getIV(options) {
-    return options.mode === 'cbc' ? CryptoJS.enc.Utf8.parse(this._iv) : null;
-  }
-
-  _getRandomIV() {
-    return CryptoJS.lib.WordArray.random(16);
-  }
-
-  encrypt(data, customCipherKey, options) {
-    if (this._config.customEncrypt) {
-      return this._config.customEncrypt(data);
-    }
-    return this.pnEncrypt(data, customCipherKey, options);
-  }
-
-  decrypt(data, customCipherKey, options) {
-    if (this._config.customDecrypt) {
-      return this._config.customDecrypt(data);
-    }
-    return this.pnDecrypt(data, customCipherKey, options);
-  }
-
-  pnEncrypt(data, customCipherKey, options) {
-    if (!customCipherKey && !this._config.cipherKey) return data;
-    options = this._parseOptions(options);
-    const mode = this._getMode(options);
-    const cipherKey = this._getPaddedKey(customCipherKey || this._config.cipherKey, options);
-
-    if (this._config.useRandomIVs) {
-      const waIv = this._getRandomIV();
-      const waPayload = CryptoJS.AES.encrypt(data, cipherKey, { iv: waIv, mode }).ciphertext;
-
-      return waIv.clone().concat(waPayload.clone()).toString(CryptoJS.enc.Base64);
-    }
-    const iv = this._getIV(options);
-    const encryptedHexArray = CryptoJS.AES.encrypt(data, cipherKey, { iv, mode }).ciphertext;
-    const base64Encrypted = encryptedHexArray.toString(CryptoJS.enc.Base64);
-    return base64Encrypted || data;
-  }
-
-  pnDecrypt(data, customCipherKey, options) {
-    if (!customCipherKey && !this._config.cipherKey) return data;
-    options = this._parseOptions(options);
-    const mode = this._getMode(options);
-    const cipherKey = this._getPaddedKey(customCipherKey || this._config.cipherKey, options);
-    if (this._config.useRandomIVs) {
-      const ciphertext = new Uint8ClampedArray(decode(data));
-
-      const iv = bufferToWordArray(ciphertext.slice(0, 16));
-      const payload = bufferToWordArray(ciphertext.slice(16));
-
-      try {
-        const plainJSON = CryptoJS.AES.decrypt({ ciphertext: payload }, cipherKey, { iv, mode }).toString(
-          CryptoJS.enc.Utf8,
-        );
-        const plaintext = JSON.parse(plainJSON);
-        return plaintext;
-      } catch (e) {
-        return null;
-      }
-    } else {
-      const iv = this._getIV(options);
-      try {
-        const ciphertext = CryptoJS.enc.Base64.parse(data);
-        const plainJSON = CryptoJS.AES.decrypt({ ciphertext }, cipherKey, { iv, mode }).toString(CryptoJS.enc.Utf8);
-        const plaintext = JSON.parse(plainJSON);
-        return plaintext;
-      } catch (e) {
-        return null;
-      }
-    }
-  }
-}
+    def pnDecrypt(self, data, customCipherKey=None, options=None):
+      if not customCipherKey and 'cipherKey' not in self._config:
+            return data
+      options = self._parseOptions(options)
+      mode = self._getMode(options)
+      cipherKey = self._getPaddedKey(customCipherKey or self._config.get('cipherKey'), options)
+      
+      try:
+        if self._config.get('useRandomIVs', False):
+            decoded_data = base64.b64decode(data)
+            iv = decoded_data[:16]
+            ciphertext = decoded_data[16:]
+            cipher = AES.new(cipherKey, mode, iv)
+            
+            unpadded_data = unpad(cipher.decrypt(ciphertext), AES.block_size)
+            plaintext = unpadded_data.decode('utf-8')
+            return json.loads(plaintext)
+        else:
+            decoded_data = base64.b64decode(data)
+            iv = self._getIV(options)
+            cipher = AES.new(cipherKey, mode, iv)
+            unpadded_data = unpad(cipher.decrypt(decoded_data), AES.block_size)
+            plaintext = unpadded_data.decode('utf-8')
+            return json.loads(plaintext)
+      except Exception:
+        return None

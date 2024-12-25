@@ -1,1 +1,0 @@
-# Same code is not vulnerable if markdown2 is updated

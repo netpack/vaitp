@@ -1,6 +1,7 @@
 import re
 from autobahn.twisted.websocket import WebSocketServerProtocol, WebSocketServerFactory
 from twisted.internet import reactor
+from twisted.web.http import Response
 
 def is_valid_url(url):
     # Simple regex to validate the URL (you may want a more robust validation)
@@ -18,10 +19,10 @@ class MyServerProtocol(WebSocketServerProtocol):
 
     def sendResponse(self, status, headers):
         # Simulate sending an HTTP response
-        print(f"HTTP/1.1 {status} Found")
-        for key, value in headers.items():
-            print(f"{key}: {value}")
-        print()  # Blank line to end headers
+        response = Response(status, headers, None)
+        self.sendHttpResponse(response)
+
+
 
 # Set up the WebSocket server
 factory = WebSocketServerFactory("ws://localhost:9000")

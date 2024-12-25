@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.http import Http404
+from django.http import Http404, HttpResponse
 from .models import FileProxy
 
 @login_required
@@ -11,7 +11,7 @@ def get_file(request):
         if not request.user.has_perm('app.view_fileproxy', file_proxy):
             raise Http404("You do not have permission to access this file.")
         # Proceed to return the file
-        return file_proxy.file.open()
+        return HttpResponse(file_proxy.file.open(), content_type='application/octet-stream')
     except FileProxy.DoesNotExist:
         raise Http404("File not found.")
 

@@ -1,5 +1,10 @@
+```
+```python
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives.asymmetric import rsa, padding
+from cryptography.hazmat.primitives import hashes
+from cryptography.hazmat.primitives import serialization
+import os
 
 def vulnerable_rsa_decrypt(private_key, ciphertext):
     try:
@@ -20,7 +25,20 @@ private_key = rsa.generate_private_key(
     backend=default_backend()
 )
 
-# Simulated ciphertext (should be a valid PKCS#1 v1.5 ciphertext)
-ciphertext = b'...'  # Replace with actual ciphertext
+public_key = private_key.public_key()
+
+# Simulate encryption to create a valid ciphertext
+plaintext_original = b"This is a secret message"
+ciphertext = public_key.encrypt(
+    plaintext_original,
+    padding.PKCS1v15()
+)
+
+
 
 plaintext = vulnerable_rsa_decrypt(private_key, ciphertext)
+
+if plaintext:
+  print(f"Decrypted plaintext: {plaintext.decode()}")
+else:
+  print("Decryption failed.")

@@ -17,7 +17,8 @@ def vulnerable_encrypt(plaintext):
 def decrypt_data(ciphertext):
     # Decrypt the ciphertext (may yield different plaintexts for the same ciphertext)
     plaintext, decryptor_header = decrypt(
-        source=ciphertext
+        source=ciphertext,
+        key_provider=kms_key_provider  # Need to pass the key provider here too for decryption.
     )
     return plaintext
 

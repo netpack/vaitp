@@ -5,7 +5,7 @@ def execute_command(command):
     # Ensure that only safe commands can be executed
     allowed_commands = ['ls', 'whoami', 'id']  # Example of allowed commands
     if command in allowed_commands:
-        result = subprocess.run(command, shell=True, check=True, text=True, capture_output=True)
+        result = subprocess.run(command.split(), check=True, text=True, capture_output=True)
         return result.stdout
     else:
         raise PermissionError("Unauthorized command execution attempt.")

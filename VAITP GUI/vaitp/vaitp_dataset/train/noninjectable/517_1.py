@@ -5,7 +5,11 @@ class InteractiveConsoleHandler(webapp.RequestHandler):
     def post(self):
         code = self.request.get('code')
         # Execute the code without any CSRF protection
-        exec(code)
+        try:
+          exec(code)
+        except Exception as e:
+          self.response.out.write(f"Error: {e}")
+        
 
 app = webapp.WSGIApplication([
     ('/_ah/admin/interactive/execute', InteractiveConsoleHandler),

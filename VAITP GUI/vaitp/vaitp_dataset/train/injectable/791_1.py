@@ -13,4 +13,11 @@ def send_email(smtp_server, port, sender_email, receiver_email, message, use_tls
         server.sendmail(sender_email, receiver_email, message)
 
 # Example usage
-send_email('smtp.example.com', 587, 'sender@example.com', 'receiver@example.com', 'Test message')
+# The password should be handled more securely, not hardcoded, and it's required for the code to actually send an email.
+# This example is left as is to show how to fix the error for now, but should be updated in real world scenario
+try:
+    send_email('smtp.example.com', 587, 'sender@example.com', 'receiver@example.com', 'Test message')
+except smtplib.SMTPAuthenticationError:
+    print("SMTP Authentication Error, check your email/password credentials")
+except Exception as e:
+    print(f"An error occurred: {e}")

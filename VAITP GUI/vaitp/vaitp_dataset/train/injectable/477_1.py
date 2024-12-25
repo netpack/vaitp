@@ -8,7 +8,10 @@ def is_safe_path(path):
 def change_owner(path, user):
     # Check if the path is safe before changing ownership
     if is_safe_path(path):
-        subprocess.run(['chown', user, path])
+        try:
+            subprocess.run(['chown', user, path], check=True)
+        except subprocess.CalledProcessError as e:
+            raise ValueError(f"Failed to change owner: {e}")
     else:
         raise ValueError("Unsafe path detected!")
 
@@ -17,7 +20,10 @@ def setup_dropbear():
     target_path = '/etc/init.d/S50dropbear.sh'
     
     # Change ownership to 'python' user
-    change_owner(target_path, 'python')
+    try:
+        change_owner(target_path, 'python')
+    except ValueError as e:
+        print(f"Error during setup: {e}")
 
 # Call the setup function
 setup_dropbear()

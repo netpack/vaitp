@@ -1,4 +1,6 @@
 from django.utils.html import escape
+from django.shortcuts import redirect
+from .models import Paste # Assuming Paste model is in the same app's models.py
 
 def create_paste(request):
     if request.method == 'POST':

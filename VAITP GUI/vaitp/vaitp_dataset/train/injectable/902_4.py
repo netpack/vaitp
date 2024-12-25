@@ -1,104 +1,92 @@
-import dotenv from "dotenv";
-import fs from "fs";
+import os
+from dotenv import load_dotenv
+import json
 
-export const ENVIRONMENT = process.env.NODE_ENV;
-const prod = ENVIRONMENT === "production";
 
-if (fs.existsSync(".env.local")) {
-  dotenv.config({ path: ".env.local" });
-}
+if os.path.exists(".env.local"):
+    load_dotenv(dotenv_path=".env.local")
 
-export const IS_CLOUD = !!process.env.IS_CLOUD;
 
-export const UPLOAD_METHOD = (() => {
-  if (IS_CLOUD) return "s3";
+ENVIRONMENT = os.getenv("NODE_ENV")
+prod = ENVIRONMENT == "production"
 
-  const method = process.env.UPLOAD_METHOD;
-  if (method && ["s3", "google-cloud"].includes(method)) {
-    return method;
-  }
+IS_CLOUD = bool(os.getenv("IS_CLOUD"))
 
-  return "local";
-})();
+def get_upload_method():
+  if IS_CLOUD:
+    return "s3"
 
-export const MONGODB_URI =
-  process.env.MONGODB_URI ??
-  (prod ? "" : "mongodb://root:password@localhost:27017/");
-if (!MONGODB_URI) {
-  throw new Error("Missing MONGODB_URI environment variable");
-}
+  method = os.getenv("UPLOAD_METHOD")
+  if method and method in ["s3", "google-cloud"]:
+    return method
 
-export const APP_ORIGIN = process.env.APP_ORIGIN || "http://localhost:3000";
-const isLocalhost = APP_ORIGIN.includes("localhost");
+  return "local"
 
-const corsOriginRegex = process.env.CORS_ORIGIN_REGEX;
-export const CORS_ORIGIN_REGEX = corsOriginRegex
-  ? new RegExp(corsOriginRegex, "i")
-  : null;
+UPLOAD_METHOD = get_upload_method()
 
-export const GOOGLE_OAUTH_CLIENT_ID = process.env.GOOGLE_OAUTH_CLIENT_ID || "";
-export const GOOGLE_OAUTH_CLIENT_SECRET =
-  process.env.GOOGLE_OAUTH_CLIENT_SECRET || "";
+MONGODB_URI = os.getenv("MONGODB_URI")
+if not MONGODB_URI:
+    MONGODB_URI = "mongodb://root:password@localhost:27017/" if not prod else ""
 
-export const S3_BUCKET = process.env.S3_BUCKET || "";
-export const S3_REGION = process.env.S3_REGION || "us-east-1";
-export const S3_DOMAIN =
-  process.env.S3_DOMAIN || `https://${S3_BUCKET}.s3.amazonaws.com/`;
-export const ENCRYPTION_KEY = process.env.ENCRYPTION_KEY || "dev";
-if (prod && ENCRYPTION_KEY === "dev") {
-  throw new Error(
-    "Cannot use ENCRYPTION_KEY=dev in production. Please set to a long random string."
-  );
-}
+if not MONGODB_URI:
+  raise Exception("Missing MONGODB_URI environment variable")
 
-export const GCS_BUCKET_NAME = process.env.GCS_BUCKET_NAME || "";
-export const GCS_DOMAIN =
-  process.env.GCS_DOMAIN ||
-  `https://storage.googleapis.com/${GCS_BUCKET_NAME}/`;
 
-export const JWT_SECRET = process.env.JWT_SECRET || "dev";
-if ((prod || !isLocalhost) && !IS_CLOUD && JWT_SECRET === "dev") {
-  throw new Error(
-    "Cannot use JWT_SECRET=dev in production. Please set to a long random string."
-  );
-}
+APP_ORIGIN = os.getenv("APP_ORIGIN") or "http://localhost:3000"
+isLocalhost = "localhost" in APP_ORIGIN
 
-export const EMAIL_ENABLED = process.env.EMAIL_ENABLED === "true";
-export const EMAIL_HOST = process.env.EMAIL_HOST;
-export const EMAIL_PORT = parseInt(process.env.EMAIL_PORT || "") || 587;
-export const EMAIL_HOST_USER = process.env.EMAIL_HOST_USER;
-export const EMAIL_HOST_PASSWORD = process.env.EMAIL_HOST_PASSWORD;
-export const EMAIL_FROM = process.env.EMAIL_FROM;
-export const SITE_MANAGER_EMAIL = process.env.SITE_MANAGER_EMAIL;
+corsOriginRegex = os.getenv("CORS_ORIGIN_REGEX")
+CORS_ORIGIN_REGEX = re.compile(corsOriginRegex, re.IGNORECASE) if corsOriginRegex else None
 
-export const STRIPE_SECRET = process.env.STRIPE_SECRET || "";
-export const STRIPE_WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET || "";
-export const STRIPE_PRICE = process.env.STRIPE_PRICE || "";
 
-export const SLACK_SIGNING_SECRET = process.env.SLACK_SIGNING_SECRET || "";
+GOOGLE_OAUTH_CLIENT_ID = os.getenv("GOOGLE_OAUTH_CLIENT_ID") or ""
+GOOGLE_OAUTH_CLIENT_SECRET = os.getenv("GOOGLE_OAUTH_CLIENT_SECRET") or ""
 
-const testConn = process.env.POSTGRES_TEST_CONN;
-export const POSTGRES_TEST_CONN = testConn ? JSON.parse(testConn) : {};
+S3_BUCKET = os.getenv("S3_BUCKET") or ""
+S3_REGION = os.getenv("S3_REGION") or "us-east-1"
+S3_DOMAIN = os.getenv("S3_DOMAIN") or f"https://{S3_BUCKET}.s3.amazonaws.com/"
+ENCRYPTION_KEY = os.getenv("ENCRYPTION_KEY") or "dev"
 
-export const AWS_CLOUDFRONT_DISTRIBUTION_ID =
-  process.env.AWS_CLOUDFRONT_DISTRIBUTION_ID || "";
+if prod and ENCRYPTION_KEY == "dev":
+  raise Exception("Cannot use ENCRYPTION_KEY=dev in production. Please set to a long random string.")
 
-// Update results every X hours
-export const EXPERIMENT_REFRESH_FREQUENCY =
-  parseInt(process.env.EXPERIMENT_REFRESH_FREQUENCY || "") || 6;
+GCS_BUCKET_NAME = os.getenv("GCS_BUCKET_NAME") or ""
+GCS_DOMAIN = os.getenv("GCS_DOMAIN") or f"https://storage.googleapis.com/{GCS_BUCKET_NAME}/"
 
-export const DEFAULT_CONVERSION_WINDOW_HOURS =
-  parseInt(process.env.DEFAULT_CONVERSION_WINDOW_HOURS || "") || 72;
+JWT_SECRET = os.getenv("JWT_SECRET") or "dev"
+if (prod or not isLocalhost) and not IS_CLOUD and JWT_SECRET == "dev":
+  raise Exception("Cannot use JWT_SECRET=dev in production. Please set to a long random string.")
 
-// Update metrics every X hours
-export const METRIC_REFRESH_FREQUENCY =
-  parseInt(process.env.METRIC_REFRESH_FREQUENCY || "") || 24;
 
-export const QUERY_CACHE_TTL_MINS =
-  parseInt(process.env.QUERY_CACHE_TTL_MINS || "") || 60;
+EMAIL_ENABLED = os.getenv("EMAIL_ENABLED") == "true"
+EMAIL_HOST = os.getenv("EMAIL_HOST")
+EMAIL_PORT = int(os.getenv("EMAIL_PORT") or 587)
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
+EMAIL_FROM = os.getenv("EMAIL_FROM")
+SITE_MANAGER_EMAIL = os.getenv("SITE_MANAGER_EMAIL")
 
-// When importing past experiments, limit to this number of days:
-export const IMPORT_LIMIT_DAYS =
-  parseInt(process.env?.IMPORT_LIMIT_DAYS || "") || 365;
+STRIPE_SECRET = os.getenv("STRIPE_SECRET") or ""
+STRIPE_WEBHOOK_SECRET = os.getenv("STRIPE_WEBHOOK_SECRET") or ""
+STRIPE_PRICE = os.getenv("STRIPE_PRICE") or ""
 
-export const CRON_ENABLED = !process.env.CRON_DISABLED;
+SLACK_SIGNING_SECRET = os.getenv("SLACK_SIGNING_SECRET") or ""
+
+testConn = os.getenv("POSTGRES_TEST_CONN")
+POSTGRES_TEST_CONN = json.loads(testConn) if testConn else {}
+
+
+AWS_CLOUDFRONT_DISTRIBUTION_ID = os.getenv("AWS_CLOUDFRONT_DISTRIBUTION_ID") or ""
+
+
+EXPERIMENT_REFRESH_FREQUENCY = int(os.getenv("EXPERIMENT_REFRESH_FREQUENCY") or 6)
+
+DEFAULT_CONVERSION_WINDOW_HOURS = int(os.getenv("DEFAULT_CONVERSION_WINDOW_HOURS") or 72)
+
+METRIC_REFRESH_FREQUENCY = int(os.getenv("METRIC_REFRESH_FREQUENCY") or 24)
+
+QUERY_CACHE_TTL_MINS = int(os.getenv("QUERY_CACHE_TTL_MINS") or 60)
+
+IMPORT_LIMIT_DAYS = int(os.getenv("IMPORT_LIMIT_DAYS") or 365)
+
+CRON_ENABLED = os.getenv("CRON_DISABLED") is None

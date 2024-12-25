@@ -1,9 +1,10 @@
 import subprocess
+import shlex
 
 def clone_repository(repo_url):
-    # Directly using the repo_url in the command without validation
-    command = f"git clone {repo_url}"
-    subprocess.run(command, shell=True)
+    # Using shlex.quote to properly escape the repo_url
+    command = ["git", "clone", repo_url]
+    subprocess.run(command, check=True)
 
 # Example usage
-clone_repository("https://example.com/repo.git; rm -rf /")  # Potentially malicious input
+clone_repository("https://example.com/repo.git")

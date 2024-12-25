@@ -1,5 +1,6 @@
 import ssl
-import urllib2
+import urllib.request
+import urllib.error
 
 # Create a context that verifies the hostname
 context = ssl.create_default_context()
@@ -8,11 +9,11 @@ context.verify_mode = ssl.CERT_REQUIRED
 
 # Use the context when opening a URL
 url = 'https://example.com'
-request = urllib2.Request(url)
+request = urllib.request.Request(url)
 
 try:
-    response = urllib2.urlopen(request, context=context)
+    response = urllib.request.urlopen(request, context=context)
     content = response.read()
-    print(content)
-except urllib2.URLError as e:
+    print(content.decode('utf-8'))
+except urllib.error.URLError as e:
     print(f"Failed to open URL: {e}")

@@ -1,5 +1,6 @@
 import logging
 from oslo_middleware import catch_error
+import traceback
 
 class VulnerableCatchError(catch_error.CatchError):
     def __init__(self, *args, **kwargs):
@@ -11,6 +12,7 @@ class VulnerableCatchError(catch_error.CatchError):
         except Exception as e:
             # Log the error including sensitive information
             logging.error("An error occurred: %s", str(e), exc_info=True)
-            # Return the full traceback in the response (vulnerable part)
+            # Return a generic error message and log the full traceback
             start_response('500 Internal Server Error', [('Content-Type', 'text/plain')])
-            return [str(e).encode('utf-8')]  # Potentially exposes sensitive info
+            logging.error("Full traceback:\n%s", traceback.format_exc())
+            return [b"An internal server error occurred. Please contact support."]

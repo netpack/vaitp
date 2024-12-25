@@ -1,5 +1,6 @@
 import os
 import sys
+import importlib
 
 # Fix for CVE-2009-0315
 def safe_import(module_name):
@@ -11,8 +12,13 @@ def safe_import(module_name):
         sys.path.remove(current_dir)  # Remove current directory from sys.path
     
     # Now import the module safely
-    __import__(module_name)
+    try:
+        importlib.import_module(module_name)
+    except ModuleNotFoundError:
+        print(f"Module '{module_name}' not found.")
+
 
 # Example usage
 if __name__ == "__main__":
-    safe_import('some_module')  # Replace 'some_module' with the actual module name
+    safe_import('os')  # Replace 'some_module' with the actual module name
+    safe_import('some_nonexistent_module')

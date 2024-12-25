@@ -4,7 +4,7 @@ import xml.sax.saxutils as saxutils
 # Function to parse XML safely, preventing XML Entity Expansion (XEE) attacks
 def safe_parse(xml_data):
     parser = ET.XMLParser(target=ET.TreeBuilder())
-    parser.entity = {}  # Disable external entities
+    parser.parser.UseForeignDTD(False) # Disable external DTDs
     return ET.fromstring(xml_data, parser=parser)
 
 # Example usage

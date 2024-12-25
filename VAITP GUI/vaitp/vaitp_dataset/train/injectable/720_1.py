@@ -6,11 +6,12 @@ def secure_chpasswd(username, password):
         raise ValueError("Setting the password to '!' is not allowed for security reasons.")
 
     # Use the -e option to ensure the password is encrypted
-    command = f"echo '{username}:{password}' | chpasswd -e"
-    subprocess.run(command, shell=True, check=True)
+    command = ["chpasswd", "-e"]
+    input_str = f"{username}:{password}".encode()
+    subprocess.run(command, input=input_str, check=True)
 
 # Example usage
 try:
-    secure_chpasswd('root', '!')
+    secure_chpasswd('root', 'test_password')
 except ValueError as e:
     print(e)

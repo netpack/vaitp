@@ -1,4 +1,4 @@
-import protobuf  # Importing the protobuf library
+from google.protobuf import message as protobuf
 
 # Define a simple protobuf message
 class MyMessage(protobuf.Message):

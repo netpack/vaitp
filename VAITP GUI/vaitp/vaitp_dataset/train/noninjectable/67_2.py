@@ -9,4 +9,7 @@ image_file = "evil.sgi"
 # Open the image file with Pillow
 # This will trigger the vulnerability in the Pillow module
 # The Image.open function will read beyond the allocated buffer
-image = Image.open(image_file)
+try:
+    image = Image.open(image_file)
+except Exception as e:
+    print(f"Error opening image: {e}")

@@ -10,8 +10,23 @@ def make_dns_request(domain):
     transaction_id = random.randint(0, 65535)  # Random transaction ID
 
     # Construct DNS query
-    query = struct.pack('>HHHHHH', transaction_id, 0x0100, 1, 0, 0, 0) + domain.encode() + b'\x00'
+    query = struct.pack('>H', transaction_id)  # Transaction ID
+    query += struct.pack('>H', 0x0100)  # Flags (recursion desired)
+    query += struct.pack('>H', 1)       # Question count
+    query += struct.pack('>H', 0)       # Answer count
+    query += struct.pack('>H', 0)       # Authority count
+    query += struct.pack('>H', 0)       # Additional count
     
+    # Encode the domain name in the DNS format
+    labels = domain.split('.')
+    for label in labels:
+      query += struct.pack('B', len(label))
+      query += label.encode()
+    query += b'\x00'  # Null terminator
+    
+    query += struct.pack('>H', 1)  # Query type: A record (1)
+    query += struct.pack('>H', 1)  # Query class: IN (1)
+
     # Send DNS query
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     

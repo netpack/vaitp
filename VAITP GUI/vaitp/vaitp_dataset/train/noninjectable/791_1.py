@@ -12,4 +12,11 @@ def send_email(smtp_server, port, sender_email, receiver_email, message, use_tls
     server.quit()
 
 # Example usage
-send_email('smtp.example.com', 587, 'sender@example.com', 'receiver@example.com', 'Test message')
+try:
+    send_email('smtp.example.com', 587, 'sender@example.com', 'receiver@example.com', 'Test message')
+except smtplib.SMTPAuthenticationError:
+    print("SMTP Authentication Error: Please check your username and password.")
+except smtplib.SMTPConnectError:
+     print("SMTP Connect Error: Could not connect to the server. Please check the server address and port.")
+except Exception as e:
+    print(f"An error occurred: {e}")

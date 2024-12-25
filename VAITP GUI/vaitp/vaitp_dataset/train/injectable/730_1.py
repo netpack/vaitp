@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, abort
+from flask import Flask, request, abort, send_file
 
 app = Flask(__name__)
 
@@ -11,6 +11,9 @@ def get_file():
     # Get the requested file name from the query parameters
     requested_file = request.args.get('file')
     
+    if not requested_file:
+        abort(400) # Bad Request if no file parameter is given
+
     # Normalize the path to prevent directory traversal
     safe_path = os.path.normpath(os.path.join(SAFE_DIRECTORY, requested_file))
 
@@ -25,4 +28,4 @@ def get_file():
         abort(404)  # File not found
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)

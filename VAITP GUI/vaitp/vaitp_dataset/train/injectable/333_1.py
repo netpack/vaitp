@@ -1,5 +1,5 @@
 import os
-from flower import Flower
+from flower.command import Flower
 
 # Configuration for Flower
 flower_config = {
@@ -11,7 +11,11 @@ flower_config = {
 # Ensure the PID file has proper ownership
 def set_pidfile_ownership(pidfile_path):
     if os.path.exists(pidfile_path):
-        os.chown(pidfile_path, 0, 0)  # Set ownership to root (uid=0, gid=0)
+        try:
+            os.chown(pidfile_path, 0, 0)  # Set ownership to root (uid=0, gid=0)
+        except PermissionError:
+             print(f"Permission denied to change ownership of {pidfile_path}. Ensure the script has sufficient privileges.")
+
 
 # Start Flower
 flower = Flower(**flower_config)

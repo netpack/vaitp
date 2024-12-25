@@ -2,9 +2,11 @@ import discord
 from discord.ext import commands
 
 # Create a bot instance with only application.commands scope (vulnerable)
-bot = commands.Bot(command_prefix='!', intents=discord.Intents.default())
+intents = discord.Intents.default()
+intents.message_content = True
+bot = commands.Bot(command_prefix='!', intents=intents)
 
-@bot.slash_command()
+@bot.slash_command(name="shutdown", description="Shuts down the bot.")
 async def shutdown(ctx):
     # Vulnerable command that could be exploited to shut down the bot
     await ctx.respond("Shutting down...")

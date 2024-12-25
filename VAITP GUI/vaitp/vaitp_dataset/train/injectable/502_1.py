@@ -1,5 +1,6 @@
 import os
 import sys
+import importlib
 
 # Securely set the Python path to avoid untrusted directories
 def secure_import(module_name):
@@ -11,9 +12,13 @@ def secure_import(module_name):
         sys.path.insert(0, cwd)
 
     # Import the module
-    __import__(module_name)
+    importlib.import_module(module_name)
 
 # Usage example
 if __name__ == "__main__":
     # Securely import a module
-    secure_import('trusted_module')
+    try:
+        secure_import('trusted_module')
+        print("Module 'trusted_module' imported successfully.")
+    except ModuleNotFoundError:
+       print("Error: Module 'trusted_module' not found.")

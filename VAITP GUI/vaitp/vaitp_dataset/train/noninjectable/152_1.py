@@ -12,4 +12,5 @@ if __name__ == "__main__":
     # Note that only /cgi-bin will work:
     handler.cgi_directories = ["/cgi-bin", "/cgi-bin/subdir"]
     httpd = server(server_address, handler)
+    print("Serving at port", server_address[1])
     httpd.serve_forever()

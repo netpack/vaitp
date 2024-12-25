@@ -1,3 +1,5 @@
+```
+```python
 from dataclasses import asdict
 from typing import Any, Dict, List, Optional, Union, cast
 
@@ -44,7 +46,7 @@ async def {{ endpoint.name | snakecase }}(
     {% for parameter in endpoint.header_parameters %}
     {{ parameter.to_string() }},
     {% endfor %}
-{{ return_type(endpoint) }}
+) -> {{ return_type(endpoint) }}:
     """ {{ endpoint.description }} """
     url = "{}{{ endpoint.path }}".format(
         client.base_url,

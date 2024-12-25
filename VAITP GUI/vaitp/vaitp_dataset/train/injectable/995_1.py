@@ -3,7 +3,7 @@
 from mod_python import apache
 
 # A whitelist of allowed modules
-ALLOWED_MODULES = ['safe_module']
+ALLOWED_MODULES = {'safe_module': None} # Store modules as keys for efficient lookup
 
 def handler(req):
     # Get the module name from the request
@@ -14,8 +14,12 @@ def handler(req):
         req.write("Access denied to module: {}".format(module_name))
         return apache.HTTP_FORBIDDEN
 
-    # Import and use the safe module
-    mod = __import__(module_name)
-    result = mod.safe_function()  # Call a safe function from the allowed module
-    req.write(result)
-    return apache.OK
+    try:
+        # Import and use the safe module
+        mod = __import__(module_name)
+        result = mod.safe_function()  # Call a safe function from the allowed module
+        req.write(str(result)) # Ensure result is a string for writing
+        return apache.OK
+    except Exception as e:
+         req.write("Error accessing module: {}".format(e))
+         return apache.HTTP_INTERNAL_SERVER_ERROR

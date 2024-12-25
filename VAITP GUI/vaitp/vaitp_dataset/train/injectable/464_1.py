@@ -6,15 +6,22 @@ def save_file(user_input_path, data):
         raise ValueError("Symlinks are not allowed.")
 
     # Ensure the path is a valid file path and within allowed directories
-    if not os.path.abspath(user_input_path).startswith('/allowed/directory/'):
+    allowed_dir = '/allowed/directory/'
+    abs_path = os.path.abspath(user_input_path)
+    if not abs_path.startswith(allowed_dir):
         raise ValueError("Invalid file path.")
 
     # Save data to the specified path
-    with open(user_input_path, 'w') as file:
-        file.write(data)
+    try:
+        os.makedirs(os.path.dirname(user_input_path), exist_ok=True)
+        with open(user_input_path, 'w') as file:
+            file.write(data)
+    except OSError as e:
+         raise ValueError(f"Error saving file: {e}")
+
 
 # Example usage
-user_input = '/path/to/user/specified/file.txt'  # This should not be a symlink
+user_input = '/allowed/directory/path/to/user/specified/file.txt'  # This should not be a symlink
 data_to_save = 'Sensitive data'
 try:
     save_file(user_input, data_to_save)

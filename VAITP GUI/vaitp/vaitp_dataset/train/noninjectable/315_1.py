@@ -1,13 +1,17 @@
-import awscrt
+import awscrt.io
+import awscrt.mqtt
 
 # Create a TLS context
-tls_context = awscrt.TlsContext()
+tls_options = awscrt.io.TlsContextOptions()
+tls_context = awscrt.io.ClientTlsContext(tls_options)
 
 # User-supplied CA certificate
 user_ca_cert = "path/to/user_ca.pem"
 
-# Improperly appending user CA to the default trust store
-tls_context.add_ca_from_path(user_ca_cert)
+# Properly add user CA to the TLS context options before creating the context
+tls_options.add_ca_from_path(user_ca_cert)
+
+
 
 # Establish a connection
-mqtt_client = awscrt.mqtt.MqttClient(tls_context=tls_context)
+mqtt_client = awscrt.mqtt.Client(event_loop_group=awscrt.io.EventLoopGroup(1), tls_context=tls_context)

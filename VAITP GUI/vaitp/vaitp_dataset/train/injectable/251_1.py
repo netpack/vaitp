@@ -11,8 +11,9 @@ mqtt_client.configureEndpoint("your-iot-endpoint.amazonaws.com", 8883)
 mqtt_client.configureCredentials("path/to/rootCA.pem", "path/to/private.key", "path/to/certificate.pem")
 
 # Set the TLS version and enable hostname verification
-mqtt_client.configureSSLContext(ssl.create_default_context(ssl.Purpose.CLIENT_AUTH))
-mqtt_client.configureSSLContext(ssl.SSLContext(ssl.PROTOCOL_TLSv1_2))
+ssl_context = ssl.create_default_context(purpose=ssl.Purpose.CLIENT_AUTH)
+ssl_context.minimum_version = ssl.TLSVersion.TLSv1_2
+mqtt_client.configureSSLContext(ssl_context)
 
 # Connect to the AWS IoT Core
 mqtt_client.connect()

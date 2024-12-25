@@ -6,10 +6,16 @@ from PIL import Image
 limit = 1000000
 
 # Try to open an image file using the Pillow library
-# Pass the limit argument to the Image.open function
+# The limit argument is not a direct parameter of Image.open
 try:
-    img = Image.open("image.pcx", limit=limit)
+    with open("image.pcx", 'rb') as f:
+        img = Image.open(f)
+        img.load()
+        if len(f.read(limit)) >= limit:
+           raise OSError("File size exceeds the limit")
     # Do something with the image
 except OSError as e:
     # Handle the exception
+    print(e)
+except FileNotFoundError as e:
     print(e)

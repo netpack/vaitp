@@ -5,11 +5,12 @@ import gnupg
 gpg = gnupg.GPG()
 
 # Generate a symmetric key
-key = gpg.gen_key(gpg.gen_key_input(key_type='RSA', key_length=1024))
+# Symmetric keys are not typically generated in this way. Let's just use a passphrase for encryption
+# key = gpg.gen_key(gpg.gen_key_input(key_type='RSA', key_length=1024))
 
-# Encrypt some data with the key and a passphrase
+# Encrypt some data with a passphrase
 data = 'Hello, world!'
 encrypted = gpg.encrypt(data, recipients=None, symmetric=True, passphrase='secret\n' + data)
 
 # Print the encrypted data
-print(encrypted.data)
+print(str(encrypted))

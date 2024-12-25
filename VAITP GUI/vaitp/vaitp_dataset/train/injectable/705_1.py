@@ -7,7 +7,7 @@ cache = Cache(app, config={'CACHE_TYPE': 'SimpleCache'})
 # Example of a patched version of user_vars
 class Website:
     def __init__(self):
-        self.user_vars = {}
+        self._user_vars = {}
 
     @property
     def user_vars(self):
@@ -31,4 +31,4 @@ class Website:
 # Example of usage
 website = Website()
 website.set_user_var('username', 'user1')
-print(website.user_vars)  # Output: {'username': 'user1'}
+print(website.user_vars)

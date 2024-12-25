@@ -3,12 +3,10 @@ from PIL import Image
 def non_vulnerable_function(image_path):
     try:
         # Open the image file
-        with open(image_path, 'rb') as image_file:
-            # Create an Image object from the file
-            image = Image.open(image_file)
+        with Image.open(image_path) as image:
             
             # Get the number of bands in the image
-            num_bands = image.im.bands
+            num_bands = len(image.getbands())
             
             # Add input validation to ensure num_bands is within a safe range
             if num_bands > 2**31 - 1:  # 2^31 - 1 is the maximum value for a 32-bit signed integer

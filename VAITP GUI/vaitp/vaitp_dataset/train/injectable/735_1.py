@@ -1,6 +1,7 @@
-from thrift.transport import TTransport
+from thrift.transport import TSocket, TTransport
 from thrift.protocol import TBinaryProtocol
 from thrift.server import TServer
+from thrift.Thrift import TProcessor
 
 class SafeThriftHandler:
     def process_message(self, message):

@@ -1,4 +1,5 @@
 import re
+import subprocess
 
 def sanitize_input(username):
     # Sanitize the username to prevent malicious characters
@@ -11,11 +12,10 @@ def login(username):
     sanitized_username = sanitize_input(username)
 
     # Properly quote the variables to prevent command injection
-    command = f"wrongpass '{sanitized_username}'"
+    command = ["wrongpass", sanitized_username]
     
     # Execute the command safely (using subprocess, for example)
-    import subprocess
-    result = subprocess.run(command, shell=True, capture_output=True, text=True)
+    result = subprocess.run(command, capture_output=True, text=True)
 
     # Check the result of the command execution
     if result.returncode == 0:

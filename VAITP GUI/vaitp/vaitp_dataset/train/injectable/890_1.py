@@ -19,4 +19,4 @@ def restrict_access(context):
     # Remove untrusted users from the Manager role
     for user in acl_users.getUsers():
         if 'untrusted_role' in user.getRoles():
-            user.removeRole
+            user.removeRole('Manager')

@@ -6,7 +6,7 @@ app.secret_key = 'your_secret_key'
 csrf = CSRFProtect(app)
 
 @app.route('/perform_action', methods=['POST'])
-@csrf.exempt  # This line should be removed to enable CSRF protection
+# @csrf.exempt  # This line should be removed to enable CSRF protection
 def perform_action():
     # Perform sensitive action
     return redirect(url_for('success'))
