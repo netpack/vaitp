@@ -10,6 +10,11 @@ def check_password(service, user, password):
         
         # Set the user and password
         kerberos.authGSSClientUserName(context, user)
+        
+        # Check if password is provided, to avoid sending empty password
+        if not password:
+          raise Exception("Password cannot be empty.")
+        
         kerberos.authGSSClientPassword(context, password)
 
         # Verify the KDC's response
@@ -23,3 +28,6 @@ def check_password(service, user, password):
     except Exception as e:
         print(f"Error: {e}")
         return False
+    finally:
+        if 'context' in locals() and context:
+           kerberos.authGSSClientClean(context)

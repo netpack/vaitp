@@ -130,7 +130,7 @@ def kernels_connection(ws: simple_websocket.Server, kernel_id: str, name: str):
         user = None
 
     try:
-        page_id = request.args["session_id"]
+        page_id = request.args.get("session_id")
         session_id = request.cookies.get(server.COOKIE_KEY_SESSION_ID)
         logger.info("Solara kernel requested for session_id=%s kernel_id=%s", session_id, kernel_id)
         if session_id is None:
@@ -138,7 +138,7 @@ def kernels_connection(ws: simple_websocket.Server, kernel_id: str, name: str):
             session_id = "session-id-cookie-unavailable:" + str(uuid4())
         ws_wrapper = WebsocketWrapper(ws)
         headers_dict: Dict[str, List[str]] = {}
-        for k, v in request.headers.__iter__():
+        for k, v in request.headers:
             if k not in headers_dict.keys():
                 headers_dict[k] = [v]
             else:
@@ -154,16 +154,16 @@ def kernels_connection(ws: simple_websocket.Server, kernel_id: str, name: str):
                 user=user,
             )
         )
-    except:  # noqa
+    except Exception:  # noqa
         logger.exception("Error in kernel handler")
         raise
 
 
 @blueprint.route("/_solara/api/close/<kernel_id>", methods=["GET", "POST"])
 def close(kernel_id: str):
-    page_id = request.args["session_id"]
+    page_id = request.args.get("session_id")
     context = kernel_context.contexts.get(kernel_id, None)
-    if context is not None:
+    if context is not None and page_id:
         context.page_close(page_id)
     return ""
 
@@ -175,7 +175,7 @@ def public(path):
     directories = [app.directory.parent / "public" for app in appmod.apps.values()]
     for directory in directories:
         file = directory / path
-        if file.exists():
+        if file.exists() and file.is_file():
             return send_from_directory(directory, path)
     return flask.Response("not found", status=404)
 
@@ -187,7 +187,7 @@ def assets(path):
     directories = server.asset_directories()
     for directory in directories:
         file = directory / path
-        if file.exists():
+        if file.exists() and file.is_file():
             return send_from_directory(directory, path)
     return flask.Response("not found", status=404)
 
@@ -198,7 +198,7 @@ def nbext(dir, filename):
         abort(401)
     for directory in server.nbextensions_directories:
         file = directory / dir / filename
-        if file.exists():
+        if file.exists() and file.is_file():
             return send_from_directory(directory, dir + os.path.sep + filename)
     return flask.Response("not found", status=404)
 
@@ -260,7 +260,7 @@ def read_root(path):
 
     assert session_id is not None
     response = flask.Response(content, mimetype="text/html")
-    response.set_cookie(server.COOKIE_KEY_SESSION_ID, value=session_id, secure=secure, samesite=samesite)
+    response.set_cookie(server.COOKIE_KEY_SESSION_ID, value=session_id, secure=secure, samesite=samesite, httponly=True)
     return response
 
 

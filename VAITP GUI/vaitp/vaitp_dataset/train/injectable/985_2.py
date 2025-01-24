@@ -36,10 +36,12 @@ from xml.sax.saxutils import escape  # noqa: DUO107
 def versioncompare(safe_version, find_version):
     if safe_version == "":
         return True
-    safe_version_tup = [int(x) for x in safe_version.split(".")]
-    find_version_tup = [int(x) for x in find_version.split(".")]
-    return find_version_tup < safe_version_tup
-
+    try:
+      safe_version_tup = [int(x) for x in safe_version.split(".")]
+      find_version_tup = [int(x) for x in find_version.split(".")]
+      return find_version_tup < safe_version_tup
+    except ValueError:
+      return False
 
 def vulnprint(appname, version, safeversion, vuln, vfilename, subdir,
               xml):
@@ -91,10 +93,14 @@ if not jdir:
     sys.exit(1)
 
 jconfig = []
-for cfile in glob.glob(jdir + '/*.json'):
-    with open(cfile) as json_file:
-        data = json.load(json_file)
-        jconfig += data
+for cfile in glob.glob(os.path.join(jdir, '*.json')):
+    try:
+        with open(cfile, 'r') as json_file:
+            data = json.load(json_file)
+            jconfig.extend(data)
+    except (json.JSONDecodeError, IOError) as e:
+        print(f"Error reading json file {cfile}: {e}", file=sys.stderr)
+
 
 scanfiles = set()
 for app in jconfig:
@@ -122,11 +128,10 @@ for fdir in opts.dirs:
                     if filename == det['file']:
                         mfile = os.path.join(root, filename)
                         try:
-                            file = open(mfile, errors='replace')
+                            with open(mfile, 'r', errors='replace') as file:
+                                filestr = file.read()
                         except IOError:
                             continue
-                        filestr = file.read()
-                        file.close()
 
                         if (('extra_match' in det
                              and det['extra_match'] not in filestr)
@@ -137,21 +142,27 @@ for fdir in opts.dirs:
                         if ('path_match' in det
                                 and (not root.endswith(det['path_match']))):
                             continue
-
-                        findversion = re.search(re.escape(det['variable'])
-                                                + r"[^0-9\n\r]*[.]*"
-                                                "([0-9.]*[0-9])[^0-9.]",
-                                                filestr)
-                        if not findversion:
+                        try:
+                            findversion_match = re.search(re.escape(det['variable'])
+                                                    + r"[^0-9\n\r]*[.]*"
+                                                    "([0-9.]*[0-9])[^0-9.]",
+                                                    filestr)
+                            if not findversion_match:
+                                continue
+                            findversion = findversion_match.group(1)
+                        except re.error:
                             continue
-                        findversion = findversion.group(1)
+
 
                         # Very ugly phpbb workaround
                         if 'add_minor' in det:
-                            findversion = findversion.split('.')
-                            findversion[-1] = str(int(findversion[-1])
-                                                  + int(det['add_minor']))
-                            findversion = '.'.join(findversion)
+                            try:
+                                findversion = findversion.split('.')
+                                findversion[-1] = str(int(findversion[-1])
+                                                    + int(det['add_minor']))
+                                findversion = '.'.join(findversion)
+                            except (ValueError, IndexError):
+                                continue
 
                         if ((not versioncompare(item['safe'], findversion))
                                 or ('old_safe' in item
@@ -173,3 +184,4 @@ for fdir in opts.dirs:
 
 if opts.xml:
     print('</freewvs>')
+    

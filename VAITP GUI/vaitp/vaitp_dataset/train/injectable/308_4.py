@@ -43,6 +43,9 @@ def cookie_parser(cookie_string: str) -> typing.Dict[str, str]:
     """
     cookie_dict: typing.Dict[str, str] = {}
     for chunk in cookie_string.split(";"):
+        chunk = chunk.strip()
+        if not chunk:
+             continue
         if "=" in chunk:
             key, val = chunk.split("=", 1)
         else:
@@ -241,7 +244,10 @@ class Request(HTTPConnection):
     async def json(self) -> typing.Any:
         if not hasattr(self, "_json"):
             body = await self.body()
-            self._json = json.loads(body)
+            try:
+                self._json = json.loads(body)
+            except json.JSONDecodeError:
+                 self._json = None
         return self._json
 
     async def _get_form(
@@ -255,6 +261,9 @@ class Request(HTTPConnection):
                 parse_options_header is not None
             ), "The `python-multipart` library must be installed to use form parsing."
             content_type_header = self.headers.get("Content-Type")
+            if not content_type_header:
+                self._form = FormData()
+                return self._form
             content_type: bytes
             content_type, _ = parse_options_header(content_type_header)
             if content_type == b"multipart/form-data":
@@ -298,7 +307,10 @@ class Request(HTTPConnection):
             # If message isn't immediately available, move on
             with anyio.CancelScope() as cs:
                 cs.cancel()
-                message = await self._receive()
+                try:
+                    message = await self._receive()
+                except RuntimeError:
+                    pass #Handle case where the receive channel is closed
 
             if message.get("type") == "http.disconnect":
                 self._is_disconnected = True

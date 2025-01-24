@@ -1,4 +1,5 @@
 import os
+import subprocess
 
 # Create a directory with a very long name
 long_dir_name = 'a' * 10000
@@ -21,6 +22,10 @@ else:
 # Run a Python script from the current working directory
 # Added a check to see if script.py exists to avoid an error if not
 if os.path.exists('script.py'):
-    os.system('python script.py')
+    try:
+        subprocess.run(['python', 'script.py'], check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error running script.py: {e}")
+        exit()
 else:
     print("Error: script.py not found")

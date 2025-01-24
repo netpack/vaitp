@@ -1,5 +1,4 @@
 import unittest
-
 from persistent import Persistent
 from zExceptions import Unauthorized
 
@@ -43,7 +42,9 @@ class Folder(Persistent):
         # Is this numeric (integer) access or string access?
         if isinstance(key, int):
             return self.item_list[key]
-        return self.item_dict[key]
+        if isinstance(key, str):
+            return self.item_dict[key]
+        raise TypeError("Key must be str, int or slice")
 
 
 class FormatterTest(unittest.TestCase):

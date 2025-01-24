@@ -15,7 +15,7 @@
 
 from typing import Optional
 
-from netaddr import IPSet
+from netaddr import IPSet, AddrFormatError
 
 from synapse.config._base import Config, ConfigError
 from synapse.config._util import validate_config
@@ -34,6 +34,10 @@ class FederationConfig(Config):
             self.federation_domain_whitelist = {}
 
             for domain in federation_domain_whitelist:
+                if not isinstance(domain, str):
+                    raise ConfigError(
+                        "Invalid domain in federation_domain_whitelist: %r" % domain
+                    )
                 self.federation_domain_whitelist[domain] = True
 
         ip_range_blacklist = config.get("ip_range_blacklist", [])
@@ -41,7 +45,7 @@ class FederationConfig(Config):
         # Attempt to create an IPSet from the given ranges
         try:
             self.ip_range_blacklist = IPSet(ip_range_blacklist)
-        except Exception as e:
+        except AddrFormatError as e:
             raise ConfigError("Invalid range(s) provided in ip_range_blacklist: %s" % e)
         # Always blacklist 0.0.0.0, ::
         self.ip_range_blacklist.update(["0.0.0.0", "::"])
@@ -54,7 +58,7 @@ class FederationConfig(Config):
         )
         try:
             self.federation_ip_range_blacklist = IPSet(federation_ip_range_blacklist)
-        except Exception as e:
+        except AddrFormatError as e:
             raise ConfigError(
                 "Invalid range(s) provided in federation_ip_range_blacklist: %s" % e
             )

@@ -1,28 +1,20 @@
-# Import the os module
 import os
+import tempfile
 
-# Define a benign python38._pth file
-# This file has a valid sys.path value
-# This value will point to the default location
-pth_file = "python38._pth"
 pth_content = "import site"
-
-# Write the benign python38._pth file to the current directory
-with open(pth_file, "w") as f:
-    f.write(pth_content)
-
-# Define a benign code file
-# This file has a simple print statement
-# The statement will show that the code is executed
-code_file = "hello.py"
 code_content = "print('Hello, world!')"
 
-# Write the benign code file to the default location
-with open(code_file, "w") as f:
-    f.write(code_content)
+with tempfile.NamedTemporaryFile(mode="w", suffix="._pth", delete=False) as pth_file:
+    pth_file.write(pth_content)
+pth_filename = pth_file.name
 
-# Run the Python interpreter with the benign python38._pth file
-# This will not trigger the vulnerability in Python
-# The interpreter will load the benign code file from the default location
-# The print statement will be executed
-os.system("python")
+with tempfile.NamedTemporaryFile(mode="w", suffix=".py", delete=False) as code_file:
+    code_file.write(code_content)
+code_filename = code_file.name
+
+
+os.system(f"python -s -E -B -I {code_filename}")
+
+
+os.remove(pth_filename)
+os.remove(code_filename)

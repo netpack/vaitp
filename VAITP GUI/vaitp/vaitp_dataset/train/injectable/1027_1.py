@@ -1,8 +1,9 @@
+
 import logging
 from snowflake.connector import connect
 
 # Configure logging
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger('snowflake.connector')
 
 # Example connection parameters
@@ -16,7 +17,7 @@ conn = connect(
     user=user,
     password=password,
     account=account,
-    passcode=passcode  # This could potentially be logged in DEBUG mode
+    passcode=passcode  # Redact sensitive data in logs by setting level to INFO
 )
 
 # Perform a query

@@ -1,3 +1,4 @@
+
 import hashlib, base64, uuid
 from cryptography.hazmat.primitives import hashes
 from typing import Any, final
@@ -5,12 +6,13 @@ class Hashing():
     def __init__(self) -> None:
         self.salt = None
     def __call__(self, *args:Any):
-        self.salt = args[0]
+        self.salt = base64.urlsafe_b64encode(uuid.uuid4().bytes).decode()
     def __str__(self) -> str:
         return "Hashing Funcitions In Here"
 
     def Standard_Multi_Hash(self,Data:str):
         '''Inreversable Salted Hash Function Don't Use If U Want To Get The Content Back'''
+        assert isinstance(Data, str), "Expected string, got " + type(Data).__name__
         a = hashlib.sha256(); a.update(bytes(Data.encode())); b = []
         base = hashlib.sha512()
         md = hashlib.md5()
@@ -34,28 +36,18 @@ class Hashing():
 
     def __Salt(self,data,salt:bytes = None):
         if not salt:
-            salts = []
-            salts.append(str(hashlib.sha256(uuid.uuid4().bytes).digest()).split("'")[1])
-            salts.append(str(data).split("'")[1])
-            salts.append(str(hashlib.sha256(uuid.uuid4().bytes).digest()).split("'")[1])
-            salts.append(str(hashlib.sha256(uuid.uuid4().bytes).digest()).split("'")[1])
-            salts.append(str(data).split("'")[1])
-            salts.append(str(data).split("'")[1])
-            salts.append(str(hashlib.sha256(uuid.uuid4().bytes).digest()).split("'")[1])
-            
-            combined_salts = ''.join(salts).encode()
-            return base64.standard_b64encode(bytes((str(base64.urlsafe_b64encode(combined_salts)).split("'")[1]+str(base64.urlsafe_b64encode(base64.standard_b64encode(combined_salts))).split("'")[1]).encode()))
-        if salt:
-            salts = []
-            salts.append(str(hashlib.sha256(salt).digest()).split("'")[1])
-            salts.append(str(data).split("'")[1])
-            salts.append(str(hashlib.sha256(salt).digest()).split("'")[1])
-            salts.append(str(hashlib.sha256(salt).digest()).split("'")[1])
-            salts.append(str(data).split("'")[1])
-            salts.append(str(data).split("'")[1])
-            salts.append(str(hashlib.sha256(salt).digest()).split("'")[1])
-            combined_salts = ''.join(salts).encode()
-            return base64.standard_b64encode(bytes((str(base64.urlsafe_b64encode(combined_salts)).split("'")[1]+str(base64.urlsafe_b64encode(base64.standard_b64encode(combined_salts))).split("'")[1]).encode()))
+            salt = base64.urlsafe_b64encode(uuid.uuid4().bytes)
+        salts = []
+        salts.append(str(hashlib.sha256(salt).digest()).split("'")[1])
+        salts.append(str(data).split("'")[1])
+        salts.append(str(hashlib.sha256(salt).digest()).split("'")[1])
+        salts.append(str(hashlib.sha256(salt).digest()).split("'")[1])
+        salts.append(str(data).split("'")[1])
+        salts.append(str(data).split("'")[1])
+        salts.append(str(hashlib.sha256(salt).digest()).split("'")[1])
+                
+        combined_salts = ''.join(salts).encode()
+        return base64.standard_b64encode(bytes((str(base64.urlsafe_b64encode(combined_salts)).split("'")[1]+str(base64.urlsafe_b64encode(base64.standard_b64encode(combined_salts))).split("'")[1]).encode()))
         
     def SHA256(self,data:str):
         sha = hashlib.sha256(bytes(data.encode()))

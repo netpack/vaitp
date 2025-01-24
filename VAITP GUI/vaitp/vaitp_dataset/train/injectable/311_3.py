@@ -1,8 +1,9 @@
+
 import tarfile
 import os
 from thefuck.utils import for_app
 from thefuck.shells import shell
-
+import tempfile
 
 tar_extensions = ('.tar', '.tar.Z', '.tar.bz2', '.tar.gz', '.tar.lz',
                   '.tar.lzma', '.tar.xz', '.taz', '.tb2', '.tbz', '.tbz2',
@@ -33,17 +34,29 @@ def match(command):
 
 
 def get_new_command(command):
-    dir = shell.quote(_tar_file(command.script_parts)[1])
+    temp_dir = tempfile.mkdtemp()
+    dir = shell.quote(temp_dir)
     return shell.and_('mkdir -p {dir}', '{cmd} -C {dir}') \
         .format(dir=dir, cmd=command.script)
 
 
 def side_effect(old_cmd, command):
-    with tarfile.TarFile(_tar_file(old_cmd.script_parts)[0]) as archive:
-        for file in archive.getnames():
-            try:
-                os.remove(file)
-            except OSError:
-                # does not try to remove directories as we cannot know if they
-                # already existed before
-                pass
+
+    tar_file_name, target_dir = _tar_file(old_cmd.script_parts)
+    members = tarfile.open(tar_file_name, 'r').getmembers()
+    for member in members:
+        if member.name.startswith('/') or '..' in member.name:
+            return
+
+    temp_dir = tempfile.mkdtemp()
+    try:
+        tarfile.open(tar_file_name, 'r').extractall(path=temp_dir)
+    except (OSError, tarfile.TarError):
+        return
+
+    for file in tarfile.open(tar_file_name, 'r').getnames():
+        try:
+            os.remove(os.path.join(temp_dir, file))
+        except OSError:
+            pass
+    os.rmdir(temp_dir)

@@ -23,10 +23,11 @@ import socket
 
 from datetime import datetime, time, timedelta
 from email.utils import parsedate_tz, mktime_tz
-from six.moves.urllib.parse import urlparse
+from urllib.parse import urlparse
 
 import aniso8601
 import pytz
+import ipaddress
 
 # Constants for upgrading date-based intervals to full datetimes.
 START_OF_DAY = time(0, 0, 0, tzinfo=pytz.UTC)
@@ -38,7 +39,7 @@ netloc_regex = re.compile(
     r"(?:"
     r"(?P<localhost>localhost)|"  # localhost...
     r"(?P<ipv4>\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})|"  # ...or ipv4
-    r"(?:\[?(?P<ipv6>[A-F0-9]*:[A-F0-9:]+)\]?)|"  # ...or ipv6
+    r"(?:\[?(?P<ipv6>[A-F0-9:]+)\]?)|"  # ...or ipv6
     r"(?P<domain>(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]{2,6}\.?|[A-Z0-9-]{2,}\.?))"  # domain...
     r")"
     r"(?::(?P<port>\d+))?"  # optional port
@@ -58,12 +59,10 @@ time_regex = re.compile(r"\d{2}:\d{2}")
 def ipv4(value):
     """Validate an IPv4 address"""
     try:
-        socket.inet_aton(value)
-        if value.count(".") == 3:
-            return value
-    except socket.error:
-        pass
-    raise ValueError("{0} is not a valid ipv4 address".format(value))
+        ipaddress.IPv4Address(value)
+        return value
+    except ipaddress.AddressValueError:
+        raise ValueError("{0} is not a valid ipv4 address".format(value))
 
 
 ipv4.__schema__ = {"type": "string", "format": "ipv4"}
@@ -72,10 +71,10 @@ ipv4.__schema__ = {"type": "string", "format": "ipv4"}
 def ipv6(value):
     """Validate an IPv6 address"""
     try:
-        socket.inet_pton(socket.AF_INET6, value)
+        ipaddress.IPv6Address(value)
         return value
-    except socket.error:
-        raise ValueError("{0} is not a valid ipv4 address".format(value))
+    except ipaddress.AddressValueError:
+        raise ValueError("{0} is not a valid ipv6 address".format(value))
 
 
 ipv6.__schema__ = {"type": "string", "format": "ipv6"}
@@ -152,7 +151,7 @@ class URL(object):
             if netloc_regex.match(
                 parsed.netloc or parsed.path.split("/", 1)[0].split("?", 1)[0]
             ):
-                self.error(value, "Did you mean: http://{0}")
+                self.error(value, "Did you mean: http://{0}".format(parsed.netloc or parsed.path.split("/", 1)[0].split("?", 1)[0]))
             self.error(value)
         if parsed.scheme and self.schemes and parsed.scheme not in self.schemes:
             self.error(value, "Protocol is not allowed")
@@ -192,8 +191,8 @@ class URL(object):
                 self.error(value, "Domain is not allowed")
             if self.check:
                 try:
-                    socket.getaddrinfo(data["domain"], None)
-                except socket.error:
+                    socket.getaddrinfo(data["domain"], None, socket.AF_INET, socket.SOCK_STREAM)
+                except socket.gaierror:
                     self.error(value, "Domain does not exists")
         return value
 
@@ -258,13 +257,13 @@ class email(object):
         server = match.group("server")
         if self.check:
             try:
-                socket.getaddrinfo(server, None)
-            except socket.error:
+                socket.getaddrinfo(server, None, socket.AF_INET, socket.SOCK_STREAM)
+            except socket.gaierror:
                 self.error(value)
         if self.domains and server not in self.domains:
-            self.error(value, "{0} does not belong to the authorized domains")
+            self.error(value, "{0} does not belong to the authorized domains".format(server))
         if self.exclude and server in self.exclude:
-            self.error(value, "{0} belongs to a forbidden domain")
+            self.error(value, "{0} belongs to a forbidden domain".format(server))
         if not self.local and (
             server in ("localhost", "::1") or server.startswith("127.")
         ):
@@ -301,7 +300,7 @@ class regex(object):
         self.re = re.compile(pattern)
 
     def __call__(self, value):
-        if not self.re.search(value):
+        if not self.re.fullmatch(value):
             message = 'Value does not match pattern: "{0}"'.format(self.pattern)
             raise ValueError(message)
         return value
@@ -440,7 +439,7 @@ iso8601interval.__schema__ = {"type": "string", "format": "iso8601-interval"}
 
 def date(value):
     """Parse a valid looking date in the format YYYY-mm-dd"""
-    date = datetime.strptime(value, "%Y-%m-%d")
+    date = datetime.strptime(value, "%Y-%m-%d").date()
     return date
 
 
@@ -525,7 +524,7 @@ def boolean(value):
     value = str(value).lower()
     if value in ("true", "1", "on",):
         return True
-    if value in ("false", "0",):
+    if value in ("false", "0", "off"):
         return False
     raise ValueError("Invalid literal for boolean(): {0}".format(value))
 

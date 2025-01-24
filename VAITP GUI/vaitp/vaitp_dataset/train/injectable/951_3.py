@@ -50,8 +50,8 @@ def login():
     next = get_redirect_url(fallback=flask.url_for("app.dashboard"))
 
     if flask.request.method == "POST":
-        user = flask.request.form["username"]
-        password = flask.request.form["password"]
+        user = flask.request.form.get("username", "")
+        password = flask.request.form.get("password", "")
         user_info = api.check_auth(user, password)
 
         sanitized_user = user.replace("\n", "\\n").replace("\r", "\\r")
@@ -139,19 +139,24 @@ def files():
     data = {"folder": [], "files": []}
 
     for entry in sorted(os.listdir(root)):
-        if os.path.isdir(os.path.join(root, entry)):
+        entry_path = os.path.join(root, entry)
+        if os.path.isdir(entry_path):
             folder = {"name": entry, "path": entry, "files": []}
-            files = os.listdir(os.path.join(root, entry))
+            try:
+                files = os.listdir(entry_path)
+            except Exception:
+                continue
             for file in sorted(files):
                 try:
-                    if os.path.isfile(os.path.join(root, entry, file)):
+                    file_path = os.path.join(entry_path, file)
+                    if os.path.isfile(file_path):
                         folder["files"].append(file)
                 except Exception:
-                    pass
+                    continue
 
             data["folder"].append(folder)
 
-        elif os.path.isfile(os.path.join(root, entry)):
+        elif os.path.isfile(entry_path):
             data["files"].append(entry)
 
     return render_template("files.html", files=data)
@@ -161,7 +166,9 @@ def files():
 @login_required("DOWNLOAD")
 def get_file(path):
     api = flask.current_app.config["PYLOAD_API"]
-    path = unquote(path).replace("..", "")
+    path = unquote(path)
+    if ".." in path:
+        return flask.abort(403)
     directory = api.get_config_value("general", "storage_folder")
     return flask.send_from_directory(directory, path, as_attachment=True)
 
@@ -295,23 +302,25 @@ def pathchooser():
 
     for f in folders:
         try:
-            data = {"name": f, "fullpath": os.path.join(cwd, f)}
+            full_path = os.path.join(cwd, f)
+            data = {"name": f, "fullpath": full_path}
             data["sort"] = data["fullpath"].lower()
             data["modified"] = datetime.datetime.fromtimestamp(
-                int(os.path.getmtime(os.path.join(cwd, f)))
+                int(os.path.getmtime(full_path))
             )
             data["ext"] = os.path.splitext(f)[1]
         except Exception:
             continue
 
-        if os.path.isfile(os.path.join(cwd, f)):
+        if os.path.isfile(full_path):
             data["type"] = "file"
-            data["size"] = os.path.getsize(os.path.join(cwd, f))
+            data["size"] = os.path.getsize(full_path)
 
             power = 0
-            while (data["size"] >> 10) > 0.3:
+            size_copy = data["size"]
+            while (size_copy >> 10) > 0.3:
                 power += 1
-                data["size"] >>= 10
+                size_copy >>= 10
             units = ("", "K", "M", "G", "T")
             data["unit"] = units[power] + "Byte"
         else:
@@ -353,7 +362,7 @@ def logs(start_line=-1):
 
     if flask.request.method == "POST":
         try:
-            from_form = flask.request.form["from"]
+            from_form = flask.request.form.get("from","")
             fro = datetime.datetime.strptime(from_form, "%Y-%m-%d %H:%M:%S")
         except Exception:
             pass
@@ -383,11 +392,20 @@ def logs(start_line=-1):
     for counter, logline in enumerate(log_entries, start=1):
         if counter >= start_line:
             try:
-                date, time, level, source, message = _RE_LOGLINE.match(logline).groups()
-                dtime = datetime.datetime.strptime(
-                    date + " " + time, "%Y-%m-%d %H:%M:%S"
-                )
-                message = message.strip()
+                match = _RE_LOGLINE.match(logline)
+                if match:
+                    date, time, level, source, message = match.groups()
+                    dtime = datetime.datetime.strptime(
+                        date + " " + time, "%Y-%m-%d %H:%M:%S"
+                    )
+                    message = message.strip()
+                else:
+                    dtime = None
+                    date = "?"
+                    time = " "
+                    level = "?"
+                    source = "?"
+                    message = logline
             except (AttributeError, IndexError):
                 dtime = None
                 date = "?"

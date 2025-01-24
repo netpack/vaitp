@@ -247,7 +247,7 @@ class PrivateKeyList(BaseList):
                 raise ValueError('Cannot parse negative number of keys')
 
             public_key_list = []
-            for i in range(num_keys):
+            for _ in range(num_keys):
                 public_key_bytes = byte_stream.read_from_format_instruction(
                     PascalStyleFormatInstruction.BYTES
                 )
@@ -281,7 +281,7 @@ class PrivateKeyList(BaseList):
                 )
 
             decipher_bytes = cipher_class.decrypt(
-                kdf_class(kdf_options),
+                kdf_options,
                 passphrase,
                 cipher_bytes
             )
@@ -328,7 +328,7 @@ class PrivateKeyList(BaseList):
             decipher_padding = decipher_byte_stream.read()
 
             if (
-                len(decipher_byte_stream.getvalue()) %
+                len(decipher_bytes) %
                     cipher_class.BLOCK_SIZE != 0
             ) or not (
                 bytes(
@@ -340,7 +340,7 @@ class PrivateKeyList(BaseList):
             raise e
         except EOFError as e:
             raise ValueError('Premature EOF detected while parsing key.')
-        except e:
+        except Exception:
             raise ValueError('Unexpected error condition reached.')
 
         return cls(
@@ -510,7 +510,7 @@ class PrivateKeyList(BaseList):
             kdf = 'none'
 
         if retain_kdf_options_if_present \
-                and isinstance(self.kdf_options, collections.abc.Mapping):
+                and isinstance(self.kdf_options, KDFOptions):
             kdf_options = self.kdf_options
         else:
             kdf_options = get_kdf_options_class(kdf).generate_options()
@@ -579,7 +579,7 @@ class PrivateKeyList(BaseList):
 
         cipher_class = get_cipher_class(cipher)
         cipher_bytes = cipher_class.encrypt(
-            get_kdf_options_class(kdf)(kdf_options),
+            kdf_options,
             passphrase,
             decipher_byte_stream.getvalue()
         )

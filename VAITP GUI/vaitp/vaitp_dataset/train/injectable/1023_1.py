@@ -6,11 +6,10 @@ app.secret_key = 'your_secret_key'
 csrf = CSRFProtect(app)
 
 @app.route('/api/resource', methods=['POST'])
-# @csrf.exempt  # This line should be removed to enforce CSRF protection
 def update_resource():
-    # Logic to update the resource
-    data = request.json
-    # Process the data
+    data = request.get_json()
+    if not data:
+        return jsonify({"status": "error", "message": "No JSON data provided"}), 400
     return jsonify({"status": "success", "data": data}), 200
 
 if __name__ == '__main__':

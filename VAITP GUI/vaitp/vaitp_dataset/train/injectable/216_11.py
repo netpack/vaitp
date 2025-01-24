@@ -3,6 +3,7 @@ from __future__ import annotations
 from dataclasses import InitVar, dataclass, field
 from datetime import date, datetime
 from typing import Any, ClassVar, Dict, Generic, List, Optional, Set, TypeVar, Union
+import re
 
 from .. import schema as oai
 from .. import utils
@@ -70,7 +71,7 @@ class Property:
             default = None
 
         if default is not None:
-            return f"{self.python_name}: {self.get_type_string()} = {self.default}"
+            return f"{self.python_name}: {self.get_type_string()} = {default}"
         else:
             return f"{self.python_name}: {self.get_type_string()}"
 
@@ -85,6 +86,13 @@ class StringProperty(Property):
     _type_string: ClassVar[str] = "str"
 
     def _validate_default(self, default: Any) -> str:
+        if not isinstance(default, str):
+            raise ValidationError(f"Expected string, got {type(default)}")
+        if self.max_length is not None and len(default) > self.max_length:
+            raise ValidationError(f"String exceeds maximum length of {self.max_length}")
+        if self.pattern is not None and not re.match(self.pattern, default):
+            raise ValidationError(f"String does not match pattern {self.pattern}")
+
         return f'"{utils.remove_string_escapes(default)}"'
 
 
@@ -109,12 +117,14 @@ class DateTimeProperty(Property):
         return imports
 
     def _validate_default(self, default: Any) -> str:
+        if not isinstance(default, str):
+            raise ValidationError(f"Expected string, got {type(default)}")
         for format_string in ("%Y-%m-%dT%H:%M:%S", "%Y-%m-%dT%H:%M:%S%z"):
             try:
                 return repr(datetime.strptime(default, format_string))
             except (TypeError, ValueError):
                 continue
-        raise ValidationError
+        raise ValidationError(f"Could not parse {default} as a datetime")
 
 
 @dataclass
@@ -136,10 +146,12 @@ class DateProperty(Property):
         return imports
 
     def _validate_default(self, default: Any) -> str:
+        if not isinstance(default, str):
+            raise ValidationError(f"Expected string, got {type(default)}")
         try:
             return repr(date.fromisoformat(default))
         except (TypeError, ValueError) as e:
-            raise ValidationError() from e
+            raise ValidationError(f"Could not parse {default} as a date") from e
 
 
 @dataclass
@@ -172,7 +184,7 @@ class FloatProperty(Property):
         try:
             return float(default)
         except (TypeError, ValueError) as e:
-            raise ValidationError() from e
+            raise ValidationError(f"Could not parse {default} as a float") from e
 
 
 @dataclass
@@ -186,7 +198,7 @@ class IntProperty(Property):
         try:
             return int(default)
         except (TypeError, ValueError) as e:
-            raise ValidationError() from e
+            raise ValidationError(f"Could not parse {default} as an int") from e
 
 
 @dataclass
@@ -196,7 +208,8 @@ class BooleanProperty(Property):
     _type_string: ClassVar[str] = "bool"
 
     def _validate_default(self, default: Any) -> bool:
-        # no try/except needed as anything that comes from the initial load from json/yaml will be boolable
+        if not isinstance(default, bool):
+            raise ValidationError(f"Expected boolean, got {type(default)}")
         return bool(default)
 
 
@@ -233,7 +246,7 @@ class ListProperty(Property, Generic[InnerProp]):
 
     def _validate_default(self, default: Any) -> str:
         if not isinstance(default, list):
-            raise ValidationError()
+            raise ValidationError(f"Expected list, got {type(default)}")
 
         default = list(map(self.inner_property._validate_default, default))
         if isinstance(self.inner_property, RefProperty):  # Fix enums to use the actual value
@@ -277,7 +290,7 @@ class UnionProperty(Property):
                 return val
             except ValidationError:
                 continue
-        raise ValidationError()
+        raise ValidationError(f"Could not validate {default} against any of the union types")
 
 
 _existing_enums: Dict[str, EnumProperty] = {}
@@ -341,6 +354,8 @@ class EnumProperty(Property):
         output: Dict[str, str] = {}
 
         for i, value in enumerate(values):
+            if not value:
+                raise ValueError(f"Empty value in Enum at index {i}")
             if value[0].isalpha():
                 key = value.upper()
             else:
@@ -353,11 +368,13 @@ class EnumProperty(Property):
         return output
 
     def _validate_default(self, default: Any) -> str:
+        if not isinstance(default, str):
+            raise ValidationError(f"Expected string, got {type(default)}")
         inverse_values = {v: k for k, v in self.values.items()}
         try:
             return f"{self.reference.class_name}.{inverse_values[default]}"
         except KeyError as e:
-            raise ValidationError() from e
+            raise ValidationError(f"Value {default} not found in enum") from e
 
 
 @dataclass
@@ -401,7 +418,7 @@ class RefProperty(Property):
         if enum:
             return enum._validate_default(default)
         else:
-            raise ValidationError
+            raise ValidationError(f"Cannot validate default for non-enum RefProperty")
 
 
 @dataclass
@@ -428,7 +445,7 @@ class DictProperty(Property):
     def _validate_default(self, default: Any) -> str:
         if isinstance(default, dict):
             return repr(default)
-        raise ValidationError
+        raise ValidationError(f"Expected dict, got {type(default)}")
 
 
 def _string_based_property(
@@ -443,7 +460,7 @@ def _string_based_property(
     elif string_format == "binary":
         return FileProperty(name=name, required=required, default=data.default)
     else:
-        return StringProperty(name=name, default=data.default, required=required, pattern=data.pattern)
+        return StringProperty(name=name, default=data.default, required=required, pattern=data.pattern, max_length=data.maxLength)
 
 
 def _property_from_data(
@@ -496,5 +513,5 @@ def property_from_data(
 ) -> Union[Property, PropertyError]:
     try:
         return _property_from_data(name=name, required=required, data=data)
-    except ValidationError:
-        return PropertyError(detail="Failed to validate default value", data=data)
+    except ValidationError as e:
+        return PropertyError(detail=f"Failed to validate default value: {e}", data=data)

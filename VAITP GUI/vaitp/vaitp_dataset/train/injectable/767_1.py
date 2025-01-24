@@ -1,9 +1,10 @@
+
 import os
 import inspect
 
 def sanitize_package_name(package_name):
     # Remove any path traversal characters
-    return os.path.basename(package_name)
+    return os.path.basename(os.path.abspath(package_name))
 
 def get_package_hook(package_name):
     sanitized_package_name = sanitize_package_name(package_name)
@@ -15,7 +16,7 @@ def get_package_hook(package_name):
             code = hook_file.read()
             try:
                 # Create a dictionary to serve as the execution namespace
-                exec_globals = {}
+                exec_globals = dict()
                 exec(code, exec_globals)
 
                 # Check if there's a function called 'run' and execute it
@@ -23,7 +24,6 @@ def get_package_hook(package_name):
                     exec_globals['run']()
 
             except Exception as e:
-                 raise Exception(f"Error executing hook: {e}")
-
+                raise Exception(f"Error executing hook: {e}")
     else:
         raise FileNotFoundError(f"Hook file for package {sanitized_package_name} not found.")

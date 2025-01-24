@@ -1,402 +1,201 @@
-/*
- * See the NOTICE file distributed with this work for additional
- * information regarding copyright ownership.
- *
- * This is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation; either version 2.1 of
- * the License, or (at your option) any later version.
- *
- * This software is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software; if not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
- * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- */
-package org.xwiki.attachment;
 
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Stream;
+import os
+import re
+import subprocess
+import tempfile
+from http.server import BaseHTTPRequestHandler, HTTPServer
+from threading import Thread
+from urllib.parse import urlparse, parse_qs
+import uuid
+import json
 
-import org.apache.commons.io.IOUtils;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
-import org.junit.jupiter.params.provider.ValueSource;
-import org.xwiki.bridge.event.DocumentCreatedEvent;
-import org.xwiki.component.manager.ComponentManager;
-import org.xwiki.component.wiki.internal.bridge.DefaultContentParser;
-import org.xwiki.icon.IconManagerScriptService;
-import org.xwiki.icon.internal.DefaultIconManagerComponentList;
-import org.xwiki.model.internal.reference.converter.EntityReferenceConverter;
-import org.xwiki.model.reference.AttachmentReference;
-import org.xwiki.model.reference.DocumentReference;
-import org.xwiki.model.script.ModelScriptService;
-import org.xwiki.observation.EventListener;
-import org.xwiki.rendering.RenderingScriptServiceComponentList;
-import org.xwiki.rendering.internal.configuration.DefaultExtendedRenderingConfiguration;
-import org.xwiki.rendering.internal.configuration.RenderingConfigClassDocumentConfigurationSource;
-import org.xwiki.rendering.internal.macro.wikibridge.DefaultWikiMacroManager;
-import org.xwiki.rendering.internal.macro.wikibridge.WikiMacroEventListener;
-import org.xwiki.rendering.syntax.Syntax;
-import org.xwiki.rendering.wikimacro.internal.DefaultWikiMacroFactory;
-import org.xwiki.rendering.wikimacro.internal.DefaultWikiMacroRenderer;
-import org.xwiki.security.authorization.AuthorizationManager;
-import org.xwiki.security.authorization.Right;
-import org.xwiki.store.TemporaryAttachmentSessionsManager;
-import org.xwiki.store.script.TemporaryAttachmentsScriptService;
-import org.xwiki.test.annotation.ComponentList;
-import org.xwiki.test.junit5.mockito.MockComponent;
-import org.xwiki.test.page.HTML50ComponentList;
-import org.xwiki.test.page.IconSetup;
-import org.xwiki.test.page.PageTest;
-import org.xwiki.test.page.TestNoScriptMacro;
-import org.xwiki.test.page.XWikiSyntax21ComponentList;
-import org.xwiki.xml.internal.html.filter.ControlCharactersFilter;
+def is_safe_filename(filename):
+    if not filename:
+        return False
+    if ".." in filename:
+        return False
+    if filename.startswith("/"):
+        return False
+    if filename.startswith("\\"):
+        return False
+    return True
 
-import com.xpn.xwiki.XWikiException;
-import com.xpn.xwiki.doc.XWikiAttachment;
-import com.xpn.xwiki.doc.XWikiDocument;
-import com.xpn.xwiki.internal.model.reference.DocumentReferenceConverter;
-import com.xpn.xwiki.objects.BaseObject;
-import com.xpn.xwiki.objects.classes.BaseClass;
+def extract_command(text):
+    match = re.search(r'{{command}}(.*){{/command}}', text, re.DOTALL)
+    if match:
+        return match.group(1).strip()
+    else:
+        return None
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.params.provider.Arguments.arguments;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+def sanitize_command(command):
+    if not command:
+        return None
 
-/**
- * Test of {@code XWiki.AttachmentSelector}.
- *
- * @version $Id$
- * @since 14.5
- * @since 14.4.2
- * @since 13.10.7
- */
-@HTML50ComponentList
-@XWikiSyntax21ComponentList
-@RenderingScriptServiceComponentList
-@DefaultIconManagerComponentList
-@ComponentList({
-    // Start -  Required in addition of RenderingScriptServiceComponentList
-    DefaultExtendedRenderingConfiguration.class,
-    RenderingConfigClassDocumentConfigurationSource.class,
-    // Start -  Required in addition of RenderingScriptServiceComponentList
-    ControlCharactersFilter.class,
-    ModelScriptService.class,
-    TestNoScriptMacro.class,
-    // Start WikiMacroEventListener
-    WikiMacroEventListener.class,
-    DefaultWikiMacroFactory.class,
-    DefaultWikiMacroManager.class,
-    DefaultContentParser.class,
-    org.xwiki.rendering.internal.parser.DefaultContentParser.class,
-    DefaultWikiMacroRenderer.class,
-    // End WikiMacroEventListener
-    TemporaryAttachmentsScriptService.class,
-    IconManagerScriptService.class,
-    DocumentReferenceConverter.class,
-    EntityReferenceConverter.class,
-    ModelScriptService.class,
-})
-class AttachmentSelectorPageTest extends PageTest
-{
-    /**
-     * Mocked because we don't want to deal with actual sessions for this test.
-     */
-    @MockComponent
-    private TemporaryAttachmentSessionsManager temporaryAttachmentSessionsManager;
+    if '&&' in command or ';' in command or '|' in command:
+        return None
+    if '`' in command or '$(' in command or '${' in command:
+        return None
+    if '>' in command or '<' in command:
+         return None
+    
+    return command
 
-    @BeforeEach
-    void setUp() throws Exception
-    {
-        when(this.temporaryAttachmentSessionsManager.getUploadedAttachments(any(DocumentReference.class)))
-            .thenReturn(List.of());
+def run_command(command, user_input=None):
+  if not command:
+        return None, "No command provided"
 
-        // Initializes then environment for the icon extension.
-        IconSetup.setUp(this, "/icons.properties");
-    }
+  try:
+    sanitized_command = sanitize_command(command)
+    if not sanitized_command:
+      return None, "Unsafe command"
+    result = subprocess.run(sanitized_command, shell=True, capture_output=True, text=True, timeout=10, input=user_input)
+    if result.returncode == 0:
+      return result.stdout, None
+    else:
+      return None, f"Command failed with error code {result.returncode}: {result.stderr}"
+  except subprocess.TimeoutExpired:
+    return None, "Command timed out"
+  except Exception as e:
+    return None, f"Error running command: {str(e)}"
+  
+def render_page(page_content):
+    command = extract_command(page_content)
+    if command:
+      output, error = run_command(command)
+      if error:
+        return f"Error: {error}"
+      else:
+        page_content = page_content.replace(f"{{command}}{command}{{/command}}", f"<pre>{output}</pre>")
+    return page_content
 
-    @ParameterizedTest
-    @ValueSource(strings = {
-        "{{noscript}}println(\"Hello from noscript!\"){{/noscript}}.png",
-        "]] {{noscript}}println(\"Hello from noscript!\"){{/noscript}}.png"
-    })
-    void renderDisplayImageFalse(String fileName) throws Exception
-    {
-        commonFixup(fileName);
+class MyHandler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        parsed_url = urlparse(self.path)
+        path = parsed_url.path
+        query_params = parse_qs(parsed_url.query)
+        
+        if path == "/render":
+             page_content = query_params.get('content', [''])[0]
+             rendered_content = render_page(page_content)
+             self.send_response(200)
+             self.send_header('Content-type', 'text/html')
+             self.end_headers()
+             self.wfile.write(rendered_content.encode())
+             return
+        
+        if path == "/upload":
+            self.send_response(200)
+            self.send_header('Content-type', 'text/html')
+            self.end_headers()
+            self.wfile.write(b'''
+                <html>
+                <body>
+                    <form action="/process_upload" method="post" enctype="multipart/form-data">
+                        <input type="file" name="file"><br>
+                        <input type="text" name="filename" placeholder="filename"><br>
+                        <input type="submit" value="Upload">
+                    </form>
+                </body>
+                </html>
+            ''')
+            return
 
-        this.request.put("docname", "xwiki:Space.Test");
-        this.request.put("classname", "xwiki:Space.Test");
-        this.request.put("property", "avatar");
-        this.request.put("object", "0");
-        this.request.put("filter", "png");
-        this.request.put("displayImage", "false");
-        this.request.put("xpage", "plain");
+        if path == "/download":
+           filename = query_params.get('filename', [''])[0]
+           if not is_safe_filename(filename):
+                self.send_response(400)
+                self.end_headers()
+                self.wfile.write(b"Invalid filename")
+                return
 
-        Document document = renderHTMLPage(new DocumentReference("xwiki", "XWiki", "AttachmentSelector"));
+           file_path = os.path.join(tempfile.gettempdir(), filename)
+           if os.path.exists(file_path) and os.path.isfile(file_path):
+                self.send_response(200)
+                self.send_header('Content-type', 'application/octet-stream')
+                self.send_header('Content-Disposition', f'attachment; filename="{filename}"')
+                self.end_headers()
+                with open(file_path, 'rb') as f:
+                    self.wfile.write(f.read())
+           else:
+                self.send_response(404)
+                self.end_headers()
+                self.wfile.write(b"File not found")
+           return
+        
+        self.send_response(404)
+        self.end_headers()
 
-        assertNotNull(document);
-        Element galleryAttachmentTitle = document.select(".current .gallery_attachmenttitle").get(0);
-        assertEquals(fileName, galleryAttachmentTitle.attr("title"));
-        assertEquals(fileName, galleryAttachmentTitle.text());
-        assertEquals(fileName, document.select(".gallery_attachmentframe .filename").text());
-        assertEquals(String.format("attach:xwiki:Space.Test@%s", fileName),
-            document.select(".gallery_attachmentframe a").attr("href"));
-    }
 
-    @ParameterizedTest
-    @ValueSource(strings = {
-        "{{noscript}}println(\"Hello from noscript!\"){{/noscript}}.png",
-        "]] {{noscript}}println(\"Hello from noscript!\"){{/noscript}}.png"
-    })
-    void renderDisplayImageTrue(String fileName) throws Exception
-    {
-        commonFixup(fileName);
+    def do_POST(self):
+        parsed_url = urlparse(self.path)
+        path = parsed_url.path
+        if path == "/process_upload":
+            content_length = int(self.headers['Content-Length'])
+            content_type = self.headers['Content-Type']
+            if not content_type or not content_type.startswith('multipart/form-data'):
+                self.send_response(400)
+                self.end_headers()
+                self.wfile.write(b"Invalid Content-Type")
+                return
 
-        this.request.put("docname", "xwiki:Space.Test");
-        this.request.put("classname", "xwiki:Space.Test");
-        this.request.put("property", "avatar");
-        this.request.put("object", "0");
-        this.request.put("filter", "png");
-        this.request.put("displayImage", "true");
-        this.request.put("xpage", "plain");
+            boundary = content_type.split("boundary=")[1]
+            post_data = self.rfile.read(content_length).decode('utf-8', errors='ignore')
+            
+            file_match = re.search(rf'Content-Disposition: form-data; name="file"; filename="([^"]+)"\r\nContent-Type: [^\r\n]+\r\n\r\n(.*?)\r\n--{boundary}', post_data, re.DOTALL)
+            filename_match = re.search(rf'Content-Disposition: form-data; name="filename"\r\n\r\n([^\r\n]+)',post_data)
 
-        Document document = renderHTMLPage(new DocumentReference("xwiki", "XWiki", "AttachmentSelector"));
-        assertNotNull(document);
-        Element galleryAttachmentTitle = document.select(".current .gallery_attachmenttitle").get(0);
-        assertEquals(fileName, galleryAttachmentTitle.attr("title"));
-        assertEquals(fileName, galleryAttachmentTitle.text());
-        assertEquals(String.format("attach:xwiki:Space.Test@%s", fileName),
-            document.select(".gallery_attachmentframe a").attr("href"));
+            if file_match and filename_match:
+               uploaded_filename = filename_match.group(1)
+               if not is_safe_filename(uploaded_filename):
+                    self.send_response(400)
+                    self.end_headers()
+                    self.wfile.write(b"Invalid filename")
+                    return
+               file_content = file_match.group(2).encode('latin-1').decode('utf-8')
+               file_path = os.path.join(tempfile.gettempdir(), uploaded_filename)
+               with open(file_path, 'w') as f:
+                 f.write(file_content)
+               self.send_response(200)
+               self.send_header('Content-type', 'text/html')
+               self.end_headers()
+               self.wfile.write(f'File "{uploaded_filename}" uploaded successfully.'.encode())
+            else:
+                self.send_response(400)
+                self.end_headers()
+                self.wfile.write(b"No file or filename in the request")
+            return
 
-        Elements img = document.select(".gallery_attachmentframe img");
-        assertEquals(String.format("xwiki:Space.Test@%s", fileName), img.attr("src"));
-        assertEquals(String.format("xwiki:Space.Test@%s", fileName), img.attr("alt"));
-    }
+        if path == "/command":
+            user_command = self.rfile.read(int(self.headers['Content-Length'])).decode('utf-8')
+            output, error = run_command(user_command)
+            response = {}
+            if error:
+                response["error"] = error
+            else:
+                response["output"] = output
+            self.send_response(200)
+            self.send_header('Content-type', 'application/json')
+            self.end_headers()
+            self.wfile.write(json.dumps(response).encode('utf-8'))
+            return
 
-    @ParameterizedTest
-    @MethodSource("attachmentSelectorMacroSource")
-    void attachmentSelectorMacroWidth(String widthValue, String expectedWidth) throws Exception
-    {
-        attachmentSelectorMacroFixup();
+        self.send_response(404)
+        self.end_headers()
 
-        XWikiDocument xwikiDocument = commonFixup("test.png");
 
-        xwikiDocument.setContent(String.format("{{attachmentSelector "
-            + "classname=\"Space.Test\" "
-            + "property=\"avatar\" "
-            + "savemode=\"direct\" "
-            + "width=\"%s\" "
-            + "displayImage=\"true\"/}}", widthValue));
+def run_server(port):
+    server_address = ('', port)
+    httpd = HTTPServer(server_address, MyHandler)
+    httpd.serve_forever()
 
-        Document document = renderHTMLPage(xwikiDocument);
-        assertEquals(expectedWidth, document.select(".displayed img").attr("width"));
-    }
-
-    @ParameterizedTest
-    @MethodSource("attachmentSelectorMacroSource")
-    void attachmentSelectorMacroHeight(String widthValue, String expectedWidth) throws Exception
-    {
-        attachmentSelectorMacroFixup();
-
-        XWikiDocument xwikiDocument = commonFixup("test.png");
-
-        xwikiDocument.setContent(String.format("{{attachmentSelector "
-            + "classname=\"Space.Test\" "
-            + "property=\"avatar\" "
-            + "savemode=\"direct\" "
-            + "height=\"%s\" "
-            + "displayImage=\"true\"/}}", widthValue));
-        Document document = renderHTMLPage(xwikiDocument);
-        assertEquals(expectedWidth, document.select(".displayed img").attr("height"));
-    }
-
-    @ParameterizedTest
-    @MethodSource("attachmentSelectorMacroSource")
-    void attachmentSelectorMacroAlternateText(String widthValue, String expectedWidth) throws Exception
-    {
-        attachmentSelectorMacroFixup();
-
-        XWikiDocument xwikiDocument = commonFixup("test.png");
-
-        xwikiDocument.setContent(String.format("{{attachmentSelector "
-            + "classname=\"Space.Test\" "
-            + "property=\"avatar\" "
-            + "savemode=\"direct\" "
-            + "alternateText=\"%s\" "
-            + "displayImage=\"true\"/}}", widthValue));
-        xwikiDocument.setSyntax(Syntax.XWIKI_2_1);
-        Document document = renderHTMLPage(xwikiDocument);
-        assertEquals(expectedWidth, document.select(".displayed img").attr("alt"));
-    }
-
-    @ParameterizedTest
-    @MethodSource("attachmentSelectorMacroSource")
-    void attachmentSelectorMacroWidthWithLink(String widthValue, String expectedWidth) throws Exception
-    {
-        attachmentSelectorMacroFixup();
-
-        XWikiDocument xwikiDocument = commonFixup("test.png");
-
-        xwikiDocument.setContent(String.format("{{attachmentSelector "
-            + "classname=\"Space.Test\" "
-            + "property=\"avatar\" "
-            + "savemode=\"direct\" "
-            + "width=\"%s\" "
-            + "link=\"true\" "
-            + "displayImage=\"true\"/}}", widthValue));
-
-        Document document = renderHTMLPage(xwikiDocument);
-        assertEquals(expectedWidth, document.select(".displayed img").attr("width"));
-    }
-
-    @ParameterizedTest
-    @MethodSource("attachmentSelectorMacroSource")
-    void attachmentSelectorMacroHeightWithLink(String widthValue, String expectedWidth) throws Exception
-    {
-        attachmentSelectorMacroFixup();
-
-        XWikiDocument xwikiDocument = commonFixup("test.png");
-
-        xwikiDocument.setContent(String.format("{{attachmentSelector "
-            + "classname=\"Space.Test\" "
-            + "property=\"avatar\" "
-            + "savemode=\"direct\" "
-            + "height=\"%s\" "
-            + "link=\"true\" "
-            + "displayImage=\"true\"/}}", widthValue));
-        Document document = renderHTMLPage(xwikiDocument);
-        assertEquals(expectedWidth, document.select(".displayed img").attr("height"));
-    }
-
-    @ParameterizedTest
-    @MethodSource("attachmentSelectorMacroSource")
-    void attachmentSelectorMacroAlternateTextWithLink(String widthValue, String expectedWidth) throws Exception
-    {
-        attachmentSelectorMacroFixup();
-
-        XWikiDocument xwikiDocument = commonFixup("test.png");
-
-        xwikiDocument.setContent(String.format("{{attachmentSelector "
-            + "classname=\"Space.Test\" "
-            + "property=\"avatar\" "
-            + "savemode=\"direct\" "
-            + "alternateText=\"%s\" "
-            + "link=\"true\" "
-            + "displayImage=\"true\"/}}", widthValue));
-        xwikiDocument.setSyntax(Syntax.XWIKI_2_1);
-        Document document = renderHTMLPage(xwikiDocument);
-        assertEquals(expectedWidth, document.select(".displayed img").attr("alt"));
-    }
-
-    @Test
-    void withTemporaryAttachment() throws Exception
-    {
-        String fileName = "test.png";
-
-        XWikiDocument xWikiDocument = commonFixup(fileName);
-
-        XWikiAttachment xWikiAttachment = mock(XWikiAttachment.class);
-        when(xWikiAttachment.getFilename()).thenReturn(fileName);
-        AttachmentReference attachmentReference =
-            new AttachmentReference(fileName, xWikiDocument.getDocumentReference());
-        when(xWikiAttachment.getReference()).thenReturn(attachmentReference);
-        when(this.temporaryAttachmentSessionsManager.getUploadedAttachments(xWikiDocument.getDocumentReference()))
-            .thenReturn(List.of(xWikiAttachment));
-        when(this.temporaryAttachmentSessionsManager.getUploadedAttachment(attachmentReference))
-            .thenReturn(Optional.of(xWikiAttachment));
-
-        this.request.put("docname", "xwiki:Space.Test");
-        this.request.put("classname", "xwiki:Space.Test");
-        this.request.put("property", "avatar");
-        this.request.put("object", "0");
-        this.request.put("filter", "png");
-        this.request.put("displayImage", "true");
-        this.request.put("xpage", "plain");
-
-        Document document = renderHTMLPage(new DocumentReference("xwiki", "XWiki", "AttachmentSelector"));
-        Element element = document.selectFirst(".gallery_attachmentbox.current");
-        assertTrue(element.classNames().contains("temporary_attachment"),
-            String.format("temporary_attachment class not found in %s", element.classNames()));
-        assertNotNull(element.selectFirst(".fake-attach"), "An icon with class fake-attach is expected to "
-            + "be found");
-    }
-
-    @Test
-    void cancelButton() throws Exception
-    {
-        commonFixup("test.png");
-
-        this.request.put("docname", "xwiki:Space.]] {{noscript/}}");
-
-        Document document = renderHTMLPage(new DocumentReference("xwiki", "XWiki", "AttachmentSelector"));
-        assertEquals("Space.]] {{noscript/}}", document.getElementById("attachment-picker-close").attr("href"));
-    }
-
-    private void attachmentSelectorMacroFixup() throws Exception
-    {
-        DocumentReference attachmentSelectorDocumentReference =
-            new DocumentReference("xwiki", "XWiki", "AttachmentSelector");
-        XWikiDocument xWikiDocument = loadPage(attachmentSelectorDocumentReference);
-
-        // TODO: The code below is more generic than this test and should be moved to be reusable. 
-        // Make the wiki component manager point to the default component manager.
-        this.componentManager.registerComponent(ComponentManager.class, "wiki",
-            this.componentManager.getInstance(ComponentManager.class));
-        when(this.componentManager.<AuthorizationManager>getInstance(AuthorizationManager.class)
-            .hasAccess(Right.ADMIN, new DocumentReference("xwiki", "XWiki", "Admin"),
-                xWikiDocument.getDocumentReference().getWikiReference())).thenReturn(true);
-        // Simulate the event not thrown by page test for now.
-        this.componentManager.<EventListener>getInstance(EventListener.class, "wikimacrolistener")
-            .onEvent(new DocumentCreatedEvent(), xWikiDocument, null);
-    }
-
-    private XWikiDocument commonFixup(String fileName) throws XWikiException, IOException
-    {
-        // Initialize a document containing an XClass definition and an XObject of this XClass.
-        // The interesting property is the avatar string field, which references the name of an attachment contained in
-        // the document itself too.
-        DocumentReference documentReference = new DocumentReference("xwiki", "Space", "Test");
-        XWikiDocument xwikiDocument = this.xwiki.getDocument(documentReference, this.context);
-        BaseClass xClass = xwikiDocument.getXClass();
-        xClass.addTextField("avatar", "Avatar", 10);
-        BaseObject baseObject = xwikiDocument.newXObject(xwikiDocument.getDocumentReference(), this.context);
-        baseObject.setStringValue("avatar", fileName);
-        // Simulates the file rename action.
-        xwikiDocument.setAttachment("tmp.png", IOUtils.toInputStream("", Charset.defaultCharset()), this.context);
-        xwikiDocument.getAttachment("tmp.png").setFilename(fileName);
-        xwikiDocument.setSyntax(Syntax.XWIKI_2_1);
-
-        this.xwiki.saveDocument(xwikiDocument, this.context);
-
-        this.context.setDoc(xwikiDocument);
-
-        return xwikiDocument;
-    }
-
-    public static Stream<Arguments> attachmentSelectorMacroSource()
-    {
-        return Stream.of(
-            arguments("{{noscript /~}~}", "{{noscript /}}"),
-            arguments("]] {{noscript /~}~}", "]] {{noscript /}}"),
-            arguments("]] {{noscript /~}~} [[", "]] {{noscript /}} [[")
-        );
-    }
-}
+if __name__ == '__main__':
+    port = 8000
+    server_thread = Thread(target=run_server, args=(port,))
+    server_thread.daemon = True
+    server_thread.start()
+    print(f"Server started on port {port}. Press Ctrl+C to stop.")
+    try:
+        while True:
+            pass
+    except KeyboardInterrupt:
+        print("Server stopped.")

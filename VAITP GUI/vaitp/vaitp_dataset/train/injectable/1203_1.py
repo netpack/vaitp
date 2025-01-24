@@ -1,8 +1,13 @@
 def safe_strncpy(dest, src, dest_size):
-    # Ensure we do not exceed the destination buffer size
-    if len(src) >= dest_size:
+    src_len = len(src)
+    if src_len >= dest_size:
         raise ValueError("Source string is too long for the destination buffer.")
-    dest[:len(src)] = src
+    for i in range(src_len):
+        dest[i] = src[i]
+    for i in range(src_len, dest_size):
+        dest[i] = ''
+
+
 
 # Example usage
 destination_buffer = [''] * 10  # Simulating a buffer of size 10

@@ -1,16 +1,20 @@
 from flask import Flask, redirect, request, abort
-import re
+from urllib.parse import urlparse
 
 app = Flask(__name__)
 
 def _validate_redirect_url(target):
-    # Basic validation of the redirect URL
     if not target:
         return False
-    # Ensure the target URL is a safe URL
-    if re.match(r'^https?://', target):
+    try:
+        parsed_url = urlparse(target)
+        if not parsed_url.scheme or not parsed_url.netloc:
+            return False
+        if parsed_url.scheme not in ['http', 'https']:
+            return False
         return True
-    return False
+    except:
+        return False
 
 @app.route('/redirect')
 def safe_redirect():
@@ -18,7 +22,7 @@ def safe_redirect():
     if _validate_redirect_url(target):
         return redirect(target)
     else:
-        abort(400)  # Bad request if the URL is invalid
+        abort(400)
 
 if __name__ == '__main__':
     app.run()

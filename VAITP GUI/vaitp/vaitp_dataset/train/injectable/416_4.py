@@ -151,7 +151,11 @@ def _eval_no_call(stmt, glob, loc):
     for insn in dis.get_instructions(bytecode):
         if "CALL" in insn.opname:
             raise RuntimeError(f"Type annotation should not contain calls, but '{stmt}' does")
-    return eval(bytecode, glob, loc)  # type: ignore[arg-type] # noqa: P204
+    try:
+      return eval(bytecode, glob, loc)  # type: ignore[arg-type] # noqa: P204
+    except Exception as e:
+      raise RuntimeError(f"Failed to evaluate type annotation '{stmt}'") from e
+
 
 
 def parse_type_line(type_line, rcb, loc):
@@ -328,10 +332,14 @@ def try_ann_to_type(ann, loc):
             return TupleType([])
         return TupleType([try_ann_to_type(a, loc) for a in ann.__args__])
     if is_list(ann):
+        if not ann.__args__:
+            return ListType(AnyType.get())
         elem_type = try_ann_to_type(ann.__args__[0], loc)
         if elem_type:
             return ListType(elem_type)
     if is_dict(ann):
+        if not ann.__args__ or len(ann.__args__) != 2:
+             raise ValueError(f"Invalid Dict type annotation: '{ann}' at {loc.highlight()}")
         key = try_ann_to_type(ann.__args__[0], loc)
         value = try_ann_to_type(ann.__args__[1], loc)
         # Raise error if key or value is None
@@ -341,15 +349,21 @@ def try_ann_to_type(ann, loc):
             raise ValueError(f"Unknown type annotation: '{ann.__args__[1]}' at {loc.highlight()}")
         return DictType(key, value)
     if is_optional(ann):
+        if not ann.__args__ or len(ann.__args__) != 2:
+            raise ValueError(f"Invalid Optional type annotation: '{ann}' at {loc.highlight()}")
         if issubclass(ann.__args__[1], type(None)):
             contained = ann.__args__[0]
-        else:
+        elif issubclass(ann.__args__[0], type(None)):
             contained = ann.__args__[1]
+        else:
+            raise ValueError(f"Invalid Optional type annotation: '{ann}' at {loc.highlight()}")
         valid_type = try_ann_to_type(contained, loc)
         msg = "Unsupported annotation {} could not be resolved because {} could not be resolved."
         assert valid_type, msg.format(repr(ann), repr(contained))
         return OptionalType(valid_type)
     if is_union(ann):
+        if not ann.__args__:
+             raise ValueError(f"Invalid Union type annotation: '{ann}' at {loc.highlight()}")
         # TODO: this is hack to recognize NumberType
         if set(ann.__args__) == set([int, float, complex]):
             return NumberType.get()
@@ -366,8 +380,12 @@ def try_ann_to_type(ann, loc):
             inner.append(maybe_type)
         return UnionType(inner)    # type: ignore[arg-type]
     if torch.distributed.rpc.is_available() and is_rref(ann):
+        if not ann.__args__:
+            raise ValueError(f"Invalid RRef type annotation: '{ann}' at {loc.highlight()}")
         return RRefType(try_ann_to_type(ann.__args__[0], loc))
     if is_future(ann):
+        if not ann.__args__:
+             raise ValueError(f"Invalid Future type annotation: '{ann}' at {loc.highlight()}")
         return FutureType(try_ann_to_type(ann.__args__[0], loc))
     if ann is float:
         return FloatType.get()

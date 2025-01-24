@@ -1,18 +1,24 @@
+import ast
+
 def safe_execute_code(user_input):
-    # Properly escape or sanitize the user input to prevent code injection
-    sanitized_input = sanitize(user_input)
-    
-    # Execute the sanitized code in a controlled environment
     try:
-        exec(sanitized_input, {"__builtins__": {}})
+        tree = ast.parse(user_input)
+        for node in ast.walk(tree):
+            if isinstance(node, (ast.Import, ast.ImportFrom, ast.Call, ast.Attribute)):
+                if isinstance(node, ast.Call):
+                   if isinstance(node.func, ast.Name) and node.func.id in ['exec', 'eval']:
+                        raise ValueError("Function call is not allowed")
+
+                elif isinstance(node, ast.Attribute):
+                    if isinstance(node.value, ast.Name) and node.value.id == '__builtins__':
+                        raise ValueError("Access to __builtins__ is not allowed.")
+                    if isinstance(node.value, ast.Name) and node.value.id in ['os', 'sys', 'subprocess']:
+                        raise ValueError("Access to os/sys/subprocess is not allowed.")
+                else:
+                    raise ValueError("Import statements are not allowed.")
+
+        compiled_code = compile(tree, filename="<string>", mode="exec")
+        local_env = {}
+        exec(compiled_code, {}, local_env)
     except Exception as e:
         print(f"Error executing code: {e}")
-
-def sanitize(input_code):
-    # Implement sanitization logic to remove or escape dangerous constructs
-    # For example, you might want to restrict certain keywords or patterns
-    forbidden_keywords = ['import', 'exec', 'eval', '__']
-    for keyword in forbidden_keywords:
-        if keyword in input_code:
-            raise ValueError(f"Forbidden keyword detected: {keyword}")
-    return input_code  # Return sanitized input

@@ -1,3 +1,4 @@
+
 import grpc
 from concurrent import futures
 import time
@@ -19,7 +20,7 @@ def serve():
         reflection_pb2_grpc.ServerReflectionServicer(SERVICE_NAMES), server
     )
     
-    server.add_insecure_port('[::]:50051')
+    server.add_secure_port('[::]:50051', grpc.server_credentials())
     
     try:
         server.start()

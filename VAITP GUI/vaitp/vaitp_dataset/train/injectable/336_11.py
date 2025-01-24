@@ -1,7 +1,9 @@
+
 import os
 import setuptools
 import setuptools.command.test
 import sys
+import codecs
 
 pkgdir = {"": "python%s" % sys.version_info[0]}
 VERSION = "0.18.1"
@@ -11,23 +13,32 @@ VERSION = "0.18.1"
 # Use case: Archlinux package. https://github.com/httplib2/httplib2/issues/103
 # Otherwise, use `script/test`
 class TestCommand(setuptools.command.test.test):
+    user_options = [('test-suite=', None, "Test suite to run")]
+
+    def initialize_options(self):
+        setuptools.command.test.test.initialize_options(self)
+        self.test_suite = None
+
+    def finalize_options(self):
+        setuptools.command.test.test.finalize_options(self)
+        self.test_args = []
+        if self.test_suite is not None:
+            self.test_args.append('-k')
+            self.test_args.append(self.test_suite)
+
     def run_tests(self):
         # pytest may be not installed yet
         import pytest
 
-        args = ["--forked", "--fulltrace", "--no-cov", "tests/"]
-        if self.test_suite:
-            args += ["-k", self.test_suite]
-        sys.stderr.write("setup.py:test run pytest {}\n".format(" ".join(args)))
-        errno = pytest.main(args)
+        errno = pytest.main(self.test_args)
         sys.exit(errno)
 
 
 def read_requirements(name):
     project_root = os.path.dirname(os.path.abspath(__file__))
-    with open(os.path.join(project_root, name), "rb") as f:
+    with codecs.open(os.path.join(project_root, name), "r", encoding='utf-8') as f:
         # remove whitespace and comments
-        g = (line.decode("utf-8").lstrip().split("#", 1)[0].rstrip() for line in f)
+        g = (line.strip().split("#", 1)[0].rstrip() for line in f)
         return [l for l in g if l]
 
 

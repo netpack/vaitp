@@ -1,13 +1,33 @@
 from asyncua import Server, ua
 import asyncio
+from asyncua.server.users import User
 
 async def start_server():
     server = Server()
     
     # Define a session check function
     async def check_session(session):
-        if not session:
+        if not session or not isinstance(session, ua.Session):
             raise ua.UaError(ua.StatusCodes.BadSessionIdInvalid)
+        if session.user is None:
+             raise ua.UaError(ua.StatusCodes.BadUserAccessDenied)
+
+    # Set security policies
+    server.set_security_policy([
+        ua.SecurityPolicy.Basic256Sha256_SignAndEncrypt,
+        ua.SecurityPolicy.Basic256Sha256_Sign
+    ])
+    
+    # Define a user manager with a default user
+    users = [
+            User(
+                username="user",
+                password="password",
+                permissions = ["access"]
+            )
+        ]
+    server.user_manager.set_user_list(users)
+
 
     # Start the server
     await server.start()

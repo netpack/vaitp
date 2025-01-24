@@ -270,8 +270,8 @@ class ZopeSecurityPolicyTestBase(unittest.TestCase):
         self.assertPolicyDenies(item3, 'private_prop')
 
     def testAccessToSimpleContainer(self):
-        self.assertPolicyAllows({}, 'keys')
-        self.assertPolicyAllows([], 'append')
+        self.assertPolicyAllows(dict(), 'keys')
+        self.assertPolicyAllows(list(), 'append')
         self.assertPolicyDenies(SimpleClass, 'attr')
         self.assertPolicyDenies(SimpleClass(), 'attr')
         c = SimpleClass()
@@ -304,7 +304,7 @@ class ZopeSecurityPolicyTestBase(unittest.TestCase):
         r_item = self.a.r_item
         context = self.context
         v = self.policy.checkPermission('View', r_item, context)
-        self.assertTrue(not v, '_View_Permission should deny access to user')
+        self.assertFalse(v, '_View_Permission should deny access to user')
         o_context = SecurityContext(self.uf.getUserById('theowner'))
         v = self.policy.checkPermission('View', r_item, o_context)
         self.assertTrue(v, '_View_Permission should grant access to theowner')
@@ -361,7 +361,7 @@ class ZopeSecurityPolicyTestBase(unittest.TestCase):
         r_item = self.a.r_item
         context = self.context
         v = self.policy.checkPermission(u'View', r_item, context)
-        self.assertTrue(not v, '_View_Permission should deny access to user')
+        self.assertFalse(v, '_View_Permission should deny access to user')
         o_context = SecurityContext(self.uf.getUserById('theowner'))
         v = self.policy.checkPermission(u'View', r_item, o_context)
         self.assertTrue(v, '_View_Permission should grant access to theowner')
@@ -447,7 +447,7 @@ class ZopeSecurityPolicyTestBase(unittest.TestCase):
         # overridden to disallow some access of str.format.  So we temporarily
         # restore the default of allowing all access.
         with override_containers(str, 1):
-            assert policy.validate('', '', u'foo', '', None)
+            self.assertTrue(policy.validate('', '', u'foo', '', None))
 
     if 0:
         # This test purposely generates a log entry.

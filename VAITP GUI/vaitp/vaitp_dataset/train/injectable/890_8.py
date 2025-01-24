@@ -4,6 +4,8 @@ import warnings
 from AccessControl import safe_builtins
 from zExceptions import NotFound
 from zope.component.testing import PlacelessSetup
+from Products.PageTemplates.Expressions import createZopeEngine
+from Products.PageTemplates.Expressions import createTrustedZopeEngine
 
 
 class EngineTestsBase(PlacelessSetup):
@@ -42,18 +44,18 @@ class EngineTestsBase(PlacelessSetup):
                     url = "http://server/" + url
                 return url
 
-        _DEFAULT_BINDINGS = dict(
-            one=1,
-            d={'one': 1, 'b': 'b', '': 'blank', '_': 'under'},
-            blank='',
-            dummy=Dummy(),
-            dummy2=DummyDocumentTemplate(),
-            eightbit=b'\xe4\xfc\xf6',
+        _DEFAULT_BINDINGS = {
+            'one': 1,
+            'd': {'one': 1, 'b': 'b', '': 'blank', '_': 'under'},
+            'blank': '',
+            'dummy': Dummy(),
+            'dummy2': DummyDocumentTemplate(),
+            'eightbit': b'\xe4\xfc\xf6',
             # ZopeContext needs 'context' and 'template' keys for unicode
             # conflict resolution
-            context=Dummy(),
-            template=DummyDocumentTemplate(),
-        )
+            'context': Dummy(),
+            'template': DummyDocumentTemplate(),
+        }
 
         if bindings is None:
             bindings = _DEFAULT_BINDINGS
@@ -212,7 +214,6 @@ class EngineTestsBase(PlacelessSetup):
 class UntrustedEngineTests(EngineTestsBase, unittest.TestCase):
 
     def _makeEngine(self):
-        from Products.PageTemplates.Expressions import createZopeEngine
         return createZopeEngine()
 
     # XXX:  add tests that show security checks being enforced
@@ -243,7 +244,6 @@ class UntrustedEngineTests(EngineTestsBase, unittest.TestCase):
 class TrustedEngineTests(EngineTestsBase, unittest.TestCase):
 
     def _makeEngine(self):
-        from Products.PageTemplates.Expressions import createTrustedZopeEngine
         return createTrustedZopeEngine()
 
     # XXX:  add tests that show security checks *not* being enforced

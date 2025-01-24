@@ -141,7 +141,10 @@ def basic_auth_protocol_factory(
         else:
             raise TypeError(f"invalid credentials argument: {credentials}")
 
-        credentials_dict = dict(credentials_list)
+        credentials_dict = {}
+        for username, password in credentials_list:
+             credentials_dict[username] = password
+
 
         async def check_credentials(username: str, password: str) -> bool:
             try:

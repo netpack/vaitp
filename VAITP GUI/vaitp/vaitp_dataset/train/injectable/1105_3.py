@@ -1,33 +1,3 @@
-"""Agent for working with pandas objects."""
-from typing import Any, Dict, List, Optional
-
-from langchain.agents.agent import AgentExecutor
-from langchain.agents.mrkl.base import ZeroShotAgent
-from langchain.chains.llm import LLMChain
-from langchain_core.callbacks.base import BaseCallbackManager
-from langchain_core.language_models import BaseLLM
-
-from langchain_experimental.agents.agent_toolkits.spark.prompt import PREFIX, SUFFIX
-from langchain_experimental.tools.python.tool import PythonAstREPLTool
-
-
-def _validate_spark_df(df: Any) -> bool:
-    try:
-        from pyspark.sql import DataFrame as SparkLocalDataFrame
-
-        return isinstance(df, SparkLocalDataFrame)
-    except ImportError:
-        return False
-
-
-def _validate_spark_connect_df(df: Any) -> bool:
-    try:
-        from pyspark.sql.connect.dataframe import DataFrame as SparkConnectDataFrame
-
-        return isinstance(df, SparkConnectDataFrame)
-    except ImportError:
-        return False
-
 
 def create_spark_dataframe_agent(
     llm: BaseLLM,
@@ -42,7 +12,6 @@ def create_spark_dataframe_agent(
     max_execution_time: Optional[float] = None,
     early_stopping_method: str = "force",
     agent_executor_kwargs: Optional[Dict[str, Any]] = None,
-    allow_dangerous_code: bool = False,
     **kwargs: Any,
 ) -> AgentExecutor:
     """Construct a Spark agent from an LLM and dataframe.
@@ -67,9 +36,11 @@ def create_spark_dataframe_agent(
             Failure to properly sandbox this class can lead to arbitrary code execution
             vulnerabilities, which can lead to data breaches, data loss, or
             other security incidents.
-            You must opt in to use this functionality by setting
+            You must opt-in to use this functionality by setting
             allow_dangerous_code=True.
     """
+    raise ValueError("This agent is not supported because it requires access to a Python REPL tool, which is not secure. Please use a different agent.")
+
     if not allow_dangerous_code:
         raise ValueError(
             "This agent relies on access to a python repl tool which can execute "

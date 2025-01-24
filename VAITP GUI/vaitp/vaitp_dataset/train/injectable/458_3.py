@@ -11,15 +11,15 @@ from xml.sax.saxutils import escape
 spaceCharacters = "".join(spaceCharacters)
 
 quoteAttributeSpecChars = spaceCharacters + "\"'=<>`"
-quoteAttributeSpec = re.compile("[" + quoteAttributeSpecChars + "]")
-quoteAttributeLegacy = re.compile("[" + quoteAttributeSpecChars +
+quoteAttributeSpec = re.compile("[" + re.escape(quoteAttributeSpecChars) + "]")
+quoteAttributeLegacy = re.compile("[" + re.escape(quoteAttributeSpecChars +
                                   "\x00\x01\x02\x03\x04\x05\x06\x07\x08\t\n"
                                   "\x0b\x0c\r\x0e\x0f\x10\x11\x12\x13\x14\x15"
                                   "\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f"
                                   "\x20\x2f\x60\xa0\u1680\u180e\u180f\u2000"
                                   "\u2001\u2002\u2003\u2004\u2005\u2006\u2007"
                                   "\u2008\u2009\u200a\u2028\u2029\u202f\u205f"
-                                  "\u3000]")
+                                  "\u3000") + "]")
 
 try:
     from codecs import register_error, xmlcharrefreplace_errors
@@ -224,7 +224,7 @@ class HTMLSerializer(object):
 
             elif type in ("Characters", "SpaceCharacters"):
                 if type == "SpaceCharacters" or in_cdata:
-                    if in_cdata and token["data"].find("</") >= 0:
+                    if in_cdata and "</" in token["data"]:
                         self.serializeError("Unexpected </ in CDATA")
                     yield self.encode(token["data"])
                 else:
@@ -248,7 +248,7 @@ class HTMLSerializer(object):
                         (k not in booleanAttributes.get(name, tuple()) and
                          k not in booleanAttributes.get("", tuple())):
                         yield self.encodeStrict("=")
-                        if self.quote_attr_values == "always" or len(v) == 0:
+                        if self.quote_attr_values == "always" or not v:
                             quote_attr = True
                         elif self.quote_attr_values == "spec":
                             quote_attr = quoteAttributeSpec.search(v) is not None
@@ -281,7 +281,7 @@ class HTMLSerializer(object):
                         yield self.encodeStrict(" /")
                     else:
                         yield self.encodeStrict("/")
-                yield self.encode(">")
+                yield self.encodeStrict(">")
 
             elif type == "EndTag":
                 name = token["name"]
@@ -293,7 +293,7 @@ class HTMLSerializer(object):
 
             elif type == "Comment":
                 data = token["data"]
-                if data.find("--") >= 0:
+                if "--" in data:
                     self.serializeError("Comment contains --")
                 yield self.encodeStrict("<!--%s-->" % token["data"])
 

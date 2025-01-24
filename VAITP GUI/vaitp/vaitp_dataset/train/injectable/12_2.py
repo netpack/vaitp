@@ -1,16 +1,16 @@
-# Install the biplist package with pip
-# pip install biplist
-
-# Import the biplist module
 import biplist
+import plistlib
 
-# Define the name of the XML plist file
 filename = "malicious.plist"
 
-# Open the XML plist file in binary mode
-with open(filename, "rb") as file:
-    # Parse the XML plist file using the biplist.readPlist function
-    # This will raise an exception if the XML plist file contains an external entity declaration
-    plist = biplist.readPlist(file)
-    # Print the contents of the plist dictionary
-    print(plist)
+try:
+    with open(filename, "rb") as file:
+        try:
+            plist = plistlib.load(file)
+            print(plist)
+        except (plistlib.InvalidFileException, Exception) as e:
+             print(f"Error parsing plist using plistlib: {e}")
+except FileNotFoundError:
+    print(f"Error: File not found: {filename}")
+except Exception as e:
+    print(f"An unexpected error occurred: {e}")

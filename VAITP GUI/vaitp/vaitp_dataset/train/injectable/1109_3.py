@@ -10,7 +10,6 @@ import pytest
 
 from cryptography import x509
 from cryptography.exceptions import UnsupportedAlgorithm
-from cryptography.hazmat.decrepit.ciphers.algorithms import RC2
 from cryptography.hazmat.primitives import hashes, serialization
 from cryptography.hazmat.primitives.asymmetric import (
     dsa,
@@ -83,7 +82,7 @@ class TestPKCS12Loading:
     )
     @pytest.mark.supported(
         only_if=lambda backend: backend.cipher_supported(
-            RC2(b"0" * 16), CBC(b"0" * 8)
+            CBC(b"0" * 16), CBC(b"0" * 8)
         ),
         skip_message="Does not support RC2",
     )
@@ -428,6 +427,7 @@ class TestPKCS12Creation:
 
         with pytest.raises(TypeError) as exc:
             serialize_key_and_certificates(None, key, cert, cert2, encryption)
+        assert str(exc.value) == "cas must be a list of certificates"
 
         with pytest.raises(TypeError) as exc:
             serialize_key_and_certificates(None, key, cert, [key], encryption)
@@ -739,220 +739,4 @@ def test_pkcs12_ordering():
 class TestPKCS12Objects:
     def test_certificate_constructor(self, backend):
         with pytest.raises(TypeError):
-            PKCS12Certificate(None, None)  # type:ignore[arg-type]
-        with pytest.raises(TypeError):
-            PKCS12Certificate("hello", None)  # type:ignore[arg-type]
-        cert = _load_cert(backend, os.path.join("x509", "cryptography.io.pem"))
-        with pytest.raises(TypeError):
-            PKCS12Certificate(cert, "hello")  # type:ignore[arg-type]
-        with pytest.raises(TypeError):
-            PKCS12Certificate(cert, 42)  # type:ignore[arg-type]
-
-    def test_certificate_equality(self, backend):
-        cert2 = _load_cert(
-            backend, os.path.join("x509", "custom", "dsa_selfsigned_ca.pem")
-        )
-        cert3 = _load_cert(backend, os.path.join("x509", "letsencryptx3.pem"))
-
-        c2n = PKCS12Certificate(cert2, None)
-        c2a = PKCS12Certificate(cert2, b"a")
-        c2b = PKCS12Certificate(cert2, b"b")
-        c3n = PKCS12Certificate(cert3, None)
-        c3a = PKCS12Certificate(cert3, b"a")
-
-        assert c2n == c2n
-        assert c2a == c2a
-        assert c2n != c2a
-        assert c2n != c3n
-        assert c2a != c2b
-        assert c2a != c3a
-
-        assert c2n != "test"
-
-    def test_certificate_hash(self, backend):
-        cert2 = _load_cert(
-            backend, os.path.join("x509", "custom", "dsa_selfsigned_ca.pem")
-        )
-        cert3 = _load_cert(backend, os.path.join("x509", "letsencryptx3.pem"))
-
-        c2n = PKCS12Certificate(cert2, None)
-        c2a = PKCS12Certificate(cert2, b"a")
-        c2b = PKCS12Certificate(cert2, b"b")
-        c3n = PKCS12Certificate(cert3, None)
-        c3a = PKCS12Certificate(cert3, b"a")
-
-        assert hash(c2n) == hash(c2n)
-        assert hash(c2a) == hash(c2a)
-        assert hash(c2n) != hash(c2a)
-        assert hash(c2n) != hash(c3n)
-        assert hash(c2a) != hash(c2b)
-        assert hash(c2a) != hash(c3a)
-
-    def test_certificate_repr(self, backend):
-        cert = _load_cert(backend, os.path.join("x509", "cryptography.io.pem"))
-        assert (
-            repr(PKCS12Certificate(cert, None))
-            == f"<PKCS12Certificate({cert!r}, friendly_name=None)>"
-        )
-        assert (
-            repr(PKCS12Certificate(cert, b"a"))
-            == f"<PKCS12Certificate({cert!r}, friendly_name=b'a')>"
-        )
-
-    def test_key_and_certificates_constructor(self, backend):
-        with pytest.raises(TypeError):
-            PKCS12KeyAndCertificates(
-                "hello",  # type:ignore[arg-type]
-                None,
-                [],
-            )
-        with pytest.raises(TypeError):
-            PKCS12KeyAndCertificates(
-                None,
-                "hello",  # type:ignore[arg-type]
-                [],
-            )
-        with pytest.raises(TypeError):
-            PKCS12KeyAndCertificates(
-                None,
-                None,
-                ["hello"],  # type:ignore[list-item]
-            )
-
-    def test_key_and_certificates_equality(self, backend):
-        cert, key = _load_ca(backend)
-        cert2 = _load_cert(
-            backend, os.path.join("x509", "custom", "dsa_selfsigned_ca.pem")
-        )
-        cert3 = _load_cert(backend, os.path.join("x509", "letsencryptx3.pem"))
-
-        p12a = PKCS12KeyAndCertificates(
-            key,
-            PKCS12Certificate(cert, None),
-            [PKCS12Certificate(cert2, None), PKCS12Certificate(cert3, None)],
-        )
-        p12b = PKCS12KeyAndCertificates(
-            key,
-            PKCS12Certificate(cert, b"name"),
-            [PKCS12Certificate(cert2, None), PKCS12Certificate(cert3, None)],
-        )
-        p12c = PKCS12KeyAndCertificates(
-            key,
-            PKCS12Certificate(cert2, None),
-            [PKCS12Certificate(cert2, None), PKCS12Certificate(cert3, None)],
-        )
-        p12d = PKCS12KeyAndCertificates(
-            key,
-            PKCS12Certificate(cert, None),
-            [PKCS12Certificate(cert3, None), PKCS12Certificate(cert2, None)],
-        )
-        p12e = PKCS12KeyAndCertificates(
-            None,
-            PKCS12Certificate(cert, None),
-            [PKCS12Certificate(cert2, None), PKCS12Certificate(cert3, None)],
-        )
-        p12f = PKCS12KeyAndCertificates(
-            None,
-            PKCS12Certificate(cert2, None),
-            [PKCS12Certificate(cert2, None), PKCS12Certificate(cert3, None)],
-        )
-        p12g = PKCS12KeyAndCertificates(
-            key,
-            None,
-            [PKCS12Certificate(cert2, None), PKCS12Certificate(cert3, None)],
-        )
-        p12h = PKCS12KeyAndCertificates(None, None, [])
-
-        assert p12a == p12a
-        assert p12h == p12h
-
-        assert p12a != p12b
-        assert p12a != p12c
-        assert p12a != p12d
-        assert p12a != p12e
-        assert p12a != p12g
-        assert p12a != p12h
-        assert p12e != p12f
-        assert p12e != p12g
-        assert p12e != p12h
-
-        assert p12e != "test"
-
-    def test_key_and_certificates_hash(self, backend):
-        cert, key = _load_ca(backend)
-        cert2 = _load_cert(
-            backend, os.path.join("x509", "custom", "dsa_selfsigned_ca.pem")
-        )
-        cert3 = _load_cert(backend, os.path.join("x509", "letsencryptx3.pem"))
-
-        p12a = PKCS12KeyAndCertificates(
-            key,
-            PKCS12Certificate(cert, None),
-            [PKCS12Certificate(cert2, None), PKCS12Certificate(cert3, None)],
-        )
-        p12b = PKCS12KeyAndCertificates(
-            key,
-            PKCS12Certificate(cert, b"name"),
-            [PKCS12Certificate(cert2, None), PKCS12Certificate(cert3, None)],
-        )
-        p12c = PKCS12KeyAndCertificates(
-            key,
-            PKCS12Certificate(cert2, None),
-            [PKCS12Certificate(cert2, None), PKCS12Certificate(cert3, None)],
-        )
-        p12d = PKCS12KeyAndCertificates(
-            key,
-            PKCS12Certificate(cert, None),
-            [PKCS12Certificate(cert3, None), PKCS12Certificate(cert2, None)],
-        )
-        p12e = PKCS12KeyAndCertificates(
-            None,
-            PKCS12Certificate(cert, None),
-            [PKCS12Certificate(cert2, None), PKCS12Certificate(cert3, None)],
-        )
-        p12f = PKCS12KeyAndCertificates(
-            None,
-            PKCS12Certificate(cert2, None),
-            [PKCS12Certificate(cert2, None), PKCS12Certificate(cert3, None)],
-        )
-        p12g = PKCS12KeyAndCertificates(
-            key,
-            None,
-            [PKCS12Certificate(cert2, None), PKCS12Certificate(cert3, None)],
-        )
-        p12h = PKCS12KeyAndCertificates(None, None, [])
-
-        assert hash(p12a) == hash(p12a)
-        assert hash(p12h) == hash(p12h)
-
-        assert hash(p12a) != hash(p12b)
-        assert hash(p12a) != hash(p12c)
-        assert hash(p12a) != hash(p12d)
-        assert hash(p12a) != hash(p12e)
-        assert hash(p12a) != hash(p12g)
-        assert hash(p12a) != hash(p12h)
-        assert hash(p12e) != hash(p12f)
-        assert hash(p12e) != hash(p12g)
-        assert hash(p12e) != hash(p12h)
-
-    def test_key_and_certificates_repr(self, backend):
-        cert, key = _load_ca(backend)
-        cert2 = _load_cert(
-            backend, os.path.join("x509", "cryptography.io.pem")
-        )
-        assert (
-            repr(
-                PKCS12KeyAndCertificates(
-                    key,
-                    PKCS12Certificate(cert, None),
-                    [PKCS12Certificate(cert2, b"name2")],
-                )
-            )
-            == "<PKCS12KeyAndCertificates(key={}, cert=<PKCS12Certificate("
-            "{}, friendly_name=None)>, additional_certs=[<PKCS12Certificate"
-            "({}, friendly_name=b'name2')>])>".format(
-                key,
-                cert,
-                cert2,
-            )
-        )
+            PKCS12

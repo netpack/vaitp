@@ -401,23 +401,22 @@ def test_upload_file(httpbin):
     # Create two temporary files to upload
     def make_file(content):
         path = tempfile.mkstemp()[1]
-        with open(path, "w") as fd:
+        with open(path, "w", encoding="utf-8") as fd:
             fd.write(content)
         return path
     path1 = make_file("first file content")
     path2 = make_file("second file content")
 
-    value1 = open(path1, "rb")
-    value2 = open(path2, "rb")
+    with open(path1, "rb") as value1, open(path2, "rb") as value2:
 
-    browser.open_fake_page(file_input_form)
-    browser.select_form()
+        browser.open_fake_page(file_input_form)
+        browser.select_form()
 
-    # Test filling an existing input and creating a new input
-    browser["first"] = value1
-    browser.new_control("file", "second", value2)
+        # Test filling an existing input and creating a new input
+        browser["first"] = value1
+        browser.new_control("file", "second", value2)
 
-    response = browser.submit_selected()
+        response = browser.submit_selected()
     files = response.json()["files"]
     assert files["first"] == "first file content"
     assert files["second"] == "second file content"
@@ -430,7 +429,7 @@ def test_upload_file_with_malicious_default(httpbin):
     """
     browser = mechanicalsoup.StatefulBrowser()
     sensitive_path = tempfile.mkstemp()[1]
-    with open(sensitive_path, "w") as fd:
+    with open(sensitive_path, "w", encoding="utf-8") as fd:
         fd.write("Some sensitive information")
     url = httpbin + "/post"
     malicious_html = f"""
@@ -442,7 +441,7 @@ def test_upload_file_with_malicious_default(httpbin):
     browser.select_form()
     response = browser.submit_selected()
     assert response.json()["files"] == {"malicious": ""}
-
+    os.remove(sensitive_path)
 
 def test_upload_file_raise_on_string_input():
     """Check for use of the file upload API that was modified to remediate
@@ -742,7 +741,7 @@ def test_download_link_to_existing_file(httpbin):
     open_legacy_httpbin(browser, httpbin)
     tmpdir = tempfile.mkdtemp()
     tmpfile = tmpdir + '/existing.png'
-    with open(tmpfile, "w") as fd:
+    with open(tmpfile, "w", encoding="utf-8") as fd:
         fd.write("initial content")
     current_url = browser.url
     current_page = browser.page
@@ -775,114 +774,4 @@ def test_download_link_404(httpbin):
     assert browser.url == current_url
     assert browser.page == current_page
 
-    # Check that the file was not downloaded
-    assert not os.path.exists(tmpfile)
-
-
-def test_download_link_referer(httpbin):
-    """Test downloading the contents of a link to file."""
-    browser = mechanicalsoup.StatefulBrowser()
-    ref = httpbin + "/my-referer"
-    browser.open_fake_page('<a href="/headers">Link</a>',
-                           url=ref)
-    tmpfile = tempfile.NamedTemporaryFile()
-    current_url = browser.url
-    current_page = browser.page
-    browser.download_link(file=tmpfile.name, link_text='Link')
-
-    # Check that the browser state has not changed
-    assert browser.url == current_url
-    assert browser.page == current_page
-
-    # Check that the file was downloaded
-    with open(tmpfile.name) as fd:
-        json_data = json.load(fd)
-    headers = json_data["headers"]
-    assert headers["Referer"] == ref
-
-
-def test_refresh_open():
-    url = 'mock://example.com'
-    initial_page = BeautifulSoup('<p>Fake empty page</p>', 'lxml')
-    reload_page = BeautifulSoup('<p>Fake reloaded page</p>', 'lxml')
-
-    browser, adapter = prepare_mock_browser()
-    mock_get(adapter, url=url, reply=str(initial_page))
-    browser.open(url)
-    mock_get(adapter, url=url, reply=str(reload_page),
-             additional_matcher=lambda r: 'Referer' not in r.headers)
-
-    browser.refresh()
-
-    assert browser.url == url
-    assert browser.page == reload_page
-
-
-def test_refresh_follow_link():
-    url = 'mock://example.com'
-    follow_url = 'mock://example.com/followed'
-    initial_content = f'<a href="{follow_url}">Link</a>'
-    initial_page = BeautifulSoup(initial_content, 'lxml')
-    reload_page = BeautifulSoup('<p>Fake reloaded page</p>', 'lxml')
-
-    browser, adapter = prepare_mock_browser()
-    mock_get(adapter, url=url, reply=str(initial_page))
-    mock_get(adapter, url=follow_url, reply=str(initial_page))
-    browser.open(url)
-    browser.follow_link()
-    refer_header = {'Referer': url}
-    mock_get(adapter, url=follow_url, reply=str(reload_page),
-             request_headers=refer_header)
-
-    browser.refresh()
-
-    assert browser.url == follow_url
-    assert browser.page == reload_page
-
-
-def test_refresh_form_not_retained():
-    url = 'mock://example.com'
-    initial_content = '<form>Here comes the form</form>'
-    initial_page = BeautifulSoup(initial_content, 'lxml')
-    reload_page = BeautifulSoup('<p>Fake reloaded page</p>', 'lxml')
-
-    browser, adapter = prepare_mock_browser()
-    mock_get(adapter, url=url, reply=str(initial_page))
-    browser.open(url)
-    browser.select_form()
-    mock_get(adapter, url=url, reply=str(reload_page),
-             additional_matcher=lambda r: 'Referer' not in r.headers)
-
-    browser.refresh()
-
-    assert browser.url == url
-    assert browser.page == reload_page
-    with pytest.raises(AttributeError, match="No form has been selected yet."):
-        browser.form
-
-
-def test_refresh_error():
-    browser = mechanicalsoup.StatefulBrowser()
-
-    # Test no page
-    with pytest.raises(ValueError):
-        browser.refresh()
-
-    # Test fake page
-    with pytest.raises(ValueError):
-        browser.open_fake_page('<p>Fake empty page</p>', url='http://fake.com')
-        browser.refresh()
-
-
-def test_requests_session_and_cookies(httpbin):
-    """Check that the session object passed to the constructor of
-    StatefulBrowser is actually taken into account."""
-    s = requests.Session()
-    requests.utils.add_dict_to_cookiejar(s.cookies, {'key1': 'val1'})
-    browser = mechanicalsoup.StatefulBrowser(session=s)
-    resp = browser.get(httpbin + "/cookies")
-    assert resp.json() == {'cookies': {'key1': 'val1'}}
-
-
-if __name__ == '__main__':
-    pytest.main(sys.argv)
+    # Check that the file

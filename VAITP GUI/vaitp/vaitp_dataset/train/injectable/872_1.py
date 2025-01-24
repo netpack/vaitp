@@ -1,3 +1,4 @@
+
 class MediaTransport:
     def __init__(self):
         self.is_active = False
@@ -14,13 +15,13 @@ class SRTP:
         self.is_initialized = False
 
     def initialize(self):
-        if self.transport.is_active:
-            self.is_initialized = True
+        if not self.transport.is_active:
+            raise RuntimeError("Transport must be active before initializing SRTP")
+        self.is_initialized = True
 
     def cleanup(self):
         if self.is_initialized:
             self.is_initialized = False
-            # Ensure transport is not used after cleanup
             self.transport = None
 
 def main():
@@ -34,9 +35,10 @@ def main():
     srtp.cleanup()
     
     # Check for use-after-free
-    if srtp.transport is not None:
-        print("Transport is still available, potential use-after-free!")
-    else:
+    try:
+        if srtp.transport is not None:
+            print("Transport is still available, potential use-after-free!")
+    except AttributeError:
         print("Transport has been safely cleaned up.")
 
 if __name__ == "__main__":

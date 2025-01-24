@@ -1,6 +1,7 @@
 from io import BytesIO, StringIO
 from pathlib import Path, PurePath
 from typing import List, Optional
+import os
 
 from bs4 import BeautifulSoup
 
@@ -265,11 +266,28 @@ def handle_include(path_value, parse_mjml, *, template_dir):
         included_path = template_dir / path
     else:
         included_path = path
+    
+    if ".." in str(included_path):
+        raise ValueError("Invalid path: Path cannot contain '..'")
+    
+    try:
+         included_path = Path(included_path).resolve()
+    except Exception:
+         raise ValueError("Invalid path: Cannot resolve path")
+
+    if template_dir:
+        if not included_path.is_relative_to(Path(template_dir).resolve()):
+            raise ValueError("Invalid path: Path must be within template directory")
+
+
     # Upstream mjml does not raise an error if the included file was not found.
     # Instead they generate a HTML comment with a failure notice.
     # using plain "open()" call because "PurePath" does not support ".open()"
-    with open(included_path, 'rb') as fp:
-        included_bytes = fp.read()
+    try:
+        with open(included_path, 'rb') as fp:
+            included_bytes = fp.read()
+    except FileNotFoundError:
+          return None
     # Need to load the included file as binary - otherwise non-ascii characters
     # in utf8-encoded include files were messed up on Windows.
     # Not sure what happens if lxml needs to handle non-utf8 contents but it

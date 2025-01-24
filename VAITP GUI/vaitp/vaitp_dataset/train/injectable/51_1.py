@@ -11,11 +11,12 @@ url = "http://example.com/app?param1=value1;param2=value2"
 parsed_url = urllib.parse.urlparse(url)
 query_string = parsed_url.query
 
-# Split the query string into individual parameters using the ; separator
-params = [param.split('=') for param in query_string.split(';')]
+# Parse the query string using urllib.parse.parse_qs, handles multiple separators and encoding
+params = urllib.parse.parse_qs(query_string, separator=';')
 
-# Create a new query string with the parsed parameters, using urllib.parse.quote_plus to encode the values
-new_query_string = '&'.join(f"{urllib.parse.quote_plus(key)}={urllib.parse.quote_plus(value)}" for key, value in params)
+# Create a new query string with the parsed parameters
+new_query_string = urllib.parse.urlencode(params, quote_via=urllib.parse.quote_plus)
+
 
 # Create a new URL with the parsed query string
 new_url = urllib.parse.urlunparse((parsed_url.scheme, parsed_url.netloc, parsed_url.path, parsed_url.params, new_query_string, parsed_url.fragment))

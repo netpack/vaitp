@@ -1,171 +1,74 @@
-/*
- * See the NOTICE file distributed with this work for additional
- * information regarding copyright ownership.
- *
- * This is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation; either version 2.1 of
- * the License, or (at your option) any later version.
- *
- * This software is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software; if not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
- * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- */
-package org.xwiki.flamingo;
+import re
+from flask import Flask, request, render_template, session
+from flask_wtf import FlaskForm
+from wtforms import StringField, SubmitField
+from wtforms.validators import DataRequired
+from flask_bootstrap import Bootstrap5
 
-import java.util.List;
+app = Flask(__name__)
+app.config['SECRET_KEY'] = 'your_secret_key'
+bootstrap = Bootstrap5(app)
 
-import javax.script.ScriptContext;
+class ThemeForm(FlaskForm):
+    newThemeName = StringField('New Theme Name', validators=[DataRequired()])
+    submit = SubmitField('Create')
 
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.xwiki.localization.macro.internal.TranslationMacro;
-import org.xwiki.model.reference.DocumentReference;
-import org.xwiki.model.script.ModelScriptService;
-import org.xwiki.query.Query;
-import org.xwiki.query.script.QueryManagerScriptService;
-import org.xwiki.rendering.RenderingScriptServiceComponentList;
-import org.xwiki.rendering.internal.configuration.DefaultExtendedRenderingConfiguration;
-import org.xwiki.rendering.internal.configuration.RenderingConfigClassDocumentConfigurationSource;
-import org.xwiki.rendering.internal.macro.message.ErrorMessageMacro;
-import org.xwiki.script.ScriptContextManager;
-import org.xwiki.script.service.ScriptService;
-import org.xwiki.security.authorization.AuthorizationManager;
-import org.xwiki.security.authorization.Right;
-import org.xwiki.security.script.SecurityScriptServiceComponentList;
-import org.xwiki.test.annotation.ComponentList;
-import org.xwiki.test.page.HTML50ComponentList;
-import org.xwiki.test.page.PageTest;
-import org.xwiki.test.page.TestNoScriptMacro;
-import org.xwiki.test.page.XWikiSyntax21ComponentList;
-import org.xwiki.wiki.script.WikiManagerScriptServiceComponentList;
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    form = ThemeForm()
+    message = None
+    themes = []
 
-import com.xpn.xwiki.XWikiException;
-import com.xpn.xwiki.doc.XWikiDocument;
-import com.xpn.xwiki.objects.BaseObject;
+    if request.method == 'POST' and form.validate_on_submit():
+        if 'form_token' in request.form and session.get('form_token') == request.form['form_token']:
+            new_theme_name = form.newThemeName.data
+            if not re.match(r'^[a-zA-Z0-9\s_.-]+$', new_theme_name):
+                message = f"platform.flamingo.themes.home.create.csrf [{new_theme_name}]"
+            else:
+                 themes.append({'title': f'Title of {new_theme_name} theme', 
+                    'style': 'background-color: lightblue;',
+                    'link': 'space/' + new_theme_name}) 
+                 message = f"Theme {new_theme_name} created successfully!"
+        else:
+            message = f"Invalid Form Token"
 
-import static javax.script.ScriptContext.GLOBAL_SCOPE;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+    session['form_token'] = str(hash(app.secret_key + str(form.newThemeName.data)))
+    return render_template('index.html', form=form, message=message, themes=themes, form_token=session['form_token'])
 
-/**
- * Test of the {@code FlamingoThemesCode.WebHomeSheet} page.
- *
- * @version $Id$
- * @since 13.10.10
- * @since 14.4.6
- * @since 14.9RC1
- */
-@HTML50ComponentList
-@XWikiSyntax21ComponentList
-@RenderingScriptServiceComponentList
-@SecurityScriptServiceComponentList
-@WikiManagerScriptServiceComponentList
-@ComponentList({
-    ErrorMessageMacro.class,
-    TranslationMacro.class,
-    TestNoScriptMacro.class,
-    DefaultExtendedRenderingConfiguration.class,
-    RenderingConfigClassDocumentConfigurationSource.class,
-    ModelScriptService.class
-})
-class WebHomeSheetPageTest extends PageTest
-{
-    private static final DocumentReference WEBHOME_SHEET =
-        new DocumentReference("xwiki", "FlamingoThemesCode", "WebHomeSheet");
+@app.template_filter('safe_html')
+def safe_html_filter(value):
+    allowed_tags = ['a', 'b', 'i', 'em', 'strong', 'p', 'br', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'ul', 'ol', 'li', 'span', 'div']
+    allowed_attributes = ['href', 'class', 'id', 'style']
+    
+    def sanitize_html(html):
+        clean_html = ""
+        for part in re.split(r'(<[^>]*>)', html):
+           if part.startswith("<") and part.endswith(">"):
+                tag_match = re.match(r'<(/)?([a-zA-Z]+)([^>]*)>', part)
+                if tag_match:
+                   is_closing_tag = tag_match.group(1)
+                   tag_name = tag_match.group(2).lower()
+                   tag_attributes = tag_match.group(3)
+                   if tag_name in allowed_tags:
+                       clean_attributes = ""
+                       for attr_match in re.finditer(r'([a-zA-Z]+)="([^"]*)"', tag_attributes):
+                            attr_name = attr_match.group(1).lower()
+                            attr_value = attr_match.group(2)
 
-    private static final DocumentReference NEW_THEME_DOCUMENT_REFERENCE =
-        new DocumentReference("xwiki", "Space", "NewTheme");
+                            if attr_name in allowed_attributes:
+                                clean_attributes += f' {attr_name}="{attr_value}"'
 
-    private QueryManagerScriptService queryManagerScriptService;
+                       clean_html += f"<{is_closing_tag or ''}{tag_name}{clean_attributes}>"
+                   else:
+                       clean_html += ""
+                else:
+                    clean_html += ""
+           else:
+               clean_html += re.sub(r'<', '&lt;', part)
 
-    private AuthorizationManager authorizationManager;
+        return clean_html
+    
+    return sanitize_html(str(value))
 
-    private ScriptContext scriptContext;
-
-    @BeforeEach
-    void setUp() throws Exception
-    {
-        this.queryManagerScriptService =
-            this.componentManager.registerMockComponent(ScriptService.class, "query", QueryManagerScriptService.class,
-                false);
-        this.authorizationManager = this.componentManager.getInstance(AuthorizationManager.class);
-        this.scriptContext = this.oldcore.getMocker().<ScriptContextManager>getInstance(ScriptContextManager.class)
-            .getCurrentScriptContext();
-    }
-
-    @Test
-    void createAction() throws Exception
-    {
-        this.request.put("newThemeName", "some content\"/}}{{noscript/}}");
-        this.request.put("form_token", "1");
-        this.request.put("action", "create");
-
-        Document document = renderHTMLPage(WEBHOME_SHEET);
-
-        assertEquals("platform.flamingo.themes.home.create.csrf [some content\"/}}{{noscript/}}]",
-            document.select(".box.errormessage").text());
-    }
-
-    @Test
-    void listAvailableThemes() throws Exception
-    {
-        loadPage(new DocumentReference("xwiki", "FlamingoThemes", "Charcoal"));
-        initNewTheme();
-        
-        // Mock the database.
-        Query query = mock(Query.class);
-        when(this.queryManagerScriptService.xwql("from doc.object(FlamingoThemesCode.ThemeClass) obj WHERE doc"
-            + ".fullName <> 'FlamingoThemesCode.ThemeTemplate' ORDER BY doc.name")).thenReturn(query);
-        when(query.setWiki(anyString())).thenReturn(query);
-        when(query.execute()).thenReturn(List.of("Space.NewTheme"));
-        
-        // Allow the current user to have access to the resources.
-        when(this.authorizationManager.hasAccess(eq(Right.VIEW), any(), eq(NEW_THEME_DOCUMENT_REFERENCE)))
-            .thenReturn(true);
-        this.scriptContext.setAttribute("hasAdmin", true, GLOBAL_SCOPE);
-
-        Document document = renderHTMLPage(WEBHOME_SHEET);
-        
-        // Validate the links and styles.
-        Element newThemeHeader = document.select("h3").get(1);
-        String newThemeHeaderText = newThemeHeader.text();
-        String newThemeHeaderLinkHref = newThemeHeader.selectFirst("a").attr("href");
-        assertEquals("]] &#123;&#123;noscript}}println(\"Hello from title!\")&#123;&#123;/noscript}}",
-            newThemeHeaderText);
-        assertEquals("Space.NewTheme", newThemeHeaderLinkHref);
-
-        String newThemeMockupPageStyle = document.select(".mockup-page").get(1).attr("style");
-        assertEquals("background-color: {{/html}} {{noscript}}println(\"Hello from body-bg!\"){{/noscript}} \"/>"
-                + "<script>...</script/>",
-            newThemeMockupPageStyle);
-    }
-
-    /**
-     * Creates a new page describing a theme.
-     *
-     * @throws XWikiException in case of error
-     */
-    private void initNewTheme() throws XWikiException
-    {
-        XWikiDocument newTheme = this.xwiki.getDocument(NEW_THEME_DOCUMENT_REFERENCE, this.context);
-        newTheme.setTitle("]] {{noscript}}println(\"Hello from title!\"){{/noscript}}");
-        BaseObject baseObject =
-            newTheme.newXObject(new DocumentReference("xwiki", "FlamingoThemesCode", "ThemeClass"), this.context);
-        baseObject.setStringValue("body-bg",
-            "{{/html}} {{noscript}}println(\"Hello from body-bg!\"){{/noscript}} \"/><script>...</script/>");
-        this.xwiki.saveDocument(newTheme, this.context);
-    }
-}
+if __name__ == '__main__':
+    app.run(debug=True)

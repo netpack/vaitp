@@ -1,3 +1,4 @@
+
 import socket
 
 def create_socket_pair():
@@ -5,11 +6,9 @@ def create_socket_pair():
     sock1 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sock2 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-    # Bind the sockets to localhost and a free port
+    # Bind the sockets to localhost and assign a random port
     sock1.bind(('localhost', 0))
-    sock2.bind(('localhost', 0))
-
-    # Get the port number assigned to sock1
+    sock1.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     port = sock1.getsockname()[1]
 
     # Connect sock2 to sock1
@@ -19,8 +18,7 @@ def create_socket_pair():
     sock1.listen(1)
     conn, _ = sock1.accept()
 
-    return conn, sock2
+    # Close sock1 as it is no longer needed
+    sock1.close()
 
-# Example usage
-conn, sock2 = create_socket_pair()
-print("Connected sockets created successfully.")
+    return conn, sock2

@@ -2,17 +2,20 @@ import os
 import re
 
 def is_interpreter_using_old_source(interpreter_path):
-    # Anchored regex to prevent local privilege escalation
     interpreters = {
-        'python': r'^/usr/bin/python[0-9]*$',
+        'python': r'^/usr/bin/python[0-9.]*$',
         'perl': r'^/usr/bin/perl$',
         'ruby': r'^/usr/bin/ruby$'
     }
+    
+    if not isinstance(interpreter_path, str):
+        return False
 
+    if not os.path.isabs(interpreter_path):
+        return False
+    
     for interpreter, pattern in interpreters.items():
         if re.match(pattern, interpreter_path):
-            # Logic to check if the interpreter is using old source files
-            # This is a placeholder for the actual implementation
             return check_old_source_files(interpreter_path)
     
     return False

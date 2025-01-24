@@ -1,5 +1,6 @@
 import os
 import sys
+import importlib
 
 def safe_import(module_name):
     # Ensure PYTHONPATH does not include untrusted directories
@@ -15,7 +16,11 @@ def safe_import(module_name):
     os.environ['PYTHONPATH'] = os.pathsep.join(safe_paths)
     
     # Import the module safely
-    __import__(module_name)
+    try:
+        importlib.import_module(module_name)
+    except ImportError:
+        print(f"Could not import module: {module_name}")
+
 
 # Example usage
 safe_import('some_module')

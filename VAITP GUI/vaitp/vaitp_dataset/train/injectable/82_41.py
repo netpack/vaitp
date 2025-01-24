@@ -1,6 +1,8 @@
 import ast
 import re
 import sys
+import os
+
 if sys.version_info[0] < 3 or sys.version_info[1] < 3:
     sys.exit('Error: typed_ast only runs on Python 3.3 and above.')
 
@@ -9,75 +11,99 @@ try:
 except ImportError:
     from distutils.core import setup, Extension
 
+def _is_valid_path(path):
+    if not isinstance(path, str):
+        return False
+    normalized_path = os.path.normpath(path)
+    if '..' in normalized_path.split(os.sep):
+        return False
+    return True
+
+
+_ast27_sources = [
+    'ast27/Parser/acceler.c',
+    'ast27/Parser/bitset.c',
+    'ast27/Parser/grammar.c',
+    'ast27/Parser/grammar1.c',
+    'ast27/Parser/node.c',
+    'ast27/Parser/parser.c',
+    'ast27/Parser/parsetok.c',
+    'ast27/Parser/tokenizer.c',
+    'ast27/Python/asdl.c',
+    'ast27/Python/ast.c',
+    'ast27/Python/graminit.c',
+    'ast27/Python/mystrtoul.c',
+    'ast27/Python/Python-ast.c',
+    'ast27/Custom/typed_ast.c',
+]
+
+_ast27_depends = [
+    'ast27/Include/asdl.h',
+    'ast27/Include/ast.h',
+    'ast27/Include/bitset.h',
+    'ast27/Include/compile.h',
+    'ast27/Include/errcode.h',
+    'ast27/Include/graminit.h',
+    'ast27/Include/grammar.h',
+    'ast27/Include/node.h',
+    'ast27/Include/parsetok.h',
+    'ast27/Include/Python-ast.h',
+    'ast27/Include/token.h',
+    'ast27/Parser/parser.h',
+    'ast27/Parser/tokenizer.h',
+]
+
+_ast3_sources = [
+    'ast3/Parser/acceler.c',
+    'ast3/Parser/bitset.c',
+    'ast3/Parser/grammar.c',
+    'ast3/Parser/grammar1.c',
+    'ast3/Parser/node.c',
+    'ast3/Parser/parser.c',
+    'ast3/Parser/parsetok.c',
+    'ast3/Parser/tokenizer.c',
+    'ast3/Python/asdl.c',
+    'ast3/Python/ast.c',
+    'ast3/Python/graminit.c',
+    'ast3/Python/Python-ast.c',
+    'ast3/Custom/typed_ast.c',
+]
+
+_ast3_depends = [
+    'ast3/Include/asdl.h',
+    'ast3/Include/ast.h',
+    'ast3/Include/bitset.h',
+    'ast3/Include/compile-ast3.h',
+    'ast3/Include/errcode.h',
+    'ast3/Include/graminit.h',
+    'ast3/Include/grammar.h',
+    'ast3/Include/node.h',
+    'ast3/Include/parsetok.h',
+    'ast3/Include/Python-ast.h',
+    'ast3/Include/token.h',
+    'ast3/Parser/parser.h',
+    'ast3/Parser/tokenizer.h',
+]
+
+if not all(_is_valid_path(path) for path in _ast27_sources + _ast27_depends + _ast3_sources + _ast3_depends):
+    sys.exit('Error: Invalid path in sources or depends.')
+
+
+
 _ast27 = Extension(
     '_ast27',
     include_dirs = ['ast27/Include'],
-    sources = [
-        'ast27/Parser/acceler.c',
-        'ast27/Parser/bitset.c',
-        'ast27/Parser/grammar.c',
-        'ast27/Parser/grammar1.c',
-        'ast27/Parser/node.c',
-        'ast27/Parser/parser.c',
-        'ast27/Parser/parsetok.c',
-        'ast27/Parser/tokenizer.c',
-        'ast27/Python/asdl.c',
-        'ast27/Python/ast.c',
-        'ast27/Python/graminit.c',
-        'ast27/Python/mystrtoul.c',
-        'ast27/Python/Python-ast.c',
-        'ast27/Custom/typed_ast.c',
-    ],
-    depends = [
-        'ast27/Include/asdl.h',
-        'ast27/Include/ast.h',
-        'ast27/Include/bitset.h',
-        'ast27/Include/compile.h',
-        'ast27/Include/errcode.h',
-        'ast27/Include/graminit.h',
-        'ast27/Include/grammar.h',
-        'ast27/Include/node.h',
-        'ast27/Include/parsetok.h',
-        'ast27/Include/Python-ast.h',
-        'ast27/Include/token.h',
-        'ast27/Parser/parser.h',
-        'ast27/Parser/tokenizer.h',
-    ])
+    sources = _ast27_sources,
+    depends = _ast27_depends
+)
 
 
 _ast3 = Extension(
     '_ast3',
     include_dirs = ['ast3/Include'],
-    sources = [
-        'ast3/Parser/acceler.c',
-        'ast3/Parser/bitset.c',
-        'ast3/Parser/grammar.c',
-        'ast3/Parser/grammar1.c',
-        'ast3/Parser/node.c',
-        'ast3/Parser/parser.c',
-        'ast3/Parser/parsetok.c',
-        'ast3/Parser/tokenizer.c',
-        'ast3/Python/asdl.c',
-        'ast3/Python/ast.c',
-        'ast3/Python/graminit.c',
-        'ast3/Python/Python-ast.c',
-        'ast3/Custom/typed_ast.c',
-    ],
-    depends = [
-        'ast3/Include/asdl.h',
-        'ast3/Include/ast.h',
-        'ast3/Include/bitset.h',
-        'ast3/Include/compile-ast3.h',
-        'ast3/Include/errcode.h',
-        'ast3/Include/graminit.h',
-        'ast3/Include/grammar.h',
-        'ast3/Include/node.h',
-        'ast3/Include/parsetok.h',
-        'ast3/Include/Python-ast.h',
-        'ast3/Include/token.h',
-        'ast3/Parser/parser.h',
-        'ast3/Parser/tokenizer.h',
-    ])
+    sources = _ast3_sources,
+    depends = _ast3_depends
+)
 
 long_description = """
 `typed_ast` is a Python 3 package that provides a Python 2.7 and Python 3

@@ -2,6 +2,8 @@ import dbus
 import dbus.service
 import dbus.mainloop.glib
 from gi.repository import GLib
+import subprocess
+import shlex
 
 class SecureGuakeService(dbus.service.Object):
     def __init__(self, bus_name):
@@ -24,9 +26,12 @@ class SecureGuakeService(dbus.service.Object):
 
     def run_command(self, command):
         # Safely execute the command and return the output
-        import subprocess
-        result = subprocess.run(command, shell=True, capture_output=True, text=True)
-        return result.stdout
+        try:
+            command_list = shlex.split(command)
+            result = subprocess.run(command_list, capture_output=True, text=True, check=True)
+            return result.stdout
+        except (subprocess.CalledProcessError, FileNotFoundError) as e:
+             return str(e)
 
 def main():
     dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)

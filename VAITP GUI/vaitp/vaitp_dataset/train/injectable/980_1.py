@@ -1,5 +1,6 @@
 import os
 import sys
+import logging
 
 def secure_path_setup():
     # Get the current PATH
@@ -14,13 +15,27 @@ def secure_path_setup():
     # Check if any secure directories are in the PATH
     for directory in secure_directories:
         if directory in current_path:
-            print(f"Warning: {directory} is in the PATH. This may pose a security risk.")
-            # Optionally, remove or sanitize the PATH here
-            # For example, you could log this or alert the administrator
-            
-    # Set the PATH to a safe value (this is an example, adjust as needed)
-    safe_path = r'C:\SecurePythonPath'
-    os.environ['PATH'] = safe_path
+             logging.warning(f"Warning: {directory} is in the PATH. This may pose a security risk.")
 
-# Call the function to setup a secure path
-secure_path_setup()
+    # Construct a safe PATH, including only absolute paths and essential directories
+    safe_directories = [
+        r'C:\Windows\system32',
+        r'C:\Windows',
+        r'C:\Windows\System32\Wbem',
+        r'C:\Windows\System32\WindowsPowerShell\v1.0'
+    ]
+
+    safe_path = os.pathsep.join(safe_directories)
+
+    # Update the PATH environment variable
+    os.environ['PATH'] = safe_path
+    
+    #Verify path is safe
+    current_path_after_update = os.environ.get('PATH', '')
+    for directory in secure_directories:
+        if directory in current_path_after_update:
+            logging.error(f"Error: {directory} is still in the PATH after update")
+
+if __name__ == "__main__":
+    logging.basicConfig(level=logging.WARNING, format='%(asctime)s - %(levelname)s - %(message)s')
+    secure_path_setup()

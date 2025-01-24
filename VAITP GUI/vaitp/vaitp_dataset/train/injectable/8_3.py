@@ -113,7 +113,9 @@ class SessionRedirectMixin:
         # to cache the redirect location onto the response object as a private
         # attribute.
         if resp.is_redirect:
-            location = resp.headers["location"]
+            location = resp.headers.get("location")
+            if location is None:
+                return None
             # Currently the underlying http module on py3 decode headers
             # in latin1, but empirical evidence suggests that latin1 is very
             # rarely used with non-ASCII characters in HTTP headers.
@@ -185,7 +187,8 @@ class SessionRedirectMixin:
             try:
                 resp.content  # Consume socket so it can be released
             except (ChunkedEncodingError, ContentDecodingError, RuntimeError):
-                resp.raw.read(decode_content=False)
+                if hasattr(resp.raw, 'read') and callable(resp.raw.read):
+                    resp.raw.read(decode_content=False)
 
             if len(resp.history) >= self.max_redirects:
                 raise TooManyRedirects(

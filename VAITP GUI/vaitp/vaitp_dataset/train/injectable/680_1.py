@@ -1,10 +1,10 @@
+
 import re
+from urllib.parse import urlparse
 
 def is_valid_uri(uri):
-    # Allow only specific URI schemes (http, https, ftp)
-    valid_schemes = ['http:', 'https:', 'ftp:']
-    scheme = uri.split(':', 1)[0] + ':'
-    return scheme in valid_schemes
+    parsed_url = urlparse(uri)
+    return parsed_url.scheme in ('http', 'https', 'ftp')
 
 def parse_feed(uri):
     if not is_valid_uri(uri):

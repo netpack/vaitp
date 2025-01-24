@@ -1,23 +1,19 @@
-def safe_insert(query):
-    # Validate and sanitize the query to prevent arbitrary code execution
-    if "INSERT" in query and not contains_dangerous_code(query):
-        # Proceed with the insertion
-        execute_query(query)
-    else:
-        raise ValueError("Invalid query detected!")
+import sqlite3
 
-def contains_dangerous_code(query):
-    # Basic check for potentially dangerous patterns
-    dangerous_patterns = ["eval(", "exec(", "__import__(", "os.", "sys."]
-    return any(pattern in query for pattern in dangerous_patterns)
-
-def execute_query(query):
-    # Function to execute the sanitized query against the database
-    print(f"Executing query: {query}")
+def safe_insert(query, params=()):
+    conn = sqlite3.connect('mydatabase.db')
+    cursor = conn.cursor()
+    try:
+        cursor.execute(query, params)
+        conn.commit()
+    except sqlite3.Error as e:
+        raise ValueError(f"Invalid query detected: {e}")
+    finally:
+        conn.close()
 
 # Example usage
 try:
-    safe_insert("INSERT INTO site_columns (name) VALUES ('new_column')")
-    safe_insert("INSERT INTO site_columns (name) VALUES ('malicious_code'); exec('os.system(\"ls\")')")
+    safe_insert("INSERT INTO site_columns (name) VALUES (?)", ('new_column',))
+    safe_insert("INSERT INTO site_columns (name) VALUES (?)", ('malicious_code',))
 except ValueError as e:
     print(e)

@@ -637,7 +637,7 @@ class Backend:
                 self._lib.Cryptography_HAS_PKCS12_SET_MAC
                 and mac_alg != self._ffi.NULL
             ):
-                self._lib.PKCS12_set_mac(
+                res = self._lib.PKCS12_set_mac(
                     p12,
                     password_buf,
                     -1,
@@ -646,6 +646,10 @@ class Backend:
                     mac_iter,
                     mac_alg,
                 )
+                if res == 0:
+                     errors = self._consume_errors()
+                     raise ValueError("Failed to set MAC", errors)
+
 
         self.openssl_assert(p12 != self._ffi.NULL)
         p12 = self._ffi.gc(p12, self._lib.PKCS12_free)

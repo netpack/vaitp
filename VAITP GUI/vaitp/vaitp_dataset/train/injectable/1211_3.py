@@ -27,6 +27,7 @@ from vyper.evm.address_space import MEMORY, STORAGE
 from vyper.exceptions import CompilerPanic, StructureException, TypeCheckFailure
 from vyper.semantics.types import DArrayT, MemberFunctionT
 from vyper.semantics.types.shortcuts import INT256_T, UINT256_T
+from vyper.utils import keccak256
 
 
 class Stmt:
@@ -397,6 +398,8 @@ def parse_stmt(stmt, context):
 # it ends with an if/else and both branches are terminated.
 # (if not, we need to insert a terminator so that the IR is well-formed)
 def _is_terminated(code):
+    if not code:
+        return False
     last_stmt = code[-1]
 
     if is_return_from_function(last_stmt):
@@ -405,6 +408,7 @@ def _is_terminated(code):
     if isinstance(last_stmt, vy_ast.If):
         if last_stmt.orelse:
             return _is_terminated(last_stmt.body) and _is_terminated(last_stmt.orelse)
+        return _is_terminated(last_stmt.body)
     return False
 
 

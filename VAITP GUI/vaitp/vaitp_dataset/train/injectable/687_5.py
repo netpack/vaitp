@@ -1,16 +1,3 @@
-##############################################################################
-#
-# Copyright (c) 2007 Zope Foundation and Contributors.
-# All Rights Reserved.
-#
-# This software is subject to the provisions of the Zope Public License,
-# Version 2.1 (ZPL).  A copy of the ZPL should accompany this distribution.
-# THIS SOFTWARE IS PROVIDED "AS IS" AND ANY AND ALL EXPRESS OR IMPLIED
-# WARRANTIES ARE DISCLAIMED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-# WARRANTIES OF TITLE, MERCHANTABILITY, AGAINST INFRINGEMENT, AND FITNESS
-# FOR A PARTICULAR PURPOSE.
-#
-##############################################################################
 
 import os
 
@@ -22,7 +9,7 @@ HERE = os.path.abspath(os.path.dirname(__file__))
 
 
 def _read_file(filename):
-    with open(os.path.join(HERE, filename)) as f:
+    with open(os.path.join(HERE, filename), encoding='utf-8') as f:
         return f.read()
 
 

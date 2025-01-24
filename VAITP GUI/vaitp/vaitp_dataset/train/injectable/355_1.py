@@ -1,24 +1,32 @@
+
 import memcache
+import uuid
+import time
 
 # Initialize the memcache client
 memcache_client = memcache.Client(['127.0.0.1:11211'], debug=0)
 
+TOKEN_PREFIX = "token_"
+TOKEN_EXPIRY = 3600  # Token expiry time in seconds
+
 def create_new_token(user_id):
-    # Logic to create a new token
-    return f"token_for_{user_id}"
+    token = f"{TOKEN_PREFIX}{uuid.uuid4()}"
+    return token
 
 def is_token_valid(token):
-    # Logic to validate the token (placeholder)
-    return token.startswith("token_for_")
+    return token.startswith(TOKEN_PREFIX) and len(token) > len(TOKEN_PREFIX)
 
 def get_user_token(user_id):
-    token = memcache_client.get(user_id)
-    if token is None:
-        # Logic to create a new token
-        token = create_new_token(user_id)
-        memcache_client.set(user_id, token)
-    else:
-        # Additional validation to ensure the token is still valid
-        if not is_token_valid(token):
-            raise Exception("Invalid token")
+    cache_key = f"user_token:{user_id}"
+    cached_data = memcache_client.get(cache_key)
+
+    if cached_data:
+        token, timestamp = cached_data.split(":", 1)
+        if is_token_valid(token) and int(timestamp) > time.time():
+            return token
+
+    token = create_new_token(user_id)
+    expiry_time = int(time.time() + TOKEN_EXPIRY)
+    memcache_client.set(cache_key, f"{token}:{expiry_time}", time=TOKEN_EXPIRY)
+
     return token

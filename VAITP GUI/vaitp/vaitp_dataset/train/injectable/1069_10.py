@@ -12,6 +12,7 @@ from gradio_client import media_data
 from PIL import Image, ImageCms
 
 from gradio import components, data_classes, processing_utils, utils
+import hashlib
 
 
 class TestTempFileManagement:
@@ -411,3 +412,16 @@ async def test_json_data_not_moved_to_cache():
         )
         == data
     )
+def hash_bytes(bytes):
+    """Hashes a byte string using SHA256.
+
+    Args:
+        bytes: The byte string to hash.
+
+    Returns:
+        The SHA256 hash of the byte string as a hexadecimal string.
+    """
+    return hashlib.sha256(bytes).hexdigest()
+
+
+processing_utils.hash_bytes = hash_bytes

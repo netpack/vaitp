@@ -8,7 +8,7 @@ from langchain_experimental.pal_chain.base import PALChain
 def test_math_prompt() -> None:
     """Test math prompt."""
     llm = OpenAI(temperature=0, max_tokens=512)
-    pal_chain = PALChain.from_math_prompt(llm, timeout=None, allow_dangerous_code=False)
+    pal_chain = PALChain.from_math_prompt(llm, timeout=10, allow_dangerous_code=False)
     question = (
         "Jan has three times the number of pets as Marcia. "
         "Marcia has two more pets than Cindy. "
@@ -22,7 +22,7 @@ def test_colored_object_prompt() -> None:
     """Test colored object prompt."""
     llm = OpenAI(temperature=0, max_tokens=512)
     pal_chain = PALChain.from_colored_object_prompt(
-        llm, timeout=None, allow_dangerous_code=False
+        llm, timeout=10, allow_dangerous_code=False
     )
     question = (
         "On the desk, you see two blue booklets, "

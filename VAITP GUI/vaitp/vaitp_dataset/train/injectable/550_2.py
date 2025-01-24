@@ -33,7 +33,10 @@ def parse_yaml_query(yaml_content):
         On success, the processed MLQuery object.
     """
     logger.debug("Attempting to parse YAML content:\n%s" % yaml_content)
-    return parse_query(yaml.safe_load(yaml_content))
+    try:
+        return parse_query(yaml.safe_load(yaml_content))
+    except yaml.YAMLError as e:
+         raise QuerySyntaxError("Invalid YAML content: {}".format(e))
 
 
 def parse_json_query(json_content):
@@ -46,7 +49,10 @@ def parse_json_query(json_content):
         On success, the processed MLQuery object.
     """
     logger.debug("Attempting to parse JSON content:\n%s" % json_content)
-    return parse_query(json.loads(json_content))
+    try:
+        return parse_query(json.loads(json_content))
+    except json.JSONDecodeError as e:
+        raise QuerySyntaxError("Invalid JSON content: {}".format(e))
 
 
 def parse_query(qd):
@@ -65,7 +71,7 @@ def parse_query(qd):
 
     logger.debug("Attempting to parse query dictionary:\n%s" % json_dumps(qd, indent=2))
 
-    qf = parse_query_fragment(qd['where']).simplify() if 'where' in qd else None
+    qf = parse_query_fragment(qd.get('where', [])).simplify() if 'where' in qd else None
     if isinstance(qf, MLClause):
         qf = MLQueryFragment(OP_AND, clauses=[qf])
 
@@ -93,8 +99,14 @@ def parse_query_fragment(q, op=OP_AND, comp=COMP_EQ):
     for sub_q in q:
         if not isinstance(sub_q, dict):
             raise TypeError("Sub-fragment must be a dictionary: %s" % sub_q)
-
+        
         for k, v in iteritems(sub_q):
+            if not isinstance(k, str):
+                raise TypeError("Key in sub-fragment must be a string: {}".format(k))
+            
+            if not isinstance(v, (dict, list)) and not isinstance(v, (int, float, str, bool, type(None))):
+                raise TypeError("Value in sub-fragment must be a dictionary, list or a primitive type: {}".format(v))
+            
             # if v is a sub-fragment with a specific operator
             if k in OPERATORS:
                 s = parse_query_fragment(v, op=k, comp=comp).simplify()

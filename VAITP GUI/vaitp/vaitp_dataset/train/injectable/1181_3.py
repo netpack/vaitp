@@ -231,7 +231,7 @@ class Retry:
             raise_on_redirect = False
 
         self.redirect = redirect
-        self.status_forcelist = status_forcelist or set()
+        self.status_forcelist = set(status_forcelist) if status_forcelist else set()
         self.allowed_methods = allowed_methods
         self.backoff_factor = backoff_factor
         self.backoff_max = backoff_max
@@ -302,7 +302,7 @@ class Retry:
 
         backoff_value = self.backoff_factor * (2 ** (consecutive_errors_len - 1))
         if self.backoff_jitter != 0.0:
-            backoff_value += random.random() * self.backoff_jitter
+            backoff_value += random.uniform(0, self.backoff_jitter)
         return float(max(0, min(self.backoff_max, backoff_value)))
 
     def parse_retry_after(self, retry_after: str) -> float:
@@ -324,7 +324,8 @@ class Retry:
 
     def get_retry_after(self, response: BaseHTTPResponse) -> float | None:
         """Get the value of Retry-After in seconds."""
-
+        if not response:
+          return None
         retry_after = response.headers.get("Retry-After")
 
         if retry_after is None:
@@ -418,7 +419,7 @@ class Retry:
                 self.status,
                 self.other,
             )
-            if x
+            if x is not None
         ]
         if not retry_counts:
             return False

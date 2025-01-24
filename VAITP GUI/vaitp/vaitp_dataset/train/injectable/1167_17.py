@@ -43,7 +43,7 @@ def add_events(sio:socketio):
             return
         ASCIIColors.yellow("New descussion requested")
         client_id = sid
-        title = data["title"]
+        title = data.get("title", "New Discussion")
         lollmsElfServer.session.get_client(client_id).discussion = lollmsElfServer.db.create_discussion(title)
         # Get the current timestamp
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -61,7 +61,7 @@ def add_events(sio:socketio):
                                     PackageManager.install_package("pygame")
                                 import pygame
                                 pygame.mixer.init()
-                                pygame.mixer.music.load(voice)
+                                pygame.mixer.music.load(str(voice))
                                 pygame.mixer.music.play()
                             except Exception as ex:
                                 pass
@@ -99,9 +99,18 @@ def add_events(sio:socketio):
     async def load_discussion(sid, data):   
         client_id = sid
         ASCIIColors.yellow(f"Loading discussion for client {client_id} ... ", end="")
-        if "id" in data:
-            discussion_id = data["id"]
-            lollmsElfServer.session.get_client(client_id).discussion = Discussion(discussion_id, lollmsElfServer.db)
+        discussion_id = data.get("id")
+        if discussion_id:
+            try:
+                discussion_id = int(discussion_id)
+                lollmsElfServer.session.get_client(client_id).discussion = Discussion(discussion_id, lollmsElfServer.db)
+            except (ValueError, TypeError):
+                lollmsElfServer.error(f"Invalid discussion id : {discussion_id}")
+                await lollmsElfServer.sio.emit('discussion',
+                                [],
+                                to=client_id
+                    )
+                return
         else:
             if lollmsElfServer.session.get_client(client_id).discussion is not None:
                 discussion_id = lollmsElfServer.session.get_client(client_id).discussion.discussion_id

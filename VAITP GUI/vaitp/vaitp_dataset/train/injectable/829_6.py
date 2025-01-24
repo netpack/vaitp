@@ -43,18 +43,18 @@ class EngineTestsBase(PlacelessSetup):
                     url = "http://server/" + url
                 return url
 
-        _DEFAULT_BINDINGS = dict(
-            one=1,
-            d={'one': 1, 'b': 'b', '': 'blank', '_': 'under'},
-            blank='',
-            dummy=Dummy(),
-            dummy2=DummyDocumentTemplate(),
-            eightbit=b'\xe4\xfc\xf6',
+        _DEFAULT_BINDINGS = {
+            'one': 1,
+            'd': {'one': 1, 'b': 'b', '': 'blank', '_': 'under'},
+            'blank': '',
+            'dummy': Dummy(),
+            'dummy2': DummyDocumentTemplate(),
+            'eightbit': b'\xe4\xfc\xf6',
             # ZopeContext needs 'context' and 'template' keys for unicode
             # conflict resolution
-            context=Dummy(),
-            template=DummyDocumentTemplate(),
-        )
+            'context': Dummy(),
+            'template': DummyDocumentTemplate(),
+        }
 
         if bindings is None:
             bindings = _DEFAULT_BINDINGS
@@ -190,8 +190,8 @@ class EngineTestsBase(PlacelessSetup):
         eng = self._makeEngine()
         ec = self._makeContext()
         expr = eng.compile('string:$eightbit')
-        self.assertRaises(UnicodeDecodeError,
-                          ec.evaluate, expr)
+        with self.assertRaises(UnicodeDecodeError):
+            ec.evaluate(expr)
         # But registering an appropriate IUnicodeEncodingConflictResolver
         # should fix it
         from Products.PageTemplates.interfaces import \
@@ -207,7 +207,7 @@ class EngineTestsBase(PlacelessSetup):
         ec = self._makeContext()
         self.assertIs(ec.evaluate('True'), True)
         self.assertIs(ec.evaluate('False'), False)
-        self.assertIs(ec.evaluate('nocall: test'), safe_builtins["test"])
+        self.assertIs(ec.evaluate('nocall:test'), safe_builtins["test"])
 
 
 class UntrustedEngineTests(EngineTestsBase, unittest.TestCase):
@@ -225,7 +225,7 @@ class UntrustedEngineTests(EngineTestsBase, unittest.TestCase):
 
     def test_list_in_path_expr(self):
         ec = self._makeContext()
-        self.assertIs(ec.evaluate('nocall: list'), safe_builtins["list"])
+        self.assertIs(ec.evaluate('nocall:list'), safe_builtins["list"])
 
     def test_underscore_traversal(self):
         # Prevent traversal to names starting with an underscore (_)
@@ -235,7 +235,7 @@ class UntrustedEngineTests(EngineTestsBase, unittest.TestCase):
             ec.evaluate("context/__class__")
 
         with self.assertRaises((NotFound, LocationError)):
-            ec.evaluate("nocall: random/_itertools/repeat")
+            ec.evaluate("nocall:random/_itertools/repeat")
 
         with self.assertRaises((NotFound, LocationError)):
             ec.evaluate("random/_itertools/repeat/foobar")
@@ -255,7 +255,7 @@ class TrustedEngineTests(EngineTestsBase, unittest.TestCase):
 
     def test_list_in_path_expr(self):
         ec = self._makeContext()
-        self.assertIs(ec.evaluate('nocall: list'), list)
+        self.assertIs(ec.evaluate('nocall:list'), list)
 
 
 class UnicodeEncodingConflictResolverTests(PlacelessSetup, unittest.TestCase):
@@ -270,8 +270,8 @@ class UnicodeEncodingConflictResolverTests(PlacelessSetup, unittest.TestCase):
         provideUtility(DefaultUnicodeEncodingConflictResolver,
                        IUnicodeEncodingConflictResolver)
         resolver = getUtility(IUnicodeEncodingConflictResolver)
-        self.assertRaises(UnicodeDecodeError,
-                          resolver.resolve, None, b'\xe4\xfc\xf6', None)
+        with self.assertRaises(UnicodeDecodeError):
+            resolver.resolve(None, b'\xe4\xfc\xf6', None)
 
     def testStrictResolver(self):
         from Products.PageTemplates.interfaces import \
@@ -344,5 +344,5 @@ class ZopeContextTests(unittest.TestCase):
         # See: https://bugs.launchpad.net/zope2/+bug/174705
         context = self._makeOne()
         info = context.createErrorInfo(AttributeError('nonesuch'), (12, 3))
-        self.assertTrue(info.type is AttributeError)
+        self.assertIs(info.type, AttributeError)
         self.assertEqual(info.__allow_access_to_unprotected_subobjects__, 1)

@@ -1,3 +1,5 @@
+import html
+
 def escape_macro_parameters(params):
     """
     Escape the parameters to prevent code injection vulnerabilities.
@@ -5,9 +7,8 @@ def escape_macro_parameters(params):
     """
     safe_params = {}
     for key, value in params.items():
-        # Example escaping: replace curly braces and dollar signs
-        safe_key = key.replace("{", "{{").replace("}", "}}").replace("$", "$$")
-        safe_value = value.replace("{", "{{").replace("}", "}}").replace("$", "$$")
+        safe_key = html.escape(str(key))
+        safe_value = html.escape(str(value))
         safe_params[safe_key] = safe_value
     return safe_params
 

@@ -85,7 +85,7 @@ def url(tgpath, tgparams=None, **kwargs):
         # Do not allow the url() function to be used for external urls.
         # This function is primarily used in redirect() calls, so this prevents
         # covert redirects and thus CSRF leaking.
-        tgpath = '/'
+        return '/'
     if tgpath.startswith('/'):
         webpath = (config.get('server.webpath') or '').rstrip('/')
         if tg_util.request_available():
@@ -134,7 +134,7 @@ def url(tgpath, tgparams=None, **kwargs):
         for key, value in pairs:
             if value is None:
                 continue
-            if isinstance(value, unicode):
+            if isinstance(value, six.text_type):
                 value = value.encode('utf8')
             args.append((key, str(value)))
     query_string = urlencode(args, True)
@@ -354,7 +354,7 @@ def jsonify_validation_errors():
                           errors.items()])
     format = request_format()
     if format in ('html', 'xhtml'):
-        message.translate({ord('\n'): u'<br />\n'})
+        message = message.replace('\n', '<br />\n')
     flash(message)
 
     # If json, return additional information to make this an exception

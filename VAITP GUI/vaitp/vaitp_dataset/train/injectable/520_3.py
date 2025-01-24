@@ -142,7 +142,7 @@ def _clean(s: Union[str, Iterable[str]], joiner: str = '; ') -> str:
             s = joiner.join(sorted(s))
         else:
             s = joiner.join(s)
-    return re_xml_illegal_chars.sub('', s)
+    return re_xml_illegal_chars.sub('', str(s))
 
 
 def encode_pdf_date(d: datetime) -> str:
@@ -563,6 +563,8 @@ class PdfMetadata(MutableMapping):
         if name.startswith('{'):
             return name
         prefix, tag = name.split(':', maxsplit=1)
+        if prefix not in cls.NS:
+            raise KeyError(f"Unknown namespace prefix: {prefix}")
         uri = cls.NS[prefix]
         return str(QName(uri, tag))
 
@@ -573,6 +575,8 @@ class PdfMetadata(MutableMapping):
         """
         uripart, tag = uriname.split('}', maxsplit=1)
         uri = uripart.replace('{', '')
+        if uri not in self.REVERSE_NS:
+             raise KeyError(f"Unknown namespace URI: {uri}")
         return self.REVERSE_NS[uri] + ':' + tag
 
     def _get_subelements(self, node):
@@ -725,7 +729,7 @@ class PdfMetadata(MutableMapping):
                         # dc:creator incorrectly created as an attribute - we're
                         # replacing it anyway, so remove the old one
                         del node.attrib[qkey]
-                        add_array(node, _clean(val))
+                        add_array(node, val)
                     else:
                         raise TypeError(f"Setting {key} to {val} with type {type(val)}")
                 else:
@@ -761,7 +765,7 @@ class PdfMetadata(MutableMapping):
                     rdf,
                     str(QName(XMP_NS_RDF, 'Description')),
                     attrib={
-                        QName(XMP_NS_RDF, 'about'): '',
+                        str(QName(XMP_NS_RDF, 'about')): '',
                         self._qname(key): _clean(val),
                     },
                 )
@@ -793,47 +797,3 @@ class PdfMetadata(MutableMapping):
                 parent.remove(node)
         except StopIteration:
             raise KeyError(key) from None
-
-    @property
-    @ensure_loaded
-    def pdfa_status(self) -> str:
-        """Returns the PDF/A conformance level claimed by this PDF, or False
-
-        A PDF may claim to PDF/A compliant without this being true. Use an
-        independent verifier such as veraPDF to test if a PDF is truly
-        conformant.
-
-        Returns:
-            str: The conformance level of the PDF/A, or an empty string if the
-            PDF does not claim PDF/A conformance. Possible valid values
-            are: 1A, 1B, 2A, 2B, 2U, 3A, 3B, 3U.
-        """
-        key_part = QName(XMP_NS_PDFA_ID, 'part')
-        key_conformance = QName(XMP_NS_PDFA_ID, 'conformance')
-        try:
-            return self[key_part] + self[key_conformance]
-        except KeyError:
-            return ''
-
-    @property
-    @ensure_loaded
-    def pdfx_status(self) -> str:
-        """Returns the PDF/X conformance level claimed by this PDF, or False
-
-        A PDF may claim to PDF/X compliant without this being true. Use an
-        independent verifier such as veraPDF to test if a PDF is truly
-        conformant.
-
-        Returns:
-            str: The conformance level of the PDF/X, or an empty string if the
-            PDF does not claim PDF/X conformance.
-        """
-        pdfx_version = QName(XMP_NS_PDFX_ID, 'GTS_PDFXVersion')
-        try:
-            return self[pdfx_version]
-        except KeyError:
-            return ''
-
-    @ensure_loaded
-    def __str__(self):
-        return self._get_xml_bytes(xpacket=False).decode('utf-8')

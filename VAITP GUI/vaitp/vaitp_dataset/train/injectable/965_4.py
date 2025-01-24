@@ -39,7 +39,7 @@ urlpatterns = [
     # GraphQL
     path("graphql/", CustomGraphQLView.as_view(graphiql=True), name="graphql"),
     # Serving static media in Django
-    path("media/<path:path>", serve, {"document_root": settings.MEDIA_ROOT}),
+    path("media/<path:path>", serve, {"document_root": settings.MEDIA_ROOT}, name="media"),
     # Admin
     path("admin/", admin_site.urls),
     # Errors
@@ -50,15 +50,15 @@ urlpatterns = [
     # Social auth/SSO
     path("", include("social_django.urls", namespace="social")),
     # django-health-check
-    path(r"health/", include("health_check.urls")),
+    path("health/", include("health_check.urls")),
     # FileProxy attachments download/get URLs used in admin views only
-    url(
+    path(
         "files/download/",
         get_file_with_authorization,
         {"add_attachment_headers": True},
         name="db_file_storage.download_file",
     ),
-    url(
+    path(
         "files/get/",
         get_file_with_authorization,
         {"add_attachment_headers": False},

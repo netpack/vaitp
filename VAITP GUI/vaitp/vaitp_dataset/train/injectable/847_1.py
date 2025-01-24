@@ -16,8 +16,8 @@ def run_with_config():
     config.read("safe_config.ini")
     user_setting = config['settings']['user_setting']
     
-    # Using subprocess.run instead of os.system for safer command execution
-    subprocess.run(["echo", user_setting], shell=False)
+    # Using subprocess.run with shell=False and passing user input as an argument
+    subprocess.run(["echo", user_setting], check=True)
 
 # Example user input
 user_input = "dummy; cat /etc/passwd #"

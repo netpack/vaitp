@@ -33,6 +33,7 @@ from tensorflow.python.ops.ragged import ragged_factory_ops
 from tensorflow.python.ops.ragged import ragged_tensor
 from tensorflow.python.platform import googletest
 from tensorflow.python.util import nest
+import numpy as np
 
 
 @test_util.run_all_in_graph_and_eager_modes
@@ -111,7 +112,7 @@ class ExtensionTypeTest(test_util.TensorFlowTestCase, parameterized.TestCase):
     def func(x):
       x2 = composite_tensor_ops.composite_tensor_to_variants(x * 2)
       x3 = composite_tensor_ops.composite_tensor_from_variant(x2, x._type_spec)
-      return x3.with_values(x3.values * math_ops.range(6.0))
+      return x3.with_values(x3.values * math_ops.cast(math_ops.range(6),dtype=x3.values.dtype))
 
     x = ragged_factory_ops.constant([[1.0, 2.0, 3.0], [4.0], [5.0, 6.0]])
     if context.executing_eagerly():

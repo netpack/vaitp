@@ -1,26 +1,34 @@
 import os
 import subprocess
+import tempfile
+import ast
 
 def safe_script_upload(script_content):
-    # Validate the script content to ensure it doesn't contain malicious code
     if is_safe_script(script_content):
-        # Write the script to a temporary file
-        with open('/tmp/safe_script.py', 'w') as script_file:
-            script_file.write(script_content)
-        
-        # Execute the script in a safe environment
-        subprocess.run(['python3', '/tmp/safe_script.py'], check=True)
+        with tempfile.NamedTemporaryFile(suffix=".py", delete=False) as script_file:
+            script_file.write(script_content.encode())
+            script_path = script_file.name
+        try:
+            subprocess.run(['python3', script_path], check=True, capture_output=True, timeout=10)
+        finally:
+            os.remove(script_path)
     else:
         raise ValueError("Unsafe script content detected.")
 
 def is_safe_script(script_content):
-    # Check for disallowed keywords or patterns in the script
-    disallowed_keywords = ['import', 'os', 'subprocess', 'eval', 'exec']
-    return not any(keyword in script_content for keyword in disallowed_keywords)
-
-# Example usage
-try:
-    user_script = "print('Hello, world!')"  # This is safe
-    safe_script_upload(user_script)
-except ValueError as e:
-    print(e)
+    try:
+        tree = ast.parse(script_content)
+        for node in ast.walk(tree):
+            if isinstance(node, (ast.Import, ast.ImportFrom, ast.Call)):
+                if isinstance(node, ast.Call):
+                    if isinstance(node.func, ast.Name) and node.func.id in ['eval', 'exec', 'open']:
+                        return False
+                    if isinstance(node.func, ast.Attribute) and isinstance(node.func.value, ast.Name) and node.func.value.id in ['os', 'subprocess']:
+                        return False
+                else:
+                    for alias in node.names:
+                        if alias.name in ['os', 'subprocess']:
+                             return False
+        return True
+    except SyntaxError:
+        return False

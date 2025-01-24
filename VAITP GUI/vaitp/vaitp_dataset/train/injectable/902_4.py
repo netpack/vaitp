@@ -1,7 +1,8 @@
 import os
 from dotenv import load_dotenv
 import json
-
+import re
+from urllib.parse import urlparse
 
 if os.path.exists(".env.local"):
     load_dotenv(dotenv_path=".env.local")
@@ -10,7 +11,7 @@ if os.path.exists(".env.local"):
 ENVIRONMENT = os.getenv("NODE_ENV")
 prod = ENVIRONMENT == "production"
 
-IS_CLOUD = bool(os.getenv("IS_CLOUD"))
+IS_CLOUD = os.getenv("IS_CLOUD", "false").lower() == "true"
 
 def get_upload_method():
   if IS_CLOUD:
@@ -26,14 +27,19 @@ UPLOAD_METHOD = get_upload_method()
 
 MONGODB_URI = os.getenv("MONGODB_URI")
 if not MONGODB_URI:
-    MONGODB_URI = "mongodb://root:password@localhost:27017/" if not prod else ""
+    MONGODB_URI = "mongodb://root:password@localhost:27017/" if not prod else None
 
 if not MONGODB_URI:
-  raise Exception("Missing MONGODB_URI environment variable")
+  raise ValueError("Missing MONGODB_URI environment variable")
 
 
 APP_ORIGIN = os.getenv("APP_ORIGIN") or "http://localhost:3000"
-isLocalhost = "localhost" in APP_ORIGIN
+try:
+    parsed_url = urlparse(APP_ORIGIN)
+    isLocalhost = parsed_url.hostname == "localhost"
+except ValueError:
+    isLocalhost = False
+
 
 corsOriginRegex = os.getenv("CORS_ORIGIN_REGEX")
 CORS_ORIGIN_REGEX = re.compile(corsOriginRegex, re.IGNORECASE) if corsOriginRegex else None
@@ -44,21 +50,21 @@ GOOGLE_OAUTH_CLIENT_SECRET = os.getenv("GOOGLE_OAUTH_CLIENT_SECRET") or ""
 
 S3_BUCKET = os.getenv("S3_BUCKET") or ""
 S3_REGION = os.getenv("S3_REGION") or "us-east-1"
-S3_DOMAIN = os.getenv("S3_DOMAIN") or f"https://{S3_BUCKET}.s3.amazonaws.com/"
+S3_DOMAIN = os.getenv("S3_DOMAIN") or (f"https://{S3_BUCKET}.s3.amazonaws.com/" if S3_BUCKET else "")
 ENCRYPTION_KEY = os.getenv("ENCRYPTION_KEY") or "dev"
 
 if prod and ENCRYPTION_KEY == "dev":
-  raise Exception("Cannot use ENCRYPTION_KEY=dev in production. Please set to a long random string.")
+  raise ValueError("Cannot use ENCRYPTION_KEY=dev in production. Please set to a long random string.")
 
 GCS_BUCKET_NAME = os.getenv("GCS_BUCKET_NAME") or ""
-GCS_DOMAIN = os.getenv("GCS_DOMAIN") or f"https://storage.googleapis.com/{GCS_BUCKET_NAME}/"
+GCS_DOMAIN = os.getenv("GCS_DOMAIN") or (f"https://storage.googleapis.com/{GCS_BUCKET_NAME}/" if GCS_BUCKET_NAME else "")
 
 JWT_SECRET = os.getenv("JWT_SECRET") or "dev"
 if (prod or not isLocalhost) and not IS_CLOUD and JWT_SECRET == "dev":
-  raise Exception("Cannot use JWT_SECRET=dev in production. Please set to a long random string.")
+  raise ValueError("Cannot use JWT_SECRET=dev in production. Please set to a long random string.")
 
 
-EMAIL_ENABLED = os.getenv("EMAIL_ENABLED") == "true"
+EMAIL_ENABLED = os.getenv("EMAIL_ENABLED", "false").lower() == "true"
 EMAIL_HOST = os.getenv("EMAIL_HOST")
 EMAIL_PORT = int(os.getenv("EMAIL_PORT") or 587)
 EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
@@ -73,7 +79,10 @@ STRIPE_PRICE = os.getenv("STRIPE_PRICE") or ""
 SLACK_SIGNING_SECRET = os.getenv("SLACK_SIGNING_SECRET") or ""
 
 testConn = os.getenv("POSTGRES_TEST_CONN")
-POSTGRES_TEST_CONN = json.loads(testConn) if testConn else {}
+try:
+    POSTGRES_TEST_CONN = json.loads(testConn) if testConn else {}
+except json.JSONDecodeError:
+    POSTGRES_TEST_CONN = {}
 
 
 AWS_CLOUDFRONT_DISTRIBUTION_ID = os.getenv("AWS_CLOUDFRONT_DISTRIBUTION_ID") or ""
@@ -89,4 +98,4 @@ QUERY_CACHE_TTL_MINS = int(os.getenv("QUERY_CACHE_TTL_MINS") or 60)
 
 IMPORT_LIMIT_DAYS = int(os.getenv("IMPORT_LIMIT_DAYS") or 365)
 
-CRON_ENABLED = os.getenv("CRON_DISABLED") is None
+CRON_ENABLED = os.getenv("CRON_DISABLED", "false").lower() != "true"

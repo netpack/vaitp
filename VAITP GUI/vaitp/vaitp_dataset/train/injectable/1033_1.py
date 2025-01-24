@@ -1,3 +1,4 @@
+
 import ssl
 import threading
 
@@ -10,8 +11,10 @@ def load_certificates():
 
 # Function to call cert_store_stats and get_ca_certs simultaneously
 def access_ssl_methods():
-    print("Cert Store Stats:", context.cert_store_stats())
-    print("CA Certs:", context.get_ca_certs())
+    stats = context.cert_store_stats()
+    certs = context.get_ca_certs()
+    print("Cert Store Stats:", stats)
+    print("CA Certs:", certs)
 
 # Create threads for simultaneous execution
 load_thread = threading.Thread(target=load_certificates)

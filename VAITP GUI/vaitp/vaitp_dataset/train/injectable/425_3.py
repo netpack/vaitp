@@ -12,12 +12,17 @@ import json
 import terminado
 import tornado.websocket
 import re
+import logging
+import uuid
 
 
 class MageTermManager(terminado.NamedTermManager):
     def get_terminal(self, term_name: str, **kwargs):
-        assert term_name is not None
-
+        if not term_name:
+             term_name = str(uuid.uuid4())
+        if not isinstance(term_name, str):
+            raise ValueError("Terminal name must be a string.")
+        
         if term_name in self.terminals:
             return self.terminals[term_name]
 
@@ -73,9 +78,21 @@ class TerminalWebsocketServer(terminado.TermSocket):
 
         cwd = self.get_argument('cwd', None, True)
         term_name = self.get_argument('term_name', None, True)
+        
+        if term_name:
+            if not isinstance(term_name, str):
+                self._logger.error("Invalid term_name: %s. Must be a string.", term_name)
+                return self.close(reason='Invalid terminal name')
+
+            if len(term_name) > 255:
+                 self._logger.error("Invalid term_name: %s. Must be less than 256 characters.", term_name)
+                 return self.close(reason='Terminal name too long')
 
         user = None
         if REQUIRE_USER_AUTHENTICATION and api_key and token:
+            if not isinstance(api_key, str) or not isinstance(token, str):
+                self._logger.error("Invalid api_key or token: must be string.")
+                return self.close(reason='Invalid API key or token')
             oauth_client = Oauth2Application.query.filter(
                 Oauth2Application.client_id == api_key,
             ).first()
@@ -99,16 +116,30 @@ class TerminalWebsocketServer(terminado.TermSocket):
 
     @gen.coroutine
     def on_message(self, raw_message):
-        message = json.loads(raw_message)
+        try:
+            message = json.loads(raw_message)
+        except json.JSONDecodeError:
+            self._logger.error("Invalid JSON message received: %s", raw_message)
+            return self.send_json_message(
+                ['stdout', 'Invalid JSON message received.'])
 
         api_key = message.get('api_key')
         token = message.get('token')
         command = message.get('command')
 
+        if command and not isinstance(command, list):
+            self._logger.error("Invalid command format: %s", command)
+            return self.send_json_message(
+                ['stdout', 'Invalid command format. Must be a list.'])
+
         if REQUIRE_USER_AUTHENTICATION or is_disable_pipeline_edit_access():
             valid = False
 
             if api_key and token:
+                if not isinstance(api_key, str) or not isinstance(token, str):
+                    self._logger.error("Invalid api_key or token: must be string.")
+                    return self.send_json_message(
+                        ['stdout', 'Invalid API key or token.'])
                 oauth_client = Oauth2Application.query.filter(
                     Oauth2Application.client_id == api_key,
                 ).first()
@@ -120,9 +151,10 @@ class TerminalWebsocketServer(terminado.TermSocket):
                         has_at_least_editor_role(oauth_token.user)
             if not valid or is_disable_pipeline_edit_access():
                 return self.send_json_message(
-                    ['stdout', f'{command[1]}\nUnauthorized access to the terminal.'])
+                    ['stdout', f'{command[1] if command and len(command) > 1 else ""}\nUnauthorized access to the terminal.'])
 
-        super().on_message(json.dumps(command))
+        if command:
+           super().on_message(json.dumps(command))
 
     def __initiate_terminal(self, terminal):
         self.send_json_message(["setup", {}])

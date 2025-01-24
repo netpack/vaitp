@@ -40,6 +40,10 @@ def add_events(sio:socketio):
         lollmsElfServer.cancel_gen = False
         client = lollmsElfServer.session.get_client(client_id)
 
+        if client is None:
+            lollmsElfServer.error("Client not found", client_id=client_id)
+            return
+
         client.generated_text=""
         client.cancel_generation=False
         client.continuing=False
@@ -53,15 +57,23 @@ def add_events(sio:socketio):
             return
 
         if not lollmsElfServer.busy:
-            if lollmsElfServer.session.get_client(client_id).discussion is None:
+            if client.discussion is None:
                 if lollmsElfServer.db.does_last_discussion_have_messages():
-                    lollmsElfServer.session.get_client(client_id).discussion = lollmsElfServer.db.create_discussion()
+                    client.discussion = lollmsElfServer.db.create_discussion()
                 else:
-                    lollmsElfServer.session.get_client(client_id).discussion = lollmsElfServer.db.load_last_discussion()
+                    client.discussion = lollmsElfServer.db.load_last_discussion()
 
+            if not isinstance(data, dict) or "prompt" not in data:
+                lollmsElfServer.error("Invalid data received", client_id=client_id)
+                return
+            
             prompt = data["prompt"]
+            if not isinstance(prompt,str):
+                lollmsElfServer.error("Invalid prompt received", client_id=client_id)
+                return
+
             ump = lollmsElfServer.config.discussion_prompt_separator +lollmsElfServer.config.user_name.strip() if lollmsElfServer.config.use_user_name_in_discussions else lollmsElfServer.personality.user_message_prefix
-            message = lollmsElfServer.session.get_client(client_id).discussion.add_message(
+            message = client.discussion.add_message(
                 message_type    = MSG_TYPE.MSG_TYPE_FULL.value,
                 sender_type     = SENDER_TYPES.SENDER_TYPES_USER.value,
                 sender          = ump.replace(lollmsElfServer.config.discussion_prompt_separator,"").replace(":",""),
@@ -86,6 +98,10 @@ def add_events(sio:socketio):
         client_id = sid
         lollmsElfServer.cancel_gen = False
         client = lollmsElfServer.session.get_client(client_id)
+        
+        if client is None:
+            lollmsElfServer.error("Client not found", client_id=client_id)
+            return
 
         client.generated_text=""
         client.cancel_generation=False
@@ -100,15 +116,22 @@ def add_events(sio:socketio):
             return
 
         if not lollmsElfServer.busy:
-            if lollmsElfServer.session.get_client(client_id).discussion is None:
+            if client.discussion is None:
                 if lollmsElfServer.db.does_last_discussion_have_messages():
-                    lollmsElfServer.session.get_client(client_id).discussion = lollmsElfServer.db.create_discussion()
+                    client.discussion = lollmsElfServer.db.create_discussion()
                 else:
-                    lollmsElfServer.session.get_client(client_id).discussion = lollmsElfServer.db.load_last_discussion()
+                    client.discussion = lollmsElfServer.db.load_last_discussion()
 
+            if not isinstance(data, dict) or "prompt" not in data:
+                lollmsElfServer.error("Invalid data received", client_id=client_id)
+                return
+            
             prompt = data["prompt"]
+            if not isinstance(prompt,str):
+                lollmsElfServer.error("Invalid prompt received", client_id=client_id)
+                return
             ump = lollmsElfServer.config.discussion_prompt_separator +lollmsElfServer.config.user_name.strip() if lollmsElfServer.config.use_user_name_in_discussions else lollmsElfServer.personality.user_message_prefix
-            message = lollmsElfServer.session.get_client(client_id).discussion.add_message(
+            message = client.discussion.add_message(
                 message_type    = MSG_TYPE.MSG_TYPE_FULL.value,
                 sender_type     = SENDER_TYPES.SENDER_TYPES_USER.value,
                 sender          = ump.replace(lollmsElfServer.config.discussion_prompt_separator,"").replace(":",""),
@@ -137,20 +160,33 @@ def add_events(sio:socketio):
     def handle_generate_msg_from(sid, data):
         client_id = sid
         client = lollmsElfServer.session.get_client(client_id)
+        if client is None:
+            lollmsElfServer.error("Client not found", client_id=client_id)
+            return
+
         lollmsElfServer.cancel_gen = False
         client.continuing=False
         client.first_chunk=True
         
-        if lollmsElfServer.session.get_client(client_id).discussion is None:
+        if client.discussion is None:
             ASCIIColors.warning("Please select a discussion")
             lollmsElfServer.error("Please select a discussion first", client_id=client_id)
             return
+
+        if not isinstance(data, dict) or "id" not in data:
+            lollmsElfServer.error("Invalid data received", client_id=client_id)
+            return
+
         id_ = data['id']
+        if not isinstance(id_,int):
+            lollmsElfServer.error("Invalid id received", client_id=client_id)
+            return
+
         generation_type = data.get('msg_type',None)
         if id_==-1:
-            message = lollmsElfServer.session.get_client(client_id).discussion.current_message
+            message = client.discussion.current_message
         else:
-            message = lollmsElfServer.session.get_client(client_id).discussion.load_message(id_)
+            message = client.discussion.load_message(id_)
         if message is None:
             return            
         client.generation_thread = threading.Thread(target=lollmsElfServer.start_message_generation, args=(message, message.id, client_id, False, generation_type))
@@ -160,21 +196,33 @@ def add_events(sio:socketio):
     def handle_continue_generate_msg_from(sid, data):
         client_id = sid
         client = lollmsElfServer.session.get_client(client_id)
+        if client is None:
+            lollmsElfServer.error("Client not found", client_id=client_id)
+            return
+
         lollmsElfServer.cancel_gen = False
         client.continuing=True
         client.first_chunk=True
         
-        if lollmsElfServer.session.get_client(client_id).discussion is None:
+        if client.discussion is None:
             ASCIIColors.yellow("Please select a discussion")
             lollmsElfServer.error("Please select a discussion", client_id=client_id)
             return
-        id_ = data['id']
-        if id_==-1:
-            message = lollmsElfServer.session.get_client(client_id).discussion.current_message
-        else:
-            message = lollmsElfServer.session.get_client(client_id).discussion.load_message(id_)
 
+        if not isinstance(data, dict) or "id" not in data:
+            lollmsElfServer.error("Invalid data received", client_id=client_id)
+            return
+            
+        id_ = data['id']
+        if not isinstance(id_,int):
+            lollmsElfServer.error("Invalid id received", client_id=client_id)
+            return
+        if id_==-1:
+            message = client.discussion.current_message
+        else:
+            message = client.discussion.load_message(id_)
+        if message is None:
+            return
         client.generated_text=message.content
         client.generation_thread = threading.Thread(target=lollmsElfServer.start_message_generation, args=(message, message.id, client_id, True))
         client.generation_thread.start()
-

@@ -1,5 +1,6 @@
 import os
 from flask import Flask, request, abort
+from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 
@@ -16,7 +17,10 @@ def upload_file():
     if file.filename == '':
         abort(400, "No selected file")
     if file and allowed_file(file.filename):
-        safe_path = os.path.join('/safe/upload/directory', file.filename)
+        filename = secure_filename(file.filename)
+        if filename == "":
+            abort(400, "Invalid filename")
+        safe_path = os.path.join('/safe/upload/directory', filename)
         file.save(safe_path)
         return "File uploaded successfully", 200
     else:

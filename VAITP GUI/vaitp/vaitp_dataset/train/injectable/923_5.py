@@ -25,12 +25,13 @@ DEALINGS IN THE SOFTWARE.
 from markdown import Extension
 from markdown.preprocessors import Preprocessor
 import functools
-import urllib
+import urllib.request
 import re
 import codecs
 import os
 from . import util
 import textwrap
+from urllib.parse import urlparse
 
 MI = 1024 * 1024  # mebibyte (MiB)
 DEFAULT_URL_SIZE = MI * 32
@@ -185,32 +186,38 @@ class SnippetPreprocessor(Preprocessor):
 
         The most recently used files are kept in a cache until the next reset.
         """
+        try:
+            parsed_url = urlparse(url)
+            if not parsed_url.scheme or not parsed_url.netloc:
+                raise SnippetMissingError("Invalid URL '{}'".format(url))
 
-        http_request = urllib.request.Request(url, headers=self.url_request_headers)
-        timeout = None if self.url_timeout == 0 else self.url_timeout
-        with urllib.request.urlopen(http_request, timeout=timeout) as response:
+            http_request = urllib.request.Request(url, headers=self.url_request_headers)
+            timeout = None if self.url_timeout == 0 else self.url_timeout
+            with urllib.request.urlopen(http_request, timeout=timeout) as response:
 
-            # Fail if status is not OK
-            status = response.status if util.PY39 else response.code
-            if status != 200:
-                raise SnippetMissingError("Cannot download snippet '{}'".format(url))
+                # Fail if status is not OK
+                status = response.status if util.PY39 else response.code
+                if status != 200:
+                    raise SnippetMissingError("Cannot download snippet '{}'".format(url))
 
-            # We provide some basic protection against absurdly large files.
-            # 32MB is chosen as an arbitrary upper limit. This can be raised if desired.
-            length = response.headers.get("content-length")
-            if length is None:
-                raise ValueError("Missing content-length header")
-            content_length = int(length)
+                # We provide some basic protection against absurdly large files.
+                # 32MB is chosen as an arbitrary upper limit. This can be raised if desired.
+                length = response.headers.get("content-length")
+                if length is None:
+                   raise SnippetMissingError("Missing content-length header for URL '{}'".format(url))
+                content_length = int(length)
 
-            if self.url_max_size != 0 and content_length >= self.url_max_size:
-                raise ValueError("refusing to read payloads larger than or equal to {}".format(self.url_max_size))
+                if self.url_max_size != 0 and content_length >= self.url_max_size:
+                    raise SnippetMissingError("Refusing to read payloads larger than or equal to {} for URL '{}'".format(self.url_max_size, url))
 
-            # Nothing to return
-            if content_length == 0:
-                return ['']
+                # Nothing to return
+                if content_length == 0:
+                    return ['']
 
-            # Process lines
-            return [l.decode(self.encoding).rstrip('\r\n') for l in response.readlines()]
+                # Process lines
+                return [l.decode(self.encoding).rstrip('\r\n') for l in response.readlines()]
+        except Exception as e:
+              raise SnippetMissingError(f"Error downloading snippet '{url}': {e}")
 
     def parse_snippets(self, lines, file_name=None, is_url=False):
         """Parse snippets snippet."""
@@ -313,13 +320,19 @@ class SnippetPreprocessor(Preprocessor):
 
                     if not url:
                         # Read file content
-                        with codecs.open(snippet, 'r', encoding=self.encoding) as f:
-                            s_lines = [l.rstrip('\r\n') for l in f]
-                            if start is not None or end is not None:
-                                s = slice(start, end)
-                                s_lines = self.dedent(s_lines[s]) if self.dedent_subsections else s_lines[s]
-                            elif section:
-                                s_lines = self.extract_section(section, s_lines)
+                        try:
+                            with codecs.open(snippet, 'r', encoding=self.encoding) as f:
+                                s_lines = [l.rstrip('\r\n') for l in f]
+                                if start is not None or end is not None:
+                                    s = slice(start, end)
+                                    s_lines = self.dedent(s_lines[s]) if self.dedent_subsections else s_lines[s]
+                                elif section:
+                                    s_lines = self.extract_section(section, s_lines)
+                        except Exception as e:
+                            if self.check_paths:
+                                raise SnippetMissingError(f"Error reading snippet file '{snippet}': {e}")
+                            else:
+                                s_lines = []
                     else:
                         # Read URL content
                         try:

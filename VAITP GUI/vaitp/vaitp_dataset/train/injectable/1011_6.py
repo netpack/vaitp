@@ -1,6 +1,9 @@
+
 from .common import PostProcessor
 from ..compat import compat_shlex_quote
-from ..utils import Popen, PostProcessingError, variadic
+from ..utils import Popen, PostProcessingError, variadic, sanitize_shell_args
+import shlex
+import os
 
 
 class ExecPP(PostProcessor):
@@ -26,7 +29,12 @@ class ExecPP(PostProcessor):
         for tmpl in self.exec_cmd:
             cmd = self.parse_cmd(tmpl, info)
             self.to_screen(f'Executing command: {cmd}')
-            _, _, return_code = Popen.run(cmd, shell=True)
+            try:
+                args = sanitize_shell_args(shlex.split(cmd))
+                _, _, return_code = Popen.run(args, shell=False, executable=os.environ.get('SHELL', '/bin/sh'))
+            except ValueError as e:
+                  raise PostProcessingError(f'Invalid command: {cmd} - {e}')
+
             if return_code != 0:
                 raise PostProcessingError(f'Command returned error code {return_code}')
         return [], info

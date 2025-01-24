@@ -43,40 +43,59 @@ def add_events(sio:socketio):
     @sio.on('create_empty_message')
     def create_empty_message(sid, data):
         client_id = sid
-        type = int(data.get("type",0))
+        message_type = data.get("type",0)
         message = data.get("message","")
-        if type==0:
+        if message_type==0:
             ASCIIColors.info(f"Building empty User message requested by : {client_id}")
             # send the message to the bot
             print(f"Creating an empty message for AI answer orientation")
-            if lollmsElfServer.session.get_client(client_id).discussion:
+            client = lollmsElfServer.session.get_client(client_id)
+            if client and client.discussion:
                 if not lollmsElfServer.model:
                     lollmsElfServer.error("No model selected. Please make sure you select a model before starting generation", client_id = client_id)
                     return          
                 lollmsElfServer.new_message(client_id, lollmsElfServer.config.user_name, message, sender_type=SENDER_TYPES.SENDER_TYPES_USER, open=True)
-        else:
+        elif message_type==1:
             if lollmsElfServer.personality is None:
                 lollmsElfServer.warning("Select a personality")
                 return
             ASCIIColors.info(f"Building empty AI message requested by : {client_id}")
             # send the message to the bot
             print(f"Creating an empty message for AI answer orientation")
-            if lollmsElfServer.session.get_client(client_id).discussion:
+            client = lollmsElfServer.session.get_client(client_id)
+            if client and client.discussion:
                 if not lollmsElfServer.model:
                     lollmsElfServer.error("No model selected. Please make sure you select a model before starting generation", client_id=client_id)
                     return          
                 lollmsElfServer.new_message(client_id, lollmsElfServer.personality.name, "[edit this to put your ai answer start]", open=True)
-
+        else:
+            lollmsElfServer.error("Unknown message type", client_id=client_id)
 
     @sio.on('add_webpage')
     def add_webpage(sid, data):
         lollmsElfServer.ShowBlockingMessage("Scraping web page\nPlease wait...")
         ASCIIColors.yellow("Scaping web page")
         client = lollmsElfServer.session.get_client(sid)
-        url = data['url']
+        if not client:
+            lollmsElfServer.error("Client not found", client_id=sid)
+            run_async(partial(sio.emit,'web_page_added', {'status':False}))
+            lollmsElfServer.HideBlockingMessage()
+            return
+        url = data.get('url',None)
+        if not url:
+            lollmsElfServer.error("No URL provided", client_id=sid)
+            run_async(partial(sio.emit,'web_page_added', {'status':False}))
+            lollmsElfServer.HideBlockingMessage()
+            return
         index =  find_first_available_file_index(lollmsElfServer.lollms_paths.personal_uploads_path,"web_",".txt")
         file_path=lollmsElfServer.lollms_paths.personal_uploads_path/f"web_{index}.txt"
-        scrape_and_save(url=url, file_path=file_path)
+        try:
+            scrape_and_save(url=url, file_path=file_path)
+        except Exception as e:
+            lollmsElfServer.error(f"Failed to scrape web page: {e}", client_id=sid)
+            run_async(partial(sio.emit,'web_page_added', {'status':False}))
+            lollmsElfServer.HideBlockingMessage()
+            return
         try:
             if not lollmsElfServer.personality.processor is None:
                 lollmsElfServer.personality.processor.add_file(file_path, client, partial(lollmsElfServer.process_chunk, client_id = sid))
@@ -89,6 +108,7 @@ def add_events(sio:socketio):
             lollmsElfServer.HideBlockingMessage()
         except Exception as e:
             # Error occurred while saving the file
+            lollmsElfServer.error(f"Failed to add file to persona: {e}", client_id=sid)
             run_async(partial(sio.emit,'web_page_added', {'status':False}))
             lollmsElfServer.HideBlockingMessage()
 
@@ -96,11 +116,19 @@ def add_events(sio:socketio):
     def take_picture(sid):
         try:
             client = lollmsElfServer.session.get_client(sid)
+            if not client:
+                lollmsElfServer.error("Client not found", client_id=sid)
+                run_async(partial(sio.emit,'picture_taken', {'status':False, 'error': 'Client not found'}))
+                return
             lollmsElfServer.info("Loading camera")
             if not PackageManager.check_package_installed("cv2"):
                 PackageManager.install_package("opencv-python")
             import cv2
             cap = cv2.VideoCapture(0)
+            if not cap.isOpened():
+                 lollmsElfServer.error("Could not open camera", client_id=sid)
+                 run_async(partial(sio.emit,'picture_taken', {'status':False, 'error': 'Could not open camera'}))
+                 return
             n = time.time()
             lollmsElfServer.info("Stand by for taking a shot in 2s")
             while(time.time()-n<2):
@@ -135,4 +163,5 @@ def add_events(sio:socketio):
 
         except Exception as ex:
             trace_exception(ex)
-            lollmsElfServer.error("Couldn't use the webcam")
+            lollmsElfServer.error("Couldn't use the webcam", client_id=sid)
+            run_async(partial(sio.emit,'picture_taken', {'status':False, 'error': str(ex)}))

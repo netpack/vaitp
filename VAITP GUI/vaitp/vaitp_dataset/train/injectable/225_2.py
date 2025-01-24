@@ -184,7 +184,11 @@ class static_view:
         # add the identity
         path = self.find_resource_path(resource_name)
         if path:
-            result.append((path, None))
+            try:
+                size = getsize(path)
+                result.append((size, None, path))
+            except OSError:
+                pass
 
         # add each file we find for the supported encodings
         # we don't mind adding multiple files for the same encoding if there
@@ -195,10 +199,17 @@ class static_view:
                 encoded_name = resource_name + ext
                 path = self.find_resource_path(encoded_name)
                 if path:
-                    result.append((path, encoding))
+                    try:
+                        size = getsize(path)
+                        result.append((size, encoding, path))
+                    except OSError:
+                        pass
 
         # sort the files by size, smallest first
-        result.sort(key=lambda x: getsize(x[0]))
+        result.sort(key=lambda x: x[0])
+        
+        # remove the size from the result
+        result = [(path,encoding) for _,encoding,path in result]
 
         # only cache the results if reload is disabled
         if not self.reload:
@@ -281,7 +292,7 @@ def _secure_path(path_tuple):
         return None
     if any([_contains_invalid_element_char(item) for item in path_tuple]):
         return None
-    encoded = '/'.join(path_tuple)  # will be unicode
+    encoded = '/'.join(item.replace('\0','') for item in path_tuple)  # will be unicode
     return encoded
 
 
@@ -391,8 +402,11 @@ class ManifestCacheBuster:
             self._manifest = self.get_manifest()
 
     def get_manifest(self):
-        with open(self.manifest_path, 'rb') as fp:
-            return self.parse_manifest(fp.read())
+        try:
+            with open(self.manifest_path, 'rb') as fp:
+                return self.parse_manifest(fp.read())
+        except (FileNotFoundError, OSError):
+             return {}
 
     def parse_manifest(self, content):
         """

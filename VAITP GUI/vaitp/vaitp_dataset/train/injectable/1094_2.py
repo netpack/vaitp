@@ -101,21 +101,21 @@ class JonesFaithfulTransformation:
             b_change, o_shift = transformation_string.split(";")
             basis_change = b_change.split(",")
             origin_shift = o_shift.split(",")
-
+            
             # add implicit multiplication symbols
             basis_change = [
-                re.sub(r"(?<=\w|\))(?=\() | (?<=\))(?=\w) | (?<=(\d|a|b|c))(?=([abc]))", r"*", string, flags=re.X)
+                re.sub(r"(?<=\w|\))(?=\()|(?<=\))(?=\w)|(?<=(\d|a|b|c))(?=([abc]))", r"*", string, flags=re.X)
                 for string in basis_change
             ]
 
             # basic input sanitation
             allowed_chars = "0123456789+-*/.abc()"
             basis_change = ["".join([c for c in string if c in allowed_chars]) for string in basis_change]
-
+            
             # requires round-trip to sympy to evaluate
             # (alternatively, `numexpr` looks like a nice solution but requires an additional dependency)
             basis_change = [
-                parse_expr(string).subs({"a": Matrix(a), "b": Matrix(b), "c": Matrix(c)}) for string in basis_change
+                parse_expr(string,  global_dict={"a": Matrix(a), "b": Matrix(b), "c": Matrix(c)}) for string in basis_change
             ]
             # convert back to numpy, perform transpose by convention
             P = np.array(basis_change, dtype=float).T[0]

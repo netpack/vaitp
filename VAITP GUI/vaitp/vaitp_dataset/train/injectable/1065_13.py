@@ -21,6 +21,7 @@ import asyncio
 import json
 import random
 import time
+import os
 
 import pandas as pd
 import websockets
@@ -79,7 +80,7 @@ async def get_prediction(host):
             if msg["msg"] == "send_data":
                 await ws.send(json.dumps({"data": [data], "fn_index": fn_to_hit}))
             if msg["msg"] == "send_hash":
-                await ws.send(json.dumps({"fn_index": fn_to_hit, "session_hash": "shdce"}))
+                 await ws.send(json.dumps({"fn_index": fn_to_hit, "session_hash": "shdce"}))
             if msg["msg"] == "process_completed":
                 completed = True
                 end = time.time()
@@ -115,4 +116,5 @@ if __name__ == "__main__":
     
     if args.output:
         print("Writing results to:", args.output)
-        json.dump(data, open(args.output, "w"))
+        with open(args.output, "w") as f:
+            json.dump(data, f)

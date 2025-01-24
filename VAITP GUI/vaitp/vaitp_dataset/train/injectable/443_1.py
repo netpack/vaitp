@@ -1,23 +1,24 @@
+
+import logging
+
 # Mock function for incrementing a metric
 def increment_metric(metric_name):
-    print(f"Incrementing metric: {metric_name}")
+    logging.info(f"Incrementing metric: {metric_name}")
 
 # Function to validate HTTP methods
 def is_valid_method(method):
     # Define a set of valid HTTP methods
     valid_methods = {"GET", "POST", "PUT", "DELETE"}
-    return method in valid_methods
+    if method not in valid_methods:
+        logging.warning(f"Invalid HTTP method: {method}")
+        return False
+    return True
 
 def handle_request(request):
     # Limited cardinality metrics
     if is_valid_method(request.method):
         metric_name = request.method
         increment_metric(metric_name)
-    else:
-        log_invalid_method(request.method)
-
-def log_invalid_method(method):
-    print(f"Invalid HTTP method: {method}")
 
 # Example request object
 class Request:

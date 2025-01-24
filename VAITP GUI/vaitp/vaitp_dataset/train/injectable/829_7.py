@@ -31,7 +31,8 @@ from zExceptions import NotFound
 from zope.component import provideUtility
 from zope.location.interfaces import LocationError
 from zope.traversing.adapters import DefaultTraversable
-
+from RestrictedPython import compile_restricted
+from RestrictedPython.Guards import safe_builtins, guarded_getattr, full_write_guarded
 from .util import useChameleonEngine
 
 
@@ -85,10 +86,28 @@ class HTMLTests(zope.component.testing.PlacelessSetup, unittest.TestCase):
         self.oldPolicy = SecurityManager.setSecurityPolicy(self.policy)
         noSecurityManager()  # Use the new policy.
 
+        # Setup RestrictedPython
+        safe_builtins["compile"] = compile_restricted
+        safe_builtins["getattr"] = guarded_getattr
+        safe_builtins["__import__"] = self._restricted_import
+        self.old_write_guard = RestrictedPython.Guards.write_guarded
+        RestrictedPython.Guards.write_guarded = full_write_guarded
+
     def tearDown(self):
         super().tearDown()
         SecurityManager.setSecurityPolicy(self.oldPolicy)
         noSecurityManager()  # Reset to old policy.
+        RestrictedPython.Guards.write_guarded = self.old_write_guard
+        del safe_builtins["compile"]
+        del safe_builtins["getattr"]
+        del safe_builtins["__import__"]
+
+    def _restricted_import(self, name, *args, **kwargs):
+        if name == 'random._itertools':
+           raise NotFound('Not found')
+        elif name.startswith('AccessControl'):
+            raise NotFound('Not found')
+        return __import__(name, *args, **kwargs)
 
     def assert_expected(self, t, fname, *args, **kwargs):
         t.write(util.read_input(fname))

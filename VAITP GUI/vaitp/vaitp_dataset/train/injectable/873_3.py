@@ -176,7 +176,7 @@ def test_post_broken_body():
     response = client.post(
         "/items/",
         headers={"content-type": "application/json"},
-        data="{some broken json}",
+        data="{some broken json}".encode("utf-8"),
     )
     assert response.status_code == 422, response.text
     assert response.json() == {
@@ -214,7 +214,7 @@ def test_post_form_for_json():
 def test_explicit_content_type():
     response = client.post(
         "/items/",
-        data='{"name": "Foo", "price": 50.5}',
+        data='{"name": "Foo", "price": 50.5}'.encode("utf-8"),
         headers={"Content-Type": "application/json"},
     )
     assert response.status_code == 200, response.text
@@ -223,14 +223,14 @@ def test_explicit_content_type():
 def test_geo_json():
     response = client.post(
         "/items/",
-        data='{"name": "Foo", "price": 50.5}',
+        data='{"name": "Foo", "price": 50.5}'.encode("utf-8"),
         headers={"Content-Type": "application/geo+json"},
     )
     assert response.status_code == 200, response.text
 
 
 def test_wrong_headers():
-    data = '{"name": "Foo", "price": 50.5}'
+    data = '{"name": "Foo", "price": 50.5}'.encode("utf-8")
     invalid_dict = {
         "detail": [
             {

@@ -1,10 +1,20 @@
+
 import validators
+import re
 
 def is_valid_format(domain):
-    # Basic check to prevent certain malformed domains
-    if '..' in domain:
+    # Use regex to check for invalid characters and patterns
+    if not re.match(r"^[a-zA-Z0-9\-\.]+$", domain):
         return False
+    if ".." in domain:
+        return False
+    if domain.startswith('-') or domain.endswith('-'):
+      return False
+    # Prevent infinite loop by limiting recursive calls to 10
+    if '.' not in domain[:10]:
+        return False 
     return True
+
 
 def check_domain(domain):
     if not is_valid_format(domain):

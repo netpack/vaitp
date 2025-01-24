@@ -1,4 +1,5 @@
-from PIL import Image # Pillow < 8.1.1
+from PIL import Image
+import io
 
 def load_icns_safely(filename):
     with open(filename, 'rb') as f:
@@ -12,13 +13,18 @@ def load_icns_safely(filename):
 
         # Load the image with the correct size
         f.seek(0) # Reset file pointer to the beginning
-        img = Image.open(f)
-        return img
+        image_data = f.read()
+        try:
+            img = Image.open(io.BytesIO(image_data))
+            img.load()
+            return img
+        except Exception as e:
+            raise ValueError(f"Error loading image: {e}")
+
 
 # Load the .icns file safely
 try:
   img = load_icns_safely('example.icns')
-  img.load()
 except FileNotFoundError:
     print("Error: 'example.icns' not found.")
 except ValueError as e:

@@ -2,12 +2,18 @@ import jsonpickle
 
 # Safe deserialization function
 def safe_deserialize(data):
-    # Use jsonpickle's `decode` method with a whitelist of allowed classes
-    return jsonpickle.decode(data, classes=(str, int, float, list, dict, tuple, bool, type(None)))
+    try:
+        # Use jsonpickle's `decode` method with a whitelist of allowed classes
+        return jsonpickle.decode(data, classes=(str, int, float, list, dict, tuple, bool, type(None)))
+    except jsonpickle.json.JSONDecodeError:
+         return None
+    except Exception:
+        return None
 
 # Example usage
 malicious_payload = '{"py/object": "__main__.YourMaliciousClass"}'
-try:
-    result = safe_deserialize(malicious_payload)
-except Exception as e:
-    print("Deserialization failed:", e)
+result = safe_deserialize(malicious_payload)
+if result is None:
+    print("Deserialization failed: Invalid JSON or disallowed object.")
+else:
+    print("Deserialized data:", result)

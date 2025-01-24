@@ -1,93 +1,104 @@
-.. py:module:: PIL.ImageFont
-.. py:currentmodule:: PIL.ImageFont
+from PIL import ImageFont, ImageDraw
 
-:py:mod:`~PIL.ImageFont` Module
-===============================
+MAX_STRING_LENGTH = 1000000
 
-The :py:mod:`~PIL.ImageFont` module defines a class with the same name. Instances of
-this class store bitmap fonts, and are used with the
-:py:meth:`PIL.ImageDraw.ImageDraw.text` method.
+def load(filename):
+    try:
+        return ImageFont.load(filename)
+    except Exception as e:
+        raise ValueError(f"Invalid filename: {filename}") from e
 
-PIL uses its own font file format to store bitmap fonts, limited to 256 characters. You can use
-`pilfont.py <https://github.com/python-pillow/pillow-scripts/blob/main/Scripts/pilfont.py>`_
-from `pillow-scripts <https://pypi.org/project/pillow-scripts/>`_ to convert BDF and
-PCF font descriptors (X window font formats) to this format.
+def load_path(filename):
+    try:
+        return ImageFont.load_path(filename)
+    except Exception as e:
+       raise ValueError(f"Invalid filename: {filename}") from e
 
-Starting with version 1.1.4, PIL can be configured to support TrueType and
-OpenType fonts (as well as other font formats supported by the FreeType
-library). For earlier versions, TrueType support is only available as part of
-the imToolkit package.
+def truetype(font, size, index=0, encoding="", layout_engine=None):
+    try:
+      return ImageFont.truetype(font, size, index=index, encoding=encoding, layout_engine=layout_engine)
+    except Exception as e:
+      raise ValueError(f"Invalid font: {font}") from e
 
-.. warning::
-    To protect against potential DOS attacks when using arbitrary strings as
-    text input, Pillow will raise a ``ValueError`` if the number of characters
-    is over a certain limit, :py:data:`MAX_STRING_LENGTH`.
+def load_default():
+    return ImageFont.load_default()
 
-    This threshold can be changed by setting
-    :py:data:`MAX_STRING_LENGTH`. It can be disabled by setting
-    ``ImageFont.MAX_STRING_LENGTH = None``.
+class ImageFont:
+    def __init__(self, font):
+        self.font = font
 
-Example
--------
+    def getname(self):
+        return self.font.getname()
+    
+    def getmetrics(self):
+        return self.font.getmetrics()
 
-::
+    def getlength(self, text, direction=None):
+        if MAX_STRING_LENGTH is not None and len(text) > MAX_STRING_LENGTH:
+            raise ValueError(f"Text length exceeds maximum allowed length: {MAX_STRING_LENGTH}")
+        return self.font.getlength(text, direction=direction)
 
-    from PIL import ImageFont, ImageDraw
+    def getsize(self, text, direction=None):
+        if MAX_STRING_LENGTH is not None and len(text) > MAX_STRING_LENGTH:
+            raise ValueError(f"Text length exceeds maximum allowed length: {MAX_STRING_LENGTH}")
+        return self.font.getsize(text, direction=direction)
 
-    draw = ImageDraw.Draw(image)
+    def getbbox(self, text, direction=None):
+      if MAX_STRING_LENGTH is not None and len(text) > MAX_STRING_LENGTH:
+        raise ValueError(f"Text length exceeds maximum allowed length: {MAX_STRING_LENGTH}")
+      return self.font.getbbox(text, direction=direction)
 
-    # use a bitmap font
-    font = ImageFont.load("arial.pil")
 
-    draw.text((10, 10), "hello", font=font)
+class FreeTypeFont(ImageFont):
+    def __init__(self, font):
+        super().__init__(font)
 
-    # use a truetype font
-    font = ImageFont.truetype("arial.ttf", 15)
+    def getname(self):
+        return self.font.getname()
 
-    draw.text((10, 25), "world", font=font)
+    def getmetrics(self):
+        return self.font.getmetrics()
 
-Functions
----------
+    def getlength(self, text, direction=None):
+        if MAX_STRING_LENGTH is not None and len(text) > MAX_STRING_LENGTH:
+            raise ValueError(f"Text length exceeds maximum allowed length: {MAX_STRING_LENGTH}")
+        return self.font.getlength(text, direction=direction)
+    
+    def getsize(self, text, direction=None):
+        if MAX_STRING_LENGTH is not None and len(text) > MAX_STRING_LENGTH:
+          raise ValueError(f"Text length exceeds maximum allowed length: {MAX_STRING_LENGTH}")
+        return self.font.getsize(text, direction=direction)
+    
+    def getbbox(self, text, direction=None):
+      if MAX_STRING_LENGTH is not None and len(text) > MAX_STRING_LENGTH:
+        raise ValueError(f"Text length exceeds maximum allowed length: {MAX_STRING_LENGTH}")
+      return self.font.getbbox(text, direction=direction)
+      
+class TransposedFont(ImageFont):
+    def __init__(self, font):
+        super().__init__(font)
 
-.. autofunction:: PIL.ImageFont.load
-.. autofunction:: PIL.ImageFont.load_path
-.. autofunction:: PIL.ImageFont.truetype
-.. autofunction:: PIL.ImageFont.load_default
+    def getname(self):
+      return self.font.getname()
 
-Methods
--------
+    def getmetrics(self):
+        return self.font.getmetrics()
+    
+    def getlength(self, text, direction=None):
+      if MAX_STRING_LENGTH is not None and len(text) > MAX_STRING_LENGTH:
+            raise ValueError(f"Text length exceeds maximum allowed length: {MAX_STRING_LENGTH}")
+      return self.font.getlength(text, direction=direction)
+    
+    def getsize(self, text, direction=None):
+      if MAX_STRING_LENGTH is not None and len(text) > MAX_STRING_LENGTH:
+        raise ValueError(f"Text length exceeds maximum allowed length: {MAX_STRING_LENGTH}")
+      return self.font.getsize(text, direction=direction)
 
-.. autoclass:: PIL.ImageFont.ImageFont
-    :members:
+    def getbbox(self, text, direction=None):
+      if MAX_STRING_LENGTH is not None and len(text) > MAX_STRING_LENGTH:
+        raise ValueError(f"Text length exceeds maximum allowed length: {MAX_STRING_LENGTH}")
+      return self.font.getbbox(text, direction=direction)
 
-.. autoclass:: PIL.ImageFont.FreeTypeFont
-    :members:
-
-.. autoclass:: PIL.ImageFont.TransposedFont
-    :members:
-    :undoc-members:
-
-Constants
----------
-
-.. data:: PIL.ImageFont.Layout.BASIC
-
-    Use basic text layout for TrueType font.
-    Advanced features such as text direction are not supported.
-
-.. data:: PIL.ImageFont.Layout.RAQM
-
-    Use Raqm text layout for TrueType font.
-    Advanced features are supported.
-
-    Requires Raqm, you can check support using
-    :py:func:`PIL.features.check_feature` with ``feature="raqm"``.
-
-Constants
----------
-
-.. data:: MAX_STRING_LENGTH
-
-    Set to 1,000,000, to protect against potential DOS attacks. Pillow will
-    raise a ``ValueError`` if the number of characters is over this limit. The
-    check can be disabled by setting ``ImageFont.MAX_STRING_LENGTH = None``.
+class Layout:
+    BASIC = "basic"
+    RAQM = "raqm"

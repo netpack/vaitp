@@ -1,3 +1,4 @@
+
 import os
 import tarfile
 import zipfile
@@ -5,6 +6,10 @@ from urllib.request import urlretrieve
 
 def safe_get_file(url, cache_dir='.', extract=False):
     """Download a file and optionally extract it safely."""
+    # Check for valid cache directory
+    if not os.path.isdir(cache_dir) or not os.access(cache_dir, os.W_OK):
+        raise PermissionError("Invalid cache directory.")
+    
     filename = os.path.join(cache_dir, os.path.basename(url))
 
     # Download the file
@@ -18,6 +23,14 @@ def safe_get_file(url, cache_dir='.', extract=False):
 
 def safe_extract(file_path, extract_to='.'):
     """Extract a tar or zip file safely."""
+    # Check for valid file path
+    if not os.path.isfile(file_path):
+        raise FileNotFoundError("Invalid file path.")
+    
+    # Check for valid extract directory
+    if not os.path.isdir(extract_to):
+        raise NotADirectoryError("Extract directory does not exist.")
+    
     if file_path.endswith('.tar.gz') or file_path.endswith('.tgz'):
         with tarfile.open(file_path, 'r:gz') as tar:
             # Extract files to a specific directory only

@@ -14,6 +14,7 @@ from langchain.tools.sql_database.prompt import QUERY_CHECKER
 from langchain.utilities.sql_database import SQLDatabase
 
 from langchain_experimental.sql.base import INTERMEDIATE_STEPS_KEY, SQLDatabaseChain
+import re
 
 
 class VectorSQLOutputParser(BaseOutputParser[str]):
@@ -42,20 +43,20 @@ class VectorSQLOutputParser(BaseOutputParser[str]):
 
     def parse(self, text: str) -> str:
         text = text.strip()
-        start = text.find("NeuralArray(")
-        _sql_str_compl = text
-        if start > 0:
-            _matched = text[text.find("NeuralArray(") + len("NeuralArray(") :]
-            end = _matched.find(")") + start + len("NeuralArray(") + 1
-            entity = _matched[: _matched.find(")")]
+        sql_str_compl = text
+        
+        def replace_neural_array(match):
+            entity = match.group(1)
             vecs = self.model.embed_query(entity)
             vecs_str = "[" + ",".join(map(str, vecs)) + "]"
-            _sql_str_compl = text.replace("DISTANCE", self.distance_func_name).replace(
-                text[start:end], vecs_str
-            )
-            if _sql_str_compl[-1] == ";":
-                _sql_str_compl = _sql_str_compl[:-1]
-        return _sql_str_compl
+            return vecs_str
+
+        sql_str_compl = re.sub(r"NeuralArray\(([^)]*)\)", replace_neural_array, sql_str_compl)
+        sql_str_compl = sql_str_compl.replace("DISTANCE", self.distance_func_name)
+        
+        if sql_str_compl and sql_str_compl[-1] == ";":
+            sql_str_compl = sql_str_compl[:-1]
+        return sql_str_compl
 
 
 class VectorSQLRetrieveAllOutputParser(VectorSQLOutputParser):

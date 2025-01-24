@@ -1,17 +1,20 @@
 import subprocess
+import shlex
 
 def safe_exec(command):
-    # Validate the command to ensure it doesn't allow arbitrary execution
-    allowed_commands = ['ls', 'whoami']  # Example of allowed commands
-    if command in allowed_commands:
-        result = subprocess.run(command, shell=True, check=True, text=True, capture_output=True)
+    allowed_commands = ['ls', 'whoami']
+    command_parts = shlex.split(command)
+    if not command_parts:
+        raise ValueError("Empty command provided.")
+    if command_parts[0] in allowed_commands:
+        result = subprocess.run(command_parts, check=True, text=True, capture_output=True)
         return result.stdout
     else:
         raise ValueError("Unauthorized command execution attempt.")
 
 # Example usage
 try:
-    print(safe_exec('ls'))  # This is allowed
-    print(safe_exec('rm -rf /'))  # This would raise an error
+    print(safe_exec('ls'))
+    print(safe_exec('rm -rf /'))
 except ValueError as e:
     print(e)

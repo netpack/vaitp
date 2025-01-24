@@ -1,8 +1,10 @@
 import rrdtool
+import shlex
 
 def safe_graph(filename, title, data):
     # Ensure that the data is sanitized to prevent format string vulnerabilities
-    sanitized_data = str(data).replace('%', '%%')
+    # and command injection.
+    sanitized_data = shlex.quote(str(data))
     
     # Call the rrdtool.graph function with the sanitized data
     rrdtool.graph(filename,
@@ -10,4 +12,4 @@ def safe_graph(filename, title, data):
                   data=sanitized_data)
 
 # Example usage
-safe_graph('output.png', 'Sample Graph', 'Data: %s' % 'Sample data')
+safe_graph('output.png', 'Sample Graph', 'Data: Sample data')

@@ -1,9 +1,9 @@
+
 import contextlib
 import logging
 import os
 from pathlib import Path
-import pdb
-import traceback
+from warnings import catch_warnings, simplefilter
 
 from rich import print
 
@@ -13,14 +13,14 @@ logger = logging.getLogger("solara.server")
 def start_error(title, msg, exception: Exception = None):
     if exception:
         traceback.print_exception(None, exception, exception.__traceback__)
-    print(f"[red]{title}:\n\t[blue]{msg}")  # noqa
+    print(f"[red]{title}:\n\t[blue]{msg}")
     os._exit(-1)
 
 
 def path_is_child_of(path: Path, parent: Path) -> bool:
-    # We use os.path.normpath() because we do not want to follow symlinks
-    # in editable installs, since some packages are symlinked
-    return os.path.normpath(path).startswith(os.path.normpath(parent))
+    with catch_warnings():
+        simplefilter("ignore", DeprecationWarning)
+        return path.relative_to(parent).startswith("..")
 
 
 @contextlib.contextmanager

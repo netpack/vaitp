@@ -4,9 +4,9 @@ def is_in_or_equal(directory, target):
     # Normalize the paths
     directory = os.path.abspath(directory)
     target = os.path.abspath(target)
-    
-    # Check if the target is within the directory
-    return os.path.commonpath([directory]) == os.path.commonpath([directory, target]) and target.startswith(directory)
+
+    # Check if the target is within the directory, ensuring no path traversal
+    return target.startswith(directory) and os.path.commonpath([directory, target]) == directory
 
 # Example usage
 directory = "/safe/directory"

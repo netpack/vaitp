@@ -1,16 +1,31 @@
 import os
+import tempfile
+import subprocess
 
 def execute_python_code(code, basename):
     # Sanitize the basename to prevent path traversal
     safe_basename = os.path.basename(basename)
-    safe_path = os.path.join("workspace", safe_basename)
+    
+    if not safe_basename:
+        raise ValueError("Invalid basename")
+    
+    if ".." in safe_basename:
+        raise ValueError("Invalid basename")
 
-    # Ensure the file is being created within the workspace directory
-    if not safe_path.startswith(os.path.join(os.getcwd(), "workspace")):
-        raise ValueError("Invalid file path")
+    with tempfile.TemporaryDirectory() as tmpdir:
+        safe_path = os.path.join(tmpdir, safe_basename)
 
-    with open(safe_path, 'w') as f:
-        f.write(code)
-
-    # Execute the code in a sandboxed environment (e.g., docker)
-    # Here you would add the logic to run the code inside a docker container
+        with open(safe_path, 'w') as f:
+            f.write(code)
+        
+        try:
+            subprocess.run(
+                ['python', safe_path],
+                check=True,
+                timeout=10,
+                capture_output=True
+            )
+        except subprocess.TimeoutExpired:
+            raise ValueError("Code execution timed out")
+        except subprocess.CalledProcessError as e:
+             raise ValueError(f"Code execution failed: {e.stderr.decode()}")

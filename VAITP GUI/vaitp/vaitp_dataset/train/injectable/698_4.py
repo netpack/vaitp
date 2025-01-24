@@ -4,6 +4,7 @@ import graphene
 import pytest
 from django.test import override_settings
 from graphql.execution.base import ExecutionResult
+import json
 
 from .... import __version__ as saleor_version
 from ....demo.views import EXAMPLE_QUERY
@@ -44,7 +45,11 @@ def test_batch_queries(category, product, api_client, channel_USD):
             },
         },
     ]
-    response = api_client.post(data)
+    response = api_client.post(
+        API_PATH,
+        json.dumps(data),
+        content_type="application/json",
+    )
     batch_content = get_graphql_content(response)
     assert "errors" not in batch_content
     assert isinstance(batch_content, list)
@@ -132,7 +137,9 @@ def test_no_query(client):
 
 def test_query_is_dict(client):
     data = {"query": {"type": "dict"}}
-    response = client.post(API_PATH, data, content_type="application/json")
+    response = client.post(
+        API_PATH, json.dumps(data), content_type="application/json"
+    )
     assert response.status_code == 400
     content = get_graphql_content_from_response(response)
     assert content["errors"][0]["message"] == "Must provide a query string."

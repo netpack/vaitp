@@ -11,7 +11,7 @@ from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.mixins import AccessMixin
 from django.http import HttpResponseServerError, JsonResponse, HttpResponseForbidden, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
-from django.template import loader, RequestContext, Template
+from django.template import loader
 from django.template.exceptions import TemplateDoesNotExist
 from django.urls import resolve, reverse
 from django.views.decorators.csrf import requires_csrf_token
@@ -23,6 +23,7 @@ from graphene_django.views import GraphQLView
 from prometheus_client import multiprocess
 from prometheus_client.metrics_core import GaugeMetricFamily
 from prometheus_client.registry import Collector
+from django.utils.html import format_html
 
 from nautobot.core.constants import SEARCH_MAX_RESULTS
 from nautobot.core.forms import SearchForm
@@ -33,6 +34,7 @@ from nautobot.core.utils.permissions import get_permission_for_model
 from nautobot.extras.models import GraphQLQuery, FileProxy
 from nautobot.extras.registry import registry
 from nautobot.extras.forms import GraphQLQueryForm
+from django.utils.safestring import mark_safe
 
 
 class HomeView(AccessMixin, TemplateView):
@@ -48,17 +50,18 @@ class HomeView(AccessMixin, TemplateView):
                 context[key] = data
 
         # Create standalone template
-        path = f'{details["template_path"]}{details["custom_template"]}'
-        if os.path.isfile(path):
-            with open(path, "r") as f:
-                html = f.read()
-        else:
-            raise TemplateDoesNotExist(path)
+        path = os.path.join(details["template_path"], details["custom_template"])
+        if not os.path.isfile(path):
+             raise TemplateDoesNotExist(path)
 
-        template = Template(html)
+        with open(path, "r", encoding="utf-8") as f:
+            html = f.read()
 
-        additional_context = RequestContext(request, context)
-        return template.render(additional_context)
+
+        template = loader.get_template_from_string(html)
+
+        additional_context = context
+        return mark_safe(template.render(additional_context))
 
     def get(self, request, *args, **kwargs):
         # Redirect user to login page if not authenticated and HIDE_RESTRICTED_UI is set to True
@@ -174,7 +177,7 @@ class SearchView(AccessMixin, View):
                         {
                             "name": queryset.model._meta.verbose_name_plural,
                             "table": table,
-                            "url": f"{reverse(url)}?q={form.cleaned_data.get('q')}",
+                            "url": format_html("{}?q={}", reverse(url), form.cleaned_data.get("q")),
                         }
                     )
 

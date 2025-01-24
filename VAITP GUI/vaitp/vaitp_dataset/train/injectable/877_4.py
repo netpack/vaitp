@@ -1,3 +1,4 @@
+
 import string
 from collections.abc import Mapping
 
@@ -25,6 +26,7 @@ class _MagicFormatMapping(Mapping):
         self._args = args
         self._kwargs = kwargs
         self._last_index = 0
+        self._seen_args = set()
 
     def __getitem__(self, key):
         if key == '':
@@ -35,7 +37,21 @@ class _MagicFormatMapping(Mapping):
             except LookupError:
                 pass
             key = str(idx)
-        return self._kwargs[key]
+        if key in self._kwargs:
+            return self._kwargs[key]
+        if key in self._seen_args:
+            raise KeyError(key)
+        try:
+            value = int(key)  # Python 3.x
+        except ValueError:
+            try:
+                value = long(key)  # Python 2.x
+            except ValueError:
+                raise KeyError(key)
+        if value < len(self._args):
+            self._seen_args.add(key)
+            return self._args[value]
+        raise KeyError(key)
 
     def __iter__(self):
         return iter(self._kwargs)
@@ -69,6 +85,8 @@ class SafeFormatter(string.Formatter):
 
     def safe_format(self, *args, **kwargs):
         """Safe variant of `format` method."""
+        if args and kwargs:
+            raise ValueError('Cannot mix positional and keyword arguments')
         kwargs = _MagicFormatMapping(args, kwargs)
         return self.vformat(self.value, args, kwargs)
 

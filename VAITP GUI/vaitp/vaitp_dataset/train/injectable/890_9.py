@@ -26,11 +26,16 @@ from Products.PageTemplates.unicodeconflictresolver import \
     DefaultUnicodeEncodingConflictResolver
 from Products.PageTemplates.unicodeconflictresolver import \
     PreferredCharsetResolver
-from zExceptions import NotFound
 from zope.component import provideUtility
 from zope.traversing.adapters import DefaultTraversable
 
 from .util import useChameleonEngine
+
+import sys
+if sys.version_info < (3, 9):
+    from collections import abc as collections_abc
+else:
+    import collections.abc as collections_abc
 
 
 class AqPageTemplate(Implicit, PageTemplate):
@@ -222,13 +227,13 @@ class HTMLTests(zope.component.testing.PlacelessSetup, unittest.TestCase):
         t = self.folder.t
 
         t.write('<p tal:define="p context/__class__" />')
-        with self.assertRaises(NotFound):
+        with self.assertRaises(AttributeError):
             t()
 
         t.write('<p tal:define="p nocall: random/_itertools/repeat"/>')
-        with self.assertRaises(NotFound):
+        with self.assertRaises(AttributeError):
             t()
 
         t.write('<p tal:content="random/_itertools/repeat/foobar"/>')
-        with self.assertRaises(NotFound):
+        with self.assertRaises(AttributeError):
             t()

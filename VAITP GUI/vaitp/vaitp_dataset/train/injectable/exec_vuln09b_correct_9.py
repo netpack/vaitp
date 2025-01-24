@@ -1,2 +1,6 @@
+
 var = quote(input())
-exec(var)
+try:
+    exec(var)
+except Exception:
+    pass

@@ -1,4 +1,5 @@
-# Copyright (c) ONNX Project Contributors
+```python
+    # Copyright (c) ONNX Project Contributors
 #
 # SPDX-License-Identifier: Apache-2.0
 """Implements function make_large_model to easily create and save models
@@ -6,8 +7,10 @@ bigger than 2 Gb.
 """
 from __future__ import annotations
 
+import hashlib
 import os
 import sys
+import tempfile
 from typing import Any, Iterable
 
 import numpy as np
@@ -178,7 +181,7 @@ class ModelContainer:
         unique_names: dict[str, int] = {}
         folder = os.path.dirname(file_path)
         if not os.path.exists(folder):
-            raise FileNotFoundError(f"Folder {folder!r} does not exist.")
+            os.makedirs(folder, exist_ok=True)
         proto = self.model_proto.SerializeToString()
         copy = onnx.ModelProto()
         copy.ParseFromString(proto)
@@ -188,6 +191,8 @@ class ModelContainer:
             file_weight = f"{os.path.split(file_path)[1]}.weight"
             full_file_weight = f"{file_path}.weight"
             offset = 0
+            with tempfile.NamedTemporaryFile(dir=folder) as f:
+                pass
             with open(full_file_weight, "wb") as f:
                 pass
 
@@ -208,139 +213,4 @@ class ModelContainer:
                     f"with location {prop.value!r} in "
                     f"{sorted(self.large_initializers)}."
                 )
-            np_tensor = self.large_initializers[prop.value]
-
-            if sys.byteorder == "big":
-                # Convert endian from little to big
-                tensor_bytes = np_tensor.byteswap().tobytes()
-            else:
-                tensor_bytes = np_tensor.tobytes()
-            if all_tensors_to_one_file:
-                _set_external_data(
-                    tensor,
-                    location=file_weight,
-                    offset=offset,
-                    length=len(tensor_bytes),
-                )
-                offset += len(tensor_bytes)
-                with open(full_file_weight, "ab") as f:
-                    f.write(tensor_bytes)
-            else:
-                name = f"{_clean_name(prefix, prop.value, unique_names)}.weight"
-                _set_external_data(tensor, location=name)
-                full_name = os.path.join(folder, name)
-                prop.value = name
-                with open(full_name, "wb") as f:
-                    f.write(tensor_bytes)
-
-        with open(file_path, "wb") as f:
-            f.write(copy.SerializeToString())
-        return copy
-
-    def save(
-        self,
-        file_path: str,
-        all_tensors_to_one_file: bool = False,
-    ) -> onnx.ModelProto:
-        """Save the large model.
-        The function returns a ModelProto,
-        the current one if the model did not need any modification,
-        a modified copy of it if it required changes such as giving file names
-        to every external tensor.
-
-        Arguments:
-            file_path: model file
-            all_tensors_to_one_file: saves all large tensors in one file or
-                one file per lerge tensor
-
-        Returns:
-            the saved ModelProto
-        """
-        return self._save_external(
-            file_path, all_tensors_to_one_file=all_tensors_to_one_file
-        )
-
-    def load(self, file_path: str, load_large_initializers: bool = True):
-        """Load the large model.
-
-        Arguments:
-            file_path: model file
-            load_large_initializers: loads the large initializers,
-                if not done, the model is incomplete but it can be used to
-                look into the model without executing it and method
-                :meth:`_load_large_initializers` can be used to load them later
-        """
-        self.model_proto_ = onnx.load_model(file_path, load_external_data=False)
-        if load_large_initializers:
-            self._load_large_initializers(file_path)
-
-    def _load_large_initializers(self, file_path):
-        """Loads large initializers.
-
-        Arguments:
-            file_path: model file, the weight are expected to be in the same folder as this file
-        """
-        if self.model_proto_ is None:
-            raise RuntimeError("A model must be loaded before loading the weights.")
-        self.large_initializers = {}
-        base_dir = os.path.dirname(file_path)
-        for i, tensor in enumerate(ext_data._get_all_tensors(self.model_proto_)):
-            if not ext_data.uses_external_data(tensor):
-                continue
-
-            info = ext_data.ExternalDataInfo(tensor)
-            external_data_file_path = c_checker._resolve_external_data_location(  # type: ignore[attr-defined]
-                base_dir, info.location, tensor.name
-            )
-            key = f"#t{i}"
-            _set_external_data(tensor, location=key)
-
-            with open(external_data_file_path, "rb") as data_file:
-                if info.offset:
-                    data_file.seek(info.offset)
-
-                raw_data = (
-                    data_file.read(info.length) if info.length else data_file.read()
-                )
-
-                dtype = onnx.helper.tensor_dtype_to_np_dtype(tensor.data_type)
-                shape = tuple(tensor.dims)
-
-                if sys.byteorder == "big":
-                    np_tensor = (
-                        np.frombuffer(raw_data, dtype=dtype).byteswap().reshape(shape)
-                    )
-                else:
-                    np_tensor = np.frombuffer(raw_data, dtype=dtype).reshape(shape)
-
-                self.large_initializers[key] = np_tensor
-
-
-def make_large_model(
-    graph: onnx.GraphProto,
-    large_initializers: dict[str, np.ndarray] | None = None,
-    **kwargs: Any,
-) -> ModelContainer:
-    """Construct a ModelContainer
-
-    C API and Python API of protobuf do not operate without serializing
-    the protos. This function uses the Python API of ModelContainer.
-
-    Arguments:
-        graph: *make_graph* returns
-        large_initializers: dictionary `name: large tensor`,
-            large tensor is any python object supporting the DLPack protocol,
-            the ownership the tensor is transferred to the ModelContainer,
-            the tensor must define method `tobytes` like numpy tensors
-        **kwargs: any attribute to add to the returned instance
-
-    Returns:
-        ModelContainer
-    """
-    model = onnx.helper.make_model(graph, **kwargs)
-    large_model = ModelContainer()
-    large_model.model_proto = model
-    if large_initializers:
-        large_model.set_large_initializers(large_initializers)
-        large_model.check_large_initializers()
-    return large_model
+            np_tensor = self.large_initializers[

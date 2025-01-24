@@ -1,8 +1,8 @@
+
 import json
 import os
-import tarsafe  # type:ignore
-import tempfile
 import requests
+import tarsafe
 
 from guarddog.analyzer.analyzer import Analyzer
 from guarddog.scanners.scanner import Scanner
@@ -19,7 +19,7 @@ class PackageScanner(Scanner):
 
     def __init__(self) -> None:
         self.analyzer = Analyzer()
-        super().__init__()  # Call super().__init__() instead of super(Scanner)
+        super().__init__()
 
     def scan_local(self, path, rules=None) -> dict:
         """
@@ -50,22 +50,6 @@ class PackageScanner(Scanner):
                 raise Exception(f"Path {path} is not a directory nor a tar.gz archive.")
         raise Exception(f"Path {path} does not exist.")
 
-    def _scan_remote(self, name, base_dir, version=None, rules=None, write_package_info=False):
-        directory = os.path.join(os.path.dirname(os.path.abspath(__file__)), base_dir)
-        file_path = os.path.join(directory, name)
-
-        self.download_package(name, directory, version)
-
-        package_info = get_package_info(name)
-
-        results = self.analyzer.analyze(file_path, package_info, rules)
-        if write_package_info:
-            suffix = f"{name}-{version}" if version is not None else name
-            with open(os.path.join(results["path"], f'package_info-{suffix}.json'), "w") as file:
-                file.write(json.dumps(package_info))
-
-        return results
-
     def scan_remote(self, name, version=None, rules=None, base_dir=None, write_package_info=False):
         """
         Scans a remote package
@@ -87,12 +71,29 @@ class PackageScanner(Scanner):
         Returns:
             dict: Analyzer output with rules to results mapping
         """
+
         if (base_dir is not None):
             return self._scan_remote(name, base_dir, version, rules, write_package_info)
 
         with tempfile.TemporaryDirectory() as tmpdirname:
             # Directory to download compressed and uncompressed package
             return self._scan_remote(name, tmpdirname, version, rules, write_package_info)
+
+    def _scan_remote(self, name, base_dir, version=None, rules=None, write_package_info=False):
+        directory = os.path.join(os.path.dirname(os.path.abspath(__file__)), base_dir)
+        file_path = os.path.join(directory, name)
+
+        self.download_package(name, directory, version)
+
+        package_info = get_package_info(name)
+
+        results = self.analyzer.analyze(file_path, package_info, rules)
+        if write_package_info:
+            suffix = f"{name}-{version}" if version is not None else name
+            with open(os.path.join(results["path"], f'package_info-{suffix}.json'), "w") as file:
+                file.write(json.dumps(package_info))
+
+        return results
 
     def download_package(self, package_name, directory, version=None) -> None:
         """Downloads the PyPI distribution for a given package and version
@@ -154,22 +155,21 @@ class PackageScanner(Scanner):
             unzippedpath (str): path to unzip compressed file
         """
 
-        response = requests.get(url, stream=True)
-        response.raise_for_status()  # Raise HTTPError for bad responses (4xx or 5xx)
-
+        response = requests.get(url, stream=True, allow_redirects=True)
+        if response.status_code != 200:
+            raise Exception("Received status code: " + str(response.status_code) + " from PyPI")
 
         with open(zippath, "wb") as f:
             for chunk in response.iter_content(chunk_size=8192):
                 f.write(chunk)
 
-
         if zippath.endswith('.tar.gz'):
             tarsafe.open(zippath).extractall(unzippedpath)
             os.remove(zippath)
         elif zippath.endswith('.zip'):
-             import zipfile
-             with zipfile.ZipFile(zippath, 'r') as zip_ref:
+            import zipfile
+            with zipfile.ZipFile(zippath, 'r') as zip_ref:
                 zip_ref.extractall(unzippedpath)
-             os.remove(zippath)
+            os.remove(zippath)
         else:
-             raise ValueError("unsupported archive extension: " + zippath)
+            raise ValueError("unsupported archive extension: " + zippath)

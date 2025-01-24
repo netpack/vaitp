@@ -16,6 +16,7 @@ import platform
 import shutil
 import stat
 import tempfile
+import uuid
 
 import pytest
 
@@ -313,9 +314,10 @@ class TestSqliteAccountInfo(AccountInfoBase):
 
     @pytest.fixture(autouse=True)
     def setUp(self, request):
-        self.db_path = tempfile.NamedTemporaryFile(
-            prefix='tmp_b2_tests_%s__' % (request.node.name,), delete=True
-        ).name
+        self.db_path = os.path.join(
+            tempfile.gettempdir(),
+            f'tmp_b2_tests_{request.node.name}_{uuid.uuid4()}.db',
+        )
         try:
             os.unlink(self.db_path)
         except OSError:

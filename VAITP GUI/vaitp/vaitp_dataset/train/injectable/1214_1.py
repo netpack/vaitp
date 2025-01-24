@@ -19,7 +19,7 @@ def _build_create_IR(args: list) -> address:
 def create_from_blueprint_fixed(raw_args: bool, args: list) -> address:
     if raw_args:
         cached_args = args  # Cache args to prevent multiple evaluations
-        return _build_create_IR(cached_args)
+        return _build_create_IR_fixed(cached_args)
 
 def _build_create_IR_fixed(cached_args: list) -> address:
     # Now, cached_args is only evaluated once

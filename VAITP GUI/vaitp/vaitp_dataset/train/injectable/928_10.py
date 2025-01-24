@@ -14,6 +14,7 @@ from urllib3.connectionpool import port_by_scheme
 from urllib3.exceptions import MaxRetryError, URLSchemeUnknown
 from urllib3.poolmanager import PoolManager
 from urllib3.util.retry import Retry
+from urllib3.util import parse_url
 
 
 class TestPoolManager(HTTPDummyServerTestCase):
@@ -263,7 +264,7 @@ class TestPoolManager(HTTPDummyServerTestCase):
             unknown_scheme = "unknown"
             unknown_scheme_url = f"{unknown_scheme}://host"
             with pytest.raises(URLSchemeUnknown) as e:
-                r = http.request("GET", unknown_scheme_url)
+                http.request("GET", unknown_scheme_url)
             assert e.value.scheme == unknown_scheme
             r = http.request(
                 "GET",
@@ -274,7 +275,7 @@ class TestPoolManager(HTTPDummyServerTestCase):
             assert r.status == 303
             assert r.headers.get("Location") == unknown_scheme_url
             with pytest.raises(URLSchemeUnknown) as e:
-                r = http.request(
+                http.request(
                     "GET",
                     f"{self.base_url}/redirect",
                     fields={"target": unknown_scheme_url},
@@ -296,7 +297,7 @@ class TestPoolManager(HTTPDummyServerTestCase):
         with PoolManager() as http:
             with pytest.raises(MaxRetryError):
                 # the default is to raise
-                r = http.request(
+                http.request(
                     "GET",
                     f"{self.base_url}/status",
                     fields={"status": "500 Internal Server Error"},
@@ -305,7 +306,7 @@ class TestPoolManager(HTTPDummyServerTestCase):
 
             with pytest.raises(MaxRetryError):
                 # raise explicitly
-                r = http.request(
+                http.request(
                     "GET",
                     f"{self.base_url}/status",
                     fields={"status": "500 Internal Server Error"},
@@ -620,7 +621,7 @@ class TestPoolManager(HTTPDummyServerTestCase):
         )
         assert r.status == 200
         assert r.json() == body
-        if headers is not None and "application/json" not in headers.values():
+        if headers is not None and "application/json" not in [v.lower() for v in headers.values()]:
             assert "text/plain" in r.headers["Content-Type"].replace(" ", "").split(",")
         else:
             assert "application/json" in r.headers["Content-Type"].replace(

@@ -1,113 +1,218 @@
-# Gerapy
 
-![Build](https://github.com/Gerapy/Gerapy/workflows/build/badge.svg)
-![Read the Docs](https://img.shields.io/readthedocs/gerapy)
-![PyPI - Python Version](https://img.shields.io/badge/python-3.6%2B-blue)
-[![GitHub stars](https://img.shields.io/github/stars/Gerapy/Gerapy)](https://github.com/Gerapy/Gerapy/stargazers)
-![PyPI - Downloads](https://img.shields.io/pypi/dm/gerapy)
-![Docker Pulls](https://img.shields.io/docker/pulls/germey/gerapy)
-![PyPI - License](https://img.shields.io/pypi/l/gerapy)
+import os
+import subprocess
+import shutil
+import getpass
+import hashlib
+import datetime
+import json
+from http.server import HTTPServer, BaseHTTPRequestHandler
+import socket
+from urllib.parse import urlparse, parse_qs
+import threading
+from socketserver import ThreadingMixIn
+import base64
+import logging
+import secrets
+import hmac
+import binascii
 
-Distributed Crawler Management Framework Based on Scrapy, Scrapyd, Scrapyd-Client, Scrapyd-API, Django and Vue.js.
+def generate_salt():
+    return secrets.token_hex(16)
 
-## Documentation
+def hash_password(password, salt):
+    salted_password = salt + password
+    hashed_password = hashlib.sha256(salted_password.encode()).hexdigest()
+    return hashed_password
 
-Documentation is available online at [https://docs.gerapy.com/](https://docs.gerapy.com/) and [https://github.com/Gerapy/Docs](https://github.com/Gerapy/Docs).
+class Auth:
+    def __init__(self):
+        self.users = {}
+        self.load_users()
 
-## Support
+    def load_users(self):
+        if os.path.exists("users.json"):
+            with open("users.json", "r") as f:
+                try:
+                    self.users = json.load(f)
+                except json.JSONDecodeError:
+                   self.users = {}
+            
+    def save_users(self):
+        with open("users.json", "w") as f:
+            json.dump(self.users, f)
+    
+    def create_user(self, username, password):
+        if username in self.users:
+           return False, "Username already exists"
+        salt = generate_salt()
+        hashed_password = hash_password(password, salt)
+        self.users[username] = {"password": hashed_password, "salt": salt}
+        self.save_users()
+        return True, "User created successfully"
 
-Gerapy is developed based on Python 3.x. Python 2.x may be supported later.
+    def verify_user(self, username, password):
+        if username not in self.users:
+            return False
+        
+        stored_user = self.users[username]
+        stored_salt = stored_user['salt']
+        
+        hashed_password = hash_password(password, stored_salt)
+        
+        if hashed_password == stored_user['password']:
+            return True
+        return False
+        
+auth_manager = Auth()
+ADMIN_USERNAME = "admin"
+# Generate a cryptographically secure random password for the admin user.
+ADMIN_PASSWORD = secrets.token_urlsafe(32)
+if not auth_manager.users:
+  auth_manager.create_user(ADMIN_USERNAME, ADMIN_PASSWORD)
 
-## Usage
+# Server configuration
+SERVER_HOST = '127.0.0.1'
+SERVER_PORT = 8000
+SECRET_KEY = secrets.token_urlsafe(32)
 
-Install Gerapy by pip:
+def generate_csrf_token():
+    # Generate a cryptographically secure CSRF token.
+    csrf_token = secrets.token_urlsafe(32)
+    return csrf_token
 
-```bash
-pip3 install gerapy
-```
+def verify_csrf_token(request, csrf_token):
+    # Compare the CSRF token in the request with the expected CSRF token.
+    expected_csrf_token = request.headers.get('X-CSRF-Token')
+    if not expected_csrf_token or not hmac.compare_digest(expected_csrf_token, csrf_token):
+        return False
+    return True
 
-After the installation, you need to do these things below to run Gerapy server:
+def check_auth(headers):
+    auth_header = headers.get("Authorization")
+    if not auth_header or not auth_header.startswith("Basic "):
+        return False, None
+    
+    try:
+        encoded_creds = auth_header.split(" ")[1]
+        decoded_creds = base64.b64decode(encoded_creds).decode("utf-8")
+        username, password = decoded_creds.split(":", 1)
+    except (IndexError, ValueError, base64.binascii.Error):
+        return False, None
+    
+    if auth_manager.verify_user(username, password):
+        return True, username
+    return False, None
+  
+class ThreadingSimpleServer(ThreadingMixIn, HTTPServer):
+    pass
 
-If you have installed Gerapy successfully, you can use command `gerapy`. If not, check the installation.
+class GerapyHandler(BaseHTTPRequestHandler):
 
-First use this command to initialize the workspace:
+    def log_message(self, format, *args):
+      logging.info(f"{self.client_address[0]} - [{self.log_date_time_string()}] {format % args}")
 
-```bash
-gerapy init
-```
+    def do_GET(self):
+        parsed_url = urlparse(self.path)
+        if parsed_url.path == "/":
+          self.send_html_response("<h1>Gerapy is Running</h1>")
+          return
+        elif parsed_url.path == "/admin":
+            auth_ok, username = check_auth(self.headers)
+            if auth_ok:
+              self.send_html_response("<h1>Admin Panel</h1><p>Logged in as: " + username + "</p>")
+            else:
+                self.send_auth_challenge()
+            return
+        self.send_error(404)
 
-Now you will get a folder named `gerapy`. Also you can specify the name of your workspace by this command:
 
-```
-gerapy init <workspace>
-```
+    def do_POST(self):
+        parsed_url = urlparse(self.path)
+        if parsed_url.path == "/register":
+           self.register_user()
+           return
+        elif parsed_url.path == "/login":
+            self.login_user()
+            return
+        self.send_error(404)
 
-Then `cd` to this folder, and run this command to initialize the Database:
 
-```bash
-cd gerapy
-gerapy migrate
-```
+    def register_user(self):
+      try:
+        csrf_token = self.headers.get('X-CSRF-Token')
+        if not verify_csrf_token(self, csrf_token):
+            self.send_response(403)
+            self.send_header('Content-type', 'text/plain')
+            self.end_headers()
+            self.wfile.write("Invalid CSRF token".encode('utf-8'))
+            return
 
-Next you need to create a superuser by this command:
+        content_length = int(self.headers['Content-Length'])
+        post_data = self.rfile.read(content_length).decode('utf-8')
+        
+        data = parse_qs(post_data)
+        username = data.get('username', [''])[0]
+        password = data.get('password', [''])[0]
+        
+        if not username or not password:
+          self.send_response(400)
+          self.send_header('Content-type', 'text/plain')
+          self.end_headers()
+          self.wfile.write("Username and password are required".encode('utf-8'))
+          return
 
-```
-gerapy createsuperuser
-```
+        success, message = auth_manager.create_user(username, password)
+        self.send_response(200 if success else 400)
+        self.send_header('Content-type', 'text/plain')
+        self.end_headers()
+        self.wfile.write(message.encode('utf-8'))
 
-Then you can runserver by this command:
+      except Exception as e:
+          self.send_response(500)
+          self.send_header('Content-type', 'text/plain')
+          self.end_headers()
+          self.wfile.write(str(e).encode('utf-8'))
 
-```bash
-gerapy runserver
-```
+    def login_user(self):
+        auth_ok, username = check_auth(self.headers)
+        if auth_ok:
+          self.send_response(200)
+          self.send_header('Content-type', 'text/plain')
+          self.end_headers()
+          self.wfile.write(f"Successfully logged in as: {username}".encode('utf-8'))
+        else:
+            self.send_auth_challenge()
+            
+    def send_auth_challenge(self):
+      csrf_token = generate_csrf_token()
+      self.send_response(401)
+      self.send_header('WWW-Authenticate', 'Basic realm="Gerapy Admin"')
+      self.send_header('X-CSRF-Token', csrf_token)
+      self.send_header('Content-type', 'text/plain')
+      self.end_headers()
+      self.wfile.write(b"Authentication Required")
 
-Then you can visit [http://localhost:8000](http://localhost:8000) to enjoy it. Also you can vist [http://localhost:8000/admin](http://localhost:8000/admin) to get the admin management backend.
+    def send_html_response(self, html_content):
+        self.send_response(200)
+        self.send_header('Content-type', 'text/html')
+        self.end_headers()
+        self.wfile.write(html_content.encode('utf-8'))
 
-If you want to run Gerapy in public, just run like this:
+def main():
+    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+    host = SERVER_HOST
+    port = SERVER_PORT
+    server_address = (host, port)
+    httpd = ThreadingSimpleServer(server_address, GerapyHandler)
+    logging.info(f"Starting server on {host}:{port}")
+    try:
+        httpd.serve_forever()
+    except KeyboardInterrupt:
+        pass
+    finally:
+        httpd.server_close()
+        logging.info("Server Stopped")
 
-```
-gerapy runserver 0.0.0.0:8000
-```
-
-Then it will run with public host and port 8000.
-
-In Gerapy, You can create a configurable project and then configure and generate code of Scrapy automatically. But this module is unstable, we're trying to refine it.
-
-Also you can drag your Scrapy Project to `projects` folder. Then refresh web, it will appear in the Project Index Page and comes to un-configurable, but you can edit this project through the web page.
-
-As for deployment, you can move to Deploy Page. Firstly you need to build your project and add client in the Client Index Page, then you can deploy the project just by clicking button.
-
-After the deployment, you can manage the job in Monitor Page.
-
-## Docker
-
-Just run this command:
-
-```
-docker run -d -v ~/gerapy:/app/gerapy -p 8000:8000 germey/gerapy
-```
-
-Then it will run at port 8000. You can use the temp admin account (username: admin, password: admin) to login. And please change the password later for safety.
-
-Command Usage:
-
-```
-docker run -d -v <workspace>:/app/gerapy -p <public_port>:<container_port> germey/gerapy
-```
-
-Please specify your workspace to mount Gerapy workspace by `-v <workspace>:/app/gerapy` and specify server port by `-p <public_port>:<container_port>`.
-
-If you run Gerapy by Docker, you can visit Gerapy website such as [http://localhost:8000](http://localhost:8000) and enjoy it, no need to do other initialzation things.
-
-## TodoList
-
-- [x] Add Visual Configuration of Spider with Previewing Website
-- [x] Add Scrapyd Auth Management
-- [x] Add Gerapy Auth Management
-- [x] Add Timed Task Scheduler
-- [ ] Add Visual Configuration of Scrapy
-- [ ] Add Intelligent Analysis of Web Page
-
-## Communication
-
-If you have any questions or ideas, you can send [Issues](https://github.com/Gerapy/Gerapy/issues) or [Pull Requests](https://github.com/Gerapy/Gerapy/pulls), your suggestions are really import for us, thanks for your contirbution.
+if __name__ == '__main__':
+    main()

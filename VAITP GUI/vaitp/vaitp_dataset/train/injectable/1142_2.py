@@ -320,7 +320,7 @@ class JWE:
                 del rec['header']
 
             return '.'.join([base64url_encode(self.objects['protected']),
-                             base64url_encode(rec.get('encrypted_key', '')),
+                             base64url_encode(rec.get('encrypted_key', b'')),
                              base64url_encode(self.objects['iv']),
                              base64url_encode(self.objects['ciphertext']),
                              base64url_encode(self.objects['tag'])])
@@ -376,7 +376,7 @@ class JWE:
         jh = self._get_jose_header(ppe.get('header', None))
 
         # TODO: allow caller to specify list of headers it understands
-        self._check_crit(jh.get('crit', {}))
+        self._check_crit(jh.get('crit', []))
 
         for hdr in jh:
             if hdr in self.header_registry:
@@ -429,7 +429,10 @@ class JWE:
                 raise InvalidJWEData(
                     'Compressed data exceeds maximum allowed'
                     'size' + f' ({default_max_compressed_size})')
-            self.plaintext = zlib.decompress(data, -zlib.MAX_WBITS)
+            try:
+                self.plaintext = zlib.decompress(data, -zlib.MAX_WBITS)
+            except zlib.error as e:
+                raise InvalidJWEData("Malformed compressed data") from e
         elif compress is None:
             self.plaintext = data
         else:
@@ -539,7 +542,7 @@ class JWE:
                 o['protected'] = p.decode('utf-8')
                 ekey = base64url_decode(data[1])
                 if ekey != b'':
-                    o['encrypted_key'] = base64url_decode(data[1])
+                    o['encrypted_key'] = ekey
                 o['iv'] = base64url_decode(data[2])
                 o['ciphertext'] = base64url_decode(data[3])
                 o['tag'] = base64url_decode(data[4])

@@ -1,15 +1,17 @@
 import os
 import sys
+import subprocess
 
 # Safe execution of a Python script without allowing arbitrary PYTHONPATH
 def safe_execute(script_path):
     # Ensure PYTHONPATH is not modified
-    original_pythonpath = os.environ.get('PYTHONPATH', '')
+    env = os.environ.copy()
+    env['PYTHONPATH'] = ''
     try:
-        os.environ['PYTHONPATH'] = ''
-        exec(open(script_path).read())
-    finally:
-        os.environ['PYTHONPATH'] = original_pythonpath
+      subprocess.run([sys.executable, script_path], env=env, check=True)
+    except subprocess.CalledProcessError as e:
+      print(f"Error executing script: {e}")
+
 
 # Example usage
 if __name__ == "__main__":

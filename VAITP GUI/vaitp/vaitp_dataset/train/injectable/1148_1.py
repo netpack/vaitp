@@ -1,13 +1,9 @@
-from RestrictedPython import compile_restricted
-from RestrictedPython.Utilities import utility_builtins
 
-# Remove the string module from utility_builtins to mitigate the vulnerability
-if 'string' in utility_builtins:
-    del utility_builtins['string']
+from RestrictedPython import compile_restricted, safe_builtins
 
 # Example of running restricted code
 code = "result = 'Hello, World!'.lower()"
-compiled_code = compile_restricted(code, '<string>', 'exec')
+compiled_code = compile_restricted(code, '<string>', 'exec', safe_builtins)
 
 # Execute the restricted code
 namespace = {}

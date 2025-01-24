@@ -14,7 +14,7 @@
 # limitations under the License.
 
 import os
-from ConfigParser import ConfigParser, NoSectionError, NoOptionError
+from configparser import ConfigParser, NoSectionError, NoOptionError
 
 from swift.common.memcached import MemcacheRing
 
@@ -33,25 +33,35 @@ class MemcacheMiddleware(object):
             path = os.path.join(conf.get('swift_dir', '/etc/swift'),
                                 'memcache.conf')
             memcache_conf = ConfigParser()
-            if memcache_conf.read(path):
-                if not self.memcache_servers:
-                    try:
-                        self.memcache_servers = \
-                            memcache_conf.get('memcache', 'memcache_servers')
-                    except (NoSectionError, NoOptionError):
-                        pass
-                if serialization_format is None:
-                    try:
-                        serialization_format = \
-                            memcache_conf.get('memcache',
-                                              'memcache_serialization_support')
-                    except (NoSectionError, NoOptionError):
-                        pass
+            try:
+                with open(path, 'r') as fp:
+                    memcache_conf.read_file(fp)
+            except IOError:
+                pass
+            if not self.memcache_servers:
+                try:
+                    self.memcache_servers = \
+                        memcache_conf.get('memcache', 'memcache_servers')
+                except (NoSectionError, NoOptionError):
+                    pass
+            if serialization_format is None:
+                try:
+                    serialization_format = \
+                        memcache_conf.get('memcache',
+                                          'memcache_serialization_support')
+                except (NoSectionError, NoOptionError):
+                    pass
 
         if not self.memcache_servers:
             self.memcache_servers = '127.0.0.1:11211'
         if serialization_format is None:
+            serialization_format = '2'
+
+        try:
+            serialization_format = int(serialization_format)
+        except ValueError:
             serialization_format = 2
+
 
         self.memcache = MemcacheRing(
             [s.strip() for s in self.memcache_servers.split(',') if s.strip()],

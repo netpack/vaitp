@@ -1,6 +1,8 @@
 import requests
+from urllib.parse import urlparse, urljoin
 
 url_preview_url_blacklist = []  # Example blacklist, can be populated elsewhere
+ALLOWED_SCHEMES = ['http', 'https']
 
 
 def is_url_allowed(url):
@@ -10,22 +12,32 @@ def is_url_allowed(url):
     return True
 
 
+def is_valid_url(url):
+    try:
+        result = urlparse(url)
+        return all([result.scheme in ALLOWED_SCHEMES, result.netloc])
+    except:
+        return False
+
+
 def fetch_url_preview(url):
+    if not is_valid_url(url):
+        raise ValueError("Invalid URL")
     if not is_url_allowed(url):
         raise ValueError("URL is blacklisted")
 
-    # Fetch the URL and process the response
+
     try:
-        response = requests.get(url)
+        response = requests.get(url, timeout=5)
         response.raise_for_status()  # Raise HTTPError for bad responses (4xx or 5xx)
     except requests.exceptions.RequestException as e:
         raise ValueError(f"Error fetching URL: {e}")
 
+    content_type = response.headers.get('Content-Type', '').lower()
 
-    # Check for oEmbed or image URL response
     if is_oembed_url(url):
-        if response.headers.get('Content-Type') != 'application/json':
-            raise ValueError("Non-JSON response for oEmbed URL")
+        if 'application/json' not in content_type:
+             raise ValueError("Non-JSON response for oEmbed URL")
         # Process oEmbed response
         print("Processing oEmbed Response")
     elif is_image_url(url):

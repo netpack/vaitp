@@ -72,10 +72,10 @@ class Lexer:
         match = reg.match(self.text, self.match_position)
         if match:
             (start, end) = match.span()
-            self.match_position = end + 1 if end == start else end
+            self.match_position = end
             self.matched_lineno = self.lineno
             cp = mp - 1
-            if cp >= 0 and cp < self.textlength:
+            if cp >= 0 and cp < len(self.text):
                 cp = self.text[: cp + 1].rfind("\n")
             self.matched_charpos = mp - cp
             self.lineno += self.text[mp : self.match_position].count("\n")
@@ -230,7 +230,7 @@ class Lexer:
         self.textlength = len(self.text)
 
         while True:
-            if self.match_position > self.textlength:
+            if self.match_position >= self.textlength:
                 break
 
             if self.match_end():
@@ -250,7 +250,7 @@ class Lexer:
             if self.match_text():
                 continue
 
-            if self.match_position > self.textlength:
+            if self.match_position >= self.textlength:
                 break
             # TODO: no coverage here
             raise exceptions.MakoException("assertion failed")

@@ -1,15 +1,15 @@
-# Import the Pillow library
 from PIL import Image
+import io
 
-# Define a limit in bytes
-# This should be smaller than the expected file size
 limit = 1000000
 
-# Try to open an image file using the Pillow library
-# Pass the limit argument to the Image.open function
 try:
-    img = Image.open("image.tiff", limit=limit)
-    # Do something with the image
+    with open("image.tiff", "rb") as f:
+        image_data = f.read(limit + 1)
+    if len(image_data) > limit:
+        raise OSError("File size exceeds limit")
+    img = Image.open(io.BytesIO(image_data))
 except OSError as e:
-    # Handle the exception
     print(e)
+except Exception as e:
+    print(f"An unexpected error occurred: {e}")

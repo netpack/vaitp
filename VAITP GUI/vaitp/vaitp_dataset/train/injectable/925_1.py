@@ -8,18 +8,23 @@ def execute_cypher_query(graph_name, cypher_query, params):
     
     # Use a safe method to insert the graph name and cypher query
     # This assumes a new function `set_cypher_params` has been created in the database
-    cursor.execute("SELECT set_cypher_params(%s, %s)", (graph_name, cypher_query))
     
-    # Now execute the cypher() function without risk of SQL injection
-    cursor.execute("SELECT cypher()")
+    try:
+        cursor.callproc("set_cypher_params", (graph_name, cypher_query))
     
-    # Fetch results
-    results = cursor.fetchall()
-    
-    # Clean up
-    cursor.close()
-    conn.commit()
-    conn.close()
+        # Now execute the cypher() function without risk of SQL injection
+        cursor.execute("SELECT cypher()")
+        
+        # Fetch results
+        results = cursor.fetchall()
+    except psycopg2.Error as e:
+        conn.rollback()
+        raise e
+    finally:
+        # Clean up
+        cursor.close()
+        conn.commit()
+        conn.close()
     
     return results
 

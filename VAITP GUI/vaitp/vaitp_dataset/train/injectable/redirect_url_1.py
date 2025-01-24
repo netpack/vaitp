@@ -1,4 +1,5 @@
 from django.shortcuts import redirect
+from django.urls import reverse
 
 def my_view(request):
-    return redirect(url_for('some-view-name'), foo='bar')
+    return redirect(reverse('some-view-name'), foo='bar')

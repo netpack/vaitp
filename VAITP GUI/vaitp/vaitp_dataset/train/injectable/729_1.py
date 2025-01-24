@@ -1,18 +1,38 @@
 from flask import Flask, request, abort
 from functools import wraps
+import secrets
+import os
 
 app = Flask(__name__)
 
 # Example of a simple OAuth token validation function
+VALID_OAUTH_TOKENS = set()
+if "VALID_OAUTH_TOKENS" in os.environ:
+    tokens = os.environ["VALID_OAUTH_TOKENS"].split(",")
+    for token in tokens:
+      VALID_OAUTH_TOKENS.add(token.strip())
+else:
+  VALID_OAUTH_TOKENS.add(secrets.token_urlsafe(32))
+  print(f"Warning: VALID_OAUTH_TOKENS environment variable not set, using default token: {VALID_OAUTH_TOKENS}")
+
 def validate_oauth_token(token):
     # Replace with actual token validation logic
-    return token == "valid_oauth_token"
+    return token in VALID_OAUTH_TOKENS
 
 def require_oauth(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        token = request.headers.get('Authorization')
-        if not token or not validate_oauth_token(token.split(" ")[1]):
+        auth_header = request.headers.get('Authorization')
+        if not auth_header:
+            abort(401)  # Unauthorized
+        try:
+            auth_type, token = auth_header.split(" ", 1)
+            if auth_type.lower() != "bearer":
+                abort(401)
+        except ValueError:
+            abort(401)
+        
+        if not validate_oauth_token(token):
             abort(403)  # Forbidden
         return f(*args, **kwargs)
     return decorated_function
@@ -30,4 +50,4 @@ def execute_task():
     return {"status": "task executed"}
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=False)

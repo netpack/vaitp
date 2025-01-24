@@ -1,19 +1,17 @@
 import sys
 import os
+import subprocess
 
 # Create a malicious Python file in the current working directory
 malicious_file = 'malicious.py'
 with open(malicious_file, 'w') as f:
     f.write('print("Malicious code executed!")\n')
 
-# Set the argv[0] argument to a string without a path separator
-sys.argv[0] = 'malicious'
-
-# Ensure the current working directory is not in sys.path
-sys.path = [p for p in sys.path if p != '']
-
-# Insert the empty string into sys.path
-sys.path.insert(0, '')
-
-# Execute the code, using the newly created malicious file
-os.execv(sys.executable, [sys.executable, malicious_file] + sys.argv[1:])
+# Execute the code using subprocess.run, avoiding os.execv and issues with argv[0] manipulation
+try:
+    subprocess.run([sys.executable, os.path.abspath(malicious_file)] + sys.argv[1:], check=True)
+except subprocess.CalledProcessError as e:
+    print(f"Error executing subprocess: {e}")
+finally:
+  if os.path.exists(malicious_file):
+    os.remove(malicious_file)

@@ -1,4 +1,3 @@
-#
 # Licensed to the Apache Software Foundation (ASF) under one
 # or more contributor license agreements. See the NOTICE file
 # distributed with this work for additional information
@@ -15,7 +14,6 @@
 # KIND, either express or implied. See the License for the
 # specific language governing permissions and limitations
 # under the License.
-#
 
 from __future__ import absolute_import
 from __future__ import division
@@ -194,27 +192,36 @@ class TProtocolBase:
         elif type == TType.STRING:
             self.readString()
         elif type == TType.STRUCT:
-            name = self.readStructBegin()
+            self.readStructBegin()
             while True:
-                (name, type, id) = self.readFieldBegin()
-                if type == TType.STOP:
+                (name, ftype, id) = self.readFieldBegin()
+                if ftype == TType.STOP:
                     break
-                self.skip(type)
+                self.skip(ftype)
                 self.readFieldEnd()
             self.readStructEnd()
         elif type == TType.MAP:
             (ktype, vtype, size) = self.readMapBegin()
+            if size < 0:
+                raise TProtocolException(TProtocolException.NEGATIVE_SIZE,
+                                        "Negative map size: %d" % size)
             for _ in range(size):
                 self.skip(ktype)
                 self.skip(vtype)
             self.readMapEnd()
         elif type == TType.SET:
             (etype, size) = self.readSetBegin()
+            if size < 0:
+                raise TProtocolException(TProtocolException.NEGATIVE_SIZE,
+                                        "Negative set size: %d" % size)
             for _ in range(size):
                 self.skip(etype)
             self.readSetEnd()
         elif type == TType.LIST:
             (etype, size) = self.readListBegin()
+            if size < 0:
+                raise TProtocolException(TProtocolException.NEGATIVE_SIZE,
+                                        "Negative list size: %d" % size)
             for _ in range(size):
                 self.skip(etype)
             self.readListEnd()
@@ -236,7 +243,8 @@ class TProtocolBase:
         elif type == TType.I64:
             return self.readI64()
         else:
-            raise Exception("Unknown integral type: %s" % str(type))
+            raise TProtocolException(TProtocolException.INVALID_DATA,
+                                     "Unknown integral type: %s" % str(type))
 
     def readFloatingPoint(self, type):
         if type == TType.FLOAT:
@@ -244,7 +252,8 @@ class TProtocolBase:
         elif type == TType.DOUBLE:
             return self.readDouble()
         else:
-            raise Exception("Unknown floating point type: %s" % str(type))
+             raise TProtocolException(TProtocolException.INVALID_DATA,
+                                    "Unknown floating point type: %s" % str(type))
 
 class TProtocolFactory:
     def getProtocol(self, trans):

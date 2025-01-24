@@ -1,24 +1,3 @@
-# Authors:
-#     Endi S. Dewata <edewata@redhat.com>
-#
-# This program is free software; you can redistribute it and/or modify
-# it under the terms of the Lesser GNU General Public License as published by
-# the Free Software Foundation; either version 3 of the License or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Lesser General Public License for more details.
-#
-# You should have received a copy of the GNU Lesser General Public License
-#  along with this program; if not, write to the Free Software Foundation,
-# Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-#
-# Copyright (C) 2013 Red Hat, Inc.
-# All rights reserved.
-#
-
 from __future__ import absolute_import
 from __future__ import print_function
 
@@ -77,12 +56,12 @@ class SSLContextAdapter(adapters.HTTPAdapter):
         for path in cert_paths:
             path = path and os.path.expanduser(path)
 
-            if os.path.isdir(path):
+            if path and os.path.isdir(path):
                 self.capaths.append(path)
-            elif os.path.exists(path):
+            elif path and os.path.isfile(path):
                 self.cafiles.append(path)
-            else:
-                logger.warning("cert_path missing; not used for validation: %s",
+            elif path:
+                 logger.warning("cert_path missing; not used for validation: %s",
                                path)
 
         # adapters.HTTPAdapter.__init__ calls our init_poolmanager, which needs
@@ -99,7 +78,7 @@ class SSLContextAdapter(adapters.HTTPAdapter):
         )
 
         # Enable post handshake authentication for TLS 1.3
-        if getattr(context, "post_handshake_auth", None) is not None:
+        if hasattr(context, "post_handshake_auth"):
             context.post_handshake_auth = True
 
         # Load from the system trust store when possible; per documentation
@@ -111,9 +90,16 @@ class SSLContextAdapter(adapters.HTTPAdapter):
         # Load any specific certificate paths that have been specified during
         # adapter initialization.
         for cafile in self.cafiles:
-            context.load_verify_locations(cafile=cafile)
+            try:
+                context.load_verify_locations(cafile=cafile)
+            except ssl.SSLError as e:
+                logger.warning("Error loading CA file '%s': %s", cafile, e)
         for capath in self.capaths:
-            context.load_verify_locations(capath=capath)
+            try:
+               context.load_verify_locations(capath=capath)
+            except ssl.SSLError as e:
+                logger.warning("Error loading CA path '%s': %s", capath, e)
+
 
         if self.verify:
             # Enable certificate verification
@@ -179,7 +165,7 @@ class PKIConnection:
 
         self.session = requests.Session()
         self.session.mount("https://", SSLContextAdapter(verify=verify, cert_paths=cert_paths))
-        self.session.trust_env = trust_env
+        self.session.trust_env = trust_env if trust_env is not None else True
         self.session.verify = verify
 
         if accept:
@@ -213,14 +199,21 @@ class PKIConnection:
         :return: None
         :raises: Exception if path is empty or None.
         """
-        if pem_cert_path is None:
+        if not pem_cert_path:
             raise Exception("No path for the certificate specified.")
-        if len(str(pem_cert_path)) == 0:
-            raise Exception("No path for the certificate specified.")
-        if pem_key_path is not None:
-            self.session.cert = (pem_cert_path, pem_key_path)
+
+        if pem_key_path:
+             if not os.path.isfile(pem_cert_path):
+                 raise Exception("Certificate file does not exist %s" % pem_cert_path)
+             if not os.path.isfile(pem_key_path):
+                 raise Exception("Key file does not exist %s" % pem_key_path)
+
+             self.session.cert = (pem_cert_path, pem_key_path)
         else:
-            self.session.cert = pem_cert_path
+             if not os.path.isfile(pem_cert_path):
+                 raise Exception("Certificate file does not exist %s" % pem_cert_path)
+
+             self.session.cert = pem_cert_path
 
     @catch_insecure_warning
     def get(self, path, headers=None, params=None, payload=None,
@@ -324,7 +317,7 @@ class PKIConnection:
         else:
             target_path = self.serverURI + path
 
-        r = self.session.put(target_path, payload, headers=headers)
+        r = self.session.put(target_path, data=payload, headers=headers)
         r.raise_for_status()
         return r
 

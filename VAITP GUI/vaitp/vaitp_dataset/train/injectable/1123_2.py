@@ -239,19 +239,17 @@ class PALChain(Chain):
 
         if (
             not code_validations.allow_command_exec
-            or not code_validations.allow_imports
         ):
             for node in ast.walk(code_tree):
                 if (
-                    not code_validations.allow_command_exec
-                    and isinstance(node, ast.Attribute)
+                    isinstance(node, ast.Attribute)
                     and node.attr in COMMAND_EXECUTION_ATTRIBUTES
                 ):
                     raise ValueError(
-                        f"Found illegal command execution function "
+                        f"Found illegal command execution attribute "
                         f"{node.attr} in code {code}"
                     )
-                if (not code_validations.allow_command_exec) and isinstance(
+                if isinstance(
                     node, ast.Call
                 ):
                     if (
@@ -271,7 +269,6 @@ class PALChain(Chain):
                             f"Found illegal command execution function "
                             f"{node.func.attr} in code {code}"
                         )
-
                 if (not code_validations.allow_imports) and (
                     isinstance(node, ast.Import) or isinstance(node, ast.ImportFrom)
                 ):

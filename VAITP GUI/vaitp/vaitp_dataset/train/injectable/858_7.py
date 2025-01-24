@@ -11,9 +11,78 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from synapse.util import glob_to_regex
+import re
 
 from tests.unittest import TestCase
+
+
+def glob_to_regex(glob):
+    """
+    Convert a simple glob pattern to a compiled regex.
+
+    The only wildcards supported are:
+      * - matches zero or more characters
+      ? - matches exactly one character
+
+    The regex will always be anchored, and will be case-insensitive.
+
+    Args:
+        glob (str): The glob pattern to convert
+
+    Returns:
+        re.Pattern: The compiled regex.
+    """
+    regex = ""
+    i = 0
+    while i < len(glob):
+        if glob[i] == "*":
+            regex += ".{0,}"
+            i += 1
+            while i < len(glob) and glob[i] == '*':
+                i += 1
+        elif glob[i] == "?":
+            regex += "."
+            i += 1
+        elif glob[i] == ".":
+            regex += r"\."
+            i += 1
+        elif glob[i] == "\\":
+            regex += r"\\"
+            i += 1
+        elif glob[i] == "^":
+            regex += r"\^"
+            i += 1
+        elif glob[i] == "$":
+            regex += r"\$"
+            i += 1
+        elif glob[i] == "[":
+            regex += r"\["
+            i += 1
+        elif glob[i] == "]":
+            regex += r"\]"
+            i += 1
+        elif glob[i] == "(":
+            regex += r"\("
+            i += 1
+        elif glob[i] == ")":
+            regex += r"\)"
+            i += 1
+        elif glob[i] == "{":
+            regex += r"\{"
+            i += 1
+        elif glob[i] == "}":
+             regex += r"\}"
+             i += 1
+        elif glob[i] == "|":
+            regex += r"\|"
+            i += 1
+        elif glob[i] == "+":
+            regex += r"\+"
+            i += 1
+        else:
+            regex += re.escape(glob[i])
+            i += 1
+    return re.compile(r"\A%s\Z" % regex, re.IGNORECASE)
 
 
 class GlobToRegexTestCase(TestCase):

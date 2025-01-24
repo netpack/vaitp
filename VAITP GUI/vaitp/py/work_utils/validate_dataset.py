@@ -7,7 +7,9 @@ import sys
 
 # Configure Gemini API
 genai.configure(api_key=os.getenv('GEMINI_API_KEY')) 
-model = genai.GenerativeModel("gemini-2.0-flash-exp")
+#model = genai.GenerativeModel("gemini-2.0-flash-exp")
+model = genai.GenerativeModel("gemini-2.0-flash-thinking-exp-1219")
+
 
 # Check if required environment variables are set
 required_vars = ['MYSQL_USER', 'MYSQL_PASSWORD', 'MYSQL_HOST', 'MYSQL_DATABASE', 'GEMINI_API_KEY']

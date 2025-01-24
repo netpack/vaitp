@@ -19,21 +19,14 @@ def get_user_list(
 ]:
 
     """ Get a list of things  """
-    url = "{}/tests/".format(client.base_url)
+    url = f"{client.base_url}/tests/"
 
     headers: Dict[str, Any] = client.get_headers()
 
-    json_an_enum_value = []
-    for an_enum_value_item_data in an_enum_value:
-        an_enum_value_item = an_enum_value_item_data.value
+    json_an_enum_value = [an_enum_value_item.value for an_enum_value_item in an_enum_value]
 
-        json_an_enum_value.append(an_enum_value_item)
 
-    if isinstance(some_date, datetime.date):
-        json_some_date = some_date.isoformat()
-
-    else:
-        json_some_date = some_date.isoformat()
+    json_some_date = some_date.isoformat()
 
     params: Dict[str, Any] = {
         "an_enum_value": json_an_enum_value,
@@ -57,11 +50,11 @@ def upload_file_tests_upload_post(
 ]:
 
     """ Upload a file  """
-    url = "{}/tests/upload".format(client.base_url)
+    url = f"{client.base_url}/tests/upload"
 
     headers: Dict[str, Any] = client.get_headers()
     if keep_alive is not None:
-        headers["keep-alive"] = keep_alive
+        headers["keep-alive"] = str(keep_alive)
 
     response = httpx.post(url=url, headers=headers, files=multipart_data.to_dict(),)
 
@@ -80,7 +73,7 @@ def json_body_tests_json_body_post(
 ]:
 
     """ Try sending a JSON body  """
-    url = "{}/tests/json_body".format(client.base_url)
+    url = f"{client.base_url}/tests/json_body"
 
     headers: Dict[str, Any] = client.get_headers()
 
@@ -116,7 +109,7 @@ def test_defaults_tests_test_defaults_post(
 ]:
 
     """  """
-    url = "{}/tests/test_defaults".format(client.base_url)
+    url = f"{client.base_url}/tests/test_defaults"
 
     headers: Dict[str, Any] = client.get_headers()
 
@@ -124,14 +117,8 @@ def test_defaults_tests_test_defaults_post(
 
     json_date_prop = date_prop.isoformat() if date_prop else None
 
-    if list_prop is None:
-        json_list_prop = None
-    else:
-        json_list_prop = []
-        for list_prop_item_data in list_prop:
-            list_prop_item = list_prop_item_data.value
-
-            json_list_prop.append(list_prop_item)
+    json_list_prop = [list_prop_item.value for list_prop_item in list_prop] if list_prop else None
+    
 
     if union_prop is None:
         json_union_prop: Optional[Union[Optional[float], Optional[str]]] = None

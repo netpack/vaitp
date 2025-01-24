@@ -1,2 +1,4 @@
-cmd = ["dot", "-T", format, "o", output]
-dotpipe = Popen(cmd, stdin=PIPE, stdout=PIPE, close_fds=True)
+import subprocess
+
+cmd = ["dot", "-T", format, "-o", output]
+dotpipe = subprocess.Popen(cmd, stdin=subprocess.PIPE, stdout=subprocess.PIPE, close_fds=True)

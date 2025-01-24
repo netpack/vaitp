@@ -1,22 +1,30 @@
+import importlib
 import os
 import sys
 
 def secure_import(module_name):
-    # Get the current working directory
-    current_dir = os.getcwd()
     
-    # Get the parent directory
-    parent_dir = os.path.dirname(current_dir)
+    trusted_dirs = [
+        os.path.normpath(path)
+        for path in sys.path
+        if os.path.isdir(path)
+    ]
     
-    # Define a list of trusted directories (e.g., system paths)
-    trusted_dirs = ["/usr/local/lib/python3.x/dist-packages", "/usr/lib/python3.x/dist-packages"]
+    try:
+      
+        spec = importlib.util.find_spec(module_name)
+        if spec is None:
+            raise ImportError(f"Module '{module_name}' not found.")
 
-    # Check if the current or parent directory is in the trusted directories
-    if current_dir in trusted_dirs or parent_dir in trusted_dirs:
-        # Proceed to import the module
-        __import__(module_name)
-    else:
-        raise ImportError("Untrusted directory: Cannot import from current or parent directory.")
+        module_path = os.path.normpath(spec.origin)
+
+        if not any(module_path.startswith(dir_) for dir_ in trusted_dirs) and not spec.submodule_search_locations:
+            raise ImportError(f"Module '{module_name}' found at '{module_path}' is not in a trusted directory.")
+        
+        importlib.import_module(module_name)
+
+    except ImportError as e:
+        raise ImportError(f"Failed to import '{module_name}': {e}") from e
 
 # Example usage
 try:

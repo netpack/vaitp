@@ -16,11 +16,11 @@ token68 = pp.Combine(pp.Word("-._~+/" + pp.nums + pp.alphas) + pp.ZeroOrMore("="
 
 quoted_string = pp.dblQuotedString.copy().setName("quoted-string").setParseAction(unquote)
 auth_param_name = token.copy().setName("auth-param-name").addParseAction(pp.downcaseTokens)
-auth_param = auth_param_name + pp.Suppress("=") + (token ^ quoted_string)
+auth_param = auth_param_name + pp.Suppress("=") + (token | quoted_string)
 params = pp.Dict(pp.delimitedList(pp.Group(auth_param)))
 
 scheme = token("scheme")
-challenge = scheme + (token68("token") ^ params("params"))
+challenge = scheme + (token68("token") | params("params"))
 
 authentication_info = params.copy()
 www_authenticate = pp.delimitedList(pp.Group(challenge))
@@ -33,7 +33,7 @@ def _parse_authentication_info(headers, headername="authentication-info"):
     if not header:
         return {}
     try:
-        parsed = authentication_info.parseString(header)
+        parsed = authentication_info.parseString(header, parseAll=True)
     except pp.ParseException as ex:
         # print(ex.explain(ex))
         raise MalformedHeader(headername)
@@ -47,7 +47,7 @@ def _parse_www_authenticate(headers, headername="www-authenticate"):
     if not header:
         return {}
     try:
-        parsed = www_authenticate.parseString(header)
+        parsed = www_authenticate.parseString(header, parseAll=True)
     except pp.ParseException as ex:
         # print(ex.explain(ex))
         raise MalformedHeader(headername)

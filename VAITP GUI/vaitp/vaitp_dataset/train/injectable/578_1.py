@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request, escape
+from flask import Flask, render_template, request, Markup
+import bleach
 
 app = Flask(__name__)
 
@@ -6,14 +7,13 @@ app = Flask(__name__)
 def search():
     query = request.args.get('q', '')
     
-    # Check if query contains 'http'
-    if 'http' not in query:
-        # Escape the query to prevent XSS
-        error_message = escape(query)
-        return render_template('error.html', error_message=error_message)
+    if 'http' in query:
+        return render_template('error.html', error_message="Invalid query")
     
-    # Proceed with normal search logic
-    # ...
+    safe_query = bleach.clean(query)
+    return render_template('search.html', query=safe_query)
+    
+
 
 if __name__ == '__main__':
     app.run(debug=True)

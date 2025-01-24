@@ -211,12 +211,29 @@ class FileData(GradioModel):
         return cls(path=path)
 
     def _copy_to_dir(self, dir: str) -> FileData:
-        pathlib.Path(dir).mkdir(exist_ok=True)
+        
+        dir_path = pathlib.Path(dir)
+        dir_path.mkdir(exist_ok=True)
         new_obj = dict(self)
-
+        
         if not self.path:
             raise ValueError("Source file path is not set")
-        new_name = shutil.copy(self.path, dir)
+        
+        source_path = pathlib.Path(self.path)
+        if not source_path.exists():
+             raise ValueError(f"Source file does not exist: {self.path}")
+
+        if not source_path.is_file():
+            raise ValueError(f"Source is not a file: {self.path}")
+            
+        
+        
+        new_name = str(dir_path / source_path.name)
+        
+        try:
+            shutil.copy2(self.path, new_name)
+        except Exception as e:
+             raise ValueError(f"Failed to copy file from '{self.path}' to '{new_name}'. Error: {e}") from e
         new_obj["path"] = new_name
         return self.__class__(**new_obj)
 

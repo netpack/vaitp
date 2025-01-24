@@ -190,6 +190,9 @@ class WellKnownResolver:
             parsed_body = json_decoder.decode(body.decode("utf-8"))
             logger.info("Response from .well-known: %s", parsed_body)
 
+            if not isinstance(parsed_body, dict) or "m.server" not in parsed_body:
+                raise Exception("Invalid .well-known format: %r" % (parsed_body,))
+
             result = parsed_body["m.server"].encode("ascii")
         except defer.CancelledError:
             # Bail if we've been cancelled

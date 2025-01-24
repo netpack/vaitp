@@ -1,4 +1,6 @@
 from subprocess import PIPE, Popen
+import shlex
+from typing import Union
 
 from .. import constants
 from ..h import *
@@ -14,7 +16,9 @@ def processTags(doc):
         if tag not in doc.md.inlineTagCommands:
             die("Unknown inline tag '{0}' found:\n  {1}", tag, outerHTML(el), el=el)
             continue
-        command = doc.md.inlineTagCommands[tag]
+        command: Union[str, list[str]] = doc.md.inlineTagCommands[tag]
+        if isinstance(command, str):
+           command = shlex.split(command)
         with Popen(command, stdin=PIPE, stdout=PIPE, stderr=PIPE, shell=True) as p:
             out, err = p.communicate(innerHTML(el).encode("utf-8"))
             try:

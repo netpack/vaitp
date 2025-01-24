@@ -44,7 +44,7 @@ def _hashy(x: bytes32) -> bytes32:
 
 @external
 def return_hash_of_rzpadded_cow() -> bytes32:
-    return self._hashy(0x636f770000000000000000000000000000000000000000000000000000000000)
+    return self._hashy(b"cow\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00")
     """
 
     c = get_contract_with_gas_estimation(selfcall_code_2)
@@ -329,6 +329,7 @@ def bar6() -> int128:
     assert c.bar3() == Decimal("1.33")
     assert c.bar4() == 77
     assert c.bar5() == 88
+    assert c.bar6() == 99
 
 
 def test_multi_mixed_arg_list_call(get_contract_with_gas_estimation):
@@ -682,19 +683,19 @@ def test0() -> ({typ1}, {typ2}):
 
 @external
 def test1() -> ({typ1}, {typ2}):
-    return self.foo({repr(kwarg1)})
+    return self.foo(a={repr(kwarg1)})
 
 @external
 def test2() -> ({typ1}, {typ2}):
-    return self.foo({repr(kwarg1)}, {repr(kwarg2)})
+    return self.foo(a={repr(kwarg1)}, b={repr(kwarg2)})
 
 @external
 def test3(x1: {typ1}) -> ({typ1}, {typ2}):
-    return self.foo(x1)
+    return self.foo(a=x1)
 
 @external
 def test4(x1: {typ1}, x2: {typ2}) -> ({typ1}, {typ2}):
-    return self.foo(x1, x2)
+    return self.foo(a=x1, b=x2)
         """
         c = get_contract(code)
         assert c.test0() == [default1, default2]

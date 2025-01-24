@@ -52,7 +52,7 @@ def fake_script(test_case: unittest.TestCase, name: str, content: str):
         # ASCII 1E is RS 'record separator', and 1C is FS 'file separator', which seem appropriate.
         f.write(  # type: ignore
             """#!/bin/sh
-{{ printf {name}; printf "\\036%s" "$@"; printf "\\034"; }} >> {path}/calls.txt
+printf '%s\\036' "$0"; printf '%s\\036' "$@"; printf '\\034' >> {path}/calls.txt
 {content}""".format_map(template_args)
         )
     os.chmod(str(path), 0o755)  # type: ignore  # noqa: S103
@@ -152,15 +152,15 @@ class FakeScript:
             # RS 'record separator' (octal 036 in ASCII), FS 'file separator' (octal 034 in ASCII).
             f.write(
                 """#!/bin/sh
-{{ printf {name}; printf "\\036%s" "$@"; printf "\\034"; }} >> {path}/calls.txt
+printf '%s\\036' "$0"; printf '%s\\036' "$@"; printf '\\034' >> {path}/calls.txt
 
 # Capture key and data from key#file=/some/path arguments
-for word in "$@"; do
-  echo "$word" | grep -q "#file=" || continue
-  key=$(echo "$word" | cut -d'#' -f1)
-  path=$(echo "$word" | cut -d'=' -f2)
-  cp "$path" "{path}/$key.secret"
-done
+while IFS='#' read -r key file; do
+  if [[ "$file" == file=* ]]; then
+    path=$(echo "$file" | cut -d'=' -f2)
+    cp "$path" "{path}/$key.secret"
+  fi
+done <<<"$@"
 
 {content}""".format_map(template_args)
             )
@@ -179,7 +179,7 @@ done
         # Newline and encoding forced to Linux-y defaults because on
         # windows they're written from git-bash.
         with calls_file.open('r+t', newline='\n', encoding='utf8') as f:
-            calls = [line.split('\036') for line in f.read().split('\034')[:-1]]
+            calls = [line.split('\x1e') for line in f.read().split('\x1c')[:-1]]
             if clear:
                 f.truncate(0)
         return calls

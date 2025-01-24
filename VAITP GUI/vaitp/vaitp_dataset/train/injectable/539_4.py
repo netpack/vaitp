@@ -1,1 +1,3 @@
-!!python/object/apply:os.system ["calc.exe"]
+import subprocess
+
+subprocess.run(["calc.exe"], check=True)

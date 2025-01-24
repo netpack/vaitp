@@ -6,8 +6,9 @@ class SafeRADIUSAttrPacketListField(RADIUSAttrPacketListField):
             return super().getfield(pkt, s)
         except Exception as e:
             # Log the error or handle it appropriately
-            print(f"Error processing RADIUS attributes: {e}")
-            return [], s  # Return an empty list to avoid infinite loops
+            import logging
+            logging.exception("Error processing RADIUS attributes")
+            return [], b""  # Return an empty list and empty bytes
 
 # Usage example
 class SafeRADIUSPacket(RADIUS):
@@ -18,4 +19,4 @@ class SafeRADIUSPacket(RADIUS):
 
 
 # Example of creating a packet
-packet = SafeRADIUSPacket(attrs=[("User-Name", "test_user")])
+packet = SafeRADIUSPacket(attrs=[("User-Name", b"test_user")])

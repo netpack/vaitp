@@ -13,10 +13,12 @@ def activate_virtualenv():
     # Proceed to activate the virtual environment if no .venv file is found
     venv_path = os.path.join(current_dir, 'venv')
     if os.path.isdir(venv_path):
-        activate_script = os.path.join(venv_path, 'bin', 'activate_this.py')
+        activate_script = os.path.join(venv_path, 'bin', 'activate')
         if os.path.isfile(activate_script):
-            with open(activate_script) as f:
-                exec(f.read(), dict(__file__=activate_script))
+            try:
+                subprocess.run([activate_script], shell=False, check=True, executable='/bin/bash')
+            except subprocess.CalledProcessError as e:
+                  print(f"Error activating virtual environment: {e}")
         else:
             print("No activation script found.")
     else:

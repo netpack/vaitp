@@ -1,14 +1,13 @@
+
 import os
 import shutil
 import socketserver
-import webbrowser
 from http.server import SimpleHTTPRequestHandler
 
 import click
 
 from dbt.task.base import ConfiguredTask
 from dbt.task.docs import DOCS_INDEX_FILE_PATH
-
 
 class ServeTask(ConfiguredTask):
     def run(self):
@@ -20,9 +19,15 @@ class ServeTask(ConfiguredTask):
         if self.args.browser:
             webbrowser.open_new_tab(f"http://localhost:{port}")
 
-        with socketserver.TCPServer(("127.0.0.1", port), SimpleHTTPRequestHandler) as httpd:
+        httpd = socketserver.TCPServer(("127.0.0.1", port), SimpleHTTPRequestHandler)
+
+        try:
             click.echo(f"Serving docs at {port}")
             click.echo(f"To access from your browser, navigate to: http://localhost:{port}")
             click.echo("\n\n")
             click.echo("Press Ctrl+C to exit.")
             httpd.serve_forever()
+        except KeyboardInterrupt:
+            pass
+        finally:
+            httpd.server_close()

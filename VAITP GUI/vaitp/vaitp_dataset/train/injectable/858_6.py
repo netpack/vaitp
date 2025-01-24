@@ -20,6 +20,7 @@ from synapse.push import push_rule_evaluator
 from synapse.push.push_rule_evaluator import PushRuleEvaluatorForEvent
 
 from tests import unittest
+import re
 
 
 class PushRuleEvaluatorTestCase(unittest.TestCase):
@@ -145,7 +146,7 @@ class PushRuleEvaluatorTestCase(unittest.TestCase):
         condition = {
             "kind": "event_match",
             "key": "content.body",
-            "pattern": r"f\oobaz",
+            "pattern": r"f\\oobaz",
         }
         self._assert_matches(
             condition,
@@ -157,10 +158,31 @@ class PushRuleEvaluatorTestCase(unittest.TestCase):
             "key": "content.body",
             "pattern": r"f\?obaz",
         }
-        self._assert_matches(
+        self._assert_not_matches(
             condition,
             {"body": r"F\oobaz"},
             r"? after \ should match any character",
+        )
+        condition = {
+            "kind": "event_match",
+            "key": "content.body",
+            "pattern": r"f\\\?obaz",
+        }
+        self._assert_matches(
+            condition,
+            {"body": r"F\?obaz"},
+            r"\? after \\ should match ?",
+        )
+        
+        condition = {
+            "kind": "event_match",
+            "key": "content.body",
+            "pattern": r"f\\*obaz",
+        }
+        self._assert_matches(
+            condition,
+            {"body": r"F\obaz"},
+            r"\* after \\ should match *",
         )
 
     def test_event_match_non_body(self):

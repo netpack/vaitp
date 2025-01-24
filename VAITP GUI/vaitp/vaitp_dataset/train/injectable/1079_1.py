@@ -1,5 +1,6 @@
 import zipfile
 import io
+import os
 
 # Create a zip file that demonstrates the vulnerability
 with zipfile.ZipFile('vulnerable.zip', 'w') as zf:
@@ -9,7 +10,33 @@ with zipfile.ZipFile('vulnerable.zip', 'w') as zf:
     # Overlapping entry
     zf.writestr('file1.txt', b'A' * (10**6))  # Overlapping entry
 
-# Attempt to read the vulnerable zip file (this will succeed in vulnerable versions)
-with zipfile.ZipFile('vulnerable.zip', 'r') as zf:
-    print(zf.namelist())
-    zf.extractall('extracted_files')
+# Attempt to read the vulnerable zip file (this will now raise an exception)
+try:
+    with zipfile.ZipFile('vulnerable.zip', 'r') as zf:
+        print(zf.namelist())
+        
+        
+        for member in zf.infolist():
+            
+            if member.file_size > 10 * 1024 * 1024:  # limit to 10MB
+                raise Exception("File size exceeds limit")
+            
+            if member.filename.startswith('/'):
+                raise Exception("Absolute path not allowed")
+                
+            if ".." in member.filename:
+                  raise Exception("Relative path not allowed")
+            
+        zf.extractall('extracted_files')
+except Exception as e:
+    print(f"Error: {e}")
+    
+try:
+    os.remove('vulnerable.zip')
+except:
+    pass
+
+try:
+    os.rmdir('extracted_files')
+except:
+    pass

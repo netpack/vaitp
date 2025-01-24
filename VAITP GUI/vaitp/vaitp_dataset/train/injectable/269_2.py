@@ -1,16 +1,14 @@
-from flask import Flask, request, redirect
+
+from flask import Flask, request, redirect, url_for
+from werkzeug.utils import redirect
 
 app = Flask(__name__)
 
-def is_safe_url(url):
-    # Ensure the URL starts with a '/' to restrict to internal paths
-    return url.startswith('/')
-
 @app.route('/redirect')
 def redirect_user():
-    tgpath = request.args.get('next')  # User-controlled input
-    if not is_safe_url(tgpath):
-        tgpath = '/'  # Redirect to a safe default (root)
+    tgpath = request.args.get('next')
+    if not tgpath or not is_safe_url(tgpath):
+        tgpath = url_for('index')
     return redirect(tgpath)
 
 if __name__ == '__main__':

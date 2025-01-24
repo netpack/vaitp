@@ -21,7 +21,7 @@ def _topsort_helper(functions, lookup):
     for f in functions:
         # called_functions is a list of ContractFunctions, need to map
         # back to FunctionDefs.
-        callees = [lookup[t.name] for t in f._metadata["type"].called_functions]
+        callees = [lookup[t.name] for t in f._metadata.get("type", {}).get("called_functions", []) if t.name in lookup]
         ret.extend(_topsort_helper(callees, lookup))
         ret.append(f)
 
@@ -35,19 +35,19 @@ def _topsort(functions):
 
 
 def _is_init_func(func_ast):
-    return func_ast._metadata["signature"].is_init_func
+    return func_ast._metadata.get("signature", {}).is_init_func
 
 
 def _is_default_func(func_ast):
-    return func_ast._metadata["signature"].is_default_func
+    return func_ast._metadata.get("signature", {}).is_default_func
 
 
 def _is_internal(func_ast):
-    return func_ast._metadata["type"].is_internal
+    return func_ast._metadata.get("type", {}).is_internal
 
 
 def _is_payable(func_ast):
-    return func_ast._metadata["type"].mutability == StateMutability.PAYABLE
+    return func_ast._metadata.get("type", {}).mutability == StateMutability.PAYABLE
 
 
 # codegen for all runtime functions + callvalue/calldata checks + method selector routines
@@ -76,7 +76,7 @@ def _runtime_ir(runtime_functions, all_sigs, global_ctx):
     # for some reason, somebody may want to deploy a contract with no
     # external functions, or more likely, a "pure data" contract which
     # contains immutables
-    if len(external_functions) == 0:
+    if not external_functions:
         # TODO: prune internal functions in this case?
         runtime = ["seq"] + list(internal_functions_map.values())
         return runtime, internal_functions_map
@@ -170,12 +170,13 @@ def generate_ir_for_module(global_ctx: GlobalContext) -> Tuple[IRnode, IRnode, F
         # pass the amount of memory allocated for the init function
         # so that deployment does not clobber while preparing immutables
         # note: (deploy mem_ofst, code, extra_padding)
-        init_mem_used = init_function._metadata["signature"].frame_info.mem_used
+        init_mem_used = init_function._metadata.get("signature", {}).frame_info.mem_used
         deploy_code.append(["deploy", init_mem_used, runtime, immutables_len])
 
         # internal functions come after everything else
-        for f in init_function._metadata["type"].called_functions:
-            deploy_code.append(internal_functions[f.name])
+        for f in init_function._metadata.get("type", {}).get("called_functions",[]):
+            if f.name in internal_functions:
+                deploy_code.append(internal_functions[f.name])
 
     else:
         if immutables_len != 0:

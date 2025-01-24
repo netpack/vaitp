@@ -67,7 +67,7 @@ async def test_access_root_of_static_handler(
     app = web.Application()
 
     # Register global static route:
-    app.router.add_static(prefix, str(tmp_path), show_index=show_index)
+    app.router.add_static(prefix, str(tmp_path.resolve()), show_index=show_index)
     client = await aiohttp_client(app)
 
     # Request the root of the static directory.
@@ -99,7 +99,7 @@ async def test_follow_symlink(
     app = web.Application()
 
     # Register global static route:
-    app.router.add_static("/", str(tmp_path), follow_symlinks=True)
+    app.router.add_static("/", str(tmp_path.resolve()), follow_symlinks=True)
     client = await aiohttp_client(app)
 
     # Request the root of the static directory.
@@ -123,7 +123,7 @@ async def test_follow_symlink_directory_traversal(
     app = web.Application()
 
     # Register global static route:
-    app.router.add_static("/", str(safe_path), follow_symlinks=True)
+    app.router.add_static("/", str(safe_path.resolve()), follow_symlinks=True)
     client = await aiohttp_client(app)
 
     await client.start_server()
@@ -175,7 +175,7 @@ async def test_follow_symlink_directory_traversal_after_normalization(
     app = web.Application()
 
     # Register global static route:
-    app.router.add_static("/", str(sandbox_path), follow_symlinks=True)
+    app.router.add_static("/", str(sandbox_path.resolve()), follow_symlinks=True)
     client = await aiohttp_client(app)
 
     await client.start_server()
@@ -227,7 +227,7 @@ async def test_access_to_the_file_with_spaces(
 
     url = "/" + str(pathlib.Path(dir_name, filename))
 
-    app.router.add_static("/", str(tmp_path))
+    app.router.add_static("/", str(tmp_path.resolve()))
     client = await aiohttp_client(app)
 
     r = await client.get(url)
@@ -244,7 +244,7 @@ async def test_access_non_existing_resource(
     app = web.Application()
 
     # Register global static route:
-    app.router.add_static("/", str(tmp_path), show_index=True)
+    app.router.add_static("/", str(tmp_path.resolve()), show_index=True)
     client = await aiohttp_client(app)
 
     # Request the root of the static directory.
@@ -311,7 +311,7 @@ async def test_unauthorized_folder_access(
         path_constructor.return_value = path
 
         # Register global static route:
-        app.router.add_static("/", str(tmp_path), show_index=True)
+        app.router.add_static("/", str(tmp_path.resolve()), show_index=True)
         client = await aiohttp_client(app)
 
         # Request the root of the static directory.
@@ -329,7 +329,7 @@ async def test_access_symlink_loop(
     app = web.Application()
 
     # Register global static route:
-    app.router.add_static("/", str(tmp_path), show_index=True)
+    app.router.add_static("/", str(tmp_path.resolve()), show_index=True)
     client = await aiohttp_client(app)
 
     # Request the root of the static directory.
@@ -358,7 +358,7 @@ async def test_access_special_resource(
         path_constructor.return_value = path
 
         # Register global static route:
-        app.router.add_static("/", str(tmp_path), show_index=True)
+        app.router.add_static("/", str(tmp_path.resolve()), show_index=True)
         client = await aiohttp_client(app)
 
         # Request the root of the static directory.
@@ -390,7 +390,7 @@ async def test_static_head(
         fw.write(b"should_not_see_this\n")
 
     app = web.Application()
-    app.router.add_static("/", str(tmp_path))
+    app.router.add_static("/", str(tmp_path.resolve()))
     client = await aiohttp_client(app)
 
     r = await client.head("/test.txt")
@@ -581,7 +581,7 @@ async def test_static_absolute_url(
     file_path = tmp_path / "file.txt"
     file_path.write_text("sample text", "ascii")
     here = pathlib.Path(__file__).parent
-    app.router.add_static("/static", here)
+    app.router.add_static("/static", str(here.resolve()))
     client = await aiohttp_client(app)
     resp = await client.get("/static/" + str(file_path.resolve()))
     assert resp.status == 403
@@ -591,7 +591,7 @@ async def test_for_issue_5250(
     aiohttp_client: AiohttpClient, tmp_path: pathlib.Path
 ) -> None:
     app = web.Application()
-    app.router.add_static("/foo", tmp_path)
+    app.router.add_static("/foo", str(tmp_path.resolve()))
 
     async def get_foobar(request: web.Request) -> web.Response:
         return web.Response(body="success!")

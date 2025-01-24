@@ -522,7 +522,7 @@ class OpenTelemetryMiddleware:
                 if len(custom_attributes) > 0:
                     span.set_attributes(custom_attributes)
             if response_hook:
-                response_hook(status, response_headers)
+                response_hook(span, environ, status, response_headers)
             return start_response(status, response_headers, *args, **kwargs)
 
         return _start_response
@@ -560,9 +560,6 @@ class OpenTelemetryMiddleware:
             self.request_hook(span, environ)
 
         response_hook = self.response_hook
-        if response_hook:
-            response_hook = functools.partial(response_hook, span, environ)
-
         start = default_timer()
         self.active_requests_counter.add(1, active_requests_count_attrs)
         try:

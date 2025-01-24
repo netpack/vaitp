@@ -1,3 +1,4 @@
+
 from mod_python import apache
 
 def handler(req):
@@ -9,9 +10,8 @@ def handler(req):
 
     # Check if the requested URL is in the list of restricted objects
     if requested_url in restricted_objects:
-        req.write("Access Denied")
-        return apache.HTTP_FORBIDDEN
+        # Use a 403 Forbidden HTTP response code
+        return apache.HTTP_FORBIDDEN, "Access Denied"
 
     # Proceed with handling the request for non-restricted objects
-    req.write("Access Granted")
-    return apache.OK
+    return apache.OK, "Access Granted"

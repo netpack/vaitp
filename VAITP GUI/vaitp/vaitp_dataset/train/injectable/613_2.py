@@ -1,10 +1,10 @@
 import datetime
-from StringIO import StringIO
+from io import StringIO
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 from django.core.serializers import json
 from django.utils import simplejson
-from django.utils.encoding import force_unicode
+from django.utils.encoding import force_str
 from tastypie.bundle import Bundle
 from tastypie.exceptions import UnsupportedFormat
 from tastypie.utils import format_datetime, format_date, format_time
@@ -176,16 +176,16 @@ class Serializer(object):
         if isinstance(data, (list, tuple)):
             return [self.to_simple(item, options) for item in data]
         if isinstance(data, dict):
-            return dict((key, self.to_simple(val, options)) for (key, val) in data.iteritems())
+            return dict((key, self.to_simple(val, options)) for (key, val) in data.items())
         elif isinstance(data, Bundle):
-            return dict((key, self.to_simple(val, options)) for (key, val) in data.data.iteritems())
+            return dict((key, self.to_simple(val, options)) for (key, val) in data.data.items())
         elif hasattr(data, 'dehydrated_type'):
-            if getattr(data, 'dehydrated_type', None) == 'related' and data.is_m2m == False:
+            if getattr(data, 'dehydrated_type', None) == 'related' and not data.is_m2m:
                 if data.full:
                     return self.to_simple(data.fk_resource, options)
                 else:
                     return self.to_simple(data.value, options)
-            elif getattr(data, 'dehydrated_type', None) == 'related' and data.is_m2m == True:
+            elif getattr(data, 'dehydrated_type', None) == 'related' and data.is_m2m:
                 if data.full:
                     return [self.to_simple(bundle, options) for bundle in data.m2m_bundles]
                 else:
@@ -200,12 +200,12 @@ class Serializer(object):
             return self.format_time(data)
         elif isinstance(data, bool):
             return data
-        elif type(data) in (long, int, float):
+        elif type(data) in (int, float):
             return data
         elif data is None:
             return None
         else:
-            return force_unicode(data)
+            return force_str(data)
 
     def to_etree(self, data, options=None, name=None, depth=0):
         """
@@ -227,19 +227,19 @@ class Serializer(object):
             else:
                 element = Element(name or 'object')
                 element.set('type', 'hash')
-            for (key, value) in data.iteritems():
+            for (key, value) in data.items():
                 element.append(self.to_etree(value, options, name=key, depth=depth+1))
         elif isinstance(data, Bundle):
             element = Element(name or 'object')
             for field_name, field_object in data.data.items():
                 element.append(self.to_etree(field_object, options, name=field_name, depth=depth+1))
         elif hasattr(data, 'dehydrated_type'):
-            if getattr(data, 'dehydrated_type', None) == 'related' and data.is_m2m == False:
+            if getattr(data, 'dehydrated_type', None) == 'related' and not data.is_m2m:
                 if data.full:
                     return self.to_etree(data.fk_resource, options, name, depth+1)
                 else:
                     return self.to_etree(data.value, options, name, depth+1)
-            elif getattr(data, 'dehydrated_type', None) == 'related' and data.is_m2m == True:
+            elif getattr(data, 'dehydrated_type', None) == 'related' and data.is_m2m:
                 if data.full:
                     element = Element(name or 'objects')
                     for bundle in data.m2m_bundles:
@@ -257,7 +257,7 @@ class Serializer(object):
             if data_type != 'string':
                 element.set('type', get_type_string(simple_data))
             if data_type != 'null':
-                element.text = force_unicode(simple_data)
+                element.text = force_str(simple_data)
         return element
 
     def from_etree(self, data):
@@ -269,15 +269,15 @@ class Serializer(object):
         """
         if data.tag == 'request':
             # if "object" or "objects" exists, return deserialized forms.
-            elements = data.getchildren()
+            elements = list(data)
             for element in elements:
                 if element.tag in ('object', 'objects'):
                     return self.from_etree(element)
             return dict((element.tag, self.from_etree(element)) for element in elements)
         elif data.tag == 'object' or data.get('type') == 'hash':
-            return dict((element.tag, self.from_etree(element)) for element in data.getchildren())
+            return dict((element.tag, self.from_etree(element)) for element in list(data))
         elif data.tag == 'objects' or data.get('type') == 'list':
-            return [self.from_etree(element) for element in data.getchildren()]
+            return [self.from_etree(element) for element in list(data)]
         else:
             type_string = data.get('type')
             if type_string in ('string', None):
@@ -314,6 +314,8 @@ class Serializer(object):
         callback.
         """
         options = options or {}
+        if 'callback' not in options:
+           raise ImproperlyConfigured("Callback is required for jsonp serialization")
         return '%s(%s)' % (options['callback'], self.to_json(data, options))
 
     def to_xml(self, data, options=None):
@@ -325,7 +327,7 @@ class Serializer(object):
         if lxml is None:
             raise ImproperlyConfigured("Usage of the XML aspects requires lxml.")
 
-        return tostring(self.to_etree(data, options), xml_declaration=True, encoding='utf-8')
+        return tostring(self.to_etree(data, options), xml_declaration=True, encoding='utf-8').decode('utf-8')
 
     def from_xml(self, content):
         """
@@ -333,8 +335,11 @@ class Serializer(object):
         """
         if lxml is None:
             raise ImproperlyConfigured("Usage of the XML aspects requires lxml.")
-
-        return self.from_etree(parse_xml(StringIO(content)).getroot())
+        
+        try:
+            return self.from_etree(parse_xml(StringIO(content)).getroot())
+        except Exception as e:
+            raise Exception("Malformed XML: %s" % e)
 
     def to_yaml(self, data, options=None):
         """
@@ -354,7 +359,10 @@ class Serializer(object):
         if yaml is None:
             raise ImproperlyConfigured("Usage of the YAML aspects requires yaml.")
 
-        return yaml.safe_load(content)
+        try:
+            return yaml.safe_load(content)
+        except yaml.YAMLError as e:
+            raise Exception("Malformed YAML: %s" % e)
 
     def to_plist(self, data, options=None):
         """
@@ -373,8 +381,10 @@ class Serializer(object):
         """
         if biplist is None:
             raise ImproperlyConfigured("Usage of the plist aspects requires biplist.")
-
-        return biplist.readPlistFromString(content)
+        try:
+            return biplist.readPlistFromString(content)
+        except biplist.InvalidPlistException as e:
+            raise Exception("Malformed plist: %s" % e)
 
     def to_html(self, data, options=None):
         """
@@ -403,7 +413,7 @@ def get_type_string(data):
     """
     data_type = type(data)
 
-    if data_type in (int, long):
+    if data_type == int:
         return 'integer'
     elif data_type == float:
         return 'float'
@@ -415,5 +425,7 @@ def get_type_string(data):
         return 'hash'
     elif data is None:
         return 'null'
-    elif isinstance(data, basestring):
+    elif isinstance(data, str):
+        return 'string'
+    else:
         return 'string'

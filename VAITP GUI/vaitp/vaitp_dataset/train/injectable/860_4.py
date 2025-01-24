@@ -166,7 +166,7 @@ class NoneAlgorithm(Algorithm):
         return b""
 
     def verify(self, msg, key, sig):
-        return False
+        return sig == b""
 
 
 class HMACAlgorithm(Algorithm):
@@ -223,6 +223,8 @@ class HMACAlgorithm(Algorithm):
         return hmac.new(key, msg, self.hash_alg).digest()
 
     def verify(self, msg, key, sig):
+        if not isinstance(sig, bytes):
+            return False
         return hmac.compare_digest(sig, self.sign(msg, key))
 
 
@@ -462,22 +464,22 @@ if has_crypto:
 
             curve = obj.get("crv")
             if curve == "P-256":
-                if len(x) == len(y) == 32:
+                if len(x) == 32 and len(y) == 32:
                     curve_obj = ec.SECP256R1()
                 else:
                     raise InvalidKeyError("Coords should be 32 bytes for curve P-256")
             elif curve == "P-384":
-                if len(x) == len(y) == 48:
+                if len(x) == 48 and len(y) == 48:
                     curve_obj = ec.SECP384R1()
                 else:
                     raise InvalidKeyError("Coords should be 48 bytes for curve P-384")
             elif curve == "P-521":
-                if len(x) == len(y) == 66:
+                if len(x) == 66 and len(y) == 66:
                     curve_obj = ec.SECP521R1()
                 else:
                     raise InvalidKeyError("Coords should be 66 bytes for curve P-521")
             elif curve == "secp256k1":
-                if len(x) == len(y) == 32:
+                if len(x) == 32 and len(y) == 32:
                     curve_obj = ec.SECP256K1()
                 else:
                     raise InvalidKeyError(
@@ -498,7 +500,7 @@ if has_crypto:
             d = base64url_decode(obj.get("d"))
             if len(d) != len(x):
                 raise InvalidKeyError(
-                    "D should be {} bytes for curve {}", len(x), curve
+                    f"D should be {len(x)} bytes for curve {curve}"
                 )
 
             return ec.EllipticCurvePrivateNumbers(
@@ -577,7 +579,7 @@ if has_crypto:
                 or :class:`.Ed448PrivateKey` iinstance
             :return bytes signature: The signature, as bytes
             """
-            msg = bytes(msg, "utf-8") if type(msg) is not bytes else msg
+            msg = force_bytes(msg)
             return key.sign(msg)
 
         def verify(self, msg, key, sig):
@@ -591,8 +593,8 @@ if has_crypto:
             :return bool verified: True if signature is valid, False if not.
             """
             try:
-                msg = bytes(msg, "utf-8") if type(msg) is not bytes else msg
-                sig = bytes(sig, "utf-8") if type(sig) is not bytes else sig
+                msg = force_bytes(msg)
+                sig = force_bytes(sig)
 
                 if isinstance(key, (Ed25519PrivateKey, Ed448PrivateKey)):
                     key = key.public_key()

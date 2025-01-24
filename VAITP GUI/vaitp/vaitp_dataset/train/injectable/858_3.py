@@ -161,13 +161,15 @@ class PushRuleEvaluatorForEvent:
         # XXX: optimisation: cache our pattern regexps
         if condition["key"] == "content.body":
             body = self._event.content.get("body", None)
-            if not body or not isinstance(body, str):
+            if not isinstance(body, str):
                 return False
 
             return _glob_matches(pattern, body, word_boundary=True)
         else:
             haystack = self._get_value(condition["key"])
             if haystack is None:
+                return False
+            if not isinstance(haystack, str):
                 return False
 
             return _glob_matches(pattern, haystack)
@@ -177,7 +179,7 @@ class PushRuleEvaluatorForEvent:
             return False
 
         body = self._event.content.get("body", None)
-        if not body or not isinstance(body, str):
+        if not isinstance(body, str):
             return False
 
         # Similar to _glob_matches, but do not treat display_name as a glob.
@@ -233,7 +235,7 @@ def _flatten_dict(
     for key, value in d.items():
         if isinstance(value, str):
             result[".".join(prefix + [key])] = value.lower()
-        elif hasattr(value, "items"):
+        elif isinstance(value, dict):
             _flatten_dict(value, prefix=(prefix + [key]), result=result)
 
     return result

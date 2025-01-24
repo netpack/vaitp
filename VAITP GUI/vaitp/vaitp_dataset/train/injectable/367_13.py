@@ -9,6 +9,7 @@ from os import urandom
 from jwcrypto.jws import JWS, JWSHeaderRegistry
 from jwcrypto.common import base64url_encode, base64url_decode, \
                             json_encode, json_decode
+from jwcrypto.jwk import JWK
 
 class _JWTError(Exception):
     """ Exception raised if claim doesn't pass. Private to this module because
@@ -73,7 +74,7 @@ def generate_jwt(claims, priv_key=None,
     now = datetime.utcnow()
 
     if jti_size:
-        claims['jti'] = base64url_encode(urandom(jti_size))
+        claims['jti'] = base64url_encode(urandom(jti_size)).decode('utf-8')
 
     claims['nbf'] = timegm((not_before or now).utctimetuple())
     claims['iat'] = timegm(now.utctimetuple())
@@ -86,14 +87,14 @@ def generate_jwt(claims, priv_key=None,
     if header['alg'] == 'none':
         signature = ''
     else:
-        token = JWS(json_encode(claims))
+        token = JWS(json_encode(claims).decode('utf-8'))
         token.allowed_algs = [header['alg']]
         token.add_signature(priv_key, protected=header)
         signature = json_decode(token.serialize())['signature']
 
-    return u'%s.%s.%s' % (
-        base64url_encode(json_encode(header)),
-        base64url_encode(json_encode(claims)),
+    return '%s.%s.%s' % (
+        base64url_encode(json_encode(header)).decode('utf-8'),
+        base64url_encode(json_encode(claims)).decode('utf-8'),
         signature
     )
 
@@ -101,7 +102,7 @@ def generate_jwt(claims, priv_key=None,
 
 _jwt_re = re.compile(r'^[A-Za-z0-9\-_]+\.[A-Za-z0-9\-_]+\.[A-Za-z0-9\-_]*$')
 def _check_jwt_format(jwt):
-    if not _jwt_re.match(jwt):
+    if not isinstance(jwt, str) or not _jwt_re.match(jwt):
         raise _JWTError('invalid JWT format')
 
 def verify_jwt(jwt,
@@ -156,7 +157,10 @@ def verify_jwt(jwt,
         # jwcrypto only supports list of allowed algorithms
         raise _JWTError('allowed_algs must be a list')
 
-    header, claims, _ = jwt.split('.')
+    try:
+        header, claims, signature = jwt.split('.')
+    except ValueError:
+        raise _JWTError('invalid JWT format')
 
     parsed_header = json_decode(base64url_decode(header))
 
@@ -176,7 +180,11 @@ def verify_jwt(jwt,
     if pub_key:
         token = JWS()
         token.allowed_algs = allowed_algs
-        token.deserialize(jwt, pub_key)
+        try:
+            token.deserialize(jwt, pub_key)
+        except Exception as e:
+           raise _JWTError(f'Signature verification failed: {e}')
+
         parsed_claims = json_decode(token.payload)
     elif 'none' not in allowed_algs:
         raise _JWTError('no key but none alg not allowed')
@@ -231,7 +239,10 @@ def process_jwt(jwt):
     :returns: ``(header, claims)``
     """
     _check_jwt_format(jwt)
-    header, claims, _ = jwt.split('.')
+    try:
+        header, claims, _ = jwt.split('.')
+    except ValueError:
+        raise _JWTError('invalid JWT format')
     parsed_header = json_decode(base64url_decode(header))
     parsed_claims = json_decode(base64url_decode(claims))
     return parsed_header, parsed_claims

@@ -1,7 +1,7 @@
 import io
 import os
 import tempfile
-import urllib
+import urllib.parse
 import weakref
 import webbrowser
 
@@ -69,7 +69,8 @@ class Browser:
     @staticmethod
     def add_soup(response, soup_config):
         """Attaches a soup object to a requests response."""
-        if ("text/html" in response.headers.get("Content-Type", "") or
+        content_type = response.headers.get("Content-Type", "")
+        if ("text/html" in content_type or
                 Browser.__looks_like_html(response)):
             # Note: By default (no charset provided in HTTP headers), requests
             # returns 'ISO-8859-1' which is the default for HTML4, even if HTML
@@ -77,7 +78,7 @@ class Browser:
             # resort to bs4 sniffing, hence the special handling here.
             http_encoding = (
                 response.encoding
-                if 'charset' in response.headers.get("Content-Type", "")
+                if 'charset' in content_type
                 else None
             )
             html_encoding = bs4.dammit.EncodingDetector.find_declared_encoding(
@@ -239,7 +240,10 @@ class Browser:
                     # If content is the empty string, we still pass it
                     # for consistency with browsers (see
                     # https://github.com/MechanicalSoup/MechanicalSoup/issues/250).
-                    files[name] = (filename, content)
+                    if not filename:
+                        files[name] = (None, content)
+                    else:
+                         files[name] = (filename, content)
                 else:
                     if isinstance(value, io.IOBase):
                         value = os.path.basename(getattr(value, "name", ""))
@@ -331,7 +335,7 @@ class Browser:
         :param: soup: Page contents to display, supplied as a bs4 soup object.
         """
         with tempfile.NamedTemporaryFile(delete=False, suffix='.html') as file:
-            file.write(soup.encode())
+            file.write(str(soup).encode())
         webbrowser.open('file://' + file.name)
 
     def close(self):

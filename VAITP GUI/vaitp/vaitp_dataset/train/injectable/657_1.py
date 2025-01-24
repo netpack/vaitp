@@ -1,5 +1,7 @@
 import os
 import sys
+import importlib
+import importlib.util
 
 # Ensure the script only uses the standard library paths
 def secure_import(module_name):
@@ -11,23 +13,29 @@ def secure_import(module_name):
         try:
             # Construct the full path to the potential module file
             module_path = os.path.join(path, module_name + ".py")
-            if os.path.exists(module_path):
-                # If it's a file, use importlib.util.spec_from_file_location to get a spec and then import using importlib.util.module_from_spec
-                import importlib.util
-                spec = importlib.util.spec_from_file_location(module_name, module_path)
-                if spec is not None:
-                   module = importlib.util.module_from_spec(spec)
-                   spec.loader.exec_module(module)
-                   return module
+            if os.path.isfile(module_path):
+                 spec = importlib.util.spec_from_file_location(module_name, module_path)
+                 if spec is not None:
+                     module = importlib.util.module_from_spec(spec)
+                     if module is not None:
+                         try:
+                             spec.loader.exec_module(module)
+                             return module
+                         except Exception:
+                             continue
             
             # Check for package (directory)
             package_path = os.path.join(path, module_name)
             init_path = os.path.join(package_path, "__init__.py")
-            if os.path.isdir(package_path) and os.path.exists(init_path):
-                module = __import__(module_name)
-                return module
-            
-        except ImportError:
+            if os.path.isdir(package_path) and os.path.isfile(init_path):
+                 spec = importlib.util.spec_from_file_location(module_name, init_path)
+                 if spec is not None:
+                     try:
+                         module = importlib.import_module(module_name)
+                         return module
+                     except Exception:
+                        continue
+        except Exception:
             continue
         
     raise ImportError(f"Module {module_name} not found in secure paths.")
@@ -36,7 +44,7 @@ def secure_import(module_name):
 if __name__ == "__main__":
     # Example of importing a module securely
     try:
-        my_module = secure_import('math') # Changed to 'math' as 'my_module' is not part of the standard library
+        my_module = secure_import('math')
         print(my_module.sqrt(4))
 
         #Testing directory package

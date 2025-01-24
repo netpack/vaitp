@@ -176,7 +176,7 @@ def test_unpack_http_url_bad_downloaded_checksum(mock_unpack_file):
     download_dir = mkdtemp()
     try:
         downloaded_file = os.path.join(download_dir, 'somepackage.tgz')
-        create_file(downloaded_file, 'some contents')
+        create_file(downloaded_file, b'some contents')
 
         unpack_http_url(
             link,
@@ -193,8 +193,8 @@ def test_unpack_http_url_bad_downloaded_checksum(mock_unpack_file):
             stream=True,
         )
         # cached file is replaced with newly downloaded file
-        with open(downloaded_file) as fh:
-            assert fh.read() == 'downloaded'
+        with open(downloaded_file, 'rb') as fh:
+            assert fh.read() == b'downloaded'
 
     finally:
         rmtree(download_dir)
@@ -432,7 +432,7 @@ class TestSafeFileCache:
 
     @pytest.mark.skipif("sys.platform == 'win32'")
     def test_safe_get_no_perms(self, cache_tmpdir, monkeypatch):
-        os.chmod(cache_tmpdir, 000)
+        os.chmod(cache_tmpdir, 0o000)
 
         monkeypatch.setattr(os.path, "exists", lambda x: True)
 
@@ -441,14 +441,14 @@ class TestSafeFileCache:
 
     @pytest.mark.skipif("sys.platform == 'win32'")
     def test_safe_set_no_perms(self, cache_tmpdir):
-        os.chmod(cache_tmpdir, 000)
+        os.chmod(cache_tmpdir, 0o000)
 
         cache = SafeFileCache(cache_tmpdir)
         cache.set("foo", b"bar")
 
     @pytest.mark.skipif("sys.platform == 'win32'")
     def test_safe_delete_no_perms(self, cache_tmpdir):
-        os.chmod(cache_tmpdir, 000)
+        os.chmod(cache_tmpdir, 0o000)
 
         cache = SafeFileCache(cache_tmpdir)
         cache.delete("foo")
@@ -468,7 +468,7 @@ class TestPipSession:
         assert hasattr(session.adapters["https://"], "cache")
 
         assert (session.adapters["https://"].cache.directory ==
-                tmpdir.join("test-cache"))
+                str(tmpdir.join("test-cache")))
 
     def test_http_cache_is_not_enabled(self, tmpdir):
         session = PipSession(cache=tmpdir.join("test-cache"))

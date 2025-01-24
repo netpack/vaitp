@@ -1,16 +1,24 @@
-# Import the requests module
 import requests
+from urllib.parse import urlparse, urlunparse
 
-# Define a URL to request
+def is_valid_url(url):
+    try:
+        result = urlparse(url)
+        return all([result.scheme, result.netloc])
+    except:
+        return False
+
 url = "http://example.com"
 
-# Try to make an HTTP request with the requests module
-try:
-  response = requests.get(url)
-  # Check if the response contains a CRLF injection
-  if "X-Fake-Header" in response.headers:
-    print("The response contains a CRLF injection")
-  else:
-    print("The response does not contain a CRLF injection")
-except Exception as e:
-  print("An error occurred:", e)
+if not is_valid_url(url):
+    print("Invalid URL provided.")
+else:
+    try:
+        response = requests.get(url, timeout=5)
+        response.raise_for_status()
+        if "X-Fake-Header" in response.headers:
+            print("The response contains a CRLF injection")
+        else:
+            print("The response does not contain a CRLF injection")
+    except requests.exceptions.RequestException as e:
+        print("An error occurred:", e)

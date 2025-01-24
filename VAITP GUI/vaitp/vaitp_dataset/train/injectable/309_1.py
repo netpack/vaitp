@@ -1,6 +1,7 @@
 import awscrt
 import awscrt.io
 import socket
+import ssl
 
 # Example PEM-encoded custom CA certificate and key (replace with actual values)
 custom_ca_cert_pem = """
@@ -30,23 +31,41 @@ tls_context = awscrt.io.ClientTlsContext(
 )
 
 # Create a connection
-#The TlsConnection does not exist. We need to create a socket, and then wrap that in a TlsConnection
 host = "example.com"
 port = 443
 
-# Resolve host to IP address (this needs to be done)
 try:
+    # Resolve host to IP address
     addr_info = socket.getaddrinfo(host, port, socket.AF_INET, socket.SOCK_STREAM)
     sock_addr = addr_info[0][4]
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    sock.connect(sock_addr)
     
-    connection = awscrt.io.TlsConnection(tls_context=tls_context, socket=sock, server_name=host)
+    # Create a socket
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    
+    # Wrap the socket with SSL/TLS using the provided context
+    ssl_sock = ssl.wrap_socket(sock, 
+                                 ssl_version=ssl.PROTOCOL_TLSv1_2,
+                                 server_hostname=host,
+                                 do_handshake_on_connect=False,
+                                 ca_certs=None,
+                                 cert_reqs=ssl.CERT_REQUIRED)
+    
+    # Connect to the server
+    ssl_sock.connect(sock_addr)
 
-    # Attempt to connect to a server
-    connection.connect() #Removed the connect function parameters
+    # Manually perform the handshake for proper certificate validation.
+    ssl_sock.do_handshake()
+
+    # Create the awscrt TlsConnection using the wrapped ssl socket
+    connection = awscrt.io.TlsConnection(tls_context=tls_context, socket=ssl_sock.fileno(), server_name=host)
+    
+    #Perform the handshake again, now through the awscrt interface.
+    connection.connect()
+
 
 except socket.gaierror as e:
-        print(f"Error resolving host {host}: {e}")
+    print(f"Error resolving host {host}: {e}")
+except ssl.SSLError as e:
+    print(f"SSL Error: {e}")
 except Exception as e:
-        print(f"An unexpected error occurred: {e}")
+    print(f"An unexpected error occurred: {e}")
