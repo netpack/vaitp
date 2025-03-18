@@ -1,5 +1,6 @@
 VAITP GUI/vaitp/vaitp_python_venv
 VAITP GUI/vaitp/vaitp_venv
+VAITP GUI/vaitp/vaitp_dataset/train/noninjectable/vaitp_venv39
 VAITP GUI/vaitp/vaitp/lineicons-free-basic-3.0
 VAITP GUI/build-vaitp-Desktop_Qt_5_12_12_MinGW_64_bit-Debug
 VAITP GUI/vaitp/py/scrappers
@@ -24,3 +25,12 @@ VAITP GUI/vaitp/py/work_utils/training_dataset.json
 VAITP GUI/vaitp/py/work_utils/validate_dataset.py
 VAITP GUI/vaitp/py/work_utils/vulnerability_scraper.py
 VAITP GUI/vaitp/py/work_utils/dataset_parts/
+VAITP GUI/vaitp/py/scrappers/0_vaitp_db.py
+VAITP GUI/vaitp/py/API
+VAITP GUI/vaitp/py/test_docker/response_code.py
+VAITP GUI/vaitp/vaitp_dataset/python_vulnerabilities_cleaned.csv
+VAITP GUI/vaitp/py/work_utils
+VAITP GUI/vaitp/vaitp_dataset/python_vulnerabilities_part1_Roberta.csv
+VAITP GUI/vaitp/vaitp_dataset/python_vulnerabilities_part2_Frederic.csv
+VAITP GUI/vaitp/vaitp_dataset/python_vulnerabilities.csv
+VAITP GUI/vaitp/vaitp_dataset/test

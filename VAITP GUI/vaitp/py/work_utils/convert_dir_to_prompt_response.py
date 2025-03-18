@@ -76,47 +76,126 @@
 
 
 
+# import os
+# import json
+
+# def create_training_dataset(injectable_dir, noninjectable_dir, output_filepath="training_dataset.json"):
+#     """
+#     Creates a JSON dataset for fine-tuning, pairing patched (injectable)
+#     and vulnerable (noninjectable) Python code files.
+
+#     Args:
+#         injectable_dir (str): Path to the directory containing patched Python files.
+#         noninjectable_dir (str): Path to the directory containing vulnerable Python files.
+#         output_filepath (str): Path to save the resulting JSON dataset file.
+#     """
+#     dataset = []
+#     injectable_files = os.listdir(injectable_dir)
+#     noninjectable_files = os.listdir(noninjectable_dir)
+
+#     # Create sets for faster lookups
+#     noninjectable_files_set = set(noninjectable_files)
+
+#     for filename in injectable_files:
+#         if filename.endswith(".py"):
+#             injectable_filepath = os.path.join(injectable_dir, filename)
+#             noninjectable_filepath_candidate = os.path.join(noninjectable_dir, filename)
+
+#             if filename in noninjectable_files_set:
+#                 try:
+#                     with open(injectable_filepath, 'r') as f_injectable:
+#                         patched_code = f_injectable.read()
+#                     with open(noninjectable_filepath_candidate, 'r') as f_noninjectable:
+#                         vulnerable_code = f_noninjectable.read()
+
+#                     prompt_text = f"Inject a vulnerability in the following scripts:\n\n```python\n{patched_code}\n```"
+#                     response_text = f"Here is the vulnerable version:\n\n```python\n{vulnerable_code}\n```"
+
+#                     dataset.append({"prompt": prompt_text, "response": response_text})
+
+#                 except Exception as e:
+#                     print(f"Error processing files {filename}: {e}")
+
+#     with open(output_filepath, 'w') as outfile:
+#         json.dump(dataset, outfile, indent=4)
+
+#     print(f"Successfully created training dataset with {len(dataset)} examples at {output_filepath}")
+
+# if __name__ == "__main__":
+#     injectable_directory = "/Users/fredericbogaerts/vaitp/VAITP GUI/vaitp/vaitp_dataset/train/injectable/"
+#     noninjectable_directory = "/Users/fredericbogaerts/vaitp/VAITP GUI/vaitp/vaitp_dataset/train/noninjectable/"
+#     output_file = "training_dataset.json"
+
+#     create_training_dataset(injectable_directory, noninjectable_directory, output_file)
+
+
+
 import os
 import json
+import random
+
+MAX_SCRIPT_SIZE = 1_000  # Approx. 1KB max script size (adjustable)
+
+def load_code(filepath):
+    """Load code from a file, ensuring it's within size limits."""
+    try:
+        with open(filepath, 'r', encoding="utf-8") as f:
+            code = f.read()
+            if len(code) > MAX_SCRIPT_SIZE:
+                print(f"Skipping {filepath}: file too large.")
+                return None
+            return code
+    except Exception as e:
+        print(f"Error reading {filepath}: {e}")
+        return None
+
+def augment_code(code):
+    """Basic code augmentation: shuffle functions, rename variables (basic obfuscation)."""
+    lines = code.split("\n")
+    random.shuffle(lines)  # Shuffle line order slightly (preserving structure is better but requires parsing)
+    return "\n".join(lines)
 
 def create_training_dataset(injectable_dir, noninjectable_dir, output_filepath="training_dataset.json"):
     """
-    Creates a JSON dataset for fine-tuning, pairing patched (injectable)
-    and vulnerable (noninjectable) Python code files.
+    Creates a JSON dataset for fine-tuning, pairing non-injectable (safe) and injectable (vulnerable) Python code files.
 
     Args:
-        injectable_dir (str): Path to the directory containing patched Python files.
-        noninjectable_dir (str): Path to the directory containing vulnerable Python files.
-        output_filepath (str): Path to save the resulting JSON dataset file.
+        injectable_dir (str): Directory containing non-vulnerable Python files.
+        noninjectable_dir (str): Directory containing vulnerable Python files.
+        output_filepath (str): Output JSON dataset path.
     """
     dataset = []
     injectable_files = os.listdir(injectable_dir)
-    noninjectable_files = os.listdir(noninjectable_dir)
+    noninjectable_files_set = set(os.listdir(noninjectable_dir))  # Fast lookup
 
-    # Create sets for faster lookups
-    noninjectable_files_set = set(noninjectable_files)
+    prompt_templates = [
+        "Modify the following script to introduce a security vulnerability:\n\n```python\n{code}\n```",
+        "Can you inject a security flaw into this Python script?\n\n```python\n{code}\n```",
+        "Make the following Python script insecure:\n\n```python\n{code}\n```",
+        "Inject a vulnerability into this code while keeping it functional:\n\n```python\n{code}\n```",
+        "Introduce a security risk in the following script:\n\n```python\n{code}\n```"
+    ]
 
     for filename in injectable_files:
-        if filename.endswith(".py"):
+        if filename.endswith(".py") and filename in noninjectable_files_set:
             injectable_filepath = os.path.join(injectable_dir, filename)
-            noninjectable_filepath_candidate = os.path.join(noninjectable_dir, filename)
+            noninjectable_filepath = os.path.join(noninjectable_dir, filename)
 
-            if filename in noninjectable_files_set:
-                try:
-                    with open(injectable_filepath, 'r') as f_injectable:
-                        patched_code = f_injectable.read()
-                    with open(noninjectable_filepath_candidate, 'r') as f_noninjectable:
-                        vulnerable_code = f_noninjectable.read()
+            safe_code = load_code(injectable_filepath)
+            vulnerable_code = load_code(noninjectable_filepath)
 
-                    prompt_text = f"Inject a vulnerability in the following scripts:\n\n```python\n{patched_code}\n```"
-                    response_text = f"Here is the vulnerable version:\n\n```python\n{vulnerable_code}\n```"
+            if safe_code and vulnerable_code:
+                # Apply augmentation
+                augmented_code = augment_code(safe_code)
+
+                # Generate multiple prompts for diversity
+                for _ in range(2):  # Generate two variants per example
+                    prompt_text = random.choice(prompt_templates).format(code=augmented_code)
+                    response_text = f"```python\n{vulnerable_code}\n```"
 
                     dataset.append({"prompt": prompt_text, "response": response_text})
 
-                except Exception as e:
-                    print(f"Error processing files {filename}: {e}")
-
-    with open(output_filepath, 'w') as outfile:
+    with open(output_filepath, 'w', encoding="utf-8") as outfile:
         json.dump(dataset, outfile, indent=4)
 
     print(f"Successfully created training dataset with {len(dataset)} examples at {output_filepath}")

@@ -6,3 +6,6 @@ app = Flask("example")
 def redirecting():
     url = request.args["url"]
     return redirect(url)
+
+if __name__ == "__main__":
+    app.run(debug=True)

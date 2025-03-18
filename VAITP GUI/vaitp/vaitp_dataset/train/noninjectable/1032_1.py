@@ -1,14 +1,14 @@
-from jinja2 import Environment
+from flask import Flask, request, render_template_string
 
-# Vulnerable setup with sandbox-less jinja2 environment
-env = Environment()  # No autoescape or loader restrictions
+app = Flask(__name__)
 
-# Example of loading and rendering a chat template
-def render_chat_template(user_input):
-    template = env.from_string("User  says: {{ user_input }}")  # Simple template
-    return template.render(user_input=user_input)
+@app.route('/vulnerable', methods=['GET'])
+def vulnerable():
+    user_input = request.args.get('name', 'Guest')
+    
+    # Directly using user input in a Jinja2 template (SSTI Vulnerability)
+    template = f"Hello, {user_input}!"
+    return render_template_string(template)
 
-# Example of potentially unsafe user input
-unsafe_input = "__import__('os').system('ls')"  # Malicious input
-output = render_chat_template(unsafe_input)  # This could execute arbitrary code
-print(output)
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5002, debug=True)
