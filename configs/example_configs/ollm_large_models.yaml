@@ -1,0 +1,57 @@
+# oLLM Large Models Configuration
+# This configuration demonstrates using oLLM for large models (70B+ parameters)
+# that cannot fit in standard GPU VRAM
+
+experiment_name: "ollm_large_models_test"
+run_description: "Testing large models using oLLM memory-efficient inference for consumer hardware"
+
+# Phase Configuration
+phase: 2
+stage: "all"
+
+# Large Model Selection - These will automatically use oLLM
+coders_to_run:
+  - "Llama-3.1-70B-Base"      # 70B model - requires oLLM on consumer GPUs
+  - "Code-Llama-34B-Base"     # 34B model - benefits from oLLM
+
+# Strategy Selection
+strategies_to_run:
+  - "DIRECT_ONLY"
+  - "DIRECT_RAG"
+
+# Data Paths
+input_dataset_dir: "vaitp_dataset/injectable"
+expected_dir: "vaitp_dataset/expected"
+
+# oLLM-Optimized Settings
+timeout_per_model: 7200  # 2 hours - oLLM inference is slower but higher quality
+max_retries: 2
+
+# oLLM Configuration (optional - system will auto-detect)
+ollm_config:
+  enable_ollm: true
+  auto_detect: true              # Let system decide when to use oLLM
+  device: "cuda"                 # Use GPU acceleration when possible
+  memory_threshold_gb: 2.0       # Use oLLM for models requiring >2GB VRAM
+  ssd_min_space_gb: 100.0        # Ensure sufficient SSD space
+  fallback_enabled: true         # Fall back to llama-cpp if oLLM fails
+
+# Model-specific oLLM overrides
+model_overrides:
+  "Llama-3.1-70B-Base":
+    force_ollm: true             # Always use oLLM for 70B model
+    batch_size: 1                # Single batch for memory efficiency
+    precision: "fp16"            # Half precision for speed
+  "Code-Llama-34B-Base":
+    prefer_ollm: true            # Prefer oLLM but allow auto-detection
+    batch_size: 2                # Slightly larger batch for 34B model
+
+# Performance Monitoring
+enable_performance_optimization: true
+monitoring_interval: 10.0       # Monitor every 10 seconds
+
+# Export Settings
+export:
+  save_excel: true
+  excel_per_model: true
+  include_backend_info: true     # Include which backend was used

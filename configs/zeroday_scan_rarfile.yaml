@@ -1,0 +1,17 @@
+# zeroday_scan_rarfile.yaml
+# -----------------------------------------------------------------------------
+# Zero-Day Discovery Scan: rarfile
+#
+# Objective:
+#   Run Phase 1 on the rarfile library (archive extraction - path traversal)
+# -----------------------------------------------------------------------------
+
+experiment_name: "zeroday_scan_rarfile"
+run_description: "Zero-day discovery scan of rarfile library (archive/path traversal)"
+
+phase: 1
+stage: "generate"
+reasoning_model: "deepseek-r1:14b"
+input_dataset_dir: "target_repos/rarfile_scan_input"
+strategy: "all"
+timeout_per_model: 3600

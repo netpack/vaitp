@@ -1,0 +1,22 @@
+# Phase 2 only: Execute coder models
+# Target: Results_cfg_jul26_trial_0_aa_vet.py (PromSec)
+
+experiment_name: "PromSec_Results_cfg_jul26_trial_0_aa_vet"
+run_description: "Phase 2 only - coder execution for aa test"
+
+phase: "2"
+stage: "all"
+
+reasoning_model: "deepseek-r1:14b"
+
+coders_to_run:
+  - "deepseek-r1:14b"
+
+strategies_to_run:
+  - "DIRECT_ONLY"
+
+input_dataset_dir: "vaitp_dataset/injectable"
+
+ollama: true
+stream_llm: true
+timeout_per_model: 3000

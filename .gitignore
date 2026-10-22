@@ -1,0 +1,37 @@
+venv/
+__pycache__/
+*.7z
+papers/
+old*
+*bkup*
+*.db_old
+.env
+*backup*
+vaitp_dataset/pyvul
+vaitp_dataset/sven
+generated*
+execution_log_orchestrated.db
+orchestrator_run.log
+target_repos/
+
+# Smart contract project (kept locally, has its own deploy secrets and submodules)
+contracts/vaitp-token/
+.gitmodules
+
+# Dataset (kept locally)
+vaitp_dataset/
+
+# RAG index (rebuilt by rag_update_scripts/2_build_faiss_index.py)
+*.faiss
+
+# Personal files
+Frederic Bogaerts - Call for Advanced Computing Projects*
+SoftwareList_6_CPCA_*.xlsx
+
+# Scratch / ad-hoc tests
+tmp_log_run.txt
+test/
+test_input/
+test_jose_*.py
+test_tomlkit_dos_proof.py
+temp_scan.py

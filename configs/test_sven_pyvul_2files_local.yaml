@@ -1,0 +1,15 @@
+# Quick smoke test: 2 files from the SVEN+PyVul dataset with local model
+experiment_name: "test_sven_pyvul_2files_local"
+run_description: "Smoke test — 2 files (1 stdio CWE-78, 1 network CWE-79) with local qwen2.5-coder-3b"
+
+phase: "3"
+
+reasoning_model: "qwen2.5-coder-3b-abliterated-basic:latest"
+
+ollama: true
+stream_llm: false
+
+max_iterations: 3
+
+# Filter to just 2 specific files (CWE-22 path traversal + CWE-89 SQL injection)
+#filter: "_sven_00_"

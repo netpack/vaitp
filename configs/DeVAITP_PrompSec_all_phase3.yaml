@@ -1,0 +1,22 @@
+# Phase 3 only: Docker-based exploitation verification for ALL 84 vulnerable files
+# No filter — runs every paired file in vaitp_dataset/vulnerable + injectable
+
+experiment_name: "PromSec_all_84_phase3"
+run_description: "Phase 3 verification of all 84 known-vulnerable files"
+
+phase: "3"
+
+# --- Model Selection ---
+reasoning_model: "llama-3.1-8b" #"deepseek-r1:14b"
+
+coders_to_run:
+  - "llama-3.1-8b" #"deepseek-r1:14b"
+
+input_dataset_dir: "vaitp_dataset/injectable"
+
+ollama: false #true
+stream_llm: false #true
+
+max_iterations: 5
+# No filter — run all files
+# skip_proven: true would skip already-proven files on re-runs

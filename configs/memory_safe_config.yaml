@@ -1,0 +1,30 @@
+# Memory-safe configuration generated automatically
+# Available memory: 7.3 GB
+
+experiment_name: "memory_safe_phase2_test"
+run_description: "Memory-optimized Phase 2 test with safe model selection"
+
+phase: 2
+stage: "all"
+
+# Memory-safe model selection
+coders_to_run:
+  - "Llama-3.2-1B-Base"
+  - "Llama-3.2-1B-Finetuned"
+  - "Qwen3-1.7B-Base"
+  - "Qwen-3-1.7B-Finetuned"
+  - "Codepy-3B-Base"
+  - "Codepy-3B-Finetuned"
+
+strategies_to_run:
+  - "DIRECT_ONLY"
+  - "DIRECT_RAG"
+
+input_dataset_dir: "vaitp_dataset/injectable_test"
+expected_dir: "vaitp_dataset/expected_test"
+
+timeout_per_model: 900  # Reduced timeout for memory safety
+
+export:
+  save_excel: true
+  excel_per_model: true

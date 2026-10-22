@@ -1,0 +1,18 @@
+# Phase 3 only: Docker-based exploitation verification
+# Target: Results_cfg_jul26_trial_0_aa_vet.py (PromSec)
+
+experiment_name: "PromSec_Results_cfg_jul26_trial_0_aa_vet"
+run_description: "Phase 3 only - exploitation verification"
+
+phase: "3"
+
+reasoning_model: "deepseek-r1:14b"
+
+input_dataset_dir: "vaitp_dataset/injectable"
+
+ollama: true
+stream_llm: true
+
+max_iterations: 5
+filter: "Results_cfg_jul26_trial_0_aa_vet"
+llm_only: true

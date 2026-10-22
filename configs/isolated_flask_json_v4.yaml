@@ -1,0 +1,22 @@
+# isolated_flask_json_v4.yaml
+experiment_name: "isolated_flask_json_v4"
+run_description: "End-to-end test on flask_json_v4.py (command injection via JSON POST shell=True)"
+
+phase: full
+stage: "all"
+
+reasoning_model: "deepseek-r1:14b"
+
+coders_to_run:
+  - "deepseek-r1:14b"
+
+strategies_to_run:
+  - "DIRECT_ONLY"
+
+input_dataset_dir: "vaitp_dataset/isolated_test"
+
+ollama: true
+
+max_iterations: 5
+
+timeout_per_model: 900

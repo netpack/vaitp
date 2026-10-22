@@ -1,0 +1,20 @@
+# CVE2023_phase1_deepthink.yaml
+# -----------------------------------------------------------------------------
+# Phase 1 Configuration for CVE-2023 Dataset with Deepthink 7B
+# -----------------------------------------------------------------------------
+
+experiment_name: "CVE2023_phase1_deepthink"
+run_description: "Phase 1 plan generation for CVE-2023 dataset using Deepthink 7B model"
+
+# --- Phase Configuration ---
+phase: 1
+stage: "generate"
+
+# --- Model Selection ---
+reasoning_model: "deepthink-7b"
+
+# --- Path Configuration ---
+input_dataset_dir: "vaitp_dataset/injectable_cve2023"
+
+# --- Performance Settings ---
+timeout_per_model: 1800 # 30 minutes

@@ -1,0 +1,69 @@
+# oLLM Mixed Models Configuration
+# This configuration demonstrates automatic backend selection for different model sizes
+# Small models use llama-cpp, large models use oLLM automatically
+
+experiment_name: "ollm_mixed_models_test"
+run_description: "Mixed model sizes with automatic oLLM/llama-cpp backend selection"
+
+# Phase Configuration
+phase: 2
+stage: "all"
+
+# Mixed Model Selection - System will choose optimal backend for each
+coders_to_run:
+  - "Llama-3.1-8B-Base"        # Small model - will use llama-cpp
+  - "Llama-3.1-13B-Base"       # Medium model - backend depends on VRAM
+  - "Llama-3.1-70B-Base"       # Large model - will use oLLM
+  - "Code-Llama-7B-Base"       # Small model - will use llama-cpp
+  - "Code-Llama-34B-Base"      # Large model - will use oLLM
+
+# Strategy Selection
+strategies_to_run:
+  - "DIRECT_ONLY"
+  - "DIRECT_RAG"
+
+# Data Paths
+input_dataset_dir: "vaitp_dataset/injectable"
+expected_dir: "vaitp_dataset/expected"
+
+# Adaptive timeout based on model size and backend
+timeout_per_model: 3600  # Base timeout - will be adjusted per model
+
+# oLLM Configuration - Balanced settings for mixed workload
+ollm_config:
+  enable_ollm: true
+  auto_detect: true              # Automatic backend selection
+  device: "auto"                 # Let system choose best device
+  memory_threshold_gb: 12.0      # Use oLLM for models requiring >12GB VRAM
+  ssd_min_space_gb: 80.0         # Moderate SSD space requirement
+  fallback_enabled: true         # Always enable fallback
+
+# Model-specific configurations
+model_overrides:
+  "Llama-3.1-8B-Base":
+    force_ollm: false            # Never use oLLM for 8B model
+    batch_size: 4                # Larger batch for small model
+  "Llama-3.1-13B-Base":
+    # No override - let auto-detection decide
+    batch_size: 2                # Moderate batch size
+  "Llama-3.1-70B-Base":
+    force_ollm: true             # Always use oLLM for 70B
+    batch_size: 1                # Conservative batch size
+    prefetch_layers: 2           # Moderate prefetching
+  "Code-Llama-7B-Base":
+    force_ollm: false            # Use llama-cpp for code generation speed
+    batch_size: 4
+  "Code-Llama-34B-Base":
+    prefer_ollm: true            # Prefer oLLM but allow fallback
+    batch_size: 1
+
+# Performance Settings
+enable_performance_optimization: true
+monitoring_interval: 5.0
+
+# Export Settings
+export:
+  save_excel: true
+  excel_per_model: true
+  include_backend_info: true     # Track which backend was used
+  include_performance_metrics: true  # Include inference speed, memory usage

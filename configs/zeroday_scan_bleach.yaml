@@ -1,0 +1,13 @@
+# zeroday_scan_bleach.yaml
+# Zero-Day Discovery Scan: bleach (Mozilla HTML sanitizer)
+# High priority - sanitizer bypass = XSS in every app using it
+
+experiment_name: "zeroday_scan_bleach"
+run_description: "Zero-day discovery scan of bleach HTML sanitizer (XSS bypass)"
+
+phase: 1
+stage: "generate"
+reasoning_model: "deepseek-r1:14b"
+input_dataset_dir: "target_repos/bleach_scan_input"
+strategy: "all"
+timeout_per_model: 3600

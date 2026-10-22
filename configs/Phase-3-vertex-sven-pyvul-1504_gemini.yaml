@@ -1,0 +1,29 @@
+# Phase 3: Gemini 3.1 Pro Preview — SVEN + PyVul OWASP Top 10 experiment
+# Part of Phase-3-vertex-sven-pyvul-1504 multi-model experiment
+experiment_name: "Phase-3-vertex-sven-pyvul-1504-gemini"
+run_description: >
+  Phase 3 exploitation verification using Gemini 3.1 Pro Preview on 100 files
+  from SVEN and PyVul datasets covering OWASP Top 10 Python vulnerability types
+  (CWE-79, CWE-89, CWE-22, CWE-78, CWE-502, CWE-94, CWE-287, CWE-601, CWE-918, CWE-352).
+
+phase: "3"
+
+# Vertex AI backend
+vertex: true
+vertex_config: "configs/Phase-3-vertex-sven-pyvul-1504_gemini.yaml"
+
+# Model — Gemini 3.1 Pro Preview (global endpoint required)
+model: google/gemini-3.1-pro-preview
+api_base: https://aiplatform.googleapis.com/v1/projects/vivid-grammar-475417-i1/locations/global/endpoints/openapi
+api_key_env: VERTEX_ACCESS_TOKEN
+
+reasoning_model: "google/gemini-3.1-pro-preview"
+
+# Dataset — SVEN + PyVul OWASP Top 10 (100 file pairs)
+input_dataset_dir: "vaitp_dataset/phase3_sven_pyvul"
+
+max_iterations: 5
+stream_llm: false
+test_timeout: 300
+trace_diagram: true
+trace_detail_level: detailed

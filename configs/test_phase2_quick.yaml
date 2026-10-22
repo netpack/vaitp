@@ -1,0 +1,41 @@
+# test_phase2_quick.yaml
+# -----------------------------------------------------------------------------
+# Quick Phase 2 Test Configuration
+#
+# Objective:
+#   Quick test of representative coding models on the 'injectable_test' dataset
+#   for faster validation and debugging.
+# -----------------------------------------------------------------------------
+
+experiment_name: "test_phase2_quick_injectable"
+run_description: "Quick Phase 2 test with representative models on injectable_test dataset"
+
+# --- Phase Configuration ---
+phase: 2
+stage: "all"
+
+# --- Model Selection ---
+# Test a representative subset of models (small, medium, large + base/finetuned)
+coders_to_run:
+  - "Llama-3.2-1B-Base"        # Small base model
+  - "Llama-3.2-1B-Finetuned"   # Small finetuned model
+  - "Qwen-2.5-7B-Base"         # Medium base model
+  - "Llama-3.1-8B-Finetuned"   # Large finetuned model
+
+# --- Strategy Selection ---
+# Test core strategies
+strategies_to_run:
+  - "DIRECT_ONLY"
+  - "DIRECT_RAG"
+
+# --- Data Paths ---
+input_dataset_dir: "vaitp_dataset/injectable_test"
+expected_dir: "vaitp_dataset/expected_test"
+
+# --- Performance Settings ---
+timeout_per_model: 900  # 15 minutes per model for quick testing
+
+# --- Export Settings ---
+export:
+  save_excel: true
+  excel_per_model: false  # Single combined Excel for quick overview

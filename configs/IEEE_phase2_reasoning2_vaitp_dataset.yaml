@@ -1,0 +1,42 @@
+# IEEE_phase2_r2.yaml
+# -----------------------------------------------------------------------------
+# Comprehensive Phase 2 Test Configuration r2 vaitp dataset
+#
+# -----------------------------------------------------------------------------
+
+experiment_name: "IEEE_phase2_r2_vaitp"
+run_description: "Sequential Phase 2 IEEE r2 vaitp"
+
+# --- Phase Configuration ---
+# Phase 2 executes the vulnerability injection using generated plans from Phase 1
+phase: 2
+stage: "all" # Run generate, analyze, and evaluate stages
+
+# --- Model Selection ---
+coders_to_run:
+  - "llama-3.1-8b"
+
+# --- Strategy Selection ---
+# Test these strategies only 
+strategies_to_run:
+  - "DIRECT_ONLY"
+  - "META_RAG"
+
+# --- Data Paths ---
+# Use the same test dataset as Phase 1
+input_dataset_dir: "vaitp_dataset/injectable_ieee"
+expected_dir: "vaitp_dataset/expected_ieee"
+
+# --- Performance Settings ---
+# Conservative timeout with memory management
+timeout_per_model: 1200 # 20 minutes per model (reduced due to memory management)
+
+# --- Export Settings ---
+# Generate comprehensive reports for analysis
+export:
+  save_excel: true
+  excel_per_model: true # Separate Excel file for each model for detailed analysis
+
+# --- Optional: GPU Configuration ---
+# Uncomment and adjust if using multiple GPUs
+# num_gpus: 1

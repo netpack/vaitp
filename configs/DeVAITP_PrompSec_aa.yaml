@@ -1,0 +1,42 @@
+# Full pipeline: Phase 1 → Phase 2 → Promote → Phase 3
+# Target: Results_cfg_jul26_trial_0_aa_vet.py (PromSec)
+
+experiment_name: "PromSec_Results_cfg_jul26_trial_0_aa_vet"
+run_description: "Chris PromSec vulnerability aa test"
+
+# --- Phase Configuration ---
+phase: full
+stage: "all"
+
+# --- Model Selection (single model for all tasks) ---
+reasoning_model: "deepseek-r1:14b"
+
+# Coder models to generate vulnerable code
+coders_to_run:
+  - "deepseek-r1:14b" # "gemma"
+
+# --- Strategy Selection ---
+strategies_to_run:
+  - "DIRECT_ONLY"
+
+# --- Path Configuration ---
+input_dataset_dir: "vaitp_dataset/injectable"
+
+# --- Backend Selection ---
+ollama: true
+
+# --- Phase 3 Settings ---
+max_iterations: 5
+filter: "Results_cfg_jul26_trial_0_aa_vet"
+llm_only: true
+
+# --- Performance Settings ---
+timeout_per_model: 3000
+
+# --- Backend Settings ---
+ollama: true
+
+# Let's stream the LLM's output
+stream_llm: true
+
+force_regenerate: true

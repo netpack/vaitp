@@ -1,0 +1,93 @@
+# Enterprise GPU oLLM Configuration Template
+# Optimized for high-end enterprise GPUs (A100, H100, RTX 6000 Ada)
+# Focuses on maximum throughput and quality
+
+experiment_name: "enterprise_gpu_experiment"
+run_description: "High-performance configuration for enterprise GPUs with selective oLLM usage"
+
+# Phase Configuration
+phase: 2
+stage: "all"
+
+# Comprehensive model selection for enterprise workloads
+coders_to_run:
+  - "Llama-3.1-8B-Base"
+  - "Llama-3.1-13B-Base"
+  - "Llama-3.1-70B-Base"
+  - "Llama-3.1-405B-Base"       # Only viable with oLLM
+  - "Code-Llama-7B-Base"
+  - "Code-Llama-13B-Base"
+  - "Code-Llama-34B-Base"
+
+strategies_to_run:
+  - "DIRECT_ONLY"
+  - "DIRECT_RAG"
+  - "ITERATIVE_REFINEMENT"      # More strategies for comprehensive testing
+
+input_dataset_dir: "vaitp_dataset/injectable"
+expected_dir: "vaitp_dataset/expected"
+
+# Enterprise-grade timeouts
+timeout_per_model: 7200  # 2 hours for comprehensive evaluation
+
+# Enterprise oLLM Configuration
+ollm_config:
+  enable_ollm: true
+  auto_detect: true
+  device: "cuda"
+  memory_threshold_gb: 40.0      # Higher threshold for enterprise GPUs
+  ssd_min_space_gb: 200.0        # Ample SSD space for large models
+  fallback_enabled: true
+  
+  # High-performance settings
+  batch_size: 4                  # Larger batches for throughput
+  prefetch_layers: 4             # Aggressive prefetching
+  precision: "fp16"              # Balanced precision/speed
+
+# Enterprise model optimization
+model_overrides:
+  # Small models - maximize throughput with llama-cpp
+  "Llama-3.1-8B-Base":
+    force_ollm: false
+    batch_size: 8                # Large batch for maximum throughput
+  "Code-Llama-7B-Base":
+    force_ollm: false
+    batch_size: 8
+  
+  # Medium models - use llama-cpp on enterprise hardware
+  "Llama-3.1-13B-Base":
+    force_ollm: false            # Enterprise GPU can handle in VRAM
+    batch_size: 4
+  "Code-Llama-13B-Base":
+    force_ollm: false
+    batch_size: 4
+  
+  # Large models - selective oLLM usage
+  "Llama-3.1-70B-Base":
+    # Let auto-detect decide based on available VRAM
+    batch_size: 2
+    prefetch_layers: 3
+  "Code-Llama-34B-Base":
+    prefer_ollm: false           # Try llama-cpp first on enterprise GPU
+    batch_size: 2
+  
+  # Huge models - always use oLLM
+  "Llama-3.1-405B-Base":
+    force_ollm: true             # Only option for 405B model
+    batch_size: 1
+    prefetch_layers: 2
+    precision: "fp16"
+
+# Enterprise monitoring and optimization
+enable_performance_optimization: true
+enable_gpu_monitoring: true
+monitoring_interval: 2.0        # Frequent monitoring for optimization
+
+# Comprehensive export for enterprise analysis
+export:
+  save_excel: true
+  excel_per_model: true
+  save_json: true               # Detailed JSON for analysis
+  include_backend_info: true
+  include_performance_metrics: true
+  include_resource_usage: true  # Track GPU/memory utilization

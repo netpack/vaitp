@@ -1,0 +1,22 @@
+# isolated_eval_v2.yaml
+experiment_name: "isolated_eval_v2"
+run_description: "End-to-end test on eval_v2.py (eval injection)"
+
+phase: full
+stage: "all"
+
+reasoning_model: "deepseek-r1:14b"
+
+coders_to_run:
+  - "deepseek-r1:14b"
+
+strategies_to_run:
+  - "DIRECT_ONLY"
+
+input_dataset_dir: "vaitp_dataset/isolated_test"
+
+ollama: true
+
+max_iterations: 5
+
+timeout_per_model: 900

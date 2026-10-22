@@ -1,0 +1,64 @@
+# IEEE_DirectVsMetaRAG_phase2_deepthink.yaml
+# -----------------------------------------------------------------------------
+# IEEE Paper: Direct vs Meta-RAG Comparison - Phase 2 (DeepThink 7B)
+#
+# Objective:
+#   Execute vulnerability injection using DeepThink 7B model comparing
+#   DIRECT_ONLY vs META_RAG strategies for the IEEE paper
+# -----------------------------------------------------------------------------
+
+experiment_name: "IEEE_DirectVsMetaRAG_phase2_deepthink"
+run_description: "IEEE Paper Phase 2: Vulnerability injection with DeepThink 7B comparing Direct vs Meta-RAG"
+
+# --- Phase Configuration ---
+# Phase 2: Execute vulnerability injection with analysis and evaluation
+phase: 2
+stage: "all"  # Run generate, analyze, and evaluate stages
+
+# --- Model Selection ---
+# Use DeepThink 7B as the coder model with native MPS execution
+coders_to_run:
+  - "deepthink-7b"
+
+# --- Performance Optimization ---
+# Force native execution (no Ollama) for better performance
+force_native_execution: true
+use_mps: true
+gpu_layers: -1  # Use all GPU layers for MPS
+
+# --- Strategy Selection ---
+# Test the two core strategies for the IEEE comparison
+strategies_to_run:
+  - "DIRECT_ONLY"    # Direct prompting without RAG
+  - "META_RAG"       # Meta-prompting with RAG
+
+# --- Dataset Configuration ---
+# Use the IEEE dataset with expected outputs for comparison
+input_dataset_dir: "vaitp_dataset/injectable_ieee"
+expected_dir: "vaitp_dataset/expected_ieee"
+
+# --- Performance Settings ---
+# Conservative timeout with memory management for comprehensive testing
+timeout_per_model: 2400  # 40 minutes per model (longer for thorough analysis)
+
+# --- Analysis Configuration ---
+# Enable SAST tools as specified in the experiment plan
+sast_tools:
+  - "bandit"
+  - "semgrep"
+  # devaic disabled as per experiment plan
+
+# --- Export Settings ---
+# Generate comprehensive reports for statistical analysis
+export:
+  save_excel: true
+  excel_per_model: true
+
+# --- Experiment Metadata ---
+experiment_type: "IEEE_comparison"
+hypothesis: "Meta-prompting with RAG is superior to Direct prompting"
+phase1_experiment: "IEEE_DirectVsMetaRAG_phase1_deepthink"  # Reference to Phase 1 experiment
+metrics_focus:
+  - "injection_success_rate"
+  - "code_functionality" 
+  - "sast_detection_rate"

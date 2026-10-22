@@ -1,0 +1,86 @@
+# VAITP Jury — DISTINCT JUDGE configuration (recommended)
+#
+# The comparison run showed the judge still selected its own model ~40% of the
+# time when it was also a juror (judge_is_juror=true). Using a SEPARATE model as
+# the judge removes that self-preference confound entirely: the judge never
+# scores its own answer, so selections track answer quality only.
+#
+# Design here: a 14B reasoning model is the JUDGE; the jurors are OTHER,
+# distinct models. The judge id is NOT one of the jurors, so records log
+# judge_is_juror=false.
+#
+# IMPORTANT: the `model` values must be tags present in your local Ollama
+# (`ollama list`). Adjust them to your installed models. As of this writing the
+# jury needs at least 2 genuinely different juror models plus a distinct judge.
+#
+# Run from the full framework (produces the explainability HTML):
+#   python main_orchestrator.py --ollama --model deepseek-r1:14b \
+#       --voting-config configs/config_jury_distinct_judge.yaml \
+#       --trace-diagram --trace-detail-level detailed \
+#       --filter eval --test-timeout 240
+#
+# Or Phase 3 only:
+#   python run_phase3.py --ollama --model deepseek-r1:14b \
+#       --voting-config configs/config_jury_distinct_judge.yaml \
+#       --trace-diagram --filter eval
+
+voting:
+  enabled: true
+
+  jurors:                                  # the panel — distinct models (distinct IDs), none is the judge
+    - {id: llama,  backend: ollama, model: "llama3.1:8b"}
+    - {id: gemma,  backend: ollama, model: "gemma4:latest"}
+    - {id: qwen,   backend: ollama, model: "qwen2.5-coder:1.5b"}
+
+  judge:
+    id: judge14b                           # NOT a juror id -> distinct judge (no self-preference)
+    backend: ollama
+    model: "deepseek-r1:14b"               # 14B reasoning model as the arbiter (distinct from jurors)
+    mode: tie_break                        # tie_break | always
+
+  default_strategy: judge_select
+  tie_breaker: judge
+  primary_juror: llama                     # used for non-allowlisted (single-model) calls
+  seed: 20260715                           # reproducible anonymised candidate shuffling
+  judge_rotations: auto                    # 1 = single shuffle; "auto"/N = present candidates in N
+                                           # cyclic orders and tally the judge's picks -> neutralises the
+                                           # judge's primacy/position bias. COST: N judge calls per judge_select
+                                           # decision (auto = number of jurors). Set to 1 to disable.
+
+  pool:
+    max_concurrency: 1                     # serial on a memory-constrained local host
+    rate_limit_per_min: 0
+    per_juror_timeout_s: 300
+    min_valid_responses: 1
+
+  log_path: "results/voting_log.jsonl"     # per-run file: results/voting_<run_id>.jsonl
+
+  # Allowlist — only listed decisions vote; everything else uses the primary juror.
+  #
+  # Coverage map (all wired decision points across the framework):
+  #   Phase 0 (run_discovery.py):
+  #     phase0.hypothesis        zero-day hypothesis generation      [generative]
+  #     phase0.severity          finding severity assessment         [generative]
+  #   Phase 1 (main_orchestrator.py, phase 1/full):
+  #     phase1.vuln_ident        WHICH vulnerability to inject       [generative/classification]
+  #     phase1.task_prompt       injection meta-prompt (the plan)    [generative]  (opt-in below)
+  #   Phase 2 (main_orchestrator.py, evaluate/reanalyze):
+  #     phase2.semantic_confirm  code-matches-intent SUCCESS/FAILURE [categorical] (opt-in; parallel-cost caveat)
+  #   Phase 3 (run_phase3.py / main_orchestrator --phase 3):
+  #     phase3.plan.infrastructure / .payloads / .edit               [generative]
+  #     phase3.recovery          recovery action                     [categorical]
+  #   NOT voted by design: phase2.codegen (the multi-coder experiment being measured);
+  #     phase3.hook / .diagnostic / .exploit_analysis / .fuzz (kept single to bound cost).
+  decisions:
+    phase3.plan.infrastructure: {strategy: judge_select}
+    phase3.plan.payloads:       {strategy: judge_select}
+    phase3.plan.edit:           {strategy: judge_select}
+    phase3.recovery:            {strategy: majority_vote, labels: [fuzz, replan, fix_infra, abort]}
+    phase1.vuln_ident:          {strategy: judge_select}
+    phase0.hypothesis:          {strategy: judge_select}
+    phase0.severity:            {strategy: judge_select}
+
+    # Opt-in (enable if you want the jury on these too):
+    # phase1.task_prompt:       {strategy: judge_select}   # jury picks the best injection plan
+    # phase2.semantic_confirm:  {strategy: majority_vote, labels: ["true","false"], judge_mode: always}
+    #                            NOTE: runs inside parallel eval workers — use serial eval to avoid GPU thrash.

@@ -1,0 +1,33 @@
+# retry_failed_full.yaml
+# Full pipeline: Phase 1 → Phase 2 → Promote → Phase 3
+# Target: 1 file from the 34 that were NOT successfully exploited in previous runs
+
+experiment_name: "retry_failed_full"
+run_description: "Re-run full pipeline on one of 34 files that failed exploitation"
+
+# --- Phase Configuration ---
+phase: full
+stage: "all"
+
+# --- Model Selection ---
+reasoning_model: "deepseek-r1:14b"
+
+coders_to_run:
+  - "deepseek-r1:14b"
+
+# --- Strategy Selection ---
+strategies_to_run:
+  - "DIRECT_ONLY"
+
+# --- Path Configuration ---
+input_dataset_dir: "vaitp_dataset/injectable"
+
+# --- Backend Selection ---
+ollama: true
+
+
+# --- Phase 3 Settings ---
+max_iterations: 5
+
+# --- Performance Settings ---
+timeout_per_model: 1500

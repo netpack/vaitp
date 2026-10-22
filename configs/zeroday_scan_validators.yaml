@@ -1,0 +1,13 @@
+# zeroday_scan_validators.yaml
+# Zero-Day Discovery Scan: validators
+# Input validation bypass = SSRF/XSS in every app using it
+
+experiment_name: "zeroday_scan_validators"
+run_description: "Zero-day discovery scan of validators library (input validation bypass)"
+
+phase: 1
+stage: "generate"
+reasoning_model: "deepseek-r1:14b"
+input_dataset_dir: "target_repos/validators_scan_input"
+strategy: "all"
+timeout_per_model: 3600

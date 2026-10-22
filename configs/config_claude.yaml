@@ -1,0 +1,21 @@
+# Vertex AI: Claude Sonnet 4.6 — Phase 3
+# Primary closed-model candidate for RQ3 (open vs closed, reasoning vs non-reasoning)
+# Using global endpoint — Google routes to any region with available capacity
+experiment_name: "vertex_claude_sonnet_4_6"
+run_description: "Claude Sonnet 4.6 via Vertex AI — closed non-reasoning model for RQ3"
+
+phase: "3"
+
+vertex: true
+vertex_config: "configs/config_claude.yaml"
+
+model: anthropic/claude-sonnet-4-6
+api_base: https://aiplatform.googleapis.com/v1/projects/vivid-grammar-475417-i1/locations/global/endpoints/openapi
+api_key_env: VERTEX_ACCESS_TOKEN
+
+reasoning_model: "anthropic/claude-sonnet-4-6"
+
+input_dataset_dir: "vaitp_dataset/vulnerable"
+
+max_iterations: 5
+stream_llm: false

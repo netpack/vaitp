@@ -1,0 +1,14 @@
+# Results Export Configuration
+# This configuration exports experiment results to various formats
+
+experiment_name: "results_export"
+run_description: "Export experiment results to Excel and CSV formats for analysis"
+
+# Phase Configuration
+phase: "export"
+
+# Export Settings
+export:
+  save_csv: true          # Export to CSV format
+  save_excel: true        # Export to Excel format
+  excel_per_model: true   # Create separate Excel file for each model

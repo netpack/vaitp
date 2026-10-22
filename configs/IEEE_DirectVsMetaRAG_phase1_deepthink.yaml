@@ -1,0 +1,39 @@
+# IEEE_DirectVsMetaRAG_phase1_deepthink.yaml
+# -----------------------------------------------------------------------------
+# IEEE Paper: Direct vs Meta-RAG Comparison - Phase 1 (DeepThink 7B)
+#
+# Objective:
+#   Generate vulnerability injection plans using DeepThink 7B model for the
+#   IEEE paper comparing Direct prompting vs Meta-prompting with RAG
+# -----------------------------------------------------------------------------
+
+experiment_name: "IEEE_DirectVsMetaRAG_phase1_deepthink"
+run_description: "IEEE Paper Phase 1: Plan generation with DeepThink 7B for Direct vs Meta-RAG comparison"
+
+# --- Phase Configuration ---
+# Phase 1: Generate vulnerability injection plans
+phase: 1
+stage: "generate"
+
+# --- Model Selection ---
+# Use DeepThink 7B as the reasoning model with native MPS execution
+reasoning_model: "deepthink-7b"
+
+# --- Performance Optimization ---
+# Force native execution (no Ollama) for better performance
+force_native_execution: true
+use_mps: true
+gpu_layers: -1  # Use all GPU layers for MPS
+
+# --- Dataset Configuration ---
+# Process all three datasets: VAITP (50), PoisonPy (50), Static (10)
+input_dataset_dir: "vaitp_dataset/injectable_ieee"
+
+# --- Performance Settings ---
+# Conservative timeout for plan generation
+timeout_per_model: 1800  # 30 minutes
+
+# --- Experiment Metadata ---
+# Track this as part of the IEEE paper experiment
+experiment_type: "IEEE_comparison"
+hypothesis: "Meta-prompting with RAG is superior to Direct prompting"

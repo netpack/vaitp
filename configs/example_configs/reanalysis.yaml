@@ -1,0 +1,17 @@
+# Reanalysis Configuration
+# This configuration reanalyzes existing results with updated expected outputs
+
+experiment_name: "reanalysis_with_updated_data"
+run_description: "Reanalyze existing experiment results with updated expected code outputs"
+
+# Phase Configuration
+phase: "reanalyze"
+
+# Input Data
+input_pickle: "generated_results.pkl"  # Results from previous Phase 2 run
+expected_dir: "vaitp_dataset/expected_updated"  # Updated expected outputs
+
+# Export Settings
+export:
+  save_excel: true
+  excel_per_model: false

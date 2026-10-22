@@ -1,0 +1,18 @@
+# Phase 3 DB-save verification test — 4 files with small model
+experiment_name: "test_phase3_deepseek-r1-14b"
+run_description: "Verify Phase 3 with deepseek-r1 14b - fast test 4 vulns only"
+
+phase: "3"
+
+reasoning_model: "deepseek-r1:14b"
+
+coders_to_run:
+  - "deepseek-r1:14b"
+
+input_dataset_dir: "vaitp_dataset/vulnerable"
+
+ollama: true
+stream_llm: true
+
+# Keep iterations low for fast testing
+max_iterations: 5

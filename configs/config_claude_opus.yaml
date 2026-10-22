@@ -1,0 +1,21 @@
+# Vertex AI: Claude Opus 4.6 — Phase 3 (optional, budget permitting)
+# Most capable closed model — use if quota is approved and budget allows
+# For RQ3, Sonnet 4.6 (config_claude.yaml) is the primary closed-model candidate
+experiment_name: "vertex_claude_opus_4_6"
+run_description: "Claude Opus 4.6 via Vertex AI — optional high-capability closed model"
+
+phase: "3"
+
+vertex: true
+vertex_config: "configs/config_claude_opus.yaml"
+
+model: anthropic/claude-opus-4-6
+api_base: https://aiplatform.googleapis.com/v1/projects/vivid-grammar-475417-i1/locations/global/endpoints/openapi
+api_key_env: VERTEX_ACCESS_TOKEN
+
+reasoning_model: "anthropic/claude-opus-4-6"
+
+input_dataset_dir: "vaitp_dataset/vulnerable"
+
+max_iterations: 5
+stream_llm: false

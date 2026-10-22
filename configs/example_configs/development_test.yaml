@@ -1,0 +1,46 @@
+# Development Test Configuration
+# This configuration is optimized for quick testing during development
+
+experiment_name: "development_test"
+run_description: "Quick development test with minimal models and strategies for rapid iteration"
+
+# Phase Configuration
+phase: 2
+stage: "all"
+
+# Minimal Model Selection for Fast Testing
+coders_to_run:
+  - "Llama-3.1-8B-Base"  # Single model for speed
+
+# Single Strategy for Quick Results
+strategies_to_run:
+  - "DIRECT_ONLY"
+
+# Data Paths - Use small test dataset if available
+input_dataset_dir: "vaitp_dataset/injectable_test"  # Smaller test dataset
+expected_dir: "vaitp_dataset/expected_test"
+
+# Development-Optimized Settings
+num_gpus: 1  # Single GPU for simplicity
+timeout_per_model: 600  # 10 minutes - short timeout for development
+max_retries: 1
+
+# oLLM Development Settings (Optional)
+# Useful for testing oLLM integration during development
+# ollm_config:
+#   enable_ollm: true
+#   auto_detect: true
+#   device: "auto"
+#   memory_threshold_gb: 6.0      # Lower threshold to test oLLM more often
+#   logging: true                 # Enable detailed oLLM logging for debugging
+#   fallback_enabled: true
+
+# Enable monitoring for development insights
+enable_performance_optimization: true
+monitoring_interval: 1.0
+
+# Quick Export
+export:
+  save_excel: false  # Skip Excel for speed
+  save_csv: true     # Quick CSV export
+  include_backend_info: true      # Track which backend was used for analysis

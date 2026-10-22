@@ -1,0 +1,31 @@
+# presentation_trace_demo.yaml
+# Generate an HTML trace report for the presentation (explainability showcase)
+# Uses the SQL injection example with full trace detail.
+
+experiment_name: "presentation_trace_demo"
+run_description: "Single SQLi file — full trace for presentation screenshots"
+
+phase: "full"
+stage: "all"
+
+reasoning_model: "llama3.1:8b"
+
+coders_to_run:
+  - "llama3.1:8b"
+
+strategies_to_run:
+  - "META_RAG"
+
+input_dataset_dir: "vaitp_dataset/presentation_demo"
+
+ollama: true
+
+intended_vulnerability: "SQL Injection"
+
+max_iterations: 5
+
+# Trace — full explainability
+trace_diagram: true
+trace_detail_level: "full"
+
+timeout_per_model: 600

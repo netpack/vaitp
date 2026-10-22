@@ -1,0 +1,24 @@
+# Phase 3 DB-save verification test — 5 files with small model
+experiment_name: "test_phase3_db_save"
+run_description: "Verify Phase 3 results are persisted to execution_log_orchestrated.db"
+
+phase: "3"
+
+reasoning_model: "qwen2.5-coder-3b-abliterated-basic:latest"
+
+coders_to_run:
+  - "qwen2.5-coder-3b-abliterated-basic:latest"
+
+input_dataset_dir: "vaitp_dataset/injectable"
+
+ollama: false
+stream_llm: false
+
+# Keep iterations low for fast testing
+max_iterations: 2
+
+# Only test a small subset via substring filter
+filter: "eval_"
+
+# Per-test Docker timeout (seconds); 0 = no limit
+test_timeout: 300

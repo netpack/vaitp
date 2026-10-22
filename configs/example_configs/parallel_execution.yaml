@@ -1,0 +1,37 @@
+# High-Performance Parallel Execution Configuration
+# This configuration maximizes parallel execution across multiple GPUs
+
+experiment_name: "large_scale_parallel_test"
+run_description: "Large-scale parallel execution testing all models and strategies across multiple GPUs with performance optimization"
+
+# Phase Configuration
+phase: 2
+stage: "all"
+
+# Model Selection - Use all available models
+coders_to_run: ["all"]
+
+# Strategy Selection - Use all strategies
+strategies_to_run: ["all"]
+
+# Data Paths
+input_dataset_dir: "vaitp_dataset/injectable"
+expected_dir: "vaitp_dataset/expected"
+
+# Performance Optimization Settings
+num_gpus: 4  # Use up to 4 GPUs
+timeout_per_model: 7200  # 2 hours timeout for complex models
+max_retries: 3
+
+# Enable advanced performance features
+enable_performance_optimization: true
+monitoring_interval: 0.5  # Monitor every 500ms for responsive optimization
+
+# Performance tuning
+estimated_memory_per_model_mb: 6000  # Estimate for large models
+
+# Export Settings
+export:
+  save_csv: true
+  save_excel: true
+  excel_per_model: true  # Separate file per model for large datasets

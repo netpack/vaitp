@@ -1,0 +1,64 @@
+# oLLM CPU-Only Configuration
+# This configuration demonstrates using oLLM on CPU-only systems
+# Optimized for systems without GPU or with limited VRAM
+
+experiment_name: "ollm_cpu_only_test"
+run_description: "CPU-only oLLM configuration for systems without GPU support"
+
+# Phase Configuration
+phase: 2
+stage: "all"
+
+# Model Selection - Choose models that benefit from oLLM on CPU
+coders_to_run:
+  - "Llama-3.1-13B-Base"       # Medium model - good for CPU oLLM
+  - "Code-Llama-13B-Base"      # Code model - benefits from oLLM memory efficiency
+
+# Strategy Selection - Limit strategies to reduce CPU load
+strategies_to_run:
+  - "DIRECT_ONLY"              # Single strategy to reduce computation
+
+# Data Paths
+input_dataset_dir: "vaitp_dataset/injectable_test"  # Use smaller test dataset
+expected_dir: "vaitp_dataset/expected_test"
+
+# CPU-Optimized Settings
+num_gpus: 0                     # Force CPU-only mode
+timeout_per_model: 14400        # 4 hours - CPU inference is much slower
+max_retries: 1                  # Reduce retries to save time
+
+# oLLM CPU Configuration
+ollm_config:
+  enable_ollm: true
+  auto_detect: true
+  device: "cpu"                 # Force CPU usage
+  memory_threshold_gb: 4.0      # Lower threshold for CPU systems
+  ssd_min_space_gb: 60.0        # Ensure sufficient SSD space for offloading
+  fallback_enabled: true
+  cpu_threads: 8                # Use multiple CPU threads
+  precision: "fp16"             # Use half precision for speed
+
+# CPU-Optimized Model Settings
+model_overrides:
+  "Llama-3.1-13B-Base":
+    force_ollm: true            # Use oLLM for memory efficiency
+    batch_size: 1               # Single batch for CPU
+    prefetch_layers: 1          # Minimal prefetching on CPU
+    cpu_threads: 8              # Utilize multiple cores
+  "Code-Llama-13B-Base":
+    force_ollm: true
+    batch_size: 1
+    prefetch_layers: 1
+    cpu_threads: 8
+
+# Disable GPU-specific optimizations
+enable_performance_optimization: false
+enable_gpu_monitoring: false
+
+# Export Settings
+export:
+  save_excel: true
+  excel_per_model: false        # Skip per-model Excel for speed
+  save_csv: true                # Use CSV for faster export
+  include_backend_info: true
+  include_cpu_metrics: true     # Track CPU usage and performance

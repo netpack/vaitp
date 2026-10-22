@@ -1,0 +1,18 @@
+# Phase 1 only: Generate injection plans
+# Target: Results_cfg_jul26_trial_0_aa_vet.py (PromSec)
+
+experiment_name: "PromSec_Results_cfg_jul26_trial_0_aa_vet"
+run_description: "Phase 1 only - prompt generation for aa test"
+
+phase: "1"
+
+reasoning_model: "deepseek-r1:14b"
+
+strategies_to_run:
+  - "DIRECT_ONLY"
+
+input_dataset_dir: "vaitp_dataset/injectable"
+
+ollama: true
+stream_llm: true
+force_regenerate: true

@@ -1,0 +1,24 @@
+# Quick Gemini test: 3 files that failed with 3B model
+experiment_name: "test_sven_pyvul_3files_gemini"
+run_description: "Gemini 3.1 Pro on 3 failed files: CWE-78 wget, CWE-502 yaml.load, CWE-22 path traversal"
+
+phase: "3"
+
+vertex: true
+vertex_config: "configs/test_sven_pyvul_3files_gemini.yaml"
+
+model: google/gemini-3.1-pro-preview
+api_base: https://aiplatform.googleapis.com/v1/projects/vivid-grammar-475417-i1/locations/global/endpoints/openapi
+api_key_env: VERTEX_ACCESS_TOKEN
+
+reasoning_model: "google/gemini-3.1-pro-preview"
+input_dataset_dir: "vaitp_dataset/phase3_sven_pyvul"
+
+max_iterations: 5
+stream_llm: false
+test_timeout: 300
+
+# Use --filter on CLI to select specific files:
+# python main_orchestrator.py --config configs/test_sven_pyvul_3files_gemini.yaml --filter cwe78_pyvul_08
+# python main_orchestrator.py --config configs/test_sven_pyvul_3files_gemini.yaml --filter cwe502_pyvul_04
+# python main_orchestrator.py --config configs/test_sven_pyvul_3files_gemini.yaml --filter cwe22_pyvul_05

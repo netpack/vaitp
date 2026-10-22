@@ -1,0 +1,28 @@
+# zeroday_scan_pyjwt.yaml
+# -----------------------------------------------------------------------------
+# Zero-Day Discovery Scan: PyJWT
+#
+# Objective:
+#   Run Phase 1 (vulnerability identification + plan generation) on the PyJWT
+#   library to identify potential security vulnerabilities.
+# -----------------------------------------------------------------------------
+
+experiment_name: "zeroday_scan_pyjwt"
+run_description: "Zero-day discovery scan of PyJWT library (auth/crypto)"
+
+# --- Phase Configuration ---
+phase: 1
+stage: "generate"
+
+# --- Model Selection ---
+reasoning_model: "deepseek-r1:14b"
+
+# --- Path Configuration ---
+input_dataset_dir: "target_repos/pyjwt_scan_input"
+
+# --- Strategy ---
+# Use all strategies for maximum coverage
+strategy: "all"
+
+# --- Performance Settings ---
+timeout_per_model: 3600  # 60 minutes

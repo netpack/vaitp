@@ -1,0 +1,44 @@
+# test_phase2_small_models.yaml
+# -----------------------------------------------------------------------------
+# Memory-Safe Phase 2 Test Configuration - Small Models Only
+#
+# Objective:
+#   Test small models (1B-3B) that are guaranteed to run without memory issues
+# -----------------------------------------------------------------------------
+
+experiment_name: "test_phase2_small_models_safe"
+run_description: "Memory-safe Phase 2 test with small models (1B-3B) to prevent crashes"
+
+# --- Phase Configuration ---
+phase: 2
+stage: "all"
+
+# --- Model Selection ---
+# Only small models that won't cause memory issues
+coders_to_run:
+  # 1B Models (safest)
+  - "Llama-3.2-1B-Base"
+  - "Llama-3.2-1B-Finetuned"
+  # 1.7B Models (still safe)
+  - "Qwen3-1.7B-Base"
+  - "Qwen-3-1.7B-Finetuned"
+  # 3B Models (moderate)
+  - "Codepy-3B-Base"
+  - "Codepy-3B-Finetuned"
+
+# --- Strategy Selection ---
+strategies_to_run:
+  - "DIRECT_ONLY"
+  - "DIRECT_RAG"
+
+# --- Data Paths ---
+input_dataset_dir: "vaitp_dataset/injectable_test"
+expected_dir: "vaitp_dataset/expected_test"
+
+# --- Performance Settings ---
+timeout_per_model: 900  # 15 minutes per model (shorter for small models)
+
+# --- Export Settings ---
+export:
+  save_excel: true
+  excel_per_model: true

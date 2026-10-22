@@ -1,0 +1,21 @@
+# Vertex AI: Qwen3-235B — Phase 3 smoke test
+experiment_name: "vertex_qwen3_235b_smoke"
+run_description: "Smoke test — Qwen3-235B via Vertex AI Model Garden"
+
+phase: "3"
+
+# Vertex AI backend configuration
+vertex: true
+vertex_config: "configs/config_qwen.yaml"
+
+# Model identity (used for Vertex API calls and DB logging)
+model: qwen/qwen3-235b-a22b-instruct-2507-maas
+api_base: https://aiplatform.googleapis.com/v1/projects/vivid-grammar-475417-i1/locations/global/endpoints/openapi
+api_key_env: VERTEX_ACCESS_TOKEN
+
+reasoning_model: "qwen/qwen3-235b-a22b-instruct-2507-maas"
+
+input_dataset_dir: "vaitp_dataset/vulnerable"
+
+max_iterations: 3
+stream_llm: false

@@ -1,0 +1,13 @@
+# zeroday_scan_multipart.yaml
+# Zero-Day Discovery Scan: python-multipart
+# High priority target - recent CVE history, parses untrusted input
+
+experiment_name: "zeroday_scan_multipart"
+run_description: "Zero-day discovery scan of python-multipart (multipart form parsing)"
+
+phase: 1
+stage: "generate"
+reasoning_model: "deepseek-r1:14b"
+input_dataset_dir: "target_repos/python-multipart_scan_input"
+strategy: "all"
+timeout_per_model: 3600

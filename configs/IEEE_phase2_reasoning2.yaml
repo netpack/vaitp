@@ -1,0 +1,47 @@
+# IEEE_phase2_r2.yaml
+# -----------------------------------------------------------------------------
+# Comprehensive Phase 2 Test Configuration r2
+#
+# Objective:
+#   Test all available coding models on the 'injectable_test' dataset to evaluate
+#   their vulnerability injection capabilities across different strategies (r2)
+# -----------------------------------------------------------------------------
+
+experiment_name: "IEEE_phase2_r2"
+run_description: "Sequential Phase 2 IEEE r2"
+
+# --- Phase Configuration ---
+# Phase 2 executes the vulnerability injection using generated plans from Phase 1
+phase: 2
+stage: "all" # Run generate, analyze, and evaluate stages
+
+# --- Model Selection ---
+# Test all available coding models (12 total)
+# Organized by size: 1B -> 1.7B -> 3B -> 7B -> 8B
+coders_to_run:
+  - "llama-3.1-8b"
+
+# --- Strategy Selection ---
+# Test core strategies only (avoid FEW_SHOT which may be added automatically)
+strategies_to_run:
+  - "DIRECT_ONLY"
+  - "META_RAG"
+
+# --- Data Paths ---
+# Use the same test dataset as Phase 1
+input_dataset_dir: "vaitp_dataset/injectable_poisonpy"
+expected_dir: "vaitp_dataset/expected_poisonpy"
+
+# --- Performance Settings ---
+# Conservative timeout with memory management
+timeout_per_model: 1200 # 20 minutes per model (reduced due to memory management)
+
+# --- Export Settings ---
+# Generate comprehensive reports for analysis
+export:
+  save_excel: true
+  excel_per_model: true # Separate Excel file for each model for detailed analysis
+
+# --- Optional: GPU Configuration ---
+# Uncomment and adjust if using multiple GPUs
+# num_gpus: 1

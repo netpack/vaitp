@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Daily VAITP RAG code-sample pass — ten records a day.
+
+  Install:
+      cp scripts/pt.netpack.vaitp.ragpass.plist ~/Library/LaunchAgents/
+      launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/pt.netpack.vaitp.ragpass.plist
+
+  Check / run now / remove:
+      launchctl print gui/$(id -u)/pt.netpack.vaitp.ragpass
+      launchctl kickstart -p gui/$(id -u)/pt.netpack.vaitp.ragpass
+      launchctl bootout gui/$(id -u)/pt.netpack.vaitp.ragpass
+
+  RunAtLoad is false on purpose: installing the job should not immediately spend a day's
+  quota. If the Mac is asleep at 10:00, launchd runs the job once the machine wakes.
+-->
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>pt.netpack.vaitp.ragpass</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/sh</string>
+        <string>/Users/fredericbogaerts/vaitp-framework/scripts/rag_pass_daily.sh</string>
+    </array>
+
+    <key>WorkingDirectory</key>
+    <string>/Users/fredericbogaerts/vaitp-framework</string>
+
+    <key>StartCalendarInterval</key>
+    <dict>
+        <key>Hour</key>
+        <integer>10</integer>
+        <key>Minute</key>
+        <integer>30</integer>
+    </dict>
+
+    <key>RunAtLoad</key>
+    <false/>
+
+    <key>StandardOutPath</key>
+    <string>/Users/fredericbogaerts/vaitp-framework/results/rag_code_pass.launchd.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/fredericbogaerts/vaitp-framework/results/rag_code_pass.launchd.log</string>
+</dict>
+</plist>

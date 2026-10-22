@@ -1,0 +1,21 @@
+# Phase 1 Plan Generation Configuration
+# This configuration generates vulnerability injection plans from injectable code
+
+experiment_name: "plan_generation"
+run_description: "Generate vulnerability injection plans using reasoning model for subsequent testing"
+
+# Phase Configuration
+phase: 1
+stage: "generate"
+
+# Reasoning Model for Plan Generation
+reasoning_model: "llama-3.1-8b"
+
+# Data Paths
+input_dataset_dir: "vaitp_dataset/injectable"
+
+# Performance Settings
+timeout_per_model: 1800  # 30 minutes for plan generation
+
+# Optional: Enable monitoring for plan generation performance
+enable_performance_optimization: true

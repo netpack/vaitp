@@ -1,0 +1,66 @@
+# VAITP Jury (multi-model voting) — local Ollama example
+#
+# A jury of local juror models decides allowlisted framework decisions; a judge
+# model breaks ties (categorical) or selects the best candidate (generative).
+# Enable with:  python run_phase3.py --ollama --model deepseek-r1:14b \
+#                   --voting-config configs/config_jury_local.yaml --filter eval
+# or, as an ablation dimension:
+#   python scripts/run_ablation_study.py --ollama --model deepseek-r1:14b \
+#       --condition full --voting-config configs/config_jury_local.yaml
+#
+# NOTE: `model` values must be tags available in your local Ollama (`ollama list`).
+# Adjust the three jurors to models your hardware can serve.
+
+voting:
+  enabled: true
+
+  jurors:                                 # the panel — heterogeneous, local (installed Ollama tags)
+    - {id: deepseek, backend: ollama, model: "deepseek-r1:14b"}
+    - {id: llama,    backend: ollama, model: "llama3.1:8b"}
+    - {id: gemma,    backend: ollama, model: "gemma4:latest"}
+
+  judge:
+    id: deepseek                          # reuse a juror by id, OR set `model:` for a standalone judge
+    mode: tie_break                       # tie_break (judge only on ties) | always (judge always decides categorical)
+    # DISTINCT-JUDGE OPTION (recommended to avoid self-preference bias): give the
+    # judge its own model instead of reusing a juror, e.g.:
+    #   judge: {id: judge_qwen, backend: ollama, model: "qwen2.5-coder:1.5b", mode: tie_break}
+    # When the judge id is not one of the jurors, records set judge_is_juror=false.
+
+  default_strategy: judge_select          # used by generative decisions
+  tie_breaker: judge                      # judge | primary | first
+  primary_juror: deepseek                 # used for non-allowlisted (single-model) calls
+  seed: 20260709                          # RNG seed for anonymised candidate shuffling (reproducible)
+
+  pool:
+    max_concurrency: 1                    # 1 = strictly serial (safe on memory-constrained local hosts)
+    rate_limit_per_min: 0                 # 0 = no spacing (local); set >0 for cloud quotas later
+    per_juror_timeout_s: 300
+    min_valid_responses: 1
+
+  # Per-run logs are written to results/voting_<run_id>.jsonl (this dir is used as the base).
+  log_path: "results/voting_log.jsonl"
+
+  # ALLOWLIST — voting only fires for these decisions. Everything else (hooks,
+  # diagnostics, exploit analysis, fuzzing, repairs) runs on the primary juror
+  # alone, which bounds the extra inference cost of the panel.
+  #
+  # Scoped Phase 3 planning decisions (tagged at each PlannerAgent call site):
+  #   phase3.plan.infrastructure  SEP+CEP (and single-shot / RAG full plan)
+  #   phase3.plan.payloads        AEP+FEP payload generation
+  #   phase3.plan.edit            incremental plan edit on retry
+  #   phase3.recovery             orchestrator recovery choice (categorical majority vote)
+  # Other phases:
+  #   phase0.hypothesis / phase0.severity  (run_discovery.py --voting-config)
+  #   phase1.vuln_ident                    (main_orchestrator Phase 1 classification)
+  decisions:
+    phase3.plan.infrastructure: {strategy: judge_select}
+    phase3.plan.payloads:       {strategy: judge_select}
+    phase3.plan.edit:           {strategy: judge_select}
+    phase3.recovery:            {strategy: majority_vote, labels: [fuzz, replan, fix_infra, abort]}
+    phase1.vuln_ident:          {strategy: judge_select}
+    phase0.hypothesis:          {strategy: judge_select}
+    phase0.severity:            {strategy: judge_select}
+
+    # --- Follow-up (not yet wired into main_orchestrator Phase 2) ---
+    # phase2.semantic_confirm: {strategy: majority_vote, labels: ["true", "false"], judge_mode: always}

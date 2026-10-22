@@ -1,0 +1,39 @@
+# full_flask_sqli_1.yaml
+# Full pipeline: Phase 1 → Phase 2 → Promote → Phase 3
+# Target: flask_sqli_1.py (SQL injection in Flask app)
+
+experiment_name: "full_flask_sqli_1"
+run_description: "End-to-end test: inject SQL vulnerability, generate vulnerable code, verify exploitation"
+
+# --- Phase Configuration ---
+phase: full
+stage: "all"
+
+# --- Model Selection (single model for all tasks) ---
+reasoning_model: "deepseek-r1:14b"
+
+# Coder models to generate vulnerable code
+coders_to_run:
+  - "deepseek-r1:14b"
+
+# --- Strategy Selection ---
+strategies_to_run:
+  - "DIRECT_ONLY"
+  - "FEW_SHOT"
+
+# --- Path Configuration ---
+input_dataset_dir: "vaitp_dataset/injectable_flask_sqli"
+
+# --- Backend Selection ---
+ollama: true
+
+# --- Phase 3 Settings ---
+max_iterations: 5
+filter: "flask_sqli_1"
+llm_only: true
+
+# --- Performance Settings ---
+timeout_per_model: 900
+
+# --- Backend Settings ---
+ollama: true

@@ -1,0 +1,17 @@
+# zeroday_scan_itsdangerous.yaml
+# -----------------------------------------------------------------------------
+# Zero-Day Discovery Scan: itsdangerous
+#
+# Objective:
+#   Run Phase 1 on the itsdangerous library (Flask session signing)
+# -----------------------------------------------------------------------------
+
+experiment_name: "zeroday_scan_itsdangerous"
+run_description: "Zero-day discovery scan of itsdangerous library (crypto/signing)"
+
+phase: 1
+stage: "generate"
+reasoning_model: "deepseek-r1:14b"
+input_dataset_dir: "target_repos/itsdangerous_scan_input"
+strategy: "all"
+timeout_per_model: 3600

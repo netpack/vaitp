@@ -1,0 +1,25 @@
+# isolated_pickle.yaml
+# Full pipeline on a single file: pickle_1.py
+# Phase 1 → Phase 2 → Promote → Phase 3
+
+experiment_name: "isolated_pickle"
+run_description: "End-to-end test on pickle_1.py (insecure deserialization)"
+
+phase: full
+stage: "all"
+
+reasoning_model: "deepseek-r1:14b"
+
+coders_to_run:
+  - "deepseek-r1:14b"
+
+strategies_to_run:
+  - "DIRECT_ONLY"
+
+input_dataset_dir: "vaitp_dataset/isolated_test"
+
+ollama: true
+
+max_iterations: 5
+
+timeout_per_model: 900

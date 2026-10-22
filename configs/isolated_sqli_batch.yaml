@@ -1,0 +1,22 @@
+# isolated_sqli_batch.yaml
+experiment_name: "isolated_sqli_batch"
+run_description: "Batch test on sqli_1, sqli_v2, sqli_v3, sqli_v4"
+
+phase: full
+stage: "all"
+
+reasoning_model: "deepseek-r1:14b"
+
+coders_to_run:
+  - "deepseek-r1:14b"
+
+strategies_to_run:
+  - "DIRECT_ONLY"
+
+input_dataset_dir: "vaitp_dataset/isolated_test"
+
+ollama: true
+
+max_iterations: 5
+
+timeout_per_model: 900

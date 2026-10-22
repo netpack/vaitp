@@ -1,0 +1,58 @@
+# VAITP Jury — FULL PIPELINE config (Phases 1 + 2 + 3), distinct judge.
+#
+# Exercises the jury on decisions across all phases:
+#   phase1.vuln_ident    which vulnerability to inject
+#   phase1.task_prompt   the injection meta-prompt (plan)
+#   phase2.semantic_confirm  code-matches-intent SUCCESS/FAILURE eval
+#   phase3.plan.* / phase3.recovery  exploitation planning + recovery
+#
+# Run the full pipeline (Phase 1 -> 2 -> promote -> 3) on a clean source dir:
+#   python main_orchestrator.py --phase full vaitp_dataset/full_test_src \
+#       --ollama --model deepseek-r1:14b \
+#       --coder qwen2.5-coder-3b-abliterated-basic:latest \
+#       --voting-config configs/config_jury_full.yaml \
+#       --trace-diagram --trace-detail-level detailed --test-timeout 240
+#
+# NOTE: judge_rotations is 1 here (not "auto") to keep this long full-pipeline
+# run tractable. Use configs/config_jury_distinct_judge.yaml (rotations: auto)
+# for the position-debiased Phase-3-only runs.
+
+voting:
+  enabled: true
+
+  jurors:                                  # distinct models (distinct IDs), none is the judge
+    - {id: llama,  backend: ollama, model: "llama3.1:8b"}
+    - {id: gemma,  backend: ollama, model: "gemma4:latest"}
+    - {id: qwen,   backend: ollama, model: "qwen2.5-coder:1.5b"}
+
+  judge:
+    id: judge14b                           # distinct 14B judge (not a juror)
+    backend: ollama
+    model: "deepseek-r1:14b"
+    mode: tie_break
+
+  default_strategy: judge_select
+  tie_breaker: judge
+  primary_juror: llama
+  seed: 20260716
+  judge_rotations: 1                       # keep the full run tractable (see note above)
+
+  pool:
+    max_concurrency: 1
+    rate_limit_per_min: 0
+    per_juror_timeout_s: 300
+    min_valid_responses: 1
+
+  log_path: "results/voting_log.jsonl"     # per-run: results/voting_<run_id>.jsonl
+
+  decisions:
+    # Phase 1
+    phase1.vuln_ident:          {strategy: judge_select}
+    phase1.task_prompt:         {strategy: judge_select}
+    # Phase 2 (runs inside parallel eval workers; jury adds contention but is bounded)
+    phase2.semantic_confirm:    {strategy: majority_vote, labels: ["true", "false"], judge_mode: always}
+    # Phase 3
+    phase3.plan.infrastructure: {strategy: judge_select}
+    phase3.plan.payloads:       {strategy: judge_select}
+    phase3.plan.edit:           {strategy: judge_select}
+    phase3.recovery:            {strategy: majority_vote, labels: [fuzz, replan, fix_infra, abort]}

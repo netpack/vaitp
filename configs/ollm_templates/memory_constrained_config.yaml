@@ -1,0 +1,72 @@
+# Memory Constrained oLLM Configuration Template
+# Optimized for systems with limited RAM/VRAM (8-16GB total)
+# Aggressive use of oLLM for memory efficiency
+
+experiment_name: "memory_constrained_experiment"
+run_description: "Memory-efficient configuration using oLLM for systems with limited resources"
+
+# Phase Configuration
+phase: 2
+stage: "all"
+
+# Conservative model selection for memory-constrained systems
+coders_to_run:
+  - "Llama-3.1-8B-Base"        # May use oLLM even for 8B on low-memory systems
+  - "Llama-3.1-13B-Base"       # Definitely use oLLM
+  - "Code-Llama-7B-Base"       # May use oLLM for memory efficiency
+
+# Limited strategies to reduce memory pressure
+strategies_to_run:
+  - "DIRECT_ONLY"              # Single strategy to minimize memory usage
+
+input_dataset_dir: "vaitp_dataset/injectable_test"  # Use smaller dataset
+expected_dir: "vaitp_dataset/expected_test"
+
+# Conservative timeouts for memory-constrained systems
+timeout_per_model: 5400  # 90 minutes - oLLM may be slower but more reliable
+
+# Memory-constrained oLLM Configuration
+ollm_config:
+  enable_ollm: true
+  auto_detect: true
+  device: "auto"                # Let system choose best option
+  memory_threshold_gb: 4.0      # Very low threshold - use oLLM aggressively
+  ssd_min_space_gb: 40.0        # Minimum SSD requirement
+  fallback_enabled: true
+  
+  # Memory-efficient settings
+  batch_size: 1                 # Single batch to minimize memory
+  prefetch_layers: 1            # Minimal prefetching
+  precision: "fp16"             # Half precision to save memory
+  
+  # Memory management
+  enable_memory_cleanup: true   # Clean up aggressively
+  memory_cleanup_interval: 30   # Clean up every 30 seconds
+
+# Aggressive oLLM usage for memory efficiency
+model_overrides:
+  "Llama-3.1-8B-Base":
+    prefer_ollm: true           # Prefer oLLM even for 8B model
+    batch_size: 1
+    prefetch_layers: 1
+  "Llama-3.1-13B-Base":
+    force_ollm: true            # Always use oLLM for 13B+
+    batch_size: 1
+    prefetch_layers: 1
+  "Code-Llama-7B-Base":
+    prefer_ollm: true           # Use oLLM for memory efficiency
+    batch_size: 1
+    prefetch_layers: 1
+
+# Memory monitoring
+enable_performance_optimization: true
+enable_memory_monitoring: true
+monitoring_interval: 10.0       # Regular memory monitoring
+memory_warning_threshold: 0.85  # Warn at 85% memory usage
+
+# Minimal export to save memory
+export:
+  save_excel: false             # Skip Excel to save memory
+  save_csv: true                # Lightweight CSV export
+  include_backend_info: true
+  include_memory_metrics: true  # Track memory efficiency

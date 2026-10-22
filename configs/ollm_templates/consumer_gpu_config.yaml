@@ -1,0 +1,78 @@
+# Consumer GPU oLLM Configuration Template
+# Optimized for consumer GPUs (RTX 4060-4090, RTX 3070-3090)
+# Automatically balances between oLLM and llama-cpp based on model size
+
+experiment_name: "consumer_gpu_experiment"
+run_description: "Optimized configuration for consumer GPUs with automatic oLLM/llama-cpp selection"
+
+# Phase Configuration
+phase: 2
+stage: "all"
+
+# Model Selection - Mix of sizes to demonstrate automatic selection
+coders_to_run:
+  - "Llama-3.1-8B-Base"        # Will use llama-cpp (fits in VRAM)
+  - "Llama-3.1-13B-Base"       # May use oLLM depending on VRAM
+  - "Llama-3.1-70B-Base"       # Will use oLLM (too large for consumer VRAM)
+  - "Code-Llama-7B-Base"       # Will use llama-cpp
+  - "Code-Llama-34B-Base"      # Will use oLLM
+
+strategies_to_run:
+  - "DIRECT_ONLY"
+  - "DIRECT_RAG"
+
+input_dataset_dir: "vaitp_dataset/injectable"
+expected_dir: "vaitp_dataset/expected"
+
+# Consumer GPU Optimized Settings
+timeout_per_model: 4800  # 80 minutes - balance between oLLM and llama-cpp speeds
+
+# oLLM Configuration for Consumer GPUs
+ollm_config:
+  enable_ollm: true
+  auto_detect: true              # Let system choose optimal backend
+  device: "cuda"                 # Use GPU acceleration
+  memory_threshold_gb: 12.0      # Typical consumer GPU VRAM threshold
+  ssd_min_space_gb: 80.0         # Reasonable SSD requirement
+  fallback_enabled: true         # Always enable fallback
+  
+  # Performance tuning for consumer hardware
+  batch_size: 2                  # Balanced batch size
+  prefetch_layers: 2             # Moderate prefetching
+  precision: "fp16"              # Half precision for speed
+
+# Hardware-specific model overrides
+model_overrides:
+  # Small models - optimize for speed with llama-cpp
+  "Llama-3.1-8B-Base":
+    force_ollm: false            # Always use llama-cpp for speed
+    batch_size: 4                # Larger batch for small model
+  "Code-Llama-7B-Base":
+    force_ollm: false
+    batch_size: 4
+  
+  # Medium models - let auto-detection decide
+  "Llama-3.1-13B-Base":
+    # No force setting - auto-detect based on available VRAM
+    batch_size: 2
+  
+  # Large models - force oLLM for quality
+  "Llama-3.1-70B-Base":
+    force_ollm: true             # Always use oLLM
+    batch_size: 1                # Conservative batch size
+    prefetch_layers: 2           # Moderate prefetching
+  "Code-Llama-34B-Base":
+    force_ollm: true
+    batch_size: 1
+    prefetch_layers: 2
+
+# Performance monitoring
+enable_performance_optimization: true
+monitoring_interval: 5.0
+
+# Export with backend tracking
+export:
+  save_excel: true
+  excel_per_model: true
+  include_backend_info: true     # Track which backend was used
+  include_performance_metrics: true

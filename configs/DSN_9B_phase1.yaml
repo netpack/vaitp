@@ -1,0 +1,26 @@
+# IEEE_phase1.yaml
+# -----------------------------------------------------------------------------
+# Test Configuration for Phase 1 Plan Generation
+#
+# Objective:
+#   Run the planning stage on the 'injectable' dataset to ensure
+#   the reasoning model can correctly analyze the code and generate valid plans.
+# -----------------------------------------------------------------------------
+
+experiment_name: "DSN_9B_phase1"
+run_description: "A test run of Phase 1 on the 'injectable_poisonpy' directory."
+
+# --- Phase Configuration ---
+# Specifies that we are only running the planning phase.
+phase: 1
+stage: "generate"
+
+# --- Model Selection ---
+reasoning_model: "agi-0-8b"
+
+# --- Path Configuration ---
+input_dataset_dir: "vaitp_dataset/injectable"
+
+# --- Performance Settings (optional) ---
+# Set a reasonable timeout for this smaller test run.
+timeout_per_model: 1800  # 30 minutes

@@ -1,0 +1,23 @@
+# Phase 3 DB-save verification test — 4 files with small model
+experiment_name: "test_phase3_qwe2-5-coder-obl"
+run_description: "Verify Phase 3 with Chris model"
+
+phase: "full" #"3"
+
+reasoning_model: "qwen2.5-coder-3b-abliterated-basic:latest"
+
+coders_to_run:
+  - "qwen2.5-coder-3b-abliterated-basic:latest"
+
+input_dataset_dir: "vaitp_dataset/injectable"
+
+ollama: true
+stream_llm: true
+
+# Keep iterations low for fast testing
+max_iterations: 3
+
+strategy: DIRECT_RAG
+
+trace_diagram: true
+trace_detail_level: full

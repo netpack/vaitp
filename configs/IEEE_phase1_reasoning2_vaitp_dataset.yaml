@@ -1,0 +1,25 @@
+# IEEE_phase1_r2.yaml
+# -----------------------------------------------------------------------------
+# Test Configuration for Phase 1 Plan Generation r2
+#
+# -----------------------------------------------------------------------------
+
+experiment_name: "IEEE_phase1_r2-vaitp"
+run_description: "A test run of Phase 1 on the 'injectable' directory with llama3.1_8B."
+
+# --- Phase Configuration ---
+# Specifies that we are only running the planning phase.
+phase: 1
+stage: "generate"
+
+# --- Model Selection ---
+# Use the default reasoning model for this test.
+reasoning_model: "llama-3.1-8b"
+
+# --- Path Configuration ---
+# The input directory for this specific test run.
+input_dataset_dir: "vaitp_dataset/injectable_ieee"
+
+# --- Performance Settings (optional) ---
+# Set a reasonable timeout for this smaller test run.
+timeout_per_model: 1800 # 30 minutes

@@ -1,0 +1,32 @@
+# CVE2023_phase2_llama.yaml
+# -----------------------------------------------------------------------------
+# Phase 2 Configuration for CVE-2023 Dataset with Llama 3.1 8B
+# -----------------------------------------------------------------------------
+
+experiment_name: "CVE2023_phase2_llama"
+run_description: "Phase 2 vulnerability injection for CVE-2023 dataset using Llama 3.1 8B model"
+
+# --- Phase Configuration ---
+phase: 2
+stage: "all" # Run generate, analyze, and evaluate stages
+
+# --- Model Selection ---
+coders_to_run:
+  - "llama-3.1-8b"
+
+# --- Strategy Selection ---
+strategies_to_run:
+#  - "DIRECT_ONLY"
+  - "META_RAG"
+
+# --- Data Paths ---
+input_dataset_dir: "vaitp_dataset/injectable_cve2023"
+expected_dir: "vaitp_dataset/expected_cve2023"
+
+# --- Performance Settings ---
+timeout_per_model: 1200 # 20 minutes per model
+
+# --- Export Settings ---
+export:
+  save_excel: true
+  excel_per_model: true

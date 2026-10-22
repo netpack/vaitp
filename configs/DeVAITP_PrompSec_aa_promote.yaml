@@ -1,0 +1,15 @@
+# Promote phase only
+# Target: Results_cfg_jul26_trial_0_aa_vet.py (PromSec)
+
+experiment_name: "PromSec_Results_cfg_jul26_trial_0_aa_vet"
+run_description: "Promote phase only - save best vulnerable code"
+
+phase: "promote"
+
+reasoning_model: "deepseek-r1:14b"
+
+input_dataset_dir: "vaitp_dataset/injectable"
+
+ollama: true
+stream_llm: false
+max_repair_attempts: 5

@@ -1,0 +1,63 @@
+# DSN_9B_phase2_all_models.yaml
+# -----------------------------------------------------------------------------
+# Comprehensive Phase 2 Test Configuration
+#
+# Objective:
+#   Test all available coding models on the 'injectable' dataset to evaluate
+#   their vulnerability injection capabilities across different strategies.
+# -----------------------------------------------------------------------------
+
+experiment_name: "DSN_9B_phase2"
+run_description: "Sequential Phase 2 test of ALL 12 coding models with aggressive memory management"
+
+# --- Phase Configuration ---
+# Phase 2 executes the vulnerability injection using generated plans from Phase 1
+phase: 2
+stage: "all" # Run generate, analyze, and evaluate stages
+
+# --- Model Selection ---
+# Test all available coding models (12 total)
+# Organized by size: 1B -> 1.7B -> 3B -> 7B -> 8B
+coders_to_run:
+  # 1B Models
+  - "Llama-3.2-1B-Base"
+  - "Llama-3.2-1B-Finetuned"
+  # 1.7B Models
+  - "Qwen3-1.7B-Base"
+  - "Qwen-3-1.7B-Finetuned"
+  # 3B Models
+  - "Codepy-3B-Base"
+  - "Codepy-3B-Finetuned"
+  # 7B Models
+  - "Qwen-2.5-7B-Base"
+  - "Qwen2.5-7B-Finetuned"
+  # 8B Models
+  - "Qwen-3-8B-Base"
+  - "Qwen3-8B-Finetuned"
+  - "Llama-3.1-8B-Base"
+  - "Llama-3.1-8B-Finetuned"
+
+# --- Strategy Selection ---
+# Test core strategies only (avoid FEW_SHOT which may be added automatically)
+strategies_to_run:
+  - "DIRECT_ONLY"
+  - "DIRECT_RAG"
+
+# --- Data Paths ---
+# Use the same test dataset as Phase 1
+input_dataset_dir: "vaitp_dataset/injectable"
+expected_dir: "vaitp_dataset/expected"
+
+# --- Performance Settings ---
+# Conservative timeout with memory management
+timeout_per_model: 1200 # 20 minutes per model (reduced due to memory management)
+
+# --- Export Settings ---
+# Generate comprehensive reports for analysis
+export:
+  save_excel: true
+  excel_per_model: true # Separate Excel file for each model for detailed analysis
+
+# --- Optional: GPU Configuration ---
+# Uncomment and adjust if using multiple GPUs
+# num_gpus: 1

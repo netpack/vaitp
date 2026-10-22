@@ -1,0 +1,45 @@
+# CPU-Only Configuration
+# This configuration runs experiments on CPU-only systems without GPU requirements
+
+experiment_name: "cpu_only_test"
+run_description: "CPU-only vulnerability injection test for systems without GPU support"
+
+# Phase Configuration
+phase: 2
+stage: "all"
+
+# Model Selection - Choose smaller models for CPU execution
+coders_to_run:
+  - "Llama-3.1-8B-Base"  # Smaller model suitable for CPU
+
+# Strategy Selection - Limit strategies to reduce CPU load
+strategies_to_run:
+  - "DIRECT_ONLY"
+
+# Data Paths
+input_dataset_dir: "vaitp_dataset/injectable"
+expected_dir: "vaitp_dataset/expected"
+
+# CPU-Optimized Settings
+num_gpus: 0  # Force CPU-only mode
+timeout_per_model: 10800  # 3 hours - CPU execution is slower
+max_retries: 1  # Reduce retries to save time
+
+# oLLM CPU Configuration (Optional)
+# oLLM can provide memory efficiency even on CPU-only systems
+# ollm_config:
+#   enable_ollm: true
+#   device: "cpu"                 # Force CPU usage
+#   memory_threshold_gb: 4.0      # Lower threshold for CPU systems
+#   ssd_min_space_gb: 60.0        # Ensure SSD space for memory offloading
+#   cpu_threads: 8                # Use multiple CPU threads
+#   precision: "fp16"             # Half precision for better CPU performance
+
+# Disable GPU-specific optimizations
+enable_performance_optimization: false
+
+# Export Settings
+export:
+  save_excel: true
+  excel_per_model: false
+  include_backend_info: true      # Track CPU vs oLLM-CPU performance

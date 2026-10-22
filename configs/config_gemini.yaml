@@ -1,0 +1,21 @@
+# Vertex AI: Gemini 2.5 Pro — Phase 3 smoke test
+experiment_name: "vertex_gemini_2_5_pro_smoke"
+run_description: "Smoke test — Gemini 2.5 Pro via Vertex AI Model Garden"
+
+phase: "3"
+
+# Vertex AI backend configuration
+vertex: true
+vertex_config: "configs/config_gemini.yaml"
+
+# Model identity (used for Vertex API calls and DB logging)
+model: google/gemini-2.5-pro
+api_base: https://us-central1-aiplatform.googleapis.com/v1/projects/vivid-grammar-475417-i1/locations/us-central1/endpoints/openapi
+api_key_env: VERTEX_ACCESS_TOKEN
+
+reasoning_model: "google/gemini-2.5-pro"
+
+input_dataset_dir: "vaitp_dataset/vulnerable"
+
+max_iterations: 3
+stream_llm: false

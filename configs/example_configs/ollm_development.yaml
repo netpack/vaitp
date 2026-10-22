@@ -1,0 +1,78 @@
+# oLLM Development Configuration
+# This configuration is optimized for development and testing of oLLM integration
+# Fast iteration with comprehensive logging and monitoring
+
+experiment_name: "ollm_development_test"
+run_description: "Development configuration for testing oLLM integration with detailed logging"
+
+# Phase Configuration
+phase: 2
+stage: "all"
+
+# Development Model Selection - Mix of sizes for testing
+coders_to_run:
+  - "Llama-3.1-8B-Base"        # Small model - test llama-cpp backend
+  - "Llama-3.1-70B-Base"       # Large model - test oLLM backend
+
+# Single Strategy for Quick Testing
+strategies_to_run:
+  - "DIRECT_ONLY"
+
+# Data Paths - Use small test dataset
+input_dataset_dir: "vaitp_dataset/injectable_test"
+expected_dir: "vaitp_dataset/expected_test"
+
+# Development-Optimized Settings
+timeout_per_model: 1800         # 30 minutes - reasonable for development
+max_retries: 1                  # Single retry to save time
+
+# oLLM Development Configuration
+ollm_config:
+  enable_ollm: true
+  auto_detect: true
+  device: "auto"
+  memory_threshold_gb: 8.0      # Lower threshold to test oLLM more often
+  ssd_min_space_gb: 50.0        # Relaxed SSD requirement
+  fallback_enabled: true
+  logging: true                 # Enable detailed oLLM logging
+
+# Development Model Overrides - Test different configurations
+model_overrides:
+  "Llama-3.1-8B-Base":
+    # Test forcing oLLM on small model (for development)
+    force_ollm: false           # Use llama-cpp to test both backends
+    batch_size: 2
+  "Llama-3.1-70B-Base":
+    force_ollm: true            # Force oLLM for large model
+    batch_size: 1
+    prefetch_layers: 2
+
+# Enhanced Development Monitoring
+enable_performance_optimization: true
+monitoring_interval: 2.0        # Frequent monitoring for development insights
+enable_memory_monitoring: true
+enable_backend_comparison: true  # Compare performance between backends
+
+# Development Logging
+logging:
+  level: "DEBUG"                # Verbose logging for development
+  log_backend_selection: true   # Log why each backend was chosen
+  log_model_loading: true       # Log model loading details
+  log_inference_timing: true    # Log inference performance
+  log_memory_usage: true        # Log memory consumption
+
+# Quick Export for Development
+export:
+  save_excel: false             # Skip Excel for speed
+  save_csv: true                # Quick CSV export
+  save_json: true               # Detailed JSON for analysis
+  include_backend_info: true
+  include_performance_metrics: true
+  include_debug_info: true      # Include debug information in export
+
+# Development Testing Features
+testing:
+  test_backend_switching: true  # Test switching between backends
+  test_fallback_mechanism: true # Test oLLM to llama-cpp fallback
+  benchmark_performance: true   # Benchmark both backends
+  validate_consistency: true    # Validate output consistency between backends

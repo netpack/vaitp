@@ -1,0 +1,48 @@
+# Basic Phase 2 Configuration
+# This configuration runs a simple vulnerability injection test with two models
+
+experiment_name: "basic_vulnerability_test"
+run_description: "Basic vulnerability injection test with Llama and Qwen models using direct strategies"
+
+# Phase Configuration
+phase: 2
+stage: "all"
+
+# Model Selection
+coders_to_run:
+  - "Llama-3.1-8B-Base"
+  - "Qwen-3-8B-Base"
+
+# Strategy Selection
+strategies_to_run:
+  - "DIRECT_ONLY"
+  - "DIRECT_RAG"
+
+# Data Paths
+input_dataset_dir: "vaitp_dataset/injectable"
+expected_dir: "vaitp_dataset/expected"
+
+# Basic Performance Settings
+timeout_per_model: 3600  # 1 hour timeout
+
+# oLLM Configuration (Optional)
+# Uncomment to enable oLLM for large models or limited VRAM systems
+# ollm_config:
+#   enable_ollm: true
+#   auto_detect: true              # Automatically use oLLM when beneficial
+#   device: "auto"                 # Let system choose best device
+#   memory_threshold_gb: 12.0      # Use oLLM for models requiring >12GB VRAM
+#   fallback_enabled: true         # Fall back to llama-cpp if oLLM fails
+
+# Model-specific backend selection (Optional)
+# model_overrides:
+#   "Llama-3.1-8B-Base":
+#     force_ollm: false            # Use llama-cpp for small models
+#   "Large-Model-70B":
+#     force_ollm: true             # Always use oLLM for large models
+
+# Export Settings
+export:
+  save_excel: true
+  excel_per_model: false
+  include_backend_info: true       # Include which backend was used (oLLM/llama-cpp)

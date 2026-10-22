@@ -1,0 +1,21 @@
+# Vertex AI: DeepSeek R1-0528 — Phase 3 smoke test
+experiment_name: "vertex_deepseek_r1_0528_smoke"
+run_description: "Smoke test — DeepSeek R1-0528 via Vertex AI Model Garden"
+
+phase: "3"
+
+# Vertex AI backend configuration
+vertex: true
+vertex_config: "configs/config_deepseek.yaml"
+
+# Model identity (used for Vertex API calls and DB logging)
+model: deepseek-ai/deepseek-r1-0528-maas
+api_base: https://us-central1-aiplatform.googleapis.com/v1/projects/vivid-grammar-475417-i1/locations/us-central1/endpoints/openapi
+api_key_env: VERTEX_ACCESS_TOKEN
+
+reasoning_model: "deepseek-ai/deepseek-r1-0528-maas"
+
+input_dataset_dir: "vaitp_dataset/vulnerable"
+
+max_iterations: 3
+stream_llm: false
